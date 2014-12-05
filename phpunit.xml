@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @todo Generar automáticamente informe de coverage en el directorio reports -->
+<phpunit bootstrap="tests/init.php" colors="true">
+    <testsuites>
+        <testsuite name="Unit tests for Transposer">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

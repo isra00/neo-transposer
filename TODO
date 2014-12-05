@@ -4,7 +4,7 @@
 -Pijada: Meter una marcador de dificultad de cada canto, en función de la amplitud: fácil/medio/difícil.
 -Pintar voice chart con SVG o algún otro sistema bonito
 +Implementar diferentes tipografías en los ChordPrinter's
--Hacer unit tests de los algoritmos complicados
 +Hacer un ChordPrinter para swahili
--Hacer URL diferentes los índices de los distintos libros (p. ej.: index.php?book=...)
++Hacer URL diferentes los índices de los distintos libros (p. ej.: index.php?book=...)
 -Meter Composer para autoloader
+-Auto-generar informe de coverage al lanzar los unit tests

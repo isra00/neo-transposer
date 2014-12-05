@@ -100,8 +100,8 @@ small.page_number {
 		text-align: center; 
 		font-weight: normal;
 	}
-		.transposition th small {
-			color: blue;
+		.transposition th strong {
+			font-size: 1.1em;
 		}
 	.transposition th,
 	.transposition td { 
