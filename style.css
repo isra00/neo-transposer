@@ -42,7 +42,7 @@ h1.song-title {
 }
 
 small.page_number {
-	padding: .2em;
+	padding: .1em .2em;
 	border: 1px solid silver;
 }
 
