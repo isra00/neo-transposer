@@ -19,7 +19,7 @@
 <div class="transpositions-list ovhid">
 <?php foreach ($transpositions as $i=>$transposition) : ?>
 	<h4><?php echo ($i == 0) ? 'The best transposition matching your voice:' : 'Equivalent transposition using capo (it\'s exactly the same for your voice)' ?></h4>
-	<table class="transposition" style="float: none">
+	<table class="transposition">
 		<thead>
 			<th colspan="3">
 				<!-- <?php echo $transposition->score ?> -->

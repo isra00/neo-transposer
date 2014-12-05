@@ -92,7 +92,6 @@ small.page_number {
 
 .transposition {
 	border-collapse: collapse;
-	float: left;
 	margin: 1em;
 }
 	.transposition th { 
