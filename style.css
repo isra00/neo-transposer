@@ -20,7 +20,7 @@ body {
 
 .main {
 	margin: 1em auto;
-	width: 60em;
+	width: 40em;
 }
 
 .song-index {
@@ -133,7 +133,7 @@ small.page_number {
 }
 
 
-@media only screen and (max-width: 60rem) {
+@media only screen and (max-width: 40rem) {
 
 	.main {
 		width: auto;
