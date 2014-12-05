@@ -38,8 +38,6 @@
 				<?php endforeach ?>
 				</select>
 
-				<input type="hidden" name="redirect" value="index.php" />
-
 				<p class="center">
 					<button type="submit" value="sent" class="bigbutton">We are ready!</button>
 				</p>

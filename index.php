@@ -2,7 +2,12 @@
 
 include 'init.php';
 
-$current_book = isset($_SESSION['book']) ? $_SESSION['book'] : DEFAULT_BOOK;
+if (!isset($_GET['book']))
+{
+	header("Location: wizard.php");
+}
+
+$current_book = isset($_GET['book']) ? intval($_GET['book']) : $_SESSION['book'];
 
 $q = mysql_query("SELECT * FROM song WHERE id_book = '$current_book' ORDER BY page, title");
 

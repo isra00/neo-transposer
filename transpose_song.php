@@ -8,7 +8,9 @@ $id_song = intval($_GET['song']);
 
 $q = mysql_query("SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE id_song = $id_song");
 
-if (!mysql_num_rows($q)) die("404 not found: el canto $id_song no existe o no está asociado a ningún book");
+if (!mysql_num_rows($q)) {
+	die("404 not found: el canto $id_song no existe o no está asociado a ningún book");
+}
 
 $song_details = mysql_fetch_assoc($q);
 
@@ -58,5 +60,6 @@ unset($transposition);
 
 $voice_chart = TranspositionChart::getChart($song_details, $transpositions[0], $transposer);
 
+$current_book = $song_details['id_book'];
 $page_title = $song_details['title'];
 include 'transpose_song.view.php';

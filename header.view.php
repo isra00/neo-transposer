@@ -2,7 +2,8 @@
 
 <body>
 	<div class="header">
-		<h2><a href="index.php"><?php echo SOFTWARE_NAME ?></a></h2>
+		<?php $current_book = isset($current_book) ? $current_book : $_SESSION['book'] ?>
+		<h2><a href="index.php?book=<?php echo $current_book ?>"><?php echo SOFTWARE_NAME ?></a></h2>
 
 		<div class="session">
 
@@ -10,10 +11,9 @@
 				(<a href="wizard.php"><?php echo $_SESSION['lowest_note'] . ' &rarr; ' . $_SESSION['highest_note'] ?></a>)
 			</span>
 
-			<?php $checked_book = ($_SESSION['book']) ? $_SESSION['book'] : DEFAULT_BOOK ?>
-			<select name="book" onchange="location.href='set_session.php?book=' + this.value + '&redirect=<?php echo urlencode('index.php') ?>'">
+			<select name="book" onchange="location.href='set_session.php?book=' + this.value">
 			<?php foreach ($GLOBALS['books'] as $id=>$book) : ?>
-				<option value="<?php echo $id ?>" <?php if ($id == $checked_book) echo 'selected="selected"' ?>><?php echo $book ?></option>
+				<option value="<?php echo $id ?>" <?php if ($id == $current_book) echo 'selected="selected"' ?>><?php echo $book ?></option>
 			<?php endforeach ?>
 			</select>
 

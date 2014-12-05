@@ -18,7 +18,6 @@ if (isset($_GET['book']))
 		$chord_printer = mysql_fetch_assoc($q);
 		$_SESSION['chord_printer'] = $chord_printer['chord_printer'];
 	}
-
 }
 
 if (isset($_GET['chord_printer']))
@@ -41,7 +40,5 @@ if (isset($_GET['highest_note']))
 	$_SESSION['highest_note'] = $_GET['highest_note'];
 }
 
-if (isset($_GET['redirect']))
-{
-	header('Location: ' . $_GET['redirect']);
-}
+$redirect = $_GET['redirect'] ? $_GET['redirect'] : 'index.php?book=' . $_SESSION['book'];
+header('Location: ' . $redirect);
