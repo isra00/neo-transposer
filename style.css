@@ -46,6 +46,11 @@ small.page_number {
 	border: 1px solid silver;
 }
 
+.voicechart-container {
+	border-bottom: 1px solid silver;
+	padding-bottom: 1em;
+}
+
 .voicechart {
 	border-collapse: collapse;
 }
