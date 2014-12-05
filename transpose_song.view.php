@@ -4,17 +4,19 @@
 
 <h4>Proposed transpositions matching your voice</h4>
 
-<table class="voicechart">
-<?php foreach ($voice_chart as $voice) : ?>
-	<tr class="<?php echo $voice['css'] ?>">
-		<th><?php echo $voice['caption'] ?></tb>
-		<?php echo str_repeat('<th>&nbsp;</th>', $voice['offset']) ?>
-		<td class="note"><?php echo $voice['lowest'] ?></td>
-		<?php echo str_repeat('<td>██</td>', $voice['length']) ?>
-		<td class="note"><?php echo $voice['highest'] ?></td>
-	</tr>
-<?php endforeach ?>
-</table>
+<div class="voicechart-container">
+	<table class="voicechart">
+	<?php foreach ($voice_chart as $voice) : ?>
+		<tr class="<?php echo $voice['css'] ?>">
+			<th><?php echo $voice['caption'] ?></tb>
+			<?php echo str_repeat('<th>&nbsp;</th>', $voice['offset']) ?>
+			<td class="note"><?php echo $voice['lowest'] ?></td>
+			<?php echo str_repeat('<td>██</td>', $voice['length']) ?>
+			<td class="note"><?php echo $voice['highest'] ?></td>
+		</tr>
+	<?php endforeach ?>
+	</table>
+</div>
 
 <p>These transpositions are equivalent, this is, they are <strong>exactly the same</strong> for your voice</p>
 
