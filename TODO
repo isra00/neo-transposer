@@ -8,3 +8,4 @@
 +Hacer URL diferentes los índices de los distintos libros (p. ej.: index.php?book=...)
 -Meter Composer para autoloader
 -Auto-generar informe de coverage al lanzar los unit tests
+-En el voice chart, pintar las notas más altas y más bajas más oscuras (degradado?) para indicar zona de peligro
