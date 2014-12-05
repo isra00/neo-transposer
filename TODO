@@ -1,0 +1,10 @@
+-Meter referencia de acordes: al hacer hover sobre un acorde, popup con digitación (tomar las imágenes de por ahí)
+-Validación de formularios
+-Formulario de edición de cantos
+-Pijada: Meter una marcador de dificultad de cada canto, en función de la amplitud: fácil/medio/difícil.
+-Pintar voice chart con SVG o algún otro sistema bonito
++Implementar diferentes tipografías en los ChordPrinter's
+-Hacer unit tests de los algoritmos complicados
++Hacer un ChordPrinter para swahili
+-Hacer URL diferentes los índices de los distintos libros (p. ej.: index.php?book=...)
+-Meter Composer para autoloader
