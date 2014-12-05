@@ -23,7 +23,8 @@
 	<table class="transposition">
 		<thead>
 			<th colspan="3">
-				<small><?php echo $transposition->score . '</small> ' . $transposition->chords[0] . ($transposition->capo ? ' with capo ' . $transposition->capo : ' (no capo)') ?>
+				<!-- <?php echo $transposition->score ?> -->
+				<?php echo '<strong>' . $transposition->chords[0] . '</strong>' . ($transposition->capo ? ' with capo ' . $transposition->capo : ' (no capo)') ?>
 			</th>
 		</thead>
 		<tbody>
@@ -43,8 +44,8 @@
 <?php endforeach ?>
 </div>
 
-<h4>These other transpositions are different, but they may fit your voice and have easy chords:</h4>
+<!--<h4>These other transpositions are different, but they may fit your voice and have easy chords:</h4>
 
-<p>[not implemented yet]</p>
+<p>[not implemented yet]</p>-->
 
 <?php include 'foot.view.php' ?>
