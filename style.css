@@ -90,7 +90,6 @@ small.page_number {
 		background: green;
 	}
 
-
 .transposition {
 	border-collapse: collapse;
 	float: left;
@@ -107,6 +106,10 @@ small.page_number {
 	.transposition td { 
 		border: 1px solid silver; 
 		padding: .3em .5em;
+	}
+
+	.transposition .chord {
+		font-size: 1.1em;
 	}
 
 .chord {

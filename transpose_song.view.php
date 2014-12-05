@@ -2,8 +2,6 @@
 
 <h1 class="song-title"><small class="page_number"><?php echo $song_details['page'] . "</small> " . $song_details['title'] ?></h1>
 
-<h4>Proposed transpositions matching your voice</h4>
-
 <div class="voicechart-container">
 	<table class="voicechart">
 	<?php foreach ($voice_chart as $voice) : ?>
@@ -18,11 +16,10 @@
 	</table>
 </div>
 
-<p>These transpositions are equivalent, this is, they are <strong>exactly the same</strong> for your voice</p>
-
 <div class="transpositions-list ovhid">
-<?php foreach ($transpositions as $transposition) : ?>
-	<table class="transposition">
+<?php foreach ($transpositions as $i=>$transposition) : ?>
+	<h4><?php echo ($i == 0) ? 'The best transposition matching your voice:' : 'Equivalent transposition using capo (it\'s exactly the same for your voice)' ?></h4>
+	<table class="transposition" style="float: none">
 		<thead>
 			<th colspan="3">
 				<!-- <?php echo $transposition->score ?> -->
