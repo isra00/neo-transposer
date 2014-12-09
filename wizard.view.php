@@ -18,14 +18,14 @@
 					Lowest:
 					<select name="lowest_note">
 					<?php foreach ($scale as $note) : ?>
-						<option value="<?php echo $note ?>" <?php if ($_SESSION['lowest_note'] == $note) echo 'selected="selected"' ?>><?php echo $note ?></option>
+						<option value="<?php echo $note ?>" <?php if (isset($_SESSION['lowest_note']) && $_SESSION['lowest_note'] == $note) echo 'selected="selected"' ?>><?php echo $note ?></option>
 					<?php endforeach ?>
 					</select>
 
 					Highest:
 					<select name="highest_note">
 					<?php foreach ($scale as $note) : ?>
-						<option value="<?php echo $note ?>" <?php if ($_SESSION['highest_note'] == $note) echo 'selected="selected"' ?>><?php echo $note ?></option>
+						<option value="<?php echo $note ?>" <?php if (isset($_SESSION['highest_note']) && $_SESSION['highest_note'] == $note) echo 'selected="selected"' ?>><?php echo $note ?></option>
 					<?php endforeach ?>
 					</select>
 				</p>
