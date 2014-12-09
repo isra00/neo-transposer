@@ -1,6 +1,6 @@
 <?php
 
-define('SOFTWARE_NAME', 'Transposer 0.1');
+define('SOFTWARE_NAME', 'Neo-Transposer');
 
 define('DB_HOST',		'localhost');
 define('DB_USER',		'root');
