@@ -9,3 +9,4 @@
 -Meter Composer para autoloader
 -Auto-generar informe de coverage al lanzar los unit tests
 -En el voice chart, pintar las notas más altas y más bajas más oscuras (degradado?) para indicar zona de peligro
+-Revisar Amefufuka para A2-B3: Em debería salir primero. Para eso, B sobre Em/G equivale a B7

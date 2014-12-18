@@ -13,7 +13,7 @@ class AutomaticTransposer
 	 * 
 	 * @var array
 	 */
-	protected $accoustic_scale = array('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
+	public $accoustic_scale = array('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
 
 	/**
 	 * All the accoustic notes (including # but not bemol) of 4 octaves, like in a 4-octave numbered_scale.

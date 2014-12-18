@@ -125,6 +125,13 @@ small.page_number {
 	font-family: sans-serif;
 }
 
+
+/* Wizard */
+.page-wizard .voice-selector .field {
+	margin-right: 1em;
+}
+
+
 /* Forms */
 .bigbutton {
 	padding: .3em .6em;
