@@ -14,6 +14,7 @@ a {
 	background: #da4336;
 	overflow: hidden;
 	color: white;
+	text-align: right;
 }
 	.header h2 {
 		float: left;
@@ -27,7 +28,7 @@ a {
 	.header .user-voice,
 	.header .switch-book,
 	.header .switch-printer {
-		float: right;
+		display: inline-block;
 		margin: .5rem;
 	}
 
