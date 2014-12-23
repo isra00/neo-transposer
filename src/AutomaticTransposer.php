@@ -1,7 +1,6 @@
 <?php
 
-require_once 'array_utils.php';
-require_once 'Transposition.php';
+namespace NeoTransposer;
 
 /**
  * Calculate the better transposition for a given song, given the amplitude of the singer's voice.
@@ -23,6 +22,12 @@ class AutomaticTransposer
 	 */
 	public $numbered_scale = array();
 
+	/**
+	 * Instance of NotesCalculator used for calculating transpositions.
+	 * @var NotesCalculator
+	 */
+	protected $nc;
+
 	function __construct()
 	{
 		// Fill the numbered_scale.
@@ -33,28 +38,8 @@ class AutomaticTransposer
 				$this->numbered_scale[] = $note . $i;
 			}
 		}
-	}
 
-	/**
-	 * @todo ¿Pasar a NotesCalculator?
-	 */
-	function transposeNote($note, $offset)
-	{
-		return array_index($this->numbered_scale, array_search($note, $this->numbered_scale) + $offset);
-	}
-
-	/**
-	 * Calculates the absolute distance (in semitones) between two notes, with octave specified.
-	 * 
-	 * @param  string $note1 Note, specified as [note name][octave number], e.g. E3.
-	 * @param  string $note2 Another note, following the same pattern as $note1.
-	 * @return integer Distance in semitones.
-	 *
-	 * @todo Pasar a NotesCalculator
-	 */
-	function distanceWithOctave($note1, $note2)
-	{
-		return array_search($note1, $this->numbered_scale) - array_search($note2, $this->numbered_scale);
+		$this->nc = new NotesCalculator;
 	}
 
 	/**
@@ -88,7 +73,7 @@ class AutomaticTransposer
 		$chord = $this->readChord($chord_name);
 		$chord['fundamental'];
 
-		$transported_fundamental = array_index(
+		$transported_fundamental = $this->nc->arrayIndex(
 			$this->accoustic_scale, 
 			array_search($chord['fundamental'], $this->accoustic_scale) + $amount
 		);
@@ -135,8 +120,8 @@ class AutomaticTransposer
 		/*
 		 * 1) Measure song and singer wideness.
 		 */
-		$song_wideness = $this->distanceWithOctave($song_highest_note, $song_lowest_note);
-		$singer_wideness = $this->distanceWithOctave($singer_highest_note, $singer_lowest_note);
+		$song_wideness = $this->nc->distanceWithOctave($song_highest_note, $song_lowest_note);
+		$singer_wideness = $this->nc->distanceWithOctave($singer_highest_note, $singer_lowest_note);
 
 		/*
 		 * 2) Calculate the offset
@@ -157,7 +142,7 @@ class AutomaticTransposer
 		/*
 		 * 3) Transpose the song's lowest note to the singer's lowest note + offset.
 		 */
-		$add_to_transport = ($this->distanceWithOctave($song_lowest_note, $singer_lowest_note) * (-1)) + $offset;
+		$add_to_transport = ($this->nc->distanceWithOctave($song_lowest_note, $singer_lowest_note) * (-1)) + $offset;
 
 		/*
 		 * 4) From the transposed lowest note, calculate the transposed chords.

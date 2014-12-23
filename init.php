@@ -21,9 +21,13 @@ $GLOBALS['chord_printers'] = array(
 
 /******************************************************************************/
 
+define('START_TIME', microtime(true));
+
+require 'vendor/autoload.php';
+
 session_start();
 
-set_include_path(get_include_path() . PATH_SEPARATOR . realpath(__DIR__ . '/src/'));
+//set_include_path(get_include_path() . PATH_SEPARATOR . realpath(__DIR__ . '/src/'));
 
 mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
 mysql_select_db(DB_DATABASE);

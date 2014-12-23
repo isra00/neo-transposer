@@ -1,5 +1,7 @@
 <?php
 
+namespace NeoTransposer;
+
 include 'init.php';
 
 if (!intval($_GET['song'])) die("Please specify as song as argument");
@@ -22,13 +24,8 @@ while ($row = mysql_fetch_assoc($q))
 	$original_chords[] = $row['chord'];
 }
 
-require_once 'AutomaticTransposer.php';
-require_once 'TranspositionChart.php';
-
 $printer = isset($_SESSION['chord_printer']) ? $_SESSION['chord_printer'] : DEFAULT_CHORD_PRINTER;
-$printer = "ChordPrinter$printer";
-
-require_once "$printer.php";
+$printer = "\NeoTransposer\ChordPrinter\ChordPrinter$printer";
 
 $transposer = new AutomaticTransposer();
 
@@ -58,7 +55,7 @@ unset($transposition);
 
 //Prepare the voice chart
 
-$voice_chart = TranspositionChart::getChart($song_details, $transpositions[0], $transposer);
+$voice_chart = TranspositionChart::getChart($song_details, $transpositions[0]);
 
 $current_book = $song_details['id_book'];
 $page_title = $song_details['title'];

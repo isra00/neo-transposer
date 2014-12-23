@@ -18,4 +18,5 @@ while ($song = mysql_fetch_assoc($q))
 }
 unset($song);
 
+$page_class = 'index';
 include 'index.view.php';

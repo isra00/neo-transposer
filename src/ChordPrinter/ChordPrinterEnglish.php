@@ -1,8 +1,8 @@
 <?php
 
-require_once 'ChordPrinter.php';
+namespace NeoTransposer\ChordPrinter;
 
-class ChordPrinterSwahili extends ChordPrinter
+class ChordPrinterEnglish extends ChordPrinter
 {
 	public function printChordInNotation($fundamental, $attributes)
 	{
@@ -11,11 +11,9 @@ class ChordPrinterSwahili extends ChordPrinter
 			$fundamental = 'B<em>b</em>';
 		}
 
-		$fundamental = str_replace('#', '<em>d</em>', $fundamental);
-
 		$print_attributes = str_replace(
-			array('m'),
-			array('-'),
+			array('4', '6', '7'),
+			array('<sup>4</sup>', '<sup>6</sup>', '<sup>7</sup>'),
 			$attributes
 		);
 

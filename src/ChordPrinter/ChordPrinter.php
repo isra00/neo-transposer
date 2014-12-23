@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AutomaticTransposer.php';
+namespace NeoTransposer\ChordPrinter;
 
 abstract class ChordPrinter
 {
@@ -16,7 +16,7 @@ abstract class ChordPrinter
 	{
 		foreach ($chordset as &$chord)
 		{
-			$chord = ($html) 
+			$chord = ($html)
 				? $this->printChordHtml($chord) 
 				: $this->printChord($chord);
 		}
@@ -27,7 +27,7 @@ abstract class ChordPrinter
 	public function printChord($chordName)
 	{
 		//If chord notation is not valid, it will throw an exception
-		$tr = new AutomaticTransposer;
+		$tr = new \NeoTransposer\AutomaticTransposer;
 		$parts = $tr->readChord($chordName);
 		return $this->printChordInNotation($parts['fundamental'], $parts['attributes']);
 	}

@@ -2,20 +2,33 @@ body {
 	font-family: sans-serif; margin: 0;
 }
 
+a {
+	color: #9f3127;
+	text-decoration: none;
+}
+	a:hover {
+		color: red;
+	}
+
 .header {
-	background: #eee;
+	background: #da4336;
 	overflow: hidden;
-	padding: .5em;
+	color: white;
 }
 	.header h2 {
 		float: left;
-		margin: 0;
+		margin: .3rem 0 .3rem .5rem;
 		font-size: 1.2em;
+		font-weight: normal;
 	}
-
-	.header .session {
+	.header a {
+		color: white;
+	}
+	.header .user-voice,
+	.header .switch-book,
+	.header .switch-printer {
 		float: right;
-		text-align: right;
+		margin: .5rem;
 	}
 
 .main {
@@ -31,9 +44,6 @@ body {
 	.song-index li {
 		margin: .3em 0;
 	}
-	.song-index li a {
-		text-decoration: none;
-	}
 
 h1.song-title {
 	border-bottom: 1px solid silver;
@@ -46,9 +56,15 @@ small.page_number {
 	border: 1px solid silver;
 }
 
+.transpositions-list h4:first-child {
+	margin-top: 0;
+}
+
 .voicechart-container {
 	border-bottom: 1px solid silver;
 	padding-bottom: 1em;
+	border-top: 1px solid silver;
+	padding-top: 1em;
 }
 
 .voicechart {
@@ -129,6 +145,8 @@ small.page_number {
 /* Wizard */
 .page-wizard .voice-selector .field {
 	margin-right: 1em;
+	margin-bottom: .4em;
+	display: inline-block;
 }
 
 
@@ -155,18 +173,30 @@ small.page_number {
 		overflow: hidden;
 	}
 
-	.header h2 {
-		float: none;
-		text-align: center;
-		margin-bottom: .4em;
+	.user-voice {
+		display: block;
+		float: right;
 	}
-
-	.header .session,
 	.header .switch-book,
 	.header .switch-printer {
+		margin: 0;
 		display: block;
-		text-align: center;
 		float: none;
+	}
+		.header .switch-book select,
+		.header .switch-printer select {
+			display: block;
+			width: 100%;
+		}
+	.switch-book select {
+		font-size: 1em;
+	}
+
+	.index h1 {
+		display: none;
+	}
+	.song-index {
+		margin-top: 1em;
 	}
 
 	small.page_number {

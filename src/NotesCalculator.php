@@ -1,5 +1,7 @@
 <?php
 
+namespace NeoTransposer;
+
 /**
  * Calculations on notes.
  */
@@ -50,4 +52,59 @@ class NotesCalculator
 
 		return $min_note;
 	}
+
+	/**
+	 * Reads an element of an array, supporting negative indexes and cyclic index.
+	 * 
+	 * @param  array $array Any indexed array.
+	 * @param  integer $index Index to read
+	 * @return mixed The array element
+	 */
+	function arrayIndex($array, $index)
+	{
+		if ($index > count($array) - 1)
+		{
+			$index = $index % count($array);
+		}
+
+		return ($index < 0)
+			? $array[count($array) + $index]
+			: $array[$index];
+	}
+
+	function transposeNote($note, $offset)
+	{
+		return $this->arrayIndex($this->numbered_scale, array_search($note, $this->numbered_scale) + $offset);
+	}
+	
+	/**
+	 * Calculates the absolute distance (in semitones) between two notes, with octave specified.
+	 * 
+	 * @param  string $note1 Note, specified as [note name][octave number], e.g. E3.
+	 * @param  string $note2 Another note, following the same pattern as $note1.
+	 * @return integer Distance in semitones.
+	 *
+	 * @todo Pasar a NotesCalculator
+	 */
+	function distanceWithOctave($note1, $note2)
+	{
+		return array_search($note1, $this->numbered_scale) - array_search($note2, $this->numbered_scale);
+	}
+
+
+	function getAsOctaveDifference($note)
+	{
+		preg_match('/([ABCDEFG#])([0-9])/', $note, $match);
+		$note = $match[1];
+		$octave = intval($match[2]);
+		$octave = $octave - 1;
+		return $note . " +$octave oct";
+	}
+
+	function getOnlyNote($note)
+	{
+		preg_match('/([ABCDEFG#])([0-9])/', $note, $match);
+		return $match[1];
+	}
+
 }

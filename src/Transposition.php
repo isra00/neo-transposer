@@ -1,5 +1,7 @@
 <?php
 
+namespace NeoTransposer;
+
 /**
  * Represents a transposition of a song, with transported chords, capo, etc.
  */

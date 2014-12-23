@@ -1,6 +1,6 @@
 <?php
 
-require_once 'ChordPrinter.php';
+namespace NeoTransposer\ChordPrinter;
 
 class ChordPrinterSpanish extends ChordPrinter
 {

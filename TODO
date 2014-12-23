@@ -10,3 +10,15 @@
 -Auto-generar informe de coverage al lanzar los unit tests
 -En el voice chart, pintar las notas más altas y más bajas más oscuras (degradado?) para indicar zona de peligro
 -Revisar Amefufuka para A2-B3: Em debería salir primero. Para eso, B sobre Em/G equivale a B7
+-Feedback de María: el voice chart despista más que ayuda
+-En el wizard, añadir una radio button: ( ) me siento más cómodo cantando en el registro bajo () en el registro alto. Esta setting se tendrá en cuenta en los casos en que, al transportar, la mitad no sea exacta (p. ej. /transpose_song.php?song=39), y se "redondeará" hacia arriba o hacia abajo según la preferencia del usuario
+
+---------
+
+Jacqueline: no tiene 100% claro que las dos transposiciones son idénticas. 
+Falta indicarlo más claramente y decir tb que la primera es la primera porque 
+los acordes son más fáciles.
+
+Ella tampoco encuentra útil el voice chart.
+
+Evenu Shalom Alehem en swahili: lowest note = D en vez de A (es A, pero aquí todo el mundo hace D)
