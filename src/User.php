@@ -36,8 +36,8 @@ class User
 		if ($userdata = mysql_fetch_assoc($q))
 		{
 			$user = new User(
-				$userdata['id_user'],
 				$userdata['email'],
+				$userdata['id_user'],
 				$userdata['lowest_note'],
 				$userdata['highest_note'],
 				$userdata['id_book'],
