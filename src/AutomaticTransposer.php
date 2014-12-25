@@ -108,10 +108,26 @@ class AutomaticTransposer
 	 * 1) Measure song and singer wideness.
 	 * 2) Calculate an offset, which be used to locate the song in the middle of the singer's register, to be more comfortable.
 	 * 3) Transport the song's lowest note to the singer's lowest note + offset.
-	 * 4) From the transported lowest note, calculate the transported chord.
+	 * 4) From the transported lowest note, calculate the transported chords.
 	 * 5) Calculate capo from the transported chords to avoid unusual chords.
 	 *
 	 ******************************************************************************/
+	/**
+	 * This is the core algorithm for Automatic transposition.
+	 *
+	 * Given the the lowest and highest note of the singer and of the song,
+	 * the algorithm tries to locate the song in the middle of the singer's
+	 * voice range through simple arithmetics. Once calculated the offset
+	 * between the original song lowest note and the ideal position, we
+	 * transpose each chord using that offset.
+	 * 
+	 * @param  [type] $singer_lowest_note  [description]
+	 * @param  [type] $singer_highest_note [description]
+	 * @param  [type] $song_lowest_note    [description]
+	 * @param  [type] $song_highest_note   [description]
+	 * @param  [type] $original_chords     [description]
+	 * @return [type]                      [description]
+	 */
 	function findPerfectTransposition($singer_lowest_note, $singer_highest_note, $song_lowest_note, $song_highest_note, $original_chords)
 	{
 		/** @todo Usar key o mejor primer acorde? */
@@ -163,6 +179,15 @@ class AutomaticTransposer
 
 	/**
 	 * Find equivalent transpositions using capo.
+	 *
+	 * The algorithm in findPerfectTransposition() would be enough to get the
+	 * "perfect" transposition, but there is one problem still: the "perfect"
+	 * chords can be very weird to play, like D#, G#, etc. To overcome
+	 * this, after calculating the perfect transposition, we will calculate
+	 * equivalent transpositions using the capo, looking for the easiest chords.
+	 *
+	 * The criteria for which chords are easier or harder are implemented in
+	 * Transposition::setChordsetEase().
 	 * 
 	 * @param  Transposition $transposition A given transposition without capo.
 	 * @param  array $originalChords Original chords of the songs.
@@ -245,6 +270,18 @@ class AutomaticTransposer
 		return $transpositions;
 	}
 
+	/**
+	 * Main method to be used by the clients of this class. It returns the
+	 * transpositions for a given song, sorted by ease.
+	 * 
+	 * @param  [type]  $singer_lowest_note  [description]
+	 * @param  [type]  $singer_highest_note [description]
+	 * @param  [type]  $song_lowest_note    [description]
+	 * @param  [type]  $song_highest_note   [description]
+	 * @param  [type]  $originalChords      [description]
+	 * @param  integer $limitTranspositions [description]
+	 * @return [type]                       [description]
+	 */
 	function findTranspositions($singer_lowest_note, $singer_highest_note, $song_lowest_note, $song_highest_note, $originalChords, $limitTranspositions=2)
 	{
 		$perfectTransposition = $this->findPerfectTransposition(
@@ -273,8 +310,6 @@ class AutomaticTransposer
 		}
 
 		return $perfect_and_equivalent;
-		//return array($perfect_and_equivalent, $alternativesNotEquivalent);
-		//return array($perfectTransposition);
 	}
 
 }
