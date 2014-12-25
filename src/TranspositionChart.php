@@ -4,15 +4,15 @@ namespace NeoTransposer;
 
 class TranspositionChart
 {
-	public static function getChart($song_details, $transposition)
+	public static function getChart($song_details, $transposition, $singer)
 	{
 		$nc = new NotesCalculator;
 
 		$voice_chart = array(
 			'singer' => array(
-				'lowest'	=> $_SESSION['lowest_note'],
-				'highest'	=> $_SESSION['highest_note'],
-				'length'	=> abs($nc->distanceWithOctave($_SESSION['lowest_note'], $_SESSION['highest_note'])) - 1,
+				'lowest'	=> $singer->lowest_note,
+				'highest'	=> $singer->highest_note,
+				'length'	=> abs($nc->distanceWithOctave($singer->lowest_note, $singer->highest_note)) - 1,
 				'caption'	=> 'Your voice:',
 				'css'		=> 'singer'
 			),

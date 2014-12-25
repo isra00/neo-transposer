@@ -24,14 +24,14 @@ while ($row = mysql_fetch_assoc($q))
 	$original_chords[] = $row['chord'];
 }
 
-$printer = isset($_SESSION['chord_printer']) ? $_SESSION['chord_printer'] : DEFAULT_CHORD_PRINTER;
+$printer = isset($_SESSION['user']->chord_printer) ? $_SESSION['user']->chord_printer : DEFAULT_CHORD_PRINTER;
 $printer = "\NeoTransposer\ChordPrinter\ChordPrinter$printer";
 
 $transposer = new AutomaticTransposer();
 
 $transpositions = $transposer->findTranspositions(
-	$_SESSION['lowest_note'],
-	$_SESSION['highest_note'],
+	$_SESSION['user']->lowest_note,
+	$_SESSION['user']->highest_note,
 	$song_details['lowest_note'], 
 	$song_details['highest_note'], 
 	$original_chords
@@ -55,7 +55,7 @@ unset($transposition);
 
 //Prepare the voice chart
 
-$voice_chart = TranspositionChart::getChart($song_details, $transpositions[0]);
+$voice_chart = TranspositionChart::getChart($song_details, $transpositions[0], $_SESSION['user']);
 
 $current_book = $song_details['id_book'];
 $page_title = $song_details['title'];

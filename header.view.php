@@ -13,12 +13,12 @@
 	</script>
 
 	<div class="header">
-		<?php $current_book = isset($current_book) ? $current_book : $_SESSION['book'] ?>
+		<?php $current_book = isset($current_book) ? $current_book : $_SESSION['user']->user->book ?>
 		<h2><a href="index.php?book=<?php echo $current_book ?>"><?php echo SOFTWARE_NAME ?></a></h2>
 
 		<span class="user-voice">
 			<?php $nc = new \NeoTransposer\NotesCalculator; ?>
-			<a href="wizard.php"><?php echo $nc->getOnlyNote($_SESSION['lowest_note']) . ' &rarr; ' . $nc->getAsOctaveDifference($_SESSION['highest_note']) ?></a>
+			<a href="wizard.php"><?php echo $nc->getOnlyNote($_SESSION['user']->lowest_note) . ' &rarr; ' . $nc->getAsOctaveDifference($_SESSION['user']->highest_note) ?></a>
 		</span>
 
 		<span class="switch-book">
@@ -30,7 +30,7 @@
 		</span>
 
 		<span class="switch-printer">
-			<?php $checked_printer = ($_SESSION['chord_printer']) ? $_SESSION['chord_printer'] : DEFAULT_CHORD_PRINTER ?>
+			<?php $checked_printer = ($_SESSION['user']->chord_printer) ? $_SESSION['user']->chord_printer : DEFAULT_CHORD_PRINTER ?>
 			<select name="chord_printer" onchange="location.href='set_session.php?chord_printer=' + this.value + '&redirect=<?php echo urlencode($_SERVER['REQUEST_URI']) ?>'">
 			<?php foreach ($GLOBALS['chord_printers'] as $class=>$name) : ?>
 				<option value="<?php echo $class ?>" <?php if ($class == $checked_printer) echo 'selected="selected"' ?>><?php echo $name ?></option>

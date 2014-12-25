@@ -9,14 +9,14 @@ if (isset($_GET['book']))
 		die("Invalid request: the specified book does not exist");
 	}
 
-	$_SESSION['book'] = intval($_GET['book']);
+	$_SESSION['user']->id_book = intval($_GET['book']);
 
 	// Auto-select chord printer based on book.
 	if (!isset($_GET['chord_printer']))
 	{
-		$q = mysql_query("SELECT chord_printer FROM book WHERE id_book = '" . $_SESSION['book'] . "'");
+		$q = mysql_query("SELECT chord_printer FROM book WHERE id_book = '" . $_SESSION['user']->id_book . "'");
 		$chord_printer = mysql_fetch_assoc($q);
-		$_SESSION['chord_printer'] = $chord_printer['chord_printer'];
+		$_SESSION['user']->chord_printer = $chord_printer['chord_printer'];
 	}
 }
 
@@ -27,18 +27,20 @@ if (isset($_GET['chord_printer']))
 		die("Invalid request: the specified chord notation does not exist");
 	}
 
-	$_SESSION['chord_printer'] = $_GET['chord_printer'];
+	$_SESSION['user']->chord_printer = $_GET['chord_printer'];
 }
 
 if (isset($_GET['lowest_note']))
 {
-	$_SESSION['lowest_note'] = $_GET['lowest_note'];
+	$_SESSION['user']->lowest_note = $_GET['lowest_note'];
 }
 
 if (isset($_GET['highest_note']))
 {
-	$_SESSION['highest_note'] = $_GET['highest_note'];
+	$_SESSION['user']->highest_note = $_GET['highest_note'];
 }
 
-$redirect = $_GET['redirect'] ? $_GET['redirect'] : 'index.php?book=' . $_SESSION['book'];
+$_SESSION['user']->persist();
+
+$redirect = $_GET['redirect'] ? $_GET['redirect'] : 'index.php?book=' . $_SESSION['user']->id_book;
 header('Location: ' . $redirect);

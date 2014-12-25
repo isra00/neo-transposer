@@ -1,5 +1,7 @@
 <?php
 
+namespace NeoTransposer;
+
 define('SOFTWARE_NAME', 'Neo-Transposer');
 
 define('DB_HOST',		'localhost');
@@ -44,7 +46,13 @@ while ($book = mysql_fetch_assoc($q))
 
 $GLOBALS['books'] = $books;
 
-if (!isset($_SESSION['lowest_note']) && false === array_search(basename($_SERVER['SCRIPT_NAME']), array('wizard.php', 'set_session.php')))
+if (!isset($_SESSION['user']))
 {
-	header("Location: wizard.php");
+	$_SESSION['user'] = new User;
+}
+
+if ($redirect = $_SESSION['user']->isRedirectionNeeded())
+{
+	header("Location: $redirect.php");
+	die;
 }
