@@ -24,9 +24,6 @@ while ($row = mysql_fetch_assoc($q))
 	$original_chords[] = $row['chord'];
 }
 
-$printer = isset($_SESSION['user']->chord_printer) ? $_SESSION['user']->chord_printer : DEFAULT_CHORD_PRINTER;
-$printer = "\NeoTransposer\ChordPrinter\ChordPrinter$printer";
-
 $transposer = new AutomaticTransposer();
 
 $transpositions = $transposer->findTranspositions(
@@ -37,19 +34,15 @@ $transpositions = $transposer->findTranspositions(
 	$original_chords
 );
 
-/**
- * @todo  IMPORTANTE!!! Si la transposición perfecta es lo mismo que en el libro,
- *        mostrar "Cantar como en el libro", y de forma secundaria, transposiciones
- *        alternativas.
- */
-
+$printer = isset($_SESSION['user']->chord_printer) ? $_SESSION['user']->chord_printer : DEFAULT_CHORD_PRINTER;
+$printer = "\NeoTransposer\ChordPrinter\ChordPrinter$printer";
 $printer = new $printer();
 
-$original_chords = $printer->printChordset($original_chords, true);
+$original_chords = $printer->printChordset($original_chords);
 
 foreach ($transpositions as &$transposition)
 {
-	$transposition = $printer->printTransposition($transposition, true);
+	$transposition = $printer->printTransposition($transposition);
 }
 unset($transposition);
 

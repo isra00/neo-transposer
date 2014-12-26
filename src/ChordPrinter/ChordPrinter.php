@@ -6,19 +6,17 @@ abstract class ChordPrinter
 {
 	protected $cssClass = 'chord';
 
-	public function printTransposition($transposition, $html = false)
+	public function printTransposition($transposition)
 	{
-		$transposition->chords = $this->printChordset($transposition->chords, $html);
+		$transposition->chords = $this->printChordset($transposition->chords);
 		return $transposition;
 	}
 
-	public function printChordset($chordset, $html = false)
+	public function printChordset($chordset)
 	{
 		foreach ($chordset as &$chord)
 		{
-			$chord = ($html)
-				? $this->printChordHtml($chord) 
-				: $this->printChord($chord);
+			$chord = $this->printChordHtml($chord);
 		}
 
 		return $chordset;
