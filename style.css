@@ -180,6 +180,7 @@ small.page_number {
 	.user-voice {
 		display: block;
 		float: right;
+		font-size: .9em;
 	}
 	.header .switch-book,
 	.header .switch-printer {
