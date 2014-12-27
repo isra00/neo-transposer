@@ -28,7 +28,7 @@ $books = array();
 $q = mysql_query("SELECT * FROM book");
 while ($book = mysql_fetch_assoc($q))
 {
-	$books[$book['id_book']] = $book['lang_name'];
+	$books[$book['id_book']] = $book;
 }
 
 $GLOBALS['books'] = $books;

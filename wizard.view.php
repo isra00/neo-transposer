@@ -57,7 +57,7 @@
 
 			<select name="book">
 			<?php foreach ($GLOBALS['books'] as $id=>$book) : ?>
-				<option value="<?php echo $id ?>"><?php echo $book ?></option>
+				<option value="<?php echo $id ?>"><?php echo $book['lang_name'] . ' (' . $book['details'] . ')' ?></option>
 			<?php endforeach ?>
 			</select>
 
