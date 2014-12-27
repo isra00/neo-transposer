@@ -8,8 +8,11 @@ if (isset($_POST['sent']))
 {
 	$form_is_valid = false;
 
-	/** @todo Poner una regex para e-mail DE VERDAD */
-	if (preg_match('/.*@.*\..*/', $_POST['email']))
+	$regexp = <<<REG
+[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
+REG;
+
+	if (preg_match("/$regexp/i", $_POST['email']))
 	{
 		$form_is_valid = true;
 	}
