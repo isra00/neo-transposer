@@ -34,6 +34,12 @@ class NotesCalculator
 		}
 	}
 
+	/**
+	 * Returns the lowest note in the array.
+	 * 
+	 * @param  array  $notes Array of numbered notes.
+	 * @return string The lowest note.
+	 */
 	public function lowestNote(array $notes)
 	{
 		$min_number = count($this->numbered_scale);
@@ -94,16 +100,16 @@ class NotesCalculator
 
 	function getAsOctaveDifference($note)
 	{
-		preg_match('/([ABCDEFG#])([0-9])/', $note, $match);
+		preg_match('/([ABCDEFG]#?b?)([0-9])/', $note, $match);
 		$note = $match[1];
 		$octave = intval($match[2]);
 		$octave = $octave - 1;
-		return $note . " +$octave oct";
+		return $note . " +$octave";
 	}
 
 	function getOnlyNote($note)
 	{
-		preg_match('/([ABCDEFG#])([0-9])/', $note, $match);
+		preg_match('/([ABCDEFG]#?b?)([0-9])/', $note, $match);
 		return $match[1];
 	}
 
