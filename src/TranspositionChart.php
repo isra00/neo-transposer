@@ -24,8 +24,8 @@ class TranspositionChart
 				'css'		=> 'original-song'
 			),
 			'transposed' => array(
-				'lowest'	=> $nc->transposeNote($song_details['lowest_note'], $transposition->offset),
-				'highest'	=> $nc->transposeNote($song_details['highest_note'], $transposition->offset),
+				'lowest'	=> $transposition->lowestNote,
+				'highest'	=> $transposition->highestNote,
 				'caption'	=> 'Transposed:',
 				'css'		=> 'transposed-song'
 			),

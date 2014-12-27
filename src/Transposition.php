@@ -38,17 +38,33 @@ class Transposition
 	public $offset = 0;
 
 	/**
+	 * Song's lowest note after transposing.
+	 * @var string
+	 */
+	public $lowestNote;
+
+	/**
+	 * Song's highest note after transposing.
+	 * @var string
+	 */
+	public $highestNote;
+
+	/**
 	 * Deviation from the perfect transposition (in semitones).
+	 * @todo  Eliminar si no se usa.
 	 * @var integer
 	 */
 	public $deviation = 0;
 
-	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0)
+	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null)
 	{
 		$this->chords = $chords;
 		$this->capo = $capo;
 		$this->asBook = $asBook;
 		$this->offset = $offset;
+		$this->lowestNote = $lowest_note;
+		$this->highestNote = $highest_note;
+
 
 		$this->setChordsetEase();
 	}
@@ -56,7 +72,7 @@ class Transposition
 	/**
 	 * Calculates the ease of the transposition, based on each chord's ease.
 	 */
-	function setChordsetEase()
+	public function setChordsetEase()
 	{
 		/*
 		 * Ordered from easier to harder. This is according to *MY* experience 
@@ -125,5 +141,23 @@ class Transposition
 	public function getAsBook()
 	{
 		return $this->asBook;
+	}
+
+	/**
+	 * Calculate the equivalent transposition without capo (the "perfect" one).
+	 * @return Transposition A transposition with capo 0.
+	 */
+	public function getEquivalentWithoutCapo()
+	{
+		if (0 == $this->capo)
+		{
+			return $this;
+		}
+
+		$transposer = new AutomaticTransposer;
+		$chords = $transposer->transposeChords($this->chords, $this->capo);
+
+		return new Transposition($chords, 0, false, $this->offset, 
+			$this->lowestNote, $this->highestNote);
 	}
 }

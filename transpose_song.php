@@ -24,15 +24,29 @@ while ($row = mysql_fetch_assoc($q))
 	$original_chords[] = $row['chord'];
 }
 
-$transposer = new AutomaticTransposer();
-
-$transpositions = $transposer->findTranspositions(
+$transposer = new AutomaticTransposer(
 	$_SESSION['user']->lowest_note,
 	$_SESSION['user']->highest_note,
 	$song_details['lowest_note'], 
 	$song_details['highest_note'], 
 	$original_chords
 );
+
+$transpositions = $transposer->findTranspositions();
+
+
+// To get the not-equivalent transpositions we need the perfect one, but it's
+// not available in this scope ==> we get it from any of the equivalents.
+/*$not_equivalents = $transposer->findAlternativeNotEquivalent(
+	$transpositions[0]->getEquivalentWithoutCapo(),
+	$song_details,
+	$_SESSION['user']->lowest_note,
+	$_SESSION['user']->highest_note,
+	false,
+	false
+);*/
+
+//Prepare the chords nicely printed
 
 $printer = isset($_SESSION['user']->chord_printer) ? $_SESSION['user']->chord_printer : DEFAULT_CHORD_PRINTER;
 $printer = "\NeoTransposer\ChordPrinter\ChordPrinter$printer";

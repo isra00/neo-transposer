@@ -3,7 +3,7 @@
 namespace NeoTransposer;
 
 /**
- * Calculations on notes.
+ * Calculations on notes and chords.
  */
 class NotesCalculator
 {
@@ -12,7 +12,7 @@ class NotesCalculator
 	 * 
 	 * @var array
 	 */
-	protected $accoustic_scale = array('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
+	public $accoustic_scale = array('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
 
 	/**
 	 * All the accoustic notes (including # but not bemol) of 4 octaves, like in a 4-octave numbered_scale.
@@ -78,6 +78,13 @@ class NotesCalculator
 			: $array[$index];
 	}
 
+	/**
+	 * Transpose a given note with an offset.
+	 * 
+	 * @param  string $note   The note to transpose
+	 * @param  integer $offset The offset to transpose.
+	 * @return string         The transposed note.
+	 */
 	function transposeNote($note, $offset)
 	{
 		return $this->arrayIndex($this->numbered_scale, array_search($note, $this->numbered_scale) + $offset);
@@ -97,7 +104,12 @@ class NotesCalculator
 		return array_search($note1, $this->numbered_scale) - array_search($note2, $this->numbered_scale);
 	}
 
-
+	/**
+	 * Format a numbered note as note + number of octaves above the 1st octave.
+	 * 
+	 * @param  string $note A numbered note.
+	 * @return string Formatted string.
+	 */
 	function getAsOctaveDifference($note)
 	{
 		preg_match('/([ABCDEFG]#?b?)([0-9])/', $note, $match);
@@ -107,10 +119,73 @@ class NotesCalculator
 		return $note . " +$octave";
 	}
 
+	/**
+	 * Given a numbered note, get the un-numbered note.
+	 * 
+	 * @param  string $note A numbered note.
+	 * @return string       The note itself.
+	 */
 	function getOnlyNote($note)
 	{
 		preg_match('/([ABCDEFG]#?b?)([0-9])/', $note, $match);
 		return $match[1];
 	}
 
+	/**
+	 * Separates the parts of a chord: fundamental note and attributes.
+	 * 
+	 * @param  string $chord_name Chord name, in standard notation.
+	 * @return array Associative array with 'fundamental' and 'attributes' key
+	 */
+	function readChord($chord_name)
+	{
+		$regexp = '/^([abcdefg]#?b?)([m4679\*]*)$/i';
+		preg_match($regexp, $chord_name, $match);
+
+		if (!isset($match[2]))
+		{
+			throw new \Exception("Chord $chord_name not recognized");
+		}
+
+		return array('fundamental' => $match[1], 'attributes' => $match[2]);
+	}
+
+	/**
+	 * Transports a chord adding or substracting semitones.
+	 * 
+	 * @param  string $chord_name Chord name, according to the syntax admitted by read_chord().
+	 * @param  integer $amount Number of semitones to add or substract.
+	 * @return string Final chord.
+	 */
+	function transportChord($chord_name, $amount)
+	{
+		$chord = $this->readChord($chord_name);
+		$chord['fundamental'];
+
+		$transported_fundamental = $this->arrayIndex(
+			$this->accoustic_scale, 
+			array_search($chord['fundamental'], $this->accoustic_scale) + $amount
+		);
+
+		return $transported_fundamental .  $chord['attributes'];
+	}
+
+	/*
+	 * Transports a set of chords adding or substracting semitones.
+	 * 
+	 * @param  array $chord_list An array of chords.
+	 * @param  integer $amount Number of semitones to add or substract.
+	 * @return array Final set of chords.
+	 */
+	function transposeChords($chord_list, $amount)
+	{
+		$final_list = array();
+
+		foreach ($chord_list as $chord)
+		{
+			$final_list[] = $this->transportChord($chord, $amount);
+		}
+
+		return $final_list;
+	}
 }
