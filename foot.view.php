@@ -1,8 +1,9 @@
 
-	</div>
+</section>
 
-	<!--<footer>
-	Generated in <?php echo round(microtime(true) - START_TIME, 3) ?> s
-	</footer>-->
+<footer>
+	Developed in Tanzania. Write me suggestions or comments to isra00@gmail.com
+</footer>
+
 </body>
 </html>

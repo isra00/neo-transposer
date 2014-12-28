@@ -44,5 +44,6 @@ else
 
 if (!isset($_POST['sent']) || !$form_is_valid)
 {
+	$page_class = 'login';
 	include 'login.view.php';
 }

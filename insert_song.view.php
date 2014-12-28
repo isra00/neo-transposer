@@ -1,8 +1,7 @@
-<?php include 'head.view.php' ?>
+<?php include 'header.view.php' ?>
 
-<body onload="document.getElementById('title').focus()">
+<?php /** @todo JS: Enfocar el campo title al cargar la página */ ?>
 
-<div class="main">
 	<h1>Insert song</h1>
 
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
@@ -11,7 +10,7 @@
 			<label for="book">Book:</label>
 			<select name="book" id="book">
 			<?php foreach ($GLOBALS['books'] as $id=>$book) : ?>
-				<option value="<?php echo $id ?>" <?php if ($id == $current_book) echo 'selected="selected"' ?>><?php echo $book ?></option>
+				<option value="<?php echo $id ?>" <?php if ($id == $current_book) echo 'selected="selected"' ?>><?php echo $book['lang_name'] ?></option>
 			<?php endforeach ?>
 			</select>
 		</p>
@@ -46,6 +45,5 @@
 		<p><button type="submit" name="sent" class="bigbutton">Insert</button></p>
 
 	</form>
-</div>
 
 <?php include 'foot.view.php' ?>

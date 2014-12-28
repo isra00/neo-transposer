@@ -1,6 +1,9 @@
 <?php include 'header.view.php' ?>
 
-<h1><?php echo $GLOBALS['books'][$current_book]['lang_name'] . ' (' . $GLOBALS['books'][$current_book]['details'] . ')' ?></h1>
+<h1>
+	<small><a href="wizard.php#book">Change book</a></small>
+	<?php echo $GLOBALS['books'][$current_book]['lang_name'] . ' (' . $GLOBALS['books'][$current_book]['details'] . ')' ?>
+</h1>
 
 <ul class="song-index">
 <?php foreach ($songs as $song) : ?>

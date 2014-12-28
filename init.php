@@ -2,8 +2,6 @@
 
 namespace NeoTransposer;
 
-define('START_TIME', microtime(true));
-
 include 'config.php';
 
 $GLOBALS['chord_printers'] = array(

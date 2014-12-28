@@ -57,6 +57,12 @@ unset($transposition);
 
 $voice_chart = TranspositionChart::getChart($song_details, $transpositions[0], $_SESSION['user']);
 
+$nc = new NotesCalculator;
+$your_voice = $nc->getOnlyNote($_SESSION['user']->lowest_note)
+ . ' &rarr; '
+ . $nc->getAsOctaveDifference($_SESSION['user']->highest_note)
+ . ' oct';
+
 $current_book = $song_details['id_book'];
 $page_title = $song_details['title'];
 $page_class = 'transpose-song';

@@ -26,6 +26,12 @@
 
 <h1 class="song-title"><small class="page_number"><?php echo $song_details['page'] . "</small> " . $song_details['title'] ?></h1>
 
+<div class="your-voice">
+	<em>Your voice:</em>
+	<?php echo $your_voice ?>
+	<a href="wizard.php" class="small-button">Change</a>
+</div>
+
 <h4>These two transpositions match your voice (they are equivalent):</h4>
 <div class="transpositions-list ovhid">
 <?php foreach ($transpositions as $i=>$transposition) : ?>

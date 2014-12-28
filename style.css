@@ -1,5 +1,6 @@
 body {
-	font-family: sans-serif; margin: 0;
+	font-family: sans-serif;
+	margin: 0;
 }
 
 a {
@@ -10,47 +11,111 @@ a {
 		color: red;
 	}
 
+h1 {
+	font-weight: normal;
+}
+
+p {
+	line-height: 1.3em;
+}
+
+/*
+ * HEADER
+ */
+
 .header {
 	background: #da4336;
 	overflow: hidden;
 	color: white;
 	text-align: right;
+	padding: .3rem .5rem .3rem .5rem;
 }
+	.header .inside {
+		width: 40em;
+		margin: auto;
+	}
+
 	.header h2 {
 		float: left;
-		margin: .3rem 0 .3rem .5rem;
-		font-size: 1.2em;
+		font-size: 1.3em;
 		font-weight: normal;
+		margin: 0;
 	}
 	.header a {
 		color: white;
 	}
-	.header .user-voice,
-	.header .switch-book,
-	.header .switch-printer {
-		display: inline-block;
-		margin: .5rem;
-	}
+
+/*
+ * MAIN BLOCKS
+ */
 
 .main {
 	margin: 1em auto;
 	width: 40em;
 }
 
+footer {
+	text-align: center;
+	background: #eee;
+	color: gray;
+	text-shadow: 1px 1px 0 white;
+	font-style: italic;
+	font-size: .9em;
+	padding: 1em;
+	margin-top: 1em;
+}
+
+/*
+ * INDEX
+ */
+
+.index h1 small {
+	display: block;
+	margin: 0;
+	font-size: 1rem;
+	font-weight: normal;
+}
 .song-index {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 	.song-index li {
-		margin: .3em 0;
+		padding: .3em 0;
+		border-bottom: 1px solid #eee;
+		line-height: 1.5em;
 	}
 
-h1.song-title {
-	border-bottom: 1px solid silver;
-	padding-bottom: .5em;
+
+/*
+ * WIZARD
+ */
+
+.page-wizard h3 {
 	font-weight: normal;
 }
+
+.page-wizard .voice-selector .field {
+	margin-right: 1em;
+	margin-bottom: .4em;
+	display: inline-block;
+}
+
+/*
+ * TRANSPOSE SONG
+ */
+
+.transpose-song h4 {
+	margin-bottom: 0;
+}
+.transpose-song .your-voice {
+	text-align: center;
+	border-bottom: 1px solid silver;
+	padding-bottom: .6em;
+}
+	.transpose-song .your-voice .small-button {
+		margin-left: .5em;
+	}
 
 small.page_number {
 	padding: .1em .2em;
@@ -59,6 +124,39 @@ small.page_number {
 
 .transpositions-list h4:first-child {
 	margin-top: 0;
+}
+.transposition {
+	border-collapse: collapse;
+	margin: 1em;
+	float: left;
+}
+.transposition:first-child {
+	margin-left: 0;
+}
+	.transposition th { 
+		text-align: center; 
+		font-weight: normal;
+	}
+		.transposition th strong {
+			font-size: 1.1em;
+		}
+	.transposition th,
+	.transposition td { 
+		border: 1px solid silver; 
+		padding: .3em .5em;
+	}
+
+	.transposition .chord {
+		font-size: 1.1em;
+	}
+
+.chord {
+	color: #e00;
+	font-family: serif;
+}
+.chord-sans {
+	color: #e00;
+	font-family: sans-serif;
 }
 
 .voicechart-container {
@@ -112,52 +210,6 @@ small.page_number {
 		background: green;
 	}
 
-.transpose-song h4 {
-	margin-bottom: 0;
-}
-.transposition {
-	border-collapse: collapse;
-	margin: 1em;
-	float: left;
-}
-.transposition:first-child {
-	margin-left: 0;
-}
-	.transposition th { 
-		text-align: center; 
-		font-weight: normal;
-	}
-		.transposition th strong {
-			font-size: 1.1em;
-		}
-	.transposition th,
-	.transposition td { 
-		border: 1px solid silver; 
-		padding: .3em .5em;
-	}
-
-	.transposition .chord {
-		font-size: 1.1em;
-	}
-
-.chord {
-	color: #e00;
-	font-family: serif;
-}
-.chord-sans {
-	color: #e00;
-	font-family: sans-serif;
-}
-
-
-/* Wizard */
-.page-wizard .voice-selector .field {
-	margin-right: 1em;
-	margin-bottom: .4em;
-	display: inline-block;
-}
-
-
 /* Forms */
 .bigbutton {
 	padding: .3em .6em;
@@ -174,9 +226,31 @@ small.page_number {
 .center {
 	text-align: center;
 }
+.small-button {
+	padding: .1em .2em;
+	border: 1px solid #9f3127;
+	display: inline-block;
+}
+	.small-button:hover {
+		background: #9f3127;
+		color: white;
+	}
+	
+.margintop {
+	margin-top: 2em;
+}
 
 
 @media only screen and (max-width: 40rem) {
+
+	.header .inside {
+		width: auto;
+		margin: 0;
+	}
+
+	.header h2 {
+		font-size: 1.4em;
+	}
 
 	.main {
 		width: auto;
@@ -184,29 +258,6 @@ small.page_number {
 		overflow: hidden;
 	}
 
-	.user-voice {
-		display: block;
-		float: right;
-		font-size: .9em;
-	}
-	.header .switch-book,
-	.header .switch-printer {
-		margin: 0;
-		display: block;
-		float: none;
-	}
-		.header .switch-book select,
-		.header .switch-printer select {
-			display: block;
-			width: 100%;
-		}
-	.switch-book select {
-		font-size: 1em;
-	}
-
-	.index h1 {
-		display: none;
-	}
 	.song-index {
 		margin-top: 1em;
 	}
