@@ -179,14 +179,7 @@ class AutomaticTransposer
 	/**
 	 * Find alternative NOT-equivalent, but near (up to 1 semitone up or down) transpositions.
 	 * 
-	 * @param  boolean $limitUp Limit the not-equivalent transpositions to not to choose higher transpositions.
-	 * @param  boolean $limitDown Limit the not-equivalent transpositions to not to choose lower transpositions.
 	 * @return array Array of Transposition objects
-	 *
-	 * @todo  Ojo con los limitDown y limitUp! Ahora mismo el dato que los activa
-	 *        (que la amplitud de la canción sea igual o mayor que la voz) está
-	 *        solo disponible en el método findPerfectTransposition, o sea, fuera
-	 *        de este ámbito. Solución rápida: habilitar una flag como atributo de la clase.
 	 *
 	 * @todo  Tazama Ilivvyo Vema es ejemplo de que también puede hacer falta una
 	 *        alternativa descendente: para (A#1 - G3) la transp. propuesta es
@@ -195,7 +188,7 @@ class AutomaticTransposer
 	 *        alternativa descendente se puede proponer Am capo 5, que son
 	 *        acordes fáciles.
 	 */
-	function findAlternativeNotEquivalent($limitDown=false, $limitUp=false)
+	function findAlternativeNotEquivalent()
 	{
 		$near_transpositions = array();
 

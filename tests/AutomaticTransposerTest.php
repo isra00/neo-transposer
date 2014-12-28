@@ -77,4 +77,20 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
             $this->transposer->sortTranspositionsByEase(array($b, $a))
         );
     }
+
+    public function testFindAlternativeNotEquivalent()
+    {
+        $transposer = new \NeoTransposer\AutomaticTransposer(
+            'A1', 'D3', 'C#2', 'E3', array('D', 'F#', 'Bm', 'A', 'G')
+        );
+
+        $expected = new \NeoTransposer\Transposition(
+            array('C', 'E', 'Am', 'G', 'F'), 0, false, -2, 'B1', 'D3', 1
+        );
+
+        $this->assertEquals(
+            array($expected),
+            $transposer->findAlternativeNotEquivalent()
+        );
+    }
 }
