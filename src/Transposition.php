@@ -76,7 +76,7 @@ class Transposition
 	 *
 	 * @var array
 	 */
-	protected $easyChords = array(
+	protected static $easyChords = array(
 		'Em', 'E', 'Am', 'A', 'D', 'Dm', 'C', 'G', 'E7', 'A7', 'G7', 'D7', 
 		'B7', 'F', 'C7', 'G#', 'G#m', 'F#', 'F#m', 'Gm', 'Bm', 'A#', 'C#', 
 		'C#7', 'F7', 'F#7', 'B', 'Fm', 'A#7', 'C#m', 'A#m', 'Cm', 'G#7', 'D#',
@@ -105,7 +105,7 @@ class Transposition
 
 		foreach ($this->chords as $chord)
 		{
-			$score = array_search($chord, $this->easyChords);
+			$score = array_search($chord, self::$easyChords);
 
 			//Acordes no registrados se les asigna una dificultad media
 			/** @todo Mejorar esto: cuando estén todos metidos, los que no estén
@@ -113,7 +113,7 @@ class Transposition
 			muy alta */
 			if (false === $score)
 			{
-				$score = count($this->easyChords) / 2;
+				$score = count(self::$easyChords) / 2;
 			}
 			
 			$this->score += $score;
