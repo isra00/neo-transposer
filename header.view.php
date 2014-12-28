@@ -24,7 +24,7 @@
 <nav class="header">
 	<div class="inside">
 		<?php if (isset($_SESSION['user']->id_book)) : ?>
-			<?php $current_book = isset($current_book) ? $current_book : $_SESSION['user']->book ?>
+			<?php $current_book = isset($current_book) ? $current_book : $_SESSION['user']->id_book ?>
 			<h2><a href="index.php?book=<?php echo $current_book ?>"><?php echo SOFTWARE_NAME ?></a></h2>
 		<?php else : ?>
 			<h2><?php echo SOFTWARE_NAME ?></h2>
