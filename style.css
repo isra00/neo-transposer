@@ -112,9 +112,16 @@ small.page_number {
 		background: green;
 	}
 
+.transpose-song h4 {
+	margin-bottom: 0;
+}
 .transposition {
 	border-collapse: collapse;
 	margin: 1em;
+	float: left;
+}
+.transposition:first-child {
+	margin-left: 0;
 }
 	.transposition th { 
 		text-align: center; 
@@ -209,10 +216,14 @@ small.page_number {
 		margin: 0 0 .3em .3em;
 	}
 
-	.voicechart-container {
+	/* Voice chart para mobile, al final me lo he cargado */
+	/*.voicechart-container {
 		display: block;
 		width: auto;
 		position: relative;
 		overflow-x: scroll;
+	}*/
+	.voicechart-container {
+		display: none;
 	}
 }

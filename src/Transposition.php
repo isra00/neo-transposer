@@ -51,20 +51,47 @@ class Transposition
 
 	/**
 	 * Deviation from the perfect transposition (in semitones).
-	 * @todo  Eliminar si no se usa.
 	 * @var integer
 	 */
-	public $deviation = 0;
+	public $deviationFromPerfect = 0;
 
-	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null)
+	/*
+	 * The chords, ordered from easier to harder. This is according to *MY*
+	 * experience as cantor and the cantors i've met.
+	 * It does not take into account only the ease of the chord, but also
+	 * the probability that the cantor knows it (for example, A9 is pretty
+	 * easy but few people know it). Therefore, it also depends on how much
+	 * each chord is actually used in the songs of the Way. As of now, this
+	 * list includes only major, minor and 7th chords.
+	 *
+	 * @todo Incluir TODOS los acordes que se usen realmente en el libro.
+	 *
+	 * @todo Implementar soporte a acordes que NO están en esta lista (p. ej. Dm9)
+	 * pero que pudieran salir... para ello no mirar los acordes sino solo
+	 * la nota fundamental. 
+	 *
+	 * @todo Cambiar sistema para ponderar acordes. Por ejemplo, Am y E tienen la misma puntuación,
+	 *       mientras que D# debería tener más puntuación que la que tiene ahora
+	 *       (por posiciones consecutivas), para evitarlo a toda costa.
+	 *
+	 * @var array
+	 */
+	protected $easyChords = array(
+		'Em', 'E', 'Am', 'A', 'D', 'Dm', 'C', 'G', 'E7', 'A7', 'G7', 'D7', 
+		'B7', 'F', 'C7', 'G#', 'G#m', 'F#', 'F#m', 'Gm', 'Bm', 'A#', 'C#', 
+		'C#7', 'F7', 'F#7', 'B', 'Fm', 'A#7', 'C#m', 'A#m', 'Cm', 'G#7', 'D#',
+		'D#m', 'D#7',
+	);
+
+	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromPerfect=0)
 	{
-		$this->chords = $chords;
-		$this->capo = $capo;
-		$this->asBook = $asBook;
-		$this->offset = $offset;
-		$this->lowestNote = $lowest_note;
-		$this->highestNote = $highest_note;
-
+		$this->chords		= $chords;
+		$this->capo			= $capo;
+		$this->asBook 		= $asBook;
+		$this->offset 		= $offset;
+		$this->lowestNote 	= $lowest_note;
+		$this->highestNote 	= $highest_note;
+		$this->deviationFromPerfect = $deviationFromPerfect;
 
 		$this->setChordsetEase();
 	}
@@ -74,38 +101,11 @@ class Transposition
 	 */
 	public function setChordsetEase()
 	{
-		/*
-		 * Ordered from easier to harder. This is according to *MY* experience 
-		 * as cantor and the cantors i've met (many ;-)
-		 * It does not take into account only the ease of the chord, but also
-		 * the probability that the cantor knows it (for example, A9 is pretty
-		 * easy but few people know it). Therefore, it also depends on how much
-		 * each chord is actually used in the songs of the Way.
-		 *
-		 * It includes only major, minor and 7th chords.
-		 *
-		 * @todo Incluir TODOS los acordes que se usen realmente en el libro.
-		 *
-		 * @todo Implementar soporte a acordes que NO están en esta lista (p. ej. Dm9)
-		 * pero que pudieran salir... para ello no mirar los acordes sino solo
-		 * la nota fundamental. 
-		 *
-		 * @todo Cambiar sistema para ponderar acordes. Por ejemplo, Am y E tienen la misma puntuación,
-		 *       mientras que D# debería tener más puntuación que la que tiene ahora
-		 *       (por posiciones consecutivas), para evitarlo a toda costa.
-		 */
-		$easyChords = array(
-			'Em', 'E', 'Am', 'A', 'D', 'Dm', 'C', 'G', 'E7', 'A7', 'G7', 'D7', 
-			'B7', 'F', 'C7', 'G#', 'G#m', 'F#', 'F#m', 'Gm', 'Bm', 'A#', 'C#', 
-			'C#7', 'F7', 'F#7', 'B', 'Fm', 'A#7', 'C#m', 'A#m', 'Cm', 'G#7', 'D#',
-			'D#m', 'D#7',
-		);
-
 		$this->score = 0;
 
 		foreach ($this->chords as $chord)
 		{
-			$score = array_search($chord, $easyChords);
+			$score = array_search($chord, $this->easyChords);
 
 			//Acordes no registrados se les asigna una dificultad media
 			/** @todo Mejorar esto: cuando estén todos metidos, los que no estén
@@ -113,7 +113,7 @@ class Transposition
 			muy alta */
 			if (false === $score)
 			{
-				$score = count($easyChords) / 2;
+				$score = count($this->easyChords) / 2;
 			}
 			
 			$this->score += $score;
@@ -141,23 +141,5 @@ class Transposition
 	public function getAsBook()
 	{
 		return $this->asBook;
-	}
-
-	/**
-	 * Calculate the equivalent transposition without capo (the "perfect" one).
-	 * @return Transposition A transposition with capo 0.
-	 */
-	public function getEquivalentWithoutCapo()
-	{
-		if (0 == $this->capo)
-		{
-			return $this;
-		}
-
-		$transposer = new AutomaticTransposer;
-		$chords = $transposer->transposeChords($this->chords, $this->capo);
-
-		return new Transposition($chords, 0, false, $this->offset, 
-			$this->lowestNote, $this->highestNote);
 	}
 }

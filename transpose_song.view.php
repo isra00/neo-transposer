@@ -1,14 +1,10 @@
 <?php include 'header.view.php' ?>
 
-<h1 class="song-title"><small class="page_number"><?php echo $song_details['page'] . "</small> " . $song_details['title'] ?></h1>
-
-<div class="transpositions-list ovhid">
-<?php foreach ($transpositions as $i=>$transposition) : ?>
-	<h4><?php echo ($i == 0) ? 'The best transposition matching your voice:' : 'Equivalent transposition using capo (it\'s exactly the same for your voice)' ?></h4>
-	<table class="transposition">
+<?php function printTransposition($transposition, $original_chords) { ?>
+<table class="transposition">
 		<thead>
 			<th colspan="3">
-				<!-- <?php echo $transposition->score ?> -->
+				<!--<?php echo $transposition->score ?>-->
 				<?php echo '<strong>' . $transposition->chords[0] . '</strong>' . ($transposition->capo ? ' with capo ' . $transposition->capo : ' (no capo)') ?>
 			</th>
 		</thead>
@@ -26,12 +22,23 @@
 		<?php endif ?>
 		</tbody>
 	</table>
+<?php } ?>
+
+<h1 class="song-title"><small class="page_number"><?php echo $song_details['page'] . "</small> " . $song_details['title'] ?></h1>
+
+<h4>These two transpositions match your voice (they are equivalent):</h4>
+<div class="transpositions-list ovhid">
+<?php foreach ($transpositions as $i=>$transposition) : ?>
+	<?php printTransposition($transposition, $original_chords) ?>
 <?php endforeach ?>
+	</div>
+
+<?php if (isset($not_equivalents[0])) : ?>
+<h4>This other transposition is a bit <?php ($not_equivalents[0]->deviationFromPerfect > 0) ? 'higher' : 'lower' ?>, but it has easier chords and may fit your voice:</h4>
+<div class="transpositions-list ovhid">
+	<?php printTransposition($not_equivalents[0], $original_chords) ?>
 </div>
-
-<!--<h4>These other transpositions are different, but they may fit your voice and have easy chords:</h4>
-
-<p>[not implemented yet]</p>-->
+<?php endif ?>
 
 <div class="voicechart-container">
 	<table class="voicechart">
@@ -46,5 +53,4 @@
 	<?php endforeach ?>
 	</table>
 </div>
-
 <?php include 'foot.view.php' ?>

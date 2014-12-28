@@ -32,19 +32,8 @@ $transposer = new AutomaticTransposer(
 	$original_chords
 );
 
-$transpositions = $transposer->findTranspositions();
-
-
-// To get the not-equivalent transpositions we need the perfect one, but it's
-// not available in this scope ==> we get it from any of the equivalents.
-/*$not_equivalents = $transposer->findAlternativeNotEquivalent(
-	$transpositions[0]->getEquivalentWithoutCapo(),
-	$song_details,
-	$_SESSION['user']->lowest_note,
-	$_SESSION['user']->highest_note,
-	false,
-	false
-);*/
+$transpositions = $transposer->getTranspositions();
+$not_equivalents = $transposer->findAlternativeNotEquivalent();
 
 //Prepare the chords nicely printed
 
@@ -58,6 +47,10 @@ foreach ($transpositions as &$transposition)
 {
 	$transposition = $printer->printTransposition($transposition);
 }
+foreach ($not_equivalents as &$transposition)
+{
+	$transposition = $printer->printTransposition($transposition);
+}
 unset($transposition);
 
 //Prepare the voice chart
@@ -66,4 +59,5 @@ $voice_chart = TranspositionChart::getChart($song_details, $transpositions[0], $
 
 $current_book = $song_details['id_book'];
 $page_title = $song_details['title'];
+$page_class = 'transpose-song';
 include 'transpose_song.view.php';

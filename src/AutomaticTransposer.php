@@ -32,12 +32,18 @@ class AutomaticTransposer
 	protected $perfectTransposition;
 
 	/**
+	 * The calculated perfect and equivalent transpositions, sorted by ease.
+	 * @var array
+	 */
+	protected $perfectAndEquivalentTranspositions;
+
+	/**
 	 * Offsets used for not equivalent transpositions.
 	 * Right now, it's only 1 semitone down and 1 semitone up.
 	 * 
 	 * @var array
 	 */
-	protected $not_equivalent_offsets = array(-1, 1);
+	protected $offsets_for_not_equivalent = array(-1, 1);
 
 	/**
 	 * Constructor needs all the data to calculate the transpositions.
@@ -167,7 +173,7 @@ class AutomaticTransposer
 	}
 
 	/**
-	 * Find alternative NOT-equivalent, but near (up to 2 semitones up or down) transpositions.
+	 * Find alternative NOT-equivalent, but near (up to 1 semitone up or down) transpositions.
 	 * 
 	 * @param  boolean $limitUp Limit the not-equivalent transpositions to not to choose higher transpositions.
 	 * @param  boolean $limitDown Limit the not-equivalent transpositions to not to choose lower transpositions.
@@ -189,28 +195,44 @@ class AutomaticTransposer
 	{
 		$near_transpositions = array();
 
-		foreach ($differences as $dif)
+		$perfectTransposition = $this->getPerfectTransposition();
+
+		foreach ($this->offsets_for_not_equivalent as $dif)
 		{
-			$near = clone $transposition;
-			$near->chords = $this->nc->transposeChords($near->chords, $dif);
-			$near->offset = $near->offset + $dif;
-			$near->setChordsetEase();
+			$near = new Transposition(
+				$this->nc->transposeChords($perfectTransposition->chords, $dif),
+				0,
+				false,
+				$perfectTransposition->offset + $dif,
+				$this->nc->transposeNote($perfectTransposition->lowestNote, $dif),
+				$this->nc->transposeNote($perfectTransposition->highestNote, $dif),
+				$dif
+			);
 
-			//If it's too low or too high, we discard it
-			$near->lowestNote = $this->nc->transposeNote($transposition->lowestNote, $dif);
-			$near->highestNote = $this->nc->transposeNote($transposition->highestNote, $dif);
+			if ($this->original_chords == $near->chords)
+			{
+				$near->setAsBook(true);
+			}
 
-			if ($this->nc->distanceWithOctave($near->lowestNote, $singer_lowest_note) < 0)
+			//If it's too low or too high, discard it
+			if ($this->nc->distanceWithOctave($near->lowestNote, $this->singer_lowest_note) < 0)
 			{
 				continue;
 			}
 
-			if ($this->nc->distanceWithOctave($near->highestNote, $singer_highest_note) > 0)
+			if ($this->nc->distanceWithOctave($near->highestNote, $this->singer_highest_note) > 0)
 			{
 				continue;
 			}
 
-			$near_transpositions[strval($dif)] = $near;
+			//If it's not better than the best of the "perfects", discard it
+			$perfectAndEquivalent = $this->getTranspositions();
+			if ($perfectAndEquivalent[0]->score < $near->score)
+			{
+				continue;
+			}
+
+			$near_transpositions[] = $near;
 		}
 
 		return $near_transpositions;
@@ -238,18 +260,23 @@ class AutomaticTransposer
 	 * @param  integer $limitTranspositions [description]
 	 * @return array Array of Transposition objects, sorted by chord ease.
 	 */
-	function findTranspositions($limitTranspositions=2)
+	function getTranspositions($limitTranspositions=2)
 	{
-		$perfectTransposition = $this->getPerfectTransposition();
+		if (empty($this->perfectAndEquivalentTranspositions))
+		{
+			$perfectTransposition = $this->getPerfectTransposition();
 
-		$equivalents = $this->findEquivalentsWithCapo($perfectTransposition, $this->original_chords);
-		//$alternativesNotEquivalent = $this->findAlternativeNotEquivalent($perfectTransposition['chords']);
+			$equivalents = $this->findEquivalentsWithCapo($perfectTransposition, $this->original_chords);
+			//$alternativesNotEquivalent = $this->findAlternativeNotEquivalent($perfectTransposition['chords']);
 
-		$perfect_and_equivalent = array_merge(array($perfectTransposition), $equivalents);
-		$perfect_and_equivalent = $this->sortTranspositionsByEase($perfect_and_equivalent);
+			$perfect_and_equivalent = array_merge(array($perfectTransposition), $equivalents);
+			$perfect_and_equivalent = $this->sortTranspositionsByEase($perfect_and_equivalent);
+
+			$this->perfectAndEquivalentTranspositions = $perfect_and_equivalent;
+		}
 
 		return ($limitTranspositions)
-			? array_slice($perfect_and_equivalent, 0, $limitTranspositions)
-			: $perfect_and_equivalent;
+			? array_slice($this->perfectAndEquivalentTranspositions, 0, $limitTranspositions)
+			: $this->perfectAndEquivalentTranspositions;
 	}
 }
