@@ -44,6 +44,9 @@ p {
 	.header a {
 		color: white;
 	}
+	.header .user {
+		line-height: 1.3em;
+	}
 
 /*
  * MAIN BLOCKS
@@ -235,7 +238,7 @@ small.page_number {
 		background: #9f3127;
 		color: white;
 	}
-	
+
 .margintop {
 	margin-top: 2em;
 }

@@ -1,5 +1,7 @@
 <?php
 
+use \NeoTransposer\NotesCalculator;
+
 class NotesCalculatorTest extends PHPUnit_Framework_TestCase
 {
 	/**
@@ -10,7 +12,7 @@ class NotesCalculatorTest extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$this->nc = new \NeoTransposer\NotesCalculator;
+		$this->nc = new NotesCalculator;
 	}
 
 	public function testTransposeNote()
