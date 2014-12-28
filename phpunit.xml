@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- @todo Generar automáticamente informe de coverage en el directorio reports -->
 <phpunit bootstrap="tests/init.php" colors="true">
     <testsuites>
-        <testsuite name="Unit tests for Transposer">
+        <testsuite name="Unit tests for Neo-Transposer">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+	<logging>
+		<log type="coverage-html" target="tests/reports" charset="UTF-8"/>
+	</logging>
+	<filter>
+		<blacklist>
+			<directory suffix=".php">vendor</directory>
+		</blacklist>
+	</filter>
 </phpunit>

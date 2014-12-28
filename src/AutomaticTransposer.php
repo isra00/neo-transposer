@@ -109,7 +109,11 @@ class AutomaticTransposer
 		 * 3) Calculate the offset for transposition given the singer's lowest
 		 * note and the song and singer wideness.
 		 */
-		$perfect_offset = ($this->nc->distanceWithOctave($this->song_lowest_note, $this->singer_lowest_note) * (-1)) + $offset_from_singer_lowest;
+		$perfect_offset = intval(
+			($this->nc->distanceWithOctave($this->song_lowest_note, $this->singer_lowest_note)
+				* (-1)
+			) + $offset_from_singer_lowest
+		);
 
 		/*
 		 * 4) Transpose the chords with the calculated offset.

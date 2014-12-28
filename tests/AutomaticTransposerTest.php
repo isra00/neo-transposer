@@ -1,8 +1,5 @@
 <?php
 
-require_once 'AutomaticTransposer.php';
-require_once 'Transposition.php';
-
 /**
  * @todo Add some corner cases to transposition algorithms
  */
@@ -14,95 +11,55 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 	 */
 	protected $transposer;
 
-    protected $testChords = array('G', 'Am', 'B7');
-
     public function setUp()
     {
-        $this->transposer = new AutomaticTransposer;
+        $this->transposer = new \NeoTransposer\AutomaticTransposer(
+            'G1', 'G3', 'B1', 'B2', array('Am', 'Dm', 'F', 'C')
+        );
     }
 
-    public function testTransposeNote()
+    public function testGetPerfectTransposition()
     {
-        $this->assertEquals('C2', $this->transposer->transposeNote('B1', 1));
-    }
+        $expected = new \NeoTransposer\Transposition(
+            array('Bm', 'Em', 'G', 'D'),
+            0,
+            false,
+            2,
+            'C#2',
+            'C#3',
+            0
+        );
 
-    public function testDistanceWithOctave()
-    {
-        $this->assertEquals(-2, $this->transposer->distanceWithOctave('C1', 'D1'));
-        $this->assertEquals(10, $this->transposer->distanceWithOctave('C2', 'D1'));
-    }
-
-    public function testReadChord()
-    {
         $this->assertEquals(
-            array('fundamental' => 'F#', 'attributes' => 'm79'),
-            $this->transposer->readChord('F#m79')
+            $expected,
+            $this->transposer->getPerfectTransposition()
         );
-    }
-
-    public function testReadChordNotRecognized()
-    {
-        $this->setExpectedException('Exception');
-        $this->transposer->readChord('Cmaj7');
-    }
-
-    public function transportChord()
-    {
-        $this->assertEquals(
-            'D#m7',
-            $this->transposer->transportChord('C#m7', 2)
-        );
-    }
-
-    public function testTransposeChords()
-    {
-        $this->assertEquals(
-            array('Em', 'F#m', 'B79'),
-            $this->transposer->transposeChords(array('Am', 'Bm', 'E79'), 7)
-        );
-    }
-
-    public function testFindPerfectTransposition()
-    {
-        $result = $this->transposer->findPerfectTransposition(
-            'C1',
-            'C2',
-            'G1',
-            'G2',
-            $this->testChords
-        );
-
-        $expected = new Transposition(array('C', 'Dm', 'E7'), 0, false, -7);
-
-        $this->assertEquals($expected, $result);
     }
 
     public function testFindPerfectTranspositionAsBook()
     {
-        $result = $this->transposer->findPerfectTransposition(
-            'G1',
-            'G2',
-            'G1',
-            'G2',
-            $this->testChords
+        $transposer = new \NeoTransposer\AutomaticTransposer(
+            'F1', 'F3', 'B1', 'B2', array('Bm', 'Em', 'G', 'D')
         );
 
-        $expected = new Transposition($this->testChords, 0, true, 0);
+        $expected = new \NeoTransposer\Transposition(
+            array('Bm', 'Em', 'G', 'D'), 0, true, 0, 'B1', 'B2', 0
+        );
 
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $transposer->getPerfectTransposition());
     }
 
     public function testFindEquivalentsWithCapo()
     {
-        $testTransposition = new Transposition(array('C', 'Dm', 'E7'), 0, false, -7);
-        $equivalents = $this->transposer->findEquivalentsWithCapo($testTransposition, $this->testChords);
+        $testTransposition = new \NeoTransposer\Transposition(array('Bm', 'Em', 'G', 'D'), 0, false);
+        $equivalents = $this->transposer->findEquivalentsWithCapo($testTransposition);
         
         $expected = array(
-            1=>new Transposition(array("B", "C#m", "D#7"), 1, false, -7),
-            new Transposition(array("A#", "Cm", "D7"), 2, false, -7),
-            new Transposition(array("A", "Bm", "C#7"), 3, false, -7),
-            new Transposition(array("G#", "A#m", "C7"), 4, false, -7),
-            new Transposition(array("G", "Am", "B7"), 5, true, -7)
+            1=>new \NeoTransposer\Transposition(array('A#m', 'D#m', 'F#', 'C#'), 1, false),
+            new \NeoTransposer\Transposition(array('Am', 'Dm', 'F', 'C'), 2, true),
+            new \NeoTransposer\Transposition(array('G#m', 'C#m', 'E', 'B'), 3, false),
+            new \NeoTransposer\Transposition(array('Gm', 'Cm', 'D#', 'A#'), 4, false),
+            new \NeoTransposer\Transposition(array('F#m', 'Bm', 'D', 'A'), 5, false)
         );
 
         $this->assertEquals($expected, $equivalents);
