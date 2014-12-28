@@ -29,11 +29,11 @@ class User
 	 */
 	public static function getUserFromDb($email)
 	{
-		$q = mysql_query("SELECT * FROM user WHERE email LIKE '" . mysql_escape_string($email) . "'");
+		$query = mysql_query("SELECT * FROM user WHERE email LIKE '" . mysql_escape_string($email) . "'");
 
 		$user = null;
 
-		if ($userdata = mysql_fetch_assoc($q))
+		if ($userdata = mysql_fetch_assoc($query))
 		{
 			$user = new User(
 				$userdata['email'],
@@ -54,7 +54,7 @@ class User
 
 		if ($this->id_user)
 		{
-			$q = mysql_query("UPDATE user SET "
+			$query = mysql_query("UPDATE user SET "
 				. "lowest_note = '" . mysql_escape_string($this->lowest_note) . "', "
 				. "highest_note = '" . mysql_escape_string($this->highest_note) . "', "
 				. "id_book = '" . mysql_escape_string($this->id_book) . "', "
@@ -62,17 +62,17 @@ class User
 				. "WHERE id_user = '" . intval($this->id_user) . "'");
 			
 			return mysql_affected_rows();
-		} else {
-			$q = mysql_query("INSERT INTO user (email, lowest_note, highest_note, id_book, chord_printer)"
-				. " VALUES ("
-				. "'" . mysql_escape_string($this->email) . "',"
-				. "'" . mysql_escape_string($this->lowest_note) . "',"
-				. "'" . mysql_escape_string($this->highest_note) . "',"
-				. "'" . mysql_escape_string($this->id_book) . "',"
-				. "'" . mysql_escape_string($this->chord_printer) . "')");
-
-			$this->id_user = mysql_insert_id();
 		}
+
+		$query = mysql_query("INSERT INTO user (email, lowest_note, highest_note, id_book, chord_printer)"
+			. " VALUES ("
+			. "'" . mysql_escape_string($this->email) . "',"
+			. "'" . mysql_escape_string($this->lowest_note) . "',"
+			. "'" . mysql_escape_string($this->highest_note) . "',"
+			. "'" . mysql_escape_string($this->id_book) . "',"
+			. "'" . mysql_escape_string($this->chord_printer) . "')");
+
+		$this->id_user = mysql_insert_id();
 	}
 
 	public function isRedirectionNeeded()
@@ -83,10 +83,8 @@ class User
 			{
 				return;
 			}
-			else
-			{
-				return 'login';
-			}
+
+			return 'login';
 		}
 
 		if (empty($this->lowest_note))

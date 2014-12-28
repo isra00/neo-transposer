@@ -162,12 +162,12 @@ class NotesCalculator
 		$chord = $this->readChord($chord_name);
 		$chord['fundamental'];
 
-		$transported_fundamental = $this->arrayIndex(
+		$transposedFundamental = $this->arrayIndex(
 			$this->accoustic_scale, 
 			array_search($chord['fundamental'], $this->accoustic_scale) + $amount
 		);
 
-		return $transported_fundamental .  $chord['attributes'];
+		return $transposedFundamental .  $chord['attributes'];
 	}
 
 	/*

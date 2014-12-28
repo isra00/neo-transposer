@@ -35,7 +35,7 @@ class AutomaticTransposer
 	 * The calculated perfect and equivalent transpositions, sorted by ease.
 	 * @var array
 	 */
-	protected $perfectAndEquivalentTranspositions;
+	protected $perfectAndEquivalent;
 
 	/**
 	 * Offsets used for not equivalent transpositions.
@@ -43,7 +43,7 @@ class AutomaticTransposer
 	 * 
 	 * @var array
 	 */
-	protected $offsets_for_not_equivalent = array(-1, 1);
+	protected $offsetsNotEquivalent = array(-1, 1);
 
 	/**
 	 * Constructor needs all the data to calculate the transpositions.
@@ -156,14 +156,14 @@ class AutomaticTransposer
 	 */
 	function findEquivalentsWithCapo(Transposition $transposition)
 	{
-		$transpositions_with_capo = array();
+		$withCapo = array();
 
 		for ($i = 1; $i < 6; $i++)
 		{
 			/** @todo Añadir detección de asBook */
 			$transposedChords = $this->nc->transposeChords($transposition->chords, $i * (-1));
 
-			$transpositions_with_capo[$i] = new Transposition(
+			$withCapo[$i] = new Transposition(
 				$transposedChords,
 				$i,
 				($transposedChords == $this->original_chords),
@@ -173,7 +173,7 @@ class AutomaticTransposer
 			);
 		}
 
-		return $transpositions_with_capo;
+		return $withCapo;
 	}
 
 	/**
@@ -194,7 +194,7 @@ class AutomaticTransposer
 
 		$perfectTransposition = $this->getPerfectTransposition();
 
-		foreach ($this->offsets_for_not_equivalent as $dif)
+		foreach ($this->offsetsNotEquivalent as $dif)
 		{
 			$near = new Transposition(
 				$this->nc->transposeChords($perfectTransposition->chords, $dif),
@@ -243,8 +243,8 @@ class AutomaticTransposer
 	 */
 	function sortTranspositionsByEase(array $transpositions)
 	{
-		usort($transpositions, function($a, $b) {
-			return ($a->score < $b->score) ? -1 : 1;
+		usort($transpositions, function($one, $two) {
+			return ($one->score < $two->score) ? -1 : 1;
 		});
 
 		return $transpositions;
@@ -259,7 +259,7 @@ class AutomaticTransposer
 	 */
 	function getTranspositions($limitTranspositions=2)
 	{
-		if (empty($this->perfectAndEquivalentTranspositions))
+		if (empty($this->perfectAndEquivalent))
 		{
 			$perfectTransposition = $this->getPerfectTransposition();
 
@@ -269,11 +269,11 @@ class AutomaticTransposer
 			$perfect_and_equivalent = array_merge(array($perfectTransposition), $equivalents);
 			$perfect_and_equivalent = $this->sortTranspositionsByEase($perfect_and_equivalent);
 
-			$this->perfectAndEquivalentTranspositions = $perfect_and_equivalent;
+			$this->perfectAndEquivalent = $perfect_and_equivalent;
 		}
 
 		return ($limitTranspositions)
-			? array_slice($this->perfectAndEquivalentTranspositions, 0, $limitTranspositions)
-			: $this->perfectAndEquivalentTranspositions;
+			? array_slice($this->perfectAndEquivalent, 0, $limitTranspositions)
+			: $this->perfectAndEquivalent;
 	}
 }
