@@ -34,7 +34,7 @@
 	</div>
 
 <?php if (isset($not_equivalents[0])) : ?>
-<h4>This other transposition is a bit <?php ($not_equivalents[0]->deviationFromPerfect > 0) ? 'higher' : 'lower' ?>, but it has easier chords and may fit your voice:</h4>
+<h4>This other transposition is a bit <?php echo ($not_equivalents[0]->deviationFromPerfect > 0) ? 'higher' : 'lower' ?>, but it has easier chords and may also fit your voice:</h4>
 <div class="transpositions-list ovhid">
 	<?php printTransposition($not_equivalents[0], $original_chords) ?>
 </div>
