@@ -12,5 +12,5 @@ define('DB_CHARSET',	'utf8');
 
 define('ANALYTICS_ID',	'UA-57809429-1');
 
-define('DEFAULT_BOOK', '1');
+define('DEFAULT_BOOK',  '1');
 define('DEFAULT_CHORD_PRINTER', 'English');
