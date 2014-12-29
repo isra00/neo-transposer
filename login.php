@@ -44,6 +44,13 @@ else
 
 if (!isset($_POST['sent']) || !$form_is_valid)
 {
-	$page_class = 'login';
-	include 'login.view.php';
+	$tpl_vars = array();
+
+	if (isset($form_is_valid))
+	{
+		$tpl_vars['form_is_valid'] = $form_is_valid;
+		$tpl_vars['post'] = array('email' => $_POST['email']);
+	}
+
+	echo $twig->render('login.tpl', $tpl_vars);
 }

@@ -21,7 +21,7 @@ mysql_query("SET character_set_client = '" . DB_CHARSET . "'");
 mysql_query("SET character_set_connection = '" . DB_CHARSET . "'");
 mysql_query("SET character_set_results = '" . DB_CHARSET . "'");
 
-/** @todo Sacar esto de aquí */
+/** @todo Sacar esto de aquí. En Silex será un service provider */
 $GLOBALS['books'] = array();
 $q = mysql_query("SELECT * FROM book");
 while ($book = mysql_fetch_assoc($q))
@@ -39,3 +39,11 @@ if ($redirect = $_SESSION['user']->isRedirectionNeeded())
 	header("Location: $redirect.php");
 	die;
 }
+
+$twig = new \Twig_Environment(new \Twig_Loader_Filesystem(__DIR__ . '/templates'));
+$twig->addGlobal('neoglobals', array(
+	'software_name' => SOFTWARE_NAME,
+	'analytics_id'  => ANALYTICS_ID,
+	'user'			=> $_SESSION['user'],
+	'books'			=> $GLOBALS['books'],
+));

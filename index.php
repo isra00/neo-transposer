@@ -18,5 +18,9 @@ while ($song = mysql_fetch_assoc($q))
 }
 unset($song);
 
-$page_class = 'index';
-include 'index.view.php';
+echo $twig->render('index.tpl', array(
+	'server'		=> $_SERVER,
+	'current_book'	=> $GLOBALS['books'][$current_book],
+	'page_title'	=> $GLOBALS['books'][$current_book]['lang_name'],
+	'songs'			=> $songs,
+));

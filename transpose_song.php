@@ -53,17 +53,20 @@ foreach ($not_equivalents as &$transposition)
 }
 unset($transposition);
 
-//Prepare the voice chart
-
-$voice_chart = TranspositionChart::getChart($song_details, $transpositions[0], $_SESSION['user']);
-
 $nc = new NotesCalculator;
-$your_voice = $nc->getOnlyNote($_SESSION['user']->lowest_note)
- . ' &rarr; '
- . $nc->getAsOctaveDifference($_SESSION['user']->highest_note)
- . ' oct';
+$your_voice = array(
+	'from' => $nc->getOnlyNote($_SESSION['user']->lowest_note),
+	'to' => $nc->getAsOctaveDifference($_SESSION['user']->highest_note)
+);
 
-$current_book = $song_details['id_book'];
-$page_title = $song_details['title'];
-$page_class = 'transpose-song';
-include 'transpose_song.view.php';
+echo $twig->render('transpose_song.tpl', array(
+	'current_book'		=> $song_details,
+	'song_details'		=> $song_details,
+	'transpositions'	=> $transpositions,
+	'not_equivalents'	=> $not_equivalents,
+	'your_voice'		=> $your_voice,
+	'original_chords'	=> $original_chords,
+	'voice_chart'		=> TranspositionChart::getChart($song_details, $transpositions[0], $_SESSION['user']),
+	'page_title'		=> $song_details['title'],
+	'page_class'		=> 'transpose-song',
+));

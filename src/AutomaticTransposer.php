@@ -232,7 +232,7 @@ class AutomaticTransposer
 			$near_transpositions[] = $near;
 		}
 
-		return $near_transpositions;
+		return $this->sortTranspositionsByEase($near_transpositions);
 	}
 
 	/**
