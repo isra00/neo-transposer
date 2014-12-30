@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'NeoTransposer\\' => array($baseDir . '/src'),
+    'NeoTransposer\\' => array($baseDir . '/src/NeoTransposer'),
 );

@@ -37,7 +37,7 @@
 <div class="your-voice">
 	<em>Your voice:</em>
 	{{ your_voice.from }} &rarr; {{ your_voice.to }} oct
-	<a href="wizard.php" class="small-button">Change</a>
+	<a href="{{ path('user_settings') }}" class="small-button">Change</a>
 </div>
 
 <h4>These two transpositions match your voice (they are equivalent):</h4>

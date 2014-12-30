@@ -1,16 +1,21 @@
 <?php
 
-namespace NeoTransposer;
+$config = array();
 
-define('SOFTWARE_NAME', 'Neo-Transposer');
+$config['db'] = array(
+	'host' => 'localhost',
+	'user' => 'root',
+	'password' => 'root',
+	'database' => 'transposer',
+	'charset' => 'utf8'
+);
 
-define('DB_HOST',		'localhost');
-define('DB_USER',		'root');
-define('DB_PASSWORD',	'root');
-define('DB_DATABASE',	'transposer');
-define('DB_CHARSET',	'utf8');
+$config['software_name'] = 'Neo-Transposer';
 
-define('ANALYTICS_ID',	'UA-57809429-1');
+$config['analytics_id'] = 'UA-57809429-1';
+$config['default_book'] = '1';
+$config['default_chord_printer'] = 'English';
 
-define('DEFAULT_BOOK',  '1');
-define('DEFAULT_CHORD_PRINTER', 'English');
+$config['templates_dir'] = __DIR__ . '/templates';
+
+return $config;

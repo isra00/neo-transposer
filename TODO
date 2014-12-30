@@ -3,15 +3,18 @@
 -Formulario de edición de cantos
 -Pijada: Meter una marcador de dificultad de cada canto, en función de la amplitud: fácil/medio/difícil.
 -Pintar voice chart con SVG o algún otro sistema bonito
-+Implementar diferentes tipografías en los ChordPrinter's
-+Hacer un ChordPrinter para swahili
-+Hacer URL diferentes los índices de los distintos libros (p. ej.: index.php?book=...)
--Meter Composer para autoloader
 -Auto-generar informe de coverage al lanzar los unit tests
 -En el voice chart, pintar las notas más altas y más bajas más oscuras (degradado?) para indicar zona de peligro
 -Revisar Amefufuka para A2-B3: Em debería salir primero. Para eso, B sobre Em/G equivale a B7
 -Feedback de María: el voice chart despista más que ayuda
 -En el wizard, añadir una radio button: ( ) me siento más cómodo cantando en el registro bajo () en el registro alto. Esta setting se tendrá en cuenta en los casos en que, al transportar, la mitad no sea exacta (p. ej. /transpose_song.php?song=39), y se "redondeará" hacia arriba o hacia abajo según la preferencia del usuario
++Hacer sesión persistente asociando e-mail. Obligatorio meter e-mail
+-Alargar tiempo de expiración de sesión
+-Implementar acordes alternativos más fáciles. Por ej., en la tonalidad de Em, B se puede conmutar por B7.
+-Rediseñar cabecera, haciendo un botón que despliegue todos los datos de sesión (usuario, tesitura, libro, chord printer), al estilo de GMail/Twitter. Investigar si Bootstrap lo puede hacer fácil (mobile: en vez de flotante, se despliega debajo, desplazando todo el contenido, como el antiguo GMail mobile).
+-(Re)diseñar el login.
+-Meter bootstrap?
+-Modificar reglas de PHPMD para que acepte variables de 25 caracteres, en vez de 20.
 
 ---------
 
