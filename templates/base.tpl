@@ -7,9 +7,6 @@
 	<link rel="stylesheet" href="{{ app.request.basepath }}/static/style.css" type="text/css" />
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="favicon.ico">
-</head>
-
-<body class="{% block page_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
 
 	{% if not neoglobals.debug %}
 	<script>
@@ -22,6 +19,9 @@
 	  ga('send', 'pageview');
 	</script>
 	{% endif %}
+</head>
+
+<body class="{% block page_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
 
 	<nav class="header">
 		<div class="inside">
