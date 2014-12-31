@@ -40,7 +40,7 @@
 	<a href="{{ path('user_settings') }}" class="small-button">Change</a>
 </div>
 
-<h4>These two transpositions match your voice (they are equivalent):</h4>
+<h4>These two transpositions match your voice (they are equivalent). The first one has easier chords:</h4>
 <div class="transpositions-list ovhid">
 {% for transposition in transpositions %}
 	{{ self.printTransposition(transposition, original_chords) }}

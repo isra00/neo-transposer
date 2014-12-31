@@ -9,7 +9,7 @@
 	<link rel="apple-touch-icon" href="favicon.ico">
 </head>
 
-<body class="{% block page_class %}{% endblock %}">
+<body class="{% block page_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
 
 	{% if not neoglobals.debug %}
 	<script>

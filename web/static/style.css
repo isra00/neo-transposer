@@ -65,29 +65,52 @@ footer {
 	font-style: italic;
 	font-size: .9em;
 	padding: 1em;
-	margin-top: 1em;
+	margin-top: 2em;
 }
 
 /*
- * INDEX
+ * BOOK
  */
-
-.index h1 small {
-	display: block;
-	margin: 0;
-	font-size: 1rem;
+.change-book {
+	float: right;
+	margin: .3rem 0;
+	font-size: .9rem;
 	font-weight: normal;
 }
+.page-book h1 {
+	margin-top: 0;
+}
+	.page-book h1 small {
+		font-size: .8em;
+		display: inline-block;
+	}
+
 .song-index {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 	.song-index li {
-		padding: .3em 0;
+		padding: .4em 0;
 		border-bottom: 1px solid #eee;
-		line-height: 1.5em;
+		line-height: 1.6em;
 	}
+
+/*
+ * LOGIN
+ */
+.page-login h1 {
+	text-align: center;
+}
+
+.login-form {
+	border: 1px solid silver;
+	background: #eee;
+	padding: .5em 1em 1em;
+	display: block;
+	width: 20em;
+	margin: 0 auto;
+}
 
 
 /*
@@ -167,6 +190,7 @@ small.page_number {
 	padding-bottom: 1em;
 	border-top: 1px solid silver;
 	padding-top: 1em;
+	margin-top: 2em;
 }
 
 .voicechart {
@@ -221,6 +245,28 @@ small.page_number {
 .error {
 	color: red;
 }
+.field.block {
+	margin-top: .5em;	
+}
+	.field.block label {
+		display: block;
+		line-height: 1.6em;
+	}
+
+.field.full-width {
+	display: block;
+}
+	.field.full-width input,
+	.field.full-width button {
+		width: 100%;
+		margin: 0 auto;
+	}
+
+input[type="text"] {
+	padding: .2em;
+	border: 1px solid silver;
+	font-size: 1.2em;
+}
 
 /* Generic */
 .ovhid {
@@ -243,8 +289,21 @@ small.page_number {
 	margin-top: 2em;
 }
 
+/*
+ * Other
+ */
+.software-name {
+	display: inline-block; /* Avoid cut the word "Neo-" "Transposer" btw lines */
+}
+
 
 @media only screen and (max-width: 40rem) {
+
+	input,
+	select,
+	button {
+		font-size: 1.1em;
+	}
 
 	.header .inside {
 		width: auto;
@@ -261,8 +320,15 @@ small.page_number {
 		overflow: hidden;
 	}
 
-	.song-index {
-		margin-top: 1em;
+	.login-form {
+		display: block;
+		width: auto;
+	}
+
+	.change-book {
+		float: none;
+		display: block;
+		margin: 1em 0 .2em;
 	}
 
 	small.page_number {

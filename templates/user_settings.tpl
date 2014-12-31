@@ -11,7 +11,7 @@
 		transposition for each song, according to your voice. But to do so, first
 		I need to know your voice.</p>
 
-		<h3>1. Which is the lowest note that you can sing? And the highest one?</h3>
+		<h3>Which is the lowest note that you can sing? And the highest one?</h3>
 
 		<p class="voice-selector">
 			<span class="field">
