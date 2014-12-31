@@ -25,6 +25,8 @@ $app->get('/login', 'NeoTransposer\\Controllers\\Login::run')
 	->method('GET|POST')
 	->bind('login');
 
+$app->get('/', 'NeoTransposer\\Controllers\\Index::get');
+
 $app['debug'] = true;
 
 $app->run();
