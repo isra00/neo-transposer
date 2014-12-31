@@ -23,7 +23,7 @@ class SetUserData
 			$app['user']->id_book = intval($request->get('book'));
 
 			// Auto-select chord printer based on book.
-			if (empty($request->get('chord_printer')))
+			if (!$request->get('chord_printer'))
 			{
 				$app['user']->chord_printer = $app['books'][$app['user']->id_book]['chord_printer'];
 			}
