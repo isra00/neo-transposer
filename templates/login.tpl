@@ -12,7 +12,7 @@
 	<form method="post" action="{{ neoglobals.server.REQUEST_URI }}" class="login-form">
 		<div class="field block full-width">
 			<label for="email">Please, type your e-mail:</label>
-			<input type="text" name="email" id="email" value="{{ post.email }}">
+			<input type="email" name="email" id="email" value="{{ post.email }}" required>
 		</div>
 		<div class="field block full-width">
 			<button type="submit" name="sent" class="bigbutton">Enter</button>
