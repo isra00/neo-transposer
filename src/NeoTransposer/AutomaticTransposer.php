@@ -94,12 +94,10 @@ class AutomaticTransposer
 		 * 
 		 * If song is wider than singer, we locate it in the bottom, so that when
 		 * the song goes high, the singer can sing one octave down. If not (normally),
-		 * we locate it in the middle, in order to be more comfortable.
-		 *
-		 * @todo Checkear si el redondeo del offset es para arriba o para abajo, y decidir...
-		 *
-		 * @todo ¿Tener en cuenta la diferente amplitud del registro bajo y alto
-		 *       para desplazar la transposición perfecta del centro?
+		 * we locate it in the middle, in order to be more comfortable. Note that
+		 * when the middle ((singer_wideness - song_wideness) / 2) is not an
+		 * integer, it will be rounded up. These behavior could be changed taking
+		 * into account the preferences of the user.
 		 */
 		$offset_from_singer_lowest = ($song_wideness >= $singer_wideness)
 			? 0
@@ -160,7 +158,6 @@ class AutomaticTransposer
 
 		for ($i = 1; $i < 6; $i++)
 		{
-			/** @todo Añadir detección de asBook */
 			$transposedChords = $this->nc->transposeChords($transposition->chords, $i * (-1));
 
 			$withCapo[$i] = new Transposition(
@@ -180,13 +177,6 @@ class AutomaticTransposer
 	 * Find alternative NOT-equivalent, but near (up to 1 semitone up or down) transpositions.
 	 * 
 	 * @return array Array of Transposition objects
-	 *
-	 * @todo  Tazama Ilivvyo Vema es ejemplo de que también puede hacer falta una
-	 *        alternativa descendente: para (A#1 - G3) la transp. propuesta es
-	 *        Dm capo 1 y Bm capo 4. Con alternativa ascendente se propondría
-	 *        Em (como en el libro), 1 st por encima de la perfecta; y con una
-	 *        alternativa descendente se puede proponer Am capo 5, que son
-	 *        acordes fáciles.
 	 */
 	function findAlternativeNotEquivalent()
 	{
@@ -224,7 +214,7 @@ class AutomaticTransposer
 
 			//If it's not better than the best of the "perfects", discard it
 			$perfectAndEquivalent = $this->getTranspositions();
-			if ($perfectAndEquivalent[0]->score < $near->score)
+			if ($perfectAndEquivalent[0]->score <= $near->score)
 			{
 				continue;
 			}
