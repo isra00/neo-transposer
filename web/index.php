@@ -28,6 +28,10 @@ $app->get('/login', 'NeoTransposer\\Controllers\\Login::run')
 $app->get('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::get');
 $app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post');
 
+//Easter egg ;-)
+$app->get('/get-lucky', 'NeoTransposer\\Controllers\\TransposeSong::get')
+	->value('id_song', 118);
+
 $app->get('/', 'NeoTransposer\\Controllers\\Index::get');
 
 $app['debug'] = true;
