@@ -20,7 +20,7 @@ class TranspositionChart
 				'lowest'	=> $song_details['lowest_note'],
 				'highest'	=> $song_details['highest_note'],
 				'length'	=> abs($nc->distanceWithOctave($song_details['lowest_note'], $song_details['highest_note'])) - 1,
-				'caption'	=> 'Original song:',
+				'caption'	=> 'Original chords:',
 				'css'		=> 'original-song'
 			),
 			'transposed' => array(

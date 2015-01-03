@@ -26,7 +26,7 @@
 		
 		<p>
 			<label for="page">Page:</label>
-			<input name="page" id="page" size="50">
+			<input name="page" id="page" size="3">
 		</p>
 
 		<p>
