@@ -57,6 +57,19 @@ p {
 	width: 40em;
 }
 
+.notification {
+	padding: .5em;
+	margin-bottom: 1em;
+}
+	.notification.error {
+		color: red;
+		border: 1px solid red;
+	}
+	.notification.success {
+		color: green;
+		border: 1px solid green;
+	}
+
 footer {
 	text-align: center;
 	background: #eee;

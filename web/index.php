@@ -18,12 +18,15 @@ $app->get('/transpose/{id_song}', 'NeoTransposer\\Controllers\\TransposeSong::ge
 $app->get('/user', 'NeoTransposer\\Controllers\\UserSettings::get')
 	->bind('user_settings');
 
-$app->get('/set_user_data', 'NeoTransposer\\Controllers\\SetUserData::get')
+$app->get('/set-user-data', 'NeoTransposer\\Controllers\\SetUserData::get')
 	->bind('set_user_data');
 
 $app->get('/login', 'NeoTransposer\\Controllers\\Login::run')
 	->method('GET|POST')
 	->bind('login');
+
+$app->get('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::get');
+$app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post');
 
 $app->get('/', 'NeoTransposer\\Controllers\\Index::get');
 

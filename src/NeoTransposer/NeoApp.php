@@ -10,6 +10,8 @@ class NeoApp extends Application
 {
 	use \Silex\Application\TwigTrait;
 
+	protected $notifications = array('error'=>array(), 'success'=>array());
+
 	public function __construct($config)
 	{
 		parent::__construct();
@@ -96,5 +98,16 @@ class NeoApp extends Application
 		}
 
 		$this['user'] = $this['session']->get('user');
+	}
+
+	function addNotification($type, $text)
+	{
+		$this->notifications[$type][] = $text;
+	}
+
+	function render($view, array $parameters = array())
+	{
+		$this['twig']->addGlobal('notifications', $this->notifications);
+		return $this['twig']->render($view, $parameters);
 	}
 }

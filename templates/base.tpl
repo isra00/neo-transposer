@@ -44,6 +44,20 @@
 	</nav>
 
 	<section class="main">
+
+	{% block notifications %}
+		{% if notifications.success %}
+			{% for notification in notifications.success %}
+			<div class="notification success">{{ notification }}</div>
+			{% endfor %}
+		{% endif %}
+		{% if notifications.error %}
+			{% for notification in notifications.error %}
+			<div class="notification error">{{ notification }}</div>
+			{% endfor %}
+		{% endif %}
+	{% endblock %}
+
 	{% block content %}{% endblock %}
 	</section>
 
