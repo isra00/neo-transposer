@@ -57,12 +57,12 @@ class Transposition
 
 	/*
 	 * The chords, ordered from easier to harder. This is according to *MY*
-	 * experience as cantor and the cantors i've met.
-	 * It does not take into account only the ease of the chord, but also
-	 * the probability that the cantor knows it (for example, A9 is pretty
-	 * easy but few people know it). Therefore, it also depends on how much
-	 * each chord is actually used in the songs of the Way. As of now, this
-	 * list includes only major, minor and 7th chords.
+	 * experience as cantor and the cantors i've met. It does not take into
+	 * account only the ease of the chord, but also the probability that the 
+	 * cantor knows it (for example, A9 is pretty easy but few people know it).
+	 * Therefore, it also depends on how much each chord is actually used in the
+	 * songs of the Way. As of now, this list includes only major, minor and 7th
+	 * chords.
 	 *
 	 * @todo Incluir TODOS los acordes que se usen realmente en el libro.
 	 *
@@ -123,8 +123,6 @@ class Transposition
 		 * If it's like in the book, although it may not be the simplest chords,
 		 * it's simpler to work with for the cantor. If the cantor is looking
 		 * specifically for easier chords, he/she has the other options.
-		 *
-		 * @todo En /transpose_song.php?song=60 se ve que quizá dividir / 2 es demasiado...
 		 */
 		if ($this->asBook)
 		{

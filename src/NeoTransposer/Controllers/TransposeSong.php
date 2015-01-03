@@ -60,14 +60,7 @@ class TransposeSong
 		unset($transposition);
 
 		$nc = new NotesCalculator;
-		$your_voice = array(
-			'from' => $nc->getOnlyNote($app['user']->lowest_note),
-			'to' => $nc->getAsOctaveDifference($app['user']->highest_note)
-		);
-
-		$dumb_user = new \StdClass;
-		$dumb_user->lowest_note = 'B1';
-		$dumb_user->highest_note = 'G3';
+		$your_voice = $app['user']->getVoiceAsString();
 
 		return $app->render('transpose_song.tpl', array(
 			'current_book'		=> $song_details,
@@ -76,8 +69,7 @@ class TransposeSong
 			'not_equivalents'	=> $not_equivalents,
 			'your_voice'		=> $your_voice,
 			'original_chords'	=> $original_chords,
-			'voice_chart'		=> TranspositionChart::getChart($song_details, $transpositions[0], $dumb_user),
-			//'voice_chart'		=> TranspositionChart::getChart($song_details, $transpositions[0], $app['user']),
+			'voice_chart'		=> TranspositionChart::getChart($song_details, $transpositions[0], $app['user']),
 			'page_title'		=> $song_details['title'],
 			'page_class'		=> 'transpose-song',
 		));

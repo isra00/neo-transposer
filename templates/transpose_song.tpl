@@ -35,8 +35,7 @@
 </h1>
 
 <div class="your-voice">
-	<em>Your voice:</em>
-	{{ your_voice.from }} &rarr; {{ your_voice.to }} oct
+	<em>Your voice:</em> {{ your_voice|raw }}
 	<a href="{{ path('user_settings') }}" class="small-button">Change</a>
 </div>
 

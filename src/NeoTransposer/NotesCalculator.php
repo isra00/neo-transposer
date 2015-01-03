@@ -96,41 +96,10 @@ class NotesCalculator
 	 * @param  string $note1 Note, specified as [note name][octave number], e.g. E3.
 	 * @param  string $note2 Another note, following the same pattern as $note1.
 	 * @return integer Distance in semitones.
-	 *
-	 * @todo Pasar a NotesCalculator
 	 */
 	function distanceWithOctave($note1, $note2)
 	{
 		return array_search($note1, $this->numbered_scale) - array_search($note2, $this->numbered_scale);
-	}
-
-	/**
-	 * Format a numbered note as note + number of octaves above the 1st octave.
-	 * 
-	 * @param  string $note A numbered note.
-	 * @return string Formatted string.
-	 *
-	 * @todo  Unir este método y el siguiente y pasarlo a User::getVoiceAsString();
-	 */
-	function getAsOctaveDifference($note)
-	{
-		preg_match('/([ABCDEFG]#?b?)([0-9])/', $note, $match);
-		$note = $match[1];
-		$octave = intval($match[2]);
-		$octave = $octave - 1;
-		return $note . " +$octave";
-	}
-
-	/**
-	 * Given a numbered note, get the un-numbered note.
-	 * 
-	 * @param  string $note A numbered note.
-	 * @return string       The note itself.
-	 */
-	function getOnlyNote($note)
-	{
-		preg_match('/([ABCDEFG]#?b?)([0-9])/', $note, $match);
-		return $match[1];
 	}
 
 	/**

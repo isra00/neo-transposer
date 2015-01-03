@@ -56,16 +56,6 @@ class NotesCalculatorTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetAsOctaveDifference()
-    {
-    	$this->assertEquals('B +1', $this->nc->getAsOctaveDifference('B2'));
-    }
-
-    public function testGetOnlyNote()
-    {
-    	$this->assertEquals('B', $this->nc->getOnlyNote('B3'));
-    }
-
     public function testLowestNote()
     {
     	$this->assertEquals('B1', $this->nc->lowestNote(array('B3', 'C2', 'B1')));

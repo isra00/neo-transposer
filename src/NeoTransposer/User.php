@@ -46,6 +46,12 @@ class User
 		}
 	}
 
+	/**
+	 * Create or update the user in the database.
+	 * 
+	 * @param  \Doctrine\DBAL\Connection $db A DB connection.
+	 * @return integer The user ID, if it was not set.
+	 */
 	public function persist(\Doctrine\DBAL\Connection $db)
 	{
 		/** @todo Hacerlo en una sola consulta, con replace or insert */
@@ -95,5 +101,25 @@ class User
 				return 'user_settings';
 			}
 		}
+	}
+
+	/**
+	 * Format a numbered note as note + number of octaves above the 1st octave.
+	 * 
+	 * @param  string $note A numbered note.
+	 * @return string Formatted string.
+	 *
+	 * @todo  Unir este método y el siguiente y pasarlo a User::getVoiceAsString();
+	 */
+	function getVoiceAsString()
+	{
+		preg_match('/([ABCDEFG]#?b?)([0-9])/', $this->lowest_note, $match);
+		$lowest_note = $match[1];
+
+		preg_match('/([ABCDEFG]#?b?)([0-9])/', $this->highest_note, $match);
+		$note = $match[1];
+		$octave = intval($match[2]);
+		$octave = $octave - 1;
+		return "$lowest_note &rarr; $note +$octave oct";
 	}
 }
