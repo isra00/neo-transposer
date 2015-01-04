@@ -110,7 +110,7 @@ class NotesCalculator
 	 */
 	function readChord($chord_name)
 	{
-		$regexp = '/^([abcdefg]#?b?)([m4679\*]*)$/i';
+		$regexp = '/^([abcdefg]#?b?)([m45679\*]*)$/i';
 		preg_match($regexp, $chord_name, $match);
 
 		if (!isset($match[2]))

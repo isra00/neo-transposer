@@ -61,8 +61,7 @@ class Transposition
 	 * account only the ease of the chord, but also the probability that the 
 	 * cantor knows it (for example, A9 is pretty easy but few people know it).
 	 * Therefore, it also depends on how much each chord is actually used in the
-	 * songs of the Way. As of now, this list includes only major, minor and 7th
-	 * chords.
+	 * songs of the Way.
 	 *
 	 * @todo Incluir TODOS los acordes que se usen realmente en el libro.
 	 *
@@ -79,8 +78,8 @@ class Transposition
 	protected static $easyChords = array(
 		'Em', 'E', 'Am', 'A', 'D', 'Dm', 'C', 'G', 'E7', 'A7', 'G7', 'D7', 
 		'B7', 'F', 'C7', 'G#', 'G#m', 'F#', 'F#m', 'Gm', 'Bm', 'A#', 'C#', 
-		'C#7', 'F7', 'F#7', 'B', 'Fm', 'A#7', 'C#m', 'A#m', 'Cm', 'G#7', 'D#',
-		'D#m', 'D#7',
+		'C#7', 'Dm9', 'F7', 'F#7', 'B', 'Dm5', 'Fm', 'A#7', 'C#m', 'A#m', 'Cm', 
+		'G#7', 'D#', 'D#m', 'D#7',
 	);
 
 	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromPerfect=0)
