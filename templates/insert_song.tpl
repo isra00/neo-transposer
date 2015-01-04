@@ -2,6 +2,8 @@
 
 {% block page_class %}page-book{% endblock %}
 
+{% block body_attributes %}onload="document.getElementById('title').focus()"{% endblock %}
+
 {% block content %}
 
 {# @todo JS: Enfocar el campo title al cargar la página #}
@@ -14,7 +16,7 @@
 			<label for="book">Book:</label>
 			<select name="id_book" id="book">
 			{% for id, book in neoglobals.books %}
-				<option value="{{ id }}" {% if id == current_book %}selected="selected"{% endif %}>{{ book.lang_name }}</option>
+				<option value="{{ id }}" {% if id == id_book %}selected="selected"{% endif %}>{{ book.lang_name }}</option>
 			{% endfor %}
 			</select>
 		</p>
