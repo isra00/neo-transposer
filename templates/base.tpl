@@ -8,6 +8,8 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="favicon.ico">
 
+	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
+
 	{% if not neoglobals.debug %}
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

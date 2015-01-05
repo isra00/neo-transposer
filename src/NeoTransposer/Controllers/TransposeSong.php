@@ -6,6 +6,8 @@ use \NeoTransposer\AutomaticTransposer;
 use \NeoTransposer\TranspositionChart;
 use \NeoTransposer\NotesCalculator;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 class TransposeSong
 {
 	public function get(\NeoTransposer\NeoApp $app, $id_song)
@@ -80,6 +82,11 @@ class TransposeSong
 			'voice_chart'		=> TranspositionChart::getChart($song_details, $transpositions[0], $app['user']),
 			'page_title'		=> $song_details['title'],
 			'page_class'		=> 'transpose-song',
+			'meta_canonical'	=> $app['url_generator']->generate(
+				'transpose_song',
+				array('id_song' => $song_details['slug']),
+				UrlGeneratorInterface::ABSOLUTE_URL
+			),
 		));
 	}
 }
