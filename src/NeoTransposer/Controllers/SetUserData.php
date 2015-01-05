@@ -7,6 +7,7 @@ use \NeoTransposer\TranspositionChart;
 use \NeoTransposer\NotesCalculator;
 
 use Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class SetUserData
 {
@@ -16,8 +17,7 @@ class SetUserData
 		{
 			if (false === array_search($request->get('book'), array_keys($app['books'])))
 			{
-				/** @todo Poner código HTTP correcto */
-				$app->abort(400, "Invalid request: the specified book does not exist");
+				throw new BadRequestHttpException('Invalid request: the specified book does not exist');
 			}
 
 			$app['user']->id_book = intval($request->get('book'));
@@ -33,8 +33,7 @@ class SetUserData
 		{
 			if (false === array_search($request->get('chord_printer'), array_keys($app['chord_printers.list'])))
 			{
-				/** @todo Poner el código HTTP correcto */
-				$app->abort(400, "Invalid request: the specified chord notation does not exist");
+				throw new BadRequestHttpException('Invalid request: the specified chord notation does not exist');
 			}
 
 			$app['user']->chord_printer = $request->get('chord_printer');
