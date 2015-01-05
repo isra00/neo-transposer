@@ -10,9 +10,17 @@ class TransposeSong
 {
 	public function get(\NeoTransposer\NeoApp $app, $id_song)
 	{
+		$field_id = 'slug';
+
+		if (preg_match('/^\d+$/', $id_song))
+		{
+			$field_id = 'id_song';
+			$id_song = (int) $id_song;
+		}
+
 		$song_details = $app['db']->fetchAssoc(
-			'SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE id_song = ?',
-			array((int) $id_song)
+			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $field_id = ?",
+			array($id_song)
 		);
 
 		if (!$song_details) {
@@ -21,7 +29,7 @@ class TransposeSong
 
 		$original_chords = $app['db']->fetchAll(
 			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
-			array((int) $id_song)
+			array($song_details['id_song'])
 		);
 
 		array_walk($original_chords, function(&$item) {

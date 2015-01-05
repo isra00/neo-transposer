@@ -13,7 +13,7 @@
 {% for song in songs %}
 	<li>
 		{{ song.page }}
-		· <a href="{{ path('transpose_song', {"id_song":song.id_song}) }}">{{ song.title }}</a>
+		· <a href="{{ path('transpose_song', {"id_song":song.slug}) }}">{{ song.title }}</a>
 	</li>
 {% endfor %}
 </ul>

@@ -3,7 +3,7 @@
 require '../vendor/autoload.php';
 
 $app = new \NeoTransposer\NeoApp(
-	require __DIR__ . '/../config.php'
+	require __DIR__ . '/../config.php',
 );
 
 $app->get('/book/{id_book}', 'NeoTransposer\\Controllers\\Book::get')
@@ -11,7 +11,6 @@ $app->get('/book/{id_book}', 'NeoTransposer\\Controllers\\Book::get')
 	->bind('book');
 
 $app->get('/transpose/{id_song}', 'NeoTransposer\\Controllers\\TransposeSong::get')
-	->assert('id_song', '\d+')
 	->bind('transpose_song');
 
 $app->get('/user', 'NeoTransposer\\Controllers\\UserSettings::get')

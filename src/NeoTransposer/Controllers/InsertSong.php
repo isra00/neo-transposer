@@ -5,8 +5,16 @@ namespace NeoTransposer\Controllers;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\User;
 
+use \Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+
 class InsertSong
 {
+	/**
+	 * A DB connection
+	 * @var \Doctrine\DBAL\Connection
+	 */
+	protected $db;
+
 	public function get(Request $request, \NeoTransposer\NeoApp $app, $tpl_vars=array())
 	{
 		return $app->render('insert_song.tpl', $tpl_vars);
@@ -14,21 +22,24 @@ class InsertSong
 
 	public function post(Request $request, \NeoTransposer\NeoApp $app)
 	{
+		$this->db = $app['db'];
+
 		$app['db']->insert('song', array(
 			'id_book' => $request->get('id_book'),
 			'page' => $request->get('page'),
 			'title' => $request->get('title'),
 			'lowest_note' => $request->get('lowest_note'),
 			'highest_note' => $request->get('highest_note'),
+			'slug' => $this->getSlug($request),
 		));
 
-		$id_song = $app['db']->lastInsertId();
+		$id_song = $this->db->lastInsertId();
 
 		foreach ($request->get('chords') as $position=>$chord)
 		{
 			if (strlen($chord))
 			{
-				$app['db']->insert('song_chord', array(
+				$this->db->insert('song_chord', array(
 					'id_song' => $id_song,
 					'chord' => $chord,
 					'position' => $position
@@ -39,5 +50,82 @@ class InsertSong
 		$app->addNotification('success', 'Song inserted');
 
 		return $this->get($request, $app, array('id_book' => $request->get('id_book')));
+	}
+
+	/*function slugizedb($db)
+	{
+		$songs = $db->fetchAll('SELECT * FROM song');
+		foreach ($songs as $song)
+		{
+			$db->update(
+				'song',
+				array('slug' => $this->urlize($song['title'])),
+				array('id_song' => $song['id_song'])
+			);
+		}
+	}*/
+
+	protected function getSlug(Request $request)
+	{
+		$candidate = $this->urlize($request->get('title'));
+		$already = $this->checkSlug($candidate);
+
+		//If there is a song with that slug, try to append the language name
+		if (!empty($already))
+		{
+			$lang_name = $this->db->fetchColumn(
+				'SELECT lang_name FROM book WHERE id_book = ?',
+				array($request->get('id_book'))
+			);
+			$candidate = $candidate . '-' . $this->urlize($lang_name);
+			$already = $this->checkSlug($candidate);
+
+			if ($already)
+			{
+				throw new ConflictHttpException('There is already a song with that slug in that book!');
+			}
+		}
+
+		return $candidate;
+
+	}
+
+	protected function checkSlug($candidate)
+	{
+		return $this->db->fetchAssoc(
+			'SELECT id_song, slug FROM song WHERE slug = ?',
+			array($candidate)
+		);
+	}
+
+	protected function urlize($string)
+	{
+		$hyphenize = array(' ', ',', '.', ':', '!', '¡', '¿', '?', '(', ')');
+
+		//La ñ la conservamos
+		$flatten_letters = array(
+			'Á' => 'a',
+			'á' => 'a',
+			'É' => 'e',
+			'é' => 'e',
+			'Í' => 'i',
+			'í' => 'i',
+			'Ó' => 'o',
+			'ó' => 'o',
+			'Ú' => 'u',
+			'ú' => 'u',
+			'ö' => 'o',
+			'ü' => 'u',
+			'ª' => 'a',
+			'º' => 'o',
+		);
+
+		$string = strtolower(trim($string));
+		$string = str_replace($hyphenize, '-', $string);
+		$string = str_replace(array_keys($flatten_letters), array_values($flatten_letters), $string);
+		$string = preg_replace('/(\-\-+)/', '-', $string);
+		$string = preg_replace('/^\-/', '', $string);
+		$string = preg_replace('/\-$/', '', $string);
+		return $string;
 	}
 }
