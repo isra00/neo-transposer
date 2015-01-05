@@ -21,6 +21,11 @@ class NeoApp extends Application
 		$this->registerSilexServices();
 		$this->registerCustomServices();
 
+		if (!empty($config['debug']))
+		{
+			$this['debug'] = $config['debug'];
+		}
+
 		$this['controllers']->before(function(Request $request, Application $app) {
 			$app['twig']->addGlobal('neoglobals', array(
 				'software_name' => $app['neoconfig']['software_name'],

@@ -3,7 +3,7 @@
 require '../vendor/autoload.php';
 
 $app = new \NeoTransposer\NeoApp(
-	require __DIR__ . '/../config.php',
+	require __DIR__ . '/../config.php'
 );
 
 $app->get('/book/{id_book}', 'NeoTransposer\\Controllers\\Book::get')
@@ -33,7 +33,5 @@ $app->get('/sura-yako', 'NeoTransposer\\Controllers\\TransposeSong::get')
 	->value('id_song', 319);
 
 $app->get('/', 'NeoTransposer\\Controllers\\Index::get');
-
-$app['debug'] = true;
 
 $app->run();
