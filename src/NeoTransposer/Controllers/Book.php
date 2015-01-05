@@ -14,7 +14,7 @@ class Book
 		}
 
 		$songs = $app['db']->fetchAll(
-			'SELECT * FROM song WHERE id_book = ? AND NOT id_song = 118 ORDER BY page, title',
+			'SELECT * FROM song WHERE id_book = ? AND NOT id_song = 118 AND NOT id_song = 319 ORDER BY page, title',
 			array((int) $id_book)
 		);
 
