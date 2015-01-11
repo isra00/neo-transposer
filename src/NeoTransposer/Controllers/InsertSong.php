@@ -104,7 +104,7 @@ class InsertSong
 
 	protected function urlize($string)
 	{
-		$hyphenize = array(' ', ',', '.', ':', '!', '¡', '¿', '?', '(', ')');
+		$hyphenize = array(' ', ',', '.', ':', '!', '¡', '¿', '?', '(', ')', '[', ']');
 
 		//La ñ la conservamos
 		$flatten_letters = array(
