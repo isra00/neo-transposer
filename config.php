@@ -18,4 +18,6 @@ $config['default_chord_printer'] = 'English';
 
 $config['templates_dir'] = __DIR__ . '/templates';
 
+$config['debug'] = false;
+
 return $config;
