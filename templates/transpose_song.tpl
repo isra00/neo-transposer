@@ -1,5 +1,7 @@
 {% extends "base.tpl" %}
 
+{% block meta_description %}Transpose the chords of '{{ song_details.title }}' (song of the Neocatechumenal Way) automatically so you can sing it without stress!{% endblock %}
+
 {% block page_class %}transpose-song{% endblock %}
 
 {% macro printTransposition(transposition, original_chords) %}
@@ -8,7 +10,7 @@
 			<th colspan="3">
 				<!--{{ transposition.score }}-->
 				<strong>{{ transposition.chords[0]|raw }} </strong>
-				{{ transposition.capo ? ' with capo ' ~ transposition.capo : ' (no capo)' }}
+				{{ transposition.capo ? 'with capo ' ~ transposition.capo : ' (no capo)' }}
 			</th>
 		</thead>
 		<tbody>

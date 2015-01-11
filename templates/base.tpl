@@ -8,6 +8,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="favicon.ico">
 
+	<meta name="description" content="{% block meta_description %}Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.{% endblock %}" />
 	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
 
 	{% if not neoglobals.debug %}
