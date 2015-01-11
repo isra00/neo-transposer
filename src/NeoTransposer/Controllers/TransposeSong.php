@@ -67,7 +67,6 @@ class TransposeSong
 		{
 			$transposition = $printer->printTransposition($transposition);
 		}
-		unset($transposition);
 
 		$nc = new NotesCalculator;
 		$your_voice = $app['user']->getVoiceAsString();
