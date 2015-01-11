@@ -3,7 +3,8 @@
         "silex/silex": "~1.1",
         "twig/twig": "~1.0",
         "symfony/twig-bridge": "~2.3",
-        "doctrine/dbal": "2.2.*"
+        "doctrine/dbal": "2.2.*",
+        "symfony/translation": "~2.3"
     },
 
     "autoload": {
