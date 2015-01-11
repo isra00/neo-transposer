@@ -4,7 +4,6 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\User;
-
 use \Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class InsertSong
@@ -52,9 +51,14 @@ class InsertSong
 		return $this->get($request, $app, array('id_book' => $request->get('id_book')));
 	}
 
-	/*function slugizedb($db)
+	/**
+	 * Use this function to set the slug on those songs which don't have.
+	 * 
+	 * @param  \Doctrine\DBAL\Connection $db A DB connection
+	 */
+	function slugizedb(\Doctrine\DBAL\Connection $db)
 	{
-		$songs = $db->fetchAll('SELECT * FROM song');
+		$songs = $db->fetchAll("SELECT * FROM song WHERE slug IS NULL OR slug = ''");
 		foreach ($songs as $song)
 		{
 			$db->update(
@@ -63,7 +67,7 @@ class InsertSong
 				array('id_song' => $song['id_song'])
 			);
 		}
-	}*/
+	}
 
 	protected function getSlug(Request $request)
 	{
