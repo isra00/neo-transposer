@@ -25,48 +25,51 @@
 </head>
 
 <body class="{% block page_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
+	<div class="wrapper">
 
-	<nav class="header">
-		<div class="inside">
+		<nav class="header">
+			<div class="inside">
 
-			{% if neoglobals.user.id_book %}
-				<h2>
-					<a href="{{ path('book', {id_book: (current_book ? current_book.id_book: neoglobals.user.id_book)}) }}">{{ neoglobals.software_name }}</a>
-				</h2>
-			{% else %}
-				<h2>{{ neoglobals.software_name }}</h2>
+				{% if current_book %}
+					<h2>
+						<a href="{{ path('book', {id_book: (current_book ? current_book.id_book: neoglobals.user.id_book)}) }}">{{ neoglobals.software_name }}</a>
+					</h2>
+				{% else %}
+					<h2>{{ neoglobals.software_name }}</h2>
+				{% endif %}
+
+				{% if neoglobals.user.isLoggedIn and neoglobals.here != 'login' %}
+				<span class="user">
+					<a href="{{ path('login') }}">Log-out</a>
+				</span>
+				{% endif %}
+
+			</div>
+		</nav>
+
+		<section class="main">
+
+		{% block notifications %}
+			{% if notifications.success %}
+				{% for notification in notifications.success %}
+				<div class="notification success">{{ notification }}</div>
+				{% endfor %}
 			{% endif %}
-
-			{% if neoglobals.here != 'login' %}
-			<span class="user">
-				<a href="{{ path('login') }}">Log-out</a>
-			</span>
+			{% if notifications.error %}
+				{% for notification in notifications.error %}
+				<div class="notification error">{{ notification }}</div>
+				{% endfor %}
 			{% endif %}
+		{% endblock %}
 
-		</div>
-	</nav>
+		{% block content %}{% endblock %}
+		</section>
 
-	<section class="main">
-
-	{% block notifications %}
-		{% if notifications.success %}
-			{% for notification in notifications.success %}
-			<div class="notification success">{{ notification }}</div>
-			{% endfor %}
-		{% endif %}
-		{% if notifications.error %}
-			{% for notification in notifications.error %}
-			<div class="notification error">{{ notification }}</div>
-			{% endfor %}
-		{% endif %}
-	{% endblock %}
-
-	{% block content %}{% endblock %}
-	</section>
+		<div class="push"></div>
+	</div>
 
 	<footer>
 		Developed in Tanzania. Write me suggestions or comments to isra00@gmail.com
 	</footer>
-
 </body>
 </html>

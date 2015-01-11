@@ -38,6 +38,12 @@ class TransposeSong
 			$item = $item['chord'];
 		});
 
+		if (!$app['user']->isLoggedIn())
+		{
+			$app['user']->lowest_note = 'B1';
+			$app['user']->highest_note = 'F#3';
+		}
+
 		$transposer = new AutomaticTransposer(
 			$app['user']->lowest_note,
 			$app['user']->highest_note,
@@ -53,7 +59,7 @@ class TransposeSong
 
 		$printer = !empty($app['user']->chord_printer)
 			? $app['user']->chord_printer
-			: $app['neoconfig']['default_chord_printer'];
+			: $song_details['chord_printer'];
 
 		$printer = $app['chord_printers.get']($printer);
 

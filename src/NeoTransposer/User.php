@@ -103,6 +103,11 @@ class User
 		}
 	}
 
+	public function isLoggedIn()
+	{
+		return !empty($this->id_user);
+	}
+
 	/**
 	 * Format a numbered note as note + number of octaves above the 1st octave.
 	 * 

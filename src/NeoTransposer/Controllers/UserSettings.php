@@ -5,10 +5,11 @@ namespace NeoTransposer\Controllers;
 use \NeoTransposer\AutomaticTransposer;
 use \NeoTransposer\TranspositionChart;
 use \NeoTransposer\NotesCalculator;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserSettings
 {
-	public function get(\NeoTransposer\NeoApp $app)
+	public function get(Request $request, \NeoTransposer\NeoApp $app)
 	{
 		$nc = new NotesCalculator;
 

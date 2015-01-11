@@ -1,3 +1,10 @@
+* {
+	margin: 0;
+}
+html, body {
+	height: 100%;
+}
+
 body {
 	font-family: sans-serif;
 	margin: 0;
@@ -13,11 +20,30 @@ a {
 
 h1 {
 	font-weight: normal;
+	margin-top: .9em;
+	margin-bottom: .9em;
+}
+h4 {
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 p {
 	line-height: 1.3em;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
+
+.wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -3em;
+}
+	.push {
+		height: 3em;
+		clear: both;
+	}
 
 /*
  * HEADER
@@ -71,14 +97,17 @@ p {
 	}
 
 footer {
+	clear: both;
 	text-align: center;
 	background: #eee;
 	color: gray;
 	text-shadow: 1px 1px 0 white;
 	font-style: italic;
 	font-size: .9em;
-	padding: 1em;
-	margin-top: 2em;
+	padding: .5em;
+	height: 2em;
+	line-height: 2.5em;
+	/*margin-top: 2em;*/
 }
 
 /*
@@ -107,6 +136,34 @@ footer {
 		padding: .4em 0;
 		border-bottom: 1px solid #eee;
 		line-height: 1.6em;
+	}
+
+.teaser {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(255,255,255,.8);
+	display: table;
+}
+	.teaser .inside {
+	    vertical-align: middle;
+	    display: table-cell;
+	}
+	.teaser .inside .more-inside {
+		width: 40em;
+		margin: 0 auto;
+		border: 1px solid silver;
+		padding: 1em;
+		overflow: hidden;
+		background: white;
+	}
+	.teaser .login-form {
+		float: right;
+		margin-left: 1em;
 	}
 
 /*
@@ -359,4 +416,17 @@ input[type="text"] {
 	.voicechart-container {
 		display: none;
 	}
+
+	.teaser .inside {
+	    vertical-align: bottom;
+	}
+		.teaser .inside .more-inside {
+			width: auto;
+			border: 0;
+			border-top: 1px solid silver;
+		}
+		.teaser .login-form {
+			float: none;
+			margin: 0;		
+		}
 }

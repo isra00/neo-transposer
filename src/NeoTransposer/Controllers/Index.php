@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
-class Login
+class Index
 {
 	public function get(\NeoTransposer\NeoApp $app)
 	{

@@ -7,7 +7,9 @@
 
 	<h1>Welcome to <span class="software-name">{{ neoglobals.software_name }}</span></h1>
 
-	<form method="post" action="{{ neoglobals.server.REQUEST_URI }}" class="login-form">
+	{% macro login_form() %}
+	{# @todo Implementar redirección después del login #}
+	<form method="post" action="{{ path('login') }}" class="login-form">
 		{% if form_error %}<div class="error">{{ form_error }}</div>{% endif %}
 		
 		<div class="field block full-width">
@@ -18,5 +20,9 @@
 			<button type="submit" name="sent" class="bigbutton">Enter</button>
 		</div>
 	</form>
+	{% endmacro %}
+	{% import _self as self %}
+
+	{{ self.login_form() }}
 
 {% endblock %}

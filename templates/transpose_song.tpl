@@ -31,6 +31,20 @@
 {% import _self as self %}
 
 {% block content %}
+
+{% if not neoglobals.user.isLoggedIn %}
+	{% import "login.tpl" as login %}
+
+	<div class="teaser">
+		<div class="inside">
+			<div class="more-inside">
+				{{ login.login_form() }}
+				<p>Neo-Transposer helps you to automatically transpose the chords of <strong>{{ song_details.title }}</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!</p>
+			</div>
+		</div>
+	</div>
+{% endif %}
+
 <h1 class="song-title">
 	<small class="page_number">{{ song_details.page }}</small>
 	{{ song_details.title }}
