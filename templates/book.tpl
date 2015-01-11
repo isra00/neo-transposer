@@ -19,7 +19,7 @@
 {% if not neoglobals.user.isLoggedIn %}
 	{% import "login.tpl" as login %}
 
-	<div class="teaser-book">
+	<div class="teaser">
 		<div class="inside">
 			<div class="more-inside">
 				{{ login.login_form() }}
