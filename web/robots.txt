@@ -1,0 +1,3 @@
+Sitemap: http://neo-transposer.leviticus.co.tz/sitemap.xml
+
+User-agent: *

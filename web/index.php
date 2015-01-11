@@ -46,5 +46,6 @@ $app->get('/sura-yako', 'NeoTransposer\\Controllers\\TransposeSong::get')
 	->value('id_song', 319);
 
 $app->get('/', 'NeoTransposer\\Controllers\\Index::get');
+$app->get('/sitemap.xml', 'NeoTransposer\\Controllers\\Sitemap::get');
 
 $app->run();
