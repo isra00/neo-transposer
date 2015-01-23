@@ -53,10 +53,7 @@ REG;
 		}
 		else
 		{
-			return $app->redirect($app['url_generator']->generate(
-				'book', 
-				array('id_book' => $user->id_book)
-			));
+			return $app->redirect($app['url_generator']->generate('book_' . $user->id_book));
 		}
 	}
 }
