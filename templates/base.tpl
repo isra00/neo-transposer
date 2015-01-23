@@ -32,7 +32,7 @@
 
 				{% if current_book %}
 					<h2>
-						<a href="{{ path('book', {id_book: (current_book ? current_book.id_book: neoglobals.user.id_book)}) }}">{{ neoglobals.software_name }}</a>
+						<a href="{{ path('book_' ~ (current_book ? current_book.id_book: neoglobals.user.id_book)) }}">{{ neoglobals.software_name }}</a>
 					</h2>
 				{% else %}
 					<h2>{{ neoglobals.software_name }}</h2>

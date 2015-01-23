@@ -53,7 +53,7 @@ class SetUserData
 
 		return $app->redirect($request->get('redirect')
 			? $request->get('redirect')
-			: $app['url_generator']->generate('book', array('id_book' => $app['user']->id_book))
+			: $app['url_generator']->generate('book_' . $app['user']->id_book)
 		);
 	}
 }

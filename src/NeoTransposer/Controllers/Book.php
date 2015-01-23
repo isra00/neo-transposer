@@ -19,9 +19,9 @@ class Book
 		);
 
 		return $app->render('book.tpl', array(
-			'page_title'	=> $app['books'][$id_book]['lang_name'],
-			'current_book'	=> $app['books'][$id_book],
-			'songs'			=> $songs,
+			'page_title'	 => $app['books'][$id_book]['lang_name'],
+			'current_book'	 => $app['books'][$id_book],
+			'songs'			 => $songs
 		));
 	}
 }

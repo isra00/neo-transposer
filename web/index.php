@@ -15,10 +15,6 @@ $needsLogin = function (Request $request, \NeoTransposer\NeoApp $app) {
 	}
 };
 
-$app->get('/book/{id_book}', 'NeoTransposer\\Controllers\\Book::get')
-	->assert('id_book', '\d+')
-	->bind('book');
-
 $app->get('/transpose/{id_song}', 'NeoTransposer\\Controllers\\TransposeSong::get')
 	->bind('transpose_song');
 
@@ -38,6 +34,14 @@ $app->get('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::get')
 	->before($needsLogin);
 $app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post')
 	->before($needsLogin);
+
+//SEO-friendly URLs for books
+foreach ($app['neoconfig']['book_url'] as $id_book=>$slug)
+{
+	$app->get($slug, 'NeoTransposer\\Controllers\\Book::get')
+		->value('id_book', $id_book)
+		->bind('book_' . $id_book);
+}
 
 //Easter eggs ;-)
 $app->get('/get-lucky', 'NeoTransposer\\Controllers\\TransposeSong::get')
