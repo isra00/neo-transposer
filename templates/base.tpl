@@ -40,7 +40,7 @@
 
 				{% if neoglobals.user.isLoggedIn and neoglobals.here != 'login' %}
 				<span class="user">
-					<a href="{{ path('login') }}">{% trans %}Log-out{% endtrans %}</a>
+					<a href="{{ path('login', {_locale: app.locale}) }}">{% trans %}Log-out{% endtrans %}</a>
 				</span>
 				{% endif %}
 

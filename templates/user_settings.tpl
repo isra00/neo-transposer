@@ -4,7 +4,7 @@
 
 {% block content %}
 
-	<h1>Welcome to {{ neoglobals.software_name }}</h1>
+	<h1>{% trans with {'%software%': '<span class="software-name">' ~ neoglobals.software_name ~ '</span>'} %}Welcome to %software%{% endtrans %}</h1>
 
 	<form method="get" action="{{ path('set_user_data') }}">
 		<p>{% trans %}This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.{% endtrans %}</p>

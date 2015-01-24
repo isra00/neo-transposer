@@ -13,8 +13,8 @@ return array('messages' => array('es' => array(
 	=> 'Neo-Transposer transporta automáticamente los cantos del Camino por ti, para que encajen perfectamente con tu voz.',
 
 	//Login
-	'Welcome to Neo-Transposer'
-	=> 'Bienvenido a Neo-Transposer',
+	'Welcome to %software%'
+	=> 'Bienvenido a %software%',
 
 	'Please, type your e-mail:'
 	=> 'Por favor, introduce tu e-mail:',
