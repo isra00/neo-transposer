@@ -18,6 +18,8 @@ class Book
 			array((int) $id_book)
 		);
 
+		$app['locale'] = $app['books'][$id_book]['locale'];
+
 		return $app->render('book.tpl', array(
 			'page_title'	 => $app['books'][$id_book]['lang_name'],
 			'current_book'	 => $app['books'][$id_book],

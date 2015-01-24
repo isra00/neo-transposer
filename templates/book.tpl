@@ -9,7 +9,7 @@
 {% block content %}
 <h1>
 	{% if neoglobals.user.isLoggedIn %}
-	<span class="change-book"><a class="small-button" href="{{ path('user_settings') }}#book">Change book</a></span>
+	<span class="change-book"><a class="small-button" href="{{ path('user_settings') }}#book">{% trans %}Change book{% endtrans %}</a></span>
 	{% endif %}
 
 	{{ current_book.lang_name }}
@@ -23,7 +23,7 @@
 		<div class="inside">
 			<div class="more-inside">
 				{{ login.login_form() }}
-				<p>Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.</p>
+				<p>{% trans %}Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.{% endtrans %}</p>
 			</div>
 		</div>
 	</div>

@@ -13,11 +13,11 @@
 		{% if form_error %}<div class="error">{{ form_error }}</div>{% endif %}
 		
 		<div class="field block full-width">
-			<label for="email">Please, type your e-mail:</label>
+			<label for="email">{% trans %}Please, type your e-mail:{% endtrans %}</label>
 			<input type="email" name="email" id="email" value="{{ post.email }}" required>
 		</div>
 		<div class="field block full-width">
-			<button type="submit" name="sent" class="bigbutton">Enter</button>
+			<button type="submit" name="sent" class="bigbutton">{% trans %}Enter{% endtrans %}</button>
 		</div>
 	</form>
 	{% endmacro %}

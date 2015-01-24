@@ -8,7 +8,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="favicon.ico">
 
-	<meta name="description" content="{% block meta_description %}Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.{% endblock %}" />
+	<meta name="description" content="{% block meta_description %}{% trans %}Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.{% endtrans %}{% endblock %}" />
 	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
 
 	{% if not neoglobals.debug %}
@@ -40,7 +40,7 @@
 
 				{% if neoglobals.user.isLoggedIn and neoglobals.here != 'login' %}
 				<span class="user">
-					<a href="{{ path('login') }}">Log-out</a>
+					<a href="{{ path('login') }}">{% trans %}Log-out{% endtrans %}</a>
 				</span>
 				{% endif %}
 
@@ -69,7 +69,7 @@
 	</div>
 
 	<footer>
-		Developed in Tanzania. Write me suggestions or comments to isra00@gmail.com
+		{% trans %}Developed in Tanzania. Write me suggestions or comments to isra00@gmail.com{% endtrans %}
 	</footer>
 </body>
 </html>

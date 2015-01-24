@@ -34,6 +34,13 @@ class TransposeSong
 			array($song_details['id_song'])
 		);
 
+		$app['locale'] = $song_details['locale'];
+
+		$next = $app['db']->fetchColumn(
+			'SELECT id_song FROM song WHERE id_song > ? AND id_book = ? ORDER BY id_song ASC LIMIT 1',
+			array($song_details['id_song'], $song_details['id_book'])
+		);
+
 		array_walk($original_chords, function(&$item) {
 			$item = $item['chord'];
 		});
@@ -53,35 +60,39 @@ class TransposeSong
 		);
 
 		$transpositions = $transposer->getTranspositions();
-		$not_equivalents = $transposer->findAlternativeNotEquivalent();
+ 		$not_equivalent = $transposer->findAlternativeNotEquivalent();
 
 		//Prepare the chords nicely printed
-
-		$printer = !empty($app['user']->chord_printer)
-			? $app['user']->chord_printer
-			: $song_details['chord_printer'];
-
-		$printer = $app['chord_printers.get']($printer);
+		$printer = $app['chord_printers.get']($song_details['chord_printer']);
 
 		$original_chords = $printer->printChordset($original_chords);
 
 		foreach ($transpositions as &$transposition)
 		{
 			$transposition = $printer->printTransposition($transposition);
-		}
-		foreach ($not_equivalents as &$transposition)
-		{
-			$transposition = $printer->printTransposition($transposition);
+			$transposition->setCapoForPrint($app);
 		}
 
+		$tpl = array();
+
+		if ($not_equivalent)
+		{
+			$not_equivalent = $printer->printTransposition($not_equivalent);
+			$not_equivalent->setCapoForPrint($app);
+			$tpl['not_equivalent_difference'] = ($not_equivalent->deviationFromPerfect > 0)
+				? $app->trans('higher')
+				: $app->trans('lower');
+		}
+		
 		$nc = new NotesCalculator;
 		$your_voice = $app['user']->getVoiceAsString();
 
-		return $app->render('transpose_song.tpl', array(
+		$tpl = array_merge($tpl, array(
+			'next'				=> $next,
 			'current_book'		=> $song_details,
 			'song_details'		=> $song_details,
 			'transpositions'	=> $transpositions,
-			'not_equivalents'	=> $not_equivalents,
+			'not_equivalent'	=> $not_equivalent,
 			'your_voice'		=> $your_voice,
 			'original_chords'	=> $original_chords,
 			'voice_chart'		=> TranspositionChart::getChart($song_details, $transpositions[0], $app['user']),
@@ -91,7 +102,9 @@ class TransposeSong
 				'transpose_song',
 				array('id_song' => $song_details['slug']),
 				UrlGeneratorInterface::ABSOLUTE_URL
-			),
+			)
 		));
+
+		return $app->render('transpose_song.tpl', $tpl);
 	}
 }

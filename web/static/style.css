@@ -21,11 +21,13 @@ a {
 h1 {
 	font-weight: normal;
 	margin-top: .9em;
-	margin-bottom: .9em;
+	margin-bottom: .6em;
+	line-height: 1.4em;
 }
 h4 {
 	margin-top: 1em;
 	margin-bottom: 1em;
+	line-height: 1.3em;
 }
 
 p {
@@ -118,6 +120,7 @@ footer {
 	margin: .3rem 0;
 	font-size: .9rem;
 	font-weight: normal;
+	line-height: 1.3em;
 }
 .page-book h1 {
 	margin-top: 0;
@@ -240,6 +243,11 @@ small.page_number {
 	.transposition td { 
 		border: 1px solid silver; 
 		padding: .3em .5em;
+	}
+
+	.transposition .capo {
+		font-size: .95em;
+		padding-left: .3em;
 	}
 
 	.transposition .chord {

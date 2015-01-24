@@ -7,15 +7,13 @@
 	<h1>Welcome to {{ neoglobals.software_name }}</h1>
 
 	<form method="get" action="{{ path('set_user_data') }}">
-		<p>This software analyses the songs and your voice, giving you the perfect
-		transposition for each song, according to your voice. But to do so, first
-		I need to know your voice.</p>
+		<p>{% trans %}This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.{% endtrans %}</p>
 
-		<h3>Which is the lowest note that you can sing? And the highest one?</h3>
+		<h3>{% trans %}Which is the lowest note that you can sing? And the highest one?{% endtrans %}</h3>
 
 		<p class="voice-selector">
 			<span class="field">
-				Lowest:
+				{% trans %}Lowest:{% endtrans %}
 				<select name="lowest_note">
 				{% for note in accoustic_scale %}
 					<option value="{{ note }}1" {% if neoglobals.user.lowest_note == note ~ 1 %}selected="selected"{% endif %}>{{ note }}</option>
@@ -24,7 +22,7 @@
 			</span>
 
 			<span class="field">
-				Highest:
+				{% trans %}Highest:{% endtrans %}
 				<select name="highest_note">
 {% for note in accoustic_scale %}
 					<option value="{{ note }}1" {% if neoglobals.user.highest_note == note ~ '1' %}selected="selected"'{% endif %}>{{ note }}</option>
@@ -42,7 +40,7 @@
 		</p>
 
 		<a name="book"></a>
-		<h3>Which songbook do you want to transpose?</h3>
+		<h3>{% trans %}Which songbook do you want to transpose?{% endtrans %}</h3>
 
 		<select name="book">
 		{% for id, book in neoglobals.books %}
@@ -51,7 +49,7 @@
 		</select>
 
 		<p class="center margintop">
-			<button type="submit" value="sent" class="bigbutton">We are ready!</button>
+			<button type="submit" value="sent" class="bigbutton">{% trans %}We are ready!{% endtrans %}</button>
 		</p>
 	</form>
 {% endblock %}

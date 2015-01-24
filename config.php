@@ -10,6 +10,7 @@ $config['db'] = array(
 	'charset' => 'utf8'
 );
 $config['templates_dir'] = __DIR__ . '/templates';
+$config['translation_file'] = __DIR__ . '/translations.php';
 
 $config['software_name'] = 'Neo-Transposer';
 

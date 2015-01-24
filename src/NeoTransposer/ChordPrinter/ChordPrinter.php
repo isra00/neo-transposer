@@ -8,7 +8,7 @@ abstract class ChordPrinter
 
 	public function printTransposition($transposition)
 	{
-		$transposition->chords = $this->printChordset($transposition->chords);
+		$transposition->chordsForPrint = $this->printChordset($transposition->chords);
 		return $transposition;
 	}
 

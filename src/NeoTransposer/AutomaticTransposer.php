@@ -177,7 +177,7 @@ class AutomaticTransposer
 	/**
 	 * Find alternative NOT-equivalent, but near (up to 1 semitone up or down) transpositions.
 	 * 
-	 * @return array Array of Transposition objects
+	 * @return Transposition A non-equivalent transposition (yes, only one).
 	 */
 	function findAlternativeNotEquivalent()
 	{

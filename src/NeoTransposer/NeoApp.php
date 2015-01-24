@@ -9,6 +9,7 @@ use \Silex\Application;
 class NeoApp extends Application
 {
 	use \Silex\Application\TwigTrait;
+	use \Silex\Application\TranslationTrait;
 
 	protected $notifications = array('error'=>array(), 'success'=>array());
 
@@ -65,6 +66,9 @@ class NeoApp extends Application
 			//'cookie_lifetime' => 60 * 60 * 24 * 31
 		); //1 month.
 		$this->register(new \Silex\Provider\SessionServiceProvider());
+
+		$this->register(new \Silex\Provider\TranslationServiceProvider());
+		$this['translator.domains'] = include $this['neoconfig']['translation_file'];
 	}
 
 	protected function registerCustomServices()

@@ -12,6 +12,12 @@ class Transposition
 	 * @var array
 	 */
 	public $chords = array();
+
+	/**
+	 * Transposed chords, after being processed by a ChordPrinter
+	 * @var array
+	 */
+	public $chordsForPrint = array();
 	
 	/**
 	 * Difficulty score
@@ -23,7 +29,13 @@ class Transposition
 	 * Capo number for the transposition
 	 * @var integer
 	 */
-	public $capo = 0;
+	protected $capo = 0;
+
+	/**
+	 * Capo number for the transposition, ready to be shown in the UI.
+	 * @var string
+	 */
+	public $capoForPrint;
 
 	/**
 	 * Whether the transposition is the same as the original one.
@@ -138,5 +150,12 @@ class Transposition
 	public function getAsBook()
 	{
 		return $this->asBook;
+	}
+
+	public function setCapoForPrint(NeoApp $app)
+	{
+		$this->capoForPrint = ($this->capo)
+				? $app->trans('with capo %n%', array('%n%' => $this->capo))
+				: $app->trans('(no capo)');
 	}
 }
