@@ -49,6 +49,9 @@ return array('messages' => array('es' => array(
 	=> 'Cambiar libro',
 
 	//TransposeSong
+	'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!'
+	=> '¡Transporta automáticamente los acordes de &quot;%song%&quot; (canto del Camino Neocatecumenal) para que puedas cantar sin estrés!',
+
 	'Your voice:'
 	=> 'Tu voz:',
 	
