@@ -128,7 +128,8 @@ class AutomaticTransposer
 		);
 
 		// If the perfect tone is the same as in the book, return 0.
-		if (0 == $perfect_offset)
+		// We do % 12 because octaves are not considered.
+		if (0 == $perfect_offset % 12)
 		{
 			$perfectTransposition->setAsBook(true);
 		}
@@ -222,7 +223,8 @@ class AutomaticTransposer
 			$near_transpositions[] = $near;
 		}
 
-		return $this->sortTranspositionsByEase($near_transpositions);
+		$not_equivalent = $this->sortTranspositionsByEase($near_transpositions);
+		return (!empty($not_equivalent)) ? $not_equivalent[0] : null;
 	}
 
 	/**
