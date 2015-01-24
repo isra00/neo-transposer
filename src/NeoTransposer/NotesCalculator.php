@@ -68,7 +68,7 @@ class NotesCalculator
 	 */
 	function arrayIndex($array, $index)
 	{
-		if ($index > count($array) - 1)
+		if (abs($index) > count($array) - 1)
 		{
 			$index = $index % count($array);
 		}
