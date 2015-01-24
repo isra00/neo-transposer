@@ -92,7 +92,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            array($expected),
+            $expected,
             $transposer->findAlternativeNotEquivalent()
         );
     }

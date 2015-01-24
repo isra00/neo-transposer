@@ -48,7 +48,7 @@ class NotesCalculator
 		foreach ($notes as $note)
 		{
 			$number = $number = array_search($note, $this->numbered_scale);
-			/** Añadir soporte de errores ($number === false) */
+			/** @todo Añadir soporte de errores ($number === false) */
 			if ($number < $min_number)
 			{
 				$min_number = $number;
