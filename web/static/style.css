@@ -44,10 +44,10 @@ p {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-	margin: 0 auto -3em;
+	margin: 0 auto -40px;
 }
 	.push {
-		height: 3em;
+		height: 40px;
 		clear: both;
 	}
 
@@ -110,11 +110,19 @@ footer {
 	text-shadow: 1px 1px 0 white;
 	font-style: italic;
 	font-size: .9em;
-	padding: .5em;
-	height: 2em;
-	line-height: 2.5em;
+	padding: 0;
+	height: 40px;
+	max-height: 40px;
 	/*margin-top: 2em;*/
+	line-height: 14px;
 }
+	footer p {
+		margin: 0;
+		line-height: 40px
+	}
+		footer p .feedback {
+			vertical-align: text-bottom;
+		}
 
 /*
  * BOOK

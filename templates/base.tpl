@@ -69,7 +69,7 @@
 	</div>
 
 	<footer>
-		{% trans %}Developed in Tanzania. Write me suggestions or comments to isra00@gmail.com{% endtrans %}
+		<p>{% trans with {'%email%': '<img src="' ~ app.request.basepath ~ '/static/feedback.png" class="feedback" alt="Feedback">'}%}Developed in Tanzania. Write me suggestions or comments to %email%{% endtrans %}</p>
 	</footer>
 </body>
 </html>

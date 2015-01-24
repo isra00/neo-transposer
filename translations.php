@@ -3,8 +3,8 @@
 return array('messages' => array('es' => array(
 
 	//General
-	'Developed in Tanzania. Write me suggestions or comments to isra00@gmail.com'
-	=> 'Desarrollado en Tanzania. Escríbeme dudas o comentarios a isra00@gmail.com',
+	'Developed in Tanzania. Write me suggestions or comments to %email%'
+	=> 'Desarrollado en Tanzania. Escríbeme dudas o comentarios a %email%',
 
 	'Log-out'
 	=> 'Salir',
