@@ -23,7 +23,7 @@ class Sitemap
 		foreach ($books as $book)
 		{
 			$urls[] = array(
-				'loc' => $app['url_generator']->generate('book', array('id_book' => $book['id_book']), UrlGeneratorInterface::ABSOLUTE_URL),
+				'loc' => $app['url_generator']->generate('book_' . $book['id_book'], array(), UrlGeneratorInterface::ABSOLUTE_URL),
 				'priority' => 1,
 				'changefreq' => 'weekly',
 				'lastmod' => $time
