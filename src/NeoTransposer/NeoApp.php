@@ -39,6 +39,13 @@ class NeoApp extends Application
 
 			//Así se salta el enableStrictVariables del Twig-Bridge cuando debug=1
 			$this['twig']->disableStrictVariables();
+
+			//By default, the locale is the language of the browser (Accept-Language header).
+			$available_languages = array_merge(
+				array('en'), 
+				array_keys($app['translator.domains']['messages'])
+			);
+			$this['locale'] = $request->getPreferredLanguage($available_languages);
 		});
 	}
 

@@ -49,7 +49,7 @@ REG;
 
 		if (empty($user->lowest_note))
 		{
-			return $app->redirect($app['url_generator']->generate('user_settings'));
+			return $app->redirect($app['url_generator']->generate('user_settings', array('_locale' => $app['locale'])));
 		}
 		else
 		{
