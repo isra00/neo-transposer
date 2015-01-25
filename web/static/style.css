@@ -256,6 +256,12 @@ small.page_number {
 		padding: .3em .5em;
 	}
 
+	.transposition .score {
+		font-size: .8rem;
+		font-weight: bold;
+		color: navy;
+	}
+
 	.transposition .capo {
 		font-size: .95em;
 		padding-left: .3em;

@@ -8,9 +8,11 @@
 	<table class="transposition">
 		<thead>
 			<th colspan="3">
-				<!--{{ transposition.score }}-->
 				<strong>{{ transposition.chordsForPrint[0]|raw }} </strong>
 				<span class="capo">{{ transposition.capoForPrint }}</span>
+				{% if neoglobals.debug %}
+				<small class="score">[{{ transposition.score }}]</small>
+				{% endif %}
 			</th>
 		</thead>
 		<tbody>
@@ -45,7 +47,9 @@
 	</div>
 {% endif %}
 
-{# <a href="/transpose/{{ next }}">NEXT &rarr;</a> #}
+{% if neoglobals.debug %}
+<a href="/transpose/{{ next }}">NEXT &rarr;</a>
+{% endif %}
 
 <h1 class="song-title">
 	<small class="page_number">{{ song_details.page }}</small>
@@ -71,7 +75,7 @@
 </div>
 {% endif %}
 
-<div class="voicechart-container">
+<div class="voicechart-container" {% if neoglobals.debug %}style="display: block"{% endif %}>
 	<table class="voicechart">
 	{% for voice in voice_chart %}
 		<tr class="{{ voice.css }}">

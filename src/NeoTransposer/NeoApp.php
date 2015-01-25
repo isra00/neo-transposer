@@ -28,6 +28,12 @@ class NeoApp extends Application
 		}
 
 		$this['controllers']->before(function(Request $request, Application $app) {
+
+			if ($request->query->get('debug'))
+			{
+				$this['debug'] = true;
+			}
+
 			$app['twig']->addGlobal('neoglobals', array(
 				'software_name' => $app['neoconfig']['software_name'],
 				'analytics_id'  => $app['neoconfig']['analytics_id'],
