@@ -83,7 +83,7 @@ return array('messages' => array('es' => array(
 	=> 'más grave',
 
 	'Original chords:'
-	=> 'Acordes originales:',
+	=> 'Original:',
 	
 	'Transposed:'
 	=> 'Transportado:',
