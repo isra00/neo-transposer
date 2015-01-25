@@ -229,7 +229,7 @@ class AutomaticTransposer
 			$perfectAndEquivalent = $this->getTranspositions();
 			if ($perfectAndEquivalent[0]->score <= $near->score)
 			{
-				//continue;
+				continue;
 			}
 
 			$near_transpositions[] = $near;
