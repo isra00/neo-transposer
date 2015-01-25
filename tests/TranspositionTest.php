@@ -42,5 +42,11 @@ class TranspositionTest extends PHPUnit_Framework_TestCase
 	{
 		$this->transp->setAlternativeChords($this->nc);
 		$this->assertEquals(array('Em', 'Am', 'B7'), $this->transp->chords);
+
+		// If AsBook, alternative chords should not be calculated.
+		$chords2 = array('Em', 'Am', 'B');
+		$tr2 = new Transposition($chords2, 0, true);
+		$tr2->setAlternativeChords($this->nc);
+		$this->assertEquals($chords2, $tr2->chords);
 	}
 }

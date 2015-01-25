@@ -188,25 +188,24 @@ class Transposition
 
 	public function setAlternativeChords(\NeoTransposer\NotesCalculator $nc)
 	{
-		$alternativeChords = array(
-			'G' => array(
-				'B' => 'B7'
-			),
-		);
-
-		$tone = $this->getTone($nc);
-
-		foreach ($this->chords as &$chord)
-		{
-			if (isset($alternativeChords[$tone][$chord]))
-			{
-				$chord = $alternativeChords[$tone][$chord];
-				//echo "Sustituyendo acorde $chord por {$alternativeChords[$tone][$chord]}\n";
-			}
-		}
-
 		if (!$this->asBook)
 		{
+			$alternativeChords = array(
+				'G' => array(
+					'B' => 'B7'
+				),
+			);
+
+			$tone = $this->getTone($nc);
+
+			foreach ($this->chords as &$chord)
+			{
+				if (isset($alternativeChords[$tone][$chord]))
+				{
+					$chord = $alternativeChords[$tone][$chord];
+					//echo "Sustituyendo acorde $chord por {$alternativeChords[$tone][$chord]}\n";
+				}
+			}
 			$this->setScore();
 		}
 	}
