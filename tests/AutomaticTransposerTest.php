@@ -17,7 +17,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->transposer = new AutomaticTransposer(
-            'G1', 'G3', 'B1', 'B2', array('Am', 'Dm', 'F', 'C')
+            'G1', 'G3', 'B1', 'B2', array('Am', 'Dm', 'F', 'C'), false
         );
     }
 
@@ -42,7 +42,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
     public function testFindPerfectTranspositionAsBook()
     {
         $transposer = new AutomaticTransposer(
-            'F1', 'F3', 'B1', 'B2', array('Bm', 'Em', 'G', 'D')
+            'F1', 'F3', 'B1', 'B2', array('Bm', 'Em', 'G', 'D'), false
         );
 
         $expected = new Transposition(
@@ -84,11 +84,11 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
     public function testFindAlternativeNotEquivalent()
     {
         $transposer = new AutomaticTransposer(
-            'A1', 'D3', 'C#2', 'E3', array('D', 'F#', 'Bm', 'A', 'G')
+            'A1', 'D3', 'C#2', 'E3', array('D', 'F#', 'Bm', 'A', 'G'), false
         );
 
         $expected = new Transposition(
-            array('C', 'E', 'Am', 'G', 'F'), 0, false, -2, 'B1', 'D3', 1
+            array('C', 'E', 'Am', 'G', 'F'), 0, false, -2, 'B1', 'D3', 1, false
         );
 
         $this->assertEquals(

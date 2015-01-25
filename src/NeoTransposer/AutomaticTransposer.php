@@ -18,6 +18,7 @@ class AutomaticTransposer
 	protected $song_lowest_note;
 	protected $song_highest_note;
 	protected $original_chords;
+	protected $first_chord_is_tone;
 
 	/**
 	 * The offset applied for the perfect transposition.
@@ -54,13 +55,14 @@ class AutomaticTransposer
 	 * @param  string $song_highest_note   Song's highest note
 	 * @param  array $original_chords      Song original chords
 	 */
-	function __construct($singer_lowest_note, $singer_highest_note, $song_lowest_note, $song_highest_note, $original_chords)
+	function __construct($singer_lowest_note, $singer_highest_note, $song_lowest_note, $song_highest_note, $original_chords, $first_chord_is_tone)
 	{
 		$this->singer_lowest_note = $singer_lowest_note;
 		$this->singer_highest_note = $singer_highest_note;
 		$this->song_lowest_note = $song_lowest_note;
 		$this->song_highest_note = $song_highest_note;
 		$this->original_chords = $original_chords;
+		$this->first_chord_is_tone = $first_chord_is_tone;
 
 		$this->nc = new NotesCalculator;
 	}
@@ -170,7 +172,10 @@ class AutomaticTransposer
 				$transposition->highestNote
 			);
 
-			$withCapo[$i]->setAlternativeChords($this->nc);
+			if ($this->first_chord_is_tone)
+			{
+				$withCapo[$i]->setAlternativeChords($this->nc);
+			}
 		}
 
 		return $withCapo;
@@ -199,7 +204,10 @@ class AutomaticTransposer
 				$dif
 			);
 
-			$near->setAlternativeChords($this->nc);
+			if ($this->first_chord_is_tone)
+			{
+				$near->setAlternativeChords($this->nc);
+			}
 
 			if ($this->original_chords == $near->chords)
 			{

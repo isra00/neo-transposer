@@ -56,7 +56,8 @@ class TransposeSong
 			$app['user']->highest_note,
 			$song_details['lowest_note'], 
 			$song_details['highest_note'], 
-			$original_chords
+			$original_chords,
+			$song_details['first_chord_is_tone']
 		);
 
 		$transpositions = $transposer->getTranspositions();
