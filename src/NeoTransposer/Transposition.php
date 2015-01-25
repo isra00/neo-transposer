@@ -104,13 +104,13 @@ class Transposition
 		$this->highestNote 	= $highest_note;
 		$this->deviationFromPerfect = $deviationFromPerfect;
 
-		$this->setChordsetEase();
+		$this->setScore();
 	}
 
 	/**
 	 * Calculates the ease of the transposition, based on each chord's ease.
 	 */
-	public function setChordsetEase()
+	public function setScore()
 	{
 		$this->score = 0;
 
@@ -135,16 +135,12 @@ class Transposition
 		 * it's simpler to work with for the cantor. If the cantor is looking
 		 * specifically for easier chords, he/she has the other options.
 		 */
-		if ($this->asBook)
-		{
-			$this->score = $this->score / 2;
-		}
 	}
 
 	public function setAsBook($asBook)
 	{
 		$this->asBook = $asBook;
-		$this->setChordsetEase();
+		$this->setScore();
 	}
 
 	public function getAsBook()
@@ -157,5 +153,61 @@ class Transposition
 		$this->capoForPrint = ($this->capo)
 				? $app->trans('with capo %n%', array('%n%' => $this->capo))
 				: $app->trans('(no capo)');
+	}
+
+	/**
+	 * In most of songs, the tone is equal to the first chord. If not, no
+	 * alternative chords are calculated. Yes, that's simple.
+	 *
+	 * @param  \NeoTransposer\NotesCalculator $nc An instance of NotesCalculator
+	 * @return [type]                             [description]
+	 */
+	public function getTone(\NeoTransposer\NotesCalculator $nc)
+	{
+		$first_chord = $nc->readChord($this->chords[0]);
+
+		/*
+		 * Flattens the chord, it is, remove all attributes different from minor.
+		 * This is needed because some songs, like Sola a Solo, start with a
+		 * 4-note chord (Dm5), or Song of Moses (C7).
+		 */
+		$first_chord['attributes'] = (false !== strpos($first_chord['attributes'], 'm'))
+			? 'm' : '';
+
+		//The tone is always expressed in major form, so we resolve the minor
+		//relatives, it is, the tone will be its third major.
+		if ($first_chord['attributes'] == 'm')
+		{
+			$position = array_search($first_chord['fundamental'], $nc->accoustic_scale);
+			$first_chord['fundamental'] = $nc->arrayIndex($nc->accoustic_scale, $position + 3);
+			$first_chord['attributes'] = null; 
+		}
+
+		return $first_chord['fundamental'] . $first_chord['attributes'];
+	}
+
+	public function setAlternativeChords(\NeoTransposer\NotesCalculator $nc)
+	{
+		$alternativeChords = array(
+			'G' => array(
+				'B' => 'B7'
+			),
+		);
+
+		$tone = $this->getTone($nc);
+
+		foreach ($this->chords as &$chord)
+		{
+			if (isset($alternativeChords[$tone][$chord]))
+			{
+				$chord = $alternativeChords[$tone][$chord];
+				//echo "Sustituyendo acorde $chord por {$alternativeChords[$tone][$chord]}\n";
+			}
+		}
+
+		if (!$this->asBook)
+		{
+			$this->setScore();
+		}
 	}
 }

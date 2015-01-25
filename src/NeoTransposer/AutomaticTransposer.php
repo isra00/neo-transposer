@@ -148,7 +148,7 @@ class AutomaticTransposer
 	 * equivalent transpositions using the capo, looking for the easiest chords.
 	 *
 	 * The criteria for which chords are easier or harder are implemented in
-	 * Transposition::setChordsetEase().
+	 * Transposition::setScore().
 	 * 
 	 * @param  Transposition $transposition A given transposition without capo.
 	 * @return array Array of <Transposition> with capo from 1 to 5.
@@ -169,6 +169,8 @@ class AutomaticTransposer
 				$transposition->lowestNote,
 				$transposition->highestNote
 			);
+
+			$withCapo[$i]->setAlternativeChords($this->nc);
 		}
 
 		return $withCapo;
@@ -197,6 +199,8 @@ class AutomaticTransposer
 				$dif
 			);
 
+			$near->setAlternativeChords($this->nc);
+
 			if ($this->original_chords == $near->chords)
 			{
 				$near->setAsBook(true);
@@ -217,7 +221,7 @@ class AutomaticTransposer
 			$perfectAndEquivalent = $this->getTranspositions();
 			if ($perfectAndEquivalent[0]->score <= $near->score)
 			{
-				continue;
+				//continue;
 			}
 
 			$near_transpositions[] = $near;
