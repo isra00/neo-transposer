@@ -3,8 +3,8 @@
 return array('messages' => array('es' => array(
 
 	//General
-	'Developed in Tanzania. Write me suggestions or comments to %email%'
-	=> 'Desarrollado en Tanzania. Escríbeme dudas o comentarios a %email%',
+	'Developed in Tanzania. Contact: %email%'
+	=> 'Desarrollado en Tanzania. Contacto: %email%',
 
 	'Log-out'
 	=> 'Salir',
@@ -37,6 +37,9 @@ return array('messages' => array('es' => array(
 	
 	'Highest:'
 	=> 'Más aguda:',
+	
+	'octave'
+	=> 'octava',
 	
 	'Which songbook do you want to transpose?'
 	=> '¿Qué libro de cantos quieres transportar?',

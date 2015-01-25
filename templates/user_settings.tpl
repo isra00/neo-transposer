@@ -29,7 +29,8 @@
 {% endfor %}
 
 {% for i in 2..3 %}
-					<optgroup label="+{{ i - 1 }} octave{{ (i > 1) ? 's' }}">
+					{# Cambiar el trans de octave por transChoice #}
+					<optgroup label="+{{ i - 1 }} {{ 'octave'|trans }}{{ (i > 1) ? 's' }}">
 	{% for note in accoustic_scale %}
 						<option value="{{ note }}{{ i }}"{% if neoglobals.user.highest_note == note ~ i %} selected="selected"{% endif %}>{{ note }}</option>
 	{% endfor %}
