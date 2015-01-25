@@ -89,7 +89,7 @@ class Transposition
 	 */
 	protected static $easyChords = array(
 		'Em', 'E', 'Am', 'A', 'D', 'Dm', 'C', 'G', 'E7', 'A7', 'G7', 'D7', 
-		'B7', 'F', 'C7', 'G#', 'G#m', 'F#', 'F#m', 'Gm', 'Bm', 'A#', 'C#', 
+		'B7', 'F', 'C7', 'F#', 'Bm', 'F#m', 'G#', 'G#m', 'Gm', 'A#', 'C#', 
 		'C#7', 'Dm9', 'F7', 'F#7', 'B', 'Dm5', 'Fm', 'A#7', 'C#m', 'A#m', 'Cm', 
 		'G#7', 'D#', 'D#m', 'D#7',
 	);
