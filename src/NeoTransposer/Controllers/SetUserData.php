@@ -31,7 +31,7 @@ class SetUserData
 		}
 
 		/** @deprecated En TransposeSong se fuerza el Printer al del libro */
-		if ($request->get('chord_printer'))
+		/*if ($request->get('chord_printer'))
 		{
 			if (false === array_search($request->get('chord_printer'), array_keys($app['chord_printers.list'])))
 			{
@@ -39,7 +39,7 @@ class SetUserData
 			}
 
 			$app['user']->chord_printer = $request->get('chord_printer');
-		}
+		}*/
 
 		if ($request->get('lowest_note'))
 		{

@@ -37,7 +37,7 @@ class NeoApp extends Application
 				'debug'			=> $this['debug'],
 			));
 
-			//Así se salta el enableStrictVariables del Twig-Bridge cuando debug=1
+			//If debug=1, Twig enables strict variables. We disable it always.
 			$this['twig']->disableStrictVariables();
 
 			//If no locale has been specified in the URL,  the Accept-Language header is taken.
@@ -92,12 +92,6 @@ class NeoApp extends Application
 			}
 			return $books_nice;
 		});
-
-		$this['chord_printers.list'] = array(
-			'English' => 'English (F#m, Bb7)',
-			'Swahili' => 'Swahili (Fd-, Eb7)',
-			'Spanish' => 'Español (Fa#-, Sib7)',
-		);
 
 		$this['chord_printers.get'] = $this->protect(function($printer) {
 			$printer = "\NeoTransposer\ChordPrinter\ChordPrinter$printer";
