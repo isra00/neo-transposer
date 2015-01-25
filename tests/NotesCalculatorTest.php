@@ -60,4 +60,14 @@ class NotesCalculatorTest extends PHPUnit_Framework_TestCase
     {
     	$this->assertEquals('B1', $this->nc->lowestNote(array('B3', 'C2', 'B1')));
     }
+
+    public function testArrayIndex()
+    {
+        $arr = array('a', 'b', 'c', 'd');
+
+        $this->assertEquals('a', $this->nc->arrayIndex($arr, 4));
+        $this->assertEquals('a', $this->nc->arrayIndex($arr, 8));
+        $this->assertEquals('d', $this->nc->arrayIndex($arr, -1));
+        $this->assertEquals('d', $this->nc->arrayIndex($arr, -5));
+    }
 }
