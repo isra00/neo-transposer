@@ -79,7 +79,7 @@
 	<table class="voicechart">
 	{% for voice in voice_chart %}
 		<tr class="{{ voice.css }}">
-			<th>{{ voice.caption|trans }}</tb>
+			<th>{{ voice.caption|trans }}</th>
 			{% for i in range(0, voice.offset) %}<th>&nbsp;</th>{% endfor %}
 			<td class="note">{{ voice.lowest }}</td>
 			{% for i in range(0, voice.length) %}<td>██</td>{% endfor %}
