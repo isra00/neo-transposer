@@ -237,7 +237,7 @@ small.page_number {
 }
 .transposition {
 	border-collapse: collapse;
-	margin: 1em;
+	margin: 1em 2em 1em 0;
 	float: left;
 }
 .transposition:first-child {
