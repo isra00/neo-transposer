@@ -27,6 +27,9 @@ class NeoApp extends Application
 			$this['debug'] = $config['debug'];
 		}
 
+		/*
+		 * Actions before every controller.
+		 */
 		$this['controllers']->before(function(Request $request, Application $app) {
 
 			if ($request->query->get('debug'))
@@ -46,18 +49,21 @@ class NeoApp extends Application
 			//If debug=1, Twig enables strict variables. We disable it always.
 			$this['twig']->disableStrictVariables();
 
-			//If no locale has been specified in the URL,  the Accept-Language header is taken.
+			//If no locale has been specified in the URL, the Accept-Language header is taken.
 			if (empty($request->attributes->get('_route_params')['_locale']))
 			{
-				$available_languages = array_merge(
+				$this['locale'] = $request->getPreferredLanguage(array_merge(
 					array('en'), 
 					array_keys($app['translator.domains']['messages'])
-				);
-				$this['locale'] = $request->getPreferredLanguage($available_languages);
+				));
 			}
 		});
 	}
 
+	/**
+	 * Register some Silex services used in the app.
+	 * @see composer.json, since some of these services require ext dependencies.
+	 */
 	protected function registerSilexServices()
 	{
 		$this->register(new \Silex\Provider\TwigServiceProvider(), array(
@@ -77,16 +83,16 @@ class NeoApp extends Application
 
 		$this->register(new \Silex\Provider\UrlGeneratorServiceProvider());
 
-		$this['session.storage.options'] = array(
-			'cookie_lifetime' => 60,
-			//'cookie_lifetime' => 60 * 60 * 24 * 31
-		); //1 month.
+		$this['session.storage.options'] = array('cookie_lifetime' => 60 * 60 * 24 * 31); //1 month.
 		$this->register(new \Silex\Provider\SessionServiceProvider());
 
 		$this->register(new \Silex\Provider\TranslationServiceProvider());
 		$this['translator.domains'] = include $this['neoconfig']['translation_file'];
 	}
 
+	/**
+	 * Services available for every controller.
+	 */
 	protected function registerCustomServices()
 	{
 		$this['books'] = $this->share(function($app) {
@@ -112,8 +118,17 @@ class NeoApp extends Application
 		$this['user'] = $this['session']->get('user');
 	}
 
+	/**
+	 * Adds a notification that will be shown in the app's header (see base.tpl)
+	 * @param string $type 'error' or 'success'.
+	 * @param string $text Text of the notification.
+	 */
 	function addNotification($type, $text)
 	{
+		if (false === array_search($type, array_keys($this->notifications)))
+		{
+			throw new \OutOfRangeException("Notification type $type not valid");
+		}
 		$this->notifications[$type][] = $text;
 	}
 
