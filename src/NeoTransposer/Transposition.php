@@ -118,13 +118,13 @@ class Transposition
 		{
 			$score = array_search($chord, self::$easyChords);
 
-			//Acordes no registrados se les asigna una dificultad media
+			//Acordes no registrados se les asigna una dificultad media-alta
 			/** @todo Mejorar esto: cuando estén todos metidos, los que no estén
 			registrados serán MUY raros, por tanto deberían tener una puntuación
 			muy alta */
 			if (false === $score)
 			{
-				$score = count(self::$easyChords) / 2;
+				$score = count(self::$easyChords) / 1.5;
 			}
 			
 			$this->score += $score;
