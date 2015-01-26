@@ -9,7 +9,7 @@
 {% block content %}
 <h1>
 	{% if neoglobals.user.isLoggedIn %}
-	<span class="change-book"><a class="small-button" href="{{ path('user_settings') }}#book">{% trans %}Change book{% endtrans %}</a></span>
+	<span class="change-book"><a class="small-button" href="{{ path('user_settings', {'_locale':app.locale}) }}#book">{% trans %}Change book{% endtrans %}</a></span>
 	{% endif %}
 
 	{{ current_book.lang_name }}
