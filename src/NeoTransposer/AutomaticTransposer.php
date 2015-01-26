@@ -110,9 +110,8 @@ class AutomaticTransposer
 		 * note and the song and singer wideness.
 		 */
 		$perfect_offset = intval(
-			($this->nc->distanceWithOctave($this->song_lowest_note, $this->singer_lowest_note)
-				* (-1)
-			) + $offset_from_singer_lowest
+			(-1) * $this->nc->distanceWithOctave($this->song_lowest_note, $this->singer_lowest_note)
+			+ $offset_from_singer_lowest
 		);
 
 		/*
