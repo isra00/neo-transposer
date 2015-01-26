@@ -267,7 +267,6 @@ class AutomaticTransposer
 			$perfectTransposition = $this->getPerfectTransposition();
 
 			$equivalents = $this->findEquivalentsWithCapo($perfectTransposition, $this->original_chords);
-			//$alternativesNotEquivalent = $this->findAlternativeNotEquivalent($perfectTransposition['chords']);
 
 			$perfect_and_equivalent = array_merge(array($perfectTransposition), $equivalents);
 			$perfect_and_equivalent = $this->sortTranspositionsByEase($perfect_and_equivalent);
