@@ -11,7 +11,7 @@
 				<strong>{{ transposition.chordsForPrint[0]|raw }} </strong>
 				<span class="capo">{{ transposition.capoForPrint }}</span>
 				{% if neoglobals.debug %}
-				<small class="score">[{{ transposition.score }}]</small>
+				<small class="score">[{{ transposition.score|round }}]</small>
 				{% endif %}
 			</th>
 		</thead>
