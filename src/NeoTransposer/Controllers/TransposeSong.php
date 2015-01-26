@@ -97,7 +97,7 @@ class TransposeSong
 			'your_voice'		=> $your_voice,
 			'original_chords'	=> $original_chords,
 			'voice_chart'		=> TranspositionChart::getChart($song_details, $transpositions[0], $app['user']),
-			'page_title'		=> $song_details['title'],
+			'page_title'		=> $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $song_details['title'])),
 			'page_class'		=> 'transpose-song',
 			'meta_canonical'	=> $app['url_generator']->generate(
 				'transpose_song',

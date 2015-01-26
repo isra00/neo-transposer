@@ -21,7 +21,7 @@ class Book
 		$app['locale'] = $app['books'][$id_book]['locale'];
 
 		return $app->render('book.tpl', array(
-			'page_title'	 => $app['books'][$id_book]['lang_name'],
+			'page_title'	 => $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name'])),
 			'current_book'	 => $app['books'][$id_book],
 			'songs'			 => $songs
 		));

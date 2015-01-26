@@ -54,10 +54,16 @@ return array('messages' => array('es' => array(
 	=> '¡Todo listo!',
 
 	//Book
+	'Songs of the Neocatechumenal Way in %lang%'
+	=> 'Cantos del Camino Neocatecumenal en %lang%',
+
 	'Change book'
 	=> 'Cambiar libro',
 
 	//TransposeSong
+	'%song% (Neocatechumenal Way)'
+	=> '%song% (Camino Neocatecumenal)',
+
 	'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!'
 	=> '¡Transporta automáticamente los acordes de &quot;%song%&quot; (canto del Camino Neocatecumenal) para que puedas cantar sin estrés!',
 
