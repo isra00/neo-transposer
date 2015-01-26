@@ -13,8 +13,14 @@ class UserSettings
 	{
 		$nc = new NotesCalculator;
 
+		//Probably the user will want the book in their own language.
+		$default_book = !empty($app['user']->id_book)
+			? $app['books'][$app['user']->id_book]['locale']
+			: $app['locale'];
+
 		return $app->render('user_settings.tpl', array(
-			'page_title'		=> 'Settings',
+			'page_title'		=> $app->trans('Settings'),
+			'default_book'		=> $default_book,
 			'scale'				=> $nc->numbered_scale,
 			'accoustic_scale'	=> $nc->accoustic_scale
 		));

@@ -45,7 +45,7 @@
 
 		<select name="book">
 		{% for id, book in neoglobals.books %}
-			<option value="{{ id }}"{% if neoglobals.user.id_book == book.id_book %} selected="selected"{% endif %}>{{ book.lang_name }} ({{ book.details}})</option>
+			<option value="{{ id }}"{% if default_book == book.locale %} selected="selected"{% endif %}>{{ book.lang_name }} ({{ book.details}})</option>
 		{% endfor %}
 		</select>
 

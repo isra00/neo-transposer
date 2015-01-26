@@ -13,6 +13,9 @@ return array('messages' => array('es' => array(
 	=> 'Neo-Transposer transporta automáticamente los cantos del Camino por ti, para que encajen perfectamente con tu voz.',
 
 	//Login
+	'Log-in'
+	=> 'Iniciar sesión',
+
 	'Welcome to %software%'
 	=> 'Bienvenido a %software%',
 
@@ -26,6 +29,9 @@ return array('messages' => array('es' => array(
 	=> 'Ese e-mail no tiene buena pinta. Por favor, revísalo.',
 
 	//User settings
+	'Settings'
+	=> 'Configuración',
+
 	'This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.'
 	=> 'Este software analiza los cantos y tu voz, calculando la transposición perfecta para cada canto, de acuerdo a tu voz. Pero para hacer eso, necesito saber una cosa sobre tu voz.',
 
