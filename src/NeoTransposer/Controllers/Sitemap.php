@@ -18,7 +18,7 @@ class Sitemap
 	{
 		$urls = array();
 
-		$time = '2015-01-24T00:00Z';
+		$time = '2015-01-28T10:00Z';
 
 		$books = $app['books'];
 		foreach ($books as $book)
