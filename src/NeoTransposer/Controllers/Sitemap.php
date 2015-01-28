@@ -3,6 +3,7 @@
 namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Sitemap
@@ -44,6 +45,10 @@ class Sitemap
 			);
 		}
 
-		return $app->render('sitemap.tpl', array('urls'	=> $urls));
+		return new Response(
+            $app['twig']->render('sitemap.tpl', array('urls' => $urls)),
+            200,
+            ['Content-Type' => 'application/xml']
+        );
 	}
 }
