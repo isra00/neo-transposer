@@ -87,7 +87,12 @@ class NeoApp extends Application
 		$this->register(new \Silex\Provider\SessionServiceProvider());
 
 		$this->register(new \Silex\Provider\TranslationServiceProvider());
-		$this['translator.domains'] = include $this['neoconfig']['translation_file'];
+		$translations = array();
+		foreach ($this['neoconfig']['translations'] as $locale=>$file)
+		{
+			$translations['messages'][$locale] = include $file;
+		}
+		$this['translator.domains'] = $translations;
 	}
 
 	/**

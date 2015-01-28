@@ -15,12 +15,16 @@ return array(
 		1 => '/nyimbo-njia-neokatekumenato',
 		2 => '/cantos-camino-neocatecumenal',
 	),
+	
+	'translations'	=> array(
+		'es' => __DIR__ . '/trans/es.php',
+		'sw' => __DIR__ . '/trans/sw.php',
+	),
 
 	'software_name'		=> 'Neo-Transposer',
 	'analytics_id'		=> 'UA-57809429-1',
 
 	'templates_dir'		=> __DIR__ . '/templates',
-	'translation_file'	=> __DIR__ . '/translations.php',
 
 	'debug'				=> false,
 );
