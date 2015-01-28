@@ -69,7 +69,7 @@
 	</div>
 
 	<footer>
-		<p>{% trans with {'%email%': '<img src="' ~ app.request.basepath ~ '/static/feedback.png" class="feedback" alt="Feedback">'}%}Developed in Tanzania. Contact: %email%{% endtrans %}</p>
+		<p>{% trans with {'%email%': '<img src="' ~ app.request.basepath ~ '/static/feedback.png" class="feedback" alt="Feedback" width="121" height="15">'}%}Developed in Tanzania. Contact: %email%{% endtrans %}</p>
 	</footer>
 </body>
 </html>

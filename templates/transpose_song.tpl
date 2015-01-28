@@ -7,13 +7,13 @@
 {% macro printTransposition(transposition, original_chords) %}
 	<table class="transposition">
 		<thead>
-			<th colspan="3">
+			<tr><th {% if not transposition.getAsBook %}colspan="3"{% endif %}>
 				<strong>{{ transposition.chordsForPrint[0]|raw }} </strong>
 				<span class="capo">{{ transposition.capoForPrint }}</span>
 				{% if neoglobals.debug %}
 				<small class="score">[{{ transposition.score|round }}]</small>
 				{% endif %}
-			</th>
+			</th></tr>
 		</thead>
 		<tbody>
 		{% if transposition.getAsBook %}
