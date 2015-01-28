@@ -34,7 +34,7 @@ REG;
 		if (!preg_match("/$regexp/i", $request->get('email')))
 		{
 			return $this->get($request, $app, array(
-				'form_error' => 'That e-mail doesn\'t look good. Please, re-type it.',
+				'error_msg'  => $app->trans('That e-mail doesn\'t look good. Please, re-type it.'),
 				'post'		 => array('email' => $request->get('email'))
 			));
 		}

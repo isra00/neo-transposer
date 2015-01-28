@@ -7,10 +7,10 @@
 
 	<h1>{% trans with {'%software%': '<span class="software-name">' ~ neoglobals.software_name ~ '</span>'} %}Welcome to %software%{% endtrans %}</h1>
 
-	{% macro login_form() %}
+	{% macro login_form(error_msg) %}
 	{# @todo Implementar redirección después del login #}
 	<form method="post" action="{{ path('login') }}" class="login-form">
-		{% if form_error %}<div class="error">{{ form_error }}</div>{% endif %}
+		<div class="error">{{ error_msg }}</div>
 		
 		<div class="field block full-width">
 			<label for="email">{% trans %}Please, type your e-mail:{% endtrans %}</label>
@@ -23,6 +23,6 @@
 	{% endmacro %}
 	{% import _self as self %}
 
-	{{ self.login_form() }}
+	{{ self.login_form(error_msg) }}
 
 {% endblock %}
