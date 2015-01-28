@@ -40,8 +40,8 @@
 	<div class="teaser">
 		<div class="inside">
 			<div class="more-inside">
+				<p>{% trans with {'%song%': song_details.title } %}Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!{% endtrans %}</p>
 				{{ login.login_form() }}
-				<p>Neo-Transposer helps you to automatically transpose the chords of <strong>{{ song_details.title }}</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!</p>
 			</div>
 		</div>
 	</div>

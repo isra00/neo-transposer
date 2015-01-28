@@ -175,10 +175,15 @@ footer {
 		overflow: hidden;
 		background: white;
 	}
-	.teaser .login-form {
-		float: right;
-		margin-left: 1em;
-	}
+		.teaser .inside .more-inside p {
+			display: inline-block;
+			width: 16em;
+		}
+		.teaser .login-form {
+			display: inline-block;
+			vertical-align: top;
+			margin: 2em 0 0 1em;
+		}
 
 /*
  * LOGIN
@@ -450,8 +455,13 @@ input[type="text"] {
 			border: 0;
 			border-top: 1px solid silver;
 		}
+
+		.teaser .inside .more-inside p {
+			display: block;
+			width: auto;
+		}
 		.teaser .login-form {
-			float: none;
+			display: block;
 			margin: 0;		
 		}
 }
