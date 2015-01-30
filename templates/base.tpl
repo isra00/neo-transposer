@@ -24,7 +24,7 @@
 	{% endif %}
 </head>
 
-<body class="{% block page_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
+<body class="{% block page_class %}{% endblock %}">
 	<div class="wrapper">
 
 		<nav class="header">

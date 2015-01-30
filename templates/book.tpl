@@ -4,8 +4,6 @@
 
 {% block page_class %}page-book{% endblock %}
 
-{% block body_attributes %}onload="document.getElementById('email').focus()"{% endblock %}
-
 {% block content %}
 <h1>
 	{% if neoglobals.user.isLoggedIn %}

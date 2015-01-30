@@ -1,7 +1,6 @@
 {% extends "base.tpl" %}
 
 {% block page_class %}page-login{% endblock %}
-{% block body_attributes %}onload="document.getElementById('email').focus()"{% endblock %}
 
 {% block content %}
 
@@ -14,7 +13,7 @@
 		
 		<div class="field block full-width">
 			<label for="email">{% trans %}Please, type your e-mail:{% endtrans %}</label>
-			<input type="email" name="email" id="email" value="{{ post.email }}" required>
+			<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required>
 		</div>
 		<div class="field block full-width">
 			<button type="submit" name="sent" class="bigbutton">{% trans %}Enter{% endtrans %}</button>

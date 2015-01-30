@@ -2,8 +2,6 @@
 
 {% block page_class %}page-book{% endblock %}
 
-{% block body_attributes %}onload="document.getElementById('title').focus()"{% endblock %}
-
 {% block content %}
 
 {# @todo JS: Enfocar el campo title al cargar la página #}
@@ -23,7 +21,7 @@
 
 		<p>
 			<label for="title">Title:</label>
-			<input name="title" id="title" size="50">
+			<input name="title" id="title" size="50" autofocus>
 		</p>
 		
 		<p>
