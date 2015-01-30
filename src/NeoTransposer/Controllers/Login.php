@@ -42,7 +42,7 @@ REG;
 		if (!$user = User::fetchUserFromEmail($request->get('email'), $app['db']))
 		{
 			$user = new User($request->get('email'));
-			$user->persist($app['db']);
+			$user->persist($app['db'], $request);
 		}
 
 		$app['session']->set('user', $user);

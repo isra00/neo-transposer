@@ -52,7 +52,7 @@ class User
 	 * @param  \Doctrine\DBAL\Connection $db A DB connection.
 	 * @return integer The user ID, if it was not set.
 	 */
-	public function persist(\Doctrine\DBAL\Connection $db)
+	public function persist(\Doctrine\DBAL\Connection $db, Request $request)
 	{
 		/** @todo Hacerlo en una sola consulta, con replace or insert */
 
@@ -73,7 +73,8 @@ class User
 			'lowest_note' => $this->lowest_note,
 			'highest_note' => $this->highest_note,
 			'id_book' => $this->id_book,
-			'chord_printer' => $this->chord_printer
+			'chord_printer' => $this->chord_printer,
+			'register_ip' => $request->getClientIp()
 		));
 
 		return $this->id_user = $db->lastInsertId();

@@ -51,7 +51,7 @@ class SetUserData
 			$app['user']->highest_note = $request->get('highest_note');
 		}
 
-		$app['user']->persist($app['db']);
+		$app['user']->persist($app['db'], $request);
 
 		return $app->redirect($request->get('redirect')
 			? $request->get('redirect')
