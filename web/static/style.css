@@ -399,6 +399,14 @@ input[type="text"] {
 
 @media only screen and (max-width: 40rem) {
 
+	/* Some Samsung devices don't display italics with sans-serif, so we
+	 * set explicitly Droid Sans. The bug affects various browsers.
+	 * @see https://code.google.com/p/chromium/issues/detail?id=169446
+	 */
+	body {
+		font-family: 'Droid sans', sans-serif;
+	}
+
 	input,
 	select,
 	button {

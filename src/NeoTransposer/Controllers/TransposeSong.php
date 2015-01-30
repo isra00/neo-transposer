@@ -34,16 +34,17 @@ class TransposeSong
 			array($song_details['id_song'])
 		);
 
+		// In PHP 5.5 this can be implemented by array_column()
+		array_walk($original_chords, function(&$item) {
+			$item = $item['chord'];
+		});
+
 		$app['locale'] = $song_details['locale'];
 
 		$next = $app['db']->fetchColumn(
 			'SELECT id_song FROM song WHERE id_song > ? AND id_book = ? ORDER BY id_song ASC LIMIT 1',
 			array($song_details['id_song'], $song_details['id_book'])
 		);
-
-		array_walk($original_chords, function(&$item) {
-			$item = $item['chord'];
-		});
 
 		if (!$app['user']->isLoggedIn())
 		{
