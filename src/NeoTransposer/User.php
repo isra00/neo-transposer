@@ -50,6 +50,7 @@ class User
 	 * Create or update the user in the database.
 	 * 
 	 * @param  \Doctrine\DBAL\Connection $db A DB connection.
+	 * @param  Symfony\Component\HttpFoundation\Request $request The Request, for fetching the client IP.
 	 * @return integer The user ID, if it was not set.
 	 */
 	public function persist(\Doctrine\DBAL\Connection $db, Request $request)
@@ -60,21 +61,21 @@ class User
 		{
 			return $db->update('user',
 				array(
-					'lowest_note' => $this->lowest_note,
-					'highest_note' => $this->highest_note,
-					'id_book' => $this->id_book,
-					'chord_printer' => $this->chord_printer,
+					'lowest_note'	=> $this->lowest_note,
+					'highest_note'	=> $this->highest_note,
+					'id_book'		=> $this->id_book,
+					'chord_printer'	=> $this->chord_printer,
 				), array('id_user' => (int) $this->id_user)
 			);
 		}
 
 		$db->insert('user', array(
-			'email' => $this->email,
-			'lowest_note' => $this->lowest_note,
-			'highest_note' => $this->highest_note,
-			'id_book' => $this->id_book,
-			'chord_printer' => $this->chord_printer,
-			'register_ip' => $request->getClientIp()
+			'email'			=> $this->email,
+			'lowest_note'	=> $this->lowest_note,
+			'highest_note'	=> $this->highest_note,
+			'id_book'		=> $this->id_book,
+			'chord_printer'	=> $this->chord_printer,
+			'register_ip'	=> $request->getClientIp()
 		));
 
 		return $this->id_user = $db->lastInsertId();
