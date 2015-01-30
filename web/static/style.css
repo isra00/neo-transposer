@@ -360,6 +360,7 @@ small.page_number {
 	.field.full-width button {
 		width: 100%;
 		margin: 0 auto;
+		box-sizing: border-box;
 	}
 
 input[type="text"] {
