@@ -13,11 +13,8 @@ class ChordPrinterSwahili extends ChordPrinter
 
 		$fundamental = str_replace('#', '<em>d</em>', $fundamental);
 
-		$print_attributes = str_replace(
-			array('m'),
-			array('-'),
-			$attributes
-		);
+		$print_attributes = str_replace('m', '-', $attributes);
+		$print_attributes = preg_replace('/^(.*)([\d])(.*)$/', '\1<sup>\2</sup>\3', $print_attributes);
 
 		return $fundamental . $print_attributes;
 	}
