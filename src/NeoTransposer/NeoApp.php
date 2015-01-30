@@ -11,6 +11,12 @@ class NeoApp extends Application
 	use \Silex\Application\TwigTrait;
 	use \Silex\Application\TranslationTrait;
 
+	/**
+	 * Swahili-speaking countries, for language detection based on IP.
+	 * @var array
+	 */
+	protected $swahili_countries = array('TZ', 'KE');
+
 	protected $notifications = array('error'=>array(), 'success'=>array());
 
 	public function __construct($config)
@@ -34,7 +40,7 @@ class NeoApp extends Application
 
 			if ($request->query->get('debug'))
 			{
-				$this['debug'] = true;
+				$app['debug'] = true;
 			}
 
 			$app['twig']->addGlobal('neoglobals', array(
@@ -43,21 +49,53 @@ class NeoApp extends Application
 				'books'			=> $app['books'],
 				'user'			=> $app['session']->get('user'),
 				'here'			=> $request->attributes->get('_route'),
-				'debug'			=> $this['debug'],
+				'debug'			=> $app['debug'],
 			));
 
 			//If debug=1, Twig enables strict variables. We disable it always.
-			$this['twig']->disableStrictVariables();
+			$app['twig']->disableStrictVariables();
 
-			//If no locale has been specified in the URL, the Accept-Language header is taken.
-			if (empty($request->attributes->get('_route_params')['_locale']))
-			{
-				$this['locale'] = $request->getPreferredLanguage(array_merge(
-					array('en'), 
-					array_keys($app['translator.domains']['messages'])
-				));
-			}
+			$app->setLocale($request);
 		});
+	}
+
+	/**
+	 * Sets the Locale for the application based on various criteria.
+	 * @param Request $request The HTTP request.
+	 */
+	protected function setLocale(Request $request)
+	{
+		//If no locale has been specified in the URL, the Accept-Language header is taken.
+		if (empty($request->attributes->get('_route_params')['_locale']))
+		{
+			$this['locale'] = $request->getPreferredLanguage(array_merge(
+				array('en'), 
+				array_keys($this['translator.domains']['messages'])
+			));
+
+			$this->setLocaleForMswahili($request->getClientIp());
+		}
+	}
+
+	/**
+	 * Language detection from browser is not fitting for Swahili-speaking
+	 * countries, where most of devices are in english.
+	 * 
+	 * @param string $ip Client IP.
+	 */
+	protected function setLocaleForMswahili($ip)
+	{
+		$url = "http://ipinfo.io/$ip";
+		if ($ipinfo = json_decode(@file_get_contents($url), true))
+		{
+			if (isset($ipinfo['country']))
+			{
+				if (false !== array_search($ipinfo['country'], $this->swahili_countries))
+				{
+					$this['locale'] = 'sw';
+				}
+			}
+		}
 	}
 
 	/**

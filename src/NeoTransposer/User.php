@@ -26,8 +26,9 @@ class User
 	/**
 	 * Factory
 	 * 
-	 * @param  [type] $email [description]
-	 * @return [type]        [description]
+	 * @param  string 						$email 	User e-mail
+	 * @param  \Doctrine\DBAL\Connection 	$db 	Database connection.
+	 * @return User        					The User instance for that e-mail.
 	 */
 	public static function fetchUserFromEmail($email, \Doctrine\DBAL\Connection $db)
 	{
