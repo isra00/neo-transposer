@@ -18,7 +18,22 @@ class Sitemap
 	{
 		$urls = array();
 
-		$time = '2015-01-28T10:00Z';
+		$time = '2015-01-31T10:00Z';
+
+		$languages = array_merge(
+			array('en'), 
+			array_keys($app['translator.domains']['messages'])
+		);
+
+		foreach ($languages as $lang)
+		{
+			$urls[] = array(
+				'loc' => $app['url_generator']->generate('login', array('_locale' => $lang), UrlGeneratorInterface::ABSOLUTE_URL),
+				'priority' => 1,
+				'changefreq' => 'weekly',
+				'lastmod' => $time
+			);
+		}
 
 		$books = $app['books'];
 		foreach ($books as $book)
