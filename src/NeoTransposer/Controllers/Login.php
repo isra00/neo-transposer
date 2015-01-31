@@ -20,7 +20,7 @@ class Login
 	public function get(Request $request, \NeoTransposer\NeoApp $app, $tpl_vars=array())
 	{
 		$app['session']->set('user', new User);
-		$tpl_vars['page_title'] = $app->trans('Log-in');
+		$tpl_vars['page_title'] = $app->trans('Transpose chords of the songs of the Neocatechumenal Way');
 		return $app->render('login.tpl', $tpl_vars);
 	}
 
