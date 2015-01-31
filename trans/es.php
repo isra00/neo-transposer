@@ -17,7 +17,7 @@ return array(
 	=> 'Transportar los acordes de los cantos del Camino Neocatecumenal',
 
 	'<span>It\'s not hard to transpose the song. What is hard is</span><span>to know to which tone should I transpose it <strong>for my voice</strong>.</span>'
-	=> '<span>Lo difícil no es transportar el canto. Lo difícil es</span> <span>saber a qué tono debo transportarlo <strong>para mi voz</strong>.</span>',
+	=> '<span>Lo difícil no es transportar el canto. Lo difícil es</span> <span>saber a qué tono debes transportarlo <strong>para tu voz</strong>.</span>',
 
 	'Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!'
 	=> 'Neo-Transposer calcula, en base a <strong>tu propia voz</strong>, la transposición perfecta para cada canto del Camino. Así de sencillo. Además, te ofrece alternativas para poder tocar los cantos con los acordes más fáciles. ¡Se acabaron las complicaciones!',
