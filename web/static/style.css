@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-	font-family: sans-serif;
+	font-family: 'Roboto', 'Droid Sans', sans-serif;
 	margin: 0;
 }
 
@@ -23,6 +23,9 @@ h1 {
 	margin-top: .9em;
 	margin-bottom: .6em;
 	line-height: 1.4em;
+}
+h2 {
+	font-weight: normal;
 }
 h3 {
 	margin-top: .6em;
@@ -188,12 +191,52 @@ footer {
 /*
  * LOGIN
  */
-.page-login h1 {
-	text-align: center;
+
+.page-login .main { 
+	margin: 0;
+	width: auto;
 }
+	.page-login .inside {
+		width: 40rem;
+		margin: 0 auto;
+	}
+
+	.page-login .main > .inside {
+		margin-top: 1%;
+	}
+
+	.page-login .mkt {
+		background: url(mkt.jpg) no-repeat;
+		background-size: cover;
+		width: 100%;
+		padding-top: 17%;
+	}
+		.page-login .mkt h2 {
+			background: rgba(255,255,255,.6);
+			color: black;
+			text-shadow: 1px 1px 0 white;
+			padding: .5em 1em;
+			font-size: 1.5em;
+			text-align: center;
+		}
+		.page-login .mkt h2 span {
+			display: block;
+		}
+
+	.page-login .mkt-text {
+		display: inline-block;
+		width: 18em;
+		margin-right: 1em;
+	}
+	.page-login .login-form {
+		display: inline-block;
+		width: 18em;
+		vertical-align: top;
+		margin-top: 1em;
+	}
 
 .login-form {
-	border: 1px solid silver;
+	/*border: 1px solid silver;*/
 	background: #eee;
 	padding: .5em 1em 1em;
 	display: block;
@@ -405,7 +448,7 @@ input[type="text"] {
 	 * @see https://code.google.com/p/chromium/issues/detail?id=169446
 	 */
 	body {
-		font-family: 'Droid sans', sans-serif;
+		/*font-family: 'Droid sans', sans-serif;*/
 	}
 
 	input,
@@ -429,9 +472,38 @@ input[type="text"] {
 		overflow: hidden;
 	}
 
+	/* LOGIN */
 	.login-form {
 		display: block;
 		width: auto;
+	}
+
+	.page-login .inside {
+		width: auto;
+		padding: 0 .5em .5em;
+	}
+
+	.page-login .mkt {
+		background: none;
+		height: auto;
+		padding: 0;
+	}
+		.page-login .mkt h2 {
+			padding: .5em 0 0;
+			background: #efefef;
+		}
+			.page-login .mkt h2 span {
+				display: inline;
+			}
+
+	.page-login .mkt-text {
+		display: block;
+		width: auto;
+		margin-right: 0;
+	}
+	.page-login .login-form {
+		width: auto;
+		display: block;
 	}
 
 	.change-book {
