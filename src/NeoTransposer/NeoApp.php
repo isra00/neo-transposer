@@ -66,7 +66,10 @@ class NeoApp extends Application
 				array_keys($this['translator.domains']['messages'])
 			));
 
-			$this->setLocaleForMswahili($request->getClientIp());
+			if (!$this['debug'])
+			{
+				$this->setLocaleForMswahili($request->getClientIp());
+			}
 		}
 	}
 
