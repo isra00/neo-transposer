@@ -43,14 +43,7 @@ class NeoApp extends Application
 				$app['debug'] = true;
 			}
 
-			$app['twig']->addGlobal('neoglobals', array(
-				'software_name' => $app['neoconfig']['software_name'],
-				'analytics_id'  => $app['neoconfig']['analytics_id'],
-				'books'			=> $app['books'],
-				'user'			=> $app['session']->get('user'),
-				'here'			=> $request->attributes->get('_route'),
-				'debug'			=> $app['debug'],
-			));
+			$app['twig']->addGlobal('current_route', $request->attributes->get('_route'));
 
 			//If debug=1, Twig enables strict variables. We disable it always.
 			$app['twig']->disableStrictVariables();

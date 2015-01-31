@@ -8,12 +8,12 @@
 
 	<h1>Insert song</h1>
 
-	<form method="post" action="{{ neoglobals.server.REQUEST_URI }}">
+	<form method="post" action="{{ app.request.getRequestUri }}">
 
 		<p>
 			<label for="book">Book:</label>
 			<select name="id_book" id="book">
-			{% for id, book in neoglobals.books %}
+			{% for id, book in app.books %}
 				<option value="{{ id }}" {% if id == id_book %}selected="selected"{% endif %}>{{ book.lang_name }}</option>
 			{% endfor %}
 			</select>

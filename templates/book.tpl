@@ -6,7 +6,7 @@
 
 {% block content %}
 <h1>
-	{% if neoglobals.user.isLoggedIn %}
+	{% if app.user.isLoggedIn %}
 	<span class="change-book"><a class="small-button" href="{{ path('user_settings', {'_locale':app.locale}) }}#book">{% trans %}Change book{% endtrans %}</a></span>
 	{% endif %}
 
@@ -14,14 +14,14 @@
 	<small class="book-details">({{ current_book.details }})</small>
 </h1>
 
-{% if not neoglobals.user.isLoggedIn %}
+{% if not app.user.isLoggedIn %}
 	{% import "login.tpl" as login %}
 
 	<div class="teaser">
 		<div class="inside">
 			<div class="more-inside">
-				{{ login.login_form() }}
 				<p>{% trans %}Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.{% endtrans %}</p>
+				{{ login.login_form() }}
 			</div>
 		</div>
 	</div>

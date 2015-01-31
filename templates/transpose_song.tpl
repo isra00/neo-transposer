@@ -10,7 +10,7 @@
 			<tr><th {% if not transposition.getAsBook %}colspan="3"{% endif %}>
 				<strong>{{ transposition.chordsForPrint[0]|raw }} </strong>
 				<span class="capo">{{ transposition.capoForPrint }}</span>
-				{% if neoglobals.debug %}
+				{% if app.neoconfig.debug %}
 				<small class="score">[{{ transposition.score|round }}]</small>
 				{% endif %}
 			</th></tr>
@@ -34,7 +34,7 @@
 
 {% block content %}
 
-{% if not neoglobals.user.isLoggedIn %}
+{% if not app.user.isLoggedIn %}
 	{% import "login.tpl" as login %}
 
 	<div class="teaser">
@@ -47,7 +47,7 @@
 	</div>
 {% endif %}
 
-{% if neoglobals.debug %}
+{% if app.neoconfig.debug %}
 <a href="/transpose/{{ next }}">NEXT &rarr;</a>
 {% endif %}
 
@@ -75,7 +75,7 @@
 </div>
 {% endif %}
 
-<div class="voicechart-container" {% if neoglobals.debug %}style="display: block"{% endif %}>
+<div class="voicechart-container" {% if app.neoconfig.debug %}style="display: block"{% endif %}>
 	<table class="voicechart">
 	{% for voice in voice_chart %}
 		<tr class="{{ voice.css }}">

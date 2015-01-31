@@ -4,7 +4,7 @@
 
 {% block content %}
 
-	<h1>{% trans with {'%software%': '<span class="software-name">' ~ neoglobals.software_name ~ '</span>'} %}Welcome to %software%{% endtrans %}</h1>
+	<h1>{% trans with {'%software%': '<span class="software-name">' ~ app.neoconfig.software_name ~ '</span>'} %}Welcome to %software%{% endtrans %}</h1>
 
 	{% macro login_form(error_msg) %}
 	{# @todo Implementar redirección después del login #}

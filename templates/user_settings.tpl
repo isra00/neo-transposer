@@ -4,7 +4,7 @@
 
 {% block content %}
 
-	<h1>{% trans with {'%software%': '<span class="software-name">' ~ neoglobals.software_name ~ '</span>'} %}Welcome to %software%{% endtrans %}</h1>
+	<h1>{% trans with {'%software%': '<span class="software-name">' ~ app.neoconfig.software_name ~ '</span>'} %}Welcome to %software%{% endtrans %}</h1>
 
 	<form method="get" action="{{ path('set_user_data') }}">
 		<p>{% trans %}This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.{% endtrans %}</p>
@@ -16,7 +16,7 @@
 				{% trans %}Lowest:{% endtrans %}
 				<select name="lowest_note">
 				{% for note in accoustic_scale %}
-					<option value="{{ note }}1" {% if neoglobals.user.lowest_note == note ~ 1 %}selected="selected"{% endif %}>{{ note }}</option>
+					<option value="{{ note }}1" {% if app.user.lowest_note == note ~ 1 %}selected="selected"{% endif %}>{{ note }}</option>
 				{% endfor %}
 				</select>
 			</span>
@@ -25,14 +25,14 @@
 				{% trans %}Highest:{% endtrans %}
 				<select name="highest_note">
 {% for note in accoustic_scale %}
-					<option value="{{ note }}1" {% if neoglobals.user.highest_note == note ~ '1' %}selected="selected"'{% endif %}>{{ note }}</option>
+					<option value="{{ note }}1" {% if app.user.highest_note == note ~ '1' %}selected="selected"'{% endif %}>{{ note }}</option>
 {% endfor %}
 
 {% for i in 2..3 %}
 					{# Cambiar el trans de octave por transChoice #}
 					<optgroup label="+{{ i - 1 }} {{ 'octave'|trans }}{{ (i > 1) ? 's' }}">
 	{% for note in accoustic_scale %}
-						<option value="{{ note }}{{ i }}"{% if neoglobals.user.highest_note == note ~ i %} selected="selected"{% endif %}>{{ note }}</option>
+						<option value="{{ note }}{{ i }}"{% if app.user.highest_note == note ~ i %} selected="selected"{% endif %}>{{ note }}</option>
 	{% endfor %}
 					</optgroup>
 {% endfor %}
@@ -44,7 +44,7 @@
 		<h3>{% trans %}Which songbook do you want to transpose?{% endtrans %}</h3>
 
 		<select name="book">
-		{% for id, book in neoglobals.books %}
+		{% for id, book in app.books %}
 			<option value="{{ id }}"{% if default_book == book.locale %} selected="selected"{% endif %}>{{ book.lang_name }} ({{ book.details}})</option>
 		{% endfor %}
 		</select>
