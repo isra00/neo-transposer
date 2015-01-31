@@ -60,6 +60,9 @@ return array(
 	'Change book'
 	=> 'Cambiar libro',
 
+	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
+	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Camino Neocatecumenal)',
