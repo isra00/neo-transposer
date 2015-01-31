@@ -35,6 +35,9 @@ return array(
 	'Settings'
 	=> 'Configuración',
 
+	'Welcome to %software%'
+	=> 'Bienvenido a %software%',
+
 	'This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.'
 	=> 'Este software analiza los cantos y tu voz, calculando la transposición perfecta para cada canto, de acuerdo a tu voz. Pero para hacer eso, necesito saber una cosa sobre tu voz.',
 
