@@ -63,6 +63,9 @@ return array(
 	'Songs of the Neocatechumenal Way in %lang%'
 	=> 'Cantos del Camino Neocatecumenal en %lang%',
 
+	'Songs of the Neocatechumenal Way'
+	=> 'Cantos del Camino Neocatecumenal',
+
 	'Change book'
 	=> 'Cambiar libro',
 

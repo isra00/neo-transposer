@@ -63,6 +63,9 @@ return array(
 	'Songs of the Neocatechumenal Way in %lang%'
 	=> 'Nyimbo za Njia ya Neokatekumenato kwa %lang%',
 
+	'Songs of the Neocatechumenal Way'
+	=> 'Nyimbo za Njia ya Neokatekumenato',
+
 	'Change book'
 	=> 'Lugha nyingine',
 /*
