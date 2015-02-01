@@ -30,7 +30,7 @@ class Sitemap
 			$urls[] = array(
 				'loc' => $app['url_generator']->generate('login', array('_locale' => $lang), UrlGeneratorInterface::ABSOLUTE_URL),
 				'priority' => 1,
-				'changefreq' => 'weekly',
+				'changefreq' => 'daily',
 				'lastmod' => $time
 			);
 		}
@@ -41,7 +41,7 @@ class Sitemap
 			$urls[] = array(
 				'loc' => $app['url_generator']->generate('book_' . $book['id_book'], array(), UrlGeneratorInterface::ABSOLUTE_URL),
 				'priority' => 1,
-				'changefreq' => 'weekly',
+				'changefreq' => 'daily',
 				'lastmod' => $time
 			);
 		}
@@ -55,7 +55,7 @@ class Sitemap
 			$urls[] = array(
 				'loc' => $app['url_generator']->generate('transpose_song', array('id_song' => $song['slug']), UrlGeneratorInterface::ABSOLUTE_URL),
 				'priority' => '0.8',
-				'changefreq' => 'monthly',
+				'changefreq' => 'weekly',
 				'lastmod' => $time
 			);
 		}
