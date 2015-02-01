@@ -210,6 +210,9 @@ footer {
 	.page-login.lang-es .mkt {
 		background-image: url(mkt-es.jpg);
 	}
+	.page-login.lang-en .mkt {
+		background-image: url(mkt-es.jpg);
+	}
 	.page-login.lang-sw .mkt {
 		background-image: url(mkt-sw.jpg);
 	}
