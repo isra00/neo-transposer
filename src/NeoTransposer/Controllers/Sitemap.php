@@ -18,7 +18,7 @@ class Sitemap
 	{
 		$urls = array();
 
-		$time = '2015-01-31T10:00Z';
+		$time = $app['neoconfig']['sitemap_lastmod'];
 
 		$languages = array_merge(
 			array('en'), 

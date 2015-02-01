@@ -26,5 +26,7 @@ return array(
 
 	'templates_dir'		=> __DIR__ . '/templates',
 
+	'sitemap_lastmod'	=> '2015-02-01T10:00Z',
+
 	'debug'				=> false,
 );
