@@ -207,15 +207,6 @@ footer {
 		width: 100%;
 		padding-top: 17%;
 	}
-	.page-login.lang-es .mkt {
-		background-image: url(mkt-es.jpg);
-	}
-	.page-login.lang-en .mkt {
-		background-image: url(mkt-es.jpg);
-	}
-	.page-login.lang-sw .mkt {
-		background-image: url(mkt-sw.jpg);
-	}
 		.page-login .mkt h2 {
 			background: rgba(255,255,255,.6);
 			color: black;
@@ -449,6 +440,25 @@ input[type="text"] {
 	display: inline-block; /* Avoid cut the word "Neo-" "Transposer" btw lines */
 }
 
+/*
+ * Most of browsers load the background image even though in the mobile media
+ * query they are disabled. We restrict to big screens to avoid this. It's
+ * really important because almost 80% of the page size is this image...
+ * 
+ * @see http://timkadlec.com/2012/04/media-query-asset-downloading-results/
+ */
+@media only screen and (min-width: 40rem) {
+
+	.page-login.lang-es .mkt {
+		background-image: url(mkt-es.jpg);
+	}
+	.page-login.lang-en .mkt {
+		background-image: url(mkt-es.jpg);
+	}
+	.page-login.lang-sw .mkt {
+		background-image: url(mkt-sw.jpg);
+	}
+}
 
 @media only screen and (max-width: 40rem) {
 
