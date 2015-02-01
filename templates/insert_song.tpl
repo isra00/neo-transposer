@@ -1,6 +1,6 @@
 {% extends "base.tpl" %}
 
-{% block page_class %}page-book{% endblock %}
+{% block page_class %}page-insert{% endblock %}
 
 {% block content %}
 
