@@ -24,7 +24,7 @@
 	{% endif %}
 </head>
 
-<body class="{% block page_class %}{% endblock %}">
+<body class="lang-{{ app.locale }} {% block page_class %}{% endblock %}">
 	<div class="wrapper">
 
 		<nav class="header">
