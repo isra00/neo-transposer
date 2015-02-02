@@ -33,7 +33,6 @@ class DoctrineServiceProvider implements ServiceProviderInterface
             'host'     => 'localhost',
             'user'     => 'root',
             'password' => null,
-            'port'     => null,
         );
 
         $app['dbs.options.initializer'] = $app->protect(function () use ($app) {

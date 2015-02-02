@@ -28,5 +28,8 @@ return array(
 
 	'sitemap_lastmod'	=> '2015-02-01T10:00Z',
 
+	/* MD5 for the MaxMind geo-ip Country database file */
+	'mmdb'				=> '867f96728a75ba8746dfe398eccd2419',
+
 	'debug'				=> false,
 );

@@ -19,6 +19,11 @@ return array(
     'Silex' => array($vendorDir . '/silex/silex/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Pimple' => array($vendorDir . '/pimple/pimple/lib'),
+    'MaxMind' => array($vendorDir . '/maxmind-db/reader/src'),
+    'JsonSerializable' => array($vendorDir . '/geoip2/geoip2/compat'),
+    'Guzzle\\Tests' => array($vendorDir . '/guzzle/guzzle/tests'),
+    'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
+    'GeoIp2' => array($vendorDir . '/geoip2/geoip2/src'),
     'Doctrine\\DBAL' => array($vendorDir . '/doctrine/dbal/lib'),
     'Doctrine\\Common' => array($vendorDir . '/doctrine/common/lib'),
 );

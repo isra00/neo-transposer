@@ -77,7 +77,6 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response->sendContent();
 
         $this->assertEquals(206, $response->getStatusCode());
-        $this->assertEquals('binary', $response->headers->get('Content-Transfer-Encoding'));
         $this->assertEquals($responseRange, $response->headers->get('Content-Range'));
     }
 
@@ -113,7 +112,6 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response->sendContent();
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('binary', $response->headers->get('Content-Transfer-Encoding'));
     }
 
     public function provideFullFileRanges()
@@ -144,7 +142,6 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response->sendContent();
 
         $this->assertEquals(416, $response->getStatusCode());
-        $this->assertEquals('binary', $response->headers->get('Content-Transfer-Encoding'));
         #$this->assertEquals('', $response->headers->get('Content-Range'));
     }
 
@@ -193,14 +190,41 @@ class BinaryFileResponseTest extends ResponseTestCase
         $this->assertEquals($virtual, $response->headers->get('X-Accel-Redirect'));
     }
 
-    public function testSplFileObject()
+    public function testDeleteFileAfterSend()
     {
-        $filePath = __DIR__.'/File/Fixtures/test';
-        $file = new \SplFileObject($filePath);
+        $request = Request::create('/');
 
-        $response = new BinaryFileResponse($file);
+        $path = __DIR__.'/File/Fixtures/to_delete';
+        touch($path);
+        $realPath = realpath($path);
+        $this->assertFileExists($realPath);
 
-        $this->assertEquals(realpath($response->getFile()->getPathname()), realpath($filePath));
+        $response = new BinaryFileResponse($realPath);
+        $response->deleteFileAfterSend(true);
+
+        $response->prepare($request);
+        $response->sendContent();
+
+        $this->assertFileNotExists($path);
+    }
+
+    public function testAcceptRangeOnUnsafeMethods()
+    {
+        $request = Request::create('/', 'POST');
+        $response = BinaryFileResponse::create(__DIR__.'/File/Fixtures/test.gif');
+        $response->prepare($request);
+
+        $this->assertEquals('none', $response->headers->get('Accept-Ranges'));
+    }
+
+    public function testAcceptRangeNotOverriden()
+    {
+        $request = Request::create('/', 'POST');
+        $response = BinaryFileResponse::create(__DIR__.'/File/Fixtures/test.gif');
+        $response->headers->set('Accept-Ranges', 'foo');
+        $response->prepare($request);
+
+        $this->assertEquals('foo', $response->headers->get('Accept-Ranges'));
     }
 
     public function getSampleXAccelMappings()
@@ -214,5 +238,13 @@ class BinaryFileResponseTest extends ResponseTestCase
     protected function provideResponse()
     {
         return new BinaryFileResponse(__DIR__.'/../README.md');
+    }
+
+    public static function tearDownAfterClass()
+    {
+        $path = __DIR__.'/../Fixtures/to_delete';
+        if (file_exists($path)) {
+            @unlink($path);
+        }
     }
 }

@@ -12,8 +12,10 @@
 namespace Silex\Tests\Provider;
 
 use Silex\Application;
+use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\FormServiceProvider;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use Symfony\Component\Validator\Constraints as Assert;
 use Silex\Tests\Provider\ValidatorServiceProviderTest\Constraint\Custom;
 use Silex\Tests\Provider\ValidatorServiceProviderTest\Constraint\CustomValidator;
@@ -38,14 +40,14 @@ class ValidatorServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application();
 
-        $app['custom.validator'] = $app->share(function() {
+        $app['custom.validator'] = $app->share(function () {
             return new CustomValidator();
         });
 
         $app->register(new ValidatorServiceProvider(), array(
             'validator.validator_service_ids' => array(
                 'test.custom.validator' => 'custom.validator',
-            )
+            ),
         ));
 
         return $app;
@@ -103,6 +105,27 @@ class ValidatorServiceProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($nbEmailError, count($form->offsetGet('email')->getErrors()));
     }
 
+    public function testValidatorWillNotAddNonexistentTranslationFiles()
+    {
+        $app = new Application(array(
+            'locale' => 'nonexistent',
+        ));
+
+        $app->register(new ValidatorServiceProvider());
+        $app->register(new TranslationServiceProvider(), array(
+            'locale_fallbacks' => array(),
+        ));
+
+        $app['validator'];
+        $translator = $app['translator'];
+
+        try {
+            $translator->trans('test');
+        } catch (NotFoundResourceException $e) {
+            $this->fail('Validator should not add a translation resource that does not exist');
+        }
+    }
+
     public function testValidatorConstraintProvider()
     {
         // Email, form is valid , nb global error, nb email error
@@ -112,5 +135,4 @@ class ValidatorServiceProviderTest extends \PHPUnit_Framework_TestCase
             array('email@sample.com', true, 0, 0),
         );
     }
-
 }

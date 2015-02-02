@@ -66,31 +66,26 @@ class NeoApp extends Application
 				array_keys($this['translator.domains']['messages'])
 			));
 
-			if (!$this['debug'])
-			{
-				$this->setLocaleForMswahili($request->getClientIp());
-			}
+			$this->setLocaleForMswahili($request->getClientIp());
 		}
 	}
 
 	/**
 	 * Language detection from browser is not fitting for Swahili-speaking
-	 * countries, where most of devices are in english.
+	 * countries, where most of devices are in english. Here we perform Geo-IP
+	 * through MaxMind's GeoIp2 library.
 	 * 
 	 * @param string $ip Client IP.
 	 */
 	protected function setLocaleForMswahili($ip)
 	{
-		$url = "http://ipinfo.io/$ip";
-		if ($ipinfo = json_decode(@file_get_contents($url), true))
+		// Sample TZ IP: 197.187.253.205
+		$reader = new \GeoIp2\Database\Reader('/var/www/html/transporter/' . $this['neoconfig']['mmdb'] . '.mmdb');
+		$record = $reader->country('197.187.253.205');
+
+		if (false !== array_search($record->country->isoCode, $this->swahili_countries))
 		{
-			if (isset($ipinfo['country']))
-			{
-				if (false !== array_search($ipinfo['country'], $this->swahili_countries))
-				{
-					$this['locale'] = 'sw';
-				}
-			}
+			$this['locale'] = 'sw';
 		}
 	}
 

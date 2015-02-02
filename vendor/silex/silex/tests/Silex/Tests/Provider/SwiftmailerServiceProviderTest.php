@@ -27,6 +27,22 @@ class SwiftmailerServiceProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Swift_Mailer', $app['mailer']);
     }
 
+    public function testSwiftMailerIgnoresSpoolIfDisabled()
+    {
+        $app = new Application();
+
+        $app->register(new SwiftmailerServiceProvider());
+        $app->boot();
+
+        $app['swiftmailer.use_spool'] = false;
+
+        $app['swiftmailer.spooltransport'] = function () {
+            throw new \Exception("Should not be instantiated");
+        };
+
+        $this->assertInstanceOf('Swift_Mailer', $app['mailer']);
+    }
+
     public function testSwiftMailerSendsMailsOnFinish()
     {
         $app = new Application();
@@ -38,7 +54,7 @@ class SwiftmailerServiceProviderTest extends \PHPUnit_Framework_TestCase
             return new SpoolStub();
         });
 
-        $app->get('/', function() use ($app) {
+        $app->get('/', function () use ($app) {
             $app['mailer']->send(\Swift_Message::newInstance());
         });
 
@@ -64,7 +80,7 @@ class SwiftmailerServiceProviderTest extends \PHPUnit_Framework_TestCase
             return new SpoolStub();
         });
 
-        $app->get('/', function() use ($app) { });
+        $app->get('/', function () use ($app) { });
 
         $request = Request::create('/');
         $response = $app->handle($request);

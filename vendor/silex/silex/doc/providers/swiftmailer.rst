@@ -10,6 +10,8 @@ will attempt to send emails through SMTP.
 Parameters
 ----------
 
+* **swiftmailer.use_spool**: A boolean to specify whether or not to use the
+  memory spool, defaults to true. 
 * **swiftmailer.options**: An array of options for the default SMTP-based
   configuration.
 
@@ -69,14 +71,11 @@ Registering
 .. note::
 
     SwiftMailer comes with the "fat" Silex archive but not with the regular
-    one. If you are using Composer, add it as a dependency to your
-    ``composer.json`` file:
+    one. If you are using Composer, add it as a dependency:
 
-    .. code-block:: json
+    .. code-block:: bash
 
-        "require": {
-            "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev"
-        }
+        composer require swiftmailer/swiftmailer
 
 Usage
 -----
@@ -100,13 +99,17 @@ The Swiftmailer provider provides a ``mailer`` service::
 Usage in commands
 ~~~~~~~~~~~~~~~~~
 
-The Swiftmailer provider sends the emails using the ``KernelEvents::TERMINATE``
+By default, the Swiftmailer provider sends the emails using the ``KernelEvents::TERMINATE``
 event, which is fired after the response has been sent. However, as this event
 isn't fired for console commands, your emails won't be sent.
 
-For that reason, if you send emails using a command console, make sure to
-flush the message spool by hand before ending the command execution. To do so,
-use the following code::
+For that reason, if you send emails using a command console, it is recommended
+that you disable the use of the memory spool (before accessing ``$app['mailer']``)::
+
+    $app['swiftmailer.use_spool'] = false;
+
+Alternatively, you can just make sure to flush the message spool by hand before
+ending the command execution. To do so, use the following code::
 
     $app['swiftmailer.spooltransport']
         ->getSpool()
