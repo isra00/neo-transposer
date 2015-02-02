@@ -31,6 +31,17 @@
 		{% endmacro %}
 		{% import _self as self %}
 		{{ self.login_form(error_msg) }}
+
+		<div class="lang-switch">
+		{% for lang in languages %}
+			{% if not loop.first %} · {% endif %}
+			{% if lang == app.locale %}
+				{{ language_names[lang] }}
+			{% else %}
+				<a href="{{ path(current_route, {'_locale': lang}) }}">{{ language_names[lang] }}</a>
+			{% endif %}
+		{% endfor %}
+		</div>
 	</div>
 
 {% endblock %}

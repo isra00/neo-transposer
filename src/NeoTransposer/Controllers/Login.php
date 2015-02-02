@@ -7,6 +7,13 @@ use \NeoTransposer\User;
 
 class Login
 {
+	/** @todo Take out from here to config... */
+	protected $language_names = array(
+		'en' => 'English',
+		'es' => 'Español',
+		'sw' => 'Kiswahili'
+	);
+
 	public function run(Request $request, \NeoTransposer\NeoApp $app)
 	{
 		if ('POST' == $request->getMethod())
@@ -19,7 +26,16 @@ class Login
 
 	public function get(Request $request, \NeoTransposer\NeoApp $app, $tpl_vars=array())
 	{
+		// Log-out always
 		$app['session']->set('user', new User);
+
+		$languages = array_merge(
+			array('en'), 
+			array_keys($app['translator.domains']['messages'])
+		);
+
+		$tpl_vars['languages'] = $languages;
+		$tpl_vars['language_names'] = $this->language_names;
 		$tpl_vars['page_title'] = $app->trans('Transpose chords of the songs of the Neocatechumenal Way');
 		return $app->render('login.tpl', $tpl_vars);
 	}
