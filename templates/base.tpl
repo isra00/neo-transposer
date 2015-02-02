@@ -11,7 +11,7 @@
 	<meta name="description" content="{% block meta_description %}{% trans %}Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.{% endtrans %}{% endblock %}" />
 	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
 
-	{% if not app.neoconfig.debug %}
+	{% if not app.debug %}
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

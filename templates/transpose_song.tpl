@@ -10,7 +10,7 @@
 			<tr><th {% if not transposition.getAsBook %}colspan="3"{% endif %}>
 				<strong>{{ transposition.chordsForPrint[0]|raw }} </strong>
 				<span class="capo">{{ transposition.capoForPrint }}</span>
-				{% if app.neoconfig.debug %}
+				{% if app.debug %}
 				<small class="score">[{{ transposition.score|round }}]</small>
 				{% endif %}
 			</th></tr>
@@ -47,7 +47,7 @@
 	</div>
 {% endif %}
 
-{% if app.neoconfig.debug %}
+{% if app.debug %}
 <a href="/transpose/{{ next }}">NEXT &rarr;</a>
 {% endif %}
 
@@ -75,7 +75,7 @@
 </div>
 {% endif %}
 
-<div class="voicechart-container" {% if app.neoconfig.debug %}style="display: block"{% endif %}>
+<div class="voicechart-container" {% if app.debug %}style="display: block"{% endif %}>
 	<table class="voicechart">
 	{% for voice in voice_chart %}
 		<tr class="{{ voice.css }}">
