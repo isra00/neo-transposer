@@ -19,7 +19,7 @@ class NeoApp extends Application
 
 	protected $notifications = array('error'=>array(), 'success'=>array());
 
-	public function __construct($config)
+	public function __construct($config, $root_dir)
 	{
 		parent::__construct();
 
@@ -36,7 +36,7 @@ class NeoApp extends Application
 		/*
 		 * Actions before every controller.
 		 */
-		$this['controllers']->before(function(Request $request, Application $app) {
+		$this['controllers']->before(function(Request $request, Application $app) use ($root_dir) {
 
 			if ($request->query->get('debug'))
 			{
@@ -48,15 +48,16 @@ class NeoApp extends Application
 			//If debug=1, Twig enables strict variables. We disable it always.
 			$app['twig']->disableStrictVariables();
 
-			$app->setLocale($request);
+			$app->setLocale($request, $root_dir);
 		});
 	}
 
 	/**
 	 * Sets the Locale for the application based on various criteria.
-	 * @param Request $request The HTTP request.
+	 * @param Request $request  The HTTP request.
+	 * @param string  $root_dir Dir where MindMax's DB is located.
 	 */
-	protected function setLocale(Request $request)
+	protected function setLocale(Request $request, $root_dir)
 	{
 		//If no locale has been specified in the URL, the Accept-Language header is taken.
 		if (empty($request->attributes->get('_route_params')['_locale']))
@@ -66,7 +67,7 @@ class NeoApp extends Application
 				array_keys($this['translator.domains']['messages'])
 			));
 
-			$this->setLocaleForMswahili($request->getClientIp());
+			$this->setLocaleForMswahili($request->getClientIp(), $root_dir);
 		}
 	}
 
@@ -75,12 +76,14 @@ class NeoApp extends Application
 	 * countries, where most of devices are in english. Here we perform Geo-IP
 	 * through MaxMind's GeoIp2 library.
 	 * 
-	 * @param string $ip Client IP.
+	 * @param string $ip 		Client IP.
+	 * @param string $root_dir 	Dir where MindMax's DB is located.
 	 */
-	protected function setLocaleForMswahili($ip)
+	protected function setLocaleForMswahili($ip, $root_dir)
 	{
 		// Sample TZ IP: 197.187.253.205
-		$reader = new \GeoIp2\Database\Reader('/var/www/html/transporter/' . $this['neoconfig']['mmdb'] . '.mmdb');
+		$dbfile = $root_dir . '/' . $this['neoconfig']['mmdb'] . '.mmdb';
+		$reader = new \GeoIp2\Database\Reader($dbfile);
 		$record = $reader->country('197.187.253.205');
 
 		if (false !== array_search($record->country->isoCode, $this->swahili_countries))

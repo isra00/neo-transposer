@@ -7,7 +7,8 @@ require '../vendor/autoload.php';
 use \Symfony\Component\HttpFoundation\Request;
 
 $app = new \NeoTransposer\NeoApp(
-	require __DIR__ . '/../config.php'
+	require __DIR__ . '/../config.php',
+	realpath(__DIR__ . '/..')
 );
 
 $needsLogin = function (Request $request, \NeoTransposer\NeoApp $app) {
