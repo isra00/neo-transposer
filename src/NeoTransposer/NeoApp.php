@@ -77,7 +77,6 @@ class NeoApp extends Application
 	 */
 	protected function setLocaleForWaswahili($ip)
 	{
-		echo "Solicitando geoip<br>";
 		// Sample TZ IP: 197.187.253.205
 		$dbfile = $this['root_dir'] . '/' . $this['neoconfig']['mmdb'] . '.mmdb';
 		$reader = new \GeoIp2\Database\Reader($dbfile);
