@@ -30,6 +30,7 @@ h2 {
 h3 {
 	margin-top: .6em;
 	margin-bottom: .6em;
+	font-weight: normal;
 }
 h4 {
 	margin-top: 1em;
@@ -142,7 +143,7 @@ footer {
 	color: grey;
 	margin-bottom: 0em;
 }
-.page-book h2 {
+.page-book h3 {
 	font-size: 1.5em;
 	margin-top: 0;
 	margin-bottom: 1%;
