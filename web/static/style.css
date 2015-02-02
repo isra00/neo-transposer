@@ -336,12 +336,29 @@ small.page_number {
 	font-family: sans-serif;
 }
 
-.voicechart-container {
+.show-voice-chart {
+	text-align: center;
+	margin: 6% 0 4%;
+}
+	.show-voice-chart a {
+		background: #eee;
+		color: #333;
+		font-size: .9em;
+		padding: .4em .7em;
+		border: 1px solid white;
+	}
+		.show-voice-chart a:hover {
+			background: grey;
+			color: white;
+		}
+
+#voicechart-container {
 	border-bottom: 1px solid silver;
 	padding-bottom: 1em;
 	border-top: 1px solid silver;
 	padding-top: 1em;
 	margin-top: 2em;
+	display: none; /* Hidden by default */
 }
 
 .voicechart {
@@ -544,15 +561,11 @@ input[type="text"] {
 		margin: 0 0 .3em .3em;
 	}
 
-	/* Voice chart para mobile, al final me lo he cargado */
-	/*.voicechart-container {
-		display: block;
+	#voicechart-container {
 		width: auto;
+		max-width: 100%;
 		position: relative;
 		overflow-x: scroll;
-	}*/
-	.voicechart-container {
-		display: none;
 	}
 
 	.teaser .inside {

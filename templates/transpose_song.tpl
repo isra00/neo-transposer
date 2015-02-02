@@ -75,7 +75,11 @@
 </div>
 {% endif %}
 
-<div class="voicechart-container" {% if app.debug %}style="display: block"{% endif %}>
+<p class="show-voice-chart">
+	<a href="javascript:void(0)" onclick="NT.showChart(this.parentNode)">Show voice chart</a>
+</p>
+
+<div id="voicechart-container">
 	<table class="voicechart">
 	{% for voice in voice_chart %}
 		<tr class="{{ voice.css }}">
@@ -88,4 +92,15 @@
 	{% endfor %}
 	</table>
 </div>
+
+<script>
+NT = {
+	showChart: function(oLinkContainer)
+	{
+		document.getElementById("voicechart-container").style.display = 'block';
+		oLinkContainer.style.display = 'none';
+	}
+};
+</script>
+
 {% endblock %}
