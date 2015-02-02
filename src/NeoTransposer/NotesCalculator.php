@@ -14,6 +14,21 @@ class NotesCalculator
 	 */
 	public $accoustic_scale = array('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
 
+	protected static $latinNotes = array(
+		'A'		=> 'La',
+		'A#'	=> 'Sib',
+		'B' 	=> 'Si',
+		'C'		=> 'Do',
+		'C#'	=> 'Do#',
+		'D'		=> 'Re',
+		'D#'	=> 'Re#',
+		'E'		=> 'Mi',
+		'F'		=> 'Fa',
+		'F#'	=> 'Fa#',
+		'G'		=> 'Sol',
+		'G#'	=> 'Sol#'
+	);
+
 	/**
 	 * All the accoustic notes (including # but not bemol) of 4 octaves, like in a 4-octave numbered_scale.
 	 * 4 octaves should be enough for all the singable notes.
@@ -158,5 +173,10 @@ class NotesCalculator
 		}
 
 		return $final_list;
+	}
+
+	public static function getNotation($note, $notation)
+	{
+		return ('latin' == $notation) ? self::$latinNotes[$note] : $note;
 	}
 }

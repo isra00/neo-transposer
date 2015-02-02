@@ -33,12 +33,12 @@
 		{{ self.login_form(error_msg) }}
 
 		<div class="lang-switch">
-		{% for lang in languages %}
+		{% for locale, lang in languages %}
 			{% if not loop.first %} · {% endif %}
-			{% if lang == app.locale %}
-				{{ language_names[lang] }}
+			{% if locale == app.locale %}
+				{{ lang.name }}
 			{% else %}
-				<a href="{{ path(current_route, {'_locale': lang}) }}">{{ language_names[lang] }}</a>
+				<a href="{{ path(current_route, {'_locale': locale}) }}">{{ lang.name }}</a>
 			{% endif %}
 		{% endfor %}
 		</div>

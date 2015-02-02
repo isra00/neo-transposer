@@ -48,8 +48,6 @@ class NeoApp extends Application
 
 			//If debug=1, Twig enables strict variables. We disable it always.
 			$app['twig']->disableStrictVariables();
-
-			//$app->setLocale($request);
 		});
 	}
 
@@ -60,10 +58,9 @@ class NeoApp extends Application
 	 */
 	public function setLocaleAutodetect(Request $request)
 	{
-		$this['locale'] = $request->getPreferredLanguage(array_merge(
-			array('en'), 
-			array_keys($this['translator.domains']['messages'])
-		));
+		$this['locale'] = $request->getPreferredLanguage(
+			array_keys($this['neoconfig']['languages'])
+		);
 
 		$this->setLocaleForWaswahili($request->getClientIp());
 	}
@@ -79,8 +76,16 @@ class NeoApp extends Application
 	{
 		// Sample TZ IP: 197.187.253.205
 		$dbfile = $this['root_dir'] . '/' . $this['neoconfig']['mmdb'] . '.mmdb';
+		
 		$reader = new \GeoIp2\Database\Reader($dbfile);
-		$record = $reader->country('197.187.253.205');
+		try
+		{
+			$record = $reader->country($ip);
+		}
+		catch (\GeoIp2\Exception\AddressNotFoundException $e)
+		{
+			return;
+		}
 
 		if (false !== array_search($record->country->isoCode, $this->swahili_countries))
 		{
@@ -97,6 +102,14 @@ class NeoApp extends Application
 		$this->register(new \Silex\Provider\TwigServiceProvider(), array(
 			'twig.path' => $this['neoconfig']['templates_dir']
 		));
+
+		//Custom Twig filter.
+		$this['twig'] = $this->share($this->extend('twig', function($twig) {
+			$twig->addFilter(new \Twig_SimpleFilter('notation', function ($str, $notation) {
+				return \NeoTransposer\NotesCalculator::getNotation($str, $notation);
+			}));
+			return $twig;
+		}));
 
 		$this->register(new \Silex\Provider\DoctrineServiceProvider(), array(
 			'db.options' => array(
@@ -116,9 +129,12 @@ class NeoApp extends Application
 
 		$this->register(new \Silex\Provider\TranslationServiceProvider());
 		$translations = array();
-		foreach ($this['neoconfig']['translations'] as $locale=>$file)
+		foreach ($this['neoconfig']['languages'] as $locale=>$details)
 		{
-			$translations['messages'][$locale] = include $file;
+			if (isset($details['file']))
+			{
+				$translations['messages'][$locale] = include $details['file'];
+			}
 		}
 		$this['translator.domains'] = $translations;
 	}

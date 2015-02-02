@@ -20,12 +20,9 @@ class Sitemap
 
 		$time = $app['neoconfig']['sitemap_lastmod'];
 
-		$languages = array_merge(
-			array('en'), 
-			array_keys($app['translator.domains']['messages'])
-		);
+		$languages = $app['neoconfig']['languages'];
 
-		foreach ($languages as $lang)
+		foreach ($languages as $lang=>$details)
 		{
 			$urls[] = array(
 				'loc' => $app['url_generator']->generate('login', array('_locale' => $lang), UrlGeneratorInterface::ABSOLUTE_URL),

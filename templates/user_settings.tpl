@@ -16,7 +16,7 @@
 				{% trans %}Lowest:{% endtrans %}
 				<select name="lowest_note">
 				{% for note in accoustic_scale %}
-					<option value="{{ note }}1" {% if app.user.lowest_note == note ~ 1 %}selected="selected"{% endif %}>{{ note }}</option>
+					<option value="{{ note }}1"{% if app.user.lowest_note == note ~ 1 %} selected="selected"{% endif %}>{{ note|notation(current_notation) }}</option>
 				{% endfor %}
 				</select>
 			</span>
@@ -25,14 +25,18 @@
 				{% trans %}Highest:{% endtrans %}
 				<select name="highest_note">
 {% for note in accoustic_scale %}
-					<option value="{{ note }}1" {% if app.user.highest_note == note ~ '1' %}selected="selected"'{% endif %}>{{ note }}</option>
+					<option value="{{ note }}1"{% if app.user.highest_note == note ~ '1' %} selected="selected"'{% endif %}>{{ note|notation(current_notation) }}</option>
 {% endfor %}
 
 {% for i in 2..3 %}
-					{# Cambiar el trans de octave por transChoice #}
+					{# Cambiar el trans de octave por transChoice
+						{% transchoice count %}
+						    {0} There are no apples|{1} There is one apple|]1,Inf] There are %count% apples
+						{% endtranschoice %}
+					#}
 					<optgroup label="+{{ i - 1 }} {{ 'octave'|trans }}{{ (i > 1) ? 's' }}">
 	{% for note in accoustic_scale %}
-						<option value="{{ note }}{{ i }}"{% if app.user.highest_note == note ~ i %} selected="selected"{% endif %}>{{ note }}</option>
+						<option value="{{ note }}{{ i }}"{% if app.user.highest_note == note ~ i %} selected="selected"{% endif %}>{{ note|notation(current_notation) }}</option>
 	{% endfor %}
 					</optgroup>
 {% endfor %}

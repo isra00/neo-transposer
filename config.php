@@ -16,9 +16,21 @@ return array(
 		2 => '/cantos-camino-neocatecumenal',
 	),
 	
-	'translations'	=> array(
-		'es' => __DIR__ . '/trans/es.php',
-		'sw' => __DIR__ . '/trans/sw.php',
+	'languages'	=> array(
+		'en' => array(
+			'name'		=> 'English',
+			'notation'	=> 'american'
+		),
+		'es' => array(
+			'name'		=> 'Español',
+			'notation'	=> 'latin',
+			'file'		=> __DIR__ . '/trans/es.php'
+		),
+		'sw' => array(
+			'name'		=> 'Kiswahili',
+			'notation'	=> 'american',
+			'file'		=> __DIR__ . '/trans/sw.php'
+		)
 	),
 
 	'software_name'		=> 'Neo-Transposer',

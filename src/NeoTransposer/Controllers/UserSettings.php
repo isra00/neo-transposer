@@ -20,7 +20,8 @@ class UserSettings
 			'page_title'		=> $app->trans('Settings'),
 			'default_book'		=> $default_book,
 			'scale'				=> $nc->numbered_scale,
-			'accoustic_scale'	=> $nc->accoustic_scale
+			'accoustic_scale'	=> $nc->accoustic_scale,
+			'current_notation'	=> $app['neoconfig']['languages'][$app['locale']]['notation']
 		));
 	}
 }
