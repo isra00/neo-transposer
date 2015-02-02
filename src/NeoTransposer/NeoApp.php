@@ -24,6 +24,7 @@ class NeoApp extends Application
 		parent::__construct();
 
 		$this['neoconfig'] = $config;
+		$this['root_dir'] = $root_dir;
 
 		$this->registerSilexServices();
 		$this->registerCustomServices();
@@ -36,7 +37,7 @@ class NeoApp extends Application
 		/*
 		 * Actions before every controller.
 		 */
-		$this['controllers']->before(function(Request $request, Application $app) use ($root_dir) {
+		$this['controllers']->before(function(Request $request, Application $app) {
 
 			if ($request->query->get('debug'))
 			{
@@ -48,27 +49,23 @@ class NeoApp extends Application
 			//If debug=1, Twig enables strict variables. We disable it always.
 			$app['twig']->disableStrictVariables();
 
-			$app->setLocale($request, $root_dir);
+			//$app->setLocale($request);
 		});
 	}
 
 	/**
-	 * Sets the Locale for the application based on various criteria.
+	 * Sets the Locale for the application based on browser lang (except Swahili).
+	 * 
 	 * @param Request $request  The HTTP request.
-	 * @param string  $root_dir Dir where MindMax's DB is located.
 	 */
-	protected function setLocale(Request $request, $root_dir)
+	public function setLocaleAutodetect(Request $request)
 	{
-		//If no locale has been specified in the URL, the Accept-Language header is taken.
-		if (empty($request->attributes->get('_route_params')['_locale']))
-		{
-			$this['locale'] = $request->getPreferredLanguage(array_merge(
-				array('en'), 
-				array_keys($this['translator.domains']['messages'])
-			));
+		$this['locale'] = $request->getPreferredLanguage(array_merge(
+			array('en'), 
+			array_keys($this['translator.domains']['messages'])
+		));
 
-			$this->setLocaleForMswahili($request->getClientIp(), $root_dir);
-		}
+		$this->setLocaleForWaswahili($request->getClientIp());
 	}
 
 	/**
@@ -77,12 +74,12 @@ class NeoApp extends Application
 	 * through MaxMind's GeoIp2 library.
 	 * 
 	 * @param string $ip 		Client IP.
-	 * @param string $root_dir 	Dir where MindMax's DB is located.
 	 */
-	protected function setLocaleForMswahili($ip, $root_dir)
+	protected function setLocaleForWaswahili($ip)
 	{
+		echo "Solicitando geoip<br>";
 		// Sample TZ IP: 197.187.253.205
-		$dbfile = $root_dir . '/' . $this['neoconfig']['mmdb'] . '.mmdb';
+		$dbfile = $this['root_dir'] . '/' . $this['neoconfig']['mmdb'] . '.mmdb';
 		$reader = new \GeoIp2\Database\Reader($dbfile);
 		$record = $reader->country('197.187.253.205');
 

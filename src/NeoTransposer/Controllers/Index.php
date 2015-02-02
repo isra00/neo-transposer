@@ -16,6 +16,8 @@ class Index
 	 */
 	public function get(Request $req, \NeoTransposer\NeoApp $app)
 	{
+		$app->setLocaleAutodetect($req);
+
 		if ($app['user']->id_book)
 		{
 			return $app->redirect($app['url_generator']->generate(
