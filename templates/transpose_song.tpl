@@ -76,7 +76,7 @@
 {% endif %}
 
 <p class="show-voice-chart">
-	<a href="javascript:void(0)" onclick="NT.showChart(this.parentNode)">Show voice chart</a>
+	<a href="javascript:void(0)" onclick="NT.showChart(this.parentNode)">{% trans %}Show voice chart{% endtrans %}</a>
 </p>
 
 <div id="voicechart-container">
