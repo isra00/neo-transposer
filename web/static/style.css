@@ -141,7 +141,7 @@ footer {
 	text-transform: uppercase;
 	font-size: .8em;
 	color: grey;
-	margin-bottom: 0em;
+	margin-bottom: 0;
 }
 .page-book h3 {
 	font-size: 1.5em;
@@ -560,7 +560,7 @@ input[type="text"] {
 	.change-book {
 		float: none;
 		display: block;
-		margin: 1em 0 .2em;
+		margin: .5em 0 .7em;
 	}
 
 	small.page_number {
