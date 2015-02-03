@@ -52,7 +52,10 @@ REG;
 
 		if (empty($user->lowest_note))
 		{
-			return $app->redirect($app['url_generator']->generate('user_settings', array('_locale' => $app['locale'])));
+			return $app->redirect($app['url_generator']->generate(
+				'user_settings', 
+				array('_locale' => $app['locale'], 'firstTime' => '1')
+			));
 		}
 		else
 		{
