@@ -112,22 +112,31 @@ class User
 	}
 
 	/**
-	 * Format a numbered note as note + number of octaves above the 1st octave.
+	 * Format the voice of the User as lowest_note - highest note +x octaves
 	 * 
-	 * @param  string $note A numbered note.
-	 * @return string Formatted string.
-	 *
-	 * @todo  Unir este método y el siguiente y pasarlo a User::getVoiceAsString();
+	 * @param  \Silex\Translator 	$trans 		The Translator service.
+	 * @param  string 				$notation 	The notation (american/latin).
+	 * @return string 				Formatted string.
 	 */
-	function getVoiceAsString()
+	function getVoiceAsString(\Silex\Translator $trans, $notation='american')
 	{
-		preg_match('/([ABCDEFG]#?b?)([0-9])/', $this->lowest_note, $match);
+		$regexp = '/([ABCDEFG]#?b?)([0-9])/';
+		
+		preg_match($regexp, $this->lowest_note, $match);
 		$lowest_note = $match[1];
 
-		preg_match('/([ABCDEFG]#?b?)([0-9])/', $this->highest_note, $match);
-		$note = $match[1];
+		preg_match($regexp, $this->highest_note, $match);
+		$highest_note = $match[1];
+
+		if ('latin' == $notation)
+		{
+			$lowest_note = NotesCalculator::getNotation($lowest_note, 'latin');
+			$highest_note = NotesCalculator::getNotation($highest_note, 'latin');
+		}
+
 		$octave = intval($match[2]);
 		$octave = $octave - 1;
-		return "$lowest_note &rarr; $note +$octave oct";
+
+		return "$lowest_note &rarr; $highest_note +$octave " . $trans->trans('oct');
 	}
 }

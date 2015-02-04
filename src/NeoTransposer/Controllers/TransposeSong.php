@@ -87,7 +87,10 @@ class TransposeSong
 		}
 		
 		$nc = new NotesCalculator;
-		$your_voice = $app['user']->getVoiceAsString();
+		$your_voice = $app['user']->getVoiceAsString(
+			$app['translator'],
+			$app['neoconfig']['languages'][$app['locale']]['notation']
+		);
 
 		$tpl = array_merge($tpl, array(
 			'next'				=> $next,
