@@ -3,8 +3,11 @@
 return array(
 
 	//General
-	'Developed in Tanzania. Contact: %email%'
-	=> 'Imetengenezwa Tanzania. Mawasiliano: %email%',
+	'Developed in Tanzania.'
+	=> 'Imetengenezwa Tanzania.',
+
+	'Contact'
+	=> 'Mawasiliano',
 
 	'Log-out'
 	=> 'Ondoka',

@@ -69,7 +69,17 @@
 	</div>
 
 	<footer>
-		<p>{% trans with {'%email%': '<img src="' ~ app.request.basepath ~ '/static/feedback.gif" class="feedback" alt="Feedback" width="121" height="15">'}%}Developed in Tanzania. Contact: %email%{% endtrans %}</p>
+		<p>{% trans %}Developed in Tanzania.{% endtrans %} <a href="javascript:void(0)" onclick="go()">{%trans %}Contact{% endtrans %}</a></p>
 	</footer>
+
+	<script>
+	//Un sencillo y comprensible método anti correo basura
+	function go() {
+		var s="el señor es mi pastor, nada me falta. En prados de fresca hierba...",
+		 p=[14,4,8,17],p2=[13,25,14,34,37,56,46,29],n=parseInt(1-1);
+		function join(ps){var r="";for(i in ps){r += s.substr(ps[i]-1,1);}return r;}
+		alert(join(p)+n+n+String.fromCharCode(Math.pow(2,6))+'g'+join(p2));
+	}
+	</script>
 </body>
 </html>
