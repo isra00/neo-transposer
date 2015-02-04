@@ -52,10 +52,14 @@ return array(
 	
 	'Highest:'
 	=> 'Más aguda:',
+	*/
 	
-	'octave'
-	=> 'octava',
-*/
+	'{1}octave|]1,Inf]octaves'
+	=> '{1}oktava|]1,Inf]oktavas',
+	
+	'oct'
+	=> 'okt',
+
 	'Which songbook do you want to transpose?'
 	=> 'Chagua lugha ya kitabu cha nyimbo:',
 	

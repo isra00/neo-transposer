@@ -53,8 +53,11 @@ return array(
 	'Highest:'
 	=> 'Más aguda:',
 	
-	'octave'
-	=> 'octava',
+	'{1}octave|]1,Inf]octaves'
+	=> '{1}octava|]1,Inf]octavas',
+	
+	'oct'
+	=> 'oct',
 	
 	'Which songbook do you want to transpose?'
 	=> '¿Qué libro de cantos quieres transportar?',
