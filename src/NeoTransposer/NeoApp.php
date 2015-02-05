@@ -183,7 +183,29 @@ class NeoApp extends Application
 
 	function render($view, array $parameters = array())
 	{
+		$this->setPageTitle($parameters);
+
 		$this['twig']->addGlobal('notifications', $this->notifications);
 		return $this['twig']->render($view, $parameters);
+	}
+
+	function setPageTitle(&$parameters)
+	{
+		//Defined by SEO rules
+		$max_title_length = 55;
+
+		$software = $this['neoconfig']['software_name'];
+
+		if (isset($parameters['page_title']))
+		{
+			if (strlen($parameters['page_title']) < $max_title_length - strlen($software))
+			{
+				$parameters['page_title'] = $parameters['page_title'] . " · $software";
+			}
+		}
+		else
+		{
+			$parameters['page_title'] = $software;
+		}
 	}
 }

@@ -467,7 +467,10 @@ input[type="text"] {
  * Other
  */
 .software-name {
-	display: inline-block; /* Avoid cut the word "Neo-" "Transposer" btw lines */
+	/* Avoid cut the word "Neo-" "Transposer" btw lines 
+	 * @todo Check if this can be done through disabling CSS cutting words
+	*/
+	display: inline-block; 
 }
 
 /*
