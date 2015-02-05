@@ -30,37 +30,35 @@
 		<nav class="header">
 			<div class="inside">
 
-				{% if current_book %}
+				{% if current_book -%}
 					<h2>
 						<a href="{{ path('book_' ~ (current_book ? current_book.id_book: app.user.id_book)) }}">{{ app.neoconfig.software_name }}</a>
 					</h2>
-				{% else %}
+				{%- else -%}
 					<h2>{{ app.neoconfig.software_name }}</h2>
-				{% endif %}
+				{%- endif %}
 
-				{% if app.user.isLoggedIn and current_route != 'login' %}
+				{% if app.user.isLoggedIn and current_route != 'login' -%}
 				<span class="user">
 					<a href="{{ path('login', {_locale: app.locale}) }}">{% trans %}Log-out{% endtrans %}</a>
 				</span>
-				{% endif %}
+				{%- endif %}
 
 			</div>
 		</nav>
 
 		<section class="main">
 
-		{% block notifications %}
-			{% if notifications.success %}
-				{% for notification in notifications.success %}
-				<div class="notification success">{{ notification }}</div>
-				{% endfor %}
-			{% endif %}
-			{% if notifications.error %}
-				{% for notification in notifications.error %}
-				<div class="notification error">{{ notification }}</div>
-				{% endfor %}
-			{% endif %}
-		{% endblock %}
+		{% if notifications.error %}
+			{% for notification in notifications.error %}
+			<div class="notification error">{{ notification }}</div>
+			{% endfor %}
+		{% endif %}
+		{% if notifications.success %}
+			{% for notification in notifications.success %}
+			<div class="notification success">{{ notification }}</div>
+			{% endfor %}
+		{% endif %}
 
 		{% block content %}{% endblock %}
 		</section>

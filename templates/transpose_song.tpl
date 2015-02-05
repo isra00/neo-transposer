@@ -4,32 +4,30 @@
 
 {% block page_class %}transpose-song{% endblock %}
 
-{% macro printTransposition(transposition, original_chords) %}
+{% macro printTransposition(transposition, original_chords) -%}
 	<table class="transposition">
 		<thead>
 			<tr><th {% if not transposition.getAsBook %}colspan="3"{% endif %}>
 				<strong>{{ transposition.chordsForPrint[0]|raw }} </strong>
 				<span class="capo">{{ transposition.capoForPrint }}</span>
-				{% if app.debug %}
+				{% if app.debug -%}
 				<small class="score">[{{ transposition.score|round }}]</small>
-				{% endif %}
+				{%- endif %}
 			</th></tr>
 		</thead>
 		<tbody>
-		{% if transposition.getAsBook %}
-			<tr><td>{% trans %}(same chords as in the book){% endtrans %}</td></tr>
-		{% else %}
-		{% for chord in original_chords %}
+		{% for chord in original_chords if not transposition.getAsBook -%}
 			<tr>
 				<td>{{ chord|raw }}</td>
 				<td class="center">&rarr;</td>
 				<td>{{ transposition.chordsForPrint[loop.index0]|raw }}</td>
 			</tr>
-		{% endfor %}
-		{% endif %}
+		{%- else -%}
+			<tr><td>{% trans %}(same chords as in the book){% endtrans %}</td></tr>
+		{%- endfor %}
 		</tbody>
 	</table>
-{% endmacro %}
+{%- endmacro %}
 {% import _self as self %}
 
 {% block content %}
@@ -58,7 +56,7 @@
 
 <div class="your-voice">
 	<em>{% trans %}Your voice:{% endtrans %}</em> {{ your_voice|raw }}
-	<a href="{{ path('user_settings') }}" class="small-button">{% trans %}Change{% endtrans %}</a>
+	<a href="{{ path('user_settings', {'_locale': app.locale}) }}" class="small-button">{% trans %}Change{% endtrans %}</a>
 </div>
 
 <h4>{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</h4>
@@ -69,7 +67,7 @@
 </div>
 
 {% if not_equivalent %}
-<h4>{{ 'This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:'|trans({'%difference%': not_equivalent_difference}) }} </h4>
+<h4>{% trans with {'%difference%': not_equivalent_difference} %}This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:{% endtrans %}</h4>
 <div class="transpositions-list ovhid">
 	{{ self.printTransposition(not_equivalent, original_chords) }}
 </div>
