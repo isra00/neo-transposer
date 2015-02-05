@@ -44,6 +44,7 @@
 
 		<select name="book">
 		{% for id, book in app.books %}
+		{# FIXME: el default book es el del locale solo la primera vez, después debe ser el actual #}
 			<option value="{{ id }}"{% if default_book == book.locale %} selected="selected"{% endif %}>{{ book.lang_name }} ({{ book.details}})</option>
 		{% endfor %}
 		</select>

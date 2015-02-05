@@ -67,7 +67,7 @@ p {
 	padding: .3rem .5rem .3rem .5rem;
 }
 	.header .inside {
-		width: 40em;
+		width: 40rem;
 		margin: auto;
 	}
 
@@ -90,7 +90,7 @@ p {
 
 .main {
 	margin: 1em auto;
-	width: 40em;
+	width: 40rem;
 }
 
 .notification {
@@ -180,7 +180,7 @@ footer {
 	    display: table-cell;
 	}
 	.teaser .inside .more-inside {
-		width: 40em;
+		width: 40rem;
 		margin: 0 auto;
 		border: 1px solid silver;
 		padding: 1em;
@@ -297,6 +297,7 @@ small.page_number {
 
 .transpositions-list h4:first-child {
 	margin-top: 0;
+	overflow: hidden;
 }
 .transposition {
 	border-collapse: collapse;
@@ -445,9 +446,6 @@ input[type="text"] {
 }
 
 /* Generic */
-.ovhid {
-	overflow: hidden;
-}
 .center {
 	text-align: center;
 }

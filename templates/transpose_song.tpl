@@ -60,7 +60,7 @@
 </div>
 
 <h4>{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</h4>
-<div class="transpositions-list ovhid">
+<div class="transpositions-list">
 {% for transposition in transpositions %}
 	{{ self.printTransposition(transposition, original_chords) }}
 {% endfor %}
@@ -68,7 +68,7 @@
 
 {% if not_equivalent %}
 <h4>{% trans with {'%difference%': not_equivalent_difference} %}This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:{% endtrans %}</h4>
-<div class="transpositions-list ovhid">
+<div class="transpositions-list">
 	{{ self.printTransposition(not_equivalent, original_chords) }}
 </div>
 {% endif %}

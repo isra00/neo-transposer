@@ -5,13 +5,14 @@ define('START_TIME', microtime(true));
 require '../vendor/autoload.php';
 
 use \Symfony\Component\HttpFoundation\Request;
+use \NeoTransposer\NeoApp;
 
-$app = new \NeoTransposer\NeoApp(
+$app = new NeoApp(
 	require __DIR__ . '/../config.php',
 	realpath(__DIR__ . '/..')
 );
 
-$needsLogin = function (Request $request, \NeoTransposer\NeoApp $app) {
+$needsLogin = function (Request $request, NeoApp $app) {
 	if ($redirect = $app['user']->isRedirectionNeeded($request))
 	{
 		return $app->redirect($app['url_generator']->generate($redirect));
@@ -40,6 +41,8 @@ $app->get('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::get')
 	->before($needsLogin);
 $app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post')
 	->before($needsLogin);
+
+$app->get('/static/style.min.css', 'NeoTransposer\\Controllers\\ServeCss::get');
 
 //SEO-friendly URLs for books
 foreach ($app['neoconfig']['book_url'] as $id_book=>$slug)
