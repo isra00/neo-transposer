@@ -347,6 +347,8 @@ small.page_number {
 .show-voice-chart {
 	text-align: center;
 	margin: 6% 0 4%;
+	clear: both;
+	overflow: hidden;
 }
 	.show-voice-chart a {
 		background: #eee;
