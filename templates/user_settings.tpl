@@ -65,10 +65,10 @@
 		var notes			= ['C1','C#1','D1','D#1','E1','F#1','F1','F#1','G1','G#1','A1','A#1','B1'],
 			lowest 			= document.getElementById('lowest_note').value,
 			highest 		= document.getElementById('highest_note').value,
-			index_highest 	= notes.indexOf(highest);
+			index_highest	= notes.indexOf(highest);
 		
 		//Index < 0 means not found ==> above the 1st octave.
-		if (notes.indexOf(lowest) >= index_highest && index_highest > 0)
+		if (notes.indexOf(lowest) >= index_highest && index_highest > -1)
 		{
 			alert('{% trans %}You have to select a highest note which is higher than the lowest one.{% endtrans %}');
 			return false;
