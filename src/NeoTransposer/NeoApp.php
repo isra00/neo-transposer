@@ -19,6 +19,11 @@ class NeoApp extends Application
 
 	protected $notifications = array('error'=>array(), 'success'=>array());
 
+	/**
+	 * Load config, register services in Silex and set before() filter.
+	 * @param [type] $config   [description]
+	 * @param [type] $root_dir [description]
+	 */
 	public function __construct($config, $root_dir)
 	{
 		parent::__construct();
@@ -169,10 +174,11 @@ class NeoApp extends Application
 
 	/**
 	 * Adds a notification that will be shown in the app's header (see base.tpl)
+	 * 
 	 * @param string $type 'error' or 'success'.
 	 * @param string $text Text of the notification.
 	 */
-	function addNotification($type, $text)
+	public function addNotification($type, $text)
 	{
 		if (false === array_search($type, array_keys($this->notifications)))
 		{
@@ -181,7 +187,14 @@ class NeoApp extends Application
 		$this->notifications[$type][] = $text;
 	}
 
-	function render($view, array $parameters = array())
+	/**
+	 * Pre-processing of the template variables and render the template.
+	 * 
+	 * @param  string $view       Template name
+	 * @param  array  $parameters Array variables.
+	 * @return string             The rendered template.
+	 */
+	public function render($view, array $parameters = array())
 	{
 		$this->setPageTitle($parameters);
 
@@ -189,7 +202,12 @@ class NeoApp extends Application
 		return $this['twig']->render($view, $parameters);
 	}
 
-	function setPageTitle(&$parameters)
+	/**
+	 * Set final page title adding a certain suffix if the title specified in 
+	 * the controller is not too long.
+	 * @param array &$parameters Template variables (should contain page_title)
+	 */
+	protected function setPageTitle(&$parameters)
 	{
 		//Defined by SEO rules
 		$max_title_length = 55;

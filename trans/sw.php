@@ -66,6 +66,9 @@ return array(
 	'We are ready!'
 	=> 'Tayari!',
 
+/*	'You have to select a highest note which is higher than the lowest one.'
+	=> 'Debes seleccionar una nota máxima que sea más alta que la mínima.',
+*/
 	//Book
 	'Songs of the Neocatechumenal Way in %lang%'
 	=> 'Nyimbo za Njia ya Neokatekumenato kwa %lang%',
