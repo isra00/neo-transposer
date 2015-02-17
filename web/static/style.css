@@ -1,6 +1,3 @@
-* {
-	margin: 0;
-}
 html, body {
 	height: 100%;
 }
@@ -89,7 +86,7 @@ p {
  */
 
 .main {
-	margin: 1em auto;
+	margin: 1em auto 2em;
 	width: 40rem;
 }
 
@@ -280,6 +277,7 @@ footer {
 
 .transpose-song h4 {
 	margin-bottom: 0;
+	clear: both;
 }
 .transpose-song .your-voice {
 	text-align: center;
@@ -343,12 +341,16 @@ small.page_number {
 	color: #e00;
 	font-family: sans-serif;
 }
+.chord-color {
+	color: #e00;
+}
 
 .show-voice-chart {
 	text-align: center;
 	margin: 6% 0 4%;
 	clear: both;
 	overflow: hidden;
+	line-height: 2em;
 }
 	.show-voice-chart a {
 		background: #eee;
@@ -369,6 +371,7 @@ small.page_number {
 	padding-top: 1em;
 	margin-top: 2em;
 	display: none; /* Hidden by default */
+	clear: both;
 }
 
 .voicechart {
@@ -415,6 +418,96 @@ small.page_number {
 		background: green;
 	}
 
+.transposition-feedback {
+	border-top: 1px solid silver;
+	margin-top: 1em;
+	padding-top: 1em;
+}
+	.transposition-feedback .answer {
+		padding-left: .4em;
+	}
+	.transposition-feedback .answer button {
+		padding: .3em .5em;
+		background: white;
+	}
+	
+	.transposition-feedback .thanks {
+		color: gray;
+		font-style: italic;
+		padding-left: .5em;
+		display: none;
+	}
+
+/* Wizard */
+.gender-selection {
+	list-style: none;
+	padding-left: 0;
+}
+	.gender-selection li {
+		margin-top: .5em;
+	}
+	.gender-selection ul {
+		padding-left: 1em;
+		list-style: none;
+	}
+
+#sub-male,
+#sub-female {
+	display: none;
+}
+h2.step-1 {
+	margin-top: 1em;
+	border-top: 1px solid silver;
+	padding-top: 1em;
+}
+.pre-song {
+	font-family: monospace;
+	background: rgb(253, 253, 248);
+	box-shadow: 0 0 1em silver;
+	padding: 1.3em;
+	display: inline-block;
+	color: #333;
+	max-width: 18rem;
+}
+	.pre-song .capo {
+		color: #e00;
+	}
+	.pre-song h5 {
+		color: #e00;
+		font-family: arial, sans-serif;
+		text-transform: uppercase;
+		text-align: center;
+		margin-top: 0;
+	}
+
+.wizard-empiric .instructions {
+	margin-bottom: 2em;
+}
+
+.wizard-empiric .answer {
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 3rem;
+	max-width: 16rem;
+}
+	.wizard-empiric .answer h3 {
+		margin-top: 0;
+	}
+
+	.wizard-empiric .answer p {
+		line-height: 2em;
+	}
+
+	.wizard-empiric .test-msg {
+		border: 1px solid silver;
+		padding: 1em;
+	}
+		.wizard-empiric .test-msg h3 {
+			text-align: center;
+			margin-top: 0;
+		}
+
+
 /* Forms */
 .bigbutton {
 	padding: .3em .6em;
@@ -460,10 +553,83 @@ input[type="text"] {
 		background: #9f3127;
 		color: white;
 	}
+	
+.flatbutton {
+	background: white;
+	display: inline-block;
+}
+	.flatbutton.green {
+		color: #3F863F;
+		border: 1px solid #3F863F;
+	}
+		.flatbutton.green:hover {
+			background: #3F863F;
+			color: white;
+		}
+
+	.flatbutton.red {
+		border: 1px solid #9f3127;
+		color: #9f3127;
+	}
+		.flatbutton.red:hover {
+			background: #9f3127;
+			color: white;
+		}
+	.flatbutton.big {
+		padding: .3em .5em;
+		font-size: 1.1em;
+	}
+.bigline {
+	line-height: 2em;
+}
+.verybigline {
+	line-height: 4em;
+}
+.big {
+	font-size: 1.2em;
+}
 
 .margintop {
 	margin-top: 2em;
 }
+.hidden {
+	display: none;
+}
+.blink {
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: .5s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 5;
+    
+    -moz-animation-name: blinker;
+    -moz-animation-duration: .5s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: 5;
+    
+    animation-name: blinker;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 5;
+}
+
+@-moz-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; background-color: white; box-shadow: none; }
+    50% { opacity: 1.0; background-color: yellow; box-shadow: 0 0 30px yellow; }
+    100% { opacity: 1.0; background-color: white; box-shadow: none; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
 
 /*
  * Other
@@ -478,7 +644,7 @@ input[type="text"] {
 /*
  * Most of browsers load the background image even though in the mobile media
  * query they are disabled. We restrict to big screens to avoid this. It's
- * really important because almost 80% of the page size is this image...
+ * really important because almost 80% of the weight in this page is this image.
  * 
  * @see http://timkadlec.com/2012/04/media-query-asset-downloading-results/
  */
@@ -594,5 +760,24 @@ input[type="text"] {
 		.teaser .login-form {
 			display: block;
 			margin: 0;		
+		}
+
+	/* Wizard */
+	.test-area {
+		text-align: center;
+	}
+		.test-area .instructions {
+			text-align: left;
+		}
+		.pre-song {
+			text-align: left;
+			clear: both;
+		}
+		.wizard-empiric .answer {
+			margin-left: 0;
+			margin-top: 2em;
+			max-width: 100%;
+			text-align: center;
+			display: block;
 		}
 }

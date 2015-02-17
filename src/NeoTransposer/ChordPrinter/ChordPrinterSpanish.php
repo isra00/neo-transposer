@@ -8,6 +8,7 @@ class ChordPrinterSpanish extends ChordPrinter
 
 	public function printChordInNotation($fundamental, $attributes)
 	{
+		/** @todo Cambiar str_replace() por regexp */
 		$print_attributes = str_replace(
 			array('m'),
 			array('-'),

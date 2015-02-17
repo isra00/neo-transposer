@@ -45,6 +45,9 @@
 				</span>
 				{%- endif %}
 
+				{#· {{ app.user.lowest_note }}
+				· {{ app.user.highest_note }}#}
+
 			</div>
 		</nav>
 
@@ -70,6 +73,10 @@
 	<footer>
 		<p>{% trans %}Developed in Tanzania.{% endtrans %} <a href="javascript:void(0)" onclick="go()">{%trans %}Contact{% endtrans %}</a></p>
 	</footer>
+
+	{% macro loadJsFramework() -%}
+	<script src="{{ app.request.basepath }}/static/zepto.min.js"></script>
+	{%- endmacro %}
 
 	<script>
 	//Un sencillo y comprensible método anti correo basura

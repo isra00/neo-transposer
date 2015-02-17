@@ -152,7 +152,7 @@ class Transposition
 	{
 		$this->capoForPrint = ($this->capo)
 				? $app->trans('with capo %n%', array('%n%' => $this->capo))
-				: $app->trans('(no capo)');
+				: $app->trans('no capo');
 	}
 
 	/**

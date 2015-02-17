@@ -34,14 +34,24 @@ return array(
 	),
 
 	'software_name'		=> 'Neo-Transposer',
-	'analytics_id'		=> 'UA-57809429-1',
-
+	'voice_wizard'		=> include 'voice_wizard.php',
 	'templates_dir'		=> __DIR__ . '/templates',
 
-	'sitemap_lastmod'	=> '2015-02-01T10:00Z',
+	'analytics_id'		=> 'UA-57809429-1',
 
 	/* MD5 for the MaxMind geo-ip Country database file */
 	'mmdb'				=> '867f96728a75ba8746dfe398eccd2419',
+
+	'sitemap_lastmod'	=> '2015-02-016T10:00Z',
+
+	'standard_voices'	=> array(
+		'male_high'		 => array('C#2', 'F#3'),
+		'male'			 => array('B1',	 'E3'),
+		'male_low'		 => array('A1',	 'D3'),
+		'female'		 => array('E1',	 'A2'),
+		'female_high'	 => array('F#1', 'C2'),
+		'female_low'	 => array('D1',	 'G2'),
+	),
 
 	'debug'				=> false,
 );

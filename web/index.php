@@ -30,6 +30,25 @@ $app->get('/{_locale}/user', 'NeoTransposer\\Controllers\\UserSettings::get')
 	->bind('user_settings')
 	->before($needsLogin);
 
+$app->get('/{_locale}/wizard', 'NeoTransposer\\Controllers\\WizardStepOne::stepOne')
+	->method('GET|POST')
+	->bind('wizard_step1')
+	->before($needsLogin);
+
+$app->post('/{_locale}/wizard/lowest', 'NeoTransposer\\Controllers\\WizardEmpiric::lowest')
+	->method('GET|POST')
+	->bind('wizard_empiric_lowest')
+	->before($needsLogin);
+
+$app->post('/{_locale}/wizard/highest', 'NeoTransposer\\Controllers\\WizardEmpiric::highest')
+	->method('GET|POST')
+	->bind('wizard_empiric_highest')
+	->before($needsLogin);
+
+$app->get('/{_locale}/wizard/finish', 'NeoTransposer\\Controllers\\WizardEmpiric::finish')
+	->bind('wizard_finish')
+	->before($needsLogin);
+
 $app->get('/set-user-data', 'NeoTransposer\\Controllers\\SetUserData::get')
 	->bind('set_user_data')
 	->before($needsLogin);

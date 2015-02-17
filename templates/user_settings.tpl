@@ -39,6 +39,8 @@
 			</span>
 		</p>
 
+		<p class="big"><a href="{{ path('wizard_step1', {'_locale': app.locale}) }}">{% trans %}If you don't know your highest and lowest note, click here{% endtrans %}</a></p>
+
 		<a name="book"></a>
 		<h3>{% trans %}Which songbook do you want to transpose?{% endtrans %}</h3>
 

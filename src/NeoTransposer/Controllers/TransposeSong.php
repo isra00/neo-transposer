@@ -5,12 +5,64 @@ namespace NeoTransposer\Controllers;
 use \NeoTransposer\AutomaticTransposer;
 use \NeoTransposer\TranspositionChart;
 use \NeoTransposer\NotesCalculator;
+use \NeoTransposer\User;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class TransposeSong
 {
 	public function get(\NeoTransposer\NeoApp $app, $id_song)
+	{
+		//For the teaser
+		if (!$app['user']->isLoggedIn())
+		{
+			$app['user']->lowest_note = 'B1';
+			$app['user']->highest_note = 'F#3';
+		}
+
+		$transData = $this->getTranspositionData($app['user'], $id_song, $app);
+
+		$tpl = array();
+
+		if ($transData['not_equivalent'])
+		{
+			$printer = $app['chord_printers.get']($transData['song_details']['chord_printer']);
+
+			$transData['not_equivalent'] = $printer->printTransposition($transData['not_equivalent']);
+			$transData['not_equivalent']->setCapoForPrint($app);
+			$tpl['not_equivalent_difference'] = ($transData['not_equivalent']->deviationFromPerfect > 0)
+				? $app->trans('higher')
+				: $app->trans('lower');
+		}
+		
+		$nc = new NotesCalculator;
+		$your_voice = $app['user']->getVoiceAsString(
+			$app['translator'],
+			$app['neoconfig']['languages'][$app['locale']]['notation']
+		);
+
+		$tpl = array_merge($tpl, array(
+			'current_book'		=> $transData['song_details'],
+			'song_details'		=> $transData['song_details'],
+			'transpositions'	=> $transData['transpositions'],
+			'not_equivalent'	=> $transData['not_equivalent'],
+			'original_chords'	=> $transData['original_chords'],
+			'next'				=> $transData['next'],
+			'your_voice'		=> $your_voice,
+			'voice_chart'		=> TranspositionChart::getChart($transData['song_details'], $transData['transpositions'][0], $app['user']),
+			'page_title'		=> $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $transData['song_details']['title'])),
+			'page_class'		=> 'transpose-song',
+			'meta_canonical'	=> $app['url_generator']->generate(
+				'transpose_song',
+				array('id_song' => $transData['song_details']['slug']),
+				UrlGeneratorInterface::ABSOLUTE_URL
+			)
+		));
+
+		return $app->render('transpose_song.tpl', $tpl);
+	}
+
+	public function getTranspositionData(User $user, $id_song, \NeoTransposer\NeoApp $app, $forceHighestNote=false)
 	{
 		$field_id = 'slug';
 
@@ -46,22 +98,16 @@ class TransposeSong
 			array($song_details['id_song'], $song_details['id_book'])
 		);
 
-		if (!$app['user']->isLoggedIn())
-		{
-			$app['user']->lowest_note = 'B1';
-			$app['user']->highest_note = 'F#3';
-		}
-
 		$transposer = new AutomaticTransposer(
-			$app['user']->lowest_note,
-			$app['user']->highest_note,
+			$user->lowest_note,
+			$user->highest_note,
 			$song_details['lowest_note'], 
 			$song_details['highest_note'], 
 			$original_chords,
 			$song_details['first_chord_is_tone']
 		);
 
-		$transpositions = $transposer->getTranspositions();
+		$transpositions = $transposer->getTranspositions(1, $forceHighestNote);
  		$not_equivalent = $transposer->findAlternativeNotEquivalent();
 
 		//Prepare the chords nicely printed
@@ -75,41 +121,13 @@ class TransposeSong
 			$transposition->setCapoForPrint($app);
 		}
 
-		$tpl = array();
-
-		if ($not_equivalent)
-		{
-			$not_equivalent = $printer->printTransposition($not_equivalent);
-			$not_equivalent->setCapoForPrint($app);
-			$tpl['not_equivalent_difference'] = ($not_equivalent->deviationFromPerfect > 0)
-				? $app->trans('higher')
-				: $app->trans('lower');
-		}
-		
-		$nc = new NotesCalculator;
-		$your_voice = $app['user']->getVoiceAsString(
-			$app['translator'],
-			$app['neoconfig']['languages'][$app['locale']]['notation']
-		);
-
-		$tpl = array_merge($tpl, array(
-			'next'				=> $next,
+		return array(
 			'current_book'		=> $song_details,
 			'song_details'		=> $song_details,
 			'transpositions'	=> $transpositions,
 			'not_equivalent'	=> $not_equivalent,
-			'your_voice'		=> $your_voice,
 			'original_chords'	=> $original_chords,
-			'voice_chart'		=> TranspositionChart::getChart($song_details, $transpositions[0], $app['user']),
-			'page_title'		=> $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $song_details['title'])),
-			'page_class'		=> 'transpose-song',
-			'meta_canonical'	=> $app['url_generator']->generate(
-				'transpose_song',
-				array('id_song' => $song_details['slug']),
-				UrlGeneratorInterface::ABSOLUTE_URL
-			)
-		));
-
-		return $app->render('transpose_song.tpl', $tpl);
+			'next'				=> $next,
+		);
 	}
 }
