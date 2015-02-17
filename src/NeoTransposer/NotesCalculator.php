@@ -80,6 +80,8 @@ class NotesCalculator
 	 * @param  array $array Any indexed array.
 	 * @param  integer $index Index to read
 	 * @return mixed The array element
+	 *
+	 * @todo 	Investigar si índices negativos se puede implementar con array_slice
 	 */
 	function arrayIndex($array, $index)
 	{
@@ -125,7 +127,7 @@ class NotesCalculator
 	 */
 	function readChord($chord_name)
 	{
-		$regexp = '/^([abcdefg]#?b?)([m45679\*]*)$/i';
+		$regexp = '/^([ABCDEFG]#?b?)([mM45679]*|dim)$/';
 		preg_match($regexp, $chord_name, $match);
 
 		if (!isset($match[2]))

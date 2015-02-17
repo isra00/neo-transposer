@@ -8,13 +8,15 @@ class ChordPrinterSpanish extends ChordPrinter
 
 	public function printChordInNotation($fundamental, $attributes)
 	{
-		/** @todo Cambiar str_replace() por regexp */
-		$print_attributes = str_replace(
-			array('m'),
-			array('-'),
-			$attributes
-		);
+		if (false === strpos($attributes, 'dim'))
+		{
+			$attributes = str_replace(
+				array('m', 'M'),
+				array('-', 'aum'),
+				$attributes
+			);
+		}
 
-		return \NeoTransposer\NotesCalculator::getNotation($fundamental, 'latin') . $print_attributes;
+		return \NeoTransposer\NotesCalculator::getNotation($fundamental, 'latin') . $attributes;
 	}
 }
