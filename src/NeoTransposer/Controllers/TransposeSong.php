@@ -108,7 +108,7 @@ class TransposeSong
 			$song_details['first_chord_is_tone']
 		);
 
-		$transpositions = $transposer->getTranspositions(1, $forceHighestNote);
+		$transpositions = $transposer->getTranspositions(2, $forceHighestNote);
  		$not_equivalent = $transposer->findAlternativeNotEquivalent();
 
 		//Prepare the chords nicely printed
