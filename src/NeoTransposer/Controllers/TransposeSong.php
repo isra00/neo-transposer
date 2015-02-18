@@ -42,6 +42,7 @@ class TransposeSong
 		);
 
 		$tpl = array_merge($tpl, array(
+			/** @todo Eliminar esta duplicidad */
 			'current_book'		=> $transData['song_details'],
 			'song_details'		=> $transData['song_details'],
 			'transpositions'	=> $transData['transpositions'],

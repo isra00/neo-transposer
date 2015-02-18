@@ -130,6 +130,21 @@ return array(
 	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
 	=> 'Neo-Transposer te ayuda a transportar automáticamente los acordes de <strong>%song%</strong> para que encajen con tu voz. ¡Escribe tu e-mail, sigue las instrucciones y tendrás todos los cantos del Camino Neocatecumenal transportados!',
 
+	'Did this chords work for you?'
+	=> '¿Te han funcionado estos acordes?',
+
+	'No'
+	=> 'No',
+
+	'Maybe you didn\'t measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.'
+	=> 'Quizá no has medido bien tu voz. <a href="%url%">Haz click aquí para ir al asistente</a>.',
+
+	'Maybe you are not singing the song the same way it was analysed for the application'
+	=> 'Quizá no lo has cantado de la misma forma que ha sido analizado para esta aplicación.',
+
+	'Maybe you are not singing in the same tone as the guitar'
+	=> 'Quizá no estás cantando en el mismo tono que la guitarra.',
+
 	//Wizard first step
 	'Voice measure wizard'
 	=> 'Asistente para medir tu voz',

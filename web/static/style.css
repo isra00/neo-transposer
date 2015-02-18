@@ -365,7 +365,6 @@ small.page_number {
 		}
 
 #voicechart-container {
-	border-bottom: 1px solid silver;
 	padding-bottom: 1em;
 	border-top: 1px solid silver;
 	padding-top: 1em;
@@ -436,6 +435,12 @@ small.page_number {
 		font-style: italic;
 		padding-left: .5em;
 		display: none;
+	}
+	#reasons-no {
+		margin: 0;
+		padding: 0 0 0 1em;
+		font-family: .9em;
+		font-style: italic;
 	}
 
 /* Wizard */

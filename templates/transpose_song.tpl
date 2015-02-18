@@ -91,19 +91,21 @@
 	</table>
 </div>
 
-<div class="transposition-feedback">
-	<span class="question">{% trans %}Did this transposition work for you?{% endtrans %}</span>
+<a name="feedback"></a>
+<form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
+	<input type="hidden" name="id_song" value="{{ song_details.id_song }}">
+	<span class="question">{% trans %}Did this chords work for you?{% endtrans %}</span>
 	<span class="answers">
-		<span class="answer"><button name="worked_1" class="flatbutton green" id="feedback-yes">Yes</button></span>
-		<span class="answer"><button name="worked_0" class="flatbutton red" id="feedback-no">No</button></span>
+		<span class="answer"><button type="submit" name="worked" value="1" class="flatbutton green" id="feedback-yes">{% trans %}Yes{% endtrans %}</button></span>
+		<span class="answer"><button type="submit" name="worked" value="0" class="flatbutton red" id="feedback-no">{% trans %}No{% endtrans %}</button></span>
 	</span>
 	<span class="thanks" id="feedback-thanks">Happy to know that! :-)</span>
 	<ul id="reasons-no" class="hidden">
-		<li>Quizá no has medido bien tu voz. <a href="{{ path('wizard_step1', {'_locale': app.locale}) }}">Haz click aquí para ir al asistente</a>.</li>
-		<li>Quizá no lo has cantado de la misma forma que ha sido analizado para esta aplicación.</li>
-		<li>Quizá no estás cantando en el mismo tono que la guitarra.</li>
+		<li>{% trans with {url: path('wizard_step1', {'_locale': app.locale})} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
+		<li>{% trans %}Maybe you are not singing the song the same way it was analysed for the application{% endtrans %}</li>
+		<li>{% trans %}Maybe you are not singing in the same tone as the guitar{% endtrans %}</li>
 	</ul>
-</div>
+</form>
 
 {% import 'base.tpl' as self %}
 {{ self.loadJsFramework() }}
@@ -111,28 +113,41 @@
 <script>
 
 NT = {
+
 	showChart: function(oLinkContainer)
 	{
 		document.getElementById("voicechart-container").style.display = 'block';
 		oLinkContainer.style.display = 'none';
 	},
 
-	feedbackYes: function()
+	sendFeedback: function(iAnswer)
 	{
-		$(".answers").hide();
-		$("#feedback-thanks").show();
-	},
-
-	feedbackNo: function()
-	{
-		$(".question").add(".answer").hide();
-		$("#reasons-no").show();
+		$.post(
+			'{{ path('transposition_feedback') }}',
+			{
+				id_song: {{ song_details.id_song }},
+				worked: iAnswer
+			}
+		);
 	}
 };
 
 $(function() {
-	$("#feedback-yes").click(NT.feedbackYes)
-	$("#feedback-no").click(NT.feedbackNo)
+
+	$("#feedback-yes").click(function(e) {
+		e.preventDefault();
+		$(".answers").hide();
+		$("#feedback-thanks").show();
+		NT.sendFeedback(1);
+	});
+
+	$("#feedback-no").click(function(e) {
+		e.preventDefault();
+		$(".question").add(".answer").hide();
+		$("#reasons-no").show();
+		NT.sendFeedback(0);
+	});
+
 });
 </script>
 

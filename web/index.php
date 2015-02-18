@@ -56,6 +56,9 @@ $app->get('/set-user-data', 'NeoTransposer\\Controllers\\SetUserData::get')
 $app->get('/transpose/{id_song}', 'NeoTransposer\\Controllers\\TransposeSong::get')
 	->bind('transpose_song');
 
+$app->post('/feedback', 'NeoTransposer\\Controllers\\TranspositionFeedback::post')
+	->bind('transposition_feedback');
+
 $app->get('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::get')
 	->before($needsLogin);
 $app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post')
