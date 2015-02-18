@@ -9,11 +9,12 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="favicon.ico">
 
-	<meta property="og:url" content="{{ app.request.getRequestUri }}">
+	<meta property="og:url" content="{{ app.request.getScheme }}://{{ app.request.getHttpHost }}{{ app.request.getRequestUri }}">
 	<meta property="og:title" content="{{ page_title }}">
 	<meta property="og:description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}">
 	<meta property="og:site_name" content="{{ app.neoconfig.software_name }}">
 	<meta property="og:type" content="website">
+	<meta property="og:image" content="{{ app.request.getScheme }}://{{ app.request.getHttpHost }}{{ app.request.basepath }}/static/mkt-{{ app.locale}}.200.jpg">
 
 	<meta name="description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}" />
 	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
