@@ -68,12 +68,19 @@ p {
 		margin: auto;
 	}
 
+	.header h1,
 	.header h2 {
-		float: left;
 		font-size: 1.3em;
 		font-weight: normal;
 		margin: 0;
+		text-align: left;
 	}
+		.header h1 small {
+			font-weight: lighter;
+			font-size: .8rem;
+			float: right;
+			display: none;
+		}
 	.header a {
 		color: white;
 	}

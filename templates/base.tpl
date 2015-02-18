@@ -48,7 +48,14 @@
 						<a itemprop="name" href="{{ path('book_' ~ (current_book ? current_book.id_book: app.user.id_book)) }}">{{ app.neoconfig.software_name }}</a>
 					</h2>
 				{%- else -%}
+					{% if current_route == 'login' -%}
+					<h1 itemprop="name">
+						{{ app.neoconfig.software_name }}
+						<small>{{ page_title }}</small>
+					</h1>
+					{% else -%}
 					<h2 itemprop="name">{{ app.neoconfig.software_name }}</h2>
+					{%- endif %}
 				{%- endif %}
 
 				<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
