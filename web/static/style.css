@@ -146,7 +146,7 @@ footer {
 	font-size: .9em;
 }
 	.book-warning h3 {
-		background: transparent url(warning.48.png) left center no-repeat;
+		background: transparent url(img/warning.48.png) left center no-repeat;
 		padding-left: 55px;
 		line-height: 40px;
 	}
@@ -675,13 +675,13 @@ input[type="text"] {
 @media only screen and (min-width: 40rem) {
 
 	.page-login.lang-es .mkt {
-		background-image: url(mkt-es.jpg);
+		background-image: url(img/mkt-es.jpg);
 	}
 	.page-login.lang-en .mkt {
-		background-image: url(mkt-es.jpg);
+		background-image: url(img/mkt-es.jpg);
 	}
 	.page-login.lang-sw .mkt {
-		background-image: url(mkt-sw.jpg);
+		background-image: url(img/mkt-sw.jpg);
 	}
 }
 
