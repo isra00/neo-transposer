@@ -21,9 +21,13 @@ class Book
 		$app['locale'] = $app['books'][$id_book]['locale'];
 
 		return $app->render('book.tpl', array(
-			'page_title'	 => $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name'])),
-			'current_book'	 => $app['books'][$id_book],
-			'songs'			 => $songs
+			'page_title'	 	=> $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name'])),
+			'current_book'	 	=> $app['books'][$id_book],
+			'songs'			 	=> $songs,
+			'meta_description'	=> $app->trans(
+				'Transpose automatically the notes of songs and psalms of the Neocatechumenal Way in %lang%.',
+				array('%lang%' => $app['books'][$id_book]['lang_name'])
+			),
 		));
 	}
 }

@@ -1,7 +1,5 @@
 {% extends "base.tpl" %}
 
-{% block meta_description %}{% trans with {'%song%': song_details.title} %}Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!{% endtrans %}{% endblock %}
-
 {% block page_class %}transpose-song{% endblock %}
 
 {% macro printTransposition(transposition, original_chords) -%}

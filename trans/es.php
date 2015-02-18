@@ -78,6 +78,9 @@ return array(
 	'Songs of the Neocatechumenal Way'
 	=> 'Cantos del Camino Neocatecumenal',
 
+	'Transpose automatically the notes of songs and psalms of the Neocatechumenal Way in %lang%.'
+	=> 'Transportar automáticamente las notas de los cantos y salmos del Camino Neocatecumenal en %lang%',
+
 	'Change book'
 	=> 'Cambiar libro',
 

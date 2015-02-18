@@ -57,7 +57,11 @@ class TransposeSong
 				'transpose_song',
 				array('id_song' => $transData['song_details']['slug']),
 				UrlGeneratorInterface::ABSOLUTE_URL
-			)
+			),
+			'meta_description'	=> $app->trans(
+				'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
+				array('%song%' => $transData['song_details']['title'])
+			),
 		));
 
 		return $app->render('transpose_song.tpl', $tpl);

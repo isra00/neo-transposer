@@ -1,7 +1,5 @@
 {% extends "base.tpl" %}
 
-{% block meta_description %}Songs of the Neocatechumenal Way in {{ current_book.lang_name }}. Neo-Transposer automatically transposes the chords of the Way, so that they really fit your voice.{% endblock %}
-
 {% block page_class %}page-book{% endblock %}
 
 {% block content %}
