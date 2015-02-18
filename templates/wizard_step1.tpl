@@ -13,7 +13,7 @@
 
 	<p>{% trans %}To start, choose one of these options:{% endtrans %}</p>
 
-	<form method="post" action="{{ here }}">
+	<form method="post" action="{{ app.request.getRequestUri }}">
 
 		<ul class="gender-selection">
 			<li>

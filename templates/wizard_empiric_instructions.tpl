@@ -14,7 +14,7 @@
 
 	<p>{% trans with {'song_title': song_title} %}You have to sing the chorus, and <strong>only the chorus</strong>, of “%song_title%”.{% endtrans %}</p>
 
-	<form method="post" action="{{ here }}">
+	<form method="post" action="{{ app.request.getRequestUri }}">
 		<p class="center"><button type="submit" value="sent" class="bigbutton">{% trans %}Understood{% endtrans %}</button></p>
 	</form>
 

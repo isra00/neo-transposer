@@ -22,7 +22,7 @@
 		<div class="inside">
 			<div class="more-inside">
 				<p>{% trans %}Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.{% endtrans %}</p>
-				{{ login.login_form() }}
+				{{ login.login_form('', app.request.getRequestUri) }}
 			</div>
 		</div>
 	</div>

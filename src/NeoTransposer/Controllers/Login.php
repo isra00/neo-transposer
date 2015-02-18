@@ -7,17 +7,17 @@ use \NeoTransposer\User;
 
 class Login
 {
-	public function run(Request $request, \NeoTransposer\NeoApp $app)
+	public function run(Request $req, \NeoTransposer\NeoApp $app)
 	{
-		if ('POST' == $request->getMethod())
+		if ('POST' == $req->getMethod())
 		{
-			return $this->post($request, $app);
+			return $this->post($req, $app);
 		}
 
-		return $this->get($request, $app);
+		return $this->get($req, $app);
 	}
 
-	public function get(Request $request, \NeoTransposer\NeoApp $app, $tpl_vars=array())
+	public function get(Request $req, \NeoTransposer\NeoApp $app, $tpl_vars=array())
 	{
 		// Log-out always
 		$app['session']->set('user', new User);
@@ -27,25 +27,25 @@ class Login
 		return $app->render('login.tpl', $tpl_vars);
 	}
 
-	public function post(Request $request, \NeoTransposer\NeoApp $app)
+	public function post(Request $req, \NeoTransposer\NeoApp $app)
 	{
 
 		$regexp = <<<REG
 [a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
 REG;
 
-		if (!preg_match("/$regexp/i", $request->get('email')))
+		if (!preg_match("/$regexp/i", $req->get('email')))
 		{
-			return $this->get($request, $app, array(
+			return $this->get($req, $app, array(
 				'error_msg'  => $app->trans('That e-mail doesn\'t look good. Please, re-type it.'),
-				'post'		 => array('email' => $request->get('email'))
+				'post'		 => array('email' => $req->get('email'))
 			));
 		}
 
-		if (!$user = User::fetchUserFromEmail($request->get('email'), $app['db']))
+		if (!$user = User::fetchUserFromEmail($req->get('email'), $app['db']))
 		{
-			$user = new User($request->get('email'));
-			$user->persist($app['db'], $request);
+			$user = new User($req->get('email'));
+			$user->persist($app['db'], $req);
 		}
 
 		$app['session']->set('user', $user);
@@ -59,7 +59,11 @@ REG;
 		}
 		else
 		{
-			return $app->redirect($app['url_generator']->generate('book_' . $user->id_book));
+			$target = $req->get('redirect')
+				? $req->get('redirect')
+				: $app['url_generator']->generate('book_' . $user->id_book);
+
+			return $app->redirect($target);
 		}
 	}
 }

@@ -39,7 +39,7 @@
 					<h2>{{ app.neoconfig.software_name }}</h2>
 				{%- endif %}
 
-				{% if app.user.isLoggedIn and current_route != 'login' -%}
+				{% if app.user.isLoggedIn -%}
 				<span class="user">
 					<a href="{{ path('login', {_locale: app.locale}) }}">{% trans %}Log-out{% endtrans %}</a>
 				</span>

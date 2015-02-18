@@ -17,7 +17,7 @@
 			{{ song|raw }}
 		</div>
 
-		<form class="answer" method="post" action="{{ here }}" id="form-answer">
+		<form class="answer" method="post" action="{{ app.request.getRequestUri }}" id="form-answer">
 			<h3>{% trans %}Could you sing it?{% endtrans %}</h3>
 
 			{% block answer_buttons %}{% endblock %}

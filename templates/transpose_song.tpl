@@ -39,7 +39,7 @@
 		<div class="inside">
 			<div class="more-inside">
 				<p>{% trans with {'%song%': song_details.title } %}Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!{% endtrans %}</p>
-				{{ login.login_form() }}
+				{{ login.login_form('', app.request.getRequestUri) }}
 			</div>
 		</div>
 	</div>
@@ -91,14 +91,49 @@
 	</table>
 </div>
 
+<div class="transposition-feedback">
+	<span class="question">{% trans %}Did this transposition work for you?{% endtrans %}</span>
+	<span class="answers">
+		<span class="answer"><button name="worked_1" class="flatbutton green" id="feedback-yes">Yes</button></span>
+		<span class="answer"><button name="worked_0" class="flatbutton red" id="feedback-no">No</button></span>
+	</span>
+	<span class="thanks" id="feedback-thanks">Happy to know that! :-)</span>
+	<ul id="reasons-no" class="hidden">
+		<li>Quizá no has medido bien tu voz. <a href="{{ path('wizard_step1', {'_locale': app.locale}) }}">Haz click aquí para ir al asistente</a>.</li>
+		<li>Quizá no lo has cantado de la misma forma que ha sido analizado para esta aplicación.</li>
+		<li>Quizá no estás cantando en el mismo tono que la guitarra.</li>
+	</ul>
+</div>
+
+{% import 'base.tpl' as self %}
+{{ self.loadJsFramework() }}
+
 <script>
+
 NT = {
 	showChart: function(oLinkContainer)
 	{
 		document.getElementById("voicechart-container").style.display = 'block';
 		oLinkContainer.style.display = 'none';
+	},
+
+	feedbackYes: function()
+	{
+		$(".answers").hide();
+		$("#feedback-thanks").show();
+	},
+
+	feedbackNo: function()
+	{
+		$(".question").add(".answer").hide();
+		$("#reasons-no").show();
 	}
 };
+
+$(function() {
+	$("#feedback-yes").click(NT.feedbackYes)
+	$("#feedback-no").click(NT.feedbackNo)
+});
 </script>
 
 {% endblock %}

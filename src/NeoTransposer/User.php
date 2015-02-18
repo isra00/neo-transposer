@@ -99,7 +99,16 @@ class User
 
 		if (empty($this->lowest_note))
 		{
-			if (false === array_search($here, array('user_settings', 'set_user_data')))
+			$exempt = array(
+				'user_settings', 
+				'set_user_data', 
+				'wizard_step1', 
+				'wizard_empiric_lowest', 
+				'wizard_empiric_highest', 
+				'wizard_finish'
+			);
+			
+			if (false === array_search($here, $exempt))
 			{
 				return 'user_settings';
 			}
