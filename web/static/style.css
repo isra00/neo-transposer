@@ -120,9 +120,6 @@ footer {
 		margin: 0;
 		line-height: 40px
 	}
-		footer p .feedback {
-			vertical-align: text-bottom;
-		}
 
 /*
  * BOOK
@@ -293,10 +290,13 @@ small.page_number {
 	border: 1px solid silver;
 }
 
-.transpositions-list h4:first-child {
-	margin-top: 0;
+.transpositions-list {
 	overflow: hidden;
 }
+	.transpositions-list h4:first-child {
+		margin-top: 0;
+		overflow: hidden;
+	}
 .transposition {
 	border-collapse: collapse;
 	margin: 1em 2em 1em 0;
@@ -347,7 +347,7 @@ small.page_number {
 
 .show-voice-chart {
 	text-align: center;
-	margin: 6% 0 4%;
+	margin: 1em 0 1.5em;
 	clear: both;
 	overflow: hidden;
 	line-height: 2em;
@@ -420,18 +420,19 @@ small.page_number {
 .transposition-feedback {
 	border-top: 1px solid silver;
 	margin-top: 1em;
-	padding-top: 1em;
+	padding-top: .5em;
 }
+	.transposition-feedback p {
+		margin: .5em 0;
+	}
 	.transposition-feedback .question,
 	.transposition-feedback .answers {
 		display: inline-block;
 	}
-	.transposition-feedback .answer {
-		padding-left: .4em;
-	}
-	.transposition-feedback .answer button {
+	.transposition-feedback .answers button {
 		padding: .3em .5em;
 		background: white;
+		margin-left: .4em;
 	}
 	
 	.transposition-feedback .thanks {
@@ -751,10 +752,6 @@ input[type="text"] {
 		max-width: 100%;
 		position: relative;
 		overflow-x: scroll;
-	}
-
-	.transposition-feedback .answers {
-		display: block;
 	}
 
 	.teaser .inside {

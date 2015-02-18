@@ -95,10 +95,10 @@
 <form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
 	<input type="hidden" name="id_song" value="{{ song_details.id_song }}">
 	<p class="question">{% trans %}Did this chords work for you?{% endtrans %}</p>
-	<div class="answers bigline">
-		<span class="answer"><button type="submit" name="worked" value="1" class="flatbutton green" id="feedback-yes">{% trans %}Yes{% endtrans %}</button></span>
-		<span class="answer"><button type="submit" name="worked" value="0" class="flatbutton red" id="feedback-no">{% trans %}No{% endtrans %}</button></span>
-	</div>
+	<p class="answers bigline">
+		<button type="submit" name="worked" value="1" class="flatbutton green" id="feedback-yes">{% trans %}Yes{% endtrans %}</button>
+		<button type="submit" name="worked" value="0" class="flatbutton red" id="feedback-no">{% trans %}No{% endtrans %}</button>
+	</p>
 	<span class="thanks" id="feedback-thanks">Happy to know that! :-)</span>
 	<ul id="reasons-no" class="hidden">
 		<li>{% trans with {url: path('wizard_step1', {'_locale': app.locale})} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
