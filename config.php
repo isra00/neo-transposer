@@ -34,7 +34,7 @@ return array(
 	),
 
 	'software_name'		=> 'Neo-Transposer',
-	'voice_wizard'		=> include 'voice_wizard.php',
+	'voice_wizard'		=> include 'config.wizard.php',
 	'templates_dir'		=> __DIR__ . '/templates',
 
 	'analytics_id'		=> 'UA-57809429-1',
