@@ -20,7 +20,12 @@
 	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 	  ga('create', '{{ app.neoconfig.analytics_id }}', 'auto');
-	  ga('send', 'pageview');
+	  
+	  {% if app.user.isLoggedIn -%}
+	  ga('set', 'dimension1', '{{ app.user.id_user }}');
+	  {%- endif %}
+
+	  ga('send', 'pageview', );
 	</script>
 	{% endif %}
 </head>
