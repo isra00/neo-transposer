@@ -50,6 +50,8 @@
 		{% endfor %}
 		</select>
 
+		<input type="hidden" name="redirect" value="{{ redirect }}">
+
 		<p class="center margintop">
 			<button type="submit" value="sent" class="bigbutton">{% trans %}We are ready!{% endtrans %}</button>
 		</p>

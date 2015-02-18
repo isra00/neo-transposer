@@ -21,7 +21,8 @@ class UserSettings
 			'default_book_locale'	=> $default_book_locale,
 			'scale'					=> $nc->numbered_scale,
 			'accoustic_scale'		=> $nc->accoustic_scale,
-			'current_notation'		=> $app['neoconfig']['languages'][$app['locale']]['notation']
+			'current_notation'		=> $app['neoconfig']['languages'][$app['locale']]['notation'],
+			'redirect'				=> $request->get('redirect'),
 		));
 	}
 }
