@@ -27,6 +27,17 @@
 
 {% endif %}
 
+{% if app.locale == 'es' and app.user.isLoggedIn %}
+<aside class="book-warning">
+	<h3>Aviso sobre el libro de cantos</h3>
+	<p>Los títulos y los acordes de los cantos a continuación están tomados de
+	la 20ª edición del Resucitó, editado en Madrid en 2014. Te sugiero
+	encarecidamente que uses la <strong>edición oficial</strong> del libro de cantos,
+	y no otras ediciones “piratas”, que pueden contener errores o diferencias en letras y acordes.
+	</p>
+</aside>
+{% endif %}
+
 <ul class="song-index">
 {% for song in songs %}
 	<li>

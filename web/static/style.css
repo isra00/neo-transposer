@@ -137,6 +137,20 @@ footer {
 	color: grey;
 	margin-bottom: 0;
 }
+.book-warning {
+	margin: 1em 0;
+	padding: .8em 1.5em .2em;
+	border: 1px solid silver;
+	background: #eee;
+	color: #444;
+	font-size: .9em;
+}
+	.book-warning h3 {
+		background: transparent url(warning.48.png) left center no-repeat;
+		padding-left: 55px;
+		line-height: 40px;
+	}
+
 .page-book h3 {
 	font-size: 1.5em;
 	margin-top: 0;
@@ -740,6 +754,11 @@ input[type="text"] {
 		float: none;
 		display: block;
 		margin: .5em 0 .7em;
+	}
+	.book-warning h3 {
+		background: transparent;
+		padding-left: 0;
+		line-height: normal;
 	}
 
 	small.page_number {
