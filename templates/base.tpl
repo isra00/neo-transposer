@@ -14,7 +14,7 @@
 	<meta property="og:description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}">
 	<meta property="og:site_name" content="{{ app.neoconfig.software_name }}">
 	<meta property="og:type" content="website">
-	<meta property="og:image" content="{{ app.absoluteBasePath }}/static/mkt-{{ app.locale}}.200.jpg">
+	<meta property="og:image" content="{{ app.absoluteBasePath }}/static/img/mkt-{{ app.locale}}.200.jpg">
 
 	<meta name="description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}" />
 	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
