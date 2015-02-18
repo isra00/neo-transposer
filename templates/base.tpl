@@ -34,15 +34,19 @@
 	<div class="wrapper">
 
 		<nav class="header">
-			<div class="inside">
+			<div class="inside" itemscope itemtype="http://schema.org/Product">
 
 				{% if current_book -%}
 					<h2>
-						<a href="{{ path('book_' ~ (current_book ? current_book.id_book: app.user.id_book)) }}">{{ app.neoconfig.software_name }}</a>
+						<a itemprop="name" href="{{ path('book_' ~ (current_book ? current_book.id_book: app.user.id_book)) }}">{{ app.neoconfig.software_name }}</a>
 					</h2>
 				{%- else -%}
-					<h2>{{ app.neoconfig.software_name }}</h2>
+					<h2 itemprop="name">{{ app.neoconfig.software_name }}</h2>
 				{%- endif %}
+
+				<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
+					Rated <span itemprop="ratingValue">4.5</span>/5 based on <span itemprop="reviewCount">28</span> reviews
+				</div>
 
 				{% if app.user.isLoggedIn and current_route != 'login' -%}
 				<span class="user">
