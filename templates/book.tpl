@@ -6,7 +6,7 @@
 <h1>{% trans %}Songs of the Neocatechumenal Way{% endtrans %}</h1>
 <h3>
 	{% if app.user.isLoggedIn %}
-	<span class="change-book"><a class="small-button" href="{{ path('user_settings', {'_locale':app.locale}) }}#book">{% trans %}Change book{% endtrans %}</a></span>
+	<span class="change-book"><a class="small-button" href="{{ path('user_settings', {'_locale':app.locale}) }}#book">{% trans %}Other languages{% endtrans %}</a></span>
 	{% endif %}
 
 	{{ current_book.lang_name }}

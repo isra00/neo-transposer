@@ -81,8 +81,8 @@ return array(
 	'Transpose automatically the notes of songs and psalms of the Neocatechumenal Way in %lang%.'
 	=> 'Transportar automáticamente las notas de los cantos y salmos del Camino Neocatecumenal en %lang%',
 
-	'Change book'
-	=> 'Cambiar libro',
+	'Other languages'
+	=> 'Otros idiomas',
 
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
 	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',
