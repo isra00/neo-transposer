@@ -422,6 +422,10 @@ small.page_number {
 	margin-top: 1em;
 	padding-top: 1em;
 }
+	.transposition-feedback .question,
+	.transposition-feedback .answers {
+		display: inline-block;
+	}
 	.transposition-feedback .answer {
 		padding-left: .4em;
 	}
@@ -747,6 +751,10 @@ input[type="text"] {
 		max-width: 100%;
 		position: relative;
 		overflow-x: scroll;
+	}
+
+	.transposition-feedback .answers {
+		display: block;
 	}
 
 	.teaser .inside {
