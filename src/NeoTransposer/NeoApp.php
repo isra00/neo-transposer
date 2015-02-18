@@ -51,6 +51,16 @@ class NeoApp extends Application
 
 			$app['twig']->addGlobal('current_route', $request->attributes->get('_route'));
 
+			$app['absoluteUriWithoutQuery'] = $request->getScheme()
+				. '://'
+				. $request->getHttpHost()
+				. strtok($request->getRequestUri(), '?');
+
+			$app['absoluteBasePath'] = $request->getScheme()
+				. '://'
+				. $request->getHttpHost()
+				. $request->getBasePath();
+
 			//If debug=1, Twig enables strict variables. We disable it always.
 			$app['twig']->disableStrictVariables();
 		});
