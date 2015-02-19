@@ -24,6 +24,7 @@ class Login
 
 		$tpl_vars['languages'] = $app['neoconfig']['languages'];
 		$tpl_vars['page_title'] = $app->trans('Transpose chords of the songs of the Neocatechumenal Way');
+		$tpl_vars['meta_canonical'] = $app['absoluteUriWithoutQuery'];
 		return $app->render('login.tpl', $tpl_vars);
 	}
 
