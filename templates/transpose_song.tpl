@@ -137,7 +137,7 @@ $(function() {
 		$(".answers").hide();
 		$("#feedback-thanks").show();
 		NT.sendFeedback(1);
-		ga('send', 'event', 'Feedback', 'Transposition', 'Worked', '{{ song_details.title }}');
+		ga('send', 'event', 'FeedbackTransposition', 'Worked', '{{ song_details.title }}');
 	});
 
 	$("#feedback-no").click(function(e) {
@@ -145,7 +145,7 @@ $(function() {
 		$(".question").add(".answer").hide();
 		$("#reasons-no").show();
 		NT.sendFeedback(0);
-		ga('send', 'event', 'Feedback', 'Transposition', 'NotWorked', '{{ song_details.title }}');
+		ga('send', 'event', 'FeedbackTransposition', 'NotWorked', '{{ song_details.title }}');
 	});
 
 });
