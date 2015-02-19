@@ -74,6 +74,7 @@ p {
 		font-weight: normal;
 		margin: 0;
 		text-align: left;
+		float: left;
 	}
 		.header h1 small {
 			font-weight: lighter;
