@@ -30,6 +30,8 @@
 	  
 	  {% if app.user.isLoggedIn -%}
 	  ga('set', 'dimension1', '{{ app.user.id_user }}');
+	  ga('set', 'dimension2', '{{ app.user.lowest_note }}');
+	  ga('set', 'dimension3', '{{ app.user.highest_note }}');
 	  {%- endif %}
 
 	  ga('send', 'pageview');
