@@ -18,7 +18,7 @@
 		<tr>
 			<td>{{ user.email[:4] }}...</td>
 			<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
-			<td>{{ app.books[user.id_book][lang_name] }}</td>
+			<td>{{ app.books[user.id_book].lang_name }}</td>
 			<td>
 				<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ user.country.isoCode|lower }}.png" width="16" />&nbsp;
 				{{ user.country.names['en']|default('?') }}
