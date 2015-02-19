@@ -32,7 +32,7 @@
 	  ga('set', 'dimension1', '{{ app.user.id_user }}');
 	  {%- endif %}
 
-	  ga('send', 'pageview', );
+	  ga('send', 'pageview');
 	</script>
 	{% endif %}
 </head>
