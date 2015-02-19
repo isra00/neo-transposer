@@ -29,7 +29,15 @@ SQL;
 			}
 		}
 
-		$fbsongs = $app['db']->fetchAll('SELECT song.id_song, title FROM transposition_feedback JOIN song ON transposition_feedback.id_song = song.id_song GROUP BY id_song');
+		$sql = <<<SQL
+SELECT song.id_song, title
+FROM transposition_feedback
+JOIN song ON transposition_feedback.id_song = song.id_song 
+GROUP BY id_song
+ORDER BY song.id_book, song.title
+SQL;
+
+		$fbsongs = $app['db']->fetchAll($sql);
 
 		$feedback = array();
 
@@ -40,6 +48,7 @@ SQL;
 				'no'	=> (int) $app['db']->fetchColumn('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=0', array($song['id_song'])),
 				'title' => $song['title']
 			);
+			$feedback[$song['id_song']]['total'] = $feedback[$song['id_song']]['yes'] + $feedback[$song['id_song']]['no'];
 		}
 
 //		var_dump($feedback);

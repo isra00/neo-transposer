@@ -35,16 +35,19 @@
 <table class="data-table">
 	<thead><tr>
 		<th>Song</th>
-		<th>Yes</th>
-		<th>No</th>
+		<th>Feedback</th>
 	</tr></thead>
 
 	<tbody>
 {% for song in feedback %}
 		<tr>
 			<td>{{ song.title }}</td>
-			<td>{{ song.yes }}</td>
-			<td>{{ song.no }}</td>
+			<td>
+				<div class="feedback-graph">
+					{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
+					{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
+				</div>
+			</td>
 		</tr>
 {% endfor %}
 	</tbody>

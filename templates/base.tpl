@@ -2,7 +2,7 @@
 <html class="no-js" lang="{{ app.locale }}">
 <head>
 	<meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>{{ page_title }}</title>
 	<link rel="stylesheet" href="{{ app.request.basepath }}/static/{% if app.debug %}style{% else %}{{ app.neoconfig.css_cache }}{% endif %}.css" type="text/css" />
@@ -19,7 +19,7 @@
 	<meta name="description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}" />
 	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
 
-	{% if not app.debug %}
+	{% if not app.debug -%}
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -36,7 +36,7 @@
 
 	  ga('send', 'pageview');
 	</script>
-	{% endif %}
+	{%- endif %}
 </head>
 
 <body class="lang-{{ app.locale }} {% block page_class %}{% endblock %}">

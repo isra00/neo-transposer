@@ -539,6 +539,35 @@ h2.step-1 {
 			margin-top: 0;
 		}
 
+/* Admin Users */
+.feedback-graph {
+	width: 101px;
+	margin: 0;
+	padding: 0;
+	border-radius: 4px;
+	overflow: hidden;
+}
+.feedback-graph .yes,
+.feedback-graph .no {
+	font-size: .8em;
+	color: white;
+	display: block;
+	padding: 0;
+	margin: 0;
+	float: left;
+	box-sizing: border-box;
+	padding: 2px .5em;
+	text-shadow: 1px 1px 0 black;
+}
+.feedback-graph .yes {
+	background: #3F863F;
+}
+.feedback-graph .no {
+	background: #9f3127;
+	text-align: right;
+}
+
+
 
 /* Forms */
 .bigbutton {
