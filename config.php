@@ -42,6 +42,8 @@ return array(
 	/* MD5 for the MaxMind geo-ip Country database file */
 	'mmdb'				=> '5dbabefea1a4789adae4d94e0d9e0835',
 
+	'css_cache'			=> '4723e58f10a4d95037a4aab0bc8744ff',
+
 	'sitemap_lastmod'	=> '2015-02-016T10:00Z',
 
 	'seo_title_suffix'	=> 'Transpose chords',

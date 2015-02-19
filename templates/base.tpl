@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>{{ page_title }}</title>
-	<link rel="stylesheet" href="{{ app.request.basepath }}/static/style{% if not app.debug %}.min{% endif %}.css" type="text/css" />
+	<link rel="stylesheet" href="{{ app.request.basepath }}/static/{% if app.debug %}style{% else %}{{ app.neoconfig.css_cache }}{% endif %}.css" type="text/css" />
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="favicon.ico">
 

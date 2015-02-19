@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ServeCss
 {
 	protected $src_file = '/static/style.css';
-	protected $min_file = '/static/style.min.css';
+	protected $min_file = '/static/%s.css';
 
 	/**
 	 * This mechanism for minimizing CSS takes advantage of the RewriteRule:
@@ -40,11 +40,19 @@ class ServeCss
 			$min_css = $source_css;
 		}
 
+		$minified_hash = md5($min_css);
+
 		file_put_contents(
-			$app['root_dir'] . '/web' . $this->min_file,
+			$app['root_dir'] . '/web' . sprintf($this->min_file, $minified_hash),
 			$min_css
 		);
 
-		return $app->redirect($this->min_file);
+		$config_file = $app['root_dir'] . '/config.php';
+
+		$config_src = file_get_contents($config_file);
+		$config_src = preg_replace("/(\s*'css_cache'\s*=>\s*')([a-f\d]{32})(',\s*)/", "\${1}$minified_hash\${3}", $config_src);
+		file_put_contents($config_file, $config_src);
+
+		return $app->redirect(sprintf($this->min_file, $minified_hash));
 	}
 }

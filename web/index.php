@@ -66,7 +66,7 @@ $app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post')
 $app->get('/admin/users', 'NeoTransposer\\Controllers\\AdminUsers::get')
 	->before($needsLogin);
 
-$app->get('/static/style.min.css', 'NeoTransposer\\Controllers\\ServeCss::get');
+$app->get('/static/' . $app['neoconfig']['css_cache'] . '.css', 'NeoTransposer\\Controllers\\ServeCss::get');
 
 //SEO-friendly URLs for books
 foreach ($app['neoconfig']['book_url'] as $id_book=>$slug)
