@@ -215,7 +215,7 @@ return array(
 	=> 'Paso 2: busquemos tu nota más grave',
 
 	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice!'
-	=> 'Intenta cantar el siguiente estribillo en <strong class="blink">%song_key %song_capo%</strong> con los acordes siguientes. Recuerda: ¡debes cantarlo por abajo, con voz grave!',
+	=> 'Intenta cantar el siguiente estribillo en <strong class="blink">%song_key% %song_capo%</strong> con los acordes siguientes. Recuerda: ¡debes cantarlo por abajo, con voz grave!',
 
 	'Yes'
 	=> 'Sí',

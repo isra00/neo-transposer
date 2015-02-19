@@ -48,7 +48,7 @@ class WizardEmpiric
 		$action_no = $action_yes = null;
 
 		//If first, time, shouldn't click NO
-		if (empty($req->get('can_sing')))
+		if (null === $req->get('can_sing'))
 		{
 			$action_no = 'lowFirstTime';
 		}
