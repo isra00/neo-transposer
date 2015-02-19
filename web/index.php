@@ -63,6 +63,8 @@ $app->get('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::get')
 	->before($needsLogin);
 $app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post')
 	->before($needsLogin);
+$app->get('/admin/users', 'NeoTransposer\\Controllers\\AdminUsers::get')
+	->before($needsLogin);
 
 $app->get('/static/style.min.css', 'NeoTransposer\\Controllers\\ServeCss::get');
 
