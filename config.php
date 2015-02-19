@@ -44,6 +44,8 @@ return array(
 
 	'sitemap_lastmod'	=> '2015-02-016T10:00Z',
 
+	'seo_title_suffix'	=> 'Transpose chords',
+
 	'standard_voices'	=> array(
 		'male_high'		 => array('C#2', 'F#3'),
 		'male'			 => array('B1',	 'E3'),

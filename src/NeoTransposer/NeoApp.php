@@ -223,12 +223,13 @@ class NeoApp extends Application
 		$max_title_length = 55;
 
 		$software = $this['neoconfig']['software_name'];
+		$suffix = $this->trans($this['neoconfig']['seo_title_suffix']);
 
 		if (isset($parameters['page_title']))
 		{
-			if (strlen($parameters['page_title']) < $max_title_length - strlen($software))
+			if (strlen($parameters['page_title']) < $max_title_length - strlen($suffix))
 			{
-				$parameters['page_title'] = $parameters['page_title'] . " · $software";
+				$parameters['page_title'] = $parameters['page_title'] . " · $suffix";
 			}
 		}
 		else

@@ -15,6 +15,9 @@ return array(
 	'Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'
 	=> 'Neo-Transposer transporta automáticamente los cantos del Camino por ti, para que encajen perfectamente con tu voz.',
 
+	'Transpose chords'
+	=> 'Transportar acordes',
+
 	//Login
 	'Transpose chords of the songs of the Neocatechumenal Way'
 	=> 'Transportar los acordes de los cantos del Camino Neocatecumenal',
