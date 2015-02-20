@@ -22,16 +22,16 @@
 
 				<ul id="sub-male">
 					<li>
+						<label for="male_normal"><input type="radio" name="gender" value="male" id="male_normal">
+						{% trans %}Neither higher nor lower / I don't know{% endtrans %}</label>
+					</li>
+					<li>
 						<label for="male_high"><input type="radio" name="gender" value="male_high" id="male_high">
 						{% trans %}My voice is higher than most of men{% endtrans %}</label>
 					</li>
 					<li>
 						<label for="male_low"><input type="radio" name="gender" value="male_low" id="male_low">
 						{% trans %}My voice is lower than most of men{% endtrans %}</label>
-					</li>
-					<li>
-						<label for="male_normal"><input type="radio" name="gender" value="male" id="male_normal">
-						{% trans %}Neither higher nor lower / I don't know{% endtrans %}</label>
 					</li>
 				</ul>
 			</li>
@@ -41,16 +41,16 @@
 				{% trans %}I have female voice{% endtrans %}</label>
 				<ul id="sub-female">
 					<li>
+						<label for="female_normal"><input type="radio" name="gender" value="female" id="female_normal">
+						{% trans %}Neither higher nor lower / I don't know{% endtrans %}</label>
+					</li>
+					<li>
 						<label for="female_high"><input type="radio" name="gender" value="female_high" id="female_high">
 						{% trans %}My voice is higher than most of women{% endtrans %}</label>
 					</li>
 					<li>
 						<label for="female_low"><input type="radio" name="gender" value="female_low" id="female_low">
 						{% trans %}My voice is lower than most of women{% endtrans %}</label>
-					</li>
-					<li>
-						<label for="female_normal"><input type="radio" name="gender" value="female" id="female_normal">
-						{% trans %}Neither higher nor lower / I don't know{% endtrans %}</label>
 					</li>
 				</ul>
 			</li>
