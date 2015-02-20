@@ -99,7 +99,7 @@
 	</p>
 	<span class="thanks" id="feedback-thanks">Happy to know that! :-)</span>
 	<ul id="reasons-no" class="hidden">
-		<li>{% trans with {url: path('wizard_step1', {'_locale': app.locale})} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
+		<li>{% trans with {'%url%': path('wizard_step1', {'_locale': app.locale})} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
 		<li>{% trans %}Maybe you are not singing the song the same way it was analysed for the application{% endtrans %}</li>
 		<li>{% trans %}Maybe you are not singing in the same tone as the guitar{% endtrans %}</li>
 	</ul>
