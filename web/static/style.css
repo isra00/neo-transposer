@@ -282,6 +282,7 @@ footer {
 
 .user-settings h3 {
 	font-weight: normal;
+	margin-top: 1.5em;
 }
 
 .user-settings .voice-selector .field {
@@ -289,6 +290,14 @@ footer {
 	margin-bottom: .4em;
 	display: inline-block;
 }
+	.user-settings .wizard-button {
+		background: #eee;
+		padding: .5em;
+		line-height: 1.5em;
+	}
+		.user-settings .wizard-button a {
+			font-size: 1.1em;
+		}
 
 /*
  * TRANSPOSE SONG
@@ -834,6 +843,15 @@ input[type="text"] {
 			display: block;
 			margin: 0;		
 		}
+
+	/* User */
+	.user-settings h3 {
+		border-top: 1px solid silver;
+		padding-top: .5em;
+	}
+	.user-settings .wizard-button {
+		text-align: center;
+	}
 
 	/* Wizard */
 	.test-area {
