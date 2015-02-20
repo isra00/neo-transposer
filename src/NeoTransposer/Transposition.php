@@ -175,7 +175,7 @@ class Transposition
 			? 'm' : '';
 
 		//The tone is always expressed in major form, so we resolve the minor
-		//relatives, it is, the tone will be its third major.
+		//relatives, it is, the tone will be its third minor.
 		if ($first_chord['attributes'] == 'm')
 		{
 			$position = array_search($first_chord['fundamental'], $nc->accoustic_scale);
@@ -192,6 +192,9 @@ class Transposition
 		{
 			$alternativeChords = array(
 				'G' => array(
+					'B' => 'B7'
+				),
+				'E' => array(
 					'B' => 'B7'
 				),
 			);

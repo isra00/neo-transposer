@@ -134,6 +134,8 @@ class AutomaticTransposer
 			$this->nc->transposeNote($this->song_highest_note, $perfect_offset)
 		);
 
+		$perfectTransposition->setAlternativeChords($this->nc);
+
 		// If the perfect tone is the same as in the book, return 0.
 		// We do % 12 because octaves are not considered.
 		if (0 == $perfect_offset % 12)
