@@ -24,7 +24,7 @@ class WizardStepOne
 
 	public function postStepOne(Request $req, NeoApp $app)
 	{
-		$standard_voices = $app['neoconfig']['standard_voices'];
+		$standard_voices = $app['neoconfig']['voice_wizard']['standard_voices'];
 
 		//Invalid POST data => go back
 		if (false === array_search($req->get('gender'), array_keys($standard_voices)))
