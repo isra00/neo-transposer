@@ -788,6 +788,8 @@ input[type="text"] {
 		.page-login .mkt h2 {
 			padding: .5em 0 0;
 			background: #efefef;
+			margin-top: 0;
+			font-size: 1.3em;
 		}
 			.page-login .mkt h2 span {
 				display: inline;
