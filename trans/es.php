@@ -19,8 +19,11 @@ return array(
 	=> 'Transportar acordes',
 
 	//Login
-	'Transpose chords of the songs of the Neocatechumenal Way'
-	=> 'Transportar los acordes de los cantos del Camino Neocatecumenal',
+	'Transpose the songs of the Neocatechumenal Way · Neo-Transposer'
+	=> 'Transportar los cantos del Camino · Neo-Transposer',
+
+	'Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!'
+	=> 'Transportar los cantos del Camino automáticamente con Neo-Transposer. ¡Los acordes exactos para tu propia voz!',
 
 	'<span>It\'s not hard to transpose the song. What is hard is</span><span>to know to which tone should I transpose it <strong>for my voice</strong>.</span>'
 	=> '<span>Lo difícil no es transportar el canto. Lo difícil es</span> <span>saber a qué tono debes transportarlo <strong>para tu voz</strong>.</span>',
@@ -81,8 +84,8 @@ return array(
 	'Songs of the Neocatechumenal Way'
 	=> 'Cantos del Camino Neocatecumenal',
 
-	'Transpose automatically the notes of songs and psalms of the Neocatechumenal Way in %lang%.'
-	=> 'Transportar automáticamente las notas de los cantos y salmos del Camino Neocatecumenal en %lang%',
+	'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.'
+	=> 'Cantos y salmos del Camino Neocatecumenal en %lang%. Con Neo-Transposer puedes transportarlos automáticamente para tu propia voz.',
 
 	'Other languages'
 	=> 'Otros idiomas',

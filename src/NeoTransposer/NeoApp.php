@@ -204,9 +204,12 @@ class NeoApp extends Application
 	 * @param  array  $parameters Array variables.
 	 * @return string             The rendered template.
 	 */
-	public function render($view, array $parameters = array())
+	public function render($view, array $parameters = array(), $modifyTitle=true)
 	{
-		$this->setPageTitle($parameters);
+		if ($modifyTitle)
+		{
+			$this->setPageTitle($parameters);
+		}
 
 		$this['twig']->addGlobal('notifications', $this->notifications);
 		return $this['twig']->render($view, $parameters);

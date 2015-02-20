@@ -25,7 +25,7 @@ class Book
 			'current_book'	 	=> $app['books'][$id_book],
 			'songs'			 	=> $songs,
 			'meta_description'	=> $app->trans(
-				'Transpose automatically the notes of songs and psalms of the Neocatechumenal Way in %lang%.',
+				'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.',
 				array('%lang%' => $app['books'][$id_book]['lang_name'])
 			),
 		));
