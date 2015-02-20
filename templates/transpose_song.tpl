@@ -142,7 +142,7 @@ $(function() {
 
 	$("#feedback-no").click(function(e) {
 		e.preventDefault();
-		$(".question").add(".answer").hide();
+		$(".question").add(".answers").hide();
 		$("#reasons-no").show();
 		NT.sendFeedback(0);
 		ga('send', 'event', 'FeedbackTransposition', 'NotWorked', '{{ song_details.title }}');
