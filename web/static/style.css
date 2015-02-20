@@ -848,6 +848,7 @@ input[type="text"] {
 	.user-settings h3 {
 		border-top: 1px solid silver;
 		padding-top: .5em;
+		margin-top: 1em;
 	}
 	.user-settings .wizard-button {
 		text-align: center;
