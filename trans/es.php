@@ -199,7 +199,7 @@ return array(
 	=> 'Ahora te voy a proponer que cantes el estribillo de un canto en cierto tono. Debes coger la guitarra e intentar cantarlo en ese tono.',
 
 	'If it is too low for you, click on “No, it\'s too low”. If you were able to sing it, click on “Yes”. Then, I will transpose the song so it will be a bit lower, and you should try again. We will keep repeating the exercise until you can\'t sing lower'
-	=> 'Si ves que te viene muy bajo, haz click en “No, me viene demasiado bajo”. Si has podido cantarlo, haz click en “Sí”. Transportaré el canto para que sea más bajo, y debes intentarlo de nuevo. Y seguiremos repitiendo el ejercicio hasta que ya no puedas cantar más bajo.',
+	=> 'Si ves que te viene muy bajo, haz click en “No, es demasiado bajo”. Si has podido cantarlo, haz click en “Sí”. Transportaré el canto para que sea más bajo, y debes intentarlo de nuevo. Y seguiremos repitiendo el ejercicio hasta que ya no puedas cantar más bajo.',
 
 	'The goal of this exercise is not to sing with a nice voice or comfortably, but to find the lowest possible note that you can sing. So please, make an effort, even if it is uncomfortable, so that I may see where is exactly the limit of your voice.'
 	=> 'El objetivo de este ejercicio no es que cantes con una voz bonita, o que cantes con comodidad, sino encontrar la nota más grave posible que puedes cantar. Por eso debes esforzarte, aunque sea incómodo, para que pueda saber dónde está exactamente el límite de tu voz.',
@@ -221,7 +221,7 @@ return array(
 	=> 'Sí',
 
 	'No, that\'s too low'
-	=> 'No, me viene demasiado bajo',
+	=> 'No, es demasiado bajo',
 
 	'Could you sing it?'
 	=> '¿Has podido cantarlo?',
