@@ -19,33 +19,42 @@ $needsLogin = function (Request $request, NeoApp $app) {
 	}
 };
 
+$valid_locales = '(' . implode('|', array_keys($app['neoconfig']['languages'])) . ')';
+
 $app->get('/', 'NeoTransposer\\Controllers\\Index::get');
 $app->get('/sitemap.xml', 'NeoTransposer\\Controllers\\Sitemap::get');
 
 $app->get('/{_locale}/login', 'NeoTransposer\\Controllers\\Login::run')
 	->method('GET|POST')
+	->assert('_locale', $valid_locales)
 	->bind('login');
 
 $app->get('/{_locale}/user', 'NeoTransposer\\Controllers\\UserSettings::get')
+	->assert('_locale', $valid_locales)
 	->bind('user_settings')
 	->before($needsLogin);
 
 $app->get('/{_locale}/wizard', 'NeoTransposer\\Controllers\\WizardStepOne::stepOne')
+	->assert('_locale', $valid_locales)
 	->method('GET|POST')
 	->bind('wizard_step1')
 	->before($needsLogin);
 
 $app->post('/{_locale}/wizard/lowest', 'NeoTransposer\\Controllers\\WizardEmpiric::lowest')
+	->assert('_locale', $valid_locales)
 	->method('GET|POST')
 	->bind('wizard_empiric_lowest')
 	->before($needsLogin);
 
 $app->post('/{_locale}/wizard/highest', 'NeoTransposer\\Controllers\\WizardEmpiric::highest')
+	->assert('_locale', $valid_locales)
 	->method('GET|POST')
+	->assert('_locale', $valid_locales)
 	->bind('wizard_empiric_highest')
 	->before($needsLogin);
 
 $app->get('/{_locale}/wizard/finish', 'NeoTransposer\\Controllers\\WizardEmpiric::finish')
+	->assert('_locale', $valid_locales)
 	->bind('wizard_finish')
 	->before($needsLogin);
 
