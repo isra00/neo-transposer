@@ -47,7 +47,6 @@ $app->post('/{_locale}/wizard/lowest', 'NeoTransposer\\Controllers\\WizardEmpiri
 	->before($needsLogin);
 
 $app->post('/{_locale}/wizard/highest', 'NeoTransposer\\Controllers\\WizardEmpiric::highest')
-	->assert('_locale', $valid_locales)
 	->method('GET|POST')
 	->assert('_locale', $valid_locales)
 	->bind('wizard_empiric_highest')
