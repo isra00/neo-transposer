@@ -129,7 +129,7 @@
 
 	{% if load_social_buttons -%}
 	<script src="https://apis.google.com/js/platform.js" async defer>
-	  {lang: 'es'}
+	  {lang: '{{ app.locale }}'}
 	</script>
 	{%- endif %}
 
