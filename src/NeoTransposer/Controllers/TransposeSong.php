@@ -62,6 +62,7 @@ class TransposeSong
 				'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
 				array('%song%' => $transData['song_details']['title'])
 			),
+			'load_social_buttons' => true,
 		));
 
 		return $app->render('transpose_song.tpl', $tpl);

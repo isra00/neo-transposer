@@ -40,6 +40,18 @@
 </head>
 
 <body class="lang-{{ app.locale }} {% block page_class %}{% endblock %}">
+
+	{% if load_social_buttons -%}
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+	{%- endif %}
+
 	<div class="wrapper">
 
 		<nav class="header">
@@ -63,6 +75,8 @@
 				<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
 					Rated <span itemprop="ratingValue">4.5</span>/5 based on <span itemprop="reviewCount">28</span> reviews
 				</div>
+
+				{% block header_extra %}{% endblock %}
 
 				{% if app.user.isLoggedIn and current_route != 'login' -%}
 				<span class="user">
@@ -112,5 +126,12 @@
 		alert(join(p)+n+n+String.fromCharCode(Math.pow(2,6))+'g'+join(p2));
 	}
 	</script>
+
+	{% if load_social_buttons -%}
+	<script src="https://apis.google.com/js/platform.js" async defer>
+	  {lang: 'es'}
+	</script>
+	{%- endif %}
+
 </body>
 </html>
