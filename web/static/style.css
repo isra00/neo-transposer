@@ -474,10 +474,24 @@ small.page_number {
 	}
 	#reasons-no {
 		margin: 0;
-		padding: 0 0 0 1em;
-		font-family: .9em;
+		padding: 0 0 0 1.1em;
+		font-size: .9em;
 		font-style: italic;
 	}
+	.transposition-feedback .social-buttons {
+		float: right;
+		text-align: right;
+		width: 200px;
+		margin-top: .6em;
+	}
+		.social-buttons .fb-like,
+		.social-buttons .g-plusone {
+			display: inline-block;
+			vertical-align: top;
+		}
+		.social-buttons .fb-like {
+			margin-right: .5em;
+		}
 
 /* Wizard */
 .gender-selection {
@@ -826,6 +840,12 @@ input[type="text"] {
 		max-width: 100%;
 		position: relative;
 		overflow-x: scroll;
+	}
+	.transposition-feedback .social-buttons {
+		float: none;
+		text-align: center;
+		width: auto;
+		margin-top: 1em;
 	}
 
 	.teaser .inside {

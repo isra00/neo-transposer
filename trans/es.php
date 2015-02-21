@@ -145,6 +145,9 @@ return array(
 	'No'
 	=> 'No',
 
+	'Happy to know that! :-)'
+	=> '¡Me alegro! :-)',
+
 	'Maybe you didn\'t measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.'
 	=> 'Quizá no has medido bien tu voz. <a href="%url%">Haz click aquí para ir al asistente</a>.',
 

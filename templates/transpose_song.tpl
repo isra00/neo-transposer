@@ -30,6 +30,15 @@
 
 {% block content %}
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 {% if not app.user.isLoggedIn %}
 	{% import "login.tpl" as login %}
 
@@ -97,7 +106,11 @@
 		<button type="submit" name="worked" value="1" class="flatbutton green" id="feedback-yes">{% trans %}Yes{% endtrans %}</button>
 		<button type="submit" name="worked" value="0" class="flatbutton red" id="feedback-no">{% trans %}No{% endtrans %}</button>
 	</p>
-	<span class="thanks" id="feedback-thanks">Happy to know that! :-)</span>
+	<span class="thanks" id="feedback-thanks">{% trans %}Happy to know that! :-){% endtrans %}</span>
+	<div class="social-buttons">
+		<div class="fb-like" data-href="{{ app.absoluteUriWithoutQuery }}" data-width="90" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+		<div class="g-plusone" data-annotation="none" data-align="right" data-href="{{ app.absoluteUriWithoutQuery }}"></div>
+	</div>
 	<ul id="reasons-no" class="hidden">
 		<li>{% trans with {'%url%': path('wizard_step1', {'_locale': app.locale})} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
 		<li>{% trans %}Maybe you are not singing the song the same way it was analysed for the application{% endtrans %}</li>
@@ -142,13 +155,17 @@ $(function() {
 
 	$("#feedback-no").click(function(e) {
 		e.preventDefault();
-		$(".question").add(".answers").hide();
+		$(".question").add(".answers").add(".social-buttons").hide();
 		$("#reasons-no").show();
 		NT.sendFeedback(0);
 		ga('send', 'event', 'FeedbackTransposition', 'NotWorked', '{{ song_details.title }}');
 	});
 
 });
+</script>
+
+<script src="https://apis.google.com/js/platform.js" async defer>
+  {lang: 'es'}
 </script>
 
 {% endblock %}
