@@ -3,7 +3,7 @@
 {% block header_extra -%}
 <div class="social-buttons">
 	<div class="fb-like" data-href="{{ app.absoluteUriWithoutQuery }}" data-width="90" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-	<!--<div class="g-plusone" data-annotation="none" data-align="right" data-href="{{ app.absoluteUriWithoutQuery }}"></div>-->
+	<div class="g-plusone" data-annotation="none" data-align="right" data-href="{{ app.absoluteUriWithoutQuery }}"></div>
 </div>
 {%- endblock %}
 

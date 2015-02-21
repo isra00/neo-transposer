@@ -489,7 +489,7 @@ small.page_number {
 			display: inline-block;
 			vertical-align: top;
 		}
-		.transposition-feedback .social-buttons .fb-like {
+		.social-buttons .fb-like {
 			margin-right: .5em;
 		}
 
@@ -817,6 +817,9 @@ input[type="text"] {
 	.page-login .login-form {
 		width: auto;
 		display: block;
+	}
+	.page-login .g-plusone {
+		display: none;
 	}
 
 	.change-book {
