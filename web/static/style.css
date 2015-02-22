@@ -563,6 +563,10 @@ h2.step-1 {
 		}
 
 /* Admin Users */
+.admin-users .main {
+	width: auto;
+	margin: 1em;
+}
 .feedback-graph {
 	width: 101px;
 	margin: 0;
@@ -712,7 +716,7 @@ input[type="text"] {
     100% { opacity: 1.0; }
 }
 .data-table {
-	width: 100%;
+	width: auto;
 	border-collapse: collapse;
 }
 	.data-table td,

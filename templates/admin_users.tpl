@@ -1,5 +1,7 @@
 {% extends "base.tpl" %}
 
+{% block page_class %}admin-users{% endblock %}
+
 {% block content %}
 
 <h2>Users ({{ users|length }})</h2>
@@ -16,7 +18,7 @@
 	<tbody>
 {% for user in users %}
 		<tr>
-			<td>{{ user.email[:4] }}...</td>
+			<td>{{ user.email }}</td>
 			<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
 			<td>{{ app.books[user.id_book].lang_name }}</td>
 			<td>
