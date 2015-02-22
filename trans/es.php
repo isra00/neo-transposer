@@ -148,6 +148,9 @@ return array(
 	'Happy to know that! :-)'
 	=> '¡Me alegro! :-)',
 
+	'It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.'
+	=> 'Parece que no has medido bien tu voz. Por favor, <a href="%url%">sigue estas instrucciones</a>.',
+
 	'Maybe you didn\'t measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.'
 	=> 'Quizá no has medido bien tu voz. <a href="%url%">Haz click aquí para ir al asistente</a>.',
 
@@ -165,7 +168,7 @@ return array(
 	=> 'Si no puedes medir tu voz de forma apropiada, sigue los pasos a continuación y la aplicación estimará tu nota máxima y mínima.',
 
 	'<strong>Remember, it\'s only an estimate</strong>. The application can\'t hear your voice, so it is impossible to have full accuracy. Remember also that, if your voice is not measured precisely, the transpositions will not be optimal for your voice, most probably. In short, the Neo-Transposer will be completely useless for you.'
-	=> '<strong>Recuerda, es solo una estimación</strong>, la aplicación no puede oír tu voz y por tanto no puede tener 100% de certeza. Recuerda también que, si la nota máxima y mínima que pones no son correctas, no hay forma de asegurar que las transposiciones propuestas sean apropiadas para tu voz. En resumen, que el Neo-Transposer no te servirá de nada.',
+	=> '<strong>Recuerda, es solo una estimación</strong>, y puede no ser acertada. Y si la medición de tu voz (nota máxima y mínima) no es correcta, los acordes propuestos no serán apropiados para tu voz.',
 
 	'Step 1'
 	=> 'Paso 1',

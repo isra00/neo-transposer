@@ -63,6 +63,10 @@ class TransposeSong
 				array('%song%' => $transData['song_details']['title'])
 			),
 			'load_social_buttons' => true,
+
+			//If user's highest note is in the 1st octave, we suggest strongly using the wizard
+			'user_first_octave' => (array_search($app['user']->highest_note, $nc->numbered_scale) < 12),
+			'url_wizard' 		=> $app['url_generator']->generate('wizard_step1', array('_locale' => $app['locale'])),
 		));
 
 		return $app->render('transpose_song.tpl', $tpl);
