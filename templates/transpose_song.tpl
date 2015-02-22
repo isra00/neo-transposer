@@ -89,6 +89,7 @@
 	</table>
 </div>
 
+{% if app.user.isLoggedIn %}
 <a name="feedback"></a>
 <form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
 	<input type="hidden" name="id_song" value="{{ song_details.id_song }}">
@@ -112,6 +113,7 @@
 		{% endif %}
 	</ul>
 </form>
+{% endif %}
 
 {% import 'base.tpl' as self %}
 {{ self.loadJsFramework() }}
