@@ -17,6 +17,8 @@ class NeoApp extends Application
 	 */
 	protected $swahili_countries = array('TZ', 'KE');
 
+	protected $cookie_lifetime = 2678400; //1 month
+
 	protected $notifications = array('error'=>array(), 'success'=>array());
 
 	/**
@@ -139,7 +141,9 @@ class NeoApp extends Application
 
 		$this->register(new \Silex\Provider\UrlGeneratorServiceProvider());
 
-		$this['session.storage.options'] = array('cookie_lifetime' => 60 * 60 * 24 * 31); //1 month.
+		//A quick & dirty way to set persistent sessions...
+		ini_set('session.gc_maxlifetime', $this->cookie_lifetime);
+		$this['session.storage.options'] = array('cookie_lifetime' => $this->cookie_lifetime);
 		$this->register(new \Silex\Provider\SessionServiceProvider());
 
 		$this->register(new \Silex\Provider\TranslationServiceProvider());
@@ -209,6 +213,11 @@ class NeoApp extends Application
 		if ($modifyTitle)
 		{
 			$this->setPageTitle($parameters);
+		}
+
+		if ($this['debug'])
+		{
+			$parameters['load_social_buttons'] = false;
 		}
 
 		$this['twig']->addGlobal('notifications', $this->notifications);
