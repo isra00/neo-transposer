@@ -1,3 +1,7 @@
 Sitemap: http://neo-transposer.leviticus.co.tz/sitemap.xml
 
 User-agent: *
+Disallow: /sura-yako
+Disallow: /transpose/sura-yako
+Disallow: /get-lucky
+Disallow: /transpose/get-lucky
