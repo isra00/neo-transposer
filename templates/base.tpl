@@ -6,8 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>{{ page_title }}</title>
 	<link rel="stylesheet" href="{{ app.request.basepath }}/static/{% if app.debug %}style{% else %}{{ app.neoconfig.css_cache }}{% endif %}.css" type="text/css" />
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-	<link rel="apple-touch-icon" href="favicon.ico">
+	<link rel="apple-touch-icon" href="{{ app.request.basepath }}/static/img/apple-touch-icon.png">
 
 	<meta property="og:url" content="{{ app.absoluteUriWithoutQuery }}">
 	<meta property="og:title" content="{{ page_title }}">
