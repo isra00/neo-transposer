@@ -12,10 +12,17 @@ $app = new NeoApp(
 	realpath(__DIR__ . '/..')
 );
 
-$needsLogin = function (Request $request, NeoApp $app) {
-	if ($redirect = $app['user']->isRedirectionNeeded($request))
+$needsLogin = function (Request $req, NeoApp $app) {
+	if ($redirect = $app['user']->isRedirectionNeeded($req))
 	{
 		return $app->redirect($app['url_generator']->generate($redirect));
+	}
+};
+
+$needsAdmin = function (Request $req, NeoApp $app) {
+	if ('carallo' != $req->get('t'))
+	{
+		throw new \Symfony\Component\Security\Core\Exception\AccessDeniedException;
 	}
 };
 
@@ -68,11 +75,14 @@ $app->post('/feedback', 'NeoTransposer\\Controllers\\TranspositionFeedback::post
 	->bind('transposition_feedback');
 
 $app->get('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::get')
-	->before($needsLogin);
+	->before($needsLogin)
+	->before($needsAdmin);
 $app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post')
-	->before($needsLogin);
+	->before($needsLogin)
+	->before($needsAdmin);
 $app->get('/admin/users', 'NeoTransposer\\Controllers\\AdminUsers::get')
-	->before($needsLogin);
+	->before($needsLogin)
+	->before($needsAdmin);
 
 $app->get('/static/' . $app['neoconfig']['css_cache'] . '.css', 'NeoTransposer\\Controllers\\ServeCss::get');
 
