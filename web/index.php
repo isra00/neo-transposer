@@ -22,7 +22,7 @@ $needsLogin = function (Request $req, NeoApp $app) {
 $needsAdmin = function (Request $req, NeoApp $app) {
 	if ('carallo' != $req->get('t'))
 	{
-		throw new \Symfony\Component\Security\Core\Exception\AccessDeniedException;
+		return new \Symfony\Component\HttpFoundation\Response('Denied', 403);
 	}
 };
 
