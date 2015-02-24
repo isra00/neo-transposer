@@ -4,19 +4,13 @@ return array(
 
 	'es'	=> array(
 		'lowest' => array(
-			'id_song'		=> 26,
+			'id_song'		=> 255,
 			'song_contents'	=> <<<SONG
-%0
-ANTE QUIEN SE VUELVE EL ROSTRO,
+%0                 %1
+YAHVEH, TÚ ERES MI DIOS,
 
-                        %1
-ANTE QUIEN SE VUELVE EL ROSTRO,
-
-                        %2
-ANTE QUIEN SE VUELVE EL ROSTRO,
-
-                        %0
-ANTE QUIEN SE VUELVE EL ROSTRO
+             %0
+YO TE ENSALZARÉ.
 SONG
 		),
 
@@ -51,13 +45,13 @@ SONG
 		),
 
 		'highest' => array(
-			'id_song'		=> 53,
+			'id_song'		=> 368,
 			'song_contents'	=> <<<SONG
-%0          %1      %2
-ALELUYA, ALELUYA, ALELUYA
+%0           %1    %2
+BWANA ASIPOIJENGA NYUMBA
 
-%0          %1      %2
-ALELUYA, ALELUYA, ALELUYA
+      %3                %0
+WAIJENGAO WAFANYA KAZI BURE
 SONG
 		),
 	),
