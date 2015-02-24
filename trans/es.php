@@ -170,11 +170,8 @@ return array(
 	'Voice measure wizard'
 	=> 'Asistente para medir tu voz',
 
-	'If you can\'t measure your voice properly, follow these steps and the application will estimate your highest and lowest note'
-	=> 'Si no puedes medir tu voz de forma apropiada, sigue los pasos a continuación y la aplicación estimará tu nota máxima y mínima.',
-
-	'<strong>Remember, it\'s only an estimate</strong>. The application can\'t hear your voice, so it is impossible to have full accuracy. Remember also that, if your voice is not measured precisely, the transpositions will not be optimal for your voice, most probably. In short, the Neo-Transposer will be completely useless for you.'
-	=> '<strong>Recuerda, es solo una estimación</strong>, y puede no ser acertada. Y si la medición de tu voz (nota máxima y mínima) no es correcta, los acordes propuestos no serán apropiados para tu voz.',
+	'Follow these steps and the application will estimate your highest and lowest note. If you don\'t follow properly these steps you won\'t be able to use Neo-Transposer.'
+	=> 'Sigue los pasos a continuación y la aplicación estimará tu nota máxima y mínima. Si no sigues correctamente estos pasos no podrás usar Neo-Transposer.',
 
 	'Step 1'
 	=> 'Paso 1',
@@ -219,11 +216,8 @@ return array(
 	'If it is too low for you, click on “No, it\'s too low”. If you were able to sing it, click on “Yes”. Then, I will transpose the song so it will be a bit lower, and you should try again. We will keep repeating the exercise until you can\'t sing lower'
 	=> 'Si ves que te viene muy bajo, haz click en “No, es demasiado bajo”. Si has podido cantarlo, haz click en “Sí”. Transportaré el canto para que sea más bajo, y debes intentarlo de nuevo. Y seguiremos repitiendo el ejercicio hasta que ya no puedas cantar más bajo.',
 
-	'The goal of this exercise is not to sing with a nice voice or comfortably, but to find the lowest possible note that you can sing. So please, make an effort, even if it is uncomfortable, so that I may see where is exactly the limit of your voice.'
-	=> 'El objetivo de este ejercicio no es que cantes con una voz bonita, o que cantes con comodidad, sino encontrar la nota más grave posible que puedes cantar. Por eso debes esforzarte, aunque sea incómodo, para que pueda saber dónde está exactamente el límite de tu voz.',
-
-	'You have to sing the chorus, and <strong>only the chorus</strong>, of “%song_title%”.'
-	=> 'Debes cantar el estribillo de “%song_title%”. Ojo, <strong>solo el estribillo</strong>.',
+	'Try to do your best to sing with your lowest possible voice, since this test tries to find the limits of your voice.'
+	=> 'Trata de esforzarte para cantar con la voz más grave posible, ya que la prueba consiste en encontrar los límites de tu voz.',
 
 	'Understood'
 	=> 'Entendido',

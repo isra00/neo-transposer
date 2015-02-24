@@ -6,8 +6,7 @@
 
 	<h1>{% trans %}Voice measure wizard{% endtrans %}</h1>
 
-	<p>{% trans %}If you can't measure your voice properly, follow these steps and the application will estimate your highest and lowest note{% endtrans %}</p>
-	<p>{% trans %}<strong>Remember, it's only an estimate</strong>. The application can't hear your voice, so it is impossible to have full accuracy. Remember also that, if your voice is not measured precisely, the transpositions will not be optimal for your voice, most probably. In short, the Neo-Transposer will be completely useless for you.{% endtrans %}</p>
+	<p>{% trans %}Follow these steps and the application will estimate your highest and lowest note. If you don't follow properly these steps you won't be able to use Neo-Transposer.{% endtrans %}</p>
 
 	<h2 class="step-1">{% trans %}Step 1{% endtrans %}</h2>
 
