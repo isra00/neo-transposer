@@ -37,7 +37,7 @@ class Book
 	{
 		//"Users rated" = # of users who use this book
 		$users = $db->fetchColumn(
-			'SELECT COUNT(id_user) FROM user WHERE id_book = 1',
+			'SELECT COUNT(id_user) FROM user WHERE id_book = ?',
 			array($id_book)
 		);
 
