@@ -140,8 +140,6 @@ class AutomaticTransposer
 			$this->nc->transposeNote($this->song_highest_note, $perfect_offset)
 		);
 
-		$perfectTransposition->setAlternativeChords($this->nc);
-
 		// If the perfect tone is the same as in the book, return 0.
 		// We do % 12 because octaves are not considered.
 		if (0 == $perfect_offset % 12)
@@ -184,11 +182,6 @@ class AutomaticTransposer
 				$transposition->lowestNote,
 				$transposition->highestNote
 			);
-
-			if ($this->first_chord_is_tone)
-			{
-				$withCapo[$i]->setAlternativeChords($this->nc);
-			}
 		}
 
 		return $withCapo;
@@ -288,6 +281,15 @@ class AutomaticTransposer
 			$perfect_and_equivalent = $this->sortTranspositionsByEase($perfect_and_equivalent);
 
 			$this->perfectAndEquivalent = $perfect_and_equivalent;
+		}
+
+		//This shouldn't be done before to avoid conflicts
+		foreach ($this->perfectAndEquivalent as &$transposition)
+		{
+			if ($this->first_chord_is_tone)
+			{
+				$transposition->setAlternativeChords($this->nc);
+			}
 		}
 
 		return ($limitTranspositions)
