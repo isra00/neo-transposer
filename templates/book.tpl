@@ -46,4 +46,9 @@
 	</li>
 {% endfor %}
 </ul>
+
+<aside itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="book-rating">
+	<span itemprop="reviewCount">{{ rating.users }}</span> usuarios han transportado los cantos en este idioma, con una puntuación de <span itemprop="ratingValue">{{ rating.rating|round(1) }}</span>/5.
+</aside>
+
 {% endblock %}

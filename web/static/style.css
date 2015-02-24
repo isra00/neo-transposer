@@ -180,6 +180,14 @@ footer {
 		line-height: 1.6em;
 	}
 
+.book-rating {
+	font-size: .9em;
+	color: gray;
+	font-style: italic;
+	padding: 1em 0;
+	text-align: center;
+}
+
 .teaser {
 	position: fixed;
 	bottom: 0;
@@ -448,10 +456,16 @@ small.page_number {
 		background: green;
 	}
 
-.transposition-feedback {
-	border-top: 1px solid silver;
+.song-rating {
 	margin-top: 1em;
+	border-top: 1px solid silver;
 	padding-top: .5em;
+	font-style: italic;
+	font-size: .9em;
+	color: gray;
+}
+
+.transposition-feedback {
 }
 	.transposition-feedback p {
 		margin: .5em 0;
@@ -566,6 +580,7 @@ h2.step-1 {
 .admin-users .main {
 	width: auto;
 	margin: 1em;
+	overflow-x: scroll;
 }
 .feedback-graph {
 	width: 101px;

@@ -89,10 +89,17 @@
 	</table>
 </div>
 
-{% if app.user.isLoggedIn %}
 <a name="feedback"></a>
+
+<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="song-rating">
+	<span itemprop="reviewCount">{{ feedback.total }}</span> usuarios han transportado los acordes de este canto con una calificación de <span itemprop="ratingValue">{{ feedback.percentage * 2 + 3 }}</span>/5
+</div>
+
+{% if app.user.isLoggedIn %}
+
 <form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
 	<input type="hidden" name="id_song" value="{{ song_details.id_song }}">
+
 	<p class="question">{% trans %}Did this chords work for you?{% endtrans %}</p>
 	<p class="answers bigline">
 		<button type="submit" name="worked" value="1" class="flatbutton green" id="feedback-yes">{% trans %}Yes{% endtrans %}</button>

@@ -71,10 +71,6 @@
 					{%- endif %}
 				{%- endif %}
 
-				<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
-					Rated <span itemprop="ratingValue">4.5</span>/5 based on <span itemprop="reviewCount">28</span> reviews
-				</div>
-
 				{% block header_extra %}{% endblock %}
 
 				{% if app.user.isLoggedIn and current_route != 'login' -%}
