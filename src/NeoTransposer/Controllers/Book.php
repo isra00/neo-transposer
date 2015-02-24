@@ -20,7 +20,6 @@ class Book
 
 		$app['locale'] = $app['books'][$id_book]['locale'];
 
-
 		return $app->render('book.tpl', array(
 			'page_title'	 	=> $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name'])),
 			'current_book'	 	=> $app['books'][$id_book],
@@ -29,22 +28,23 @@ class Book
 				'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.',
 				array('%lang%' => $app['books'][$id_book]['lang_name'])
 			),
-			'rating'			=> $this->getBookRating($id_book, count($songs), $app['db'])
+			'rating'			=> $this->getBookRating($id_book, count($songs), $app)
 		));
 	}
 
-	protected function getBookRating($id_book, $songs, \Doctrine\DBAL\Connection $db)
+	protected function getBookRating($id_book, $songs, \NeoTransposer\NeoApp $app)
 	{
 		//"Users rated" = # of users who use this book
-		$users = $db->fetchColumn(
+		$users = $app['db']->fetchColumn(
 			'SELECT COUNT(id_user) FROM user WHERE id_book = ?',
 			array($id_book)
 		);
 
 		return array(
 			//More songs => higher rating, always btw 4 and 5
-			'rating' => 4 + (1 / (220 - $songs)),
-			'users'	 => $users
+			'rating'		=> 4 + (1 / (220 - $songs)),
+			'users'			=> $users,
+			'book_title'	=> $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name']))
 		);
 	}
 }

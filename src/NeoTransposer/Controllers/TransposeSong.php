@@ -67,7 +67,7 @@ class TransposeSong
 			//If user's highest note is in the 1st octave, we suggest strongly using the wizard
 			'user_first_octave' => (array_search($app['user']->highest_note, $nc->numbered_scale) < 12),
 			'url_wizard' 		=> $app['url_generator']->generate('wizard_step1', array('_locale' => $app['locale'])),
-			'feedback'			=> $this->getFeedbackData($id_song, $app['db']),
+			'rating'			=> $this->getRatingData($id_song, $app['db']),
 		));
 
 		return $app->render('transpose_song.tpl', $tpl);
@@ -142,7 +142,7 @@ class TransposeSong
 		);
 	}
 
-	public function getFeedbackData($id_song, \Doctrine\DBAL\Connection $db)
+	public function getRatingData($id_song, \Doctrine\DBAL\Connection $db)
 	{
 
 		$sql = <<<SQL
@@ -152,16 +152,19 @@ WHERE id_song = ?
 GROUP BY worked WITH ROLLUP
 SQL;
 		$fb = $db->fetchAll($sql, array($id_song));
-		$feedback = array();
+
+		if (empty($fb)) return;
+
+		$rating = array();
 		$worked_names = array('no', 'yes');
 		foreach ($fb as $row)
 		{
-			$name = is_null($row['worked']) ? 'total' : $worked_names[$row['worked']];
-			$feedback[$name] = $row['n'];
+			$name = is_null($row['worked']) ? 'users' : $worked_names[$row['worked']];
+			$rating[$name] = $row['n'];
 		}
 
-		$feedback['percentage'] = ($feedback['yes'] / $feedback['total']);
+		$rating['proportion'] = ($rating['yes'] / $rating['users']);
 
-		return $feedback;
+		return $rating;
 	}
 }

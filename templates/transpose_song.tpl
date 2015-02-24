@@ -89,11 +89,17 @@
 	</table>
 </div>
 
+<hr>
+
 <a name="feedback"></a>
 
-<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="song-rating">
-	<span itemprop="reviewCount">{{ feedback.total }}</span> usuarios han transportado los acordes de este canto con una calificación de <span itemprop="ratingValue">{{ feedback.percentage * 2 + 3 }}</span>/5
-</div>
+{% if rating %}
+<aside itemscope itemtype="http://schema.org/Product" class="song-rating">
+	{% trans with {'%users%': rating.users, '%song%': song_details.title, '%rating%': (rating.proportion * 2 + 3)|round(1)} -%}
+	<span itemprop="name">%song%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">has been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>
+	{%- endtrans %}
+</aside>
+{% endif %}
 
 {% if app.user.isLoggedIn %}
 

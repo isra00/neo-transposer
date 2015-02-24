@@ -54,20 +54,20 @@
 	<div class="wrapper">
 
 		<nav class="header">
-			<div class="inside" itemscope itemtype="http://schema.org/Product">
+			<div class="inside">
 
 				{% if current_book -%}
 					<h2>
-						<a itemprop="name" href="{{ path('book_' ~ (current_book ? current_book.id_book: app.user.id_book)) }}">{{ app.neoconfig.software_name }}</a>
+						<a href="{{ path('book_' ~ (current_book ? current_book.id_book: app.user.id_book)) }}">{{ app.neoconfig.software_name }}</a>
 					</h2>
 				{%- else -%}
 					{% if current_route == 'login' -%}
-					<h1 itemprop="name">
+					<h1>
 						{{ app.neoconfig.software_name }}
 						<small>{{ page_title }}</small>
 					</h1>
 					{% else -%}
-					<h2 itemprop="name">{{ app.neoconfig.software_name }}</h2>
+					<h2>{{ app.neoconfig.software_name }}</h2>
 					{%- endif %}
 				{%- endif %}
 

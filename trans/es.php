@@ -93,6 +93,9 @@ return array(
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
 	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',
 
+	'The <span itemprop="name">%book_title%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">have been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>'
+	=> 'Los <span itemprop="name">%book_title%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">han sido transportados por <span itemprop="reviewCount">%users%</span> usuarios, con una puntuación de <span itemprop="ratingValue">%rating%</span>/5.</span>',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Camino Neocatecumenal)',
@@ -138,6 +141,9 @@ return array(
 
 	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
 	=> 'Neo-Transposer te ayuda a transportar automáticamente los acordes de <strong>%song%</strong> para que encajen con tu voz. ¡Escribe tu e-mail, sigue las instrucciones y tendrás todos los cantos del Camino Neocatecumenal transportados!',
+
+	'<span itemprop="name">%song%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">has been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>'
+	=> '<span itemprop="name">%song%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">ha sido transportado por <span itemprop="reviewCount">%users%</span> usuarios, con un éxito de <span itemprop="ratingValue">%rating%</span>/5.</span>',
 
 	'Did this chords work for you?'
 	=> '¿Te han funcionado estos acordes?',

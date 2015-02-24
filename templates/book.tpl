@@ -47,8 +47,10 @@
 {% endfor %}
 </ul>
 
-<aside itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="book-rating">
-	<span itemprop="reviewCount">{{ rating.users }}</span> usuarios han transportado los cantos en este idioma, con una puntuación de <span itemprop="ratingValue">{{ rating.rating|round(1) }}</span>/5.
+<aside itemscope itemtype="http://schema.org/Product" class="book-rating">
+	{% trans with {'%users%': rating.users, '%book_title%': rating.book_title, '%rating%': rating.rating|round(1)} -%}
+	The <span itemprop="name">%book_title%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">have been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>
+	{%- endtrans %}
 </aside>
 
 {% endblock %}
