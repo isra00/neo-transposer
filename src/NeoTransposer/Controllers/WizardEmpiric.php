@@ -75,7 +75,7 @@ class WizardEmpiric
 			$action_yes = 'tooLow';
 		}
 		
-		$tpl = $this->prepareSongForTest('lowest', $app);
+		$tpl = $this->prepareSongForTest('lowest', $app, false, true);
 
 		return $app->render('wizard_empiric_lowest.tpl', array_merge($tpl, array(
 			'action_yes'	=> $action_yes,
@@ -125,11 +125,14 @@ class WizardEmpiric
 	{
 		$transposeController = new TransposeSong;
 
+		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
+
 		$transData = $transposeController->getTranspositionData(
 			$app['user'],
-			$app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song]['id_song'], 
+			$wizard_config_song['id_song'], 
 			$app,
-			$forceHighestNote
+			$forceHighestNote,
+			!empty($wizard_config_song['override_highest_note']) ? $wizard_config_song['override_highest_note'] : null
 		);
 
 		$transChords = $transData['transpositions'][0]->chordsForPrint;
@@ -142,14 +145,13 @@ class WizardEmpiric
 
 		$transData['transpositions'][0]->setCapoForPrint($app);
 
-		$song = str_replace(' ', '&nbsp;', $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song]['song_contents']);
+		$song = str_replace(' ', '&nbsp;', $wizard_config_song['song_contents']);
 		$song = str_replace($placeholders, $transChords, $song);
 		$song = nl2br($song);
 
-		$song_key = \NeoTransposer\NotesCalculator::getNotation(
-			$transData['transpositions'][0]->chords[0], 
-			$app['neoconfig']['languages'][$app['locale']]['notation']
-		);
+		$printer = $app['chord_printers.get']($transData['song_details']['chord_printer']);
+
+		$song_key = $printer->printChord($transData['transpositions'][0]->chords[0]);
 
 		return array(
 			'song'			=> $song,

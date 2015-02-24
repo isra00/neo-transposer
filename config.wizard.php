@@ -5,6 +5,7 @@ return array(
 	'es'	=> array(
 		'lowest' => array(
 			'id_song'		=> 255,
+			'override_highest_note'	=> 'F2',
 			'song_contents'	=> <<<SONG
 %0                 %1
 YAHVEH, TÚ ERES MI DIOS,
@@ -28,19 +29,14 @@ SONG
 
 	'sw'	=> array(
 		'lowest' => array(
-			'id_song'		=> 125,
-			'song_contents'	=> <<<SONG
-%0
-MBELE YAKE WOTE UFICHA USO
+			'id_song'				=> 44,
+			'override_highest_note'	=> 'F2',
+			'song_contents'			=> <<<SONG
+%0             %1
+YAHWEH U MUNGU WANGU
 
-                       %1
-MBELE YAKE WOTE UFICHA USO
-
-                       %2
-MBELE YAKE WOTE UFICHA USO
-
-                       %0
-MBELE YAKE WOTE UFICHA USO
+        %0
+NITAKUTUKUZA
 SONG
 		),
 

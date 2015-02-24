@@ -73,7 +73,7 @@ class TransposeSong
 		return $app->render('transpose_song.tpl', $tpl);
 	}
 
-	public function getTranspositionData(User $user, $id_song, \NeoTransposer\NeoApp $app, $forceHighestNote=false)
+	public function getTranspositionData(User $user, $id_song, \NeoTransposer\NeoApp $app, $forceHighestNote=false, $forceLowestNote=false, $overrideHighestNote=null)
 	{
 		$field_id = 'slug';
 
@@ -113,12 +113,12 @@ class TransposeSong
 			$user->lowest_note,
 			$user->highest_note,
 			$song_details['lowest_note'], 
-			$song_details['highest_note'], 
+			$overrideHighestNote ? $overrideHighestNote : $song_details['highest_note'], 
 			$original_chords,
 			$song_details['first_chord_is_tone']
 		);
 
-		$transpositions = $transposer->getTranspositions(2, $forceHighestNote);
+		$transpositions = $transposer->getTranspositions(2, $forceHighestNote, $forceLowestNote);
  		$not_equivalent = $transposer->findAlternativeNotEquivalent();
 
 		//Prepare the chords nicely printed
@@ -155,7 +155,7 @@ SQL;
 
 		if (empty($fb)) return;
 
-		$rating = array();
+		$rating = array('no' => 0, 'yes' => 0);
 		$worked_names = array('no', 'yes');
 		foreach ($fb as $row)
 		{

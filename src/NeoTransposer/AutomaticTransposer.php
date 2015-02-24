@@ -77,9 +77,10 @@ class AutomaticTransposer
 	 * transpose each chord using that offset.
 	 * 
 	 * @param boolean $forceHighestNote Used only in wizard to find highest note.
+	 * @param boolean $forceLowestNote Used only in wizard to find highest note.
 	 * @return Transposition The transposition matching that voice.
 	 */
-	function getPerfectTransposition($forceHighestNote=false)
+	function getPerfectTransposition($forceHighestNote=false, $forceLowestNote=false)
 	{
 		if (!empty($this->perfectTransposition))
 		{
@@ -109,6 +110,11 @@ class AutomaticTransposer
 		if ($forceHighestNote)
 		{
 			$offset_from_singer_lowest = $singer_wideness - $song_wideness;
+		}
+		
+		if ($forceLowestNote)
+		{
+			$offset_from_singer_lowest = 0;
 		}
 
 		/*
@@ -267,13 +273,14 @@ class AutomaticTransposer
 	 * 
 	 * @param 	integer $limitTranspositions Limit of equivalent transpositions to return
 	 * @param 	boolean $forceHighestNote Used only in wizard to find highest note.
+	 * @param 	boolean $forceLowestNote Used only in wizard to find lowest note.
 	 * @return 	array 	Array of Transposition objects, sorted by chord ease.
 	 */
-	function getTranspositions($limitTranspositions=2, $forceHighestNote=false)
+	function getTranspositions($limitTranspositions=2, $forceHighestNote=false, $forceLowestNote=false)
 	{
 		if (empty($this->perfectAndEquivalent))
 		{
-			$perfectTransposition = $this->getPerfectTransposition($forceHighestNote);
+			$perfectTransposition = $this->getPerfectTransposition($forceHighestNote, $forceLowestNote);
 
 			$equivalents = $this->findEquivalentsWithCapo($perfectTransposition, $this->original_chords);
 
