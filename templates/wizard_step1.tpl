@@ -23,7 +23,7 @@
 				<ul id="sub-male">
 					<li>
 						<label for="male_normal"><input type="radio" name="gender" value="male" id="male_normal">
-						{% trans %}Neither higher nor lower / I don't know{% endtrans %}</label>
+						{% trans %}Neither higher nor lower than most of men / I don't know{% endtrans %}</label>
 					</li>
 					<li>
 						<label for="male_high"><input type="radio" name="gender" value="male_high" id="male_high">
@@ -42,7 +42,7 @@
 				<ul id="sub-female">
 					<li>
 						<label for="female_normal"><input type="radio" name="gender" value="female" id="female_normal">
-						{% trans %}Neither higher nor lower / I don't know{% endtrans %}</label>
+						{% trans %}Neither higher nor lower than most of women / I don't know{% endtrans %}</label>
 					</li>
 					<li>
 						<label for="female_high"><input type="radio" name="gender" value="female_high" id="female_high">

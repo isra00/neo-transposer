@@ -197,8 +197,11 @@ return array(
 	'My voice is lower than most of women'
 	=> 'Tengo voz más grave que la mayoría de mujeres',
 
-	'Neither higher nor lower / I don\'t know'
-	=> 'Ni más grave ni más aguda que la mayoría / no sé',
+	'Neither higher nor lower than most of men / I don\'t know'
+	=> 'Ni más grave ni más aguda que la mayoría de los hombres / no sé',
+
+	'Neither higher nor lower than most of women / I don\'t know'
+	=> 'Ni más grave ni más aguda que la mayoría de las mujeres / no sé',
 
 	'I have female voice'
 	=> 'Tengo voz de mujer',
