@@ -7,17 +7,30 @@ use \NeoTransposer\TranspositionChart;
 use \NeoTransposer\NotesCalculator;
 use \NeoTransposer\User;
 
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use \Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class TransposeSong
 {
-	public function get(\NeoTransposer\NeoApp $app, $id_song)
+	public function get(\NeoTransposer\NeoApp $app, Request $req, $id_song)
 	{
 		//For the teaser
 		if (!$app['user']->isLoggedIn())
 		{
 			$app['user']->lowest_note = 'B1';
 			$app['user']->highest_note = 'F#3';
+		}
+		else
+		{
+			if (empty($app['user']->lowest_note))
+			{
+				$app->setLocaleAutodetect($req);
+				
+				return $app->redirect($app['url_generator']->generate(
+					'user_settings', 
+					array('_locale' => $app['locale'])
+				));
+			}
 		}
 
 		$transData = $this->getTranspositionData($app['user'], $id_song, $app);

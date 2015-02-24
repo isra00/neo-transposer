@@ -23,6 +23,31 @@
 </p>
 {% endfor %}
 
+<h2>Null users with feedback ({{ null_users_with_fb|length }})</h2>
+
+<p><em>Shouldn't be no one, especially after 25/feb update!</em></p>
+
+<table class="data-table">
+	<thead><tr>
+		<th>Song</th>
+		<th>Worked</th>
+		<th>User</th>
+		<th>Email</th>
+		<th>Time</th>
+	</tr></thead>
+	<tbody>
+{% for fb in null_users_with_fb %}
+		<tr>
+			<td>{{ fb.id_song }}</td>
+			<td>{{ fb.worked }}</td>
+			<td>{{ fb.id_user }}</td>
+			<td>{{ fb.email }}</td>
+			<td>{{ fb.time }}</td>
+		</tr>
+{% endfor %}
+	</tbody>
+</table>
+
 <h2>Feedback ({{ feedback|length }})</h2>
 
 <table class="data-table">

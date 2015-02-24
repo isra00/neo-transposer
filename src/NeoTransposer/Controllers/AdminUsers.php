@@ -26,7 +26,7 @@ SQL;
 				{
 					$user['country'] = $reader->country($user['register_ip'])->country;
 				}
-				catch (Exception $e) {}
+				catch (\Exception $e) {}
 			}
 		}
 
@@ -86,11 +86,22 @@ SQL;
 
 		$good_users = $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
 
+		$sql = <<<SQL
+SELECT id_song, user.id_user, worked, time, email
+FROM `transposition_feedback`
+join user on transposition_feedback.id_user = user.id_user
+WHERE user.lowest_note IS NULL
+ORDER BY time DESC
+SQL;
+	
+		$null_users_with_feedback = $app['db']->fetchAll($sql);
+
 		return $app->render('admin_users.tpl', array(
 			'users'					=> $users,
 			'feedback'				=> $feedback,
 			'global_performance'	=> $global_performance,
 			'good_users'			=> $good_users,
+			'null_users_with_fb'	=> $null_users_with_feedback,
 		));
 	}
 }
