@@ -84,10 +84,13 @@ SQL;
 			$raw_data = $feedback_data;
 		}
 
+		$good_users = $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
+
 		return $app->render('admin_users.tpl', array(
 			'users'					=> $users,
 			'feedback'				=> $feedback,
-			'global_performance'	=> $global_performance
+			'global_performance'	=> $global_performance,
+			'good_users'			=> $good_users,
 		));
 	}
 }

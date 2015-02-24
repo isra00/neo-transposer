@@ -5,17 +5,23 @@
 {% block content %}
 
 <h2>Global performance</h2>
-<ul>
-	{% for group, gp in global_performance %}
-	<li>
-		{{ group }}: {{ ((gp.yes / gp.total) * 100)|round }}% 
-		<div class="feedback-graph">
-			{% if gp.yes %}<span class="yes" style="width: {{ ((gp.yes / gp.total) * 100)|round }}px">{{ gp.yes }}</span>{% endif %}
-			{% if gp.no %}<span class="no" style="width: {{ ((gp.no / gp.total) * 100)|round }}px">{{ gp.no }}</span>{% endif %}
-		</div>
-	</li>
+
+<h3>Good users (voice range > 1oct): {{ ((good_users / users|length) * 100)|round }}% </h3>
+<div class="feedback-graph">
+	<span class="yes" style="width: {{ ((good_users / users|length) * 100)|round }}px">{{ good_users }}</span>
+	<span class="no" style="width: {{ (((users|length - good_users) / users|length) * 100)|round }}px">{{ users|length - good_users }}</span>
+</div>
+
+<h3>Feedback</h3>
+{% for group, gp in global_performance %}
+<p>
+	{{ group }}: {{ ((gp.yes / gp.total) * 100)|round }}% 
+	<div class="feedback-graph">
+		{% if gp.yes %}<span class="yes" style="width: {{ ((gp.yes / gp.total) * 100)|round }}px">{{ gp.yes }}</span>{% endif %}
+		{% if gp.no %}<span class="no" style="width: {{ ((gp.no / gp.total) * 100)|round }}px">{{ gp.no }}</span>{% endif %}
+	</div>
+</p>
 {% endfor %}
-</ul>
 
 <h2>Feedback ({{ feedback|length }})</h2>
 
