@@ -4,6 +4,43 @@
 
 {% block content %}
 
+<h2>Global performance</h2>
+<ul>
+	{% for group, gp in global_performance %}
+	<li>
+		{{ group }}: {{ ((gp.yes / gp.total) * 100)|round }}% 
+		<div class="feedback-graph">
+			{% if gp.yes %}<span class="yes" style="width: {{ ((gp.yes / gp.total) * 100)|round }}px">{{ gp.yes }}</span>{% endif %}
+			{% if gp.no %}<span class="no" style="width: {{ ((gp.no / gp.total) * 100)|round }}px">{{ gp.no }}</span>{% endif %}
+		</div>
+	</li>
+{% endfor %}
+</ul>
+
+<h2>Feedback ({{ feedback|length }})</h2>
+
+<table class="data-table">
+	<thead><tr>
+		<th>Song</th>
+		<th>Feedback</th>
+	</tr></thead>
+
+	<tbody>
+{% for song in feedback %}
+		<tr>
+			<td>{{ song.title }}</td>
+			<td>
+				<div class="feedback-graph">
+					{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
+					{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
+				</div>
+			</td>
+		</tr>
+{% endfor %}
+	</tbody>
+</table>
+
+
 <h2>Users ({{ users|length }})</h2>
 
 <table class="data-table">
@@ -27,29 +64,6 @@
 			</td>
 			<td>{{ user.register_time }}</td>
 			<td>{{ user.feedback }}</td>
-		</tr>
-{% endfor %}
-	</tbody>
-</table>
-
-<h2>Feedback ({{ feedback|length }})</h2>
-
-<table class="data-table">
-	<thead><tr>
-		<th>Song</th>
-		<th>Feedback</th>
-	</tr></thead>
-
-	<tbody>
-{% for song in feedback %}
-		<tr>
-			<td>{{ song.title }}</td>
-			<td>
-				<div class="feedback-graph">
-					{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
-					{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
-				</div>
-			</td>
 		</tr>
 {% endfor %}
 	</tbody>

@@ -11,6 +11,7 @@ SELECT user.*, COUNT(worked) feedback
 FROM user
 LEFT JOIN transposition_feedback ON transposition_feedback.id_user = user.id_user
 GROUP BY user.id_user
+ORDER BY register_time DESC
 SQL;
 		$users = $app['db']->fetchAll($sql);
 
@@ -51,11 +52,42 @@ SQL;
 			$feedback[$song['id_song']]['total'] = $feedback[$song['id_song']]['yes'] + $feedback[$song['id_song']]['no'];
 		}
 
-//		var_dump($feedback);
+		$sql_gp_all = <<<SQL
+SELECT worked, count(worked) n
+FROM transposition_feedback
+GROUP BY worked
+WITH ROLLUP
+SQL;
+
+		$sql_gp_good_users = <<<SQL
+SELECT worked, count(worked) n
+FROM transposition_feedback
+JOIN user on transposition_feedback.id_user = user.id_user AND CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1
+GROUP BY worked
+WITH ROLLUP
+SQL;
+
+		$global_performance['all'] = $app['db']->fetchAll($sql_gp_all);
+		$global_performance['goods'] = $app['db']->fetchAll($sql_gp_good_users);
+
+		$answers = array('no', 'yes');
+
+		foreach ($global_performance as $group=>&$raw_data)
+		{
+			$feedback_data = array('yes'=>0, 'no'=>0, 'total'=>0);
+			foreach ($raw_data as $row)
+			{
+				$key = is_null($row['worked']) ? 'total' : $answers[$row['worked']];
+				$feedback_data[$key] = $row['n'];
+			}
+
+			$raw_data = $feedback_data;
+		}
 
 		return $app->render('admin_users.tpl', array(
-			'users' => $users,
-			'feedback' => $feedback
+			'users'					=> $users,
+			'feedback'				=> $feedback,
+			'global_performance'	=> $global_performance
 		));
 	}
 }
