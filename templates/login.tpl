@@ -13,9 +13,9 @@
 
 	<div class="mkt">
 		<h2>
-			<div class="inside">
+			<span class="inside">
 				{% trans %}<span>It's not hard to transpose the song. What is hard is</span><span>to know to which tone should I transpose it <strong>for my voice</strong>.</span>{% endtrans %}
-			</div>
+			</span>
 		</h2>
 	</div>
 
