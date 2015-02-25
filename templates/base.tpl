@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="{{ app.locale }}">
+<html lang="{{ app.locale }}">
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,8 +29,8 @@
 	  ga('set','anonymizeIp', true);
 	  {% if app.user.isLoggedIn -%}
 	  ga('set', '&uid', '{{ app.user.id_user }}');
-	  ga('set', 'dimension2', '{{ app.user.lowest_note }}');
-	  ga('set', 'dimension3', '{{ app.user.highest_note }}');
+	  ga('set', 'dimension2', '{{ app.user.lowest_note|default('-') }}');
+	  ga('set', 'dimension3', '{{ app.user.highest_note|default('-') }}');
 	  {%- endif %}
 
 	  ga('send', 'pageview');
