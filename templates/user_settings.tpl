@@ -75,6 +75,7 @@
 		if (notes.indexOf(lowest) >= index_highest && index_highest > -1)
 		{
 			alert('{% trans %}You have to select a highest note which is higher than the lowest one.{% endtrans %}');
+			ga('send', 'event', 'VoiceSettings', 'MustSelectValidHighestNote', '{{ song_details.title }}');
 			return false;
 		}
 		return true;
