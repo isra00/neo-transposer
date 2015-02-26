@@ -54,6 +54,7 @@
 	<thead><tr>
 		<th>Song</th>
 		<th>Feedback</th>
+		<th>&#x1f44d;</th>
 	</tr></thead>
 
 	<tbody>
@@ -66,6 +67,7 @@
 					{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
 				</div>
 			</td>
+			<td>{{ song.fb_shares }}</td>
 		</tr>
 {% endfor %}
 	</tbody>

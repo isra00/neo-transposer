@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Controllers;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 class AdminUsers
 {
 	public function get(\NeoTransposer\NeoApp $app)
@@ -31,7 +33,7 @@ SQL;
 		}
 
 		$sql = <<<SQL
-SELECT song.id_song, title
+SELECT song.id_song, title, song.slug
 FROM transposition_feedback
 JOIN song ON transposition_feedback.id_song = song.id_song 
 GROUP BY id_song
@@ -50,6 +52,10 @@ SQL;
 				'title' => $song['title']
 			);
 			$feedback[$song['id_song']]['total'] = $feedback[$song['id_song']]['yes'] + $feedback[$song['id_song']]['no'];
+			
+			$song_url = $app['url_generator']->generate('transpose_song', array('id_song' => $song['slug']), UrlGeneratorInterface::ABSOLUTE_URL);
+			$graph_url = 'http://graph.facebook.com/' . $song_url;
+			$feedback[$song['id_song']]['fb_shares'] = @json_decode(file_get_contents($graph_url), true)['shares'];
 		}
 
 		$sql_gp_all = <<<SQL
