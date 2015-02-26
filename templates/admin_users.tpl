@@ -54,7 +54,7 @@
 	<thead><tr>
 		<th>Song</th>
 		<th>Feedback</th>
-		<th>&#x1f44d;</th>
+		<th>FB</th>
 	</tr></thead>
 
 	<tbody>
