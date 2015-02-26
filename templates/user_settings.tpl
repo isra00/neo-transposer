@@ -6,7 +6,7 @@
 
 	<h1>{% trans with {'%software%': '<span class="software-name">' ~ app.neoconfig.software_name ~ '</span>'} %}Welcome to %software%{% endtrans %}</h1>
 
-	<form method="get" action="{{ path('set_user_data') }}" onsubmit="return check(this)">
+	<form method="get" action="{{ path('set_user_data') }}" id="f">
 		<p>{% trans %}This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.{% endtrans %}</p>
 
 		<h3>{% trans %}Which is the lowest note that you can sing? And the highest one?{% endtrans %}</h3>
@@ -57,27 +57,32 @@
 		</p>
 	</form>
 
+	{% import 'base.tpl' as self %}
+	{{ self.loadJsFramework() }}
+
 	<script>
-	/**
-	 * Check whether the selected highest note is higher that the lowest one.
-	 * 
-	 * @param  {object} form The form object.
-	 * @return {boolean} Whether the form is valid or not.
-	 */
-	function check(form)
-	{
-		var notes			= ['C1','C#1','D1','D#1','E1','F#1','F1','F#1','G1','G#1','A1','A#1','B1'],
-			lowest 			= document.getElementById('lowest_note').value,
-			highest 		= document.getElementById('highest_note').value,
-			index_highest	= notes.indexOf(highest);
-		
-		//Index < 0 means not found ==> above the 1st octave.
-		if (notes.indexOf(lowest) >= index_highest && index_highest > -1)
-		{
-			alert('{% trans %}You have to select a highest note which is higher than the lowest one.{% endtrans %}');
-			return false;
-		}
-		return true;
-	}
+	$(function() {
+		$(document.getElementById("f")).submit(function(e) {
+
+			e.preventDefault();
+
+			var notes			= ['C1','C#1','D1','D#1','E1','F#1','F1','F#1','G1','G#1','A1','A#1','B1'],
+				lowest 			= document.getElementById('lowest_note').value,
+				highest 		= document.getElementById('highest_note').value,
+				index_highest	= notes.indexOf(highest);
+			
+			//Index < 0 means not found ==> above the 1st octave.
+			if (index_highest > -1)
+			{
+				alert("{% trans %}Are you sure that is your real voice range? If you don't know, you can use the assistant to measure it.{% endtrans %}");
+				$(".wizard-button").addClass("blink");
+				return false;
+			}
+
+		    var form = this;
+            form.submit();
+
+		});
+	});
 	</script>
 {% endblock %}

@@ -74,8 +74,8 @@ return array(
 	'We are ready!'
 	=> '¡Todo listo!',
 
-	'You have to select a highest note which is higher than the lowest one.'
-	=> 'Debes seleccionar una nota máxima que sea más alta que la mínima.',
+	'Are you sure that is your real voice range? If you don\'t know, you can use the assistant to measure it.'
+	=> '¿Estás seguro de que esas son tus notas mínima y máxima? Si no sabes, puedes usar el asistente para medir tu voz.',
 
 	//Book
 	'Songs of the Neocatechumenal Way in %lang%'
