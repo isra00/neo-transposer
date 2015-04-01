@@ -147,9 +147,19 @@ NT = {
 			'{{ path('transposition_feedback') }}',
 			{
 				id_song: {{ song_details.id_song }},
-				worked: iAnswer
+				worked: iAnswer,
+				referer: '{{ app.request.server.get('HTTP_REFERER') }}'
 			}
 		);
+
+		{% if not app.user.lowest_note %}
+		NT.gaNullUserFeedback();
+		{% endif %}
+	},
+
+	gaNullUserFeedback: function()
+	{
+		ga('send', 'event', 'NullUserFeedback', 'Worked', '{{ song_details.title }}');
 	}
 };
 
