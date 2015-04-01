@@ -99,13 +99,48 @@ join user on transposition_feedback.id_user = user.id_user
 WHERE user.lowest_note IS NULL
 ORDER BY time DESC
 SQL;
-	
 		$null_users_with_feedback = $app['db']->fetchAll($sql);
+
+		$sql = <<<SQL
+select date(time) day
+from transposition_feedback
+group by day
+order by day asc
+SQL;
+
+		$days_with_feedback = $app['db']->fetchAll($sql);
+
+		foreach ($days_with_feedback as $day)
+		{
+			$day = $day['day'];
+
+			$sql = <<<SQL
+select sub_yes.day, yes, no, yes+no total, yes/(yes+no)*100 performance
+from
+(
+  SELECT date(time) day, count(worked) yes, worked
+  FROM transposition_feedback
+  where date(time) <= '$day'
+  and worked=1
+) sub_yes
+join
+(
+  SELECT date(time) day, count(worked) no, worked
+  FROM transposition_feedback
+  where date(time) <= '$day'
+  and worked=0
+) sub_no
+SQL;
+
+			$global_perf_chrono[] = $app['db']->fetchAll($sql)[0];
+
+		}
 
 		return $app->render('admin_users.tpl', array(
 			'users'					=> $users,
 			'feedback'				=> $feedback,
 			'global_performance'	=> $global_performance,
+			'global_perf_chrono'	=> $global_perf_chrono,
 			'good_users'			=> $good_users,
 			'null_users_with_fb'	=> $null_users_with_feedback,
 		));

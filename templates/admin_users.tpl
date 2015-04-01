@@ -25,7 +25,7 @@
 
 <h2>Null users with feedback ({{ null_users_with_fb|length }})</h2>
 
-<p><em>Shouldn't be no one, especially after 25/feb update!</em></p>
+<p><em>Shouldn't be no one, especially after 26/feb update!</em></p>
 
 <table class="data-table">
 	<thead><tr>
@@ -43,6 +43,30 @@
 			<td>{{ fb.id_user }}</td>
 			<td>{{ fb.email }}</td>
 			<td>{{ fb.time }}</td>
+		</tr>
+{% endfor %}
+	</tbody>
+</table>
+
+<h2>Global performance day by day (cumulative)</h2>
+
+<table class="data-table">
+	<thead><tr>
+		<th>Date</th>
+		<th>Feedback</th>
+		<th>Perf</th>
+	</tr></thead>
+	<tbody>
+{% for day in global_perf_chrono %}
+		<tr>
+			<td>{{ day.day }}</td>
+			<td>
+				<div class="feedback-graph">
+					<span class="yes" style="width: {{ ((day.yes / day.total) * 100)|round }}px">{{ day.yes }}</span>
+					<span class="no" style="width: {{ ((day.no / day.total) * 100)|round }}px">{{ day.no }}</span>
+				</div>
+			</td>
+			<td>{{ day.performance|round }}</td>
 		</tr>
 {% endfor %}
 	</tbody>
