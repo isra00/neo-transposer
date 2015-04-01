@@ -16,7 +16,9 @@ class TranspositionFeedback
 				array(
 					'id_song' => $req->get('id_song'),
 					'id_user' => $app['user']->id_user,
-					'worked' => (int) $req->get('worked')
+					'worked' => (int) $req->get('worked'),
+					'user_highest_note' => $app['user']->highest_note,
+					'user_lowest_note' => $app['user']->lowest_note,
 				)
 			);
 

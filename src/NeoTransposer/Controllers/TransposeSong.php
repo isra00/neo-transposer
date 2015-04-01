@@ -22,6 +22,7 @@ class TransposeSong
 		}
 		else
 		{
+			//If null user, redirect to User Settings
 			if (empty($app['user']->lowest_note))
 			{
 				$app->setLocaleAutodetect($req);
