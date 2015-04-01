@@ -48,6 +48,11 @@ class SetUserData
 
 		if ($request->get('highest_note'))
 		{
+			if (strpos($request->get('highest_note'), '1'))
+			{
+				return $app->redirect($app['url_generator']->generate('user_settings', array('bad_voice_range'=>'1')));
+			}
+
 			$app['user']->highest_note = $request->get('highest_note');
 		}
 

@@ -9,6 +9,11 @@ class UserSettings
 {
 	public function get(Request $request, \NeoTransposer\NeoApp $app)
 	{
+		if ($request->get('bad_voice_range'))
+		{
+			$app->addNotification('error', $app->trans('Are you sure that is your real voice range? If you don\'t know, you can use the assistant to measure it.'));
+		}
+
 		$nc = new NotesCalculator;
 
 		//Probably the user will want the book in their own language.
