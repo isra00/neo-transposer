@@ -13,6 +13,16 @@ class User
 	public $id_book;
 	public $chord_printer;
 
+	/**
+	 * Simple constructor. Check fetchUserFromEmail() to create from DB.
+	 * 
+	 * @param string 	$email         User email
+	 * @param int 		$id_user       User ID
+	 * @param string 	$lowest_note   User lowest note
+	 * @param string 	$highest_note  User highest note
+	 * @param int 		$id_book       Book in user
+	 * @param string 	$chord_printer ChordPrinter in user
+	 */
 	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null, $chord_printer=null)
 	{
 		$this->id_user = $id_user;
@@ -24,7 +34,7 @@ class User
 	}
 
 	/**
-	 * Factory
+	 * Factory: get a User object from the DB
 	 * 
 	 * @param  string 						$email 	User e-mail
 	 * @param  \Doctrine\DBAL\Connection 	$db 	Database connection.
@@ -82,11 +92,16 @@ class User
 		return $this->id_user = $db->lastInsertId();
 	}
 
+	/**
+	 * Redirections depending on the state of the user (not logged in, no voice...)
+	 * @param  Request $request [description]
+	 * @return boolean          [description]
+	 */
 	public function isRedirectionNeeded(Request $request)
 	{
 		$here = $request->attributes->get('_route');
 
-		//Login has its own redirection logic.
+		//Login page has its own redirection logic.
 		if ($here == 'login')
 		{
 			return;
@@ -115,6 +130,11 @@ class User
 		}
 	}
 
+	/**
+	 * Check if user is logged in or an anonymous user
+	 * 
+	 * @return boolean
+	 */
 	public function isLoggedIn()
 	{
 		return !empty($this->id_user);
