@@ -9,10 +9,22 @@ class AdminUsers
 	public function get(\NeoTransposer\NeoApp $app)
 	{
 		$sql = <<<SQL
-SELECT user.*, COUNT(worked) feedback
+SELECT user.*, y.yes yes, n.no no, y.yes + n.no total
 FROM user
-LEFT JOIN transposition_feedback ON transposition_feedback.id_user = user.id_user
-GROUP BY user.id_user
+LEFT JOIN
+(
+	SELECT id_user, COUNT(worked) yes
+	FROM transposition_feedback
+	WHERE worked=1
+	GROUP BY id_user
+) y ON user.id_user = y.id_user
+LEFT JOIN
+(
+	SELECT id_user, COUNT(worked) no
+	FROM transposition_feedback
+	WHERE worked=0
+	GROUP BY id_user
+) n ON y.id_user = n.id_user
 ORDER BY register_time DESC
 SQL;
 		$users = $app['db']->fetchAll($sql);

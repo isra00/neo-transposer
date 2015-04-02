@@ -4,6 +4,10 @@
 
 {% block content %}
 
+<nav class="floating_toc" data-toc-levels="2">
+	<ul></ul>
+</nav>
+
 <h2>Global performance</h2>
 
 <h3>Good users (voice range > 1oct): {{ ((good_users / users|length) * 100)|round }}% </h3>
@@ -116,14 +120,59 @@
 			<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
 			<td>{{ app.books[user.id_book].lang_name }}</td>
 			<td>
-				<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ user.country.isoCode|lower }}.png" width="16" />&nbsp;
+				<!--<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ user.country.isoCode|lower }}.png" width="16" />&nbsp;-->
 				{{ user.country.names['en']|default('?') }}
 			</td>
 			<td>{{ user.register_time }}</td>
-			<td>{{ user.feedback }}</td>
+			<td>
+				{% if user.total > 0 %}
+				<div class="feedback-graph">
+					{% if user.yes > 0 %}<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>{% endif %}
+					{% if user.no > 0 %}<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>{% endif %}
+				</div>
+				{% endif %}
+			</td>
 		</tr>
 {% endfor %}
 	</tbody>
 </table>
 
+{% import 'base.tpl' as self %}
+{{ self.loadJsFramework() }}
+
+<script>
+/**
+ * NBCDi: utilidades de documentos
+ * @type {Object}
+ */
+BC3 = {
+
+    /**
+     * Genera la tabla de contenidos
+     */
+    generateToc: function()
+    {
+        //Si hay links del document, añadirlos
+        toc_level = $(".floating_toc").data("toc-levels");
+        titulos = $("h" + toc_level);
+        for (i in titulos.get())
+        {
+            marker = "h" + toc_level + "_" + i;
+
+            (function(j, marker, titulos) {
+                $(".floating_toc ul").append('<li><a href="#' + marker + '">' + titulos[i].innerHTML + '</a></li>');
+            })(i, marker, titulos);
+
+            $(titulos[i]).html('<a name="' + marker + '"></a>' + $(titulos[i]).html());
+        }
+
+        $("body").addClass("with-floating-toc");
+    },
+};
+
+$(function() {
+    BC3.generateToc();
+});
+
+</script>
 {% endblock %}

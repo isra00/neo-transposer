@@ -597,11 +597,11 @@ h2.step-1 {
 		font-size: .8em;
 		color: white;
 		display: block;
-		padding: 0;
 		margin: 0;
 		float: left;
 		box-sizing: border-box;
-		padding: 2px .5em;
+		padding: 0 3px;
+		line-height: 140%;
 		text-shadow: 1px 1px 0 black;
 	}
 	.feedback-graph .yes {
@@ -611,6 +611,28 @@ h2.step-1 {
 		background: #9f3127;
 		text-align: right;
 	}
+.floating_toc {
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: .8em;
+    line-height: 170%;
+    background: white;
+    /*z-index: -999;*/
+    padding: .5em;
+    opacity: .7;
+    width: 300px;
+    max-height: 100%;
+}
+    .floating_toc:hover {
+        /*z-index: 999;*/
+        opacity: 1;
+    }
+    .floating_toc ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
 /* Forms */
 .bigbutton {
@@ -911,4 +933,14 @@ input[type="text"] {
 			text-align: center;
 			display: block;
 		}
+
+	/* Admin Users */
+	.floating_toc {
+	    position: relative;
+	    top: auto;
+	    right: auto;
+	    padding: .5em;
+	    opacity: 1;
+	    width: auto;
+	}
 }
