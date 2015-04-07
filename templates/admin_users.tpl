@@ -27,6 +27,15 @@
 </p>
 {% endfor %}
 
+{% set users_not_reporting_fb = users|length - users_reporting_fb %}
+<h3>Users reporting feedback: {{ ((users_reporting_fb / users|length) * 100)|round }}%</h3>
+<p>
+	<div class="feedback-graph">
+		<span class="yes" style="width: {{ ((users_reporting_fb / users|length) * 100)|round }}px">{{ users_reporting_fb }}</span>
+		<span class="no" style="width: {{ ((users_not_reporting_fb / users|length) * 100)|round }}px">{{ users_not_reporting_fb }}</span>
+	</div>
+</p>
+
 <h2>Null users with feedback ({{ null_users_with_fb|length }})</h2>
 
 <p><em>Shouldn't be no one, especially after 26/feb update!</em></p>
