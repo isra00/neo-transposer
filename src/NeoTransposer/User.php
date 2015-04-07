@@ -85,7 +85,8 @@ class User
 				'highest_note'	=> $this->highest_note,
 				'id_book'		=> $this->id_book,
 				'chord_printer'	=> $this->chord_printer,
-				'request_uri' 	=> $_SERVER['REQUEST_URI']
+				'request_uri' 	=> $_SERVER['REQUEST_URI'],
+				'referer' 		=> $_SERVER['HTTP_REFERER']
 			));
 		}
 
