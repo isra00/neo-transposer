@@ -34,16 +34,26 @@ return array(
 	'That e-mail doesn\'t look good. Please, re-type it.'
 	=> 'Anwani ya barua pepe uliyoingiza si sahihi.',
 
+	//User voice
+	'Your voice'
+	=> 'Sauti yako',
+	
+	'<span>I don\'t know</span> my voice range'
+	=> '<span>Sizifahamu</span> nota za sauti yangu',
+
+	'<span>I do know</span> my voice range'
+	=> '<span>Nazifahamu</span> nota za sauti yangu',
+
 	//User settings
 /*	'Settings'
 	=> 'Configuración',
-
+*/
 	'Welcome to %software%'
-	=> 'Bienvenido a %software%',
+	=> 'Karibu kwenye %software%',
 
 	'This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.'
-	=> 'Este software analiza los cantos y tu voz, calculando la transposición perfecta para cada canto, de acuerdo a tu voz. Pero para hacer eso, necesito saber una cosa sobre tu voz.',
-
+	=> 'Software hii inazichunguza nyimbo na sauti yako, ikifanya hesabu kwa kubadilia ufunguo wa nyimbo kulingana na sauti yako binafsi. Lakini kwanza tujue mwelekeo wa sauti yako.',
+/*
 	'Which is the lowest note that you can sing? And the highest one?'
 	=> '¿Cuál es la nota más grave que puedes cantar? ¿Y la más aguda?',
 
@@ -85,10 +95,10 @@ return array(
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Njia ya Neokatekumenato)',
-/*
+
 	'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!'
-	=> '¡Transporta automáticamente los acordes de &quot;%song%&quot; (canto del Camino Neocatecumenal) para que puedas cantar sin estrés!',
-*/
+	=> 'Neo-Transposer inabadilia ufunguo wa &quot;%song%&quot; (wimbo wa Njia ya Neokatekumenato) kulingana na sauti yako binafsi ili uweze kuimba na hakika!',
+
 	'Your voice:'
 	=> 'Sauti yako:',
 	

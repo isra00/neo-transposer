@@ -133,6 +133,23 @@ footer {
 		line-height: 40px
 	}
 
+/* USER VOICE */
+.two-choices {
+	text-align: center;
+}
+	.two-choices a {
+		display: inline-block;
+		font-size: 1.2em;
+		padding: 1em;
+		border: 1px solid #9f3127;
+		margin: 2%;
+		width: 35%;
+	}
+		.two-choices a span {
+			display: block;
+			font-size: 1.2em;
+		}
+
 /*
  * BOOK
  */
@@ -856,6 +873,11 @@ input[type="text"] {
 	}
 	.page-login .g-plusone {
 		display: none;
+	}
+
+	.two-choices a {
+		display: block;
+		width: auto;
 	}
 
 	.change-book {

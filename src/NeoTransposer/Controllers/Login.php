@@ -56,7 +56,7 @@ REG;
 		if (empty($user->lowest_note))
 		{
 			return $app->redirect($app['url_generator']->generate(
-				'user_settings', 
+				'user_voice', 
 				array('_locale' => $app['locale'], 'firstTime' => '1')
 			));
 		}

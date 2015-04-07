@@ -41,6 +41,11 @@ $app->get('/{_locale}/user', 'NeoTransposer\\Controllers\\UserSettings::get')
 	->bind('user_settings')
 	->before($needsLogin);
 
+$app->get('/{_locale}/user/voice', 'NeoTransposer\\Controllers\\UserVoice::get')
+	->assert('_locale', $valid_locales)
+	->bind('user_voice')
+	->before($needsLogin);
+
 $app->get('/{_locale}/wizard', 'NeoTransposer\\Controllers\\WizardStepOne::stepOne')
 	->assert('_locale', $valid_locales)
 	->method('GET|POST')

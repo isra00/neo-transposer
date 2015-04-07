@@ -40,6 +40,16 @@ return array(
 	'That e-mail doesn\'t look good. Please, re-type it.'
 	=> 'Ese e-mail no tiene buena pinta. Por favor, revísalo.',
 
+	//User voice
+	'Your voice'
+	=> 'Tu voz',
+	
+	'<span>I don\'t know</span> my voice range'
+	=> '<span>No conozco</span> mi rango de voz',
+
+	'<span>I do know</span> my voice range'
+	=> '<span>Sí conozco</span> mi rango de voz',
+
 	//User settings
 	'Settings'
 	=> 'Configuración',

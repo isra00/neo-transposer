@@ -126,6 +126,7 @@ class User
 		{
 			$exempt = array(
 				'user_settings', 
+				'user_voice', 
 				'set_user_data', 
 				'wizard_step1', 
 				'wizard_empiric_lowest', 
@@ -135,7 +136,7 @@ class User
 			
 			if (false === array_search($here, $exempt))
 			{
-				return 'user_settings';
+				return 'user_voice';
 			}
 		}
 	}
