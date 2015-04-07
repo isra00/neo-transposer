@@ -70,7 +70,7 @@ class User
 
 		if ($this->id_user)
 		{
-			return $db->update('user',
+			$db->update('user',
 				array(
 					'lowest_note'	=> $this->lowest_note,
 					'highest_note'	=> $this->highest_note,
@@ -78,6 +78,15 @@ class User
 					'chord_printer'	=> $this->chord_printer,
 				), array('id_user' => (int) $this->id_user)
 			);
+
+			$db->insert('user_edit', array(
+				'id_user'		=> $this->id_user,
+				'lowest_note'	=> $this->lowest_note,
+				'highest_note'	=> $this->highest_note,
+				'id_book'		=> $this->id_book,
+				'chord_printer'	=> $this->chord_printer,
+				'request_uri' 	=> $_SERVER['REQUEST_URI']
+			));
 		}
 
 		$db->insert('user', array(
