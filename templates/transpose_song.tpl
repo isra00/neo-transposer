@@ -93,14 +93,6 @@
 
 <a name="feedback"></a>
 
-{% if rating %}
-<aside itemscope itemtype="http://schema.org/Product" class="song-rating">
-	{% trans with {'%users%': rating.users, '%song%': song_details.title, '%rating%': (rating.proportion * 2 + 3)|round(1)} -%}
-	<span itemprop="name">%song%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">has been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>
-	{%- endtrans %}
-</aside>
-{% endif %}
-
 {% if app.user.isLoggedIn %}
 
 <form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">

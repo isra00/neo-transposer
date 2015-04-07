@@ -5,6 +5,9 @@ namespace NeoTransposer\Controllers;
 use \NeoTransposer\NotesCalculator;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use UserVoice and UserBook instead
+ */
 class UserSettings
 {
 	public function get(Request $request, \NeoTransposer\NeoApp $app)

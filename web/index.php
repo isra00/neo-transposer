@@ -36,6 +36,7 @@ $app->get('/{_locale}/login', 'NeoTransposer\\Controllers\\Login::run')
 	->assert('_locale', $valid_locales)
 	->bind('login');
 
+/** @deprecated Remove after testing the next two pages */
 $app->get('/{_locale}/user', 'NeoTransposer\\Controllers\\UserSettings::get')
 	->assert('_locale', $valid_locales)
 	->bind('user_settings')
