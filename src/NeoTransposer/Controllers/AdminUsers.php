@@ -27,6 +27,7 @@ class AdminUsers
 			'users_reporting_fb'	=> $users_reporting_fb,
 			'global_perf_chrono'	=> $this->fetchGlobalPerfChrono(),
 			'feedback'				=> $this->getFeedback(),
+			'unhappy_users'			=> $this->getUnhappyUsers(),
 			'users'					=> $this->getUsers(),
 		));
 	}
@@ -109,6 +110,32 @@ SQL;
 		}
 
 		return $feedback;
+	}
+
+	protected function getUnhappyUsers()
+	{
+		$sql = <<<SQL
+SELECT user.id_user, user.email, y.yes yes, n.no no, y.yes + n.no total, yes/(y.yes + n.no) perf
+FROM user
+JOIN
+(
+	SELECT id_user, COUNT(worked) yes
+	FROM transposition_feedback
+	WHERE worked=1
+	GROUP BY id_user
+) y ON user.id_user = y.id_user
+JOIN
+(
+	SELECT id_user, COUNT(worked) no
+	FROM transposition_feedback
+	WHERE worked=0
+	GROUP BY id_user
+) n ON y.id_user = n.id_user
+where yes/(y.yes + n.no) < 0.5
+ORDER BY total DESC
+SQL;
+
+		return $this->app['db']->fetchAll($sql);
 	}
 
 	protected function getUsers()

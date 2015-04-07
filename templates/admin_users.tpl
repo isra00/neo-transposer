@@ -111,6 +111,34 @@
 </table>
 
 
+<h2>Unhappy users ({{ unhappy_users|length }})</h2>
+
+<table class="data-table">
+	<thead><tr>
+		<th>ID</th>
+		<th>E-mail</th>
+		<th>FB</th>
+		<th>Total</th>
+		<th>Perf</th>
+	</tr></thead>
+	<tbody>
+{% for user in unhappy_users %}
+		<tr>
+			<td>{{ user.id_user }}</td>
+			<td>{{ user.email }}</td>
+			<td>
+				<div class="feedback-graph">
+					<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>
+					<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>
+				</div>
+			</td>
+			<td>{{ user.total }}</td>
+			<td>{{ user.perf|round(2) }}</td>
+		</tr>
+{% endfor %}
+	</tbody>
+</table>
+
 <h2>Users ({{ users|length }})</h2>
 
 <table class="data-table">
