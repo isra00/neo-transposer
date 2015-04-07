@@ -54,7 +54,7 @@
 
 <div class="your-voice">
 	<em>{% trans %}Your voice:{% endtrans %}</em> {{ your_voice|raw }}
-	<a href="{{ path('user_settings', {'_locale': app.locale, 'redirect': app.request.getRequestUri}) }}" class="small-button">{% trans %}Change{% endtrans %}</a>
+	<a href="{{ path('user_voice', {'_locale': app.locale, 'redirect': app.request.getRequestUri}) }}" class="small-button">{% trans %}Change{% endtrans %}</a>
 </div>
 
 <h4>{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</h4>

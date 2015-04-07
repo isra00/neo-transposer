@@ -13,7 +13,7 @@
 		<a href="javascript:void(0)" id="i-know" class="flatbutton red">{% trans %}<span>I do know</span> my voice range{% endtrans %}</a>
 	</nav>
 
-	<section class="hidden" id="voice-range">
+	<form method="get" action="{{ path('set_user_data') }}" id="voice-range" class="hidden">
 		<p class="voice-selector">
 			<span class="field">
 				{% trans %}Lowest:{% endtrans %}
@@ -42,8 +42,14 @@
 			</span>
 		</p>
 
+		<input type="hidden" name="redirect" value="{{ redirect }}">
+
 		<p class="wizard-button"><a href="{{ path('wizard_step1', {'_locale': app.locale}) }}">{% trans %}If you don't know your highest and lowest note, click here{% endtrans %}</a></p>
-	</section>
+
+		<p class="center margintop">
+			<button type="submit" value="sent" class="bigbutton">{% trans %}We are ready!{% endtrans %}</button>
+		</p>
+	</form>
 
 	{% import 'base.tpl' as self %}
 	{{ self.loadJsFramework() }}

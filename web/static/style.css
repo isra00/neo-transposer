@@ -730,6 +730,7 @@ input[type="text"] {
 }
 .big {
 	font-size: 1.2em;
+	line-height: 150%;
 }
 
 .margintop {
