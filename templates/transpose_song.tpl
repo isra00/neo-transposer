@@ -151,15 +151,6 @@ NT = {
 				referer: '{{ app.request.server.get('HTTP_REFERER') }}'
 			}
 		);
-
-		{% if not app.user.lowest_note %}
-		NT.gaNullUserFeedback();
-		{% endif %}
-	},
-
-	gaNullUserFeedback: function()
-	{
-		ga('send', 'event', 'NullUserFeedback', 'Worked', '{{ song_details.title }}');
 	}
 };
 
