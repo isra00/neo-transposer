@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<h1>Selecciona idioma</h1>
+<h1>{% trans %}Choose language{% endtrans %}</h1>
 
 <ul class="big">
 {% for id, book in app.books %}

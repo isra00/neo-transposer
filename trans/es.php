@@ -50,6 +50,10 @@ return array(
 	'<span>I do know</span> my voice range'
 	=> '<span>Sí conozco</span> mi rango de voz',
 
+	//User Book
+	'Choose language'
+	=> 'Selecciona idioma',
+
 	//User settings
 	'Settings'
 	=> 'Configuración',

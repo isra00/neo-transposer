@@ -44,6 +44,10 @@ return array(
 	'<span>I do know</span> my voice range'
 	=> '<span>Nazifahamu</span> nota za sauti yangu',
 
+	//User Book
+	'Choose language'
+	=> 'Chagua lugha',
+
 	//User settings
 /*	'Settings'
 	=> 'Configuración',
