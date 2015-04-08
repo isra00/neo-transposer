@@ -110,6 +110,36 @@
 	</tbody>
 </table>
 
+<h2>Unsuccessful songs</h2>
+
+<table class="data-table">
+	<thead><tr>
+		<th>Song</th>
+		<th>Feedback</th>
+		<th>Total</th>
+		<th>Perf</th>
+	</tr></thead>
+
+	<tbody>
+{% for song in feedback %}
+{% set perf = song.yes / (song.yes + song.no) %}
+	{% if perf < 0.5 %}
+		<tr>
+			<td>{{ song.title }}</td>
+			<td>
+				<div class="feedback-graph">
+					{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
+					{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
+				</div>
+			</td>
+			<td>{{ song.yes + song.no }}
+			<td>{{ perf|round(2) }}</td>
+		</tr>
+	{% endif %}
+{% endfor %}
+	</tbody>
+</table>
+
 
 <h2>Unhappy users ({{ unhappy_users|length }})</h2>
 
