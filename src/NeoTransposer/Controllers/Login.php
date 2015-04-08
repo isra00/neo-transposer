@@ -37,17 +37,19 @@ class Login
 [a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
 REG;
 
-		if (!preg_match("/$regexp/i", $req->get('email')))
+		$req_email = trim($req->get('email'));
+
+		if (!preg_match("/$regexp/i", $req_email))
 		{
 			return $this->get($req, $app, array(
 				'error_msg'  => $app->trans('That e-mail doesn\'t look good. Please, re-type it.'),
-				'post'		 => array('email' => $req->get('email'))
+				'post'		 => array('email' => $req_email)
 			));
 		}
 
-		if (!$user = User::fetchUserFromEmail($req->get('email'), $app['db']))
+		if (!$user = User::fetchUserFromEmail($req_email, $app['db']))
 		{
-			$user = new User($req->get('email'));
+			$user = new User($req_email);
 			$user->persist($app['db'], $req);
 		}
 
