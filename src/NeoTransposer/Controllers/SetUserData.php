@@ -22,25 +22,6 @@ class SetUserData
 
 			$app['user']->id_book = intval($request->get('book'));
 
-			// Auto-select chord printer based on book.
-			/** @deprecated En TransposeSong se fuerza el Printer al del libro */
-			if (!$request->get('chord_printer'))
-			{
-				$app['user']->chord_printer = $app['books'][$app['user']->id_book]['chord_printer'];
-			}
-		}
-
-		/** @deprecated En TransposeSong se fuerza el Printer al del libro */
-		/*if ($request->get('chord_printer'))
-		{
-			if (false === array_search($request->get('chord_printer'), array_keys($app['chord_printers.list'])))
-			{
-				throw new BadRequestHttpException('Invalid request: the specified chord notation does not exist');
-			}
-
-			$app['user']->chord_printer = $request->get('chord_printer');
-		}*/
-
 		if ($request->get('lowest_note'))
 		{
 			$app['user']->lowest_note = $request->get('lowest_note');

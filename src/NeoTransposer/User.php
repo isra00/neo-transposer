@@ -11,7 +11,6 @@ class User
 	public $lowest_note;
 	public $highest_note;
 	public $id_book;
-	public $chord_printer;
 	public $wizard_step1;
 	public $wizard_lowest_attempts = 0;
 	public $wizard_highest_attempts = 0;
@@ -24,16 +23,14 @@ class User
 	 * @param string 	$lowest_note   User lowest note
 	 * @param string 	$highest_note  User highest note
 	 * @param int 		$id_book       Book in user
-	 * @param string 	$chord_printer ChordPrinter in user
 	 */
-	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null, $chord_printer=null)
+	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null)
 	{
 		$this->id_user = $id_user;
 		$this->email = $email;
 		$this->lowest_note = $lowest_note;
 		$this->highest_note = $highest_note;
 		$this->id_book = $id_book;
-		$this->chord_printer = $chord_printer;
 	}
 
 	/**
@@ -54,8 +51,7 @@ class User
 				$userdata['id_user'],
 				$userdata['lowest_note'],
 				$userdata['highest_note'],
-				$userdata['id_book'],
-				$userdata['chord_printer']
+				$userdata['id_book']
 			);
 		}
 	}
@@ -78,7 +74,6 @@ class User
 					'lowest_note'	=> $this->lowest_note,
 					'highest_note'	=> $this->highest_note,
 					'id_book'		=> $this->id_book,
-					'chord_printer'	=> $this->chord_printer,
 					'wizard_step1' => $this->wizard_step1,
 					'wizard_lowest_attempts' => $this->wizard_lowest_attempts,
 					'wizard_highest_attempts' => $this->wizard_highest_attempts
@@ -90,7 +85,6 @@ class User
 				'lowest_note'	=> $this->lowest_note,
 				'highest_note'	=> $this->highest_note,
 				'id_book'		=> $this->id_book,
-				'chord_printer'	=> $this->chord_printer,
 				'request_uri' 	=> $_SERVER['REQUEST_URI'],
 				'referer' 		=> $_SERVER['HTTP_REFERER']
 			));
@@ -101,7 +95,6 @@ class User
 			'lowest_note'	=> $this->lowest_note,
 			'highest_note'	=> $this->highest_note,
 			'id_book'		=> $this->id_book,
-			'chord_printer'	=> $this->chord_printer,
 			'register_ip'	=> $request->getClientIp()
 		));
 
