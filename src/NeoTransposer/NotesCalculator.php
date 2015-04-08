@@ -177,6 +177,7 @@ class NotesCalculator
 		return $final_list;
 	}
 
+	/** @todo Mover a nueva clase NotesNotation */
 	public static function getNotation($note, $notation)
 	{
 		return ('latin' == $notation) ? self::$latinNotes[$note] : $note;

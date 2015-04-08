@@ -4,6 +4,7 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\User;
+use \NeoTransposer\Persistence\UserPersistence;
 
 class Login
 {
@@ -47,7 +48,7 @@ REG;
 			));
 		}
 
-		if (!$user = User::fetchUserFromEmail($req_email, $app['db']))
+		if (!$user = UserPersistence::fetchUserFromEmail($req_email, $app['db']))
 		{
 			$user = new User($req_email);
 			$user->persist($app['db'], $req);

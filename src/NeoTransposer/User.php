@@ -3,6 +3,7 @@
 namespace NeoTransposer;
 
 use Symfony\Component\HttpFoundation\Request;
+use \NeoTransposer\Persistence\UserPersistence;
 
 class User
 {
@@ -16,7 +17,7 @@ class User
 	public $wizard_highest_attempts = 0;
 
 	/**
-	 * Simple constructor. Check fetchUserFromEmail() to create from DB.
+	 * Simple constructor. Check UserPersistence::fetchUserFromEmail() to create from DB.
 	 * 
 	 * @param string 	$email         User email
 	 * @param int 		$id_user       User ID
@@ -40,32 +41,6 @@ class User
 	}
 
 	/**
-	 * Factory: get a User object from the DB
-	 * 
-	 * @param  string 						$email 	User e-mail
-	 * @param  \Doctrine\DBAL\Connection 	$db 	Database connection.
-	 * @return User        					The User instance for that e-mail.
-	 */
-	public static function fetchUserFromEmail($email, \Doctrine\DBAL\Connection $db)
-	{
-		$sql = 'SELECT * FROM user WHERE email LIKE ?';
-		
-		if ($userdata = $db->fetchAssoc($sql, array($email)))
-		{
-			return new User(
-				$userdata['email'],
-				$userdata['id_user'],
-				$userdata['lowest_note'],
-				$userdata['highest_note'],
-				$userdata['id_book'],
-				$userdata['wizard_step1'],
-				$userdata['wizard_lowest_attempts'],
-				$userdata['wizard_highest_attempts']
-			);
-		}
-	}
-
-	/**
 	 * Create or update the user in the database.
 	 * 
 	 * @param  \Doctrine\DBAL\Connection $db A DB connection.
@@ -74,40 +49,7 @@ class User
 	 */
 	public function persist(\Doctrine\DBAL\Connection $db, Request $request)
 	{
-		/** @todo Hacerlo en una sola consulta, con replace or insert */
-
-		if ($this->id_user)
-		{
-			$db->update('user',
-				array(
-					'lowest_note'	=> $this->lowest_note,
-					'highest_note'	=> $this->highest_note,
-					'id_book'		=> $this->id_book,
-					'wizard_step1' => $this->wizard_step1,
-					'wizard_lowest_attempts' => $this->wizard_lowest_attempts,
-					'wizard_highest_attempts' => $this->wizard_highest_attempts
-				), array('id_user' => (int) $this->id_user)
-			);
-
-			return $db->insert('user_edit', array(
-				'id_user'		=> $this->id_user,
-				'lowest_note'	=> $this->lowest_note,
-				'highest_note'	=> $this->highest_note,
-				'id_book'		=> $this->id_book,
-				'request_uri' 	=> $_SERVER['REQUEST_URI'],
-				'referer' 		=> $_SERVER['HTTP_REFERER']
-			));
-		}
-
-		$db->insert('user', array(
-			'email'			=> $this->email,
-			'lowest_note'	=> $this->lowest_note,
-			'highest_note'	=> $this->highest_note,
-			'id_book'		=> $this->id_book,
-			'register_ip'	=> $request->getClientIp()
-		));
-
-		return $this->id_user = $db->lastInsertId();
+		UserPersistence::persist($this, $db, $request);
 	}
 
 	/**
@@ -161,6 +103,8 @@ class User
 
 	/**
 	 * Format the voice of the User as lowest_note - highest note +x octaves
+	 * 
+	 * @todo Mover a nueva clase NotesNotation
 	 * 
 	 * @param  \Silex\Translator 	$trans 		The Translator service.
 	 * @param  string 				$notation 	The notation (american/latin).
