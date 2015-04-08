@@ -47,6 +47,7 @@
 		{
 			$(".test-area").hide();
 			$(".too-low").show();
+			ga('send', 'event', 'WizardError', 'LowestFirst', 'user_id: {{ app.user.id_user }}');
 		},
 
 		repeatTest: function()
