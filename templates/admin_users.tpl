@@ -157,7 +157,7 @@
 			<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
 			<td>{{ app.books[user.id_book].lang_name }}</td>
 			<td>
-				<!--<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ user.country.isoCode|lower }}.png" width="16" />&nbsp;-->
+				<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ user.country.isoCode|lower }}.png" width="16" />&nbsp;
 				{{ user.country.names['en']|default('?') }}
 			</td>
 			<td>{{ user.register_time }}</td>
