@@ -41,7 +41,7 @@ class UserPersistence
 	 * @param  \Symfony\Component\HttpFoundation\Request $request The Request, for fetching the client IP.
 	 * @return integer The user ID, if it was not set.
 	 */
-	public function persist(User $user, \Doctrine\DBAL\Connection $db, Request $request)
+	public static function persist(User $user, \Doctrine\DBAL\Connection $db, Request $request)
 	{
 
 		/** @todo Hacerlo en una sola consulta, con replace or insert */
