@@ -21,6 +21,7 @@ class SetUserData
 			}
 
 			$app['user']->id_book = intval($request->get('book'));
+		}
 
 		if ($request->get('lowest_note'))
 		{
