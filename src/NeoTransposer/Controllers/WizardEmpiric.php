@@ -161,7 +161,7 @@ class WizardEmpiric
 		);
 	}
 
-	public function finish(NeoApp $app)
+	public function finish(Request $req, NeoApp $app)
 	{
 		$your_voice = $app['user']->getVoiceAsString(
 			$app['translator'],
@@ -175,6 +175,9 @@ class WizardEmpiric
 				$go_to_book = $book['id_book'];
 			}
 		}
+
+		//Only when wizard is finished, voice range is stored in DB
+		$app['user']->persist($app['db'], $req);
 
 		return $app->render('wizard_finish.tpl', array(
 			'your_voice'	=> $your_voice,
