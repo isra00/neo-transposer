@@ -47,10 +47,4 @@
 {% endfor %}
 </ul>
 
-<aside itemscope itemtype="http://schema.org/Product" class="book-rating">
-	{% trans with {'%users%': rating.users, '%book_title%': rating.book_title, '%rating%': rating.rating|round(1)} -%}
-	The <span itemprop="name">%book_title%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">have been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>
-	{%- endtrans %}
-</aside>
-
 {% endblock %}
