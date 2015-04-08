@@ -22,15 +22,21 @@ class User
 	 * @param int 		$id_user       User ID
 	 * @param string 	$lowest_note   User lowest note
 	 * @param string 	$highest_note  User highest note
-	 * @param int 		$id_book       Book in user
+	 * @param int 		$id_book       Book
+	 * @param int 		wizard_step1	Option checked in Wizard First Step
+	 * @param string 	wizard_lowest_attempts No. of attempts in Wizard Lowest note.
+	 * @param string 	wizard_highest_attempts No. of attempts in Wizard Lowest note.
 	 */
-	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null)
+	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null)
 	{
-		$this->id_user = $id_user;
+ 		$this->id_user = $id_user;
 		$this->email = $email;
 		$this->lowest_note = $lowest_note;
 		$this->highest_note = $highest_note;
 		$this->id_book = $id_book;
+		$this->wizard_step1 = $wizard_step1;
+		$this->wizard_lowest_attempts = $wizard_lowest_attempts;
+		$this->wizard_highest_attempts = $wizard_highest_attempts;
 	}
 
 	/**
@@ -51,7 +57,10 @@ class User
 				$userdata['id_user'],
 				$userdata['lowest_note'],
 				$userdata['highest_note'],
-				$userdata['id_book']
+				$userdata['id_book'],
+				$userdata['wizard_step1'],
+				$userdata['wizard_lowest_attempts'],
+				$userdata['wizard_highest_attempts']
 			);
 		}
 	}
