@@ -126,6 +126,9 @@ return array(
 	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
 	=> 'Estas dos transposiciones encajan con tu voz (son equivalentes). La primera tiene acordes más fáciles:',
 	
+	'Beware that this is the best tone for your voice, but might not be the best one for the assembly.'
+	=> 'Ten en cuenta que este es el tono óptimo para tu voz, pero podría no ser el mejor para la asamblea.',
+
 	'with capo %n%'
 	=> 'con cejilla %n%º traste',
 	
@@ -240,8 +243,8 @@ return array(
 	'Step 2: let\'s find your lowest note'
 	=> 'Paso 2: busquemos tu nota más grave',
 
-	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice!'
-	=> 'Intenta cantar el siguiente estribillo en <strong class="blink">%song_key% %song_capo%</strong> con los acordes siguientes. Recuerda: ¡debes cantarlo por abajo, con voz grave!',
+	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won\'t be able to sing loud enough in the community!'
+	=> 'Intenta cantar el siguiente estribillo en <strong class="blink">%song_key% %song_capo%</strong> con los acordes siguientes. Recuerda: ¡debes cantarlo por abajo, con voz grave, pero sin bajar demasiado o no podrás cantar suficientemente fuerte en la comunidad.',
 
 	'Yes'
 	=> 'Sí',

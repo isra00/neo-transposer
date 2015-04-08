@@ -3,7 +3,7 @@
 {% block title %}{% trans %}Step 2: let's find your lowest note{% endtrans %}{% endblock %}
 
 {% block instructions %}
-	{% trans with {'song_key': song_key, 'song_capo': song_capo} %}Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice!{% endtrans %}
+	{% trans with {'song_key': song_key, 'song_capo': song_capo} %}Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won't be able to sing loud enough in the community!{% endtrans %}
 {% endblock %}
 
 {% block answer_buttons %}

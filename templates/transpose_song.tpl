@@ -58,6 +58,7 @@
 </div>
 
 <h4>{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</h4>
+
 <div class="transpositions-list">
 {% for transposition in transpositions %}
 	{{ self.printTransposition(transposition, original_chords) }}
@@ -70,6 +71,8 @@
 	{{ self.printTransposition(not_equivalent, original_chords) }}
 </div>
 {% endif %}
+
+<p class="advice">{% trans %}Beware that this is the best tone for your voice, but might not be the best one for the assembly.{% endtrans %}</p>
 
 <p class="show-voice-chart">
 	<a href="javascript:void(0)" onclick="NT.showChart(this.parentNode)">{% trans %}Show voice chart{% endtrans %}</a>

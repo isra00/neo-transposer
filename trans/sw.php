@@ -112,6 +112,9 @@ return array(
 /*	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
 	=> 'Estas dos transposiciones encajan con tu voz (son equivalentes). La primera tiene acordes más fáciles:',
 
+	'Beware that this is the best tone for your voice, but might not be the best one for the assembly.'
+	=> 'Ten en cuenta que este es el tono óptimo para tu voz, pero podría no ser el mejor para la asamblea.',
+
 	'with capo %n%'
 	=> 'cejilla %n%º traste',
 	

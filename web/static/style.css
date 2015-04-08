@@ -36,7 +36,7 @@ h4 {
 }
 
 p {
-	line-height: 1.3em;
+	line-height: 1.4em;
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
@@ -200,14 +200,6 @@ footer {
 		border-bottom: 1px solid #eee;
 		line-height: 1.6em;
 	}
-
-.book-rating {
-	font-size: .9em;
-	color: gray;
-	font-style: italic;
-	padding: 1em 0;
-	text-align: center;
-}
 
 .teaser {
 	position: fixed;
@@ -477,14 +469,6 @@ small.page_number {
 		background: green;
 	}
 
-.song-rating {
-	margin-top: 1em;
-	padding-top: .5em;
-	font-style: italic;
-	font-size: .9em;
-	color: gray;
-}
-
 .transposition-feedback {
 }
 	.transposition-feedback p {
@@ -731,6 +715,11 @@ input[type="text"] {
 .big {
 	font-size: 1.2em;
 	line-height: 150%;
+}
+.advice {
+	font-style: italic;
+	font-size: .95em;
+	color: gray;
 }
 
 .margintop {
