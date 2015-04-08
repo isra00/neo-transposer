@@ -8,7 +8,7 @@
 
 <ul class="big">
 {% for id, book in app.books %}
-	<li><a href="{{ path('book_' ~ id) }}">{{ book.lang_name }} ({{ book.details}})</a></li>
+	<li><a href="{{ path('set_user_data', {book: id}) }}">{{ book.lang_name }} ({{ book.details}})</a></li>
 {% endfor %}
 </ul>
 
