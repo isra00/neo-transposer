@@ -35,6 +35,9 @@ class WizardEmpiric
 				array($app['neoconfig']['voice_wizard'][$app['locale']]['lowest']['id_song'])
 			);
 
+			$app['user']->wizard_lowest_attempts = 0;
+			$app['user']->wizard_highest_attempts = 0;
+
 			return $app->render('wizard_empiric_instructions.tpl', array(
 				'song_title' => $song_title
 			));
@@ -58,6 +61,7 @@ class WizardEmpiric
 		{
 			$app['user']->lowest_note = $this->nc->transposeNote($app['user']->lowest_note, -1);
 			$app['user']->highest_note = $this->nc->transposeNote($app['user']->highest_note, -1);
+			$app['user']->wizard_lowest_attempts++;
 		}
 
 		// If no, we recover the previous one and pass to the next step
@@ -98,6 +102,7 @@ class WizardEmpiric
 		{
 			$nc = new \NeoTransposer\NotesCalculator;
 			$app['user']->highest_note = $nc->transposeNote($app['user']->highest_note, +1);
+			$app['user']->wizard_highest_attempts++;
 		}
 
 		// If no, we recover the last one and pass to the next step

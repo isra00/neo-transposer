@@ -35,6 +35,8 @@ class WizardStepOne
 		$app['user']->lowest_note = $standard_voices[$req->get('gender')][0];
 		$app['user']->highest_note = $standard_voices[$req->get('gender')][1];
 
+		$app['user']->wizard_step1 = $req->get('gender');
+
 		return $app->redirect($app['url_generator']->generate('wizard_empiric_lowest'));
 	}
 }

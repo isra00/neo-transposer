@@ -12,6 +12,9 @@ class User
 	public $highest_note;
 	public $id_book;
 	public $chord_printer;
+	public $wizard_step1;
+	public $wizard_lowest_attempts = 0;
+	public $wizard_highest_attempts = 0;
 
 	/**
 	 * Simple constructor. Check fetchUserFromEmail() to create from DB.
@@ -76,6 +79,9 @@ class User
 					'highest_note'	=> $this->highest_note,
 					'id_book'		=> $this->id_book,
 					'chord_printer'	=> $this->chord_printer,
+					'wizard_step1' => $this->wizard_step1,
+					'wizard_lowest_attempts' => $this->wizard_lowest_attempts,
+					'wizard_highest_attempts' => $this->wizard_highest_attempts
 				), array('id_user' => (int) $this->id_user)
 			);
 
