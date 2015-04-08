@@ -79,7 +79,7 @@ class User
 				), array('id_user' => (int) $this->id_user)
 			);
 
-			$db->insert('user_edit', array(
+			return $db->insert('user_edit', array(
 				'id_user'		=> $this->id_user,
 				'lowest_note'	=> $this->lowest_note,
 				'highest_note'	=> $this->highest_note,
