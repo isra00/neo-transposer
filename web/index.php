@@ -1,7 +1,5 @@
 <?php
 
-define('START_TIME', microtime(true));
-
 require '../vendor/autoload.php';
 
 use \Symfony\Component\HttpFoundation\Request;
@@ -106,8 +104,3 @@ $app->get('/sura-yako', 'NeoTransposer\\Controllers\\TransposeSong::get')
 	->value('id_song', 319);
 
 $app->run();
-
-if ($app['debug'])
-{
-	die('<!-- Run in ' . round(microtime(true) - START_TIME, 3) . 's -->');
-}
