@@ -723,6 +723,9 @@ input[type="text"] {
 	font-size: .95em;
 	color: gray;
 }
+.green {
+	color: green;
+}
 
 .margintop {
 	margin-top: 2em;

@@ -43,6 +43,9 @@
 	<li>
 		{{ song.page }}
 		· <a href="{{ path('transpose_song', {"id_song":song.slug}) }}">{{ song.title }}</a>
+		{% if song.worked == '1' %}
+		<span class="green" title="Has reportado los acordes propuestos como válidos">&#10004;</span>
+		{% endif %}
 	</li>
 {% endfor %}
 </ul>

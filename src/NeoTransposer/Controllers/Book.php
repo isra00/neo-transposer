@@ -13,9 +13,21 @@ class Book
 			$app->abort(404, "Book $id_book does not exist.");
 		}
 
+		$sql = <<<SQL
+SELECT song.id_song, slug, page, title, transposition_feedback.worked
+FROM song
+LEFT JOIN transposition_feedback
+	ON transposition_feedback.id_song = song.id_song
+	AND transposition_feedback.id_user = ?
+WHERE id_book = ?
+AND NOT song.id_song = 118
+AND NOT song.id_song = 319
+ORDER BY page, title
+SQL;
+
 		$songs = $app['db']->fetchAll(
-			'SELECT * FROM song WHERE id_book = ? AND NOT id_song = 118 AND NOT id_song = 319 ORDER BY page, title',
-			array((int) $id_book)
+			$sql,
+			array($app['user']->id_user, (int) $id_book)
 		);
 
 		$app['locale'] = $app['books'][$id_book]['locale'];
