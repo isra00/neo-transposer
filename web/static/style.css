@@ -689,7 +689,8 @@ input[type="text"] {
 		color: #3F863F;
 		border: 1px solid #3F863F;
 	}
-		.flatbutton.green:hover {
+		.flatbutton.green:hover,
+		.flatbutton.green.highlighted {
 			background: #3F863F;
 			color: white;
 		}
@@ -698,7 +699,8 @@ input[type="text"] {
 		border: 1px solid #9f3127;
 		color: #9f3127;
 	}
-		.flatbutton.red:hover {
+		.flatbutton.red:hover,
+		.flatbutton.red.highlighted {
 			background: #9f3127;
 			color: white;
 		}

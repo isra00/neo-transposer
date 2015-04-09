@@ -77,6 +77,7 @@ class TransposeSong
 				array('%song%' => $transData['song_details']['title'])
 			),
 			'load_social_buttons' => true,
+			'feedback'			=> $this->getFeedbackForUser($app['db'], $app['user']->id_user, $transData['song_details']['id_song']),
 
 			//If user's highest note is in the 1st octave, we suggest strongly using the wizard
 			'user_first_octave' => (array_search($app['user']->highest_note, $nc->numbered_scale) - array_search($app['user']->lowest_note, $nc->numbered_scale) < 12),
@@ -153,5 +154,14 @@ class TransposeSong
 			'original_chords'	=> $original_chords,
 			'next'				=> $next,
 		);
+	}
+
+	protected function getFeedbackForUser(\Doctrine\DBAL\Connection $db, $id_user, $id_song)
+	{
+		$worked = $db->fetchColumn(
+			'SELECT worked FROM transposition_feedback WHERE id_user = ? AND id_song = ?',
+			array($id_user, $id_song)
+		);
+		return str_replace(array('1', '0'), array('yes', 'no'), $worked);
 	}
 }
