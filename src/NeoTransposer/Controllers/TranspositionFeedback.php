@@ -11,16 +11,37 @@ class TranspositionFeedback
 	{
 		if ($req->get('id_song') && null !== $req->get('worked'))
 		{
-			$app['db']->insert(
-				'transposition_feedback',
-				array(
-					'id_song' => $req->get('id_song'),
-					'id_user' => $app['user']->id_user,
-					'worked' => (int) $req->get('worked'),
-					'user_highest_note' => $app['user']->highest_note,
-					'user_lowest_note' => $app['user']->lowest_note,
-				)
-			);
+
+			$sql = <<<SQL
+INSERT INTO transposition_feedback (
+	id_song,
+	id_user,
+	worked,
+	user_lowest_note,
+	user_highest_note,
+	time
+) VALUES (?, ?, ?, ?, ?, NOW())
+ON DUPLICATE KEY UPDATE
+	id_song = ?,
+	id_user = ?,
+	worked = ?,
+	user_lowest_note = ?,
+	user_highest_note = ?,
+	time = NOW()
+SQL;
+
+			$app['db']->executeUpdate($sql, array(
+				$req->get('id_song'),
+				$app['user']->id_user,
+				(int) $req->get('worked'),
+				$app['user']->lowest_note,
+				$app['user']->highest_note,
+				$req->get('id_song'),
+				$app['user']->id_user,
+				(int) $req->get('worked'),
+				$app['user']->lowest_note,
+				$app['user']->highest_note,
+			));
 
 			//Progressive enhancement: supports form submission without AJAX
 			if (!$req->isXmlHttpRequest())

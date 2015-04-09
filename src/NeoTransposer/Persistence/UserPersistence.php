@@ -44,7 +44,11 @@ class UserPersistence
 	public static function persist(User $user, \Doctrine\DBAL\Connection $db, Request $request)
 	{
 
-		/** @todo Hacerlo en una sola consulta, con replace or insert */
+		/** 
+		 * @todo Hacerlo en una sola consulta, con
+		 * insert into table (fields) values ()
+		 * on duplicate key update field = value, field = value ...
+		 */
 
 		if ($user->id_user)
 		{
