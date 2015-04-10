@@ -113,9 +113,9 @@
 	</div>
 	<ul id="reasons-no" class="hidden">
 		{% if user_first_octave %}
-		<li class="big">{% trans with {'%url%': url_wizard} %}It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.{% endtrans %}</li>
+		<li class="big">{% trans with {'%url%': url_wizard ~ "#afterNegativeFeedbackWithBadVoice"} %}It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.{% endtrans %}</li>
 		{% else %}
-		<li>{% trans with {'%url%': url_wizard} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
+		<li>{% trans with {'%url%': url_wizard ~ "#afterNegativeFeedback"} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
 		<li>{% trans %}Maybe you are not singing the song the same way it was analysed for the application{% endtrans %}</li>
 		<li>{% trans %}Maybe you are not singing in the same tone as the guitar{% endtrans %}</li>
 		{% endif %}
