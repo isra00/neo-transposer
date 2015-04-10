@@ -242,7 +242,7 @@ SQL;
 	protected function getMostActiveUsers()
 	{
 		$sql = <<<SQL
-select user.id_user, user.email, count(transposition_feedback.id_song) fb, h.hits
+select user.id_user, user.email, user.highest_note, user.lowest_note, count(transposition_feedback.id_song) fb, h.hits
 from user
 join transposition_feedback on transposition_feedback.id_user = user.id_user
 join

@@ -161,6 +161,7 @@
 	<thead><tr>
 		<th>ID</th>
 		<th>E-mail</th>
+		<th>Voice</th>
 		<th>FB</th>
 		<th>Hits</th>
 	</tr></thead>
@@ -169,6 +170,7 @@
 		<tr>
 			<td>{{ user.id_user }}</td>
 			<td>{{ user.email }}</td>
+			<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
 			<td>{{ user.fb }}</td>
 			<td>{{ user.hits }}</td>
 		</tr>
