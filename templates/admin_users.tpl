@@ -4,6 +4,8 @@
 
 {% block content %}
 
+<a name="top"></a>
+
 <nav class="floating_toc" data-toc-levels="2">
 	<ul></ul>
 </nav>
@@ -35,6 +37,19 @@
 		<span class="no" style="width: {{ ((users_not_reporting_fb / users|length) * 100)|round }}px">{{ users_not_reporting_fb }}</span>
 	</div>
 </p>
+
+<h3>Songs with feedback</h3>
+
+{% for book in songs_with_fb %}
+	{% set book_fb = book.total - book.nofb %}
+	
+	<p>{{ app.books[book.id_book].lang_name }}: {{ ((book_fb / book.total) * 100)|round }}% 
+		<div class="feedback-graph">
+			<span class="yes" style="width: {{ ((book_fb / book.total) * 100)|round }}px">{{ book_fb }}</span>
+			<span class="no" style="width: {{ (((book.nofb) / book.total) * 100)|round }}px">{{ book.nofb }}</span>
+		</div>
+	</p>
+{% endfor %}
 
 <h2>Null users with feedback ({{ null_users_with_fb|length }})</h2>
 
@@ -140,6 +155,26 @@
 	</tbody>
 </table>
 
+<h2>Most active users ({{ most_active_users|length }})</h2>
+
+<table class="data-table">
+	<thead><tr>
+		<th>ID</th>
+		<th>E-mail</th>
+		<th>FB</th>
+		<th>Hits</th>
+	</tr></thead>
+	<tbody>
+{% for user in most_active_users %}
+		<tr>
+			<td>{{ user.id_user }}</td>
+			<td>{{ user.email }}</td>
+			<td>{{ user.fb }}</td>
+			<td>{{ user.hits }}</td>
+		</tr>
+{% endfor %}
+	</tbody>
+</table>
 
 <h2>Unhappy users ({{ unhappy_users|length }})</h2>
 
@@ -230,7 +265,11 @@ BC3 = {
                 $(".floating_toc ul").append('<li><a href="#' + marker + '">' + titulos[i].innerHTML + '</a></li>');
             })(i, marker, titulos);
 
-            $(titulos[i]).html('<a name="' + marker + '"></a>' + $(titulos[i]).html());
+            $(titulos[i]).html(
+            	'<a name="' + marker + '"></a>'
+            	+ $(titulos[i]).html()
+            	+ '<a href="#h2_0"> &uarr; </a>'
+            );
         }
 
         $("body").addClass("with-floating-toc");

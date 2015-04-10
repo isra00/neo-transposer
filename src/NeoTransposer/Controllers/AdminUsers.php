@@ -29,6 +29,8 @@ class AdminUsers
 			'feedback'				=> $this->getFeedback(),
 			'unhappy_users'			=> $this->getUnhappyUsers(),
 			'users'					=> $this->getUsers(),
+			'songs_with_fb'			=> $this->getSongsWithFeedback(),
+			'most_active_users'		=> $this->getMostActiveUsers(),
 		));
 	}
 
@@ -217,5 +219,37 @@ SQL;
 		}
 
 		return $global_perf_chrono;
+	}
+
+	protected function getSongsWithFeedback()
+	{
+		$sql = <<<SQL
+select nofb.id_book, nofb.nofb, total.total from
+(
+ select id_book, count(song.id_song) nofb
+ from song
+ left join transposition_feedback on transposition_feedback.id_song = song.id_song
+ where transposition_feedback.id_song is null
+ group by id_book
+) nofb
+join
+(select id_book, count(id_song) total from song group by id_book) total
+on nofb.id_book = total.id_book
+SQL;
+		return $this->app['db']->fetchAll($sql);
+	}
+
+	protected function getMostActiveUsers()
+	{
+		$sql = <<<SQL
+select user.id_user, user.email, count(transposition_feedback.id_song) fb, count(user_hit.time) hits
+from user
+join transposition_feedback on transposition_feedback.id_user = user.id_user
+left join user_hit on user_hit.id_user = user.id_user
+group by id_user
+order by hits desc, fb desc
+limit 20
+SQL;
+		return $this->app['db']->fetchAll($sql);
 	}
 }
