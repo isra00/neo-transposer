@@ -46,6 +46,11 @@
 			{% endfor %}
 		</p>
 
+		<p>
+			<input type="checkbox" name="first_chord_is_tone" checked="checked" id="first_chord_is_tone">
+			<label for="first_chord_is_tone">First chord = key</label>
+		</p>
+
 		<p><button type="submit" name="sent" class="bigbutton">Insert</button></p>
 
 	</form>
