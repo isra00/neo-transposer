@@ -242,12 +242,18 @@ SQL;
 	protected function getMostActiveUsers()
 	{
 		$sql = <<<SQL
-select user.id_user, user.email, count(transposition_feedback.id_song) fb, count(user_hit.time) hits
+select user.id_user, user.email, count(transposition_feedback.id_song) fb, h.hits
 from user
 join transposition_feedback on transposition_feedback.id_user = user.id_user
-left join user_hit on user_hit.id_user = user.id_user
+join
+(
+  select user.id_user, count(time) hits
+  from user
+  left join user_hit on user_hit.id_user = user.id_user
+  group by id_user
+) h on h.id_user = user.id_user
 group by id_user
-order by hits desc, fb desc
+order by fb desc, hits desc
 limit 20
 SQL;
 		return $this->app['db']->fetchAll($sql);
