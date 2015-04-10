@@ -103,7 +103,7 @@
 
 	<p class="question">{% trans %}Did this chords work for you?{% endtrans %}</p>
 	<p class="answers bigline">
-		<button type="submit" name="worked" value="1" class="flatbutton green {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes">{% trans %}Yes{% endtrans %}</button>
+		<button type="submit" name="worked" value="1" {% if feedback == 'yes' %}title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}"{% endif %} class="flatbutton green {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes">{% trans %}Yes{% endtrans %} {% if feedback == 'yes' %}&#10004;{% endif %}</button>
 		<button type="submit" name="worked" value="0" class="flatbutton red {% if feedback == 'no' %}highlighted{% endif %}" id="feedback-no">{% trans %}No{% endtrans %}</button>
 	</p>
 	<span class="thanks" id="feedback-thanks">{% trans %}Happy to know that! :-){% endtrans %}</span>
