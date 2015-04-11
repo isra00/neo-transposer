@@ -155,6 +155,16 @@ class Transposition
 				: $app->trans('no capo');
 	}
 
+	public function getCapoForPrint(NeoApp $app)
+	{
+		if (empty($this->capoForPrint))
+		{
+			$this->setCapoForPrint($app);
+		}
+
+		return $this->capoForPrint;
+	}
+
 	/**
 	 * In most of songs, the tone is equal to the first chord. If not, no
 	 * alternative chords are calculated. Yes, that's simple.

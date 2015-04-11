@@ -136,6 +136,7 @@ class TransposeSong
  		$not_equivalent = $transposer->findAlternativeNotEquivalent();
 
 		//Prepare the chords nicely printed
+		/** @todo Pasar esto a AutomaticTransposer? */
 		$printer = $app['chord_printers.get']($song_details['chord_printer']);
 
 		$original_chords = $printer->printChordset($original_chords);

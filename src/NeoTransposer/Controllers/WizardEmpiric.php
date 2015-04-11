@@ -130,6 +130,9 @@ class WizardEmpiric
 	{
 		$transposeController = new TransposeSong;
 
+		/** @todo Meter más cosas en SongForWizard para liberar peso aquí */
+		$song = \NeoTransposer\SongForWizard::createSongForWizard($app, $wizard_config_song);
+
 		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
 		$transData = $transposeController->getTranspositionData(
@@ -140,29 +143,13 @@ class WizardEmpiric
 			!empty($wizard_config_song['override_highest_note']) ? $wizard_config_song['override_highest_note'] : null
 		);
 
-		$transChords = $transData['transpositions'][0]->chordsForPrint;
-
-		$placeholders = array();
-		for ($i = 0; $i < count($transChords); $i++)
-		{
-			$placeholders[] = "%$i";
-		}
-
-		$transData['transpositions'][0]->setCapoForPrint($app);
-
-		$song = str_replace(' ', '&nbsp;', $wizard_config_song['song_contents']);
-		$song = str_replace($placeholders, $transChords, $song);
-		$song = nl2br($song);
-
-		$printer = $app['chord_printers.get']($transData['song_details']['chord_printer']);
-
-		$song_key = $printer->printChord($transData['transpositions'][0]->chords[0]);
+		$transposedChords = $transData['transpositions'][0]->chordsForPrint;
 
 		return array(
-			'song'			=> $song,
+			'song'			=> $song->getHtmlTextWithChords($transposedChords),
 			'song_title'	=> $transData['song_details']['title'],
-			'song_key'		=> $song_key,
-			'song_capo'		=> $transData['transpositions'][0]->capoForPrint,
+			'song_key'		=> $transposedChords[0],
+			'song_capo'		=> $transData['transpositions'][0]->getCapoForPrint($app),
 		);
 	}
 
