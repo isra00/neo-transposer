@@ -72,6 +72,7 @@
 {% if app.user.isLoggedIn %}
 
 <form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
+
 	<input type="hidden" name="id_song" value="{{ song_details.id_song }}">
 
 	{# <p class="question">{% trans %}Did this chords work for you?{% endtrans %}</p> #}

@@ -439,11 +439,12 @@ footer {
 		}
 
 .transposition-feedback {
+	margin-top: 1em;
 }
 	.transposition-feedback .answers {
 		display: block;
 		overflow: hidden;
-		margin-bottom: 1em;
+		margin: 0 0 1em;
 	}
 		.transposition-feedback .answers button {
 			display: block;
@@ -478,7 +479,7 @@ footer {
 		font-style: italic;
 		display: none;
 		border: 1px solid #3F863F;
-		padding: .5em;
+		padding: .8em .5em;
 	}
 	#reasons-no {
 		margin: 0;
@@ -486,6 +487,7 @@ footer {
 		font-size: .9em;
 		font-style: italic;
 		border: 1px solid #9f3127;
+		list-style: none;
 	}
 		#reasons-no li {
 			margin: .5em 0;
