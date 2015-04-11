@@ -454,13 +454,13 @@ footer {
 			border: 0;
 			float: left;
 			color: white;
-			font-size: 1.2em;
+			font-size: 1em;
 			line-height: 130%;
 			font-weight: bold;
 		}
 		.transposition-feedback .answers button small {
 			display: block;
-			font-size: .9rem;
+			font-size: .9em;
 			font-weight: normal;
 		}
 
