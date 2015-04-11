@@ -346,22 +346,12 @@ footer {
  * TRANSPOSE SONG
  */
 
-.transpose-song h4 {
+.transpose-song h1 {
+	text-align: center;
+}
+.transpose-song .explanation {
 	margin-bottom: 0;
 	clear: both;
-}
-.transpose-song .your-voice {
-	text-align: center;
-	border-bottom: 1px solid silver;
-	padding-bottom: .6em;
-}
-	.transpose-song .your-voice .small-button {
-		margin-left: .5em;
-	}
-
-small.page_number {
-	padding: .1em .2em;
-	border: 1px solid silver;
 }
 
 .transpositions-list {
@@ -375,6 +365,7 @@ small.page_number {
 	border-collapse: collapse;
 	margin: 1em 2em 1em 0;
 	float: left;
+	font-size: 1.1em;
 }
 .transposition:first-child {
 	margin-left: 0;
@@ -382,13 +373,13 @@ small.page_number {
 	.transposition th { 
 		text-align: center; 
 		font-weight: normal;
+		border-bottom: 1px solid silver;
 	}
 		.transposition th strong {
 			font-size: 1.1em;
 		}
 	.transposition th,
 	.transposition td { 
-		border: 1px solid silver; 
 		padding: .3em .5em;
 	}
 
@@ -399,12 +390,21 @@ small.page_number {
 	}
 
 	.transposition .capo {
-		font-size: .95em;
 		padding-left: .3em;
 	}
 
 	.transposition .chord {
 		font-size: 1.1em;
+	}
+	.transposition .original {
+		text-align: right;
+	}
+	.transposition .arrow {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.transposition .transposed {
+		text-align: left;
 	}
 
 .chord {
@@ -438,6 +438,81 @@ small.page_number {
 			color: white;
 		}
 
+.transposition-feedback {
+}
+	.transposition-feedback .answers {
+		display: block;
+		overflow: hidden;
+		margin-bottom: 1em;
+	}
+		.transposition-feedback .answers button {
+			display: block;
+			width: 50%;
+			box-sizing: border-box;
+			margin: 0;
+			padding: .3em .5em;
+			border: 0;
+			float: left;
+			color: white;
+			font-size: 1.2em;
+			line-height: 130%;
+			font-weight: bold;
+		}
+		.transposition-feedback .answers button small {
+			display: block;
+			font-size: .9rem;
+			font-weight: normal;
+		}
+
+		.transposition-feedback button.yes {
+			background: #3F863F;
+			text-align: left;
+		}
+		.transposition-feedback button.no {
+			background: #c4392d;
+			text-align: right;
+		}
+	
+	.transposition-feedback .thanks {
+		color: #3F863F;
+		font-style: italic;
+		display: none;
+		border: 1px solid #3F863F;
+		padding: .5em;
+	}
+	#reasons-no {
+		margin: 0;
+		padding: .5em;
+		font-size: .9em;
+		font-style: italic;
+		border: 1px solid #9f3127;
+	}
+		#reasons-no li {
+			margin: .5em 0;
+		}
+	.transposition-feedback .social-buttons {
+		float: right;
+		text-align: right;
+		width: 200px;
+		margin-top: .6em;
+	}
+		.social-buttons .fb-like,
+		.social-buttons .g-plusone {
+			display: inline-block;
+			vertical-align: top;
+		}
+		.social-buttons .fb-like {
+			margin-right: .5em;
+		}
+
+.transpose-song .your-voice {
+	text-align: center;
+	margin-top: 1.5em;
+}
+	.transpose-song .your-voice .small-button {
+		margin-left: .5em;
+	}
+	
 #voicechart-container {
 	padding-bottom: 1em;
 	border-top: 1px solid silver;
@@ -491,47 +566,6 @@ small.page_number {
 		background: green;
 	}
 
-.transposition-feedback {
-}
-	.transposition-feedback p {
-		margin: .5em 0;
-	}
-	.transposition-feedback .question,
-	.transposition-feedback .answers {
-		display: inline-block;
-	}
-	.transposition-feedback .answers button {
-		padding: .3em .5em;
-		background: white;
-		margin-left: .4em;
-	}
-	
-	.transposition-feedback .thanks {
-		color: gray;
-		font-style: italic;
-		padding-left: .5em;
-		display: none;
-	}
-	#reasons-no {
-		margin: 0;
-		padding: 0 0 0 1.3em;
-		font-size: .9em;
-		font-style: italic;
-	}
-	.transposition-feedback .social-buttons {
-		float: right;
-		text-align: right;
-		width: 200px;
-		margin-top: .6em;
-	}
-		.social-buttons .fb-like,
-		.social-buttons .g-plusone {
-			display: inline-block;
-			vertical-align: top;
-		}
-		.social-buttons .fb-like {
-			margin-right: .5em;
-		}
 
 /* Wizard */
 .gender-selection {
@@ -909,9 +943,12 @@ input[type="text"] {
 		line-height: normal;
 	}
 
-	small.page_number {
-		float: right;
-		margin: 0 0 .3em .3em;
+	/* TransposeSong */
+	.transposition,
+	.transposition:first-child {
+		margin: 1em auto;
+		float: none;
+		clear: both;
 	}
 
 	#voicechart-container {

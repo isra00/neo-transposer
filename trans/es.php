@@ -133,7 +133,7 @@ return array(
 	=> 'Ten en cuenta que este es el tono óptimo para tu voz, pero podría no ser el mejor para la asamblea.',
 
 	'with capo %n%'
-	=> 'con cejilla %n%º traste',
+	=> 'con capo %n%',
 	
 	'no capo'
 	=> 'sin cejilla',
@@ -165,8 +165,11 @@ return array(
 	'<span itemprop="name">%song%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">has been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>'
 	=> '<span itemprop="name">%song%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">ha sido transportado por <span itemprop="reviewCount">%users%</span> usuarios, con un éxito de <span itemprop="ratingValue">%rating%</span>/5.</span>',
 
-	'Did this chords work for you?'
-	=> '¿Te han funcionado estos acordes?',
+	'It has worked'
+	=> 'Ha funcionado',
+
+	'It hasn\'t worked'
+	=> 'No ha funcionado',
 
 	'No'
 	=> 'No',

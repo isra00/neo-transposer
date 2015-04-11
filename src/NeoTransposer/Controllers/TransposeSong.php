@@ -76,7 +76,7 @@ class TransposeSong
 				'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
 				array('%song%' => $transData['song_details']['title'])
 			),
-			'load_social_buttons' => true,
+			//'load_social_buttons' => true,
 			'feedback'			=> $this->getFeedbackForUser($app['db'], $app['user']->id_user, $transData['song_details']['id_song']),
 
 			//If user's highest note is in the 1st octave, we suggest strongly using the wizard

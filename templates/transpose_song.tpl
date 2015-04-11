@@ -6,7 +6,7 @@
 	<table class="transposition">
 		<thead>
 			<tr><th {% if not transposition.getAsBook %}colspan="3"{% endif %}>
-				<strong>{{ transposition.chordsForPrint[0]|raw }} </strong>
+				{{ transposition.chordsForPrint[0]|raw }}
 				<span class="capo">{{ transposition.capoForPrint }}</span>
 				{% if app.debug -%}
 				<small class="score">[{{ transposition.score|round }}]</small>
@@ -16,9 +16,9 @@
 		<tbody>
 		{% for chord in original_chords if not transposition.getAsBook -%}
 			<tr>
-				<td>{{ chord|raw }}</td>
-				<td class="center">&rarr;</td>
-				<td>{{ transposition.chordsForPrint[loop.index0]|raw }}</td>
+				<td class="original">{{ chord|raw }}</td>
+				<td class="arrow center">&rarr;</td>
+				<td class="transposed">{{ transposition.chordsForPrint[loop.index0]|raw }}</td>
 			</tr>
 		{%- else -%}
 			<tr><td>{% trans %}(same chords as in the book){% endtrans %}</td></tr>
@@ -44,20 +44,15 @@
 {% endif %}
 
 {% if app.debug %}
-<a href="/transpose/{{ next }}">NEXT &rarr;</a>
+<!--<a href="/transpose/{{ next }}">NEXT &rarr;</a>-->
 {% endif %}
 
-<h1 class="song-title">
-	<small class="page_number">{{ song_details.page }}</small>
+<h1>
+	{# <small class="page_number">{{ song_details.page }}</small> #}
 	{{ song_details.title }}
 </h1>
 
-<div class="your-voice">
-	<em>{% trans %}Your voice:{% endtrans %}</em> {{ your_voice|raw }}
-	<a href="{{ path('user_voice', {'_locale': app.locale, 'redirect': app.request.getRequestUri}) }}" class="small-button">{% trans %}Change{% endtrans %}</a>
-</div>
-
-<h4>{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</h4>
+<p class="explanation">{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</p>
 
 <div class="transpositions-list">
 {% for transposition in transpositions %}
@@ -71,6 +66,50 @@
 	{{ self.printTransposition(not_equivalent, original_chords) }}
 </div>
 {% endif %}
+
+<a name="feedback"></a>
+
+{% if app.user.isLoggedIn %}
+
+<form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
+	<input type="hidden" name="id_song" value="{{ song_details.id_song }}">
+
+	{# <p class="question">{% trans %}Did this chords work for you?{% endtrans %}</p> #}
+
+	<p class="answers">
+		<button type="submit" name="worked" value="1" class="yes {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes" {% if feedback == 'yes' %}title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}"{% endif %}>
+			{% trans %}Yes{% endtrans %} {% if feedback == 'yes' %}&#10004;{% endif %}
+			<small>{% trans %}It has worked{% endtrans %}</small>
+		</button>
+		<button type="submit" name="worked" value="0" class="no {% if feedback == 'no' %}highlighted{% endif %}" id="feedback-no">
+			{% trans %}No{% endtrans %}
+			<small>{% trans %}It hasn't worked{% endtrans %}</small>
+		</button>
+	</p>
+
+	<div class="thanks" id="feedback-thanks">{% trans %}Happy to know that! :-){% endtrans %}</div>
+	
+	{# <div class="social-buttons">
+		<div class="fb-like" data-href="{{ app.absoluteUriWithoutQuery }}" data-width="90" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+		<div class="g-plusone" data-annotation="none" data-align="right" data-href="{{ app.absoluteUriWithoutQuery }}"></div>
+	</div> #}
+	
+	<ul id="reasons-no" class="hidden">
+		{% if user_first_octave %}
+		<li class="big">{% trans with {'%url%': url_wizard ~ "#afterNegativeFeedbackWithBadVoice"} %}It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.{% endtrans %}</li>
+		{% else %}
+		<li>{% trans with {'%url%': url_wizard ~ "#afterNegativeFeedback"} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
+		<li>{% trans %}Maybe you are not singing the song the same way it was analysed for the application{% endtrans %}</li>
+		<li>{% trans %}Maybe you are not singing in the same tone as the guitar{% endtrans %}</li>
+		{% endif %}
+	</ul>
+</form>
+{% endif %}
+
+<div class="your-voice">
+	<em>{% trans %}Your voice:{% endtrans %}</em> {{ your_voice|raw }}
+	<a href="{{ path('user_voice', {'_locale': app.locale, 'redirect': app.request.getRequestUri}) }}" class="small-button">{% trans %}Change{% endtrans %}</a>
+</div>
 
 <p class="advice">{% trans %}Beware that this is the best tone for your voice, but might not be the best one for the assembly.{% endtrans %}</p>
 
@@ -91,37 +130,6 @@
 	{% endfor %}
 	</table>
 </div>
-
-<hr>
-
-<a name="feedback"></a>
-
-{% if app.user.isLoggedIn %}
-
-<form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
-	<input type="hidden" name="id_song" value="{{ song_details.id_song }}">
-
-	<p class="question">{% trans %}Did this chords work for you?{% endtrans %}</p>
-	<p class="answers bigline">
-		<button type="submit" name="worked" value="1" {% if feedback == 'yes' %}title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}"{% endif %} class="flatbutton green {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes">{% trans %}Yes{% endtrans %} {% if feedback == 'yes' %}&#10004;{% endif %}</button>
-		<button type="submit" name="worked" value="0" class="flatbutton red {% if feedback == 'no' %}highlighted{% endif %}" id="feedback-no">{% trans %}No{% endtrans %}</button>
-	</p>
-	<span class="thanks" id="feedback-thanks">{% trans %}Happy to know that! :-){% endtrans %}</span>
-	<div class="social-buttons">
-		<div class="fb-like" data-href="{{ app.absoluteUriWithoutQuery }}" data-width="90" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-		<div class="g-plusone" data-annotation="none" data-align="right" data-href="{{ app.absoluteUriWithoutQuery }}"></div>
-	</div>
-	<ul id="reasons-no" class="hidden">
-		{% if user_first_octave %}
-		<li class="big">{% trans with {'%url%': url_wizard ~ "#afterNegativeFeedbackWithBadVoice"} %}It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.{% endtrans %}</li>
-		{% else %}
-		<li>{% trans with {'%url%': url_wizard ~ "#afterNegativeFeedback"} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
-		<li>{% trans %}Maybe you are not singing the song the same way it was analysed for the application{% endtrans %}</li>
-		<li>{% trans %}Maybe you are not singing in the same tone as the guitar{% endtrans %}</li>
-		{% endif %}
-	</ul>
-</form>
-{% endif %}
 
 {% import 'base.tpl' as self %}
 {{ self.loadJsFramework() }}
