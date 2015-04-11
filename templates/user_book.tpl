@@ -1,14 +1,15 @@
 {% extends "base.tpl" %}
 
-{% block page_class %}user-settings{% endblock %}
-
 {% block content %}
 
 <h1>{% trans %}Choose language{% endtrans %}</h1>
 
-<ul class="big">
+<ul class="books">
 {% for id, book in app.books %}
-	<li><a href="{{ path('set_user_data', {book: id}) }}">{{ book.lang_name }} ({{ book.details}})</a></li>
+	<li><a href="{{ path('set_user_data', {book: id}) }}">
+		{{ book.lang_name }}
+		<small>({{ book.details}})</small>
+	</a></li>
 {% endfor %}
 </ul>
 

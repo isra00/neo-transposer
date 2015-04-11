@@ -1,6 +1,6 @@
 {% extends "base.tpl" %}
 
-{% block page_class %}user-settings{% endblock %}
+{% block page_class %}user-voice{% endblock %}
 
 {% block content %}
 

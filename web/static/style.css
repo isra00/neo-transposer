@@ -68,6 +68,7 @@ hr {
 	color: white;
 	text-align: right;
 	padding: .3rem .5rem .3rem .5rem;
+	box-shadow: 0 1px 5px silver;
 }
 	.header .inside {
 		width: 40rem;
@@ -151,6 +152,48 @@ footer {
 			display: block;
 			font-size: 1.2em;
 		}
+.user-voice .voice-selector .field {
+	margin-right: 1em;
+	margin-bottom: .4em;
+	display: inline-block;
+}
+	.user-voice .wizard-button {
+		background: #eee;
+		padding: .5em;
+		line-height: 1.5em;
+	}
+		.user-voice .wizard-button a {
+			font-size: 1.1em;
+		}
+
+/* USER BOOK */
+.books {
+	margin: 1px;
+	padding: 0;
+	list-style: none;
+	border: 1px solid silver;
+}
+	.books li {
+		margin: 0;
+		font-size: 1.4em;
+		border-top: 1px solid silver;
+		/*box-shadow: 0 0 2px #aaa;*/
+		background: #efefef;
+	}
+			.books li:first-child {
+				border-top: 0;
+			}
+
+		.books li a {
+			display: block;
+			padding: .5em .5em;
+		}
+			.books li a small {
+				display: block;
+				font-size: .7em;
+				color: #333;
+				font-weight: lighter;
+			}
 
 /*
  * BOOK
@@ -298,29 +341,6 @@ footer {
 	margin-bottom: .5em;
 }
 
-
-/*
- * User settings
- */
-
-.user-settings h3 {
-	font-weight: normal;
-	margin-top: 1.5em;
-}
-
-.user-settings .voice-selector .field {
-	margin-right: 1em;
-	margin-bottom: .4em;
-	display: inline-block;
-}
-	.user-settings .wizard-button {
-		background: #eee;
-		padding: .5em;
-		line-height: 1.5em;
-	}
-		.user-settings .wizard-button a {
-			font-size: 1.1em;
-		}
 
 /*
  * TRANSPOSE SONG
@@ -724,6 +744,7 @@ input[type="text"] {
 	font-style: italic;
 	font-size: .95em;
 	color: gray;
+	text-align: center;
 }
 .green {
 	color: green;
@@ -925,12 +946,7 @@ input[type="text"] {
 		}
 
 	/* User */
-	.user-settings h3 {
-		border-top: 1px solid silver;
-		padding-top: .5em;
-		margin-top: 1em;
-	}
-	.user-settings .wizard-button {
+	.user-voice .wizard-button {
 		text-align: center;
 	}
 
