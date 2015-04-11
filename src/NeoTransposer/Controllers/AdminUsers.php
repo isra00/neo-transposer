@@ -31,6 +31,7 @@ class AdminUsers
 			'users'					=> $this->getUsers(),
 			'songs_with_fb'			=> $this->getSongsWithFeedback(),
 			'most_active_users'		=> $this->getMostActiveUsers(),
+			'good_users_chrono'		=> $this->getGoodUsersChrono(),
 		));
 	}
 
@@ -255,6 +256,24 @@ join
 group by id_user
 order by fb desc, hits desc
 limit 20
+SQL;
+		return $this->app['db']->fetchAll($sql);
+	}
+
+	protected function getGoodUsersChrono()
+	{
+		$sql = <<<SQL
+SELECT date(register_time) day, goods.n goods, COUNT(id_user) total, concat(round((goods.n/COUNT(id_user))*100), '%') goods_rate
+FROM user
+join
+(
+  select date(register_time) dayg, count(id_user) n
+  from user
+  WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1
+  group by dayg
+) goods on date(user.register_time) = goods.dayg
+group by day
+order by day desc
 SQL;
 		return $this->app['db']->fetchAll($sql);
 	}

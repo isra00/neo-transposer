@@ -51,6 +51,30 @@
 	</p>
 {% endfor %}
 
+<h2>Good users day by day</h2>
+
+<table class="data-table">
+	<thead><tr>
+		<th>Registr. day</th>
+		<th>Goods/bads</th>
+		<th>%</th>
+	</tr></thead>
+	<tbody>
+{% for day in good_users_chrono %}
+		<tr>
+			<td>{{ day.day }}</td>
+			<td>
+				<div class="feedback-graph">
+					<span class="yes" style="width: {{ ((day.goods / day.total) * 100)|round }}px">{{ day.goods }}</span>
+					<span class="no" style="width: {{ (((day.total - day.goods) / day.total) * 100)|round }}px">{{ day.total - day.goods }}</span>
+				</div>
+			</td>
+			<td>{{ day.goods_rate }}</td>
+		</tr>
+{% endfor %}
+	</tbody>
+</table>
+
 <h2>Null users with feedback ({{ null_users_with_fb|length }})</h2>
 
 <p><em>Shouldn't be no one, especially after 26/feb update!</em></p>
