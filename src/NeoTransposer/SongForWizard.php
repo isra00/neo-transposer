@@ -10,14 +10,9 @@ class SongForWizard
 	 */
 	protected $rawText;
 
-	protected function __construct($rawText)
+	public function __construct($rawText)
 	{
 		$this->rawText = $rawText;
-	}
-
-	public static function createSongForWizard(\NeoTransposer\NeoApp $app, $songIndex)
-	{
-		return new SongForWizard($app['neoconfig']['voice_wizard'][$app['locale']][$songIndex]['song_contents']);
 	}
 
 	public function getHtmlTextWithChords($chords)

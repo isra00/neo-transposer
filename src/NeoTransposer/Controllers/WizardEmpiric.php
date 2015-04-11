@@ -128,13 +128,9 @@ class WizardEmpiric
 
 	public function prepareSongForTest($wizard_config_song, NeoApp $app, $forceHighestNote=false)
 	{
-		$transposeController = new TransposeSong;
-
-		/** @todo Meter más cosas en SongForWizard para liberar peso aquí */
-		$song = \NeoTransposer\SongForWizard::createSongForWizard($app, $wizard_config_song);
-
 		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
+		$transposeController = new TransposeSong;
 		$transData = $transposeController->getTranspositionData(
 			$app['user'],
 			$wizard_config_song['id_song'], 
@@ -144,6 +140,9 @@ class WizardEmpiric
 		);
 
 		$transposedChords = $transData['transpositions'][0]->chordsForPrint;
+
+		/** @todo Meter más cosas en SongForWizard para liberar peso aquí */
+		$song = new \NeoTransposer\SongForWizard($wizard_config_song['song_contents']);
 
 		return array(
 			'song'			=> $song->getHtmlTextWithChords($transposedChords),
