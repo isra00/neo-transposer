@@ -406,6 +406,9 @@ footer {
 	.transposition .transposed {
 		text-align: left;
 	}
+	.transposition .as-book {
+		font-size: .85em;
+	}
 
 .chord {
 	color: #e00;

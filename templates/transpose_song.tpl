@@ -21,7 +21,7 @@
 				<td class="transposed">{{ transposition.chordsForPrint[loop.index0]|raw }}</td>
 			</tr>
 		{%- else -%}
-			<tr><td>{% trans %}(same chords as in the book){% endtrans %}</td></tr>
+			<tr><td class="as-book">{% trans %}(same chords as in the book){% endtrans %}</td></tr>
 		{%- endfor %}
 		</tbody>
 	</table>
