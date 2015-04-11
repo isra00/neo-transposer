@@ -142,6 +142,7 @@ NT = {
 	{
 		document.getElementById("voicechart-container").style.display = 'block';
 		oLinkContainer.style.display = 'none';
+		ga('send', 'event', 'Actions', 'ShowVoiceChart', '{{ song_details.title }}');
 	},
 
 	sendFeedback: function(iAnswer)
