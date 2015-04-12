@@ -61,7 +61,9 @@ class TransposeSong
 		);
 
 		$tpl = array_merge($tpl, array(
+			'current_book'		=> $transData['song_details'],
 			'song_details'		=> $transData['song_details'],
+			'transpositions'	=> $transData['transpositions'],
 			'transpositions'	=> $transData['transpositions'],
 			'not_equivalent'	=> $transData['not_equivalent'],
 			'original_chords'	=> $transData['original_chords'],
