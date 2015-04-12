@@ -92,6 +92,7 @@ class TransposeSong
 		return $app->render('transpose_song.tpl', $tpl);
 	}
 
+	/** @todo Move this logic in get(). This method doesn't add anything */
 	public function getTranspositionData($id_song, \NeoTransposer\NeoApp $app, $forceHighestNote=false, $forceLowestNote=false, $overrideHighestNote=null)
 	{
 		$song = \NeoTransposer\Model\TransposedSong::create($id_song, $app);

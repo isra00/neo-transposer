@@ -23,7 +23,6 @@ class AdminUsers
 		return $app->render('admin_users.tpl', array(
 			'good_users'			=> $good_users,
 			'global_performance'	=> $this->getGlobalPerformance(),
-			'null_users_with_fb'	=> $this->getNullUsersWithFeedback(),
 			'users_reporting_fb'	=> $users_reporting_fb,
 			'global_perf_chrono'	=> $this->fetchGlobalPerfChrono(),
 			'feedback'				=> $this->getFeedback(),
@@ -70,18 +69,6 @@ SQL;
 		}
 
 		return $global_performance;
-	}
-
-	protected function getNullUsersWithFeedback()
-	{
-		$sql = <<<SQL
-SELECT id_song, user.id_user, worked, time, email
-FROM `transposition_feedback`
-join user on transposition_feedback.id_user = user.id_user
-WHERE user.lowest_note IS NULL
-ORDER BY time DESC
-SQL;
-		return $this->app['db']->fetchAll($sql);
 	}
 
 	protected function getFeedback()
