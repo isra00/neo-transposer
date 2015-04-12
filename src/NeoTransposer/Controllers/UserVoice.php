@@ -8,7 +8,7 @@ class UserVoice
 {
 	public function get(Request $request, \NeoTransposer\NeoApp $app)
 	{
-		$nc = new \NeoTransposer\NotesCalculator;
+		$nc = new \NeoTransposer\Model\NotesCalculator;
 
 		$redirect = $request->get('redirect');
 

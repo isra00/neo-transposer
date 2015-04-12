@@ -1,8 +1,8 @@
 <?php
 
-namespace NeoTransposer;
+namespace NeoTransposer\Model;
 
-class SongForWizard
+class SongTextForWizard
 {
 	/**
 	 * Lyrics and chord placeholders, as fetched from config file.

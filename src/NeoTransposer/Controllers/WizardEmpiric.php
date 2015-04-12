@@ -5,18 +5,19 @@ namespace NeoTransposer\Controllers;
 use Symfony\Component\HttpFoundation\Request;
 use NeoTransposer\Controllers;
 use \NeoTransposer\NeoApp;
+use \NeoTransposer\Model\SongTextForWizard;
 
 class WizardEmpiric
 {
 	/**
 	 * An instance of NotesCalculator
-	 * @var \NeoTransposer\NotesCalculator
+	 * @var \NeoTransposer\Model\NotesCalculator
 	 */
 	protected $nc;
 
 	public function __construct()
 	{
-		$this->nc = new \NeoTransposer\NotesCalculator;
+		$this->nc = new \NeoTransposer\Model\NotesCalculator;
 	}
 
 	public function lowest(Request $req, NeoApp $app)
@@ -100,7 +101,7 @@ class WizardEmpiric
 		//If yes, lower down 1 semitone and retry
 		if ('yes' == $req->get('can_sing'))
 		{
-			$nc = new \NeoTransposer\NotesCalculator;
+			$nc = new \NeoTransposer\Model\NotesCalculator;
 			$app['user']->highest_note = $nc->transposeNote($app['user']->highest_note, +1);
 			$app['user']->wizard_highest_attempts++;
 		}
@@ -130,25 +131,21 @@ class WizardEmpiric
 	{
 		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
-		$transposeController = new TransposeSong;
-		$transData = $transposeController->getTranspositionData(
-			$app['user'],
-			$wizard_config_song['id_song'], 
-			$app,
+		$song = \NeoTransposer\Model\TransposedSong::create($wizard_config_song['id_song'], $app);
+		$song->transpose(
 			$forceHighestNote,
 			!empty($wizard_config_song['override_highest_note']) ? $wizard_config_song['override_highest_note'] : null
 		);
 
-		$transposedChords = $transData['transpositions'][0]->chordsForPrint;
+		$transposedChords = $song->transpositions[0]->chordsForPrint;
 
-		/** @todo Meter más cosas en SongForWizard para liberar peso aquí */
-		$song = new \NeoTransposer\SongForWizard($wizard_config_song['song_contents']);
+		$songText = new SongTextForWizard($wizard_config_song['song_contents']);
 
 		return array(
-			'song'			=> $song->getHtmlTextWithChords($transposedChords),
-			'song_title'	=> $transData['song_details']['title'],
+			'song'			=> $songText->getHtmlTextWithChords($transposedChords),
+			'song_title'	=> $song->song_details['title'],
 			'song_key'		=> $transposedChords[0],
-			'song_capo'		=> $transData['transpositions'][0]->getCapoForPrint($app),
+			'song_capo'		=> $song->transpositions[0]->getCapoForPrint($app),
 		);
 	}
 

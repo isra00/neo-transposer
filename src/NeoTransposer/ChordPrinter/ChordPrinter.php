@@ -25,7 +25,7 @@ abstract class ChordPrinter
 	public function printChord($chordName)
 	{
 		//If chord notation is not valid, it will throw an exception
-		$nc = new \NeoTransposer\NotesCalculator;
+		$nc = new \NeoTransposer\Model\NotesCalculator;
 		$parts = $nc->readChord($chordName);
 		return $this->printChordInNotation($parts['fundamental'], $parts['attributes']);
 	}

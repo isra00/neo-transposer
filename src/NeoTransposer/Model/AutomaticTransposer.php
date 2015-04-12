@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer;
+namespace NeoTransposer\Model;
 
 /**
  * Calculate the better transposition for a given song, given the amplitude of the singer's voice.

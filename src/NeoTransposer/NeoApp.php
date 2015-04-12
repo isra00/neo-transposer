@@ -5,6 +5,7 @@ namespace NeoTransposer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use \Silex\Application;
+use \NeoTransposer\Model\User;
 
 class NeoApp extends Application
 {
@@ -125,7 +126,7 @@ class NeoApp extends Application
 		//Custom Twig filter.
 		$this['twig'] = $this->share($this->extend('twig', function($twig) {
 			$twig->addFilter(new \Twig_SimpleFilter('notation', function ($str, $notation) {
-				return \NeoTransposer\NotesCalculator::getNotation($str, $notation);
+				return \NeoTransposer\Model\NotesCalculator::getNotation($str, $notation);
 			}));
 			return $twig;
 		}));

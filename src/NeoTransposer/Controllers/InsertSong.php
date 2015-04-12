@@ -3,7 +3,7 @@
 namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\User;
+use \NeoTransposer\Model\User;
 use \Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class InsertSong

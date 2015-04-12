@@ -1,12 +1,12 @@
 <?php
 
-namespace NeoTransposer;
+namespace NeoTransposer\Model;
 
 class TranspositionChart
 {
 	public static function getChart($song_details, $transposition, $singer)
 	{
-		$nc = new NotesCalculator;
+		$nc = new \NeoTransposer\Model\NotesCalculator;
 
 		$voice_chart = array(
 			'singer' => array(

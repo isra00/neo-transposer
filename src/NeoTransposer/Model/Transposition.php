@@ -1,6 +1,9 @@
 <?php
 
-namespace NeoTransposer;
+namespace NeoTransposer\Model;
+
+use \NeoTransposer\Model\NotesCalculator;
+use \NeoTransposer\NeoApp;
 
 /**
  * Represents a transposition of a song, with transported chords, capo, etc.
@@ -169,10 +172,10 @@ class Transposition
 	 * In most of songs, the tone is equal to the first chord. If not, no
 	 * alternative chords are calculated. Yes, that's simple.
 	 *
-	 * @param  \NeoTransposer\NotesCalculator $nc An instance of NotesCalculator
+	 * @param  \NeoTransposer\Model\NotesCalculator $nc An instance of NotesCalculator
 	 * @return [type]                             [description]
 	 */
-	public function getTone(\NeoTransposer\NotesCalculator $nc)
+	public function getTone(NotesCalculator $nc)
 	{
 		$first_chord = $nc->readChord($this->chords[0]);
 
@@ -196,10 +199,15 @@ class Transposition
 		return $first_chord['fundamental'] . $first_chord['attributes'];
 	}
 
-	public function setAlternativeChords(\NeoTransposer\NotesCalculator $nc)
+	public function setAlternativeChords(NotesCalculator $nc)
 	{
 		if (!$this->asBook)
 		{
+			/**
+			 * Array keys = musical keys (tone) in which the replace will be done
+			 * Array values = array of chords original => replacement
+			 * @var array
+			 */
 			$alternativeChords = array(
 				'G' => array(
 					'B' => 'B7'
@@ -216,7 +224,6 @@ class Transposition
 				if (isset($alternativeChords[$tone][$chord]))
 				{
 					$chord = $alternativeChords[$tone][$chord];
-					//echo "Sustituyendo acorde $chord por {$alternativeChords[$tone][$chord]}\n";
 				}
 			}
 			$this->setScore();

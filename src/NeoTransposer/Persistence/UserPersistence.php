@@ -3,7 +3,7 @@
 namespace NeoTransposer\Persistence;
 
 use Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\User;
+use \NeoTransposer\Model\User;
 
 class UserPersistence
 {
@@ -36,7 +36,7 @@ class UserPersistence
 	/**
 	 * Create or update the user in the database.
 	 * 
-	 * @param  NeoTransposer\User 			$user 	The User object to persist.
+	 * @param  NeoTransposer\Model\User 			$user 	The User object to persist.
 	 * @param  \Doctrine\DBAL\Connection 	$db 	A DB connection.
 	 * @param  \Symfony\Component\HttpFoundation\Request $request The Request, for fetching the client IP.
 	 * @return integer The user ID, if it was not set.

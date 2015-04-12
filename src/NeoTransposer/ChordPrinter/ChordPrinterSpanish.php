@@ -17,6 +17,6 @@ class ChordPrinterSpanish extends ChordPrinter
 			);
 		}
 
-		return \NeoTransposer\NotesCalculator::getNotation($fundamental, 'latin') . $attributes;
+		return \NeoTransposer\Model\NotesCalculator::getNotation($fundamental, 'latin') . $attributes;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer;
+namespace NeoTransposer\Model;
 
 /**
  * Calculations on notes and chords.

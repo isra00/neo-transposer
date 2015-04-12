@@ -1,9 +1,10 @@
 <?php
 
-namespace NeoTransposer;
+namespace NeoTransposer\Model;
 
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Persistence\UserPersistence;
+use \NeoTransposer\Model\NotesCalculator;
 
 class User
 {
