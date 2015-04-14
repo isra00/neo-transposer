@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block answer_buttons %}
-	<p><button type="submit" name="can_sing" value="yes" class="big flatbutton green {{ action_yes|default() }}" id="yes">{% trans %}Yes{% endtrans %}</button></p>
-	<p><button type="submit" name="can_sing" value="no" class="big flatbutton red {{ action_no|default() }}" id="no">{% trans %}No, that's too high{% endtrans %}</button></p>
+	<button type="submit" name="can_sing" value="yes" class="big flatbutton green {{ action_yes|default() }}" id="yes">{% trans %}Yes{% endtrans %}</button>
+	<button type="submit" name="can_sing" value="no" class="big flatbutton red {{ action_no|default() }}" id="no">{% trans %}No, that's too high{% endtrans %}</button>
 {% endblock %}
 
 {% block messages %}

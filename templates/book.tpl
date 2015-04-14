@@ -4,14 +4,14 @@
 
 {% block content %}
 <h1>{% trans %}Songs of the Neocatechumenal Way{% endtrans %}</h1>
-<h3>
+<h2>
 	{% if app.user.isLoggedIn %}
 	<span class="change-book"><a class="small-button" href="{{ path('user_book', {'_locale':app.locale}) }}">{% trans %}Other languages{% endtrans %}</a></span>
 	{% endif %}
 
 	{{ current_book.lang_name }}
 	<small class="book-details">({{ current_book.details }})</small>
-</h3>
+</h2>
 
 {% if not app.user.isLoggedIn %}
 	{% import "login.tpl" as login %}
@@ -28,9 +28,9 @@
 {% endif %}
 
 {% if app.locale == 'es' and app.user.isLoggedIn %}
-<aside class="book-warning">
+<aside class="tip">
 	<h3>Aviso sobre el libro de cantos</h3>
-	<p>Los títulos y los acordes de los cantos a continuación están tomados de
+	<p>Los títulos y acordes de los cantos a continuación están tomados de
 	la 20ª edición del Resucitó, editado en Madrid en 2014. Te sugiero
 	encarecidamente que uses la <strong>edición oficial</strong> del libro de cantos,
 	y no otras ediciones “piratas”, que pueden contener errores o diferencias en letras y acordes.

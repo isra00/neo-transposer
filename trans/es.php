@@ -45,10 +45,10 @@ return array(
 	=> 'Tu voz',
 	
 	'<span>I don\'t know</span> my voice range'
-	=> '<span>No conozco</span> mi rango de voz',
+	=> '<span>No conozco</span> mi tesitura de voz',
 
 	'<span>I do know</span> my voice range'
-	=> '<span>Sí conozco</span> mi rango de voz',
+	=> '<span>Sí conozco</span> mi tesitura de voz',
 
 	//User Book
 	'Choose language'
@@ -61,8 +61,8 @@ return array(
 	'Welcome to %software%'
 	=> 'Bienvenido a %software%',
 
-	'This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.'
-	=> 'Este software analiza los cantos y tu voz, calculando la transposición perfecta para cada canto, de acuerdo a tu voz. Pero para hacer eso, necesito saber una cosa sobre tu voz.',
+	'This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.'
+	=> 'Este software calcula la transposición perfecta de cada canto para <em>tu</em> voz. Pero para ello, necesita saber tu tesitura.',
 
 	'Which is the lowest note that you can sing? And the highest one?'
 	=> '¿Cuál es la nota más grave que puedes cantar? ¿Y la más aguda?',
@@ -82,14 +82,17 @@ return array(
 	'If you don\'t know your highest and lowest note, click here'
 	=> 'Si no sabes tu nota mínima y máxima, haz click aquí',
 	
-	'Which songbook do you want to transpose?'
-	=> '¿Qué libro de cantos quieres transportar?',
-	
 	'We are ready!'
 	=> '¡Todo listo!',
 
 	'Are you sure that is your real voice range? If you don\'t know, you can use the assistant to measure it.'
 	=> '¿Estás seguro de que esas son tus notas mínima y máxima? Si no sabes, puedes usar el asistente para medir tu voz.',
+
+	'What is the voice range?'
+	=> '¿Qué es la tesitura de voz?',
+
+	'Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.'
+	=> 'Cada persona tiene una voz diferente: unos cantan más grave, otros más agudo. Conocer tu tesitura de voz es saber exactamente los límites de tu voz: a qué nota eres capaz de llegar por abajo (grave) y por arriba (agudo).',
 
 	//Book
 	'Songs of the Neocatechumenal Way in %lang%'
@@ -237,7 +240,7 @@ return array(
 	=> 'Ahora te voy a proponer que cantes el estribillo de un canto en cierto tono. Debes coger la guitarra e intentar cantarlo en ese tono.',
 
 	'If it is too low for you, click on “No, it\'s too low”. If you were able to sing it, click on “Yes”. Then, I will transpose the song so it will be a bit lower, and you should try again. We will keep repeating the exercise until you can\'t sing lower'
-	=> 'Si ves que te viene muy bajo, haz click en “No, es demasiado bajo”. Si has podido cantarlo, haz click en “Sí”. Transportaré el canto para que sea más bajo, y debes intentarlo de nuevo. Y seguiremos repitiendo el ejercicio hasta que ya no puedas cantar más bajo.',
+	=> 'Si ves que te viene muy bajo, haz click en “No, es muy bajo”. Si has podido cantarlo, haz click en “Sí”. Transportaré el canto para que sea más bajo, y debes intentarlo de nuevo. Y seguiremos repitiendo el ejercicio hasta que ya no puedas cantar más bajo.',
 
 	'Try to do your best to sing with your lowest possible voice, since this test tries to find the limits of your voice.'
 	=> 'Trata de esforzarte para cantar con la voz más grave posible, ya que la prueba consiste en encontrar los límites de tu voz.',
@@ -250,13 +253,13 @@ return array(
 	=> 'Paso 2: busquemos tu nota más grave',
 
 	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won\'t be able to sing loud enough in the community!'
-	=> 'Intenta cantar el siguiente estribillo en <strong class="blink">%song_key% %song_capo%</strong> con los acordes siguientes. Recuerda: ¡debes cantarlo por abajo, con voz grave, pero sin bajar demasiado o no podrás cantar suficientemente fuerte en la comunidad.',
+	=> 'Intenta cantar el siguiente estribillo en <strong class="blink">%song_key% %song_capo%</strong> con los acordes siguientes. Recuerda: debes cantarlo por abajo, con voz grave, pero sin bajar demasiado, o no podrás cantar a un volumen aceptable.',
 
 	'Yes'
 	=> 'Sí',
 
 	'No, that\'s too low'
-	=> 'No, es demasiado bajo',
+	=> 'No, es muy bajo',
 
 	'Could you sing it?'
 	=> '¿Has podido cantarlo?',
@@ -287,7 +290,7 @@ return array(
 	=> 'Por último, intenta cantar el siguiente estribillo en <strong class="blink">%song_key% %song_capo%</strong> con los acordes siguientes. Recuerda: debes cantarlo <strong>por arriba, con voz aguda</strong>, ¡pero sin falsete! Esfuérzate, ¡ya casi hemos terminado!',
 
 	'No, that\'s too high'
-	=> 'No, es demasiado alto',
+	=> 'No, es muy alto',
 
 	'According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.'
 	=> 'Según la voz que has definido, ese tono no debería ser demasiado alto para ti. Quizá debas volver al primer paso y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba cantando en el mismo tono que la guitarra.',

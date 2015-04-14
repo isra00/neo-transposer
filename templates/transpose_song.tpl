@@ -61,7 +61,7 @@
 </div>
 
 {% if not_equivalent %}
-<h4>{% trans with {'%difference%': not_equivalent_difference} %}This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:{% endtrans %}</h4>
+<p class="explanation">{% trans with {'%difference%': not_equivalent_difference} %}This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:{% endtrans %}</p>
 <div class="transpositions-list">
 	{{ self.printTransposition(not_equivalent, original_chords) }}
 </div>
@@ -112,10 +112,10 @@
 	<a href="{{ path('user_voice', {'_locale': app.locale, 'redirect': app.request.getRequestUri}) }}" class="small-button">{% trans %}Change{% endtrans %}</a>
 </div>
 
-<p class="advice">{% trans %}Beware that this is the best tone for your voice, but might not be the best one for the assembly.{% endtrans %}</p>
+<p class="tip">{% trans %}Beware that this is the best tone for your voice, but might not be the best one for the assembly.{% endtrans %}</p>
 
 <p class="show-voice-chart">
-	<a href="javascript:void(0)" onclick="NT.showChart(this.parentNode)">{% trans %}Show voice chart{% endtrans %}</a>
+	<a href="javascript:void(0)" class="btn-neutral" onclick="NT.showChart(this.parentNode)">{% trans %}Show voice chart{% endtrans %}</a>
 </p>
 
 <div id="voicechart-container">

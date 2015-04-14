@@ -10,7 +10,7 @@ body {
 }
 
 a {
-	color: #9f3127;
+	color: #D32F2F;
 	text-decoration: none;
 }
 	a:hover {
@@ -22,6 +22,7 @@ h1 {
 	margin-top: .9em;
 	margin-bottom: .6em;
 	line-height: 1.4em;
+	text-align: center;
 }
 h2 {
 	font-weight: normal;
@@ -63,7 +64,7 @@ hr {
  */
 
 .header {
-	background: #da4336;
+	background: #D32F2F;
 	overflow: hidden;
 	color: white;
 	text-align: right;
@@ -110,8 +111,9 @@ hr {
 	margin-bottom: 1em;
 }
 	.notification.error {
-		color: red;
-		border: 1px solid red;
+		color: white;
+		background: #F44336;
+		box-shadow: 0 2px 2px silver;
 	}
 	.notification.success {
 		color: green;
@@ -144,7 +146,7 @@ footer {
 		display: inline-block;
 		font-size: 1.2em;
 		padding: 1em;
-		border: 1px solid #9f3127;
+		border: 1px solid #D32F2F;
 		margin: 2%;
 		width: 35%;
 	}
@@ -152,36 +154,56 @@ footer {
 			display: block;
 			font-size: 1.2em;
 		}
-.user-voice .voice-selector .field {
+.page-user-voice .tip {
+	margin-top: 2em;
+}
+.page-user-voice .voice-selector .field {
 	margin-right: 1em;
 	margin-bottom: .4em;
 	display: inline-block;
 }
-	.user-voice .wizard-button {
+	.page-user-voice .wizard-button {
 		background: #eee;
-		padding: .5em;
+		padding: .5em .8em;
 		line-height: 1.5em;
 	}
-		.user-voice .wizard-button a {
+		.page-user-voice .wizard-button a {
 			font-size: 1.1em;
 		}
+
+.tip {
+	margin: 1em 0;
+	/*font-style: italic;*/
+	color: #444;
+	background: #eee url(img/dialog-information.png) 10px 13px no-repeat;
+	padding: 1em 1em .5em 65px;
+	min-height: 60px;
+}
+	.tip h3 {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
 
 /* USER BOOK */
 .books {
 	margin: 1px;
 	padding: 0;
 	list-style: none;
-	border: 1px solid silver;
+	/*border: 1px solid silver;*/
+	background: #f3f3f3;
 }
 	.books li {
 		margin: 0;
 		font-size: 1.4em;
-		border-top: 1px solid silver;
+		border-top: 1px solid #ccc;
 		/*box-shadow: 0 0 2px #aaa;*/
-		background: #efefef;
 	}
 			.books li:first-child {
 				border-top: 0;
+			}
+			.books li:hover {
+				box-shadow: 2px 2px 3px silver;
+				background: #eee;
 			}
 
 		.books li a {
@@ -210,22 +232,10 @@ footer {
 	font-size: .8em;
 	color: grey;
 	margin-bottom: 0;
+	text-align: left;
 }
-.book-warning {
-	margin: 1em 0;
-	padding: .8em 1.5em .2em;
-	border: 1px solid silver;
-	background: #eee;
-	color: #444;
-	font-size: .9em;
-}
-	.book-warning h3 {
-		background: transparent url(img/warning.48.png) left center no-repeat;
-		padding-left: 55px;
-		line-height: 40px;
-	}
 
-.page-book h3 {
+.page-book .main h2 {
 	font-size: 1.5em;
 	margin-top: 0;
 	margin-bottom: 1%;
@@ -428,17 +438,20 @@ footer {
 	clear: both;
 	overflow: hidden;
 	line-height: 2em;
+	padding-bottom: 5px;
 }
-	.show-voice-chart a {
+	/*.show-voice-chart a {
 		background: #eee;
 		color: #333;
 		font-size: .9em;
 		padding: .4em .7em;
-		border: 1px solid white;
+		box-shadow: 1px 1px 1px silver;
 	}
+		/** @todo Unificar con flatbutton */
 		.show-voice-chart a:hover {
-			background: grey;
-			color: white;
+			/*background: grey;
+			color: white;*/
+/*			box-shadow: 1px 1px 5px silver;*/
 		}
 
 .transposition-feedback {
@@ -448,12 +461,13 @@ footer {
 		display: block;
 		overflow: hidden;
 		margin: 0 0 1em;
+		padding-bottom: 5px;
 	}
 		.transposition-feedback .answers button {
 			display: block;
-			width: 50%;
+			width: 48.5%;
 			box-sizing: border-box;
-			margin: 0;
+			margin: 0 0 0 2%;
 			padding: .3em .5em;
 			border: 0;
 			float: left;
@@ -461,19 +475,23 @@ footer {
 			font-size: 1em;
 			line-height: 130%;
 			font-weight: bold;
+			box-shadow: 1px 1px 5px silver;
 		}
-		.transposition-feedback .answers button small {
-			display: block;
-			font-size: .9em;
-			font-weight: normal;
-		}
+			.transposition-feedback .answers button:first-child {
+				margin-left: 0;
+			}
+			.transposition-feedback .answers button small {
+				display: block;
+				font-size: .9em;
+				font-weight: normal;
+			}
 
 		.transposition-feedback button.yes {
 			background: #3F863F;
 			text-align: left;
 		}
 			.transposition-feedback button.yes:hover {
-				background: #57B057
+				background: #4CAF50;
 			}
 		.transposition-feedback button.no {
 			background: #c4392d;
@@ -484,19 +502,20 @@ footer {
 			}
 	
 	.transposition-feedback .thanks {
-		color: #3F863F;
+		color: white;
 		font-style: italic;
 		display: none;
-		border: 1px solid #3F863F;
-		padding: .8em .5em;
+		padding: .8em .8em;
+		background: #4CAF50;
 	}
 	#reasons-no {
 		margin: 0;
-		padding: .5em;
+		padding: 0 .5em;
 		font-size: .9em;
 		font-style: italic;
-		border: 1px solid #9f3127;
+		border: 1px solid #D32F2F;
 		list-style: none;
+		color: #444;
 	}
 		#reasons-no li {
 			margin: .5em 0;
@@ -584,7 +603,7 @@ footer {
 	padding-left: 0;
 }
 	.gender-selection li {
-		margin-top: .5em;
+		margin-top: .7em;
 	}
 	.gender-selection ul {
 		padding-left: 1em;
@@ -634,9 +653,19 @@ h2.step-1 {
 		margin-top: 0;
 	}
 
-	.wizard-empiric .answer p {
-		line-height: 2em;
+	.wizard-empiric .answer nav {
+		line-height: 3em;
 	}
+		.wizard-empiric .answer nav button {
+			margin-left: .5em;
+		}
+			.wizard-empiric .answer nav button:first-child {
+				margin-left: 0;
+			}
+		.wizard-empiric .answer nav button.green {
+			padding-left: 1em;
+			padding-right: 1em;
+		}
 
 	.wizard-empiric .test-msg {
 		border: 1px solid silver;
@@ -676,7 +705,7 @@ h2.step-1 {
 		background: #41A341;
 	}
 	.feedback-graph .no {
-		background: #9f3127;
+		background: #D32F2F;
 		text-align: right;
 	}
 .floating_toc {
@@ -740,11 +769,11 @@ input[type="text"] {
 }
 .small-button {
 	padding: .1em .2em;
-	border: 1px solid #9f3127;
+	border: 1px solid #D32F2F;
 	display: inline-block;
 }
 	.small-button:hover {
-		background: #9f3127;
+		background: #D32F2F;
 		color: white;
 	}
 	
@@ -752,6 +781,9 @@ input[type="text"] {
 	background: white;
 	display: inline-block;
 }
+	.flatbutton:hover {
+		box-shadow: 1px 1px 2px silver;
+	}
 	.flatbutton.green {
 		color: #3F863F;
 		border: 1px solid #3F863F;
@@ -763,18 +795,43 @@ input[type="text"] {
 		}
 
 	.flatbutton.red {
-		border: 1px solid #9f3127;
-		color: #9f3127;
+		border: 1px solid #D32F2F;
+		color: #D32F2F;
 	}
 		.flatbutton.red:hover,
 		.flatbutton.red.highlighted {
-			background: #9f3127;
+			background: #D32F2F;
 			color: white;
 		}
 	.flatbutton.big {
 		padding: .3em .5em;
 		font-size: 1.1em;
 	}
+.btn-neutral {
+	background: #eee;
+	color: #333;
+	border: 0;
+	border-radius: 3px;
+	padding: .4em .7em;
+	box-shadow: 1px 1px 3px #aaa;
+}
+	.btn-neutral:hover,
+	.btn-neutral:active {
+		box-shadow: 2px 2px 3px #aaa;
+		background: #e7e7e7;
+		color: #333;
+	}
+	.btn-neutral.bigbutton {
+		padding: .5em 1em;
+	}
+	.btn-neutral:disabled {
+		color: gray;
+		box-shadow: none;
+	}
+		.btn-neutral:disabled:hover {
+			box-shadow: none;
+		}
+
 .bigline {
 	line-height: 2em;
 }
@@ -895,7 +952,7 @@ input[type="text"] {
 
 	.main {
 		width: auto;
-		margin: 0 .5em .5em;
+		margin: 0 .5em 1.5em;
 		overflow: hidden;
 	}
 
@@ -948,11 +1005,6 @@ input[type="text"] {
 		display: block;
 		margin: .5em 0 .7em;
 	}
-	.book-warning h3 {
-		background: transparent;
-		padding-left: 0;
-		line-height: normal;
-	}
 
 	/* TransposeSong */
 	.transposition,
@@ -993,8 +1045,8 @@ input[type="text"] {
 			margin: 0;		
 		}
 
-	/* User */
-	.user-voice .wizard-button {
+	/* User voice */
+	.page-user-voice .wizard-button {
 		text-align: center;
 	}
 

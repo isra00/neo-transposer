@@ -56,7 +56,7 @@
 		</ul>
 
 		<p class="center margintop">
-			<button type="submit" value="sent" class="bigbutton" id="submit">{% trans %}Next step &rarr;{% endtrans %}</button>
+			<button type="submit" value="sent" class="btn-neutral bigbutton" id="submit">{% trans %}Next step &rarr;{% endtrans %}</button>
 		</p>
 
 	</form>

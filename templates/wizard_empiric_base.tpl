@@ -20,7 +20,9 @@
 		<form class="answer" method="post" action="{{ app.request.getRequestUri }}" id="form-answer">
 			<h3>{% trans %}Could you sing it?{% endtrans %}</h3>
 
+			<nav>
 			{% block answer_buttons %}{% endblock %}
+			</nav>
 		</form>
 	</div>
 

@@ -1,12 +1,12 @@
 {% extends "base.tpl" %}
 
-{% block page_class %}user-voice{% endblock %}
+{% block page_class %}page-user-voice{% endblock %}
 
 {% block content %}
 
 	<h1>{% trans with {'%software%': '<span class="software-name">' ~ app.neoconfig.software_name ~ '</span>'} %}Welcome to %software%{% endtrans %}</h1>
 
-	<p>{% trans %}This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.{% endtrans %}</p>
+	<p>{% trans %}This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.{% endtrans %}</p>
 
 	<nav class="two-choices">
 		<a href="{{ path('wizard_step1') }}" class="flatbutton red">{% trans %}<span>I don't know</span> my voice range{% endtrans %}</a>
@@ -47,9 +47,14 @@
 		<p class="wizard-button"><a href="{{ path('wizard_step1', {'_locale': app.locale}) }}">{% trans %}If you don't know your highest and lowest note, click here{% endtrans %}</a></p>
 
 		<p class="center margintop">
-			<button type="submit" value="sent" class="bigbutton">{% trans %}We are ready!{% endtrans %}</button>
+			<button type="submit" value="sent" class="btn-neutral bigbutton">{% trans %}We are ready!{% endtrans %}</button>
 		</p>
 	</form>
+
+	<aside class="tip">
+		<h3>{% trans %}What is the voice range?{% endtrans %}</h3>
+		<p>{% trans %}Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.{% endtrans %}</p>
+	</aside>
 
 	{% import 'base.tpl' as self %}
 	{{ self.loadJsFramework() }}
