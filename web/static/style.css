@@ -475,7 +475,9 @@ footer {
 			font-size: 1em;
 			line-height: 130%;
 			font-weight: bold;
+			text-align: center;
 			box-shadow: 1px 1px 5px silver;
+			border-radius: 4px;
 		}
 			.transposition-feedback .answers button:first-child {
 				margin-left: 0;
@@ -488,14 +490,12 @@ footer {
 
 		.transposition-feedback button.yes {
 			background: #3F863F;
-			text-align: left;
 		}
 			.transposition-feedback button.yes:hover {
 				background: #4CAF50;
 			}
 		.transposition-feedback button.no {
 			background: #c4392d;
-			text-align: right;
 		}
 			.transposition-feedback button.no:hover {
 				background: #E53A2B;
