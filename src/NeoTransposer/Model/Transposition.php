@@ -173,14 +173,16 @@ class Transposition
 	 * alternative chords are calculated. Yes, that's simple.
 	 *
 	 * @param  \NeoTransposer\Model\NotesCalculator $nc An instance of NotesCalculator
-	 * @return [type]                             [description]
+	 * @return string The tone, expressed as major chord in american notation.
+	 *
+	 * @todo  Change "tone" for "key" (bad translation from Spanish, Isra!)
 	 */
 	public function getTone(NotesCalculator $nc)
 	{
 		$first_chord = $nc->readChord($this->chords[0]);
 
 		/*
-		 * Flattens the chord, it is, remove all attributes different from minor.
+		 * Flatten the chord, it is, remove all attributes different from minor.
 		 * This is needed because some songs, like Sola a Solo, start with a
 		 * 4-note chord (Dm5), or Song of Moses (C7).
 		 */
