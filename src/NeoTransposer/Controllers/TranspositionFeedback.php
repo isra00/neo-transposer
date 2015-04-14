@@ -47,7 +47,6 @@ SQL;
 			//Progressive enhancement: supports form submission without AJAX
 			if (!$req->isXmlHttpRequest())
 			{
-				/** @todo En vez de #feedback, ?feedback y mostrar mensajes!!! */
 				return $app->redirect($app['url_generator']->generate(
 					'transpose_song',
 					array('id_song' => $req->get('id_song'))
