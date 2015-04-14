@@ -71,7 +71,7 @@
 
 	<input type="hidden" name="id_song" value="{{ song.song_details.id_song }}">
 
-	<p class="answers">
+	<p class="answers" {% if non_js_fb %}style="display: none"{% endif %}>
 		<button type="submit" name="worked" value="1" class="yes {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes" {% if feedback == 'yes' %}title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}"{% endif %}>
 			{% trans %}Yes{% endtrans %} {% if feedback == 'yes' %}&#10004;{% endif %}
 			<small>{% trans %}It has worked{% endtrans %}</small>
@@ -82,14 +82,14 @@
 		</button>
 	</p>
 
-	<div class="thanks" id="feedback-thanks">{% trans %}Happy to know that! :-){% endtrans %}</div>
+	<div class="thanks {% if non_js_fb != 'yes' %}hidden{% endif %}" id="feedback-thanks">{% trans %}Happy to know that! :-){% endtrans %}</div>
 	
 	{# <div class="social-buttons">
 		<div class="fb-like" data-href="{{ app.absoluteUriWithoutQuery }}" data-width="90" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 		<div class="g-plusone" data-annotation="none" data-align="right" data-href="{{ app.absoluteUriWithoutQuery }}"></div>
 	</div> #}
 	
-	<ul id="reasons-no" class="hidden">
+	<ul id="reasons-no" class="{% if non_js_fb != 'no' %}hidden{% endif %}">
 		{% if user_first_octave %}
 		<li class="big">{% trans with {'%url%': url_wizard ~ "#afterNegativeFeedbackWithBadVoice"} %}It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.{% endtrans %}</li>
 		{% else %}

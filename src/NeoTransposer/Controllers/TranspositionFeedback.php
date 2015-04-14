@@ -29,16 +29,17 @@ ON DUPLICATE KEY UPDATE
 	user_highest_note = ?,
 	time = NOW()
 SQL;
+			$worked = (int) $req->get('worked');
 
 			$app['db']->executeUpdate($sql, array(
 				$req->get('id_song'),
 				$app['user']->id_user,
-				(int) $req->get('worked'),
+				$worked,
 				$app['user']->lowest_note,
 				$app['user']->highest_note,
 				$req->get('id_song'),
 				$app['user']->id_user,
-				(int) $req->get('worked'),
+				$worked,
 				$app['user']->lowest_note,
 				$app['user']->highest_note,
 			));
@@ -50,7 +51,7 @@ SQL;
 				return $app->redirect($app['url_generator']->generate(
 					'transpose_song',
 					array('id_song' => $req->get('id_song'))
-				) . '#feedback');
+				) . '?fb=' . str_replace(array('1', '0'), array('yes', 'no'), $worked) . '#feedback');
 			}
 
 			return true;

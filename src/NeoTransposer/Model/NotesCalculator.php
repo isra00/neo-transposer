@@ -109,8 +109,6 @@ class NotesCalculator
 	 * 
 	 * @param  string $chord_name Chord name, in standard notation.
 	 * @return array Associative array with 'fundamental' and 'attributes' key
-	 *
-	 * @todo  Mover a ChordPrinter una vez se halla renombrado a ChordNotation??
 	 */
 	function readChord($chord_name)
 	{

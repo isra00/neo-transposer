@@ -511,7 +511,6 @@ footer {
 	.transposition-feedback .thanks {
 		color: white;
 		font-style: italic;
-		display: none;
 		padding: .8em .8em;
 		background: #4CAF50;
 	}
