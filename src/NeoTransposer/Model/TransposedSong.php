@@ -32,7 +32,6 @@ class TransposedSong
 	 */
 	public static function create($id_song, NeoApp $app)
 	{
-		/** @todo ¿Pasar esto del slug al controller? Solo ahí se usa slug */
 		$field_id = 'slug';
 
 		if (preg_match('/^\d+$/', $id_song))

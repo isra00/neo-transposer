@@ -123,10 +123,11 @@ class NeoApp extends Application
 			'twig.path' => $this['neoconfig']['templates_dir']
 		));
 
-		//Custom Twig filter.
+		//Custom Twig filter for printing notes in different notations.
+		//@todo Esto solo se usa una vez... es realmente necesario?
 		$this['twig'] = $this->share($this->extend('twig', function($twig) {
 			$twig->addFilter(new \Twig_SimpleFilter('notation', function ($str, $notation) {
-				return \NeoTransposer\Model\NotesCalculator::getNotation($str, $notation);
+				return \NeoTransposer\Model\NotesNotation::getNotation($str, $notation);
 			}));
 			return $twig;
 		}));

@@ -5,6 +5,7 @@ namespace NeoTransposer\Model;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Persistence\UserPersistence;
 use \NeoTransposer\Model\NotesCalculator;
+use \NeoTransposer\Model\NotesNotation;
 
 class User
 {
@@ -105,31 +106,12 @@ class User
 	/**
 	 * Format the voice of the User as lowest_note - highest note +x octaves
 	 * 
-	 * @todo Mover a nueva clase NotesNotation
-	 * 
 	 * @param  \Silex\Translator 	$trans 		The Translator service.
 	 * @param  string 				$notation 	The notation (american/latin).
 	 * @return string 				Formatted string.
 	 */
 	function getVoiceAsString(\Silex\Translator $trans, $notation='american')
 	{
-		$regexp = '/([ABCDEFG]#?b?)([0-9])/';
-		
-		preg_match($regexp, $this->lowest_note, $match);
-		$lowest_note = $match[1];
-
-		preg_match($regexp, $this->highest_note, $match);
-		$highest_note = $match[1];
-
-		if ('latin' == $notation)
-		{
-			$lowest_note = NotesCalculator::getNotation($lowest_note, 'latin');
-			$highest_note = NotesCalculator::getNotation($highest_note, 'latin');
-		}
-
-		$octave = intval($match[2]);
-		$octave = $octave - 1;
-
-		return "$lowest_note &rarr; $highest_note +$octave " . $trans->trans('oct');
+		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->lowest_note, $this->highest_note);
 	}
 }
