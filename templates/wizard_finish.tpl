@@ -8,7 +8,7 @@
 
 	<p class="center big">{{ your_voice|raw }}</p>
 
-	<p>{% trans %}Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer{% endtrans %}</p>
+	<p>{% trans %}Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer.{% endtrans %}</p>
 
 	<p class="center"><a href="{{ go_to_book }}" class="big flatbutton red">{% trans %}Transpose the songs{% endtrans %}</a></p>
 

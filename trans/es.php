@@ -268,7 +268,7 @@ return array(
 	=> 'Eso es un poco extraño',
 
 	'According to the voice you have chosen in the previous step, that tone should not be too low. Maybe you should go back and choose better which type of voice is yours... or maybe simply repeat the test making sure that you are singing in the same tone as the guitar.'
-	=> 'Según la voz que has definido, ese tono no debería ser demasiado bajo para ti. Quizá debas volver al paso anterior y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba cantando en el mismo tono que la guitarra.',
+	=> 'Según la voz que has definido, ese tono no debería ser demasiado bajo para ti. Quizá debas volver atrás y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba asegurándote de que cantas en el mismo tono que la guitarra.',
 
 	'Change my voice type'
 	=> 'Cambiar mi tipo de voz',
@@ -293,7 +293,7 @@ return array(
 	=> 'No, es muy alto',
 
 	'According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.'
-	=> 'Según la voz que has definido, ese tono no debería ser demasiado alto para ti. Quizá debas volver al primer paso y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba cantando en el mismo tono que la guitarra.',
+	=> 'Según la voz que has definido, este tono no debería ser demasiado alto para ti. Quizá debas volver al primer paso y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba cantando en el mismo tono que la guitarra.',
 
 	//Wizard: finish
 	'We are done!'
@@ -302,8 +302,8 @@ return array(
 	'According to the tests, your voice range is:'
 	=> 'Según las pruebas tu tesitura de voz es la siguiente:',
 
-	'Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer'
-	=> '¡Enhorabuena! Ya puedes empezar a disfrutar de las transposiciones automáticas de Neo-Transposer',
+	'Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer.'
+	=> '¡Enhorabuena! Ya puedes empezar a disfrutar de las transposiciones automáticas de Neo-Transposer.',
 
 	'Transpose the songs'
 	=> '¡Transportar ya los cantos!',
