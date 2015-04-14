@@ -109,15 +109,14 @@ hr {
 .notification {
 	padding: .5em;
 	margin-bottom: 1em;
+	color: white;
+	box-shadow: 0 2px 2px silver;
 }
 	.notification.error {
-		color: white;
 		background: #F44336;
-		box-shadow: 0 2px 2px silver;
 	}
 	.notification.success {
-		color: green;
-		border: 1px solid green;
+		background: #4CAF50;
 	}
 
 footer {
