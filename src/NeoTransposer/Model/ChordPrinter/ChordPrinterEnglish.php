@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\ChordPrinter;
+namespace NeoTransposer\Model\ChordPrinter;
 
 class ChordPrinterEnglish extends ChordPrinter
 {

@@ -178,7 +178,7 @@ class NeoApp extends Application
 		});
 
 		$this['chord_printers.get'] = $this->protect(function($printer) {
-			$printer = "\NeoTransposer\ChordPrinter\ChordPrinter$printer";
+			$printer = "\NeoTransposer\Model\ChordPrinter\ChordPrinter$printer";
 			return new $printer();
 		});
 
