@@ -616,7 +616,7 @@ footer {
 }
 h2.step-1 {
 	margin-top: 1em;
-	border-top: 1px solid silver;
+	border-top: 3px solid silver;
 	padding-top: 1em;
 }
 .pre-song {
@@ -668,13 +668,27 @@ h2.step-1 {
 		}
 
 	.wizard-empiric .test-msg {
-		border: 1px solid silver;
-		padding: 1em;
+		box-shadow: 1px 1px 6px #aaa;
 	}
 		.wizard-empiric .test-msg h3 {
 			text-align: center;
 			margin-top: 0;
+			background: #F44336;
+			color: white;
+			font-size: 1.2em;
+			line-height: 200%;
+			text-transform: uppercase;
+			font-weight: bold;
 		}
+		.wizard-empiric .test-msg .inside {
+			padding: 0 1em 1em;
+		}
+		.wizard-empiric .test-msg nav {
+			text-align: center;
+			margin-top: 1em;
+			line-height: 3em;
+		}
+
 
 /* Admin Users */
 .admin-users .main {
@@ -1068,6 +1082,9 @@ input[type="text"] {
 			text-align: center;
 			display: block;
 		}
+	.wizard-empiric .test-msg {
+		margin: 0 6px 6px;
+	}
 
 	/* Admin Users */
 	.floating_toc {

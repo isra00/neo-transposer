@@ -14,22 +14,26 @@
 {% block messages %}
 	<div class="low-first-time hidden test-msg">
 		<h3>{% trans %}Well, that is a bit strange{% endtrans %}</h3>
-		<p>{% trans %}According to the voice you have chosen in the previous step, that tone should not be too low. Maybe you should go back and choose better which type of voice is yours... or maybe simply repeat the test making sure that you are singing in the same tone as the guitar.{% endtrans %}</p>
-		<p class="center margintop bigline">
-			<a href="{{ path('wizard_step1') }}" class="big flatbutton red">{% trans %}Change my voice type{% endtrans %}</a>
-			&nbsp;
-			<a href="javascript:void(0)" class="big flatbutton red" id="repeat-test">{% trans %}Repeat the test{% endtrans %}</a>
-		</p>
+		<div class="inside">
+			<p>{% trans %}According to the voice you have chosen in the previous step, that tone should not be too low. Maybe you should go back and choose better which type of voice is yours... or maybe simply repeat the test making sure that you are singing in the same tone as the guitar.{% endtrans %}</p>
+			<nav>
+				<a href="{{ path('wizard_step1') }}" class="big flatbutton red">{% trans %}Change my voice type{% endtrans %}</a>
+				&nbsp;
+				<a href="javascript:void(0)" class="big flatbutton red" id="repeat-test">{% trans %}Repeat the test{% endtrans %}</a>
+			</nav>
+		</div>
 	</div>
 
 	<div class="too-low hidden test-msg">
 		<h3>{% trans %}Well, that is a bit strange{% endtrans %}</h3>
-		<p>{% trans %}If you have chosen properly your voice in the previous step and you have sang the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type... or if you are sure that this super-low voice is yours, just go to the next step:{% endtrans %}</p>
-		<p class="center margintop bigline">
-			<a href="{{ path('wizard_step1') }}" class="big flatbutton red">{% trans %}Change my voice type{% endtrans %}</a>
-			&nbsp;
-			<a href="{{ path('wizard_empiric_highest') }}" class="big flatbutton green" id="repeat-test">{% trans %}Go to the next step{% endtrans %}</a>
-		</p>
+		<div class="inside">
+			<p>{% trans %}If you have chosen properly your voice in the previous step and you have sang the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type... or if you are sure that this super-low voice is yours, just go to the next step:{% endtrans %}</p>
+			<nav>
+				<a href="{{ path('wizard_step1') }}" class="big flatbutton red">{% trans %}Change my voice type{% endtrans %}</a>
+				&nbsp;
+				<a href="{{ path('wizard_empiric_highest') }}" class="big flatbutton green" id="repeat-test">{% trans %}Go to the next step{% endtrans %}</a>
+			</nav>
+		</div>
 	</div>
 {% endblock %}
 

@@ -14,12 +14,14 @@
 {% block messages %}
 	<div class="high-first-time hidden test-msg">
 		<h3>{% trans %}Well, that is a bit strange{% endtrans %}</h3>
-		<p>{% trans %}According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.{% endtrans %}</p>
-		<p class="center margintop bigline">
-			<a href="{{ path('wizard_step1') }}" class="big flatbutton red">{% trans %}Change my voice type{% endtrans %}</a>
-			&nbsp;
-			<a href="javascript:void(0)" class="big flatbutton red" id="repeat-test">{% trans %}Repeat the test{% endtrans %}</a>
-		</p>
+		<div class="inside">
+			<p>{% trans %}According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.{% endtrans %}</p>
+			<nav>
+				<a href="{{ path('wizard_step1') }}" class="big flatbutton red">{% trans %}Change my voice type{% endtrans %}</a>
+				&nbsp;
+				<a href="javascript:void(0)" class="big flatbutton red" id="repeat-test">{% trans %}Repeat the test{% endtrans %}</a>
+			</nav>
+		</div>
 	</div>
 {% endblock %}
 
