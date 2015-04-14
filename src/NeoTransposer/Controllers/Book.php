@@ -35,6 +35,7 @@ SQL;
 		return $app->render('book.tpl', array(
 			'page_title'	 	=> $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name'])),
 			'current_book'	 	=> $app['books'][$id_book],
+			'header_link'	 	=> $app['url_generator']->generate('book_' . $app['books'][$id_book]['id_book']),
 			'songs'			 	=> $songs,
 			'meta_description'	=> $app->trans(
 				'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.',

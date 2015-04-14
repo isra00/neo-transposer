@@ -56,9 +56,9 @@
 		<nav class="header">
 			<div class="inside">
 
-				{% if current_book -%}
+				{% if header_link -%}
 					<h2>
-						<a href="{{ path('book_' ~ (current_book ? current_book.id_book: app.user.id_book)) }}">{{ app.neoconfig.software_name }}</a>
+						<a href="{{ header_link }}">{{ app.neoconfig.software_name }}</a>
 					</h2>
 				{%- else -%}
 					{% if current_route == 'login' -%}

@@ -63,15 +63,15 @@ class TransposedSong
 		return new TransposedSong($song_details, $app, $original_chords);
 	}
 
+	/** 
+	 * @todo ¿Pedir parámetro User en lugar de usar $app['user'] para mayor flexibilidad?
+	 * Será útil para el teaser (dumb user) o para las "voces estándar" (feature request)
+	 */
 	public function transpose($forceHighestNote=false, $forceLowestNote=false, $overrideHighestNote=null)
 	{
-		// Esto es anti MVC total...
+		// Esto es anti MVC total... @todo Moverlo al controller
 		$this->app['locale'] = $this->song_details['locale'];
 
-		/** 
-		 * @todo ¿Pedir parámetro User en lugar de usar $app['user'] para mayor flexibilidad?
-		 * Será útil para el teaser (dumb user) o para las "voces estándar" (feature request)
-		 */
 		$transposer = new AutomaticTransposer(
 			$this->app['user']->lowest_note,
 			$this->app['user']->highest_note,
