@@ -217,6 +217,10 @@ footer {
 				font-weight: lighter;
 			}
 
+.page-user-book .tip {
+	margin-top: 2.5em;
+}
+
 /*
  * BOOK
  */
@@ -546,7 +550,11 @@ footer {
 	.transpose-song .your-voice .small-button {
 		margin-left: .5em;
 	}
-	
+
+.transpose-song .tip {
+	margin-top: 1.5em;
+}
+
 #voicechart-container {
 	padding-bottom: 1em;
 	border-top: 1px solid silver;
