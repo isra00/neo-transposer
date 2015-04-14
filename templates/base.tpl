@@ -79,9 +79,6 @@
 				</span>
 				{%- endif %}
 
-				{#· {{ app.user.lowest_note }}
-				· {{ app.user.highest_note }}#}
-
 			</div>
 		</nav>
 

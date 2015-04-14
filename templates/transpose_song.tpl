@@ -43,12 +43,7 @@
 	</div>
 {% endif %}
 
-{% if app.debug %}
-<!--<a href="/transpose/{{ next }}">NEXT &rarr;</a>-->
-{% endif %}
-
 <h1>
-	{# <small class="page_number">{{ song_details.page }}</small> #}
 	{{ song_details.title }}
 </h1>
 
@@ -74,8 +69,6 @@
 <form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
 
 	<input type="hidden" name="id_song" value="{{ song_details.id_song }}">
-
-	{# <p class="question">{% trans %}Did this chords work for you?{% endtrans %}</p> #}
 
 	<p class="answers">
 		<button type="submit" name="worked" value="1" class="yes {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes" {% if feedback == 'yes' %}title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}"{% endif %}>
