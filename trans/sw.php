@@ -153,4 +153,7 @@ return array(
 
 	'No'
 	=> 'Hapana',
+
+	'Happy to know that! :-)'
+	=> 'Nafurahi kwa hayo :-)',
 );
