@@ -41,7 +41,7 @@
 <ul class="song-index">
 {% for song in songs %}
 	<li>
-		{{ song.page }}
+		{{ song.page|default('&#248;')|raw }}
 		· <a href="{{ path('transpose_song', {"id_song":song.slug}) }}">{{ song.title }}</a>
 		{% if song.worked == '1' %}
 		<span class="green" title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}">&#10004;</span>
