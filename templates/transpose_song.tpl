@@ -45,6 +45,7 @@
 
 <h1>
 	{{ song_details.title }}
+	<small>{% if app.debug %}[{{ song_details.id_song }}]{% endif %}</small>
 </h1>
 
 <p class="explanation">{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</p>
