@@ -23,7 +23,7 @@
 		<p class="mkt-text">{% trans %}Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!{% endtrans %}</p>
 
 		{% macro login_form(error_msg, redirect) %}
-		<form method="post" action="{{ path('login', {'redirect': redirect}) }}" class="login-form">
+		<form method="post" action="{{ path('login', {'redirect': redirect, '_locale': app.locale}) }}" class="login-form">
 			<div class="error">{{ error_msg }}</div>
 			
 			<div class="field block full-width">
