@@ -9,7 +9,7 @@
 	<p>{% trans %}This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.{% endtrans %}</p>
 
 	<nav class="two-choices">
-		<a href="{{ path('wizard_step1') }}" class="flatbutton red">{% trans %}<span>I don't know</span> my voice range{% endtrans %}</a>
+		<a href="{{ path('wizard_step1', {'_locale': app.locale}) }}" class="flatbutton red">{% trans %}<span>I don't know</span> my voice range{% endtrans %}</a>
 		<a href="javascript:void(0)" id="i-know" class="flatbutton red">{% trans %}<span>I do know</span> my voice range{% endtrans %}</a>
 	</nav>
 
