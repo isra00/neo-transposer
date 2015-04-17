@@ -81,9 +81,10 @@ class Transposition
 	 * @todo Añadir acordes que, aunque no están en el libro, podrían salir por
 	 *       ser transposiciones de estos.
 	 *
-	 * @todo Cambiar sistema para ponderar acordes. Por ejemplo, Am y E tienen la misma puntuación,
-	 *       mientras que D# debería tener más puntuación que la que tiene ahora
-	 *       (por posiciones consecutivas), para evitarlo a toda costa.
+	 * @todo Cambiar sistema para ponderar acordes. Por ejemplo, Am y E tienen
+	 *       la misma puntuación, mientras que D# debería tener más puntuación
+	 *       que la que tiene ahora (por posiciones consecutivas), para evitarlo
+	 *       a toda costa.
 	 *
 	 * @var array
 	 */
@@ -118,10 +119,6 @@ class Transposition
 		{
 			$score = array_search($chord, self::$easyChords);
 
-			//Acordes no registrados se les asigna una dificultad media-alta
-			/** @todo Mejorar esto: cuando estén todos metidos, los que no estén
-			registrados serán MUY raros, por tanto deberían tener una puntuación
-			muy alta */
 			if (false === $score)
 			{
 				$score = count(self::$easyChords) / 1.8;

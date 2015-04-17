@@ -34,6 +34,7 @@ class TransposeSong
 		}
 
 		$song = TransposedSong::create($id_song, $app);
+		$app['locale'] = $song->song_details['locale'];
 		$song->transpose();
 
 		$tpl = array();

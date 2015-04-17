@@ -68,9 +68,6 @@ class TransposedSong
 	 */
 	public function transpose($forceHighestNote=false, $forceLowestNote=false, $overrideHighestNote=null)
 	{
-		// Esto es anti MVC total... @todo Moverlo al controller
-		$this->app['locale'] = $this->song_details['locale'];
-
 		$transposer = new AutomaticTransposer(
 			$this->app['user']->lowest_note,
 			$this->app['user']->highest_note,
