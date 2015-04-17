@@ -1,7 +1,7 @@
 <?php
 
-use \NeoTransposer\AutomaticTransposer;
-use \NeoTransposer\Transposition;
+use \NeoTransposer\Model\AutomaticTransposer;
+use \NeoTransposer\Model\Transposition;
 
 /**
  * @todo Add some corner cases to transposition algorithms

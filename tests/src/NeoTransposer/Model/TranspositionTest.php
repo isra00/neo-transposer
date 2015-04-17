@@ -1,6 +1,7 @@
 <?php
 
-use \NeoTransposer\Transposition;
+use \NeoTransposer\Model\Transposition;
+use \NeoTransposer\Model\NotesCalculator;
 
 class TranspositionTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +20,7 @@ class TranspositionTest extends PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->transp = new Transposition(array('Em', 'Am', 'B'));
-		$this->nc = new \NeoTransposer\NotesCalculator;
+		$this->nc = new NotesCalculator;
 	}
 
 	/*public function testGetWithAlternativeChords()
@@ -31,11 +32,11 @@ class TranspositionTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @todo Implement with a data provider
 	 */
-	public function testGetTone()
+	public function testGetKey()
 	{
-		$this->assertEquals('G', $this->transp->getTone($this->nc));
-		$this->assertEquals('G', (new Transposition(array('G7')))->getTone($this->nc));
-		$this->assertEquals('F', (new Transposition(array('Dm5')))->getTone($this->nc));
+		$this->assertEquals('G', $this->transp->getKey($this->nc));
+		$this->assertEquals('G', (new Transposition(array('G7')))->getKey($this->nc));
+		$this->assertEquals('F', (new Transposition(array('Dm5')))->getKey($this->nc));
 	}
 
 	public function testGetWithAlternativeChords()

@@ -1,6 +1,6 @@
 <?php
 
-use \NeoTransposer\NotesCalculator;
+use \NeoTransposer\Model\NotesCalculator;
 
 class NotesCalculatorTest extends PHPUnit_Framework_TestCase
 {
