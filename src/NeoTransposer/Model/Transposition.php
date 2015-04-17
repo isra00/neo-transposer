@@ -91,10 +91,10 @@ class Transposition
 	 * @var array
 	 */
 	protected static $easyChords = array(
-		'Em', 'E', 'Am', 'A', 'D', 'Dm', 'C', 'G', 'E7', 'A7', 'G7', 'D7', 
-		'B7', 'F', 'C7', 'F#', 'Bm', 'F#m', 'G#', 'G#m', 'Gm', 'A#', 'C#', 
-		'C#7', 'Dm9', 'F7', 'F#7', 'B', 'Dm5', 'Fm', 'A#7', 'C#m', 'A#m', 'Cm', 
-		'G#7', 'D#', 'D#m', 'D#7',
+		'Em', 'E', 'Am', 'A', 'D', 'Dm', 'C', 'G', 'E7', 'A7', 'G7', 'D7', 'B7',
+		'F', 'C7', 'F#', 'Bm', 'F#m', 'G#', 'G#m', 'Gm', 'A#', 'C#', 'C#7', 
+		'Dm9', 'F7', 'F7M', 'F#7', 'B', 'Em6', 'Dm5', 'Fm', 'Am6', 'A#7', 'C#m',
+		'A#m', 'Cm', 'G#7', 'D#', 'D#m', 'D#7', 'C#dim', 'Gm6'
 	);
 
 	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromPerfect=0)
