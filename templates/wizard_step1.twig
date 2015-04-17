@@ -1,4 +1,4 @@
-{% extends "base.tpl" %}
+{% extends "base.twig" %}
 
 {% block page_class %}voice-wizard{% endblock %}
 
@@ -61,7 +61,7 @@
 
 	</form>
 	
-	{% import 'base.tpl' as self %}
+	{% import 'base.twig' as self %}
 	{{ self.loadJsFramework() }}
 	
 	<script>

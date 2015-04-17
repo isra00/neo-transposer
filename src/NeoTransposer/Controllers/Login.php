@@ -28,7 +28,7 @@ class Login
 		$tpl_vars['meta_description']		= $app->trans('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
 		$tpl_vars['meta_canonical']			= $app['absoluteUriWithoutQuery'];
 		$tpl_vars['load_social_buttons']	= true;
-		return $app->render('login.tpl', $tpl_vars, true);
+		return $app->render('login.twig', $tpl_vars, true);
 	}
 
 	public function post(Request $req, \NeoTransposer\NeoApp $app)

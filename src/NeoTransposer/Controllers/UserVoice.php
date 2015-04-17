@@ -31,7 +31,7 @@ class UserVoice
 			}
 		}
 
-		return $app->render('user_voice.tpl', array(
+		return $app->render('user_voice.twig', array(
 			'page_title'			=> $app->trans('Your voice'),
 			'scale'					=> $nc->numbered_scale,
 			'accoustic_scale'		=> $nc->accoustic_scale,

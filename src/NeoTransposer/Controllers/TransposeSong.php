@@ -56,7 +56,7 @@ class TransposeSong
 
 		$nc = new NotesCalculator;
 
-		return $app->render('transpose_song.tpl', array_merge($tpl, array(
+		return $app->render('transpose_song.twig', array_merge($tpl, array(
 			'song'				=> $song,
 			'your_voice'		=> $your_voice,
 			'voice_chart'		=> TranspositionChart::getChart($song->song_details, $song->transpositions[0], $app['user']),

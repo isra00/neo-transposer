@@ -1,4 +1,4 @@
-{% extends "base.tpl" %}
+{% extends "base.twig" %}
 
 {% block page_class %}page-book{% endblock %}
 
@@ -14,7 +14,7 @@
 </h2>
 
 {% if not app.user.isLoggedIn %}
-	{% import "login.tpl" as login %}
+	{% import "login.twig" as login %}
 
 	<div class="teaser">
 		<div class="inside">

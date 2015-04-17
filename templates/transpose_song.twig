@@ -1,4 +1,4 @@
-{% extends "base.tpl" %}
+{% extends "base.twig" %}
 
 {% block page_class %}transpose-song{% endblock %}
 
@@ -31,7 +31,7 @@
 {% block content %}
 
 {% if not app.user.isLoggedIn %}
-	{% import "login.tpl" as login %}
+	{% import "login.twig" as login %}
 
 	<div class="teaser">
 		<div class="inside">
@@ -126,7 +126,7 @@
 	</table>
 </div>
 
-{% import 'base.tpl' as self %}
+{% import 'base.twig' as self %}
 {{ self.loadJsFramework() }}
 
 <script>

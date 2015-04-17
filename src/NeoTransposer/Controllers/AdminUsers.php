@@ -14,13 +14,15 @@ class AdminUsers
 
 	public function get(\NeoTransposer\NeoApp $app)
 	{
+		$app['locale'] = 'es';
+		
 		$this->app = $app;
 
 		$good_users = $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
 
 		$users_reporting_fb = $app['db']->fetchColumn('select count(distinct id_user) from transposition_feedback');
 
-		return $app->render('admin_users.tpl', array(
+		return $app->render('admin_users.twig', array(
 			'good_users'			=> $good_users,
 			'global_performance'	=> $this->getGlobalPerformance(),
 			'users_reporting_fb'	=> $users_reporting_fb,
@@ -96,7 +98,7 @@ SQL;
 			
 			$song_url = $this->app['url_generator']->generate('transpose_song', array('id_song' => $song['slug']), UrlGeneratorInterface::ABSOLUTE_URL);
 			$graph_url = 'http://graph.facebook.com/' . $song_url;
-			$feedback[$song['id_song']]['fb_shares'] = @json_decode(file_get_contents($graph_url), true)['shares'];
+			@$feedback[$song['id_song']]['fb_shares'] = @json_decode(file_get_contents($graph_url), true)['shares'];
 		}
 
 		return $feedback;

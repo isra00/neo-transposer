@@ -1,4 +1,4 @@
-{% extends "base.tpl" %}
+{% extends "base.twig" %}
 
 {% block page_class %}page-user-voice{% endblock %}
 
@@ -56,7 +56,7 @@
 		<p>{% trans %}Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.{% endtrans %}</p>
 	</aside>
 
-	{% import 'base.tpl' as self %}
+	{% import 'base.twig' as self %}
 	{{ self.loadJsFramework() }}
 
 	<script>

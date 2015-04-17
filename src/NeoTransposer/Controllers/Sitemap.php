@@ -58,7 +58,7 @@ class Sitemap
 		}
 
 		return new Response(
-            $app['twig']->render('sitemap.tpl', array('urls' => $urls)),
+            $app['twig']->render('sitemap.twig', array('urls' => $urls)),
             200,
             ['Content-Type' => 'application/xml']
         );

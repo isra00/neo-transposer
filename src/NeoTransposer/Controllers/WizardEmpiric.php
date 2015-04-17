@@ -24,7 +24,7 @@ class WizardEmpiric
 	{
 		if (!isset($app['neoconfig']['voice_wizard'][$app['locale']]['lowest']))
 		{
-			return $app->render('error.tpl', array(
+			return $app->render('error.twig', array(
 				'error_title' => $app->trans('Sorry, the voice measure wizard is not available in ' . $app['neoconfig']['languages'][$app['locale']]['name'])
 			));
 		}
@@ -39,7 +39,7 @@ class WizardEmpiric
 			$app['user']->wizard_lowest_attempts = 0;
 			$app['user']->wizard_highest_attempts = 0;
 
-			return $app->render('wizard_empiric_instructions.tpl', array(
+			return $app->render('wizard_empiric_instructions.twig', array(
 				'song_title' => $song_title
 			));
 		}
@@ -82,7 +82,7 @@ class WizardEmpiric
 		
 		$tpl = $this->prepareSongForTest('lowest', $app, false, true);
 
-		return $app->render('wizard_empiric_lowest.tpl', array_merge($tpl, array(
+		return $app->render('wizard_empiric_lowest.twig', array_merge($tpl, array(
 			'action_yes'	=> $action_yes,
 			'action_no'		=> $action_no,
 		)));
@@ -121,7 +121,7 @@ class WizardEmpiric
 		
 		$tpl = $this->prepareSongForTest('highest', $app, true);
 
-		return $app->render('wizard_empiric_highest.tpl', array_merge($tpl, array(
+		return $app->render('wizard_empiric_highest.twig', array_merge($tpl, array(
 			'action_yes'	=> $action_yes,
 			'action_no'		=> $action_no,
 		)));
@@ -156,6 +156,7 @@ class WizardEmpiric
 			$app['neoconfig']['languages'][$app['locale']]['notation']
 		);
 
+		//Redirect to the book of the current locale, auto-detected.
 		foreach ($app['books'] as $book)
 		{
 			if ($book['locale'] == $app['locale'])
@@ -167,7 +168,7 @@ class WizardEmpiric
 		//Only when wizard is finished, voice range is stored in DB
 		$app['user']->persist($app['db'], $req);
 
-		return $app->render('wizard_finish.tpl', array(
+		return $app->render('wizard_finish.twig', array(
 			'your_voice'	=> $your_voice,
 			'go_to_book'	=> $app['url_generator']->generate('book_' . $go_to_book)
 		));

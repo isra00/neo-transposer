@@ -32,7 +32,7 @@ SQL;
 
 		$app['locale'] = $app['books'][$id_book]['locale'];
 
-		return $app->render('book.tpl', array(
+		return $app->render('book.twig', array(
 			'page_title'	 	=> $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name'])),
 			'current_book'	 	=> $app['books'][$id_book],
 			'header_link'	 	=> $app['url_generator']->generate('book_' . $app['books'][$id_book]['id_book']),

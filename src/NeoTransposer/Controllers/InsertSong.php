@@ -16,7 +16,9 @@ class InsertSong
 
 	public function get(Request $request, \NeoTransposer\NeoApp $app, $tpl_vars=array())
 	{
-		return $app->render('insert_song.tpl', $tpl_vars);
+		$app['locale'] = 'es';
+
+		return $app->render('insert_song.twig', $tpl_vars);
 	}
 
 	public function post(Request $request, \NeoTransposer\NeoApp $app)

@@ -19,7 +19,7 @@ class WizardStepOne
 
 	public function getStepOne(NeoApp $app)
 	{
-		return $app->render('wizard_step1.tpl');
+		return $app->render('wizard_step1.twig');
 	}
 
 	public function postStepOne(Request $req, NeoApp $app)

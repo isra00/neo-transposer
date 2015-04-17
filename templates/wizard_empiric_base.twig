@@ -1,4 +1,4 @@
-{% extends "base.tpl" %}
+{% extends "base.twig" %}
 
 {% block page_class %}wizard-empiric{% endblock %}
 
@@ -28,7 +28,7 @@
 
 	{% block messages %}{% endblock %}
 
-	{% import 'base.tpl' as self %}
+	{% import 'base.twig' as self %}
 	{{ self.loadJsFramework() }}
 
 	{% block js %}{% endblock %}
