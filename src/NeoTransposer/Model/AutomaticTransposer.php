@@ -18,7 +18,7 @@ class AutomaticTransposer
 	protected $song_lowest_note;
 	protected $song_highest_note;
 	protected $original_chords;
-	protected $first_chord_is_tone;
+	protected $first_chord_is_key;
 
 	/**
 	 * The offset applied for the perfect transposition.
@@ -55,14 +55,14 @@ class AutomaticTransposer
 	 * @param  string $song_highest_note   Song's highest note
 	 * @param  array $original_chords      Song original chords
 	 */
-	function __construct($singer_lowest_note, $singer_highest_note, $song_lowest_note, $song_highest_note, $original_chords, $first_chord_is_tone)
+	function __construct($singer_lowest_note, $singer_highest_note, $song_lowest_note, $song_highest_note, $original_chords, $first_chord_is_key)
 	{
 		$this->singer_lowest_note = $singer_lowest_note;
 		$this->singer_highest_note = $singer_highest_note;
 		$this->song_lowest_note = $song_lowest_note;
 		$this->song_highest_note = $song_highest_note;
 		$this->original_chords = $original_chords;
-		$this->first_chord_is_tone = $first_chord_is_tone;
+		$this->first_chord_is_key = $first_chord_is_key;
 
 		$this->nc = new NotesCalculator;
 	}
@@ -140,7 +140,7 @@ class AutomaticTransposer
 			$this->nc->transposeNote($this->song_highest_note, $perfect_offset)
 		);
 
-		// If the perfect tone is the same as in the book, return 0.
+		// If the perfect key is the same as in the book, return 0.
 		// We do % 12 because octaves are not considered.
 		if (0 == $perfect_offset % 12)
 		{
@@ -210,7 +210,7 @@ class AutomaticTransposer
 				$dif
 			);
 
-			if ($this->first_chord_is_tone)
+			if ($this->first_chord_is_key)
 			{
 				$near->setAlternativeChords($this->nc);
 			}
@@ -286,7 +286,7 @@ class AutomaticTransposer
 		//This shouldn't be done before to avoid conflicts
 		foreach ($this->perfectAndEquivalent as &$transposition)
 		{
-			if ($this->first_chord_is_tone)
+			if ($this->first_chord_is_key)
 			{
 				$transposition->setAlternativeChords($this->nc);
 			}

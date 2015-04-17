@@ -169,15 +169,13 @@ class Transposition
 	}
 
 	/**
-	 * In most of songs, the tone is equal to the first chord. If not, no
+	 * In most of songs, the key is equal to the first chord. If not, no
 	 * alternative chords are calculated. Yes, that's simple.
 	 *
 	 * @param  \NeoTransposer\Model\NotesCalculator $nc An instance of NotesCalculator
-	 * @return string The tone, expressed as major chord in american notation.
-	 *
-	 * @todo  Change "tone" for "key" (bad translation from Spanish, Isra!)
+	 * @return string The key, expressed as major chord in american notation.
 	 */
-	public function getTone(NotesCalculator $nc)
+	public function getKey(NotesCalculator $nc)
 	{
 		$first_chord = $nc->readChord($this->chords[0]);
 
@@ -189,8 +187,8 @@ class Transposition
 		$first_chord['attributes'] = (false !== strpos($first_chord['attributes'], 'm'))
 			? 'm' : '';
 
-		//The tone is always expressed in major form, so we resolve the minor
-		//relatives, it is, the tone will be its third minor.
+		//The key is always expressed in major form, so we resolve the minor
+		//relatives, it is, the key will be its third minor.
 		if ($first_chord['attributes'] == 'm')
 		{
 			$position = array_search($first_chord['fundamental'], $nc->accoustic_scale);
@@ -206,7 +204,7 @@ class Transposition
 		if (!$this->asBook)
 		{
 			/**
-			 * Array keys = musical keys (tone) in which the replace will be done
+			 * Array keys = musical keys (tonality) in which the replace will be done
 			 * Array values = array of chords original => replacement
 			 * @var array
 			 */
@@ -219,13 +217,13 @@ class Transposition
 				),
 			);
 
-			$tone = $this->getTone($nc);
+			$key = $this->getKey($nc);
 
 			foreach ($this->chords as &$chord)
 			{
-				if (isset($alternativeChords[$tone][$chord]))
+				if (isset($alternativeChords[$key][$chord]))
 				{
-					$chord = $alternativeChords[$tone][$chord];
+					$chord = $alternativeChords[$key][$chord];
 				}
 			}
 			$this->setScore();
