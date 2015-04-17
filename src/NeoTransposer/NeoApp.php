@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use \Silex\Application;
 use \NeoTransposer\Model\User;
 
+/**
+ * An extension of Silex Application with custom stuff.
+ */
 class NeoApp extends Application
 {
 	use \Silex\Application\TwigTrait;
@@ -254,6 +257,9 @@ class NeoApp extends Application
 		}
 	}
 
+	/**
+	 * Records a page hit in the DB.
+	 */
 	protected function recordHit()
 	{
 		if ($this['user']->isLoggedIn())

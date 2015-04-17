@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Model\User;
 use \Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
+/**
+ * Administrator's Insert Song form.
+ */
 class InsertSong
 {
 	/**

@@ -15,8 +15,8 @@ class NotesCalculator
 	public $accoustic_scale = array('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
 
 	/**
-	 * All the accoustic notes (including # but not bemol) of 4 octaves, like in a 4-octave numbered_scale.
-	 * 4 octaves should be enough for all the singable notes.
+	 * All the accoustic notes (including # but not bemol) of 4 octaves, like in
+	 * a 4-octave numbered_scale. 4 octaves should be enough for voice range.
 	 * 
 	 * @var array
 	 */
@@ -37,8 +37,8 @@ class NotesCalculator
 	/**
 	 * Returns the lowest note in the array.
 	 * 
-	 * @param  array  $notes Array of numbered notes.
-	 * @return string The lowest note.
+	 * @param  array $notes Array of numbered notes.
+	 * @return string 		The lowest note.
 	 */
 	public function lowestNote(array $notes)
 	{
@@ -67,9 +67,9 @@ class NotesCalculator
 	/**
 	 * Reads an element of an array, supporting negative indexes and cyclic index.
 	 * 
-	 * @param  array $array Any indexed array.
-	 * @param  integer $index Index to read
-	 * @return mixed The array element
+	 * @param  array 	$array 	Any indexed array.
+	 * @param  integer 	$index 	Index to read
+	 * @return mixed 			The array element
 	 */
 	function arrayIndex($array, $index)
 	{
@@ -86,9 +86,9 @@ class NotesCalculator
 	/**
 	 * Transpose a given note with an offset.
 	 * 
-	 * @param  string $note   The note to transpose
-	 * @param  integer $offset The offset to transpose.
-	 * @return string         The transposed note.
+	 * @param  string 	$note  	The note to transpose
+	 * @param  integer 	$offset The offset to transpose.
+	 * @return string         	The transposed note.
 	 */
 	function transposeNote($note, $offset)
 	{
@@ -98,9 +98,9 @@ class NotesCalculator
 	/**
 	 * Calculates the absolute distance (in semitones) between two notes, with octave specified.
 	 * 
-	 * @param  string $note1 Note, specified as [note name][octave number], e.g. E3.
-	 * @param  string $note2 Another note, following the same pattern as $note1.
-	 * @return integer Distance in semitones.
+	 * @param  string 	$note1 	Note, specified as [note name][octave number], e.g. E3.
+	 * @param  string 	$note2 	Another note, following the same pattern as $note1.
+	 * @return integer 			Distance in semitones.
 	 */
 	function distanceWithOctave($note1, $note2)
 	{
@@ -110,17 +110,17 @@ class NotesCalculator
 	/**
 	 * Separates the parts of a chord: fundamental note and attributes.
 	 * 
-	 * @param  string $chord_name Chord name, in standard notation.
-	 * @return array Associative array with 'fundamental' and 'attributes' key
+	 * @param  string 	$chordName 	Chord name, in standard notation.
+	 * @return array 				Associative array with 'fundamental' and 'attributes' key
 	 */
-	function readChord($chord_name)
+	function readChord($chordName)
 	{
 		$regexp = '/^([ABCDEFG]#?b?)([mM45679]*|dim)$/';
-		preg_match($regexp, $chord_name, $match);
+		preg_match($regexp, $chordName, $match);
 
 		if (!isset($match[2]))
 		{
-			throw new \Exception("Chord $chord_name not recognized");
+			throw new \Exception("Chord $chordName not recognized");
 		}
 
 		return array('fundamental' => $match[1], 'attributes' => $match[2]);
@@ -129,13 +129,13 @@ class NotesCalculator
 	/**
 	 * Transports a chord adding or substracting semitones.
 	 * 
-	 * @param  string $chord_name Chord name, according to the syntax admitted by read_chord().
-	 * @param  integer $amount Number of semitones to add or substract.
-	 * @return string Final chord.
+	 * @param  string 	$chordName 	Chord name, according to the syntax admitted by read_chord().
+	 * @param  integer 	$amount 	Number of semitones to add or substract.
+	 * @return string 				Final chord.
 	 */
-	function transportChord($chord_name, $amount)
+	function transportChord($chordName, $amount)
 	{
-		$chord = $this->readChord($chord_name);
+		$chord = $this->readChord($chordName);
 		$chord['fundamental'];
 
 		$transposedFundamental = $this->arrayIndex(
@@ -149,15 +149,15 @@ class NotesCalculator
 	/*
 	 * Transports a set of chords adding or substracting semitones.
 	 * 
-	 * @param  array $chord_list An array of chords.
-	 * @param  integer $amount Number of semitones to add or substract.
-	 * @return array Final set of chords.
+	 * @param  array 	$chordList 	An array of chords.
+	 * @param  integer 	$amount 	Number of semitones to add or substract.
+	 * @return array 				Final set of chords.
 	 */
-	function transposeChords($chord_list, $amount)
+	function transposeChords($chordList, $amount)
 	{
 		$final_list = array();
 
-		foreach ($chord_list as $chord)
+		foreach ($chordList as $chord)
 		{
 			$final_list[] = $this->transportChord($chord, $amount);
 		}

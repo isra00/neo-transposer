@@ -5,6 +5,11 @@ namespace NeoTransposer\Controllers;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\NeoApp;
 
+/**
+ * First step of the Wizard: choose a pre-defined voice range. In the next step
+ * (WizardEmpiric) that voice range will be refined through empirical tests so
+ * the real voice range can be measured.
+ */
 class WizardStepOne
 {
 	public function stepOne(Request $req, NeoApp $app)

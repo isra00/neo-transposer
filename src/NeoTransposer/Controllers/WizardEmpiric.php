@@ -7,6 +7,9 @@ use NeoTransposer\Controllers;
 use \NeoTransposer\NeoApp;
 use \NeoTransposer\Model\SongTextForWizard;
 
+/**
+ * Wizard Empiric: measures the user's voice range through an empirical test.
+ */
 class WizardEmpiric
 {
 	/**

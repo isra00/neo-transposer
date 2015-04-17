@@ -4,6 +4,13 @@ namespace NeoTransposer\Model\ChordPrinter;
 
 class ChordPrinterSwahili extends ChordPrinter
 {
+	/**
+	 * Return a chord with Swahili notation.
+	 * 
+	 * @param  string $fundamental Chord's root note.
+	 * @param  string $attributes  Chord's type or attributes.
+	 * @return string              The final notation (HTML).
+	 */
 	public function printChordInNotation($fundamental, $attributes)
 	{
 		if ($fundamental == 'A#')

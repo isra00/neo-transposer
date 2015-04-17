@@ -2,8 +2,18 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
+/**
+ * Notation for chords as in the British songbook.
+ */
 class ChordPrinterEnglish extends ChordPrinter
 {
+	/**
+	 * Return a chord with English notation.
+	 * 
+	 * @param  string $fundamental Chord's root note.
+	 * @param  string $attributes  Chord's type or attributes.
+	 * @return string              The final notation (HTML).
+	 */
 	public function printChordInNotation($fundamental, $attributes)
 	{
 		if ($fundamental == 'A#')

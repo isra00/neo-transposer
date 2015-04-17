@@ -9,6 +9,9 @@ use \NeoTransposer\Model\NotesCalculator;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * Sets the user data. This URL has NO CONTENT.
+ */
 class SetUserData
 {
 	public function get(Request $request, \NeoTransposer\NeoApp $app)

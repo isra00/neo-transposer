@@ -21,11 +21,11 @@ class User
 	/**
 	 * Simple constructor. Check UserPersistence::fetchUserFromEmail() to create from DB.
 	 * 
-	 * @param string 	$email         User email
-	 * @param int 		$id_user       User ID
-	 * @param string 	$lowest_note   User lowest note
-	 * @param string 	$highest_note  User highest note
-	 * @param int 		$id_book       Book
+	 * @param string 	$email         	User email
+	 * @param int 		$id_user       	User ID
+	 * @param string 	$lowest_note   	User lowest note
+	 * @param string 	$highest_note  	User highest note
+	 * @param int 		$id_book       	Book
 	 * @param int 		wizard_step1	Option checked in Wizard First Step
 	 * @param string 	wizard_lowest_attempts No. of attempts in Wizard Lowest note.
 	 * @param string 	wizard_highest_attempts No. of attempts in Wizard Lowest note.
@@ -55,9 +55,11 @@ class User
 	}
 
 	/**
-	 * Redirections depending on the state of the user (not logged in, no voice...)
-	 * @param  Request $request [description]
-	 * @return boolean          [description]
+	 * Redirections depending on the state of the user (not logged in/no 
+	 * voice range defined).
+	 * 
+	 * @param  Request $request The HttpFoundation Request, to know the current route.
+	 * @return string          	Address for redirection, if needed.
 	 */
 	public function isRedirectionNeeded(Request $request)
 	{
@@ -108,7 +110,7 @@ class User
 	 * 
 	 * @param  \Silex\Translator 	$trans 		The Translator service.
 	 * @param  string 				$notation 	The notation (american/latin).
-	 * @return string 				Formatted string.
+	 * @return string 							Formatted string.
 	 */
 	function getVoiceAsString(\Silex\Translator $trans, $notation='american')
 	{

@@ -2,6 +2,17 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
+/**
+ * Chord printers implement the different chord notations.
+ *
+ * Internally, chords are notated with the following format:
+ * -Note with american notation, like NotesCalculator::$accoustic_scale.
+ * -Major is default.
+ * -Minor as "m". Example: "Am" = A minor.
+ * -Diminished as "dim".
+ * -A number represents the nth interval added. Example: "C7" = C seventh.
+ * -Augmented (major) interval as "M" after the number. Example: "C7M"
+ */
 abstract class ChordPrinter
 {
 	protected $cssClass = 'chord';
@@ -24,7 +35,7 @@ abstract class ChordPrinter
 
 	public function printChord($chordName)
 	{
-		//If chord notation is not valid, it will throw an exception
+		//If internal notation is not valid, it will throw an exception
 		$nc = new \NeoTransposer\Model\NotesCalculator;
 		$parts = $nc->readChord($chordName);
 		return $this->printChordInNotation($parts['fundamental'], $parts['attributes']);

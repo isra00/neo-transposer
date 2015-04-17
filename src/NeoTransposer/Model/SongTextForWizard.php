@@ -2,10 +2,14 @@
 
 namespace NeoTransposer\Model;
 
+/**
+ * Song text (with chords) that is shown in Wizard Empiric.
+ */
 class SongTextForWizard
 {
 	/**
 	 * Lyrics and chord placeholders, as fetched from config file.
+	 * 
 	 * @var string
 	 */
 	protected $rawText;
@@ -15,6 +19,14 @@ class SongTextForWizard
 		$this->rawText = $rawText;
 	}
 
+	/**
+	 * Place the given chords in a song text with placeholders
+	 * 
+	 * @param  array	$chords Chords ready to be printed.
+	 * @return string         	HTML song text with chords.
+	 * 
+	 * @see    config.wizard.php
+	 */
 	public function getHtmlTextWithChords($chords)
 	{
 		$placeholders = array();

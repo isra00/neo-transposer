@@ -4,6 +4,12 @@ namespace NeoTransposer\Model;
 
 use \NeoTransposer\NeoApp;
 
+/**
+ * Read a song from DB, calculate its transpositions and prepare for print.
+ *
+ * This class is in an upper level than AutomaticTransposer and is intended to
+ * be used by controllers such as TransposeSong and WizardEmpiric.
+ */
 class TransposedSong
 {
 	public $song_details;
@@ -62,10 +68,6 @@ class TransposedSong
 		return new TransposedSong($song_details, $app, $original_chords);
 	}
 
-	/** 
-	 * @todo ¿Pedir parámetro User en lugar de usar $app['user'] para mayor flexibilidad?
-	 * Será útil para el teaser (dumb user) o para las "voces estándar" (feature request)
-	 */
 	public function transpose($forceHighestNote=false, $forceLowestNote=false, $overrideHighestNote=null)
 	{
 		$transposer = new AutomaticTransposer(

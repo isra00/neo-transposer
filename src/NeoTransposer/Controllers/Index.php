@@ -4,10 +4,13 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Controller for the / route, which has NO CONTENTS.
+ */
 class Index
 {
 	/**
-	 * Controller for the / route. If logged in, redirect to the book. If not,
+	 * If logged in, redirect to the book. If not,
 	 * redirect to login in the language of the browser (Accept-Language header).
 	 * 
 	 * @param  Request               $req The HTTP request.

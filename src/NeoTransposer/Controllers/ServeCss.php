@@ -4,6 +4,9 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Controller that serves merged+compressed CSS files for the app.
+ */
 class ServeCss
 {
 	protected $src_file = '/static/style.css';

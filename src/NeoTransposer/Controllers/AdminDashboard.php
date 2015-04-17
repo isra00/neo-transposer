@@ -4,7 +4,10 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class AdminUsers
+/**
+ * Administrator's dashboard.
+ */
+class AdminDashboard
 {
 	/**
 	 * The App in use, for easier access.

@@ -83,7 +83,7 @@ $app->get('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::get')
 $app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post')
 	->before($needsLogin)
 	->before($needsAdmin);
-$app->get('/admin/users', 'NeoTransposer\\Controllers\\AdminUsers::get')
+$app->get('/admin/dashboard', 'NeoTransposer\\Controllers\\AdminDashboard::get')
 	->before($needsLogin)
 	->before($needsAdmin);
 

@@ -9,6 +9,9 @@ use \NeoTransposer\Model\NotesCalculator;
 use \Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * Transpose Song page: transposes the given song for the singer's voice range.
+ */
 class TransposeSong
 {
 	public function get(\NeoTransposer\NeoApp $app, Request $req, $id_song)

@@ -11,7 +11,9 @@ class NotesNotation
 {
 	/**
 	 * Correspondence between American and Latin notation. The softwares uses
-	 * always american notation (with no flats, only sharps) internally.
+	 * always american notation (with no flats, only sharps) internally. Beware
+	 * that, according to the Neocatechumenal songbook, A# is always Bb.
+	 * 
 	 * @var array
 	 */
 	protected static $latinNotes = array(

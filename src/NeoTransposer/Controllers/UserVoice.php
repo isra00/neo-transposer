@@ -4,6 +4,9 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Page for the user to set his/her voice range, or to go to the Wizard.
+ */
 class UserVoice
 {
 	public function get(Request $request, \NeoTransposer\NeoApp $app)

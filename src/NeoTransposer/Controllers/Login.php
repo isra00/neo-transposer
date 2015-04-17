@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Model\User;
 use \NeoTransposer\Persistence\UserPersistence;
 
+/**
+ * Landing page with Login form.
+ */
 class Login
 {
 	public function run(Request $req, \NeoTransposer\NeoApp $app)

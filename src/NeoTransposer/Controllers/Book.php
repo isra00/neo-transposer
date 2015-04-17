@@ -4,6 +4,9 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Book page: show list of songs belonging to a given book.
+ */
 class Book
 {
 	public function get(Request $req, \NeoTransposer\NeoApp $app, $id_book)

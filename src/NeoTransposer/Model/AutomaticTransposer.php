@@ -3,7 +3,7 @@
 namespace NeoTransposer\Model;
 
 /**
- * Calculate the better transposition for a given song, given the amplitude of the singer's voice.
+ * Transpose a given song automatically, given the singer's voice.
  */
 class AutomaticTransposer
 {
@@ -100,8 +100,7 @@ class AutomaticTransposer
 		 * the song goes high, the singer can sing one octave down. If not (normally),
 		 * we locate it in the middle, in order to be more comfortable. Note that
 		 * when the middle ((singer_wideness - song_wideness) / 2) is not an
-		 * integer, it will be rounded up. These behavior could be changed taking
-		 * into account the preferences of the user.
+		 * integer, it will be rounded up.
 		 */
 		$offset_from_singer_lowest = ($song_wideness >= $singer_wideness)
 			? 0
@@ -188,7 +187,7 @@ class AutomaticTransposer
 	}
 
 	/**
-	 * Find alternative NOT-equivalent, but near (up to 1 semitone up or down) transpositions.
+	 * Find alternative NOT-equivalent, but near (up to 1 semitone up or down) transposition.
 	 * 
 	 * @return Transposition A non-equivalent transposition (yes, only one).
 	 */
@@ -274,7 +273,6 @@ class AutomaticTransposer
 		if (empty($this->perfectAndEquivalent))
 		{
 			$perfectTransposition = $this->getPerfectTransposition($forceHighestNote, $forceLowestNote);
-
 			$equivalents = $this->findEquivalentsWithCapo($perfectTransposition, $this->original_chords);
 
 			$perfect_and_equivalent = array_merge(array($perfectTransposition), $equivalents);
