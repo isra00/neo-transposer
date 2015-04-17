@@ -47,8 +47,13 @@ class NotesCalculator
 
 		foreach ($notes as $note)
 		{
-			$number = $number = array_search($note, $this->numbered_scale);
-			/** @todo Añadir soporte de errores ($number === false) */
+			$number = array_search($note, $this->numbered_scale);
+
+			if ($number === false)
+			{
+				throw new \InvalidArgumentException("'$note' is not a valid note");
+			}
+
 			if ($number < $min_number)
 			{
 				$min_number = $number;
