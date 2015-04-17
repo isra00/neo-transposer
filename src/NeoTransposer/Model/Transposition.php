@@ -78,11 +78,8 @@ class Transposition
 	 * Therefore, it also depends on how much each chord is actually used in the
 	 * songs of the Way.
 	 *
-	 * @todo Incluir TODOS los acordes que se usen realmente en el libro.
-	 *
-	 * @todo Implementar soporte a acordes que NO están en esta lista (p. ej. Dm9)
-	 * pero que pudieran salir... para ello no mirar los acordes sino solo
-	 * la nota fundamental. 
+	 * @todo Añadir acordes que, aunque no están en el libro, podrían salir por
+	 *       ser transposiciones de estos.
 	 *
 	 * @todo Cambiar sistema para ponderar acordes. Por ejemplo, Am y E tienen la misma puntuación,
 	 *       mientras que D# debería tener más puntuación que la que tiene ahora
@@ -127,7 +124,7 @@ class Transposition
 			muy alta */
 			if (false === $score)
 			{
-				$score = count(self::$easyChords) / 1.5;
+				$score = count(self::$easyChords) / 1.8;
 			}
 			
 			$this->score += $score;
