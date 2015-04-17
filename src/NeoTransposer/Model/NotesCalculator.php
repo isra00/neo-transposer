@@ -65,8 +65,6 @@ class NotesCalculator
 	 * @param  array $array Any indexed array.
 	 * @param  integer $index Index to read
 	 * @return mixed The array element
-	 *
-	 * @todo 	Investigar si índices negativos se puede implementar con array_slice
 	 */
 	function arrayIndex($array, $index)
 	{
