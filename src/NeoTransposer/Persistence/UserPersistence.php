@@ -48,7 +48,7 @@ class UserPersistence
 	{
 		if ($user->id_user)
 		{
-			$db->update('user',
+			return $db->update('user',
 				array(
 					'lowest_note'	=> $user->lowest_note,
 					'highest_note'	=> $user->highest_note,
@@ -58,15 +58,6 @@ class UserPersistence
 					'wizard_highest_attempts' => $user->wizard_highest_attempts
 				), array('id_user' => (int) $user->id_user)
 			);
-
-			return $db->insert('user_edit', array(
-				'id_user'		=> $user->id_user,
-				'lowest_note'	=> $user->lowest_note,
-				'highest_note'	=> $user->highest_note,
-				'id_book'		=> $user->id_book,
-				'request_uri' 	=> $_SERVER['REQUEST_URI'],
-				'referer' 		=> $_SERVER['HTTP_REFERER']
-			));
 		}
 
 		$db->insert('user', array(

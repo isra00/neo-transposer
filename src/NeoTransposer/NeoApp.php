@@ -70,8 +70,6 @@ class NeoApp extends Application
 			//If debug=1, Twig enables strict variables. We disable it always.
 			$app['twig']->disableStrictVariables();
 		});
-
-		$this->recordHit();
 	}
 
 	/**
@@ -254,21 +252,6 @@ class NeoApp extends Application
 		else
 		{
 			$parameters['page_title'] = $software;
-		}
-	}
-
-	/**
-	 * Records a page hit in the DB.
-	 */
-	protected function recordHit()
-	{
-		if ($this['user']->isLoggedIn())
-		{
-			$this['db']->insert('user_hit', array(
-				'id_user' => $this['user']->id_user,
-				'request_uri' => $_SERVER['REQUEST_URI'],
-				'post_vars' => str_replace('[]', '', json_encode($_POST))
-			));
 		}
 	}
 }
