@@ -384,9 +384,6 @@ footer {
 	float: left;
 	font-size: 1.1em;
 }
-.transposition:first-child {
-	margin-left: 0;
-}
 	.transposition th { 
 		text-align: center; 
 		font-weight: normal;
