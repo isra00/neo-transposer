@@ -139,7 +139,7 @@ return array(
 	=> 'con capo %n%',
 	
 	'no capo'
-	=> 'sin cejilla',
+	=> 'sin capo',
 	
 	'(same chords as in the book)'
 	=> '(mismos acordes que en el libro)',
