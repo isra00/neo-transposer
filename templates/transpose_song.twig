@@ -59,7 +59,7 @@
 {% if song.not_equivalent %}
 <p class="explanation">{% trans with {'%difference%': not_equivalent_difference} %}This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:{% endtrans %}</p>
 <div class="transpositions-list">
-	{{ self.printTransposition(not_equivalent, song.original_chords) }}
+	{{ self.printTransposition(song.not_equivalent, song.original_chords) }}
 </div>
 {% endif %}
 
