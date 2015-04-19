@@ -101,7 +101,7 @@ SQL;
 			
 			$song_url = $this->app['url_generator']->generate('transpose_song', array('id_song' => $song['slug']), UrlGeneratorInterface::ABSOLUTE_URL);
 			$graph_url = 'http://graph.facebook.com/' . $song_url;
-			@$feedback[$song['id_song']]['fb_shares'] = @json_decode(file_get_contents($graph_url), true)['shares'];
+			//@$feedback[$song['id_song']]['fb_shares'] = @json_decode(file_get_contents($graph_url), true)['shares'];
 		}
 
 		return $feedback;
@@ -235,19 +235,12 @@ SQL;
 	protected function getMostActiveUsers()
 	{
 		$sql = <<<SQL
-select user.id_user, user.email, user.highest_note, user.lowest_note, count(transposition_feedback.id_song) fb, h.hits
-from user
+SELECT user.id_user, user.email, user.highest_note, user.lowest_note, count(transposition_feedback.id_song) fb
+FROM user
 join transposition_feedback on transposition_feedback.id_user = user.id_user
-join
-(
-  select user.id_user, count(time) hits
-  from user
-  left join user_hit on user_hit.id_user = user.id_user
-  group by id_user
-) h on h.id_user = user.id_user
-group by id_user
-order by fb desc, hits desc
-limit 20
+GROUP BY transposition_feedback.id_user
+ORDER BY fb DESC
+LIMIT 20
 SQL;
 		return $this->app['db']->fetchAll($sql);
 	}
