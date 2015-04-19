@@ -25,7 +25,7 @@ class AdminDashboard
 
 		$users_reporting_fb = $app['db']->fetchColumn('select count(distinct id_user) from transposition_feedback');
 
-		return $app->render('admin_users.twig', array(
+		return $app->render('admin_dashboard.twig', array(
 			'good_users'			=> $good_users,
 			'global_performance'	=> $this->getGlobalPerformance(),
 			'users_reporting_fb'	=> $users_reporting_fb,
@@ -235,11 +235,23 @@ SQL;
 	protected function getMostActiveUsers()
 	{
 		$sql = <<<SQL
-SELECT user.id_user, user.email, user.highest_note, user.lowest_note, count(transposition_feedback.id_song) fb
+SELECT user.id_user, user.email, user.lowest_note, user.highest_note, y.yes yes, n.no no, y.yes + n.no total, yes/(y.yes + n.no) perf
 FROM user
-join transposition_feedback on transposition_feedback.id_user = user.id_user
-GROUP BY transposition_feedback.id_user
-ORDER BY fb DESC
+JOIN
+(
+	SELECT id_user, COUNT(worked) yes
+	FROM transposition_feedback
+	WHERE worked=1
+	GROUP BY id_user
+) y ON user.id_user = y.id_user
+JOIN
+(
+	SELECT id_user, COUNT(worked) no
+	FROM transposition_feedback
+	WHERE worked=0
+	GROUP BY id_user
+) n ON y.id_user = n.id_user
+ORDER BY total DESC
 LIMIT 20
 SQL;
 		return $this->app['db']->fetchAll($sql);

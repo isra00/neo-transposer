@@ -162,7 +162,7 @@
 		<th>E-mail</th>
 		<th>Voice</th>
 		<th>FB</th>
-		<th>Hits</th>
+		<th>Perf</th>
 	</tr></thead>
 	<tbody>
 {% for user in most_active_users %}
@@ -170,8 +170,13 @@
 			<td>{{ user.id_user }}</td>
 			<td>{{ user.email }}</td>
 			<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
-			<td>{{ user.fb }}</td>
-			<td>{{ user.hits }}</td>
+			<td>{{ user.total }}</td>
+			<td>
+				<div class="feedback-graph">
+					<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>
+					<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>
+				</div>
+			</td>
 		</tr>
 {% endfor %}
 	</tbody>
