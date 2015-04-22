@@ -17,6 +17,7 @@ class AdminDashboard
 
 	public function get(\NeoTransposer\NeoApp $app)
 	{
+		//$this->populateCountry($app);
 		$app['locale'] = 'es';
 		
 		$this->app = $app;
@@ -36,7 +37,41 @@ class AdminDashboard
 			'songs_with_fb'			=> $this->getSongsWithFeedback(),
 			'most_active_users'		=> $this->getMostActiveUsers(),
 			'good_users_chrono'		=> $this->getGoodUsersChrono(),
+			'perf_by_country'		=> $this->getPerformanceByCountry(),
 		));
+
+	}
+
+	protected function populateCountry($app)
+	{
+		$ips = $app['db']->fetchAll('SELECT register_ip FROM user');
+
+		$reader = new \GeoIp2\Database\Reader($app['root_dir'] . '/' . $app['neoconfig']['mmdb'] . '.mmdb');
+
+		foreach ($ips as $ip)
+		{
+			$ip = $ip['register_ip'];
+
+			if (!strlen(trim($ip)))
+			{
+				continue;
+			}
+
+			try
+			{
+				$record = $reader->country($ip);
+			}
+			catch (\GeoIp2\Exception\AddressNotFoundException $e)
+			{
+				continue;
+			}
+
+			$app['db']->update(
+				'user',
+				array('country' => $record->country->isoCode),
+				array('register_ip' => $ip)
+			);
+		}
 	}
 
 	protected function getGlobalPerformance()
@@ -101,7 +136,7 @@ SQL;
 			
 			$song_url = $this->app['url_generator']->generate('transpose_song', array('id_song' => $song['slug']), UrlGeneratorInterface::ABSOLUTE_URL);
 			$graph_url = 'http://graph.facebook.com/' . $song_url;
-			//@$feedback[$song['id_song']]['fb_shares'] = @json_decode(file_get_contents($graph_url), true)['shares'];
+			@$feedback[$song['id_song']]['fb_shares'] = @json_decode(file_get_contents($graph_url), true)['shares'];
 		}
 
 		return $feedback;
@@ -177,10 +212,10 @@ SQL;
 	protected function fetchGlobalPerfChrono()
 	{
 		$sql = <<<SQL
-select date(time) day
-from transposition_feedback
-group by day
-order by day asc
+SELECT date(time) day
+FROM transposition_feedback
+GROUP BY day
+ORDER BY day DESC
 SQL;
 
 		$days_with_feedback = $this->app['db']->fetchAll($sql);
@@ -190,21 +225,37 @@ SQL;
 			$day = $day['day'];
 
 			$sql = <<<SQL
-select sub_yes.day, yes, no, yes+no total, yes/(yes+no)*100 performance
-from
+SELECT '$day' day, 
+	c_yes, c_no, c_yes+c_no c_total, c_yes/(c_yes+c_no)*100 c_performance,
+	d_yes, d_no, d_yes+d_no d_total, d_yes/(d_yes+d_no)*100 d_performance
+FROM
 (
-  SELECT date(time) day, count(worked) yes, worked
+  SELECT date(time) day, count(worked) c_yes, worked
   FROM transposition_feedback
-  where date(time) <= '$day'
-  and worked=1
-) sub_yes
+  WHERE date(time) <= '$day'
+  AND worked=1
+) sub_cyes
+JOIN
+(
+  SELECT date(time) day, count(worked) c_no, worked
+  FROM transposition_feedback
+  WHERE date(time) <= '$day'
+  AND worked=0
+) sub_cno
 join
 (
-  SELECT date(time) day, count(worked) no, worked
+  SELECT date(time) day, count(worked) d_yes, worked
   FROM transposition_feedback
-  where date(time) <= '$day'
-  and worked=0
-) sub_no
+  WHERE date(time) = '$day'
+  AND worked=1
+) sub_dyes
+join
+(
+  SELECT date(time) day, count(worked) d_no, worked
+  FROM transposition_feedback
+  WHERE date(time) = '$day'
+  AND worked=0
+) sub_dno
 SQL;
 
 			$global_perf_chrono[] = $this->app['db']->fetchAll($sql)[0];
@@ -217,17 +268,18 @@ SQL;
 	protected function getSongsWithFeedback()
 	{
 		$sql = <<<SQL
-select nofb.id_book, nofb.nofb, total.total from
+SELECT nofb.id_book, nofb.nofb, total.total FROM
 (
- select id_book, count(song.id_song) nofb
- from song
- left join transposition_feedback on transposition_feedback.id_song = song.id_song
- where transposition_feedback.id_song is null
- group by id_book
+ SELECT id_book, count(song.id_song) nofb
+ FROM song
+ LEFT JOIN transposition_feedback ON transposition_feedback.id_song = song.id_song
+ WHERE transposition_feedback.id_song IS NULL
+ GROUP BY id_book
 ) nofb
-join
-(select id_book, count(id_song) total from song group by id_book) total
-on nofb.id_book = total.id_book
+JOIN
+(
+	SELECT id_book, count(id_song) total FROM song GROUP BY id_book
+) total ON nofb.id_book = total.id_book
 SQL;
 		return $this->app['db']->fetchAll($sql);
 	}
@@ -273,5 +325,54 @@ group by day
 order by day desc
 SQL;
 		return $this->app['db']->fetchAll($sql);
+	}
+
+	protected function getPerformanceByCountry()
+	{
+		$sql = <<<SQL
+select country, count(user.id_user) n
+from user
+join transposition_feedback on transposition_feedback.id_user = user.id_user
+where not country is null
+group by country
+order by n desc
+SQL;
+		$countries = $this->app['db']->fetchAll($sql);
+
+		$performance = array();
+
+		foreach ($countries as $country)
+		{
+			$country = $country['country'];
+
+			$sql = <<<SQL
+select '$country' country, yes, no, yes+no total, yes/(yes+no)*100 performance
+from
+(
+  SELECT date(time) day, count(worked) yes, worked
+  FROM transposition_feedback
+  join user on transposition_feedback.id_user = user.id_user
+  where user.country = '$country'
+  and worked=1
+) sub_yes
+join
+(
+  SELECT date(time) day, count(worked) no, worked
+  FROM transposition_feedback
+  join user on transposition_feedback.id_user = user.id_user
+  where user.country = '$country'
+  and worked=0
+) sub_no
+SQL;
+			$countryPerformance = $this->app['db']->fetchAll($sql);
+			$performance[$country] = $countryPerformance[0];
+		}
+
+		usort($performance, function($a, $b) 
+		{
+			return ($a['performance'] < $b['performance']) ? 1 : -1;
+		});
+
+		return $performance;
 	}
 }

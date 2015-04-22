@@ -75,12 +75,14 @@
 	</tbody>
 </table>
 
-<h2>Global performance day by day (cumulative)</h2>
+<h2>Global performance day by day</h2>
 
 <table class="data-table">
 	<thead><tr>
 		<th>Date</th>
-		<th>Feedback</th>
+		<th>Cumulative</th>
+		<th>Perf</th>
+		<th>Day</th>
 		<th>Perf</th>
 	</tr></thead>
 	<tbody>
@@ -89,11 +91,46 @@
 			<td>{{ day.day }}</td>
 			<td>
 				<div class="feedback-graph">
-					<span class="yes" style="width: {{ ((day.yes / day.total) * 100)|round }}px">{{ day.yes }}</span>
-					<span class="no" style="width: {{ ((day.no / day.total) * 100)|round }}px">{{ day.no }}</span>
+					{% if day.c_yes %}<span class="yes" style="width: {{ ((day.c_yes / day.c_total) * 100)|round }}px">{{ day.c_yes }}</span>{% endif %}
+					{% if day.c_no %}<span class="no" style="width: {{ ((day.c_no / day.c_total) * 100)|round }}px">{{ day.c_no }}</span>{% endif %}
 				</div>
 			</td>
-			<td>{{ day.performance|round }}</td>
+			<td>{{ day.c_performance|round }}%</td>
+			<td>
+				<div class="feedback-graph">
+					{% if day.d_yes %}<span class="yes" style="width: {{ ((day.d_yes / day.d_total) * 100)|round }}px">{{ day.d_yes }}</span>{% endif %}
+					{% if day.d_no %}<span class="no" style="width: {{ ((day.d_no / day.d_total) * 100)|round }}px">{{ day.d_no }}</span>{% endif %}
+				</div>
+			</td>
+			<td>{{ day.d_performance|round }}%</td>
+		</tr>
+{% endfor %}
+	</tbody>
+</table>
+
+<h2>Performance by country</h2>
+
+<table class="data-table">
+	<thead><tr>
+		<th>Country</th>
+		<th>Performance</th>
+		<th>%</th>
+	</tr></thead>
+
+	<tbody>
+{% for country, perf in perf_by_country %}
+		<tr>
+			<td>
+				<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ perf.country|lower }}.png" width="16" />&nbsp;
+				{{ perf.country }}
+			</td>
+			<td>
+				<div class="feedback-graph">
+					{% if perf.yes -%}<span class="yes" style="width: {{ ((perf.yes / perf.total) * 100)|round }}px">{{ perf.yes }}</span>{%- endif %}
+					{% if perf.no -%}<span class="no" style="width: {{ ((perf.no / perf.total) * 100)|round }}px">{{ perf.no }}</span>{%- endif %}
+				</div>
+			</td>
+			<td>{{ perf.performance|round }}%</td>
 		</tr>
 {% endfor %}
 	</tbody>
