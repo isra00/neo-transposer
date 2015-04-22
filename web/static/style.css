@@ -356,6 +356,19 @@ footer {
 	text-align: center;
 	font-size: .9em;
 	margin-bottom: .5em;
+	border-top: 1px solid silver;
+	padding-top: .9em;
+}
+
+.landing-info {
+	border-top: 1px solid silver;
+	margin-top: 1em;
+	padding-top: 1em;
+}
+.disclaimer {
+	font-style: italic;
+	font-size: .9em;
+	color: #444;
 }
 
 
