@@ -40,6 +40,9 @@ return array(
 	'That e-mail doesn\'t look good. Please, re-type it.'
 	=> 'Ese e-mail no tiene buena pinta. Por favor, revísalo.',
 
+	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.'
+	=> 'Esta página web es iniciativa personal de un miembro del Camino Neocatecumenal pero NO representa oficialmente ni está afiliada de ningún modo al Camino Neocatecumenal o a sus responsables. El libro de cantos “Resucitó” es &copy; Kiko Argüello 2014.',
+
 	//User voice
 	'Your voice'
 	=> 'Tu voz',

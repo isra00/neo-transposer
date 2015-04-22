@@ -11,6 +11,7 @@
 
 {% block content %}
 
+	<a name="up"></a>
 	<div class="mkt">
 		<h2>
 			<span class="inside">
@@ -48,6 +49,58 @@
 			{% endif %}
 		{% endfor %}
 		</div>
+
+		<section class="landing-info">
+
+			<!--<h3>Cómo funciona</h3>
+
+			<p>Cada persona tiene un tono de voz, más agudo o más grave. A
+				menudo los acordes de los cantos del Camino según el libro de
+				cantos determinan un tono de la canción demasiado agudo o
+				demasiado grave para la voz del cantor. En ese caso solemos
+				transportar los cantos, pero no es fácil hacerlo: ¿a qué tono
+				debo transportarlo para mi voz? ¿Y la cejilla (capo), en qué
+				traste se debe poner?</p>
+
+			<p>Neo-Transposer te ayuda a resolver este problema. La aplicación
+				mide tu voz y calcula los acordes óptimos para tu voz. 
+				Inscríbete con tu e-mail, sigue los pasos y en unos minutos
+				tendrás los acordes de todos los cantos transportados a tu
+				voz.</p>
+
+			<h4>Usa Neo-Transposer, ¡pero usa también la cabeza! :-)</h4>
+
+			<p>Ojo, ¡esto es solo una herramienta! El carisma de cantor es
+				mucho más, y exige práctica, mucha práctica. Debes tener en
+				cuenta la intención de cada canto, para cantarlo con un tono
+				de voz que no solo sea bueno para ti, sino que transmita bien
+				la intención del canto y ayude a cantar a toda la comunidad. Si
+				tienes dudas, pregunta siempre a otros cantores y a tus
+				catequistas.</p>
+
+			<p class="center margintop">
+				<a href="#up" id="cta" class="btn-neutral bigbutton">Entrar en Neo-Transposer</a>
+			</p>-->
+
+			<div class="disclaimer">
+				<p>{% trans %}This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.{% endtrans %}</p>
+			</div>
+
+		</section>
 	</div>
+
+	{% import 'base.twig' as self %}
+	{{ self.loadJsFramework() }}
+
+	<script>
+	$(function() {
+		$(document.getElementById("cta")).click(function() {
+			$(document.getElementById("email")).focus(); /** @todo NO FUNCIONA! */
+			$(document.getElementById("email"))
+				.removeClass("blink") /** @todo TAMPOCO FUNCIONA (segunda vez) */
+				.addClass("blink");
+		});
+	});
+	</script>
 
 {% endblock %}
