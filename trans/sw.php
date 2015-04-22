@@ -17,7 +17,7 @@ return array(
 */
 	//Login
 	'Transpose chords of the songs of the Neocatechumenal Way'
-	=> 'Badilia ufunguo wa kodi ya nyimbo za Njia ya Neokatekumenato',
+	=> 'Badilia ufunguo wa kordi ya nyimbo za Njia ya Neokatekumenato',
 
 	'<span>It\'s not hard to transpose the song. What is hard is</span><span>to know to which tone should I transpose it <strong>for my voice</strong>.</span>'
 	=> '<span>Sio shida kubadilia ufunguo ya wimbo. Shida ni kujua ufunguo gani ni bora kwa <strong>sauti yangu</strong>?</span>',
@@ -55,8 +55,12 @@ return array(
 	'Welcome to %software%'
 	=> 'Karibu kwenye %software%',
 
-	'This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.'
+	/*'This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.'
 	=> 'Software hii inazichunguza nyimbo na sauti yako, ikifanya hesabu kwa kubadilia ufunguo wa nyimbo kulingana na sauti yako binafsi. Lakini kwanza tujue mwelekeo wa sauti yako.',
+*/
+	'This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.'
+	=> 'Software hii inahesabu transposition bora kwa kila wimbo kulingana na sauti <em>yako</em> binafsi. Lakini kwanza tujue nota za sauti yako.',
+
 /*
 	'Which is the lowest note that you can sing? And the highest one?'
 	=> '¿Cuál es la nota más grave que puedes cantar? ¿Y la más aguda?',
@@ -156,4 +160,14 @@ return array(
 
 	'Happy to know that! :-)'
 	=> 'Nafurahi kwa hayo :-)',
+
+	//Wizard empiric: lowest note
+	'Could you sing it?'
+	=> 'Umefanikiwa kuuimba?',
+
+	'No, that\'s too low'
+	=> 'La, chini sana',
+
+	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won\'t be able to sing loud enough in the community!'
+	=> 'Jaribu kuimba kitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unastahili kuuimbia na sauti ya chini. Recuerda: debes cantarlo por abajo, con voz grave, pero sin bajar demasiado, o no podrás cantar a un volumen aceptable.',
 );
