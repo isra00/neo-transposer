@@ -52,7 +52,7 @@
 
 		<section class="landing-info">
 
-			<!--<h3>Cómo funciona</h3>
+			{# <h3>Cómo funciona</h3>
 
 			<p>Cada persona tiene un tono de voz, más agudo o más grave. A
 				menudo los acordes de los cantos del Camino según el libro de
@@ -80,7 +80,7 @@
 
 			<p class="center margintop">
 				<a href="#up" id="cta" class="btn-neutral bigbutton">Entrar en Neo-Transposer</a>
-			</p>-->
+			</p> #}
 
 			<div class="disclaimer">
 				<p>{% trans %}This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.{% endtrans %}</p>
@@ -92,7 +92,7 @@
 	{% import 'base.twig' as self %}
 	{{ self.loadJsFramework() }}
 
-	<script>
+	{# <script>
 	$(function() {
 		$(document.getElementById("cta")).click(function() {
 			$(document.getElementById("email")).focus(); /** @todo NO FUNCIONA! */
@@ -101,6 +101,6 @@
 				.addClass("blink");
 		});
 	});
-	</script>
+	</script> #}
 
 {% endblock %}
