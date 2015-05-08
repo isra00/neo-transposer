@@ -1,7 +1,9 @@
 <IfModule mod_rewrite.c>
 	Options -MultiViews
 	RewriteEngine On
-	#RewriteBase /transporter/web/
+
+	RewriteRule ^en/login / [L,R=temp]
+
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ index.php [QSA,L]
 </IfModule>

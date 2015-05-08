@@ -17,10 +17,10 @@ return array(
 	),
 	
 	'languages'	=> array(
-		'en' => array(
+		/*'en' => array(
 			'name'		=> 'English',
 			'notation'	=> 'american'
-		),
+		),*/
 		'es' => array(
 			'name'		=> 'Español',
 			'notation'	=> 'latin',
