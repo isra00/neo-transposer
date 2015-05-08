@@ -26,81 +26,83 @@ $needsAdmin = function (Request $req, NeoApp $app) {
 
 $valid_locales = '(' . implode('|', array_keys($app['neoconfig']['languages'])) . ')';
 
-$app->get('/', 'NeoTransposer\\Controllers\\Index::get');
-$app->get('/sitemap.xml', 'NeoTransposer\\Controllers\\Sitemap::get');
+$controllers = 'NeoTransposer\\Controllers';
 
-$app->get('/{_locale}/login', 'NeoTransposer\\Controllers\\Login::run')
+$app->get('/', "$controllers\\Index::get");
+$app->get('/sitemap.xml', "$controllers\\Sitemap::get");
+
+$app->get('/{_locale}/login', "$controllers\\Login::run")
 	->method('GET|POST')
 	->assert('_locale', $valid_locales)
 	->bind('login');
 
-$app->get('/{_locale}/user/voice', 'NeoTransposer\\Controllers\\UserVoice::get')
+$app->get('/{_locale}/user/voice', "$controllers\\UserVoice::get")
 	->assert('_locale', $valid_locales)
 	->bind('user_voice')
 	->before($needsLogin);
 
-$app->get('/{_locale}/user/book', 'NeoTransposer\\Controllers\\UserBook::get')
+$app->get('/{_locale}/user/book', "$controllers\\UserBook::get")
 	->assert('_locale', $valid_locales)
 	->bind('user_book')
 	->before($needsLogin);
 
-$app->get('/{_locale}/wizard', 'NeoTransposer\\Controllers\\WizardStepOne::stepOne')
+$app->get('/{_locale}/wizard', "$controllers\\WizardStepOne::stepOne")
 	->assert('_locale', $valid_locales)
 	->method('GET|POST')
 	->bind('wizard_step1')
 	->before($needsLogin);
 
-$app->post('/{_locale}/wizard/lowest', 'NeoTransposer\\Controllers\\WizardEmpiric::lowest')
+$app->post('/{_locale}/wizard/lowest', "$controllers\\WizardEmpiric::lowest")
 	->assert('_locale', $valid_locales)
 	->method('GET|POST')
 	->bind('wizard_empiric_lowest')
 	->before($needsLogin);
 
-$app->post('/{_locale}/wizard/highest', 'NeoTransposer\\Controllers\\WizardEmpiric::highest')
+$app->post('/{_locale}/wizard/highest', "$controllers\\WizardEmpiric::highest")
 	->method('GET|POST')
 	->assert('_locale', $valid_locales)
 	->bind('wizard_empiric_highest')
 	->before($needsLogin);
 
-$app->get('/{_locale}/wizard/finish', 'NeoTransposer\\Controllers\\WizardEmpiric::finish')
+$app->get('/{_locale}/wizard/finish', "$controllers\\WizardEmpiric::finish")
 	->assert('_locale', $valid_locales)
 	->bind('wizard_finish')
 	->before($needsLogin);
 
-$app->get('/set-user-data', 'NeoTransposer\\Controllers\\SetUserData::get')
+$app->get('/set-user-data', "$controllers\\SetUserData::get")
 	->bind('set_user_data')
 	->before($needsLogin);
 
-$app->get('/transpose/{id_song}', 'NeoTransposer\\Controllers\\TransposeSong::get')
+$app->get('/transpose/{id_song}', "$controllers\\TransposeSong::get")
 	->bind('transpose_song');
 
-$app->post('/feedback', 'NeoTransposer\\Controllers\\TranspositionFeedback::post')
+$app->post('/feedback', "$controllers\\TranspositionFeedback::post")
 	->bind('transposition_feedback');
 
-$app->get('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::get')
+$app->get('/insert-song', "$controllers\\InsertSong::get")
 	->before($needsLogin)
 	->before($needsAdmin);
-$app->post('/insert-song', 'NeoTransposer\\Controllers\\InsertSong::post')
+$app->post('/insert-song', "$controllers\\InsertSong::post")
 	->before($needsLogin)
 	->before($needsAdmin);
-$app->get('/admin/dashboard', 'NeoTransposer\\Controllers\\AdminDashboard::get')
+$app->get('/admin/dashboard', "$controllers\\AdminDashboard::get")
 	->before($needsLogin)
 	->before($needsAdmin);
 
-$app->get('/static/' . $app['neoconfig']['css_cache'] . '.css', 'NeoTransposer\\Controllers\\ServeCss::get');
+$app->get('/static/' . $app['neoconfig']['css_cache'] . '.css', "$controllers\\ServeCss::get");
 
 //SEO-friendly URLs for books
 foreach ($app['neoconfig']['book_url'] as $id_book=>$slug)
 {
-	$app->get($slug, 'NeoTransposer\\Controllers\\Book::get')
+	$app->get($slug, "$controllers\\Book::get")
 		->value('id_book', $id_book)
 		->bind('book_' . $id_book);
 }
 
 //Easter eggs ;-)
-$app->get('/get-lucky', 'NeoTransposer\\Controllers\\TransposeSong::get')
+$app->get('/get-lucky', "$controllers\\TransposeSong::get")
 	->value('id_song', 118);
-$app->get('/sura-yako', 'NeoTransposer\\Controllers\\TransposeSong::get')
+$app->get('/sura-yako', "$controllers\\TransposeSong::get")
 	->value('id_song', 319);
 
 $app->run();
