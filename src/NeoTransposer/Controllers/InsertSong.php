@@ -54,7 +54,11 @@ class InsertSong
 
 		$app->addNotification('success', 'Song inserted');
 
-		return $this->get($request, $app, array('id_book' => $request->get('id_book')));
+		return $this->get(
+			$request, 
+			$app, 
+			array('id_book' => $request->get('id_book'))
+		);
 	}
 
 	/**
@@ -132,7 +136,11 @@ class InsertSong
 
 		$string = strtolower(trim($string));
 		$string = str_replace($hyphenize, '-', $string);
-		$string = str_replace(array_keys($flatten_letters), array_values($flatten_letters), $string);
+		$string = str_replace(
+			array_keys($flatten_letters), 
+			array_values($flatten_letters), 
+			$string
+		);
 		$string = preg_replace('/(\-\-+)/', '-', $string);
 		$string = preg_replace('/^\-/', '', $string);
 		$string = preg_replace('/\-$/', '', $string);

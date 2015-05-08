@@ -53,7 +53,11 @@ class Sitemap
 		foreach ($songs as $song)
 		{
 			$urls[] = array(
-				'loc' => $app['url_generator']->generate('transpose_song', array('id_song' => $song['slug']), UrlGeneratorInterface::ABSOLUTE_URL),
+				'loc' => $app['url_generator']->generate(
+					'transpose_song', 
+					array('id_song' => $song['slug']), 
+					UrlGeneratorInterface::ABSOLUTE_URL
+				),
 				'priority' => '0.8',
 				'changefreq' => 'weekly',
 				'lastmod' => $time

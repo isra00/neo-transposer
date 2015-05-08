@@ -53,7 +53,11 @@ class ServeCss
 		$config_file = $app['root_dir'] . '/config.php';
 
 		$config_src = file_get_contents($config_file);
-		$config_src = preg_replace("/(\s*'css_cache'\s*=>\s*')([a-f\d]{32})(',\s*)/", "\${1}$minified_hash\${3}", $config_src);
+		$config_src = preg_replace(
+			"/(\s*'css_cache'\s*=>\s*')([a-f\d]{32})(',\s*)/", 
+			"\${1}$minified_hash\${3}", 
+			$config_src
+		);
 		file_put_contents($config_file, $config_src);
 
 		return $app->redirect(sprintf($this->min_file, $minified_hash));
