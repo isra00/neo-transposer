@@ -3,7 +3,7 @@ html, body {
 }
 
 body {
-	font-family: 'Roboto', 'Droid Sans', sans-serif;
+	font-family: Roboto, 'Droid Sans', sans-serif;
 	margin: 0;
 	color: #222;
 	background: #fdfdfd;
@@ -50,7 +50,7 @@ hr {
 
 .wrapper {
 	min-height: 100%;
-	height: auto !important;
+	height: auto!important;
 	height: 100%;
 	margin: 0 auto -40px;
 }
@@ -68,7 +68,7 @@ hr {
 	overflow: hidden;
 	color: white;
 	text-align: right;
-	padding: .3rem .5rem .3rem .5rem;
+	padding: .3rem .5rem;
 	box-shadow: 0 1px 5px silver;
 }
 	.header .inside {
@@ -783,15 +783,18 @@ h2.step-1 {
 
 .field.full-width {
 	display: block;
+	line-height: 1.6em
 }
-	.field.full-width input,
-	.field.full-width button {
-		width: 100%;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-input[type="text"] {
+.field.full-width {
+	display: block
+}
+.field.full-width button,
+.field.full-width input {
+	width: 100%;
+	margin: 0 auto;
+	box-sizing: border-box
+}
+input[type=text] {
 	padding: .2em;
 	border: 1px solid silver;
 	font-size: 1.2em;
@@ -957,9 +960,6 @@ input[type="text"] {
 @media only screen and (min-width: 40rem) {
 
 	.page-login.lang-es .mkt {
-		background-image: url(img/mkt-es.jpg);
-	}
-	.page-login.lang-en .mkt {
 		background-image: url(img/mkt-es.jpg);
 	}
 	.page-login.lang-sw .mkt {
