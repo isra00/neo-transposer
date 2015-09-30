@@ -223,4 +223,9 @@ class Transposition
 			$this->setScore();
 		}
 	}
+
+	public function getCapo()
+	{
+		return $this->capo;
+	}
 }

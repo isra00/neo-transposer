@@ -290,6 +290,9 @@ class AutomaticTransposer
 			}
 		}
 
+		//If alternative chords have been set, scores may change and so positions.
+		$this->perfectAndEquivalent = $this->sortTranspositionsByEase($this->perfectAndEquivalent);
+
 		return ($limitTranspositions)
 			? array_slice($this->perfectAndEquivalent, 0, $limitTranspositions)
 			: $this->perfectAndEquivalent;

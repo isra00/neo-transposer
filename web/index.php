@@ -11,18 +11,25 @@ $app = new NeoApp(
 );
 
 $needsLogin = function (Request $req, NeoApp $app) {
+	
+	//Locale necessary for Admin pages, which set no es/sw locale.
 	if ($redirect = $app['user']->isRedirectionNeeded($req))
 	{
-		return $app->redirect($app['url_generator']->generate($redirect));
+		return $app->redirect($app['url_generator']->generate($redirect, array(
+			'_locale' => ('en' == $app['locale']) ? 'es' : $app['locale']
+		)));
 	}
 };
 
-$needsAdmin = function (Request $req, NeoApp $app) {
-	if ('carallo' != $req->get('t'))
-	{
-		return new \Symfony\Component\HttpFoundation\Response('Denied', 403);
-	}
-};
+$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+	'security.firewalls' => array(
+		'test' => array(
+			'pattern'	=> '^/admin',
+			'http'		=> true,
+			'users'		=> $app['neoconfig']['admins'],
+		)
+	)
+));
 
 $valid_locales = '(' . implode('|', array_keys($app['neoconfig']['languages'])) . ')';
 
@@ -79,15 +86,22 @@ $app->get('/transpose/{id_song}', "$controllers\\TransposeSong::get")
 $app->post('/feedback', "$controllers\\TranspositionFeedback::post")
 	->bind('transposition_feedback');
 
-$app->get('/insert-song', "$controllers\\InsertSong::get")
-	->before($needsLogin)
-	->before($needsAdmin);
-$app->post('/insert-song', "$controllers\\InsertSong::post")
-	->before($needsLogin)
-	->before($needsAdmin);
+$app->get('/{_locale}/all-songs-report', "$controllers\\AllSongsReport::get")
+	->assert('_locale', $valid_locales)
+	->bind('all_songs_report')
+	->before($needsLogin);
+
+$app->get('/admin/insert-song', "$controllers\\InsertSong::get")
+	->before($needsLogin);
+$app->post('/admin/insert-song', "$controllers\\InsertSong::post")
+	->before($needsLogin);
 $app->get('/admin/dashboard', "$controllers\\AdminDashboard::get")
-	->before($needsLogin)
-	->before($needsAdmin);
+	->before($needsLogin);
+$app->get('/admin/chord-correction', "$controllers\\ChordCorrectionPanel::get")
+	->before($needsLogin);
+$app->post('/admin/chord-correction', "$controllers\\ChordCorrectionPanel::post")
+	->bind('chord_correction_panel')
+	->before($needsLogin);
 
 $app->get('/static/' . $app['neoconfig']['css_cache'] . '.css', "$controllers\\ServeCss::get");
 

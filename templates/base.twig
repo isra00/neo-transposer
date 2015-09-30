@@ -18,7 +18,9 @@
 	<meta name="description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}" />
 	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
 
-	{% if not app.debug -%}
+	{% if app.debug -%}
+	<script>var ga = function() {}</script>
+	{%- else -%}
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -102,7 +104,10 @@
 	</div>
 
 	<footer>
-		<p>{% trans %}Developed in Tanzania.{% endtrans %} <a href="javascript:void(0)" onclick="go()">{%trans %}Contact{% endtrans %}</a></p>
+		<p>
+			{% trans with { '%url%': 'http://github.com/isra00/neo-transposer' } %}Developed as <a href="%url%">free software</a> in Tanzania.{% endtrans %}
+			<a href="javascript:void(0)" onclick="go()">{%trans %}Contact{% endtrans %}</a>.
+		</p>
 	</footer>
 
 	{% macro loadJsFramework() -%}

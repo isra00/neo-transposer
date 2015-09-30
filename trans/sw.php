@@ -3,8 +3,8 @@
 return array(
 
 	//General
-	'Developed in Tanzania.'
-	=> 'Imetengenezwa Tanzania.',
+	'Developed as <a href="%url%">free software</a> in Tanzania.'
+	=> 'Imetengenezwa Tanzania kama <a href="%url%">software huru</a>.',
 
 	'Contact'
 	=> 'Mawasiliano',
@@ -44,14 +44,6 @@ return array(
 	'<span>I do know</span> my voice range'
 	=> '<span>Nazifahamu</span> nota za sauti yangu',
 
-	//User Book
-	'Choose language'
-	=> 'Chagua lugha',
-
-	//User settings
-/*	'Settings'
-	=> 'Configuración',
-*/
 	'Welcome to %software%'
 	=> 'Karibu kwenye %software%',
 
@@ -71,7 +63,13 @@ return array(
 	'Highest:'
 	=> 'Más aguda:',
 	*/
-	
+
+	'What is the voice range?'
+	=> 'Nota za sauti ni kitu gani?',
+
+	'Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.'
+	=> 'Kila mmoja ana sauti yake: wengine wanaimba na sauti ya juu, wengine na ya chini. Kujua nota za sauti yako maana yake kujua bila kubabaika vikomo vya sauti yako: nota gani ya chini na nota gani ya juu unaweza kufikia.',
+
 	'{1}octave|]1,Inf]octaves'
 	=> '{1}oktava|]1,Inf]oktavas',
 	
@@ -87,6 +85,11 @@ return array(
 /*	'You have to select a highest note which is higher than the lowest one.'
 	=> 'Debes seleccionar una nota máxima que sea más alta que la mínima.',
 */
+
+	//User Book
+	'Choose language'
+	=> 'Chagua lugha',
+
 	//Book
 	'Songs of the Neocatechumenal Way in %lang%'
 	=> 'Nyimbo za Njia ya Neokatekumenato kwa %lang%',
@@ -152,6 +155,21 @@ return array(
 /*	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
 	=> 'Neo-Transposer te ayuda a transportar automáticamente los acordes de <strong>%song%</strong> para que encajen con tu voz. ¡Escribe tu e-mail, sigue las instrucciones y tendrás todos los cantos del Camino Neocatecumenal transportados!'
 */
+
+	//Wizard first step
+	
+	// Wizard empiric instructions
+	'Understood'
+	=> 'Nimeelewa',
+	
+	//Wizard empiric: lowest note
+	'Step 2: let\'s find your lowest note'
+	=> 'Hatua ya 2: tutafute nota yako ya chini',
+	
+	//Wizard empiric: highest note
+	
+	//Wizard: finish
+	
 	'Yes'
 	=> 'Ndiyo',
 
@@ -162,12 +180,31 @@ return array(
 	=> 'Nafurahi kwa hayo :-)',
 
 	//Wizard empiric: lowest note
+	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won\'t be able to sing loud enough in the community!'
+	=> 'Jaribu kuimba kitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unapaswa kuuimbia na sauti ya chini, lakini usishuke sana ili uweze kuimba kwa nguvu.',
+
 	'Could you sing it?'
 	=> 'Umefanikiwa kuuimba?',
 
 	'No, that\'s too low'
 	=> 'La, chini sana',
 
-	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won\'t be able to sing loud enough in the community!'
-	=> 'Jaribu kuimba kitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unastahili kuuimbia na sauti ya chini. Recuerda: debes cantarlo por abajo, con voz grave, pero sin bajar demasiado, o no podrás cantar a un volumen aceptable.',
+/*	'Well, that is a bit strange'
+	=> 'Haiwezekani',*/
+
+	'Repeat the test'
+	=> 'Rudia tena jaribio',
+
+	'Go to the next step'
+	=> 'Kwenda hatua inayofuata',
+
+	//All Songs Report
+	'All transpositions for your voice'
+	=> 'Funguo za nyimbo zote kwa sauti yako',
+
+	'(as in the book)'
+	=> '(jinsi ilivyo)',
+
+	'Print'
+	=> 'Chapa'
 );

@@ -23,8 +23,53 @@
 			</nav>
 		</div>
 	</div>
+
+	<div class="too-high hidden test-msg">
+		<h3>{% trans %}That's not possible...{% endtrans %}</h3>
+		<div class="inside">
+			<p>{% trans %}You have clicked "Yes" many times, but I don't think it's really possible that you can sing that high. Please verify that you are following properly the steps, or click on "Finish here" if you want to finish the test.{% endtrans %}</p>
+			<nav>
+				<a href="{{ path('wizard_step1', {'_locale': app.locale}) }}" class="big flatbutton red">{% trans %}Repeat the test{% endtrans %}</a>
+				&nbsp;
+				<button type="button" id="fsubmit" class="big flatbutton green">{% trans %}Finish here{% endtrans %}</button>
+			</nav>
+		</div>
+	</div>
 {% endblock %}
 
+
 {% block js %}
-	{# @todo Implementar el mensaje de arriba!!! #}
+	<script>
+	NT = {
+		
+		tooHigh: function()
+		{
+			$(".test-area").hide();
+			$(".too-high").show();
+			ga('send', 'event', 'WizardError', 'HighestTooHigh', 'user_id: {{ app.user.id_user }}');
+
+			$(document.getElementById("fsubmit")).click(function() {
+				$(document.getElementById("yes").parentNode).append(
+					'<input type="hidden" name="can_sing" value="no">'
+				);
+				document.forms[0].submit();
+			});
+		},
+
+		preventFormSubmit: function()
+		{
+			$("#form-answer").submit(function(e) {
+				e.preventDefault();
+			});
+		}
+	};
+
+	$(function()
+	{
+		$(".tooHigh").click(function(e) {
+			NT.preventFormSubmit();
+			NT.tooHigh();
+		});
+	});
+	</script>
 {% endblock %}

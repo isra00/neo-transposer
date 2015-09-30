@@ -10,6 +10,20 @@
 	<ul></ul>
 </nav>
 
+<h2>Admin ops</h2>
+
+{% if tool_output %}
+<pre>{{ tool_output }}</pre>
+{% else %}
+<nav class="admin-tools">
+	<a class="small-button" href="{{ path(current_route, {'tool': 'refreshCss'}) }}">Refresh CSS</a>
+	<a class="small-button" href="{{ path(current_route, {'tool': 'populateCountry'}) }}">Populate Country data</a>
+	<a class="small-button" href="{{ path(current_route, {'tool': 'checkLowerHigherNotes'}) }}">Check lower-highest notes</a>
+	<a class="small-button" href="{{ path(current_route, {'tool': 'checkChordOrder'}) }}">Check chord order</a>
+	<a class="small-button" href="{{ path('chord_correction_panel') }}">Chord correction panel</a>
+</nav>
+{% endif %}
+
 <h2>Global performance</h2>
 
 <h3>Good users (voice range > 1oct): {{ ((good_users / users|length) * 100)|round }}% </h3>
@@ -122,7 +136,7 @@
 		<tr>
 			<td>
 				<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ perf.country|lower }}.png" width="16" />&nbsp;
-				{{ perf.country }}
+				{{ perf.country_name }}
 			</td>
 			<td>
 				<div class="feedback-graph">
@@ -142,7 +156,9 @@
 	<thead><tr>
 		<th>Song</th>
 		<th>Feedback</th>
-		<th>FB</th>
+		<th>Performance</th>
+		<th>Wideness</th>
+		<th>Facebook</th>
 	</tr></thead>
 
 	<tbody>
@@ -155,6 +171,8 @@
 					{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
 				</div>
 			</td>
+			<td>{{ song.performance|round(2) }}</td>
+			<td>{{ song.wideness }}</td>
 			<td>{{ song.fb_shares }}</td>
 		</tr>
 {% endfor %}
@@ -169,12 +187,12 @@
 		<th>Feedback</th>
 		<th>Total</th>
 		<th>Perf</th>
+		<th>Wideness</th>
 	</tr></thead>
 
 	<tbody>
 {% for song in feedback %}
-{% set perf = song.yes / (song.yes + song.no) %}
-	{% if perf < 0.5 %}
+	{% if song.performance < 0.5 %}
 		<tr>
 			<td>{{ song.title }}</td>
 			<td>
@@ -184,7 +202,8 @@
 				</div>
 			</td>
 			<td>{{ song.yes + song.no }}
-			<td>{{ perf|round(2) }}</td>
+			<td>{{ song.performance|round(2) }}</td>
+			<td>{{ song.wideness }}</td>
 		</tr>
 	{% endif %}
 {% endfor %}
@@ -200,6 +219,7 @@
 		<th>Voice</th>
 		<th>FB</th>
 		<th>Perf</th>
+		<th>Lowest/highest attempts</th>
 	</tr></thead>
 	<tbody>
 {% for user in most_active_users %}
@@ -214,6 +234,7 @@
 					<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>
 				</div>
 			</td>
+			<td>{{ user.wizard_lowest_attempts }} / {{ user.wizard_highest_attempts }}</td>
 		</tr>
 {% endfor %}
 	</tbody>
@@ -257,6 +278,7 @@
 		<th>GeoIP</th>
 		<th>Registered</th>
 		<th>Fback</th>
+		<th>Lowest/highest attempts</th>
 	</tr></thead>
 	<tbody>
 {% for user in users %}
@@ -277,6 +299,7 @@
 				</div>
 				{% endif %}
 			</td>
+			<td>{{ user.wizard_lowest_attempts }} / {{ user.wizard_highest_attempts }}</td>
 		</tr>
 {% endfor %}
 	</tbody>

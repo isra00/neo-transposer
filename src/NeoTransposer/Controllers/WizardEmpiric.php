@@ -109,19 +109,21 @@ class WizardEmpiric
 			$app['user']->wizard_highest_attempts++;
 		}
 
+		// If user clicks "yes" many times, we alert...
+		if (end($this->nc->numbered_scale) == $app['user']->highest_note)
+		{
+			$action_yes = 'tooHigh';
+		}
+
 		// If no, we recover the last one and pass to the next step
-		if ('no' == $req->get('can_sing'))
+		// ...and if after being alerted that B4 is too much, decides to continue,
+		// stop here and force B4.
+		if ('no' == $req->get('can_sing') || $app['user']->highest_note == 'C1')
 		{
 			$app['user']->highest_note = $this->nc->transposeNote($app['user']->highest_note, -1);
 			return $app->redirect($app['url_generator']->generate('wizard_finish'));
 		}
 
-		//If too low, next "yes" won't work as usual
-		/*if ('C1' == $app['user']->lowest_note)
-		{
-			$action_yes = 'tooLow';
-		}*/
-		
 		$tpl = $this->prepareSongForTest('highest', $app, true);
 
 		return $app->render('wizard_empiric_highest.twig', array_merge($tpl, array(

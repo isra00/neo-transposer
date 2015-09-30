@@ -3,8 +3,8 @@
 return array(
 
 	//General
-	'Developed in Tanzania.'
-	=> 'Desarrollado en Tanzania.',
+	'Developed as <a href="%url%">free software</a> in Tanzania.'
+	=> '<a href="%url%">Software libre</a> desarrollado en Tanzania.',
 
 	'Contact'
 	=> 'Contacto',
@@ -310,5 +310,15 @@ return array(
 
 	'Transpose the songs'
 	=> '¡Transportar ya los cantos!',
+
+	//All Songs Report
+	'All transpositions for your voice'
+	=> 'Todas las transposiciones para tu voz',
+
+	'(as in the book)'
+	=> '(como en el libro)',
+
+	'Print'
+	=> 'Imprimir',
 
 );
