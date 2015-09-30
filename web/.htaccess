@@ -6,6 +6,13 @@
 
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ index.php [QSA,L]
+	
+	# Solucionar 404 a URLs obsoletas (añadido 21/sep/2015)
+	Redirect 301 "/transpose/santo-1988" "/transpose/santo-1988-tiempo-ordinario"
+	Redirect 301 "/transpose/yavheh-tu-eres-mi-dios" "/transpose/yahveh-tu-eres-mi-dios"
+	Redirect 301 "/book/1" "/nyimbo-njia-neokatekumenato"
+	Redirect 301 "/book/2" "/cantos-camino-neocatecumenal"
+	Redirect 301 "/transpose/oh-jesus-amor-mio-[estrofa-por-abajo]" "/oh-jesus-amor-mio"
 </IfModule>
 
 <ifModule mod_gzip.c>
