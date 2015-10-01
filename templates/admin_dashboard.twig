@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% block page_class %}admin-users{% endblock %}
+{% block page_class %}admin-dashboard{% endblock %}
 
 {% block content %}
 
@@ -10,267 +10,286 @@
 	<ul></ul>
 </nav>
 
-<h2>Admin ops</h2>
+<article class="row">
+	<h2>Admin ops</h2>
 
-{% if tool_output %}
-<pre>{{ tool_output }}</pre>
-{% else %}
-<nav class="admin-tools">
-	<a class="small-button" href="{{ path(current_route, {'tool': 'refreshCss'}) }}">Refresh CSS</a>
-	<a class="small-button" href="{{ path(current_route, {'tool': 'populateCountry'}) }}">Populate Country data</a>
-	<a class="small-button" href="{{ path(current_route, {'tool': 'checkLowerHigherNotes'}) }}">Check lower-highest notes</a>
-	<a class="small-button" href="{{ path(current_route, {'tool': 'checkChordOrder'}) }}">Check chord order</a>
-	<a class="small-button" href="{{ path('chord_correction_panel') }}">Chord correction panel</a>
-</nav>
-{% endif %}
+	{% if tool_output %}
+	<pre>{{ tool_output }}</pre>
+	{% else %}
+	<nav class="admin-tools">
+		<a class="small-button" href="{{ path(current_route, {'tool': 'refreshCss'}) }}">Refresh CSS</a>
+		<a class="small-button" href="{{ path(current_route, {'tool': 'populateCountry'}) }}">Populate Country data</a>
+		<a class="small-button" href="{{ path(current_route, {'tool': 'checkLowerHigherNotes'}) }}">Check lower-highest notes</a>
+		<a class="small-button" href="{{ path(current_route, {'tool': 'checkChordOrder'}) }}">Check chord order</a>
+		<a class="small-button" href="{{ path('chord_correction_panel') }}">Chord correction panel</a>
+	</nav>
+	{% endif %}
 
-<p><a href="{{ url(current_route, { long: 1}) }}">Load long reports</a></p>
+	<p><a href="{{ url(current_route, { long: 1}) }}">Load long reports</a></p>
+</article>
 
-<h2>Global performance</h2>
+<article>
+	<h2>Global performance</h2>
 
-<h3>Total users: {{ user_count }}</h3>
+	<div class="circles-container">
+		<h4 class="data-circle"><span>Total users</span> <b>{{ user_count }}</b></h4>
 
-<h3>Good users (voice range > 1oct): {{ ((good_users / user_count) * 100)|round }}% </h3>
-<div class="feedback-graph">
-	<span class="yes" style="width: {{ ((good_users / user_count) * 100)|round }}px">{{ good_users }}</span>
-	<span class="no" style="width: {{ (((user_count - good_users) / user_count) * 100)|round }}px">{{ user_count - good_users }}</span>
-</div>
-
-<h3>Feedback</h3>
-{% for group, gp in global_performance %}
-<p>
-	{{ group }}: {{ ((gp.yes / gp.total) * 100)|round }}% 
-	<div class="feedback-graph">
-		{% if gp.yes %}<span class="yes" style="width: {{ ((gp.yes / gp.total) * 100)|round }}px">{{ gp.yes }}</span>{% endif %}
-		{% if gp.no %}<span class="no" style="width: {{ ((gp.no / gp.total) * 100)|round }}px">{{ gp.no }}</span>{% endif %}
+		<h4 class="data-circle good-users">
+			<span>Good users <br><small>voice range > 1oct</small></span>
+			<b>{{ ((good_users / user_count) * 100)|round }}%</b>
+		</h4>
 	</div>
-</p>
-{% endfor %}
 
-{% set users_not_reporting_fb = user_count - users_reporting_fb %}
-<h3>Users reporting feedback: {{ ((users_reporting_fb / user_count) * 100)|round }}%</h3>
-<p>
-	<div class="feedback-graph">
-		<span class="yes" style="width: {{ ((users_reporting_fb / user_count) * 100)|round }}px">{{ users_reporting_fb }}</span>
-		<span class="no" style="width: {{ ((users_not_reporting_fb / user_count) * 100)|round }}px">{{ users_not_reporting_fb }}</span>
-	</div>
-</p>
-
-<h3>Songs with feedback</h3>
-
-{% for book in songs_with_fb %}
-	{% set book_fb = book.total - book.nofb %}
-	
-	<p>{{ app.books[book.id_book].lang_name }}: {{ ((book_fb / book.total) * 100)|round }}% 
+	<h3>Feedback</h3>
+	{% for group, gp in global_performance %}
+	<p>
+		{{ group }}: {{ ((gp.yes / gp.total) * 100)|round }}% 
 		<div class="feedback-graph">
-			<span class="yes" style="width: {{ ((book_fb / book.total) * 100)|round }}px">{{ book_fb }}</span>
-			<span class="no" style="width: {{ (((book.nofb) / book.total) * 100)|round }}px">{{ book.nofb }}</span>
+			{% if gp.yes %}<span class="yes" style="width: {{ ((gp.yes / gp.total) * 100)|round }}px">{{ gp.yes }}</span>{% endif %}
+			{% if gp.no %}<span class="no" style="width: {{ ((gp.no / gp.total) * 100)|round }}px">{{ gp.no }}</span>{% endif %}
 		</div>
 	</p>
-{% endfor %}
+	{% endfor %}
 
-<h2>Good users day by day</h2>
+	{% set users_not_reporting_fb = user_count - users_reporting_fb %}
+	<h3>Users reporting feedback: {{ ((users_reporting_fb / user_count) * 100)|round }}%</h3>
+	<p>
+		<div class="feedback-graph">
+			<span class="yes" style="width: {{ ((users_reporting_fb / user_count) * 100)|round }}px">{{ users_reporting_fb }}</span>
+			<span class="no" style="width: {{ ((users_not_reporting_fb / user_count) * 100)|round }}px">{{ users_not_reporting_fb }}</span>
+		</div>
+	</p>
 
-<table class="data-table">
-	<thead><tr>
-		<th>Registr. day</th>
-		<th>Goods/bads</th>
-		<th>%</th>
-	</tr></thead>
-	<tbody>
-{% for day in good_users_chrono %}
-		<tr>
-			<td>{{ day.day }}</td>
-			<td>
-				<div class="feedback-graph">
-					<span class="yes" style="width: {{ ((day.goods / day.total) * 100)|round }}px">{{ day.goods }}</span>
-					<span class="no" style="width: {{ (((day.total - day.goods) / day.total) * 100)|round }}px">{{ day.total - day.goods }}</span>
-				</div>
-			</td>
-			<td>{{ day.goods_rate }}</td>
-		</tr>
-{% endfor %}
-	</tbody>
-</table>
+	<h3>Songs with feedback</h3>
 
-<h2>Global performance day by day</h2>
+	{% for book in songs_with_fb %}
+		{% set book_fb = book.total - book.nofb %}
+		
+		<p>{{ app.books[book.id_book].lang_name }}: {{ ((book_fb / book.total) * 100)|round }}% 
+			<div class="feedback-graph">
+				<span class="yes" style="width: {{ ((book_fb / book.total) * 100)|round }}px">{{ book_fb }}</span>
+				<span class="no" style="width: {{ (((book.nofb) / book.total) * 100)|round }}px">{{ book.nofb }}</span>
+			</div>
+		</p>
+	{% endfor %}
+</article>
 
-<table class="data-table">
-	<thead><tr>
-		<th>Date</th>
-		<th>Cumulative</th>
-		<th>Perf</th>
-		<th>Day</th>
-		<th>Perf</th>
-	</tr></thead>
-	<tbody>
-{% for day in global_perf_chrono %}
-		<tr>
-			<td>{{ day.day }}</td>
-			<td>
-				<div class="feedback-graph">
-					{% if day.c_yes %}<span class="yes" style="width: {{ ((day.c_yes / day.c_total) * 100)|round }}px">{{ day.c_yes }}</span>{% endif %}
-					{% if day.c_no %}<span class="no" style="width: {{ ((day.c_no / day.c_total) * 100)|round }}px">{{ day.c_no }}</span>{% endif %}
-				</div>
-			</td>
-			<td>{{ day.c_performance|round }}%</td>
-			<td>
-				<div class="feedback-graph">
-					{% if day.d_yes %}<span class="yes" style="width: {{ ((day.d_yes / day.d_total) * 100)|round }}px">{{ day.d_yes }}</span>{% endif %}
-					{% if day.d_no %}<span class="no" style="width: {{ ((day.d_no / day.d_total) * 100)|round }}px">{{ day.d_no }}</span>{% endif %}
-				</div>
-			</td>
-			<td>{{ day.d_performance|round }}%</td>
-		</tr>
-{% endfor %}
-	</tbody>
-</table>
+<article>
+	<h2>Performance by country</h2>
 
-<h2>Performance by country</h2>
+	<table class="data-table">
+		<thead><tr>
+			<th>Country</th>
+			<th>Performance</th>
+			<th>%</th>
+		</tr></thead>
 
-<table class="data-table">
-	<thead><tr>
-		<th>Country</th>
-		<th>Performance</th>
-		<th>%</th>
-	</tr></thead>
+		<tbody>
+	{% for country, perf in perf_by_country %}
+			<tr>
+				<td>
+					<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ perf.country|lower }}.png" width="16" />&nbsp;
+					{{ perf.country_name }}
+				</td>
+				<td>
+					<div class="feedback-graph">
+						{% if perf.yes -%}<span class="yes" style="width: {{ ((perf.yes / perf.total) * 100)|round }}px">{{ perf.yes }}</span>{%- endif %}
+						{% if perf.no -%}<span class="no" style="width: {{ ((perf.no / perf.total) * 100)|round }}px">{{ perf.no }}</span>{%- endif %}
+					</div>
+				</td>
+				<td>{{ perf.performance|round }}%</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
 
-	<tbody>
-{% for country, perf in perf_by_country %}
-		<tr>
-			<td>
-				<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ perf.country|lower }}.png" width="16" />&nbsp;
-				{{ perf.country_name }}
-			</td>
-			<td>
-				<div class="feedback-graph">
-					{% if perf.yes -%}<span class="yes" style="width: {{ ((perf.yes / perf.total) * 100)|round }}px">{{ perf.yes }}</span>{%- endif %}
-					{% if perf.no -%}<span class="no" style="width: {{ ((perf.no / perf.total) * 100)|round }}px">{{ perf.no }}</span>{%- endif %}
-				</div>
-			</td>
-			<td>{{ perf.performance|round }}%</td>
-		</tr>
-{% endfor %}
-	</tbody>
-</table>
+<article>
+	<h2>Good users day by day</h2>
 
-<h2>Feedback ({{ feedback|length }})</h2>
+	<table class="data-table">
+		<thead><tr>
+			<th>Registr. day</th>
+			<th>Goods/bads</th>
+			<th>%</th>
+		</tr></thead>
+		<tbody>
+	{% for day in good_users_chrono %}
+			<tr>
+				<td>{{ day.day }}</td>
+				<td>
+					<div class="feedback-graph">
+						<span class="yes" style="width: {{ ((day.goods / day.total) * 100)|round }}px">{{ day.goods }}</span>
+						<span class="no" style="width: {{ (((day.total - day.goods) / day.total) * 100)|round }}px">{{ day.total - day.goods }}</span>
+					</div>
+				</td>
+				<td>{{ day.goods_rate }}</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
 
-<table class="data-table">
-	<thead><tr>
-		<th>Song</th>
-		<th>Feedback</th>
-		<th>Performance</th>
-		<th>Wideness</th>
-		<th>Facebook</th>
-	</tr></thead>
+<article>
+	<h2>Global performance day by day</h2>
 
-	<tbody>
-{% for song in feedback %}
-		<tr>
-			<td>{{ song.title }}</td>
-			<td>
-				<div class="feedback-graph">
-					{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
-					{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
-				</div>
-			</td>
-			<td>{{ song.performance|round(2) }}</td>
-			<td>{{ song.wideness }}</td>
-			<td>{{ song.fb_shares }}</td>
-		</tr>
-{% endfor %}
-	</tbody>
-</table>
+	<table class="data-table">
+		<thead><tr>
+			<th>Date</th>
+			<th>Cumulative</th>
+			<th>Perf</th>
+			<th>Day</th>
+			<th>Perf</th>
+		</tr></thead>
+		<tbody>
+	{% for day in global_perf_chrono %}
+			<tr>
+				<td>{{ day.day }}</td>
+				<td>
+					<div class="feedback-graph">
+						{% if day.c_yes %}<span class="yes" style="width: {{ ((day.c_yes / day.c_total) * 100)|round }}px">{{ day.c_yes }}</span>{% endif %}
+						{% if day.c_no %}<span class="no" style="width: {{ ((day.c_no / day.c_total) * 100)|round }}px">{{ day.c_no }}</span>{% endif %}
+					</div>
+				</td>
+				<td>{{ day.c_performance|round }}%</td>
+				<td>
+					<div class="feedback-graph">
+						{% if day.d_yes %}<span class="yes" style="width: {{ ((day.d_yes / day.d_total) * 100)|round }}px">{{ day.d_yes }}</span>{% endif %}
+						{% if day.d_no %}<span class="no" style="width: {{ ((day.d_no / day.d_total) * 100)|round }}px">{{ day.d_no }}</span>{% endif %}
+					</div>
+				</td>
+				<td>{{ day.d_performance|round }}%</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
 
-<h2>Unsuccessful songs</h2>
+<article>
+	<h2>Feedback ({{ feedback|length }})</h2>
 
-<table class="data-table">
-	<thead><tr>
-		<th>Song</th>
-		<th>Feedback</th>
-		<th>Total</th>
-		<th>Perf</th>
-		<th>Wideness</th>
-	</tr></thead>
+	<table class="data-table">
+		<thead><tr>
+			<th>Song</th>
+			<th>Feedback</th>
+			<th>Performance</th>
+			<th>Wideness</th>
+			<th>Facebook</th>
+		</tr></thead>
 
-	<tbody>
-{% for song in feedback %}
-	{% if song.performance < 0.5 %}
-		<tr>
-			<td>{{ song.title }}</td>
-			<td>
-				<div class="feedback-graph">
-					{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
-					{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
-				</div>
-			</td>
-			<td>{{ song.yes + song.no }}
-			<td>{{ song.performance|round(2) }}</td>
-			<td>{{ song.wideness }}</td>
-		</tr>
-	{% endif %}
-{% endfor %}
-	</tbody>
-</table>
+		<tbody>
+	{% for song in feedback %}
+			<tr>
+				<td>{{ song.title }}</td>
+				<td>
+					<div class="feedback-graph">
+						{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
+						{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
+					</div>
+				</td>
+				<td>{{ song.performance|round(2) }}</td>
+				<td>{{ song.wideness }}</td>
+				<td>{{ song.fb_shares }}</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
 
-<h2>Most active users ({{ most_active_users|length }})</h2>
+<article>
+	<h2>Unsuccessful songs</h2>
 
-<table class="data-table">
-	<thead><tr>
-		<th>ID</th>
-		<th>E-mail</th>
-		<th>Voice</th>
-		<th>FB</th>
-		<th>Perf</th>
-		<th>Lowest/highest attempts</th>
-	</tr></thead>
-	<tbody>
-{% for user in most_active_users %}
-		<tr>
-			<td>{{ user.id_user }}</td>
-			<td>{{ user.email }}</td>
-			<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
-			<td>{{ user.total }}</td>
-			<td>
-				<div class="feedback-graph">
-					<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>
-					<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>
-				</div>
-			</td>
-			<td>{{ user.wizard_lowest_attempts }} / {{ user.wizard_highest_attempts }}</td>
-		</tr>
-{% endfor %}
-	</tbody>
-</table>
+	<table class="data-table">
+		<thead><tr>
+			<th>Song</th>
+			<th>Feedback</th>
+			<th>Total</th>
+			<th>Perf</th>
+			<th>Wideness</th>
+		</tr></thead>
 
-<h2>Unhappy users ({{ unhappy_users|length }})</h2>
+		<tbody>
+	{% for song in feedback %}
+		{% if song.performance < 0.5 %}
+			<tr>
+				<td>{{ song.title }}</td>
+				<td>
+					<div class="feedback-graph">
+						{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
+						{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
+					</div>
+				</td>
+				<td>{{ song.yes + song.no }}
+				<td>{{ song.performance|round(2) }}</td>
+				<td>{{ song.wideness }}</td>
+			</tr>
+		{% endif %}
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
 
-<table class="data-table">
-	<thead><tr>
-		<th>ID</th>
-		<th>E-mail</th>
-		<th>FB</th>
-		<th>Total</th>
-		<th>Perf</th>
-	</tr></thead>
-	<tbody>
-{% for user in unhappy_users %}
-		<tr>
-			<td>{{ user.id_user }}</td>
-			<td>{{ user.email }}</td>
-			<td>
-				<div class="feedback-graph">
-					<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>
-					<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>
-				</div>
-			</td>
-			<td>{{ user.total }}</td>
-			<td>{{ user.perf|round(2) }}</td>
-		</tr>
-{% endfor %}
-	</tbody>
-</table>
+<article class="row">
+	<h2>Most active users ({{ most_active_users|length }})</h2>
+
+	<table class="data-table">
+		<thead><tr>
+			<th>ID</th>
+			<th>E-mail</th>
+			<th>Voice</th>
+			<th>FB</th>
+			<th>Perf</th>
+			<th>Lowest/highest attempts</th>
+		</tr></thead>
+		<tbody>
+	{% for user in most_active_users %}
+			<tr>
+				<td>{{ user.id_user }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
+				<td>{{ user.total }}</td>
+				<td>
+					<div class="feedback-graph">
+						<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>
+						<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>
+					</div>
+				</td>
+				<td>{{ user.wizard_lowest_attempts }} / {{ user.wizard_highest_attempts }}</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
+
+<article class="row">
+	<h2>Unhappy users ({{ unhappy_users|length }})</h2>
+
+	<table class="data-table">
+		<thead><tr>
+			<th>ID</th>
+			<th>E-mail</th>
+			<th>FB</th>
+			<th>Total</th>
+			<th>Perf</th>
+		</tr></thead>
+		<tbody>
+	{% for user in unhappy_users %}
+			<tr>
+				<td>{{ user.id_user }}</td>
+				<td>{{ user.email }}</td>
+				<td>
+					<div class="feedback-graph">
+						<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>
+						<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>
+					</div>
+				</td>
+				<td>{{ user.total }}</td>
+				<td>{{ user.perf|round(2) }}</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
 
 {% import 'base.twig' as self %}
 {{ self.loadJsFramework() }}

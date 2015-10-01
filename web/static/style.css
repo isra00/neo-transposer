@@ -710,12 +710,77 @@ h2.step-1 {
 		}
 
 
-/* Admin Users */
-.admin-users .main {
+/* Admin Dashboard */
+.admin-dashboard {
+	background: #efefef;
+}
+.admin-dashboard .main {
 	width: auto;
 	margin: 1em;
 	overflow-x: scroll;
 }
+	.admin-dashboard article {
+		display: inline-block;
+		width: 30%;
+		vertical-align: top;
+		padding: .5rem;
+		background: white;
+		box-shadow: 1px 1px 1px #eee;
+		margin: .5rem;
+		border-radius: .3em;
+	}
+	.admin-dashboard article.row {
+		display: block;
+		clear: both;
+		width: auto;
+	}
+	.admin-dashboard article h2 {
+		margin: 0 -0.5rem .5em;
+		padding: 0 .5rem .5em;
+		border-bottom: 1px solid silver;
+		font-size: 1em;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+	.circles-container {
+		text-align: center;
+	}
+	.admin-dashboard .data-circle {
+		display: inline-block;
+		vertical-align: top;
+		width: 130px;
+		max-width: 130px;
+		height: 130px;
+		max-height: 130px;
+		background: #009587;
+		border-radius: 50%;
+		text-align: center;
+		color: white;
+		font-weight: normal;
+		margin: .5em;
+	}
+		.admin-dashboard .data-circle span {
+			display: block;
+			padding-top: 20px;
+			font-size: .9em;
+		}
+		.admin-dashboard .data-circle b {
+			display: block;
+			margin-top: .5em;
+			font-size: 2.5em;
+			font-weight: normal;
+		}
+		.admin-dashboard .data-circle.good-users {
+			background: #ccdb38;
+			color: #444;
+		}
+		.admin-dashboard .data-circle.good-users span {
+			padding-top: 15px;
+		}
+		.admin-dashboard .data-circle.good-users b {
+			margin-top: .3em;
+		}
+
 .feedback-graph {
 	width: 102px;
 	margin: 0;
@@ -932,6 +997,7 @@ input[type=text] {
 .data-table {
 	width: auto;
 	border-collapse: collapse;
+	background: white;
 }
 	.data-table td,
 	.data-table th {
@@ -1106,7 +1172,7 @@ input[type=text] {
 		margin: 0 6px 6px;
 	}
 
-	/* Admin Users */
+	/* Admin Dashboard */
 	.floating_toc {
 	    position: relative;
 	    top: auto;
@@ -1114,5 +1180,13 @@ input[type=text] {
 	    padding: .5em;
 	    opacity: 1;
 	    width: auto;
+	    margin-bottom: .5em;
+	    font-size: .9em;
+	}
+
+	.admin-dashboard article {
+		display: block;
+		width: auto;
+		margin: 0 0 .5rem;
 	}
 }
