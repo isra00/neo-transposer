@@ -737,10 +737,11 @@ h2.step-1 {
 	.admin-dashboard article h2 {
 		margin: 0 -0.5rem .5em;
 		padding: 0 .5rem .5em;
-		border-bottom: 1px solid silver;
+		border-bottom: 1px solid #eee;
 		font-size: 1em;
 		text-transform: uppercase;
 		font-weight: bold;
+		color: #555;
 	}
 	.circles-container {
 		text-align: center;
@@ -1001,7 +1002,7 @@ input[type=text] {
 }
 	.data-table td,
 	.data-table th {
-		border: 1px solid silver;
+		border-bottom: 1px solid silver;
 		padding: .2em .3em;
 	}
 
