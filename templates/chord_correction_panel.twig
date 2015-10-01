@@ -1,0 +1,35 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<form method="post" action="{{ path(current_route) }}">
+
+	{% for song in songs %}
+	<div style="overflow: hidden">
+		<h2>{{ song.page }} · {{ song.title }}</h2>
+
+		{% if song.id_book == 1 %}
+		<div style="float: right; width: 30rem; height: 200px; overflow: scroll">
+			<img src="{{ song.image }}" width="130%" />
+		</div>
+		{% else %}
+		<iframe style="float: right; width: 30rem" src="{{ song.image }}" border="0">
+		</iframe>
+		{% endif %}
+
+		<ul>
+		{% for chord in song.chords %}
+			<li>
+				<input size="1" name="{{ song.id_song }}_{{ chord.chord}}" value="{{ chord.position }}">
+				{{ chord.chord }}
+			</li>
+		{% endfor %}
+		</ul>
+	</div>
+	{% endfor %}
+
+	<button type="submit" name="sent" class="bigbutton">Update</button>
+
+</form>
+
+{% endblock %}
