@@ -4,9 +4,9 @@ return array(
 
 	'db' => array(
 		'host'		=> 'localhost',
-		'user'		=> 'root',
-		'password'	=> 'root',
-		'database'	=> 'transposer',
+		'user'		=> 'your mysql user',
+		'password'	=> 'your mysql password',
+		'database'	=> 'your mysql database',
 		'charset'	=> 'utf8'
 	),
 
