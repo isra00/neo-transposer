@@ -30,7 +30,7 @@ SQL;
 
 		$songs = $app['db']->fetchAll(
 			$sql,
-			array($app['user']->id_user, (int) $id_book)
+			array($app['neouser']->id_user, (int) $id_book)
 		);
 
 		$app['locale'] = $app['books'][$id_book]['locale'];

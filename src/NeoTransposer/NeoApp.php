@@ -188,7 +188,7 @@ class NeoApp extends Application
 			$this['session']->set('user', new User());
 		}
 
-		$this['user'] = $this['session']->get('user');
+		$this['neouser'] = $this['session']->get('user');
 	}
 
 	/**

@@ -30,7 +30,7 @@
 
 {% block content %}
 
-{% if not app.user.isLoggedIn %}
+{% if not app.neouser.isLoggedIn %}
 	{% import "login.twig" as login %}
 
 	<div class="teaser">
@@ -65,7 +65,7 @@
 
 <a name="feedback"></a>
 
-{% if app.user.isLoggedIn %}
+{% if app.neouser.isLoggedIn %}
 
 <form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
 

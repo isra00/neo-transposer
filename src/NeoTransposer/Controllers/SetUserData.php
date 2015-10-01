@@ -23,12 +23,12 @@ class SetUserData
 				throw new BadRequestHttpException('Invalid request: the specified book does not exist');
 			}
 
-			$app['user']->id_book = intval($request->get('book'));
+			$app['neouser']->id_book = intval($request->get('book'));
 		}
 
 		if ($request->get('lowest_note'))
 		{
-			$app['user']->lowest_note = $request->get('lowest_note');
+			$app['neouser']->lowest_note = $request->get('lowest_note');
 		}
 
 		if ($request->get('highest_note'))
@@ -41,14 +41,14 @@ class SetUserData
 				));
 			}
 
-			$app['user']->highest_note = $request->get('highest_note');
+			$app['neouser']->highest_note = $request->get('highest_note');
 		}
 
-		$app['user']->persist($app['db'], $request);
+		$app['neouser']->persist($app['db'], $request);
 
 		return $app->redirect($request->get('redirect')
 			? $request->get('redirect')
-			: $app['url_generator']->generate('book_' . $app['user']->id_book)
+			: $app['url_generator']->generate('book_' . $app['neouser']->id_book)
 		);
 	}
 }

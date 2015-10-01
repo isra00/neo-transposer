@@ -46,7 +46,7 @@
 		{
 			$(".test-area").hide();
 			$(".too-high").show();
-			ga('send', 'event', 'WizardError', 'HighestTooHigh', 'user_id: {{ app.user.id_user }}');
+			ga('send', 'event', 'WizardError', 'HighestTooHigh', 'user_id: {{ app.neouser.id_user }}');
 
 			$(document.getElementById("fsubmit")).click(function() {
 				$(document.getElementById("yes").parentNode).append(

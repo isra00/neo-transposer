@@ -5,7 +5,7 @@
 {% block content %}
 <h1>{% trans %}Songs of the Neocatechumenal Way{% endtrans %}</h1>
 <h2>
-	{% if app.user.isLoggedIn %}
+	{% if app.neouser.isLoggedIn %}
 	<span class="change-book"><a class="small-button" href="{{ path('user_book', {'_locale':app.locale}) }}">{% trans %}Other languages{% endtrans %}</a></span>
 	{% endif %}
 
@@ -13,7 +13,7 @@
 	<small class="book-details">({{ current_book.details }})</small>
 </h2>
 
-{% if not app.user.isLoggedIn %}
+{% if not app.neouser.isLoggedIn %}
 	{% import "login.twig" as login %}
 
 	<div class="teaser">
@@ -27,7 +27,7 @@
 
 {% endif %}
 
-{% if app.locale == 'es' and app.user.isLoggedIn %}
+{% if app.locale == 'es' and app.neouser.isLoggedIn %}
 <aside class="tip">
 	<h3>Aviso sobre el libro de cantos</h3>
 	<p>Los títulos y acordes de los cantos a continuación están tomados de

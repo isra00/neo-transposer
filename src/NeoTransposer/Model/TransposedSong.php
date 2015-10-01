@@ -71,8 +71,8 @@ class TransposedSong
 	public function transpose($forceHighestNote=false, $forceLowestNote=false, $overrideHighestNote=null)
 	{
 		$transposer = new AutomaticTransposer(
-			$this->app['user']->lowest_note,
-			$this->app['user']->highest_note,
+			$this->app['neouser']->lowest_note,
+			$this->app['neouser']->highest_note,
 			$this->song_details['lowest_note'], 
 			$overrideHighestNote ? $overrideHighestNote : $this->song_details['highest_note'], 
 			$this->original_chords,

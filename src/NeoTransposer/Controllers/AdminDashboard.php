@@ -22,8 +22,8 @@ class AdminDashboard
 		
 		$this->app = $app;
 
+		$user_count = $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user');
 		$good_users = $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
-
 		$users_reporting_fb = $app['db']->fetchColumn('select count(distinct id_user) from transposition_feedback');
 
 		$toolOutput = '';
@@ -56,17 +56,17 @@ class AdminDashboard
 		}
 
 		return $app->render('admin_dashboard.twig', array(
+			'user_count'			=> $user_count,
 			'good_users'			=> $good_users,
 			'global_performance'	=> $this->getGlobalPerformance(),
 			'users_reporting_fb'	=> $users_reporting_fb,
-			'global_perf_chrono'	=> $this->fetchGlobalPerfChrono(),
-			'feedback'				=> $this->getFeedback(),
 			'unhappy_users'			=> $this->getUnhappyUsers(),
-			'users'					=> $this->getUsers(),
 			'songs_with_fb'			=> $this->getSongsWithFeedback(),
 			'most_active_users'		=> $this->getMostActiveUsers(),
-			'good_users_chrono'		=> $this->getGoodUsersChrono(),
 			'perf_by_country'		=> $this->getPerformanceByCountry(),
+			'global_perf_chrono'	=> $req->get('long') ? $this->fetchGlobalPerfChrono() : null,
+			'feedback'				=> $req->get('long') ? $this->getFeedback() : null,
+			'good_users_chrono'		=> $req->get('long') ? $this->getGoodUsersChrono() : null,
 			'tool_output'			=> $toolOutput,
 		));
 	}
@@ -173,47 +173,6 @@ ORDER BY total DESC
 SQL;
 
 		return $this->app['db']->fetchAll($sql);
-	}
-
-	protected function getUsers()
-	{
-		$sql = <<<SQL
-SELECT user.*, y.yes yes, n.no no, y.yes + n.no total
-FROM user
-LEFT JOIN
-(
-	SELECT id_user, COUNT(worked) yes
-	FROM transposition_feedback
-	WHERE worked=1
-	GROUP BY id_user
-) y ON user.id_user = y.id_user
-LEFT JOIN
-(
-	SELECT id_user, COUNT(worked) no
-	FROM transposition_feedback
-	WHERE worked=0
-	GROUP BY id_user
-) n ON y.id_user = n.id_user
-ORDER BY register_time DESC
-SQL;
-		$users = $this->app['db']->fetchAll($sql);
-
-		$dbfile = $this->app['root_dir'] . '/' . $this->app['neoconfig']['mmdb'] . '.mmdb';
-		$reader = new \GeoIp2\Database\Reader($dbfile);
-	
-		foreach ($users as &$user)
-		{
-			if (!empty($user['register_ip']))
-			{
-				try
-				{
-					$user['country'] = $reader->country($user['register_ip'])->country;
-				}
-				catch (\Exception $e) {}
-			}
-		}
-
-		return $users;
 	}
 
 	protected function fetchGlobalPerfChrono()

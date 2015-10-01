@@ -24,12 +24,16 @@
 </nav>
 {% endif %}
 
+<p><a href="{{ url(current_route, { long: 1}) }}">Load long reports</a></p>
+
 <h2>Global performance</h2>
 
-<h3>Good users (voice range > 1oct): {{ ((good_users / users|length) * 100)|round }}% </h3>
+<h3>Total users: {{ user_count }}</h3>
+
+<h3>Good users (voice range > 1oct): {{ ((good_users / user_count) * 100)|round }}% </h3>
 <div class="feedback-graph">
-	<span class="yes" style="width: {{ ((good_users / users|length) * 100)|round }}px">{{ good_users }}</span>
-	<span class="no" style="width: {{ (((users|length - good_users) / users|length) * 100)|round }}px">{{ users|length - good_users }}</span>
+	<span class="yes" style="width: {{ ((good_users / user_count) * 100)|round }}px">{{ good_users }}</span>
+	<span class="no" style="width: {{ (((user_count - good_users) / user_count) * 100)|round }}px">{{ user_count - good_users }}</span>
 </div>
 
 <h3>Feedback</h3>
@@ -43,12 +47,12 @@
 </p>
 {% endfor %}
 
-{% set users_not_reporting_fb = users|length - users_reporting_fb %}
-<h3>Users reporting feedback: {{ ((users_reporting_fb / users|length) * 100)|round }}%</h3>
+{% set users_not_reporting_fb = user_count - users_reporting_fb %}
+<h3>Users reporting feedback: {{ ((users_reporting_fb / user_count) * 100)|round }}%</h3>
 <p>
 	<div class="feedback-graph">
-		<span class="yes" style="width: {{ ((users_reporting_fb / users|length) * 100)|round }}px">{{ users_reporting_fb }}</span>
-		<span class="no" style="width: {{ ((users_not_reporting_fb / users|length) * 100)|round }}px">{{ users_not_reporting_fb }}</span>
+		<span class="yes" style="width: {{ ((users_reporting_fb / user_count) * 100)|round }}px">{{ users_reporting_fb }}</span>
+		<span class="no" style="width: {{ ((users_not_reporting_fb / user_count) * 100)|round }}px">{{ users_not_reporting_fb }}</span>
 	</div>
 </p>
 
@@ -263,43 +267,6 @@
 			</td>
 			<td>{{ user.total }}</td>
 			<td>{{ user.perf|round(2) }}</td>
-		</tr>
-{% endfor %}
-	</tbody>
-</table>
-
-<h2>Users ({{ users|length }})</h2>
-
-<table class="data-table">
-	<thead><tr>
-		<th>E-mail</th>
-		<th>Tesitura</th>
-		<th>Book</th>
-		<th>GeoIP</th>
-		<th>Registered</th>
-		<th>Fback</th>
-		<th>Lowest/highest attempts</th>
-	</tr></thead>
-	<tbody>
-{% for user in users %}
-		<tr>
-			<td>{{ user.email }}</td>
-			<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
-			<td>{{ app.books[user.id_book].lang_name }}</td>
-			<td>
-				<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ user.country.isoCode|lower }}.png" width="16" />&nbsp;
-				{{ user.country.names['en']|default('?') }}
-			</td>
-			<td>{{ user.register_time }}</td>
-			<td>
-				{% if user.total > 0 %}
-				<div class="feedback-graph">
-					{% if user.yes > 0 %}<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>{% endif %}
-					{% if user.no > 0 %}<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>{% endif %}
-				</div>
-				{% endif %}
-			</td>
-			<td>{{ user.wizard_lowest_attempts }} / {{ user.wizard_highest_attempts }}</td>
 		</tr>
 {% endfor %}
 	</tbody>

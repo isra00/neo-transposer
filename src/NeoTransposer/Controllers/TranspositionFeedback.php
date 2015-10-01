@@ -36,15 +36,15 @@ SQL;
 
 			$app['db']->executeUpdate($sql, array(
 				$req->get('id_song'),
-				$app['user']->id_user,
+				$app['neouser']->id_user,
 				$worked,
-				$app['user']->lowest_note,
-				$app['user']->highest_note,
+				$app['neouser']->lowest_note,
+				$app['neouser']->highest_note,
 				$req->get('id_song'),
-				$app['user']->id_user,
+				$app['neouser']->id_user,
 				$worked,
-				$app['user']->lowest_note,
-				$app['user']->highest_note,
+				$app['neouser']->lowest_note,
+				$app['neouser']->highest_note,
 			));
 
 			//Progressive enhancement: supports form submission without AJAX

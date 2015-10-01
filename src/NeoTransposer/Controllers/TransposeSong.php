@@ -17,15 +17,15 @@ class TransposeSong
 	public function get(\NeoTransposer\NeoApp $app, Request $req, $id_song)
 	{
 		//For the teaser we transpose for a standard male voice
-		if (!$app['user']->isLoggedIn())
+		if (!$app['neouser']->isLoggedIn())
 		{
-			$app['user']->lowest_note = 'B1';
-			$app['user']->highest_note = 'F#3';
+			$app['neouser']->lowest_note = 'B1';
+			$app['neouser']->highest_note = 'F#3';
 		}
 		else
 		{
 			//If null user, redirect to User Settings
-			if (empty($app['user']->lowest_note))
+			if (empty($app['neouser']->lowest_note))
 			{
 				$app->setLocaleAutodetect($req);
 				
@@ -53,7 +53,7 @@ class TransposeSong
 				: $app->trans('lower');
 		}
 		
-		$your_voice = $app['user']->getVoiceAsString(
+		$your_voice = $app['neouser']->getVoiceAsString(
 			$app['translator'],
 			$app['neoconfig']['languages'][$app['locale']]['notation']
 		);
@@ -63,7 +63,7 @@ class TransposeSong
 		return $app->render('transpose_song.twig', array_merge($tpl, array(
 			'song'				=> $song,
 			'your_voice'		=> $your_voice,
-			'voice_chart'		=> TranspositionChart::getChart($song->song_details, $song->transpositions[0], $app['user']),
+			'voice_chart'		=> TranspositionChart::getChart($song->song_details, $song->transpositions[0], $app['neouser']),
 			'page_title'		=> $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $song->song_details['title'])),
 			'header_link'		=> $app['url_generator']->generate('book_' . $song->song_details['id_book']),
 			'meta_canonical'	=> $app['url_generator']->generate(
@@ -75,10 +75,10 @@ class TransposeSong
 				'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
 				array('%song%' => $song->song_details['title'])
 			),
-			'feedback'			=> $this->getFeedbackForUser($app['db'], $app['user']->id_user, $song->song_details['id_song']),
+			'feedback'			=> $this->getFeedbackForUser($app['db'], $app['neouser']->id_user, $song->song_details['id_song']),
 
 			//If user's highest note is in the 1st octave, we suggest strongly using the wizard
-			'user_first_octave' => (array_search($app['user']->highest_note, $nc->numbered_scale) - array_search($app['user']->lowest_note, $nc->numbered_scale) < 12),
+			'user_first_octave' => (array_search($app['neouser']->highest_note, $nc->numbered_scale) - array_search($app['neouser']->lowest_note, $nc->numbered_scale) < 12),
 			'url_wizard' 		=> $app['url_generator']->generate('wizard_step1', array('_locale' => $app['locale'])),
 
 			//Non-JS browsers show message after clicking on feedback

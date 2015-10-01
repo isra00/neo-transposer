@@ -46,7 +46,7 @@ SQL;
 			$songs[] = $song;
 		}
 
-		$your_voice = $app['user']->getVoiceAsString(
+		$your_voice = $app['neouser']->getVoiceAsString(
 			$app['translator'],
 			$app['neoconfig']['languages'][$app['locale']]['notation']
 		);

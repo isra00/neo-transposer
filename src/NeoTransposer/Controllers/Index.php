@@ -21,10 +21,10 @@ class Index
 	{
 		$app->setLocaleAutodetect($req);
 
-		if ($app['user']->id_book)
+		if ($app['neouser']->id_book)
 		{
 			return $app->redirect($app['url_generator']->generate(
-				'book_' . $app['user']->id_book
+				'book_' . $app['neouser']->id_book
 			));
 		}
 

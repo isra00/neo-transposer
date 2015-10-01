@@ -13,7 +13,7 @@ $app = new NeoApp(
 $needsLogin = function (Request $req, NeoApp $app) {
 	
 	//Locale necessary for Admin pages, which set no es/sw locale.
-	if ($redirect = $app['user']->isRedirectionNeeded($req))
+	if ($redirect = $app['neouser']->isRedirectionNeeded($req))
 	{
 		return $app->redirect($app['url_generator']->generate($redirect, array(
 			'_locale' => ('en' == $app['locale']) ? 'es' : $app['locale']

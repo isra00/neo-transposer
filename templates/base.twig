@@ -29,10 +29,10 @@
 
 	  ga('create', '{{ app.neoconfig.analytics_id }}', 'auto');
 	  ga('set','anonymizeIp', true);
-	  {% if app.user.isLoggedIn -%}
-	  ga('set', '&uid', '{{ app.user.id_user }}');
-	  ga('set', 'dimension2', '{{ app.user.lowest_note|default('-') }}');
-	  ga('set', 'dimension3', '{{ app.user.highest_note|default('-') }}');
+	  {% if app.neouser.isLoggedIn -%}
+	  ga('set', '&uid', '{{ app.neouser.id_user }}');
+	  ga('set', 'dimension2', '{{ app.neouser.lowest_note|default('-') }}');
+	  ga('set', 'dimension3', '{{ app.neouser.highest_note|default('-') }}');
 	  {%- endif %}
 
 	  ga('send', 'pageview');
@@ -75,7 +75,7 @@
 
 				{% block header_extra %}{% endblock %}
 
-				{% if app.user.isLoggedIn and current_route != 'login' -%}
+				{% if app.neouser.isLoggedIn and current_route != 'login' -%}
 				<span class="user">
 					<a href="{{ path('login', {_locale: app.locale}) }}">{% trans %}Log-out{% endtrans %}</a>
 				</span>
