@@ -355,8 +355,12 @@ join
 ) sub_no
 SQL;
 			$countryPerformance = $this->app['db']->fetchAll($sql);
-			$performance[$country] = $countryPerformance[0];
-			$performance[$country]['country_name'] = $country_names[$country];
+
+			if ($countryPerformance[0]['total'] > 5)
+			{
+				$performance[$country] = $countryPerformance[0];
+				$performance[$country]['country_name'] = $country_names[$country];
+			}
 		}
 
 		usort($performance, function($a, $b) 
