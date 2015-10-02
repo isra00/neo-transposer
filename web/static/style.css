@@ -1107,6 +1107,13 @@ input[type=text] {
 		margin: .5em 0 .7em;
 	}
 
+	.page-book .tip {
+		padding-left: 1em;
+	}
+		.page-book .tip h3 {
+			padding-left: 65px;
+		}
+
 	/* TransposeSong */
 	.transposition,
 	.transposition:first-child {
