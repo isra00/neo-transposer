@@ -241,7 +241,7 @@ footer {
 .page-book .main h2 {
 	font-size: 1.5em;
 	margin-top: 0;
-	margin-bottom: 1%;
+	margin-bottom: 2%;
 }
 	.page-book h2 small {
 		font-size: .8em;
@@ -1147,6 +1147,7 @@ input[type=text] {
 		.teaser .inside .more-inside p {
 			display: block;
 			width: auto;
+			font-size: 1.1em;
 		}
 		.teaser .login-form {
 			display: block;
