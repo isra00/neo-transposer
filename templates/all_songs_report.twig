@@ -11,9 +11,11 @@
 </p>
 
 <nav class="report-actions">
-	<a href="javascript:void(0)" onclick="window.print()" class="btn-neutral">{% trans %}Print{% endtrans %}</a>
-	{# <a href="javascript:void(0)" class="btn-neutral">Download as PDF</a> #}
+	<a href="javascript:void(0)" onclick="window.print()" class="btn-neutral print">{% trans %}Print{% endtrans %}</a>
+	{#<a href="javascript:void(0)" class="btn-neutral">Download as PDF</a>#}
 </nav>
+
+<p class="tip">{% trans %}C = capo. If not written, no capo should be used.{% endtrans %}</p>
 
 <div>
 	<ul class="songs-list">
@@ -33,7 +35,7 @@
 						{% trans %}(as in the book){% endtrans %}
 					{% else %}
 						{% for i, original_chord in song.original_chords -%}
-							<span class="chord-group">{{ original_chord|raw }}
+							<span class="chord-pair">{{ original_chord|raw }}
 								&rsaquo;
 								{{ transposition.chordsForPrint[i]|raw }}
 							</span>

@@ -175,7 +175,7 @@ footer {
 	/*font-style: italic;*/
 	color: #444;
 	background: #eee url(img/dialog-information.png) 10px 13px no-repeat;
-	padding: 1em 1em .5em 65px;
+	padding: 1em 1em .8em 65px;
 	min-height: 60px;
 }
 	.tip h3 {
@@ -202,7 +202,7 @@ footer {
 			}
 			.books li:hover {
 				box-shadow: 2px 2px 3px silver;
-				background: #eee;
+				background-color: #eee;
 			}
 
 		.books li a {
@@ -509,13 +509,13 @@ footer {
 			background: #3F863F;
 		}
 			.transposition-feedback button.yes:hover {
-				background: #4CAF50;
+				background-color: #4CAF50;
 			}
 		.transposition-feedback button.no {
 			background: #c4392d;
 		}
 			.transposition-feedback button.no:hover {
-				background: #E53A2B;
+				background-color: #E53A2B;
 			}
 	
 	.transposition-feedback .thanks {
@@ -695,6 +695,53 @@ h2.step-1 {
 			line-height: 3em;
 		}
 
+/* All Songs Report */
+.all-songs-report h1 {
+	margin-bottom: 0;
+}
+.all-songs-report .your-voice {
+	margin-top: .5em;
+}
+.all-songs-report .your-voice,
+.all-songs-report .report-actions {
+	text-align: center;
+}
+
+a.print {
+	background: #EEE url(https://cdn4.iconfinder.com/data/icons/miu/22/common_printer_print-16.png) 9px 9px no-repeat;
+	padding-left: 30px;
+}
+
+.all-songs-report .tip {
+	float: right;
+	margin-top: 2em;
+	width: 10em;
+}
+
+.all-songs-report .songs-list,
+.all-songs-report .songs-list ul {
+	padding: 0;
+	list-style: none;
+}
+	.all-songs-report .songs-list h2 {
+		margin: 0;
+		padding: .5em 0 0;
+		font-size: 1em;
+		font-weight: bold;
+	}
+	.all-songs-report .songs-list > li {
+		widows: 5;
+		orphans: 5;
+	}
+	.all-songs-report .songs-list li {
+		padding: 0;
+	}
+		.all-songs-report .songs-list li li {
+			font-size: .9em;
+		}
+		.all-songs-report .songs-list .chord-pair {
+			display: inline-block;
+		}
 
 /* Admin Dashboard */
 .admin-dashboard {
@@ -862,7 +909,7 @@ input[type=text] {
 	display: inline-block;
 }
 	.small-button:hover {
-		background: #D32F2F;
+		background-color: #D32F2F;
 		color: white;
 	}
 	
@@ -879,7 +926,7 @@ input[type=text] {
 	}
 		.flatbutton.green:hover,
 		.flatbutton.green.highlighted {
-			background: #3F863F;
+			background-color: #3F863F;
 			color: white;
 		}
 
@@ -889,7 +936,7 @@ input[type=text] {
 	}
 		.flatbutton.red:hover,
 		.flatbutton.red.highlighted {
-			background: #D32F2F;
+			background-color: #D32F2F;
 			color: white;
 		}
 	.flatbutton.big {
@@ -907,7 +954,7 @@ input[type=text] {
 	.btn-neutral:hover,
 	.btn-neutral:active {
 		box-shadow: 2px 2px 3px #aaa;
-		background: #e7e7e7;
+		background-color: #e7e7e7;
 		color: #333;
 	}
 	.btn-neutral.bigbutton {
@@ -1158,6 +1205,14 @@ input[type=text] {
 		margin: 0 6px 6px;
 	}
 
+	/* All Songs Report */
+	.all-songs-report .tip {
+		float: none;
+		margin-top: 5%;
+		margin-bottom: 0;
+		width: auto;
+	}
+
 	/* Admin Dashboard */
 	.floating_toc {
 	    position: relative;
@@ -1174,5 +1229,31 @@ input[type=text] {
 		display: block;
 		width: auto;
 		margin: 0 0 .5rem;
+	}
+}
+
+@media print {
+
+	body,
+	.wrapper,
+	.main,
+	.all-songs-report h1,
+	.all-songs-report .your-voice {
+		margin: 0;
+	}
+
+	nav.header,
+	footer,
+	.all-songs-report .report-actions {
+		display: none;
+	}
+
+	.main {
+		width: 100%;
+	}
+
+	.tip {
+		border: 1px solid silver;
+		padding-left: 1em;
 	}
 }

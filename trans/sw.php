@@ -206,5 +206,9 @@ return array(
 	=> '(jinsi ilivyo)',
 
 	'Print'
-	=> 'Chapa'
+	=> 'Chapa',
+
+	'C = capo. If not written, no capo should be used.'
+	=> 'C = capo. Kama haijaandikwa maana yake haitumiki.',
+
 );
