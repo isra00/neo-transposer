@@ -140,10 +140,6 @@ SQL;
 				'wideness'		=> $nc->distanceWithOctave($song['highest_note'], $song['lowest_note']),
 			);
 			$feedback[$song['id_song']]['total'] = $feedback[$song['id_song']]['yes'] + $feedback[$song['id_song']]['no'];
-			
-			$song_url = $this->app['url_generator']->generate('transpose_song', array('id_song' => $song['slug']), UrlGeneratorInterface::ABSOLUTE_URL);
-			$graph_url = 'http://graph.facebook.com/' . $song_url;
-			@$feedback[$song['id_song']]['fb_shares'] = @json_decode(file_get_contents($graph_url), true)['shares'];
 		}
 
 		return $feedback;
