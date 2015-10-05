@@ -30,7 +30,6 @@ class Login
 		$tpl_vars['page_title']				= $app->trans('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
 		$tpl_vars['meta_description']		= $app->trans('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
 		$tpl_vars['meta_canonical']			= $app['absoluteUriWithoutQuery'];
-		$tpl_vars['load_social_buttons']	= true;
 		return $app->render('login.twig', $tpl_vars, true);
 	}
 

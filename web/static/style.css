@@ -536,20 +536,6 @@ footer {
 		#reasons-no li {
 			margin: .5em 0;
 		}
-	.transposition-feedback .social-buttons {
-		float: right;
-		text-align: right;
-		width: 200px;
-		margin-top: .6em;
-	}
-		.social-buttons .fb-like,
-		.social-buttons .g-plusone {
-			display: inline-block;
-			vertical-align: top;
-		}
-		.social-buttons .fb-like {
-			margin-right: .5em;
-		}
 
 .transpose-song .your-voice {
 	text-align: center;
@@ -1092,9 +1078,6 @@ input[type=text] {
 		width: auto;
 		display: block;
 	}
-	.page-login .g-plusone {
-		display: none;
-	}
 
 	.two-choices a {
 		display: block;
@@ -1127,12 +1110,6 @@ input[type=text] {
 		max-width: 100%;
 		position: relative;
 		overflow-x: scroll;
-	}
-	.transposition-feedback .social-buttons {
-		float: none;
-		text-align: center;
-		width: auto;
-		margin-top: 1em;
 	}
 
 	.teaser .inside {

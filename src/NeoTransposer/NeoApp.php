@@ -220,11 +220,6 @@ class NeoApp extends Application
 			$this->setPageTitle($parameters);
 		}
 
-		if ($this['debug'])
-		{
-			$parameters['load_social_buttons'] = false;
-		}
-
 		$this['twig']->addGlobal('notifications', $this->notifications);
 		return $this['twig']->render($view, $parameters);
 	}
