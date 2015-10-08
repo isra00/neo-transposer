@@ -2,49 +2,23 @@
 
 namespace NeoTransposer\Controllers;
 
-use \Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\Model\TransposedSong;
+use \Symfony\Component\HttpFoundation\Response;
 
 /**
  * Transpose Song page: transposes the given song for the singer's voice range.
  */
 class AllSongsReport
 {
-	/* 
-	 * Report is presented in two columns. This is the sequence number of the
-	 * song after which the column break will be done.
+	/**
+	 * HTML report.
+	 * 
+	 * @param  \NeoTransposer\NeoApp $app The NeoApp
+	 * @return string The rendered view (HTML).
 	 */
-	protected $songForcolumnBreak = array(
-		'es' => 109,
-		'sw' => 88,
-	);
-
-	public function get(\NeoTransposer\NeoApp $app, Request $req)
+	public function get(\NeoTransposer\NeoApp $app)
 	{
-		$sql = <<<SQL
-SELECT id_song
-FROM song 
-JOIN book USING (id_book) 
-WHERE locale = ? 
-AND NOT song.id_song = 118
-AND NOT song.id_song = 319
-ORDER BY page
-SQL;
-
-		$ids = $app['db']->fetchAll($sql, array($app['locale']));
-
-		$songs = array();
-
-		foreach ($ids as $id)
-		{
-			$song = TransposedSong::create($id['id_song'], $app);
-			$song->transpose();
-
-			//Remove bracketed text from song title (used for aclarations)
-			$song->song_details['title'] = preg_replace('/(.)\[.*\]/', '$1', $song->song_details['title']);
-
-			$songs[] = $song;
-		}
+		$reportModel = new \NeoTransposer\Model\AllSongsReport($app);
+		$allTranspositions = $reportModel->getAllTranspositions();
 
 		$your_voice = $app['neouser']->getVoiceAsString(
 			$app['translator'],
@@ -52,10 +26,25 @@ SQL;
 		);
 
 		return $app->render('all_songs_report.twig', array(
-			'column_break'	=> $this->songForcolumnBreak[$app['locale']],
-			'songs'			=> $songs,
+			'songs'			=> $allTranspositions,
 			'your_voice'	=> $your_voice,
-			'header_link'	=> $app['url_generator']->generate('book_' . $songs[0]->song_details['id_book']),
+			'header_link' 	=> $app['url_generator']->generate('book_' . $allTranspositions[0]->song_details['id_book']),
+			'page_title'  	=> $app->trans('All transpositions for your voice'),
 		));
+	}
+
+	/**
+	 * PDF report.
+	 * 
+	 * @param  \NeoTransposer\NeoApp $app The NeoApp
+	 * 
+	 * @return Response A redirection to the PDF (they are all served statically).
+	 */
+	public function getPdf(\NeoTransposer\NeoApp $app)
+	{
+		$reportModel = new \NeoTransposer\Model\AllSongsReport($app);
+		$pdfReportUrl = $reportModel->getPdfReportUrl();
+
+		return $app->redirect($pdfReportUrl);
 	}
 }

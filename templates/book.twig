@@ -27,6 +27,10 @@
 
 {% endif %}
 
+<div class="tip new">
+	<strong>NUEVO: <a href="{{ path('all_songs_report', {_locale: app.locale}) }}">Descarga en PDF</a></strong> todos los cantos transportados para tu voz. Así no necesitarás conexión a Internet cada vez que quieras consultar un canto :-)
+</div>
+
 <ul class="song-index">
 {% for song in songs %}
 	<li>

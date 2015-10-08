@@ -318,10 +318,10 @@ return array(
 	'(as in the book)'
 	=> '(como en el libro)',
 
-	'Print'
-	=> 'Imprimir',
-
 	'C = capo. If not written, no capo should be used.'
 	=> 'C = capo (cejilla). Si no aparece significa que no se debe usar capo (cejilla).',
+
+	'Download as PDF'
+	=> 'Descargar en PDF',
 
 );

@@ -183,6 +183,12 @@ footer {
 		margin-bottom: 0;
 	}
 
+	.tip.new {
+		background-image: url(img/icon-megaphon.png);
+		background-position: 15px 15px;
+		min-height: 32px;
+	}
+
 /* USER BOOK */
 .books {
 	margin: 1px;
@@ -701,21 +707,16 @@ h2.step-1 {
 }
 .all-songs-report .your-voice {
 	margin-top: .5em;
-}
-.all-songs-report .your-voice,
-.all-songs-report .report-actions {
 	text-align: center;
 }
-
-a.print {
-	background: #EEE url(https://cdn4.iconfinder.com/data/icons/miu/22/common_printer_print-16.png) 9px 9px no-repeat;
-	padding-left: 30px;
+.all-songs-report .report-actions {
+	text-align: center;
+	line-height: 260%;
 }
 
-.all-songs-report .tip {
-	float: right;
-	margin-top: 2em;
-	width: 10em;
+.all-songs-report .note {
+	margin: 1em 0 0;
+	font-size: .9em;
 }
 
 .all-songs-report .songs-list,
@@ -743,6 +744,13 @@ a.print {
 			display: inline-block;
 		}
 
+	a.btn-download-pdf {
+		background-image: url(img/icon-dl.png);
+		background-position: .7em .5em;
+		background-repeat: no-repeat;
+		padding-left: 40px;
+	}
+
 /* Admin Dashboard */
 .admin-dashboard {
 	background: #efefef;
@@ -752,6 +760,26 @@ a.print {
 	margin: 1em;
 	overflow-x: scroll;
 }
+	.admin-dashboard .admin-tools {
+		overflow: hidden;
+	}
+		.admin-dashboard .admin-tools ul,
+		.admin-dashboard .admin-tools p {
+			float: left;
+			margin: 0 1em 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		.admin-dashboard .admin-tools p {
+			line-height: 3em;
+		}
+		.admin-dashboard .admin-tools h4 {
+			margin: .5em 0;
+		}
+		.admin-dashboard .admin-tools li {
+			line-height: 180%;
+		}
+
 	.admin-dashboard article {
 		display: inline-block;
 		width: 30%;
@@ -948,7 +976,7 @@ input[type=text] {
 	color: #333;
 	border: 0;
 	border-radius: 3px;
-	padding: .4em .7em;
+	padding: .5em .7em;
 	box-shadow: 1px 1px 3px #aaa;
 }
 	.btn-neutral:hover,
@@ -967,6 +995,16 @@ input[type=text] {
 		.btn-neutral:disabled:hover {
 			box-shadow: none;
 		}
+
+.btn-blue {
+	background-color: #2196f3;
+	color: white;
+}
+	.btn-blue:hover,
+	.btn-blue:active {
+		background-color: #1976d2;
+		color: #efefef;
+	}
 
 .bigline {
 	line-height: 2em;
@@ -1144,6 +1182,11 @@ input[type=text] {
 			padding-left: 65px;
 		}
 
+
+	.tip.new {
+		background-image: none;
+	}
+
 	/* TransposeSong */
 	.transposition,
 	.transposition:first-child {
@@ -1205,14 +1248,6 @@ input[type=text] {
 		margin: 0 6px 6px;
 	}
 
-	/* All Songs Report */
-	.all-songs-report .tip {
-		float: none;
-		margin-top: 5%;
-		margin-bottom: 0;
-		width: auto;
-	}
-
 	/* Admin Dashboard */
 	.floating_toc {
 	    position: relative;
@@ -1236,24 +1271,16 @@ input[type=text] {
 
 	body,
 	.wrapper,
-	.main,
-	.all-songs-report h1,
-	.all-songs-report .your-voice {
+	.main {
 		margin: 0;
 	}
 
 	nav.header,
-	footer,
-	.all-songs-report .report-actions {
+	footer {
 		display: none;
 	}
 
 	.main {
 		width: 100%;
-	}
-
-	.tip {
-		border: 1px solid silver;
-		padding-left: 1em;
 	}
 }

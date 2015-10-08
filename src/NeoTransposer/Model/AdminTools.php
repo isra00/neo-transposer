@@ -3,6 +3,7 @@
 namespace NeoTransposer\Model;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use \NeoTransposer\NeoApp;
 
 /**
  * Administrator's tools.
@@ -15,7 +16,7 @@ class AdminTools
 	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return string                     Just a confirmation message.
 	 */
-	public function populateCountry(\NeoTransposer\NeoApp $app)
+	public function populateCountry(NeoApp $app)
 	{
 		$ips = $app['db']->fetchAll('SELECT register_ip FROM user');
 
@@ -55,7 +56,7 @@ class AdminTools
 	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return string                     Check results, to be displayed.
 	 */
-	public function checkLowerHigherNotes(\NeoTransposer\NeoApp $app)
+	public function checkLowerHigherNotes(NeoApp $app)
 	{
 		$songs = $app['db']->fetchAll('SELECT * FROM song');
 
@@ -91,7 +92,7 @@ class AdminTools
 	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return [type]                     An unsignificant message for the admin.
 	 */
-	public function refreshCss(\NeoTransposer\NeoApp $app)
+	public function refreshCss(NeoApp $app)
 	{
 		$cache_file = $app['root_dir'] . '/web/static/' . $app['neoconfig']['css_cache'] . '.css';
 		
@@ -112,7 +113,7 @@ class AdminTools
 	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return string                     Check results (to be displayed).
 	 */
-	public function checkChordOrder(\NeoTransposer\NeoApp $app)
+	public function checkChordOrder(NeoApp $app)
 	{
 		$chords = $app['db']->fetchAll(
 			'SELECT * FROM `song_chord` ORDER BY id_song ASC, position ASC'
@@ -143,5 +144,22 @@ class AdminTools
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Clear all the cached PDF All Songs Reports.
+	 *
+	 * Warning! This function does not work in Windows.
+	 * 
+	 * @param  NeoApp $app 	The NeoApp object.
+	 * @return string 		Confirmation message or command output if any.
+	 */
+	public function clearPdfCache(NeoApp $app)
+	{
+		$dir = $app['root_dir']
+		 . '/web/' . $app['neoconfig']['pdf_reports_dir'];
+
+		exec("rm $dir/*", $output);
+		return empty($output) ? 'All PDF reports removed succesfully' : $output;
 	}
 }

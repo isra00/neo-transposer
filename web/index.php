@@ -90,6 +90,11 @@ $app->get('/{_locale}/all-songs-report', "$controllers\\AllSongsReport::get")
 	->assert('_locale', $valid_locales)
 	->bind('all_songs_report')
 	->before($needsLogin);
+	
+$app->get('/{_locale}/all-songs-report/pdf', "$controllers\\AllSongsReport::getPdf")
+	->assert('_locale', $valid_locales)
+	->bind('all_songs_report_pdf')
+	->before($needsLogin);
 
 $app->get('/admin/insert-song', "$controllers\\InsertSong::get")
 	->before($needsLogin);

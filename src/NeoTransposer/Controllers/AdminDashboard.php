@@ -46,6 +46,10 @@ class AdminDashboard
 					$toolOutput = $tools->refreshCss($app);
 					break;
 
+				case 'clearPdfCache':
+					$toolOutput = $tools->clearPdfCache($app);
+					break;
+
 				case 'checkChordOrder':
 					$toolOutput = $tools->checkChordOrder($app);
 					$toolOutput = empty($toolOutput)

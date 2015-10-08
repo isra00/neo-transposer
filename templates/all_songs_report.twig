@@ -3,54 +3,5 @@
 {% block page_class %}all-songs-report{% endblock %}
 
 {% block content %}
-<h1>{% trans %}All transpositions for your voice{% endtrans %}</h1>
-
-<p class="your-voice">
-	<em>{% trans %}Your voice:{% endtrans %}</em> 
-	{{ your_voice|raw }}
-</p>
-
-<nav class="report-actions">
-	<a href="javascript:void(0)" onclick="window.print()" class="btn-neutral print">{% trans %}Print{% endtrans %}</a>
-	{#<a href="javascript:void(0)" class="btn-neutral">Download as PDF</a>#}
-</nav>
-
-<p class="tip">{% trans %}C = capo. If not written, no capo should be used.{% endtrans %}</p>
-
-<div>
-	<ul class="songs-list">
-	{% for song in songs %}
-		<li>
-			<h2>{{ song.song_details.page|default('&#248;')|raw }}
-			· {{ song.song_details.title }}</h2>
-
-			<ul>
-			{% for transposition in song.transpositions|slice(0,1) -%}
-				<li>
-					{% if transposition.capo %}
-						<span class="capo">C{{ transposition.capo }}</span>
-					{% endif %}
-
-					{% if transposition.asBook %}
-						{% trans %}(as in the book){% endtrans %}
-					{% else %}
-						{% for i, original_chord in song.original_chords -%}
-							<span class="chord-pair">{{ original_chord|raw }}
-								&rsaquo;
-								{{ transposition.chordsForPrint[i]|raw }}
-							</span>
-							{% if not loop.last %} &nbsp; {% endif %}
-						{%- endfor %}
-					{% endif %}
-				</li>
-			{%- endfor %}
-			</ul>
-		</li>
-		{% if loop.index == column_break %}
-		</ul><ul class="songs-list">
-		{% endif %}
-	{% endfor %}
-	</ul>
-</div>
-
+{% include "all_songs_list.twig" %}
 {% endblock %}
