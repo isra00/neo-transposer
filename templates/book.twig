@@ -28,7 +28,7 @@
 {% endif %}
 
 <div class="tip new">
-	<strong>NUEVO: <a href="{{ path('all_songs_report', {_locale: app.locale}) }}">Descarga en PDF</a></strong> todos los cantos transportados para tu voz. Así no necesitarás conexión a Internet cada vez que quieras consultar un canto :-)
+	{% trans with { '%url%': path('all_songs_report', {_locale: app.locale}) } %}<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won't need Internet every time you need to check a transposition :-) {% endtrans %}
 </div>
 
 <ul class="song-index">

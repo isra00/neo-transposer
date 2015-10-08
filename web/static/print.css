@@ -1,0 +1,41 @@
+@page {
+	size: A4;
+	margin: 0;
+}
+
+body {
+	margin: .5cm 1cm 1cm;
+}
+
+.wrapper,
+.main,
+.all-songs-report h1 {
+	margin: 0;
+}
+
+nav.header {
+	background: none;
+	box-shadow: none;
+}
+	nav.header h2 {
+		float: none;
+		text-align: center;
+		font-size: 1em;
+	}
+	nav.header a {
+		color: #D32F2F;
+		border: 1px solid #D32F2F;
+		padding: .2em .5em;
+	}
+	nav.header .user {
+		display: none;
+	}
+
+footer,
+.all-songs-report .report-actions {
+	display: none;
+}
+
+.main {
+	width: 100%;
+}

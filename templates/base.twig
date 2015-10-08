@@ -38,6 +38,8 @@
 	  ga('send', 'pageview');
 	</script>
 	{%- endif %}
+
+	{% block header_extra %}{% endblock %}
 </head>
 
 <body class="lang-{{ app.locale }} {% block page_class %}{% endblock %}">

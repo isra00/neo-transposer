@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -10,12 +11,13 @@ use \Symfony\Component\HttpFoundation\Response;
 class AllSongsReport
 {
 	/**
-	 * HTML report.
+	 * HTML report. If dl query string arg is present, the page is offered to
+	 * download, included the styles inside the HTML.
 	 * 
 	 * @param  \NeoTransposer\NeoApp $app The NeoApp
 	 * @return string The rendered view (HTML).
 	 */
-	public function get(\NeoTransposer\NeoApp $app)
+	public function get(\NeoTransposer\NeoApp $app, Request $req)
 	{
 		$reportModel = new \NeoTransposer\Model\AllSongsReport($app);
 		$allTranspositions = $reportModel->getAllTranspositions();
@@ -25,26 +27,39 @@ class AllSongsReport
 			$app['neoconfig']['languages'][$app['locale']]['notation']
 		);
 
-		return $app->render('all_songs_report.twig', array(
+		$tplVars = array(
 			'songs'			=> $allTranspositions,
 			'your_voice'	=> $your_voice,
 			'header_link' 	=> $app['url_generator']->generate('book_' . $allTranspositions[0]->song_details['id_book']),
 			'page_title'  	=> $app->trans('All transpositions for your voice'),
-		));
-	}
+		);
 
-	/**
-	 * PDF report.
-	 * 
-	 * @param  \NeoTransposer\NeoApp $app The NeoApp
-	 * 
-	 * @return Response A redirection to the PDF (they are all served statically).
-	 */
-	public function getPdf(\NeoTransposer\NeoApp $app)
-	{
-		$reportModel = new \NeoTransposer\Model\AllSongsReport($app);
-		$pdfReportUrl = $reportModel->getPdfReportUrl();
+		if ($req->get('dl'))
+		{
+			$tplVars['print_css_code'] = file_get_contents($app['root_dir'] . '/web/static/style.css')
+			 . file_get_contents($app['root_dir'] . '/web/static/print.css');
 
-		return $app->redirect($pdfReportUrl);
+			$tplVars['header_link'] = $app['absoluteBasePath'];
+		}
+
+		$responseBody = $app->render('all_songs_report.twig', $tplVars);
+
+		if ($req->get('dl'))
+		{
+			$filename = $app->trans('Transpositions')
+			 . '-' . str_replace('#', 'd', $app['neouser']->lowest_note . '-' . $app['neouser']->highest_note)
+			 . '.html';
+
+			return new Response($responseBody, 200, array(
+		        'Cache-Control' 		=> 'private',
+		        'Content-Type' 			=> 'application/stream',
+		        'Content-Length' 		=> strlen($responseBody),
+		        'Content-Disposition' 	=> 'attachment; filename=' . $filename,
+			));
+		}
+		else
+		{
+			return $responseBody;
+		}
 	}
 }

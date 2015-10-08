@@ -713,6 +713,9 @@ h2.step-1 {
 	text-align: center;
 	line-height: 260%;
 }
+	.all-songs-report .report-actions a.btn-neutral {
+		margin-right: 1em;
+	}
 
 .all-songs-report .note {
 	margin: 1em 0 0;
@@ -744,11 +747,16 @@ h2.step-1 {
 			display: inline-block;
 		}
 
-	a.btn-download-pdf {
-		background-image: url(img/icon-dl.png);
+	a.btn-icon {
 		background-position: .7em .5em;
 		background-repeat: no-repeat;
 		padding-left: 40px;
+	}
+	.icon-download {
+		background-image: url(img/icon-dl.png);
+	}
+	.icon-print {
+		background-image: url(img/icon-print.png);
 	}
 
 /* Admin Dashboard */
@@ -972,7 +980,7 @@ input[type=text] {
 		font-size: 1.1em;
 	}
 .btn-neutral {
-	background: #eee;
+	background-color: #eee;
 	color: #333;
 	border: 0;
 	border-radius: 3px;
@@ -1264,23 +1272,5 @@ input[type=text] {
 		display: block;
 		width: auto;
 		margin: 0 0 .5rem;
-	}
-}
-
-@media print {
-
-	body,
-	.wrapper,
-	.main {
-		margin: 0;
-	}
-
-	nav.header,
-	footer {
-		display: none;
-	}
-
-	.main {
-		width: 100%;
 	}
 }

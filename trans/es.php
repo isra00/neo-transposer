@@ -119,6 +119,9 @@ return array(
 	'The <span itemprop="name">%book_title%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">have been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>'
 	=> 'Los <span itemprop="name">%book_title%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">han sido transportados por <span itemprop="reviewCount">%users%</span> usuarios, con una puntuación de <span itemprop="ratingValue">%rating%</span>/5.</span>',
 
+	'<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won\'t need Internet every time you need to check a transposition :-)'
+	=> '<strong>NUEVO: <a href="%url%">Descarga todos los cantos</a></strong> transportados para tu voz. Así no necesitarás conexión a Internet cada vez que quieras consultar un canto :-)',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Camino Neocatecumenal)',
@@ -321,7 +324,12 @@ return array(
 	'C = capo. If not written, no capo should be used.'
 	=> 'C = capo (cejilla). Si no aparece significa que no se debe usar capo (cejilla).',
 
-	'Download as PDF'
-	=> 'Descargar en PDF',
+	'Print'
+	=> 'Imprimir',
 
+	'Download'
+	=> 'Descargar',
+
+	'Transpositions'
+	=> 'Transposiciones',
 );
