@@ -22,7 +22,7 @@
 </p>
 
 <nav class="report-actions">
-	<a href="javascript:void(0)" onclick="window.print()" class="btn-neutral btn-icon icon-print">{% trans %}Print{% endtrans %}</a>
+	<a href="javascript:void(0)" class="btn-neutral btn-icon icon-print">{% trans %}Print{% endtrans %}</a>
 	<a href="{{ path('all_songs_report', {'dl': 1}) }}" class="btn-neutral btn-icon icon-download">{% trans %}Download{% endtrans %}</a>
 </nav>
 
@@ -60,5 +60,26 @@
 	{% endfor %}
 	</ul>
 </div>
+
+{% import 'base.twig' as self %}
+{{ self.loadJsFramework() }}
+
+<script>
+
+$(function() {
+
+	$(".icon-print").click(function(e) {
+		ga('send', 'event', 'AllSongsReport', 'Print');
+		window.print();
+	});
+
+	$(".icon-download").attr("href", "javascript:void(0)");
+
+	$(".icon-download").click(function(e) {
+		location.href = "{{ path('all_songs_report', {'dl': 1}) }}";
+		ga('send', 'event', 'AllSongsReport', 'Download');
+	});
+});
+</script>
 
 {% endblock %}
