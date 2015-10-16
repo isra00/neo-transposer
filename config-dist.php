@@ -41,7 +41,7 @@ return array(
 	'analytics_id'		=> 'UA-57809429-1',
 
 	/* MD5 for the MaxMind geo-ip Country database file */
-	'mmdb'				=> 'd04df2c3a0f6e8999e36d86987474480',
+	'mmdb'				=> '0d97eaedd8a165dd3afa45c2f1cfabec',
 
 	'css_cache'			=> '4723e58f10a4d95037a4aab0bc8744ff',
 
