@@ -83,7 +83,7 @@ $app->get('/set-user-data', "$controllers\\SetUserData::get")
 $app->get('/transpose/{id_song}', "$controllers\\TransposeSong::get")
 	->bind('transpose_song');
 
-$app->post('/feedback', "$controllers\\TranspositionFeedback::post")
+$app->post('/feedback', "$controllers\\ReceiveFeedback::post")
 	->bind('transposition_feedback');
 
 $app->get('/{_locale}/all-songs-report', "$controllers\\AllSongsReport::get")
