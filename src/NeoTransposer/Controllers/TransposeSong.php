@@ -11,13 +11,13 @@ use \Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Transpose Song page: transposes the given song for the singer's voice range.
+ * Transpose Song page: transpose the given song for the singer's voice range.
  */
 class TransposeSong
 {
 	public function get(\NeoTransposer\NeoApp $app, Request $req, $id_song)
 	{
-		//For the teaser we transpose for a standard male voice
+		//For the teaser (not logged in), transpose for a standard male voice
 		if (!$app['neouser']->isLoggedIn())
 		{
 			$app['neouser']->lowest_note = 'B1';
@@ -45,10 +45,7 @@ class TransposeSong
 
 		if ($transposedSong->not_equivalent)
 		{
-			$printer = $app['chord_printers.get']($transposedSong->song->bookChordPrinter);
-
-			$transposedSong->not_equivalent = $printer->printTransposition($transposedSong->not_equivalent);
-			$transposedSong->not_equivalent->setCapoForPrint($app);
+			//Pasar a twig?
 			$tpl['not_equivalent_difference'] = ($transposedSong->not_equivalent->deviationFromPerfect > 0)
 				? $app->trans('higher')
 				: $app->trans('lower');

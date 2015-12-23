@@ -91,5 +91,11 @@ class TransposedSong
 			$transposition = $printer->printTransposition($transposition);
 			$transposition->setCapoForPrint($this->app);
 		}
+
+		if ($this->not_equivalent)
+		{
+			$this->not_equivalent = $printer->printTransposition($this->not_equivalent);
+			$this->not_equivalent->setCapoForPrint($this->app);
+		}
 	}
 }
