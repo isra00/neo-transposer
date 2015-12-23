@@ -36,7 +36,7 @@
 	<div class="teaser">
 		<div class="inside">
 			<div class="more-inside">
-				<p>{% trans with {'%song%': song.song_details.title } %}Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!{% endtrans %}</p>
+				<p>{% trans with {'%song%': song.song.title } %}Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!{% endtrans %}</p>
 				{{ login.login_form('', app.request.getRequestUri) }}
 			</div>
 		</div>
@@ -44,22 +44,22 @@
 {% endif %}
 
 <h1>
-	{{ song.song_details.title }}
-	<small>{% if app.debug %}[{{ song.song_details.id_song }}]{% endif %}</small>
+	{{ song.song.title }}
+	<small>{% if app.debug %}[{{ song.song.idSong }}]{% endif %}</small>
 </h1>
 
 <p class="explanation">{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</p>
 
 <div class="transpositions-list">
 {% for transposition in song.transpositions %}
-	{{ self.printTransposition(transposition, song.original_chords) }}
+	{{ self.printTransposition(transposition, song.song.originalChords) }}
 {% endfor %}
 </div>
 
 {% if song.not_equivalent %}
 <p class="explanation">{% trans with {'%difference%': not_equivalent_difference} %}This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:{% endtrans %}</p>
 <div class="transpositions-list">
-	{{ self.printTransposition(song.not_equivalent, song.original_chords) }}
+	{{ self.printTransposition(song.not_equivalent, song.song.originalChords) }}
 </div>
 {% endif %}
 
@@ -69,7 +69,7 @@
 
 <form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
 
-	<input type="hidden" name="id_song" value="{{ song.song_details.id_song }}">
+	<input type="hidden" name="id_song" value="{{ song.song.idSong }}">
 
 	<p class="answers" {% if non_js_fb %}style="display: none"{% endif %}>
 		<button type="submit" name="worked" value="1" class="yes {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes" {% if feedback == 'yes' %}title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}"{% endif %}>
@@ -132,7 +132,7 @@ NT = {
 	{
 		document.getElementById("voicechart-container").style.display = 'block';
 		oLinkContainer.style.display = 'none';
-		ga('send', 'event', 'Actions', 'ShowVoiceChart', '{{ song.song_details.title }}');
+		ga('send', 'event', 'Actions', 'ShowVoiceChart', '{{ song.song.title }}');
 	},
 
 	sendFeedback: function(iAnswer)
@@ -140,7 +140,7 @@ NT = {
 		$.post(
 			'{{ path('transposition_feedback') }}',
 			{
-				id_song: {{ song.song_details.id_song }},
+				id_song: {{ song.song.idSong }},
 				worked: iAnswer,
 				referer: '{{ app.request.server.get('HTTP_REFERER') }}'
 			}
@@ -155,7 +155,7 @@ $(function() {
 		$(".answers").hide();
 		$("#feedback-thanks").show();
 		NT.sendFeedback(1);
-		ga('send', 'event', 'FeedbackTransposition', 'Worked', '{{ song.song_details.title }}');
+		ga('send', 'event', 'FeedbackTransposition', 'Worked', '{{ song.song.title }}');
 	});
 
 	$("#feedback-no").click(function(e) {
@@ -163,7 +163,7 @@ $(function() {
 		$(".question").add(".answers").hide();
 		$("#reasons-no").show();
 		NT.sendFeedback(0);
-		ga('send', 'event', 'FeedbackTransposition', 'NotWorked', '{{ song.song_details.title }}');
+		ga('send', 'event', 'FeedbackTransposition', 'NotWorked', '{{ song.song.title }}');
 	});
 
 });

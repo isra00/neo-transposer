@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use \NeoTransposer\Model\Song;
 use \NeoTransposer\Model\TransposedSong;
 use \NeoTransposer\Model\TranspositionChart;
 use \NeoTransposer\Model\NotesCalculator;
@@ -36,19 +37,19 @@ class TransposeSong
 			}
 		}
 
-		$song = TransposedSong::create($id_song, $app);
-		$app['locale'] = $song->song_details['locale'];
-		$song->transpose();
+		$transposedSong = TransposedSong::create($id_song, $app);
+		$app['locale'] = $transposedSong->song->bookLocale;
+		$transposedSong->transpose();
 
 		$tpl = array();
 
-		if ($song->not_equivalent)
+		if ($transposedSong->not_equivalent)
 		{
-			$printer = $app['chord_printers.get']($song->song_details['chord_printer']);
+			$printer = $app['chord_printers.get']($transposedSong->song->bookChordPrinter);
 
-			$song->not_equivalent = $printer->printTransposition($song->not_equivalent);
-			$song->not_equivalent->setCapoForPrint($app);
-			$tpl['not_equivalent_difference'] = ($song->not_equivalent->deviationFromPerfect > 0)
+			$transposedSong->not_equivalent = $printer->printTransposition($transposedSong->not_equivalent);
+			$transposedSong->not_equivalent->setCapoForPrint($app);
+			$tpl['not_equivalent_difference'] = ($transposedSong->not_equivalent->deviationFromPerfect > 0)
 				? $app->trans('higher')
 				: $app->trans('lower');
 		}
@@ -60,25 +61,31 @@ class TransposeSong
 
 		$nc = new NotesCalculator;
 
+		$user_first_octave = (
+			array_search($app['neouser']->highest_note, $nc->numbered_scale)
+			- array_search($app['neouser']->lowest_note, $nc->numbered_scale)
+			< 12
+		);
+
 		return $app->render('transpose_song.twig', array_merge($tpl, array(
-			'song'				=> $song,
+			'song'				=> $transposedSong,
 			'your_voice'		=> $your_voice,
-			'voice_chart'		=> TranspositionChart::getChart($song->song_details, $song->transpositions[0], $app['neouser']),
-			'page_title'		=> $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $song->song_details['title'])),
-			'header_link'		=> $app['url_generator']->generate('book_' . $song->song_details['id_book']),
+			'voice_chart'		=> TranspositionChart::getChart($transposedSong->song, $transposedSong->transpositions[0], $app['neouser']),
+			'page_title'		=> $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $transposedSong->song->title)),
+			'header_link'		=> $app['url_generator']->generate('book_' . $transposedSong->song->idBook),
 			'meta_canonical'	=> $app['url_generator']->generate(
 				'transpose_song',
-				array('id_song' => $song->song_details['slug']),
+				array('id_song' => $transposedSong->song->slug),
 				UrlGeneratorInterface::ABSOLUTE_URL
 			),
 			'meta_description'	=> $app->trans(
 				'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
-				array('%song%' => $song->song_details['title'])
+				array('%song%' => $transposedSong->song->title)
 			),
-			'feedback'			=> $this->getFeedbackForUser($app['db'], $app['neouser']->id_user, $song->song_details['id_song']),
+			'feedback'			=> $this->getFeedbackForUser($app['db'], $app['neouser']->id_user, $transposedSong->song->idSong),
 
 			//If user's highest note is in the 1st octave, we suggest strongly using the wizard
-			'user_first_octave' => (array_search($app['neouser']->highest_note, $nc->numbered_scale) - array_search($app['neouser']->lowest_note, $nc->numbered_scale) < 12),
+			'user_first_octave' => $user_first_octave,
 			'url_wizard' 		=> $app['url_generator']->generate('wizard_step1', array('_locale' => $app['locale'])),
 
 			//Non-JS browsers show message after clicking on feedback

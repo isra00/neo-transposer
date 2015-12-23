@@ -3,6 +3,8 @@
 namespace NeoTransposer\Model;
 
 use \NeoTransposer\NeoApp;
+use \NeoTransposer\Persistence\SongPersistence;
+use \NeoTransposer\Model\Song;
 
 /**
  * Read a song from DB, calculate its transpositions and prepare for print.
@@ -12,60 +14,53 @@ use \NeoTransposer\NeoApp;
  */
 class TransposedSong
 {
-	public $song_details;
+
+	/**
+	 * @var NeoTransposer\Song
+	 */
+	public $song;
+
+	/**
+	 * @var Array
+	 */
 	public $transpositions;
+
+	/**
+	 * @var Transposition
+	 */
 	public $not_equivalent;
-	public $original_chords;
 
 	/**
 	 * @var NeoTransposer\NeoApp;
 	 */
 	protected $app;
 
-	protected function __construct($song_details, NeoApp $app, $original_chords)
+	protected function __construct(Song $song, NeoApp $app)
 	{
-		$this->song_details = $song_details;
-		$this->app = $app;
-		$this->original_chords = $original_chords;
+		$this->song = $song;
+		$this->app 	= $app;
 	}
 
 	/**
 	 * Factory
+	 * @todo Pasar a Song y SongPersistence
 	 * 
 	 * @param  string|int            $id_song Song ID or slug.
 	 * @param  \NeoTransposer\NeoApp $app     NeoApp instance.
 	 * @return TransposedSong                 The created object.
 	 */
-	public static function create($id_song, NeoApp $app)
+	public static function create($idSong, NeoApp $app)
 	{
-		$field_id = 'slug';
-
-		if (preg_match('/^\d+$/', $id_song))
+		try
 		{
-			$field_id = 'id_song';
-			$id_song = (int) $id_song;
+			$song = SongPersistence::fetchSongById($idSong, $app['db']);
+		}
+		catch (\Exception $e)
+		{
+			$app->abort(404, $e->getMessage());
 		}
 
-		$song_details = $app['db']->fetchAssoc(
-			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $field_id = ?",
-			array($id_song)
-		);
-
-		if (!$song_details) {
-			$app->abort(404, "The specified song does not exist or it's not bound to a valid book");
-		}
-
-		$original_chords = $app['db']->fetchAll(
-			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
-			array($song_details['id_song'])
-		);
-
-		// In PHP 5.5 this can be implemented by array_column()
-		array_walk($original_chords, function(&$item) {
-			$item = $item['chord'];
-		});
-
-		return new TransposedSong($song_details, $app, $original_chords);
+		return new TransposedSong($song, $app);
 	}
 
 	public function transpose($forceHighestNote=false, $forceLowestNote=false, $overrideHighestNote=null)
@@ -73,10 +68,10 @@ class TransposedSong
 		$transposer = new AutomaticTransposer(
 			$this->app['neouser']->lowest_note,
 			$this->app['neouser']->highest_note,
-			$this->song_details['lowest_note'], 
-			$overrideHighestNote ? $overrideHighestNote : $this->song_details['highest_note'], 
-			$this->original_chords,
-			$this->song_details['first_chord_is_tone']
+			$this->song->lowestNote,
+			$overrideHighestNote ? $overrideHighestNote : $this->song->highestNote, 
+			$this->song->originalChords,
+			$this->song->firstChordIsTone
 		);
 
 		$this->transpositions = $transposer->getTranspositions(2, $forceHighestNote, $forceLowestNote);
@@ -87,9 +82,9 @@ class TransposedSong
 
 	public function prepareForPrint()
 	{
-		$printer = $this->app['chord_printers.get']($this->song_details['chord_printer']);
+		$printer = $this->app['chord_printers.get']($this->song->bookChordPrinter);
 
-		$this->original_chords = $printer->printChordset($this->original_chords);
+		$this->song->originalChords = $printer->printChordset($this->song->originalChords);
 
 		foreach ($this->transpositions as &$transposition)
 		{

@@ -8,7 +8,7 @@ use \NeoTransposer\NeoApp;
 use \NeoTransposer\Model\SongTextForWizard;
 
 /**
- * Wizard Empiric: measures the user's voice range through an empirical test.
+ * Wizard Empiric: measure the user's voice range through an empirical test.
  */
 class WizardEmpiric
 {
@@ -136,21 +136,21 @@ class WizardEmpiric
 	{
 		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
-		$song = \NeoTransposer\Model\TransposedSong::create($wizard_config_song['id_song'], $app);
-		$song->transpose(
+		$transposedSong = \NeoTransposer\Model\TransposedSong::create($wizard_config_song['id_song'], $app);
+		$transposedSong->transpose(
 			$forceHighestNote,
 			!empty($wizard_config_song['override_highest_note']) ? $wizard_config_song['override_highest_note'] : null
 		);
 
-		$transposedChords = $song->transpositions[0]->chordsForPrint;
+		$transposedChords = $transposedSong->transpositions[0]->chordsForPrint;
 
 		$songText = new SongTextForWizard($wizard_config_song['song_contents']);
 
 		return array(
 			'song'			=> $songText->getHtmlTextWithChords($transposedChords),
-			'song_title'	=> $song->song_details['title'],
+			'song_title'	=> $transposedSong->song->title,
 			'song_key'		=> $transposedChords[0],
-			'song_capo'		=> $song->transpositions[0]->getCapoForPrint($app),
+			'song_capo'		=> $transposedSong->transpositions[0]->getCapoForPrint($app),
 		);
 	}
 

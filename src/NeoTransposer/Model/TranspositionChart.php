@@ -4,7 +4,7 @@ namespace NeoTransposer\Model;
 
 class TranspositionChart
 {
-	public static function getChart($songDetails, $transposition, $singer)
+	public static function getChart(Song $song, $transposition, $singer)
 	{
 		$nc = new \NeoTransposer\Model\NotesCalculator;
 
@@ -17,9 +17,9 @@ class TranspositionChart
 				'css'		=> 'singer'
 			),
 			'original' => array(
-				'lowest'	=> $songDetails['lowest_note'],
-				'highest'	=> $songDetails['highest_note'],
-				'length'	=> abs($nc->distanceWithOctave($songDetails['lowest_note'], $songDetails['highest_note'])) - 1,
+				'lowest'	=> $song->lowestNote,
+				'highest'	=> $song->highestNote,
+				'length'	=> abs($nc->distanceWithOctave($song->lowestNote, $song->highestNote)) - 1,
 				'caption'	=> 'Original chords:',
 				'css'		=> 'original-song'
 			),

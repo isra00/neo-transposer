@@ -150,6 +150,7 @@ class AdminTools
 	 * Clear all the cached PDF All Songs Reports.
 	 *
 	 * Warning! This function does not work in Windows.
+	 * @todo ELIMINAR ESTO Y TODO LO RELACIONADO
 	 * 
 	 * @param  NeoApp $app 	The NeoApp object.
 	 * @return string 		Confirmation message or command output if any.
