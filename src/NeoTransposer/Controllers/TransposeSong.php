@@ -43,14 +43,6 @@ class TransposeSong
 
 		$tpl = array();
 
-		if ($transposedSong->not_equivalent)
-		{
-			//Pasar a twig?
-			$tpl['not_equivalent_difference'] = ($transposedSong->not_equivalent->deviationFromPerfect > 0)
-				? $app->trans('higher')
-				: $app->trans('lower');
-		}
-		
 		$your_voice = $app['neouser']->getVoiceAsString(
 			$app['translator'],
 			$app['neoconfig']['languages'][$app['locale']]['notation']
