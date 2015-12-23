@@ -16,7 +16,7 @@ class ServeCss
 	 * This mechanism for minimizing CSS takes advantage of the RewriteRule:
 	 * if the file style.min.css does not exist, this controller will be called.
 	 * After the first request, the static file will be served directly by Apache.
-	 * THE MINIFIED FILE MUST BE MANUALLY REMOVED AFTER EVERY UPDATE.
+	 * THE MINIFIED FILE MUST BE MANUALLY REMOVED AFTER EVERY UPDATE (in AdminTools)
 	 * 
 	 * @param  \NeoTransposer\NeoApp $app The Silex app.
 	 */

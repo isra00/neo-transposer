@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * Sets the user data. This URL has NO CONTENT.
+ * Sets the user data and redirect. There is no response body.
  */
 class SetUserData
 {

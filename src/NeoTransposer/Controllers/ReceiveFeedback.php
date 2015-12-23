@@ -47,7 +47,7 @@ SQL;
 				$app['neouser']->highest_note,
 			));
 
-			//Progressive enhancement: supports form submission without AJAX
+			//Progressive enhancement: support form submission without AJAX, then refresh the page.
 			if (!$req->isXmlHttpRequest())
 			{
 				return $app->redirect($app['url_generator']->generate(

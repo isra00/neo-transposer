@@ -126,12 +126,6 @@ class Transposition
 			
 			$this->score += $score;
 		}
-
-		/*
-		 * If it's like in the book, although it may not be the simplest chords,
-		 * it's simpler to work with for the cantor. If the cantor is looking
-		 * specifically for easier chords, he/she has the other options.
-		 */
 	}
 
 	public function setAsBook($asBook)

@@ -51,10 +51,10 @@ class AllSongsReport
 			 . '.html';
 
 			return new Response($responseBody, 200, array(
-		        'Cache-Control' 		=> 'private',
-		        'Content-Type' 			=> 'application/stream',
-		        'Content-Length' 		=> strlen($responseBody),
-		        'Content-Disposition' 	=> 'attachment; filename=' . $filename,
+				'Cache-Control' 		=> 'private',
+				'Content-Type' 			=> 'application/stream',
+				'Content-Length' 		=> strlen($responseBody),
+				'Content-Disposition' 	=> 'attachment; filename=' . $filename,
 			));
 		}
 		else

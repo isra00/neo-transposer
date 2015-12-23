@@ -7,12 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Implements a XML Sitemap.
+ * Implements a XML Sitemap with login, book and song pages.
  */
 class Sitemap
 {
 	/**
-	 * Generates a Sitemap with the URLs of the books and the transpose-songs
+	 * Generates the Sitemap.
 	 * 
 	 * @param  \NeoTransposer\NeoApp $app The Silex app
 	 * @return string                     The rendered view
