@@ -91,17 +91,12 @@ $app->get('/{_locale}/all-songs-report', "$controllers\\AllSongsReport::get")
 	->bind('all_songs_report')
 	->before($needsLogin);
 	
-$app->get('/admin/insert-song', "$controllers\\InsertSong::get")
-	->before($needsLogin);
-$app->post('/admin/insert-song', "$controllers\\InsertSong::post")
-	->before($needsLogin);
-$app->get('/admin/dashboard', "$controllers\\AdminDashboard::get")
-	->before($needsLogin);
-$app->get('/admin/chord-correction', "$controllers\\ChordCorrectionPanel::get")
-	->before($needsLogin);
+$app->get('/admin/insert-song', "$controllers\\InsertSong::get");
+$app->post('/admin/insert-song', "$controllers\\InsertSong::post");
+$app->get('/admin/dashboard', "$controllers\\AdminDashboard::get");
+$app->get('/admin/chord-correction', "$controllers\\ChordCorrectionPanel::get");
 $app->post('/admin/chord-correction', "$controllers\\ChordCorrectionPanel::post")
-	->bind('chord_correction_panel')
-	->before($needsLogin);
+	->bind('chord_correction_panel');
 
 $app->get('/static/' . $app['neoconfig']['css_cache'] . '.css', "$controllers\\ServeCss::get");
 
