@@ -20,7 +20,7 @@ return array(
 	=> 'Badilia ufunguo wa kordi ya nyimbo za Njia ya Neokatekumenato',
 
 	'<span>It\'s not hard to transpose the song. What is hard is</span><span>to know to which tone should I transpose it <strong>for my voice</strong>.</span>'
-	=> '<span>Sio shida kubadilia ufunguo ya wimbo. Shida ni kujua ufunguo gani ni bora kwa <strong>sauti yangu</strong>?</span>',
+	=> '<span>Sio shida kubadilisha funguo za nyimbo. Shida ni kujua ufunguo gani ni bora kwa <strong>sauti yangu</strong>?</span>',
 /*
 	'Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!'
 	=> 'Neo-Transposer calcula, en base a <strong>tu propia voz</strong>, la transposición perfecta para cada canto del Camino. Así de sencillo. Además, te ofrece alternativas para poder tocar los cantos con los acordes más fáciles. ¡Se acabaron las complicaciones!',
@@ -106,6 +106,10 @@ return array(
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
 	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',
 */
+
+	'<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won\'t need Internet every time you need to check a transposition :-)'
+	=> '<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. Hivyo huhitaji Internet kila mara unapohitaji kupata transposition :-)',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Njia ya Neokatekumenato)',
@@ -121,19 +125,19 @@ return array(
 	
 /*	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
 	=> 'Estas dos transposiciones encajan con tu voz (son equivalentes). La primera tiene acordes más fáciles:',
-
+*/
 	'Beware that this is the best tone for your voice, but might not be the best one for the assembly.'
-	=> 'Ten en cuenta que este es el tono óptimo para tu voz, pero podría no ser el mejor para la asamblea.',
+	=> 'Kumbuka: toni hii ni bora kwa sauti yako binafsi, lakini labda haitakuwa nzuri kwa watu wa kusanyiko.',
 
 	'with capo %n%'
-	=> 'cejilla %n%º traste',
+	=> 'capo %n%',
 	
 	'(no capo)'
-	=> '(sin cejilla)',
-	
+	=> '(bila capo)',
+
 	'(same chords as in the book)'
-	=> '(mismos acordes que en el libro)',
-	
+	=> '(kordi kama kwenye kitabu)',
+/*	
 	'This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:'
 	=> 'Esta otra transposición es un poco %difference%, pero tiene acordes más fáciles y puede venir bien a tu voz:',
 	
@@ -143,6 +147,13 @@ return array(
 	'lower'
 	=> 'más grave',
 */
+
+	'It has worked'
+	=> 'Nimefanikiwa kuimba',
+
+	'It hasn\'t worked'
+	=> 'Sijafanikiwa',
+
 	'Original chords:'
 	=> 'Kwenye kitabu:',
 	
@@ -150,7 +161,7 @@ return array(
 	=> 'Kwa kubadili ufunguo:', //REVISAR
 
 	'Show voice chart'
-	=> 'Onyesha picha ya sauti',
+	=> 'Onyesha chati ya sauti',
 
 /*	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
 	=> 'Neo-Transposer te ayuda a transportar automáticamente los acordes de <strong>%song%</strong> para que encajen con tu voz. ¡Escribe tu e-mail, sigue las instrucciones y tendrás todos los cantos del Camino Neocatecumenal transportados!'
@@ -167,6 +178,9 @@ return array(
 	=> 'Hatua ya 2: tutafute nota yako ya chini',
 	
 	//Wizard empiric: highest note
+
+	'No, that\'s too high'
+	=> 'La, ni juu sana',
 	
 	//Wizard: finish
 	
