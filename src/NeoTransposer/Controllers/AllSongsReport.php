@@ -4,6 +4,7 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
+use \NeoTransposer\Model\TransposedSong;
 
 /**
  * Transpose Song page: transposes the given song for the singer's voice range.
@@ -19,8 +20,7 @@ class AllSongsReport
 	 */
 	public function get(\NeoTransposer\NeoApp $app, Request $req)
 	{
-		$reportModel = new \NeoTransposer\Model\AllSongsReport($app);
-		$allTranspositions = $reportModel->getAllTranspositions();
+		$allTranspositions = $this->getAllTranspositions($app);
 
 		$your_voice = $app['neouser']->getVoiceAsString(
 			$app['translator'],
@@ -61,5 +61,41 @@ class AllSongsReport
 		{
 			return $responseBody;
 		}
+	}
+
+	/**
+	 * Fetches all the songs from the current book and transposes them.
+	 * 
+	 * @return array Array of TransposedSong objects.
+	 */
+	public function getAllTranspositions(\NeoTransposer\NeoApp $app)
+	{
+
+		$sql = <<<SQL
+SELECT id_song
+FROM song 
+JOIN book USING (id_book) 
+WHERE locale = ? 
+AND NOT song.id_song = 118
+AND NOT song.id_song = 319
+ORDER BY page
+SQL;
+
+		$ids = $app['db']->fetchAll($sql, array($app['locale']));
+
+		$songs = array();
+
+		foreach ($ids as $id)
+		{
+			$song = TransposedSong::create($id['id_song'], $app);
+			$song->transpose();
+
+			//Remove bracketed text from song title (used for aclarations)
+			$song->song->title = preg_replace('/(.)\[.*\]/', '$1', $song->song->title);
+
+			$songs[] = $song;
+		}
+
+		return $songs;
 	}
 }

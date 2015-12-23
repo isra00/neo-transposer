@@ -145,22 +145,4 @@ class AdminTools
 
 		return $output;
 	}
-
-	/**
-	 * Clear all the cached PDF All Songs Reports.
-	 *
-	 * Warning! This function does not work in Windows.
-	 * @todo ELIMINAR ESTO Y TODO LO RELACIONADO
-	 * 
-	 * @param  NeoApp $app 	The NeoApp object.
-	 * @return string 		Confirmation message or command output if any.
-	 */
-	public function clearPdfCache(NeoApp $app)
-	{
-		$dir = $app['root_dir']
-		 . '/web/' . $app['neoconfig']['pdf_reports_dir'];
-
-		exec("rm $dir/*", $output);
-		return empty($output) ? 'All PDF reports removed succesfully' : $output;
-	}
 }
