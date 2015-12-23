@@ -187,6 +187,7 @@ footer {
 		background-image: url(img/icon-megaphon.png);
 		background-position: 15px 15px;
 		min-height: 32px;
+		line-height: 130%;
 	}
 
 /* USER BOOK */
