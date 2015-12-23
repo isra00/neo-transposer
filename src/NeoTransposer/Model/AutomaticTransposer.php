@@ -209,14 +209,14 @@ class AutomaticTransposer
 				$dif
 			);
 
-			if ($this->first_chord_is_key)
-			{
-				$near->setAlternativeChords($this->nc);
-			}
-
 			if ($this->original_chords == $near->chords)
 			{
 				$near->setAsBook(true);
+			}
+
+			if ($this->first_chord_is_key)
+			{
+				$near->setAlternativeChords($this->nc);
 			}
 
 			//If it's too low or too high, discard it
