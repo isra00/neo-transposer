@@ -30,7 +30,7 @@ class AllSongsReport
 		$tplVars = array(
 			'songs'			=> $allTranspositions,
 			'your_voice'	=> $your_voice,
-			'header_link' 	=> $app['url_generator']->generate('book_' . $allTranspositions[0]->song_details['id_book']),
+			'header_link' 	=> $app['url_generator']->generate('book_' . $allTranspositions[0]->song->idBook),
 			'page_title'  	=> $app->trans('All transpositions for your voice'),
 		);
 

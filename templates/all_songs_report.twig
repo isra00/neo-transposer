@@ -32,8 +32,8 @@
 	<ul class="songs-list">
 	{% for song in songs %}
 		<li>
-			<h2>{{ song.song_details.page|default('&#248;')|raw }}
-			· {{ song.song_details.title }}</h2>
+			<h2>{{ song.song.page|default('&#248;')|raw }}
+			· {{ song.song.title }}</h2>
 
 			<ul>
 			{% for transposition in song.transpositions|slice(0,1) -%}
@@ -45,7 +45,7 @@
 					{% if transposition.asBook %}
 						{% trans %}(as in the book){% endtrans %}
 					{% else %}
-						{% for i, original_chord in song.original_chords -%}
+						{% for i, original_chord in song.song.originalChords -%}
 							<span class="chord-pair">{{ original_chord|raw }}
 								&rsaquo;
 								{{ transposition.chordsForPrint[i]|raw }}

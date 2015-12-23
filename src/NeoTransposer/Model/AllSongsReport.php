@@ -118,7 +118,7 @@ SQL;
 			$song->transpose();
 
 			//Remove bracketed text from song title (used for aclarations)
-			$song->song_details['title'] = preg_replace('/(.)\[.*\]/', '$1', $song->song_details['title']);
+			$song->song->title = preg_replace('/(.)\[.*\]/', '$1', $song->song->title);
 
 			$songs[] = $song;
 		}
