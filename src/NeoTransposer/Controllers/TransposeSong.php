@@ -31,7 +31,7 @@ class TransposeSong
 				$app->setLocaleAutodetect($req);
 				
 				return $app->redirect($app['url_generator']->generate(
-					'user_settings', 
+					'user_voice', 
 					array('_locale' => $app['locale'])
 				));
 			}
