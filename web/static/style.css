@@ -414,7 +414,7 @@ footer {
 		}
 	.transposition th,
 	.transposition td { 
-		padding: .3em .5em;
+		padding: .2em .5em;
 	}
 
 	.transposition .score {
@@ -635,11 +635,12 @@ h2.step-1 {
 .pre-song {
 	font-family: monospace;
 	background: rgb(253, 253, 248);
-	box-shadow: 0 0 1em silver;
+	box-shadow: 0px 2px .5em silver;
 	padding: 1.3em;
 	display: inline-block;
 	color: #333;
 	max-width: 18rem;
+	font-size: 1.1em;
 }
 	.pre-song .capo {
 		color: #e00;
@@ -650,6 +651,9 @@ h2.step-1 {
 		text-transform: uppercase;
 		text-align: center;
 		margin-top: 0;
+	}
+	.pre-song .chord {
+		font-size: .9em;
 	}
 
 .wizard-empiric .instructions {
@@ -1154,7 +1158,7 @@ input[type=text] {
 		padding: 0;
 	}
 		.page-login .mkt h2 {
-			padding: .5em 0 0;
+			padding: .5em 0;
 			background: #efefef;
 			margin-top: 0;
 			font-size: 1.3em;
