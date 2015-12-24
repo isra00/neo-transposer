@@ -156,6 +156,9 @@ class WizardEmpiric
 
 	public function finish(Request $req, NeoApp $app)
 	{
+		//Only when wizard is finished, voice range is stored in DB
+		$app['neouser']->persist($app['db'], $req);
+
 		$your_voice = $app['neouser']->getVoiceAsString(
 			$app['translator'],
 			$app['neoconfig']['languages'][$app['locale']]['notation']
@@ -169,9 +172,6 @@ class WizardEmpiric
 				$go_to_book = $book['id_book'];
 			}
 		}
-
-		//Only when wizard is finished, voice range is stored in DB
-		$app['neouser']->persist($app['db'], $req);
 
 		return $app->render('wizard_finish.twig', array(
 			'your_voice'	=> $your_voice,

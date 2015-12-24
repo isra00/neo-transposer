@@ -76,11 +76,11 @@ class AutomaticTransposer
 	 * between the original song lowest note and the ideal position, we
 	 * transpose each chord using that offset.
 	 * 
-	 * @param boolean $forceHighestNote Used only in wizard to find highest note.
-	 * @param boolean $forceLowestNote Used only in wizard to find highest note.
+	 * @param boolean $forceHighestSingerNote Used only in wizard to find highest note.
+	 * @param boolean $forceLowestSingerNote Used only in wizard to find highest note.
 	 * @return Transposition The transposition matching that voice.
 	 */
-	function getPerfectTransposition($forceHighestNote=false, $forceLowestNote=false)
+	function getPerfectTransposition($forceHighestSingerNote=false, $forceLowestSingerNote=false)
 	{
 		if (!empty($this->perfectTransposition))
 		{
@@ -106,12 +106,12 @@ class AutomaticTransposer
 			? 0
 			: round(($singer_wideness - $song_wideness) / 2);
 
-		if ($forceHighestNote)
+		if ($forceHighestSingerNote)
 		{
 			$offset_from_singer_lowest = $singer_wideness - $song_wideness;
 		}
 		
-		if ($forceLowestNote)
+		if ($forceLowestSingerNote)
 		{
 			$offset_from_singer_lowest = 0;
 		}
@@ -187,6 +187,60 @@ class AutomaticTransposer
 	}
 
 	/**
+	 * Sorts an array of Transpositions from easiest to hardest.
+	 * 
+	 * @param  array $transpositions Array of Transpositions, with the score already set.
+	 * @return array The sorted array
+	 */
+	function sortTranspositionsByEase(array $transpositions)
+	{
+		usort($transpositions, function($one, $two) {
+			return ($one->score < $two->score) ? -1 : 1;
+		});
+
+		return $transpositions;
+	}
+
+	/**
+	 * Main method to be used by the clients of this class. It returns the
+	 * perfect and equivalent transpositions for a given song, sorted by ease.
+	 * 
+	 * @param 	integer $limitTranspositions Limit of equivalent transpositions to return
+	 * @param 	boolean $forceHighestSingerNote Used only in wizard to find highest note.
+	 * @param 	boolean $forceLowestSingerNote Used only in wizard to find lowest note.
+	 * @return 	array 	Array of Transposition objects, sorted by chord ease.
+	 */
+	function getTranspositions($limitTranspositions=2, $forceHighestSingerNote=false, $forceLowestSingerNote=false)
+	{
+		if (empty($this->perfectAndEquivalent))
+		{
+			$perfectTransposition = $this->getPerfectTransposition($forceHighestSingerNote, $forceLowestSingerNote);
+			$equivalents = $this->findEquivalentsWithCapo($perfectTransposition, $this->original_chords);
+
+			$perfect_and_equivalent = array_merge(array($perfectTransposition), $equivalents);
+			$perfect_and_equivalent = $this->sortTranspositionsByEase($perfect_and_equivalent);
+
+			$this->perfectAndEquivalent = $perfect_and_equivalent;
+		}
+
+		//This shouldn't be done before to avoid conflicts
+		foreach ($this->perfectAndEquivalent as &$transposition)
+		{
+			if ($this->first_chord_is_key)
+			{
+				$transposition->setAlternativeChords($this->nc);
+			}
+		}
+
+		//If alternative chords have been set, scores may change and so positions.
+		$this->perfectAndEquivalent = $this->sortTranspositionsByEase($this->perfectAndEquivalent);
+
+		return ($limitTranspositions)
+			? array_slice($this->perfectAndEquivalent, 0, $limitTranspositions)
+			: $this->perfectAndEquivalent;
+	}
+
+	/**
 	 * Find alternative NOT-equivalent, but near (up to 1 semitone up or down) transposition.
 	 * 
 	 * @return Transposition A non-equivalent transposition (yes, only one).
@@ -242,59 +296,5 @@ class AutomaticTransposer
 
 		$not_equivalent = $this->sortTranspositionsByEase($near_transpositions);
 		return (!empty($not_equivalent)) ? $not_equivalent[0] : null;
-	}
-
-	/**
-	 * Sorts an array of Transpositions from easiest to hardest.
-	 * 
-	 * @param  array $transpositions Array of Transpositions, with the score already set.
-	 * @return array The sorted array
-	 */
-	function sortTranspositionsByEase(array $transpositions)
-	{
-		usort($transpositions, function($one, $two) {
-			return ($one->score < $two->score) ? -1 : 1;
-		});
-
-		return $transpositions;
-	}
-
-	/**
-	 * Main method to be used by the clients of this class. It returns the
-	 * perfect and equivalent transpositions for a given song, sorted by ease.
-	 * 
-	 * @param 	integer $limitTranspositions Limit of equivalent transpositions to return
-	 * @param 	boolean $forceHighestNote Used only in wizard to find highest note.
-	 * @param 	boolean $forceLowestNote Used only in wizard to find lowest note.
-	 * @return 	array 	Array of Transposition objects, sorted by chord ease.
-	 */
-	function getTranspositions($limitTranspositions=2, $forceHighestNote=false, $forceLowestNote=false)
-	{
-		if (empty($this->perfectAndEquivalent))
-		{
-			$perfectTransposition = $this->getPerfectTransposition($forceHighestNote, $forceLowestNote);
-			$equivalents = $this->findEquivalentsWithCapo($perfectTransposition, $this->original_chords);
-
-			$perfect_and_equivalent = array_merge(array($perfectTransposition), $equivalents);
-			$perfect_and_equivalent = $this->sortTranspositionsByEase($perfect_and_equivalent);
-
-			$this->perfectAndEquivalent = $perfect_and_equivalent;
-		}
-
-		//This shouldn't be done before to avoid conflicts
-		foreach ($this->perfectAndEquivalent as &$transposition)
-		{
-			if ($this->first_chord_is_key)
-			{
-				$transposition->setAlternativeChords($this->nc);
-			}
-		}
-
-		//If alternative chords have been set, scores may change and so positions.
-		$this->perfectAndEquivalent = $this->sortTranspositionsByEase($this->perfectAndEquivalent);
-
-		return ($limitTranspositions)
-			? array_slice($this->perfectAndEquivalent, 0, $limitTranspositions)
-			: $this->perfectAndEquivalent;
 	}
 }

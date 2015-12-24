@@ -63,23 +63,38 @@ class TransposedSong
 		return new TransposedSong($song, $app);
 	}
 
-	public function transpose($forceHighestNote=false, $forceLowestNote=false, $overrideHighestNote=null)
+
+	/**
+	 * Main method to be used by the clients of this class. It returns the
+	 * perfect and equivalent transpositions for a given song, sorted by ease.
+	 * 
+	 * @param 	boolean $forceHighestSingerNote 	Used only in wizard to find highest note.
+	 * @param 	boolean $forceLowestSingerNote 		Used only in wizard to find lowest note.
+	 * @param 	boolean $overrideSongHighestNote 	Override song's highest note. Used in Wizard 
+	 * 												because not the whole song is sung but only a 
+	 * 												part that might not contain the song's highest 
+	 * 												note registered in the DB.
+	 */
+	public function transpose($forceHighestSingerNote=false, $forceLowestSingerNote=false, $overrideSongHighestNote=null)
 	{
 		$transposer = new AutomaticTransposer(
 			$this->app['neouser']->lowest_note,
 			$this->app['neouser']->highest_note,
 			$this->song->lowestNote,
-			$overrideHighestNote ? $overrideHighestNote : $this->song->highestNote, 
+			$overrideSongHighestNote ? $overrideSongHighestNote : $this->song->highestNote, 
 			$this->song->originalChords,
 			$this->song->firstChordIsTone
 		);
 
-		$this->transpositions = $transposer->getTranspositions(2, $forceHighestNote, $forceLowestNote);
+		$this->transpositions = $transposer->getTranspositions(2, $forceHighestSingerNote, $forceLowestSingerNote);
  		$this->not_equivalent = $transposer->findAlternativeNotEquivalent();
 
  		$this->prepareForPrint();
 	}
 
+	/**
+	 * Prepare transpositions for print (chords and capo sentence).
+	 */
 	public function prepareForPrint()
 	{
 		$printer = $this->app['chord_printers.get']($this->song->bookChordPrinter);
