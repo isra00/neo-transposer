@@ -76,9 +76,6 @@ return array(
 	'oct'
 	=> 'okt',
 
-	'Which songbook do you want to transpose?'
-	=> 'Chagua lugha ya kitabu cha nyimbo:',
-	
 	'We are ready!'
 	=> 'Tayari!',
 
@@ -147,12 +144,21 @@ return array(
 	'lower'
 	=> 'más grave',
 */
+	
+	'Yes'
+	=> 'Ndiyo',
+
+	'No'
+	=> 'Hapana',
 
 	'It has worked'
 	=> 'Nimefanikiwa kuimba',
 
 	'It hasn\'t worked'
 	=> 'Sijafanikiwa',
+
+	'Happy to know that! :-)'
+	=> 'Nafurahi kwa hayo :-)',
 
 	'Original chords:'
 	=> 'Kwenye kitabu:',
@@ -168,37 +174,62 @@ return array(
 */
 
 	//Wizard first step
+	'Voice measure wizard'
+	=> 'Kupima sauti yako',
+
+	'Follow these steps and the application will estimate your highest and lowest note. If you don\'t follow properly these steps you won\'t be able to use Neo-Transposer.'
+	=> 'Fuata hatua hizi na programu itakadiria nota yako ya chini na ya juu. Usipofuata kikamilifu hatua hizi hutaweza kuitumia Neo-Transposer.',
 	
+	'Step 1'
+	=> 'Hatua ya 1',
+
+	'To start, choose one of these options:'
+	=> 'Uanze ukichagua jinsia yako:',
+
+	'I have male voice'
+	=> 'Sauti yangu ni ya kiume',
+
+	'I have female voice'
+	=> 'Sauti yangu ni ya kike',
+
+	'Neither higher nor lower than most of men / I don\'t know'
+	=> 'Wala juu wala chini kuliko wanaume wengi / sijui',
+
+	'My voice is higher than most of men'
+	=> 'Sauti yangu ni ya juu kuliko wanaume wengi',
+
+	'My voice is lower than most of men'
+	=> 'Sauti yangu ni ya chini kuliko wanaume wengi',
+
+	'Neither higher nor lower than most of women / I don\'t know'
+	=> 'Wala juu wala chini kuliko wanawake wengi / sijui',
+
+	'My voice is higher than most of women'
+	=> 'Sauti yangu ni ya juu kuliko wanawake wengi',
+
+	'My voice is lower than most of women'
+	=> 'Sauti yangu ni ya chini kuliko wanawake wengi',
+
+	'Next step &rarr;'
+	=> 'Inayofuata &rarr;',
+
 	// Wizard empiric instructions
+
+	'Step 2: time to sing!'
+	=> 'Hatua ya 2: tuimbe sasa!',
+
 	'Understood'
 	=> 'Nimeelewa',
 	
 	//Wizard empiric: lowest note
 	'Step 2: let\'s find your lowest note'
-	=> 'Hatua ya 2: tutafute nota yako ya chini',
-	
-	//Wizard empiric: highest note
+	=> 'Hatua ya 2: kutafuta nota yako ya chini',
 
-	'No, that\'s too high'
-	=> 'La, ni juu sana',
-	
-	//Wizard: finish
-	
-	'Yes'
-	=> 'Ndiyo',
-
-	'No'
-	=> 'Hapana',
-
-	'Happy to know that! :-)'
-	=> 'Nafurahi kwa hayo :-)',
-
-	//Wizard empiric: lowest note
 	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won\'t be able to sing loud enough in the community!'
-	=> 'Jaribu kuimba kitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unapaswa kuuimbia na sauti ya chini, lakini usishuke sana ili uweze kuimba kwa nguvu.',
+	=> 'Jaribu kuimba kiitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unapaswa kukiimba na sauti ya chini, lakini usishuke sana ili uweze kuimba kwa nguvu.',
 
 	'Could you sing it?'
-	=> 'Umefanikiwa kuuimba?',
+	=> 'Umefanikiwa kukiimba?',
 
 	'No, that\'s too low'
 	=> 'La, chini sana',
@@ -207,10 +238,34 @@ return array(
 	=> 'Haiwezekani',*/
 
 	'Repeat the test'
-	=> 'Rudia tena jaribio',
+	=> 'Rudia tena kipimo',
 
 	'Go to the next step'
 	=> 'Kwenda hatua inayofuata',
+	
+	//Wizard empiric: highest note
+
+	'Step 3: let\'s find your highest note'
+	=> 'Hatua ya 3: kutafuta nota yako ya juu',
+
+	'Now try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong> with the following chords. Remember: you must sing it <strong>with high voice</strong>, but without doing falsetto! Make a little effort, we are almost done!'
+	=> 'Sasa jaribu kuimba kiitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unapaswa kuimba na <strong>sauti ya juu</strong>, lakini usifanye falsetto. Jitahidi, tunakaribia mwisho!',
+
+	'No, that\'s too high'
+	=> 'La, ni juu sana',
+	
+	//Wizard: finish
+	'We are done!'
+	=> 'Tupo tayari!',
+
+	'According to the tests, your voice range is:'
+	=> 'Kufuatana na kipimo, nota zako ni hizi:',
+
+	'Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer.'
+	=> 'Hongera! Sasa unaweza kupata automatic transpsitions katika Neo-Transposer.',
+
+	'Transpose the songs'
+	=> 'Transpose nyimbo',
 
 	//All Songs Report
 	'All transpositions for your voice'

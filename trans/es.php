@@ -301,6 +301,15 @@ return array(
 	'According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.'
 	=> 'Según la voz que has definido, este tono no debería ser demasiado alto para ti. Quizá debas volver al primer paso y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba cantando en el mismo tono que la guitarra.',
 
+	'That\'s not possible...'
+	=> 'Eso no es posible...',
+
+	'You have clicked "Yes" many times, but I don\'t think it\'s really possible that you can sing that high. Please verify that you are following properly the steps, or click on "Finish here" if you want to finish the test.'
+	=> 'Has hecho click en "Sí" muchas veces, pero no es probable que puedas cantar tan alto. Por favor, comprueba que has seguido correctamente los pasos, o haz click en "Terminar aquí" si quieres finalizar la prueba.',
+
+	'Finish here'
+	=> 'Terminar aquí',
+
 	//Wizard: finish
 	'We are done!'
 	=> '¡Hemos terminado!',
