@@ -24,7 +24,9 @@ class WizardStepOne
 
 	public function getStepOne(NeoApp $app)
 	{
-		return $app->render('wizard_step1.twig');
+		return $app->render('wizard_step1.twig', array(
+			'page_title' => $app->trans('Voice measure wizard')
+		));
 	}
 
 	public function postStepOne(Request $req, NeoApp $app)
