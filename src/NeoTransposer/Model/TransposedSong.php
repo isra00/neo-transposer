@@ -43,7 +43,6 @@ class TransposedSong
 
 	/**
 	 * Factory
-	 * @todo Pasar a Song y SongPersistence
 	 * 
 	 * @param  string|int            $id_song Song ID or slug.
 	 * @param  \NeoTransposer\NeoApp $app     NeoApp instance.
@@ -87,9 +86,9 @@ class TransposedSong
 		);
 
 		$this->transpositions = $transposer->getTranspositions(2, $forceHighestSingerNote, $forceLowestSingerNote);
- 		$this->not_equivalent = $transposer->findAlternativeNotEquivalent();
+		$this->not_equivalent = $transposer->findAlternativeNotEquivalent();
 
- 		$this->prepareForPrint();
+		$this->prepareForPrint();
 	}
 
 	/**

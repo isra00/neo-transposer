@@ -56,6 +56,11 @@ class TransposeSong
 			< 12
 		);
 
+		if ($req->get('noEquivalent'))
+		{
+			$transposedSong->transpositions = array($transposedSong->transpositions[0]);
+		}
+
 		return $app->render('transpose_song.twig', array_merge($tpl, array(
 			'song'				=> $transposedSong,
 			'your_voice'		=> $your_voice,
