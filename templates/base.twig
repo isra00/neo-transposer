@@ -2,7 +2,7 @@
 <html lang="{{ app.locale }}">
 <head>
 
-{% if current_route == 'transpose_song' %}
+{% if current_route == 'transpose_song' and app.request.attributes.get('id_song') == 'el-mesias-leon-para-vencer' %}
 <!-- Google Analytics Content Experiment code -->
 <script>function utmx_section(){}function utmx(){}(function(){var
 k='95326089-0',d=document,l=d.location,c=d.cookie;
