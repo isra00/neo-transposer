@@ -131,7 +131,7 @@ class Transposition
 	public function setAsBook($asBook)
 	{
 		$this->asBook = $asBook;
-		$this->setScore();
+		$this->setScore(); /** @todo ¿Podría no hacer falta ya? */
 	}
 
 	public function getAsBook()

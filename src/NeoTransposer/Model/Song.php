@@ -8,7 +8,6 @@ class Song
 	public $idBook;
 	public $page;
 	public $title;
-	public $key;
 	public $lowestNote;
 	public $highestNote;
 	public $slug;
@@ -23,7 +22,6 @@ class Song
 		$this->idBook 				= $dbColumns['id_book'];
 		$this->page 				= $dbColumns['page'];
 		$this->title 				= $dbColumns['title'];
-		$this->key 					= $dbColumns['key'];
 		$this->lowestNote 			= $dbColumns['lowest_note'];
 		$this->highestNote 			= $dbColumns['highest_note'];
 		$this->slug 				= $dbColumns['slug'];
