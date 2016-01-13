@@ -836,12 +836,12 @@ h2.step-1 {
 	}
 		.admin-dashboard .data-circle span {
 			display: block;
-			padding-top: 20px;
+			padding-top: 15%;
 			font-size: .9em;
 		}
 		.admin-dashboard .data-circle b {
 			display: block;
-			margin-top: .5em;
+			margin-top: 12%;
 			font-size: 2.5em;
 			font-weight: normal;
 		}
@@ -856,12 +856,29 @@ h2.step-1 {
 			margin-top: .3em;
 		}
 
+	.admin-dashboard .data-circle.small-circle {
+		width: 90px;
+		max-width: 90px;
+		height: 90px;
+		max-height: 90px;
+		background-color: #92791e;
+	}
+		.admin-dashboard .data-circle.small-circle span {
+			font-size: .8em;
+		}
+		.admin-dashboard .data-circle.small-circle b {
+			font-size: 2em;
+		}
+
 .feedback-graph {
 	width: 102px;
 	margin: 0;
 	padding: 0;
 	border-radius: 4px;
 	overflow: hidden;
+}
+.feedback-graph.big-graph {
+	width: 200px;
 }
 	.feedback-graph .yes,
 	.feedback-graph .no {
@@ -882,6 +899,12 @@ h2.step-1 {
 		background: #D32F2F;
 		text-align: right;
 	}
+
+	.feedback-graph.big-graph .yes,
+	.feedback-graph.big-graph .no {
+		line-height: 160%;
+	}
+
 .floating_toc {
     position: fixed;
     top: 0;

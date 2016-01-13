@@ -58,6 +58,7 @@ class AdminDashboard
 		return $app->render('admin_dashboard.twig', array(
 			'user_count'			=> $user_count,
 			'good_users'			=> $good_users,
+			'song_availability'		=> $this->getSongAvailability(),
 			'global_performance'	=> $this->getGlobalPerformance(),
 			'users_reporting_fb'	=> $users_reporting_fb,
 			'unhappy_users'			=> $this->getUnhappyUsers(),
@@ -106,6 +107,24 @@ SQL;
 		}
 
 		return $global_performance;
+	}
+
+	protected function getSongAvailability()
+	{
+		$sql = <<<SQL
+SELECT 
+  book.id_book, 
+  song_count total,
+  sc.current
+FROM 
+  book
+JOIN
+(
+  SELECT id_book, count(id_song) current FROM song GROUP BY id_book
+) sc ON sc.id_book = book.id_book
+SQL;
+
+		return $this->app['db']->fetchAll($sql);
 	}
 
 	protected function getFeedback()

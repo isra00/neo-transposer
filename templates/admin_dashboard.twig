@@ -49,13 +49,22 @@
 		</h4>
 	</div>
 
+	<div class="circles-container">
+	{% for book in song_availability %}
+		<h4 class="data-circle small-circle">
+			<span>{{ app.books[book.id_book].lang_name }}</span> 
+			<b>{{ ((book.current / book.total) * 100)|round }}<small>%</small></b>
+		</h4>
+	{% endfor %}
+	</div>
+
 	<h3>Feedback</h3>
 	{% for group, gp in global_performance %}
 	<p>
 		{{ group }}: {{ ((gp.yes / gp.total) * 100)|round }}% 
-		<div class="feedback-graph">
-			{% if gp.yes %}<span class="yes" style="width: {{ ((gp.yes / gp.total) * 100)|round }}px">{{ gp.yes }}</span>{% endif %}
-			{% if gp.no %}<span class="no" style="width: {{ ((gp.no / gp.total) * 100)|round }}px">{{ gp.no }}</span>{% endif %}
+		<div class="feedback-graph big-graph">
+			{% if gp.yes %}<span class="yes" style="width: {{ ((gp.yes / gp.total) * 200)|round }}px">{{ gp.yes }}</span>{% endif %}
+			{% if gp.no %}<span class="no" style="width: {{ ((gp.no / gp.total) * 200)|round }}px">{{ gp.no }}</span>{% endif %}
 		</div>
 	</p>
 	{% endfor %}

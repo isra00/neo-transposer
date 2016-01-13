@@ -28,6 +28,7 @@ CREATE TABLE `book` (
   `details` varchar(100) NOT NULL,
   `chord_printer` varchar(50) NOT NULL,
   `locale` char(2) NOT NULL,
+  `song_count` smallint(6) unsigned NOT NULL COMMENT 'Total # of songs that should be present. For management purposes only.',
   PRIMARY KEY (`id_book`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,7 +39,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'Kiswahili','Tanzania - Kenya 2003','Swahili','sw'),(2,'Español','Madrid 2014','Spanish','es');
+INSERT INTO `book` VALUES (1,'Kiswahili','Tanzania - Kenya 2003','Swahili','sw',184),(2,'Español','Madrid 2014','Spanish','es',225);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,4 +110,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-13  9:59:14
+-- Dump completed on 2016-01-13 18:53:48
