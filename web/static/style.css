@@ -1261,6 +1261,11 @@ input[type=text] {
 		margin: 0 6px 6px;
 	}
 
+	/* All Songs Report */
+	.icon-print {
+		display: none;
+	}
+
 	/* Admin Dashboard */
 	.floating_toc {
 	    position: relative;
