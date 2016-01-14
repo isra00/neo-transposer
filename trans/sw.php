@@ -105,7 +105,7 @@ return array(
 */
 
 	'<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won\'t need Internet every time you need to check a transposition :-)'
-	=> '<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. Hivyo huhitaji Internet kila mara unapohitaji kupata transposition :-)',
+	=> '<strong>NEW: <a href="%url%">Jipatie ripoti ya nyimbo zote</a></strong> na kordi zilizobadilishwa kwa sauti yako. Hivyo hutahitaji Internet kila unapotaka kupata transposition :-)',
 
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
@@ -217,6 +217,15 @@ return array(
 
 	'Step 2: time to sing!'
 	=> 'Hatua ya 2: tuimbe sasa!',
+
+	'Now I will propose you to sing the chorus of a song in a certain key. Take your guitar and try to sing it in that key.'
+	=> 'Sasa unatakiwa kuimba kiitikio cha wimbo kinachofuata katika ufunguo fulani. Uchukue gitaa yako na kukiimba katika ufunguo ule ule.',
+
+	'If it is too low for you, click on “No, it\'s too low”. If you were able to sing it, click on “Yes”. Then, I will transpose the song so it will be a bit lower, and you should try again. We will keep repeating the exercise until you can\'t sing lower'
+	=> 'Ikiwa sauti iko chini sana kwako, piga “La, chini sana”. Ukifanikiwa kukiimba, piga “Ndiyo”. Kisha, nitakishusha ili kiwe chini kidogo zaidi, na itabidi ujaribu kuimba tena. Tutarudia zoezi hili mpaka ushindwe kuimba chini zaidi.',
+
+	'Try to do your best to sing with your lowest possible voice, since this test tries to find the limits of your voice.'
+	=> 'Ujaribu kujitahidi kuimba na sauti yako ya chini kabisa, kwa sababu kipimo hiki kinatafuta vikomo vya sauti yako.',
 
 	'Understood'
 	=> 'Nimeelewa',

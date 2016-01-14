@@ -138,7 +138,7 @@ return array(
 	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
 	=> 'Estas dos transposiciones encajan con tu voz (son equivalentes). La primera tiene acordes más fáciles:',
 	
-	'Beware that this is the best tone for your voice, but might not be the best one for the assembly.'
+	'Beware that this is the best key for your voice, but might not be the best one for the assembly.'
 	=> 'Ten en cuenta que este es el tono óptimo para tu voz, pero podría no ser el mejor para la asamblea.',
 
 	'with capo %n%'
@@ -242,7 +242,7 @@ return array(
 	'Step 2: time to sing!'
 	=> 'Paso 2: te toca cantar',
 
-	'Now I will propose you to sing the chorus of a song in a certain tone. Take your guitar and try to sing it in that tone.'
+	'Now I will propose you to sing the chorus of a song in a certain key. Take your guitar and try to sing it in that key.'
 	=> 'Ahora te voy a proponer que cantes el estribillo de un canto en cierto tono. Debes coger la guitarra e intentar cantarlo en ese tono.',
 
 	'If it is too low for you, click on “No, it\'s too low”. If you were able to sing it, click on “Yes”. Then, I will transpose the song so it will be a bit lower, and you should try again. We will keep repeating the exercise until you can\'t sing lower'
