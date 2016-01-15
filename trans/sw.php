@@ -13,7 +13,7 @@ return array(
 	=> 'Ondoka',
 
 	'Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'
-	=> 'Neo-Transposer inabadilisha yenyewe nyimbo za Njia ya Neokatekumenato kwa ajili yako, ili zifae sauti yako kikamilifu.',
+	=> 'Neo-Transposer inabadilisha yenyewe nyimbo za Njia ya Neokatekumenato kwa ajili yako, ili ziendane na sauti yako kikamilifu.',
 
 	'Transpose chords'
 	=> 'Transportar acordes',
@@ -98,7 +98,7 @@ return array(
 	=> 'Nyimbo za Njia ya Neokatekumenato',
 
 	'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.'
-	=> 'Nyimbo na zaburi za Njia ya Neokatekumenato kwa %lang%. Neo-Transposer inabadilisha yenyewe ufunguo za nyimbo ili zikae kwenye sauti yako binafsi.',
+	=> 'Nyimbo na zaburi za Njia ya Neokatekumenato kwa %lang%. Neo-Transposer inabadilisha yenyewe ufunguo za nyimbo ili ziendane na sauti yako binafsi.',
 
 	'Other languages'
 	=> 'Lugha nyingine',
@@ -141,7 +141,7 @@ return array(
 	=> '(kordi kama kwenye kitabu)',
 	
 	'This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:'
-	=> 'Transposition hii iko %difference% kidogo, lakini kordi zake ni rahisi zaidi na pia inafaa kwa sauti yako:',
+	=> 'Transposition hii iko %difference% kidogo, lakini kordi zake ni rahisi zaidi na pia inaendana na sauti yako:',
 	
 	'higher'
 	=> 'juu zaidi',
