@@ -53,29 +53,18 @@ return array(
 	'<span>I do know</span> my voice range'
 	=> '<span>Sí conozco</span> mi tesitura de voz',
 
-	//User Book
-	'Choose language'
-	=> 'Selecciona idioma',
-
-	//User settings
-	'Settings'
-	=> 'Configuración',
-
 	'Welcome to %software%'
 	=> 'Bienvenido a %software%',
 
 	'This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.'
 	=> 'Este software calcula la transposición perfecta de cada canto para <em>tu</em> voz. Pero para ello, necesita saber tu tesitura.',
 
-	'Which is the lowest note that you can sing? And the highest one?'
-	=> '¿Cuál es la nota más grave que puedes cantar? ¿Y la más aguda?',
-
 	'Lowest:'
 	=> 'Más grave:',
 	
 	'Highest:'
 	=> 'Más aguda:',
-	
+
 	'{1}octave|]1,Inf]octaves'
 	=> '{1}octava|]1,Inf]octavas',
 	
@@ -84,7 +73,7 @@ return array(
 
 	'If you don\'t know your highest and lowest note, click here'
 	=> 'Si no sabes tu nota mínima y máxima, haz click aquí',
-	
+
 	'We are ready!'
 	=> '¡Todo listo!',
 
@@ -96,6 +85,10 @@ return array(
 
 	'Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.'
 	=> 'Cada persona tiene una voz diferente: unos cantan más grave, otros más agudo. Conocer tu tesitura de voz es saber exactamente los límites de tu voz: a qué nota eres capaz de llegar por abajo (grave) y por arriba (agudo).',
+
+	//User Book
+	'Choose language'
+	=> 'Selecciona idioma',
 
 	//Book
 	'Songs of the Neocatechumenal Way in %lang%'
@@ -116,9 +109,6 @@ return array(
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
 	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',
 
-	'The <span itemprop="name">%book_title%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">have been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>'
-	=> 'Los <span itemprop="name">%book_title%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">han sido transportados por <span itemprop="reviewCount">%users%</span> usuarios, con una puntuación de <span itemprop="ratingValue">%rating%</span>/5.</span>',
-
 	'<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won\'t need Internet every time you need to check a transposition :-)'
 	=> '<strong>NUEVO: <a href="%url%">Descarga todos los cantos</a></strong> transportados para tu voz. Así no necesitarás conexión a Internet cada vez que quieras consultar un canto :-)',
 
@@ -137,7 +127,7 @@ return array(
 	
 	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
 	=> 'Estas dos transposiciones encajan con tu voz (son equivalentes). La primera tiene acordes más fáciles:',
-	
+
 	'Beware that this is the best key for your voice, but might not be the best one for the assembly.'
 	=> 'Ten en cuenta que este es el tono óptimo para tu voz, pero podría no ser el mejor para la asamblea.',
 
@@ -146,7 +136,7 @@ return array(
 	
 	'no capo'
 	=> 'sin capo',
-	
+
 	'(same chords as in the book)'
 	=> '(mismos acordes que en el libro)',
 	
@@ -161,7 +151,7 @@ return array(
 
 	'Original chords:'
 	=> 'Original:',
-	
+
 	'Transposed:'
 	=> 'Transportado:',
 
@@ -171,17 +161,17 @@ return array(
 	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
 	=> 'Neo-Transposer te ayuda a transportar automáticamente los acordes de <strong>%song%</strong> para que encajen con tu voz. ¡Escribe tu e-mail, sigue las instrucciones y tendrás todos los cantos del Camino Neocatecumenal transportados!',
 
-	'<span itemprop="name">%song%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">has been transposed by <span itemprop="reviewCount">%users%</span> users, with a rating of <span itemprop="ratingValue">%rating%</span>/5.</span>'
-	=> '<span itemprop="name">%song%</span> <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">ha sido transportado por <span itemprop="reviewCount">%users%</span> usuarios, con un éxito de <span itemprop="ratingValue">%rating%</span>/5.</span>',
+	'Yes'
+	=> 'Sí',
 
 	'It has worked'
 	=> 'Ha funcionado',
 
-	'It hasn\'t worked'
-	=> 'No ha funcionado',
-
 	'No'
 	=> 'No',
+
+	'It hasn\'t worked'
+	=> 'No ha funcionado',
 
 	'Happy to know that! :-)'
 	=> '¡Me alegro! :-)',
@@ -214,11 +204,17 @@ return array(
 	'I have male voice'
 	=> 'Tengo voz de hombre',
 
+	'I have female voice'
+	=> 'Tengo voz de mujer',
+
 	'My voice is higher than most of men'
 	=> 'Tengo voz más aguda que la mayoría de hombres',
 
 	'My voice is lower than most of men'
 	=> 'Tengo voz más grave que la mayoría de hombres',
+
+	'Neither higher nor lower than most of men / I don\'t know'
+	=> 'Ni más grave ni más aguda que la mayoría de los hombres / no sé',
 
 	'My voice is higher than most of women'
 	=> 'Tengo voz más aguda que la mayoría de mujeres',
@@ -226,19 +222,14 @@ return array(
 	'My voice is lower than most of women'
 	=> 'Tengo voz más grave que la mayoría de mujeres',
 
-	'Neither higher nor lower than most of men / I don\'t know'
-	=> 'Ni más grave ni más aguda que la mayoría de los hombres / no sé',
-
 	'Neither higher nor lower than most of women / I don\'t know'
 	=> 'Ni más grave ni más aguda que la mayoría de las mujeres / no sé',
-
-	'I have female voice'
-	=> 'Tengo voz de mujer',
 
 	'Next step &rarr;'
 	=> 'Siguiente paso &rarr;',
 
 	// Wizard empiric instructions
+
 	'Step 2: time to sing!'
 	=> 'Paso 2: te toca cantar',
 
@@ -261,14 +252,11 @@ return array(
 	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won\'t be able to sing loud enough in the community!'
 	=> 'Intenta cantar el siguiente estribillo en <strong class="blink">%song_key% %song_capo%</strong> con los acordes siguientes. Recuerda: debes cantarlo por abajo, con voz grave, pero sin bajar demasiado, o no podrás cantar a un volumen aceptable.',
 
-	'Yes'
-	=> 'Sí',
+	'Could you sing it?'
+	=> '¿Has podido cantarlo?',
 
 	'No, that\'s too low'
 	=> 'No, es muy bajo',
-
-	'Could you sing it?'
-	=> '¿Has podido cantarlo?',
 
 	'Well, that is a bit strange'
 	=> 'Eso es un poco extraño',
@@ -289,6 +277,7 @@ return array(
 	=> 'Ir al siguiente paso',
 
 	//Wizard empiric: highest note
+
 	'Step 3: let\'s find your highest note'
 	=> 'Paso 3: busquemos tu nota más aguda',
 

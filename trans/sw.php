@@ -11,21 +11,27 @@ return array(
 
 	'Log-out'
 	=> 'Ondoka',
-/*
+
 	'Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'
-	=> 'Neo-Transposer transporta automáticamente los cantos del Camino por ti, para que encajen perfectamente con tu voz.',
-*/
+	=> 'Neo-Transposer inabadilisha yenyewe nyimbo za Njia ya Neokatekumenato kwa ajili yako, ili zifae sauti yako kikamilifu.',
+
+	'Transpose chords'
+	=> 'Transportar acordes',
+
 	//Login
-	'Transpose chords of the songs of the Neocatechumenal Way'
+	'Transpose the songs of the Neocatechumenal Way · Neo-Transposer'
 	=> 'Badilia ufunguo wa kordi ya nyimbo za Njia ya Neokatekumenato',
+
+	'Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!'
+	=> 'Badilisha ufunguo wa nyimbo za Njia ya Neokatekumenato na Neo-Transposer. Kordi kamili kwa sauti yako!',
 
 	'<span>It\'s not hard to transpose the song. What is hard is</span><span>to know to which tone should I transpose it <strong>for my voice</strong>.</span>'
 	=> '<span>Sio shida kubadilisha funguo za nyimbo. Shida ni kujua ufunguo gani ni bora kwa <strong>sauti yangu</strong>?</span>',
-/*
-	'Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!'
-	=> 'Neo-Transposer calcula, en base a <strong>tu propia voz</strong>, la transposición perfecta para cada canto del Camino. Así de sencillo. Además, te ofrece alternativas para poder tocar los cantos con los acordes más fáciles. ¡Se acabaron las complicaciones!',
 
-*/	'Please, type your e-mail:'
+	'Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!'
+	=> 'Neo-Transposer inahesabu transposition kamili kwa kila wimbo wa Njia kulingana na sauti yako binafsi. Rahisi sana! Pia inakutolea kordi rahisi zaidi. Usi&shy;sumbu&shy;liwe tena na mambo ya kordi na sauti!',
+
+	'Please, type your e-mail:'
 	=> 'Weka anwani yako ya barua pepe:',
 
 	'Enter'
@@ -33,6 +39,9 @@ return array(
 
 	'That e-mail doesn\'t look good. Please, re-type it.'
 	=> 'Anwani ya barua pepe uliyoingiza si sahihi.',
+
+	/*'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.'
+	=> 'Esta página web es iniciativa personal de un miembro del Camino Neocatecumenal pero NO representa oficialmente ni está afiliada de ningún modo al Camino Neocatecumenal o a sus responsables. El libro de cantos “Resucitó” es &copy; Kiko Argüello 2014.',*/
 
 	//User voice
 	'Your voice'
@@ -47,28 +56,14 @@ return array(
 	'Welcome to %software%'
 	=> 'Karibu kwenye %software%',
 
-	/*'This software analyses the songs and your voice, giving you the perfect transposition for each song, according to your voice. But to do so, first I need to know your voice.'
-	=> 'Software hii inazichunguza nyimbo na sauti yako, ikifanya hesabu kwa kubadilia ufunguo wa nyimbo kulingana na sauti yako binafsi. Lakini kwanza tujue mwelekeo wa sauti yako.',
-*/
 	'This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.'
 	=> 'Software hii inahesabu transposition bora kwa kila wimbo kulingana na sauti <em>yako</em> binafsi. Lakini kwanza tujue nota za sauti yako.',
 
-/*
-	'Which is the lowest note that you can sing? And the highest one?'
-	=> '¿Cuál es la nota más grave que puedes cantar? ¿Y la más aguda?',
-
 	'Lowest:'
-	=> 'Más grave:',
+	=> 'Ya chini:',
 	
 	'Highest:'
-	=> 'Más aguda:',
-	*/
-
-	'What is the voice range?'
-	=> 'Nota za sauti ni kitu gani?',
-
-	'Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.'
-	=> 'Kila mmoja ana sauti yake: wengine wanaimba na sauti ya juu, wengine na ya chini. Kujua nota za sauti yako maana yake kujua bila kubabaika vikomo vya sauti yako: nota gani ya chini na nota gani ya juu unaweza kufikia.',
+	=> 'Ya juu:',
 
 	'{1}octave|]1,Inf]octaves'
 	=> '{1}oktava|]1,Inf]oktavas',
@@ -76,12 +71,20 @@ return array(
 	'oct'
 	=> 'okt',
 
+	'If you don\'t know your highest and lowest note, click here'
+	=> 'Usipozijua nota za sauti yako, piga click hapa.',
+
 	'We are ready!'
 	=> 'Tayari!',
 
-/*	'You have to select a highest note which is higher than the lowest one.'
-	=> 'Debes seleccionar una nota máxima que sea más alta que la mínima.',
-*/
+	'Are you sure that is your real voice range? If you don\'t know, you can use the assistant to measure it.'
+	=> 'Una uhakika ya nota hizo? Usipozijua unaweza kuzipima hapa hivi.',
+
+	'What is the voice range?'
+	=> 'Nota za sauti ni kitu gani?',
+
+	'Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.'
+	=> 'Kila mmoja ana sauti yake: wengine wanaimba na sauti ya juu, wengine na ya chini. Kujua nota za sauti yako maana yake kujua bila kubabaika vikomo vya sauti yako: nota gani ya chini na nota gani ya juu unaweza kufikia.',
 
 	//User Book
 	'Choose language'
@@ -94,15 +97,17 @@ return array(
 	'Songs of the Neocatechumenal Way'
 	=> 'Nyimbo za Njia ya Neokatekumenato',
 
+	'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.'
+	=> 'Nyimbo na zaburi za Njia ya Neokatekumenato kwa %lang%. Neo-Transposer inabadilisha yenyewe ufunguo za nyimbo ili zikae kwenye sauti yako binafsi.',
+
 	'Other languages'
 	=> 'Lugha nyingine',
-/*
-	'You have reported the proposed transposition as valid'
+
+/*	'You have reported the proposed transposition as valid'
 	=> 'Has reportado los acordes propuestos como válidos',
 
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
-	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',
-*/
+	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',*/
 
 	'<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won\'t need Internet every time you need to check a transposition :-)'
 	=> '<strong>NEW: <a href="%url%">Jipatie ripoti ya nyimbo zote</a></strong> na kordi zilizobadilishwa kwa sauti yako. Hivyo hutahitaji Internet kila unapotaka kupata transposition :-)',
@@ -120,9 +125,9 @@ return array(
 	'Change'
 	=> 'Geuza',
 	
-/*	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
-	=> 'Estas dos transposiciones encajan con tu voz (son equivalentes). La primera tiene acordes más fáciles:',
-*/
+	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
+	=> 'Imba wimbo huu ukitumia kordi zinazofuata. Chaguo la kwanza lina kordi rahisi zaidi:',
+
 	'Beware that this is the best tone for your voice, but might not be the best one for the assembly.'
 	=> 'Kumbuka: toni hii ni bora kwa sauti yako binafsi, lakini labda haitakuwa nzuri kwa watu wa kusanyiko.',
 
@@ -134,25 +139,36 @@ return array(
 
 	'(same chords as in the book)'
 	=> '(kordi kama kwenye kitabu)',
-/*	
+	
 	'This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:'
-	=> 'Esta otra transposición es un poco %difference%, pero tiene acordes más fáciles y puede venir bien a tu voz:',
+	=> 'Transposition hii iko %difference% kidogo, lakini kordi zake ni rahisi zaidi na pia inafaa kwa sauti yako:',
 	
 	'higher'
-	=> 'más aguda',
+	=> 'juu zaidi',
 
 	'lower'
-	=> 'más grave',
-*/
-	
+	=> 'chini ',
+
+	'Original chords:'
+	=> 'Kwenye kitabu:',
+
+	'Transposed:'
+	=> 'Kwa kubadili ufunguo:', //REVISAR
+
+	'Show voice chart'
+	=> 'Onyesha chati ya sauti',
+
+	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
+	=> 'Neo-Transposer inakusaidia kwa kubadilisha ufunguo ya kordi za <strong>%song%</strong> ili zifae sauti yako. ¡Andika barua pepe yako, fuata maelekezo na utapata mara moja kordi za nyimbo zote za Njia ya Neokatekumenato!',
+
 	'Yes'
 	=> 'Ndiyo',
 
-	'No'
-	=> 'Hapana',
-
 	'It has worked'
 	=> 'Nimefanikiwa kuimba',
+
+	'No'
+	=> 'Hapana',
 
 	'It hasn\'t worked'
 	=> 'Sijafanikiwa',
@@ -160,18 +176,17 @@ return array(
 	'Happy to know that! :-)'
 	=> 'Nafurahi kwa hayo :-)',
 
-	'Original chords:'
-	=> 'Kwenye kitabu:',
-	
-	'Transposed:'
-	=> 'Kwa kubadili ufunguo:', //REVISAR
+	'It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.'
+	=> 'Inaonekana hujapima vizuri sauti yako. Tafadhali, <a href="%url%">piga hapa na fuata maelekezo</a>.',
 
-	'Show voice chart'
-	=> 'Onyesha chati ya sauti',
+	'Maybe you didn\'t measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.'
+	=> 'Labda hujapima vizuri sauti yako. <a href="%url%">Piga hapa kwa kuipima tena</a>.',
 
-/*	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
-	=> 'Neo-Transposer te ayuda a transportar automáticamente los acordes de <strong>%song%</strong> para que encajen con tu voz. ¡Escribe tu e-mail, sigue las instrucciones y tendrás todos los cantos del Camino Neocatecumenal transportados!'
-*/
+/*	'Maybe you are not singing the song the same way it was analysed for the application'
+	=> 'Quizá no lo has cantado de la misma forma que ha sido analizado para esta aplicación.',
+
+	'Maybe you are not singing in the same tone as the guitar'
+	=> 'Quizá no estás cantando en el mismo tono que la guitarra.',*/
 
 	//Wizard first step
 	'Voice measure wizard'
@@ -192,23 +207,23 @@ return array(
 	'I have female voice'
 	=> 'Sauti yangu ni ya kike',
 
-	'Neither higher nor lower than most of men / I don\'t know'
-	=> 'Wala juu wala chini kuliko wanaume wengi / sijui',
-
 	'My voice is higher than most of men'
 	=> 'Sauti yangu ni ya juu kuliko wanaume wengi',
 
 	'My voice is lower than most of men'
 	=> 'Sauti yangu ni ya chini kuliko wanaume wengi',
 
-	'Neither higher nor lower than most of women / I don\'t know'
-	=> 'Wala juu wala chini kuliko wanawake wengi / sijui',
+	'Neither higher nor lower than most of men / I don\'t know'
+	=> 'Wala juu wala chini kuliko wanaume wengi / sijui',
 
 	'My voice is higher than most of women'
 	=> 'Sauti yangu ni ya juu kuliko wanawake wengi',
 
 	'My voice is lower than most of women'
 	=> 'Sauti yangu ni ya chini kuliko wanawake wengi',
+
+	'Neither higher nor lower than most of women / I don\'t know'
+	=> 'Wala juu wala chini kuliko wanawake wengi / sijui',
 
 	'Next step &rarr;'
 	=> 'Inayofuata &rarr;',
@@ -229,7 +244,7 @@ return array(
 
 	'Understood'
 	=> 'Nimeelewa',
-	
+
 	//Wizard empiric: lowest note
 	'Step 2: let\'s find your lowest note'
 	=> 'Hatua ya 2: kutafuta nota yako ya chini',
@@ -244,14 +259,23 @@ return array(
 	=> 'La, chini sana',
 
 /*	'Well, that is a bit strange'
-	=> 'Haiwezekani',*/
+	=> 'Eso es un poco extraño',
+
+	'According to the voice you have chosen in the previous step, that tone should not be too low. Maybe you should go back and choose better which type of voice is yours... or maybe simply repeat the test making sure that you are singing in the same tone as the guitar.'
+	=> 'Según la voz que has definido, ese tono no debería ser demasiado bajo para ti. Quizá debas volver atrás y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba asegurándote de que cantas en el mismo tono que la guitarra.',*/
+
+	'Change my voice type'
+	=> 'Badilisha aina ya sauti yangu',
 
 	'Repeat the test'
 	=> 'Rudia tena kipimo',
 
+/*	'If you have chosen properly your voice in the previous step and you have sang the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type... or if you are sure that this super-low voice is yours, just go to the next step:'
+	=> 'Si has elegido correctamente tu voz en el paso anterior y has cantado en todas las pruebas en el tono correcto con voz grave, es prácticamente imposible que puedas cantar más grave de eso. Quizá debas volver al paso anterior y elegir mejor qué tipo de voz es la tuya... o si estás seguro de que esa voz de ultratumba es la tuya, pasa al siguiente paso:',*/
+
 	'Go to the next step'
 	=> 'Kwenda hatua inayofuata',
-	
+
 	//Wizard empiric: highest note
 
 	'Step 3: let\'s find your highest note'
@@ -262,7 +286,19 @@ return array(
 
 	'No, that\'s too high'
 	=> 'La, ni juu sana',
-	
+
+/*	'According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.'
+	=> 'Según la voz que has definido, este tono no debería ser demasiado alto para ti. Quizá debas volver al primer paso y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba cantando en el mismo tono que la guitarra.',
+
+	'That\'s not possible...'
+	=> 'Eso no es posible...',
+
+	'You have clicked "Yes" many times, but I don\'t think it\'s really possible that you can sing that high. Please verify that you are following properly the steps, or click on "Finish here" if you want to finish the test.'
+	=> 'Has hecho click en "Sí" muchas veces, pero no es probable que puedas cantar tan alto. Por favor, comprueba que has seguido correctamente los pasos, o haz click en "Terminar aquí" si quieres finalizar la prueba.',
+
+	'Finish here'
+	=> 'Terminar aquí',*/
+
 	//Wizard: finish
 	'We are done!'
 	=> 'Tupo tayari!',
@@ -284,7 +320,7 @@ return array(
 	=> '(jinsi ilivyo)',
 
 	'C = capo. If not written, no capo should be used.'
-	=> 'C = capo. Kama haijaandikwa maana yake haitumiki.',
+	=> 'C = capo. Kama haijaandikwa, maana yake haitumiki.',
 
 	'Print'
 	=> 'Chapa',
@@ -292,4 +328,6 @@ return array(
 	'Download'
 	=> 'Download',
 
+	'Transpositions'
+	=> 'Transpositions',
 );
