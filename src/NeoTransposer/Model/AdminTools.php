@@ -68,12 +68,25 @@ class AdminTools
 		{
 			if ($song['lowest_note'] != $nc->lowestNote(array($song['lowest_note'], $song['highest_note'])))
 			{
-				$output[] = $song['id_song'] . ' ' . $song['lowest_note'] . ' is higher than ' . $song['highest_note'] . '!!!';
+				$output[] = $song['id_song'] . ' ' . $song['lowest_note'] . ' is higher than ' . $song['highest_note'] . '!';
 			}
 
 			if ($song['lowest_note'] == $song['highest_note'])
 			{
-				$output[] = $song['id_song'] . ' highest_note == lowest_note !!';
+				$output[] = $song['id_song'] . ' highest_note == lowest_note!';
+			}
+
+			if (!empty($song['lowest_note_assembly']) && !empty($song['highest_note_assembly']))
+			{
+				if (0 < $nc->distanceWithOctave($song['lowest_note'], $song['lowest_note_assembly']))
+				{
+					$output[] = $song['id_song'] . ' lowest_note_assembly < lowest_note!';
+				}
+
+				if (0 > $nc->distanceWithOctave($song['highest_note'], $song['highest_note_assembly']))
+				{
+					$output[] = $song['id_song'] . ' highest_note < highest_note_assembly!';
+				}
 			}
 		}
 
