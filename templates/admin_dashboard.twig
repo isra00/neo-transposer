@@ -100,6 +100,7 @@
 			<th>Country</th>
 			<th>Performance</th>
 			<th>%</th>
+			<th>good</th>
 		</tr></thead>
 
 		<tbody>
@@ -115,7 +116,8 @@
 						{% if perf.no -%}<span class="no" style="width: {{ ((perf.no / perf.total) * 100)|round }}px">{{ perf.no }}</span>{%- endif %}
 					</div>
 				</td>
-				<td>{{ perf.performance|round }}%</td>
+				<td>{{ perf.performance|round }}<small>%</small></td>
+				<td>{{ (perf.good_users * 100)|round }}<small>%</small></td>
 			</tr>
 	{% endfor %}
 		</tbody>
@@ -169,14 +171,14 @@
 						{% if day.c_no %}<span class="no" style="width: {{ ((day.c_no / day.c_total) * 100)|round }}px">{{ day.c_no }}</span>{% endif %}
 					</div>
 				</td>
-				<td>{{ day.c_performance|round }}%</td>
+				<td>{{ day.c_performance|round }}<small>%</small></td>
 				<td>
 					<div class="feedback-graph">
 						{% if day.d_yes %}<span class="yes" style="width: {{ ((day.d_yes / day.d_total) * 100)|round }}px">{{ day.d_yes }}</span>{% endif %}
 						{% if day.d_no %}<span class="no" style="width: {{ ((day.d_no / day.d_total) * 100)|round }}px">{{ day.d_no }}</span>{% endif %}
 					</div>
 				</td>
-				<td>{{ day.d_performance|round }}%</td>
+				<td>{{ day.d_performance|round }}<small>%</small></td>
 			</tr>
 	{% endfor %}
 		</tbody>

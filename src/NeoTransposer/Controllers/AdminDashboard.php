@@ -340,11 +340,34 @@ where not country is null
 group by country
 order by n desc
 SQL;
+
 		$countries = $this->app['db']->fetchAll($sql);
 
 		$performance = array();
 
 		$country_names = $this->getCountryNamesList();
+
+		$sql = <<<SQL
+SELECT user.country, COUNT(id_user) total, good
+FROM 
+  user
+JOIN
+  (
+    SELECT country, COUNT(id_user) good 
+    FROM user 
+    WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1
+    GROUP BY user.country
+  ) goods ON goods.country = user.country
+GROUP BY user.country order by total desc
+SQL;
+
+		$good_users_country_raw = $this->app['db']->fetchAll($sql);
+
+		$good_users_country = array();
+		foreach ($good_users_country_raw as $row)
+		{
+			$good_users_country[$row['country']] = $row['good'] / $row['total'];
+		}
 
 		foreach ($countries as $country)
 		{
@@ -374,7 +397,8 @@ SQL;
 			if ($countryPerformance[0]['total'] > 5)
 			{
 				$performance[$country] = $countryPerformance[0];
-				$performance[$country]['country_name'] = $country_names[$country];
+				$performance[$country]['country_name'] 	= $country_names[$country];
+				$performance[$country]['good_users']	= $good_users_country[$country];
 			}
 		}
 
