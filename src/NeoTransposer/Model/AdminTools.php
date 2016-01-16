@@ -51,7 +51,13 @@ class AdminTools
 	}
 
 	/**
-	 * Check songs that have lower_note > higher_note
+	 * Check songs that have one of the following conditions:
+	 * - lowest_note > highest_note 
+	 * - lowest_note == highest_note
+	 * - lowest_note_assembly > highest_note_assembly
+	 * - lowest_note_assembly == highest_note_assembly
+	 * - lowest_note_assembly < lowest_note
+	 * - highest_note_assembly > highest_note
 	 * 
 	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return string                     Check results, to be displayed.
@@ -78,14 +84,24 @@ class AdminTools
 
 			if (!empty($song['lowest_note_assembly']) && !empty($song['highest_note_assembly']))
 			{
-				if (0 < $nc->distanceWithOctave($song['lowest_note'], $song['lowest_note_assembly']))
+				if ($song['lowest_note_assembly'] != $nc->lowestNote(array($song['lowest_note_assembly'], $song['highest_note_assembly'])))
+				{
+					$output[] = $song['id_song'] . ' assembly lowest_note ' . $song['lowest_note_assembly'] . ' is higher than ' . $song['highest_note_assembly'] . '!';
+				}
+
+				if ($song['lowest_note_assembly'] == $song['highest_note_assembly'])
+				{
+					$output[] = $song['id_song'] . ' highest_note_assembly == lowest_note_assembly!';
+				}
+
+				if (0 > $nc->distanceWithOctave($song['lowest_note_assembly'], $song['lowest_note']))
 				{
 					$output[] = $song['id_song'] . ' lowest_note_assembly < lowest_note!';
 				}
 
 				if (0 > $nc->distanceWithOctave($song['highest_note'], $song['highest_note_assembly']))
 				{
-					$output[] = $song['id_song'] . ' highest_note < highest_note_assembly!';
+					$output[] = $song['id_song'] . ' highest_note_assembly > highest_note!';
 				}
 			}
 		}
