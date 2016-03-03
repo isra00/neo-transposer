@@ -128,8 +128,8 @@ return array(
 	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
 	=> 'Imba wimbo huu ukitumia kordi zinazofuata. Chaguo la kwanza lina kordi rahisi zaidi:',
 
-	'Beware that this is the best tone for your voice, but might not be the best one for the assembly.'
-	=> 'Kumbuka: toni hii ni bora kwa sauti yako binafsi, lakini labda haitakuwa nzuri kwa watu wa kusanyiko.',
+	'Beware that this is the best key for your voice, but might not be the best one for the assembly.'
+	=> 'Kumbuka: ufunguo huu ni bora kwa sauti yako binafsi, lakini labda haitakuwa mzuri kwa watu wa kusanyiko kwa jumla.',
 
 	'with capo %n%'
 	=> 'capo %n%',
