@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use NeoTransposer\Controllers;
 use \NeoTransposer\NeoApp;
 use \NeoTransposer\Model\SongTextForWizard;
+use \NeoTransposer\Model\AutomaticTransposer;
 
 /**
  * Wizard Empiric: measure the user's voice range through an empirical test.
@@ -83,7 +84,7 @@ class WizardEmpiric
 			$action_yes = 'tooLow';
 		}
 		
-		$tpl = $this->prepareSongForTest('lowest', $app, false, true);
+		$tpl = $this->prepareSongForTest('lowest', $app, AutomaticTransposer::FORCE_LOWEST);
 
 		return $app->render('wizard_empiric_lowest.twig', array_merge($tpl, array(
 			'action_yes'	=> $action_yes,
@@ -109,22 +110,22 @@ class WizardEmpiric
 			$app['neouser']->wizard_highest_attempts++;
 		}
 
-		// If user clicks "yes" many times, we alert...
+		// If user clicks "yes" many times, he/she will reach the highest possible note (B4)!
 		if (end($this->nc->numbered_scale) == $app['neouser']->highest_note)
 		{
 			$action_yes = 'tooHigh';
 		}
 
-		// If no, we recover the last one and pass to the next step
-		// ...and if after being alerted that B4 is too much, decides to continue,
-		// stop here and force B4.
+		// If not, we recover the last one and pass to the next step
+		// ...and if after being alerted that B4 is too much, he/she decides to continue, stop here 
+		// and force B4.
 		if ('no' == $req->get('can_sing') || $app['neouser']->highest_note == 'C1')
 		{
 			$app['neouser']->highest_note = $this->nc->transposeNote($app['neouser']->highest_note, -1);
 			return $app->redirect($app['url_generator']->generate('wizard_finish'));
 		}
 
-		$tpl = $this->prepareSongForTest('highest', $app, true);
+		$tpl = $this->prepareSongForTest('highest', $app, AutomaticTransposer::FORCE_HIGHEST);
 
 		return $app->render('wizard_empiric_highest.twig', array_merge($tpl, array(
 			'action_yes'	=> $action_yes,
@@ -132,15 +133,12 @@ class WizardEmpiric
 		)));
 	}
 
-	public function prepareSongForTest($wizard_config_song, NeoApp $app, $forceHighestNote=false)
+	public function prepareSongForTest($wizard_config_song, NeoApp $app, $forceVoiceLimit=false)
 	{
 		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
 		$transposedSong = \NeoTransposer\Model\TransposedSong::create($wizard_config_song['id_song'], $app);
-		$transposedSong->transpose(
-			$forceHighestNote,
-			!empty($wizard_config_song['override_highest_note']) ? $wizard_config_song['override_highest_note'] : null
-		);
+		$transposedSong->transpose($forceVoiceLimit);
 
 		$transposedChords = $transposedSong->transpositions[0]->chordsForPrint;
 

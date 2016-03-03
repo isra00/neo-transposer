@@ -96,4 +96,36 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
             $transposer->findAlternativeNotEquivalent()
         );
     }
+
+    public function testForceHighestVoice()
+    {
+        $transposer = new AutomaticTransposer(
+            'A1', 'E3', 'E2', 'A2', array('Am', 'G'), false
+        );
+
+        $expected = new Transposition(
+            array('Em', 'D'), 0, false, 7, 'B2', 'E3', 0
+        );
+
+        $this->assertEquals(
+            $expected,
+            $transposer->getPerfectTransposition(AutomaticTransposer::FORCE_HIGHEST)
+        );
+    }
+
+    public function testForceLowestVoice()
+    {
+        $transposer = new AutomaticTransposer(
+            'A1', 'E3', 'E2', 'A2', array('Am', 'G'), false
+        );
+
+        $expected = new Transposition(
+            array('Dm', 'C'), 0, false, -7, 'A1', 'D2', 0
+        );
+
+        $this->assertEquals(
+            $expected,
+            $transposer->getPerfectTransposition(AutomaticTransposer::FORCE_LOWEST)
+        );
+    }
 }

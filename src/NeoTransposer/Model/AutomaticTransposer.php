@@ -7,6 +7,9 @@ namespace NeoTransposer\Model;
  */
 class AutomaticTransposer
 {
+	const FORCE_LOWEST  = 1;
+	const FORCE_HIGHEST = 2;
+
 	/**
 	 * Instance of NotesCalculator used for calculating transpositions.
 	 * @var NotesCalculator
@@ -76,11 +79,10 @@ class AutomaticTransposer
 	 * between the original song lowest note and the ideal position, we
 	 * transpose each chord using that offset.
 	 * 
-	 * @param boolean $forceHighestSingerNote Used only in wizard to find highest note.
-	 * @param boolean $forceLowestSingerNote Used only in wizard to find highest note.
-	 * @return Transposition The transposition matching that voice.
+	 * @param  int 				$forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
+	 * @return Transposition 	The transposition matching that voice.
 	 */
-	function getPerfectTransposition($forceHighestSingerNote=false, $forceLowestSingerNote=false)
+	function getPerfectTransposition($forceVoiceLimit=false)
 	{
 		if (!empty($this->perfectTransposition))
 		{
@@ -106,14 +108,9 @@ class AutomaticTransposer
 			? 0
 			: round(($singer_wideness - $song_wideness) / 2);
 
-		if ($forceHighestSingerNote)
+		if ($forceVoiceLimit)
 		{
-			$offset_from_singer_lowest = $singer_wideness - $song_wideness;
-		}
-		
-		if ($forceLowestSingerNote)
-		{
-			$offset_from_singer_lowest = 0;
+			$offset_from_singer_lowest = ($forceVoiceLimit == self::FORCE_HIGHEST) ? ($singer_wideness - $song_wideness) : 0;
 		}
 
 		/*
@@ -206,15 +203,14 @@ class AutomaticTransposer
 	 * perfect and equivalent transpositions for a given song, sorted by ease.
 	 * 
 	 * @param 	integer $limitTranspositions Limit of equivalent transpositions to return
-	 * @param 	boolean $forceHighestSingerNote Used only in wizard to find highest note.
-	 * @param 	boolean $forceLowestSingerNote Used only in wizard to find lowest note.
+	 * @param  int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 * @return 	array 	Array of Transposition objects, sorted by chord ease.
 	 */
-	function getTranspositions($limitTranspositions=2, $forceHighestSingerNote=false, $forceLowestSingerNote=false)
+	function getTranspositions($limitTranspositions=2, $forceVoiceLimit=false)
 	{
 		if (empty($this->perfectAndEquivalent))
 		{
-			$perfectTransposition = $this->getPerfectTransposition($forceHighestSingerNote, $forceLowestSingerNote);
+			$perfectTransposition = $this->getPerfectTransposition($forceVoiceLimit);
 			$equivalents = $this->findEquivalentsWithCapo($perfectTransposition, $this->original_chords);
 
 			$perfect_and_equivalent = array_merge(array($perfectTransposition), $equivalents);
