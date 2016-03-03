@@ -104,7 +104,7 @@ return array(
 	=> 'Otros idiomas',
 
 	'You have reported the proposed transposition as valid'
-	=> 'Has reportado los acordes propuestos como válidos',
+	=> 'La transposición propuesta te ha funcionado',
 
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
 	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',

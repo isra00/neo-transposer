@@ -141,7 +141,7 @@ return array(
 	=> '(kordi kama kwenye kitabu)',
 	
 	'This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:'
-	=> 'Transposition hii iko %difference% kidogo, lakini kordi zake ni rahisi zaidi na pia inaendana na sauti yako:',
+	=> 'Transposition hii iko %difference% kidogo, lakini kordi zake ni rahisi zaidi, na pia inaendana na sauti yako:',
 	
 	'higher'
 	=> 'juu zaidi',
@@ -153,7 +153,7 @@ return array(
 	=> 'Kwenye kitabu:',
 
 	'Transposed:'
-	=> 'Kwa kubadili ufunguo:', //REVISAR
+	=> 'Ufunguo ukibadilishwa:',
 
 	'Show voice chart'
 	=> 'Onyesha chati ya sauti',
