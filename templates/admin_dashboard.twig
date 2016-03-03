@@ -53,7 +53,7 @@
 	{% for book in song_availability %}
 		<h4 class="data-circle small-circle">
 			<span>{{ app.books[book.id_book].lang_name }}</span> 
-			<b>{{ ((book.current / book.total) * 100)|round }}<small>%</small></b>
+			<b>{{ ((book.current / book.total) * 100)|round(0, 'floor') }}<small>%</small></b>
 		</h4>
 	{% endfor %}
 	</div>
