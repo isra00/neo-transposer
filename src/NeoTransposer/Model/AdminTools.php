@@ -174,4 +174,65 @@ class AdminTools
 
 		return $output;
 	}
+
+
+	/**
+	 * A functional test for detecting changes in the transposition algorithm.
+	 * It generates an AllSongsReport and compares it with a pre-stored result set.
+	 * 
+	 * @todo Implementar detección de cambio de prioridad (p. ej., que la transposición esperada #0
+	 *       ahora es #1 y la esperada #1 es 0).
+	 * 
+	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
+	 * @return string                     Check results (to be displayed).
+	 */
+	public function testAllTranspositions(NeoApp $app)
+	{
+		$allSongsController = new \NeoTransposer\Controllers\AllSongsReport();
+
+		$app['locale'] = 'es';
+
+		//Beware that it will generate a report with the songs of the current locale only.
+		$allSongs = $allSongsController->getAllTranspositions($app);
+
+		$testData = json_decode(
+			file_get_contents($app['neoconfig']['test_all_transpositions_expected']),
+			true
+		);
+
+		$app['neouser']->lowest_note  = $testData['singerLowestVoice'];
+		$app['neouser']->highest_note = $testData['singerHighestVoice'];
+
+		$testResult = array();
+
+		foreach ($allSongs as $transposedSong)
+		{
+			$testResult[$transposedSong->song->idSong] = array(
+				'songLowestNote' 	=> $transposedSong->song->lowestNote,
+				'songHighestNote' 	=> $transposedSong->song->highestNote,
+				'offset' 			=> $transposedSong->transpositions[0]->offset,
+				'lowestNote' 		=> $transposedSong->transpositions[0]->lowestNote,
+				'highestNote' 		=> $transposedSong->transpositions[0]->highestNote,
+				'score' 			=> $transposedSong->transpositions[0]->score,
+				'capo' 				=> $transposedSong->transpositions[0]->getCapo(),
+				'chords'			=> join(',', $transposedSong->transpositions[0]->chords)
+			);
+		}
+
+		$output = '';
+
+		foreach ($testResult as $idSong=>$result)
+		{
+			if ($difference = array_diff($result, $testData['expectedResults'][$idSong]))
+			{
+				$output .= "\n<strong>Song #$idSong</strong>\n";
+				foreach ($difference as $property=>$resultValue)
+				{
+					$output .= "$property:\texpected <em>" . $testData['expectedResults'][$idSong][$property] . '</em> but got <em>' . $resultValue . "</em>\n";
+				}
+			}
+		}
+
+		return empty($output) ? 'Test <strong class="green">SUCCESSFUL</strong>: song transpositions are identical to expected :-)' : $output;
+	}
 }

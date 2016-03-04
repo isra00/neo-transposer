@@ -14,7 +14,7 @@
 	<h2>Admin ops</h2>
 
 	{% if tool_output %}
-	<pre>{{ tool_output }}</pre>
+	<pre>{{ tool_output|raw }}</pre>
 	{% else %}
 	<nav class="admin-tools">
 		<ul>
@@ -28,6 +28,7 @@
 			<li><a href="{{ path(current_route, {'tool': 'checkLowerHigherNotes'}) }}">Check lower-highest notes</a></li>
 			<li><a href="{{ path(current_route, {'tool': 'checkChordOrder'}) }}">Check chord order</a></li>
 			<li><a href="{{ path('chord_correction_panel') }}">Chord correction panel</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'testAllTranspositions'}) }}">Functional test: all transpositions</a></li>
 		</ul>
 
 		<p><a href="{{ url(current_route, { long: 1}) }}" class="btn-neutral">Load long reports ⇲</a></p>

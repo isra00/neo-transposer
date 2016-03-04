@@ -10,7 +10,9 @@ use \NeoTransposer\Model\Song;
  * Read a song from DB, calculate its transpositions and prepare for print.
  *
  * This class is in an upper level than AutomaticTransposer and is intended to
- * be used by controllers such as TransposeSong and WizardEmpiric.
+ * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
+ * 
+ * @todo Rename to SongWithTranspositions? More clarity (transpose* class are too many) and ontological accuracy.
  */
 class TransposedSong
 {

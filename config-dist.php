@@ -36,7 +36,8 @@ return array(
 	'software_name'		=> 'Neo-Transposer',
 	'voice_wizard'		=> include 'config.wizard.php',
 	'templates_dir'		=> __DIR__ . '/templates',
-	'pdf_reports_dir'	=> 'cache-pdf',
+	'test_all_transpositions_expected' => __DIR__ . '/tests/testAllTranspositions.expected.json',
+	'pdf_reports_dir'	=> 'cache-pdf', /* @todo Remove */
 
 	'analytics_id'		=> 'UA-57809429-1',
 
