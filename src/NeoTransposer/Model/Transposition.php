@@ -139,6 +139,12 @@ class Transposition
 		return $this->asBook;
 	}
 
+	/**
+	 * It is necessary to split setter and getter because setter requires NeoApp param, which is not
+	 * available in the template.
+	 * 
+	 * @param NeoApp $app The Silex-Neo app object.
+	 */
 	public function setCapoForPrint(NeoApp $app)
 	{
 		$this->capoForPrint = ($this->capo)
@@ -146,6 +152,12 @@ class Transposition
 				: $app->trans('no capo');
 	}
 
+	/**
+	 * This method should not be invoked from template, because it requires the NeoApp param.
+	 * Template should invoke the public attribute capoForPrint, previously set in the controller.
+	 * 
+	 * @param NeoApp $app The Silex-Neo app object.
+	 */
 	public function getCapoForPrint(NeoApp $app)
 	{
 		if (empty($this->capoForPrint))
