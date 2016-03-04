@@ -126,6 +126,8 @@ class Transposition
 			
 			$this->score += $score;
 		}
+
+		$this->score = round($this->score, 0);
 	}
 
 	public function setAsBook($asBook)
