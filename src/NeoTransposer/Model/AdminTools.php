@@ -190,11 +190,6 @@ class AdminTools
 	{
 		$allSongsController = new \NeoTransposer\Controllers\AllSongsReport();
 
-		$app['locale'] = 'es';
-
-		//Beware that it will generate a report with the songs of the current locale only.
-		$allSongs = $allSongsController->getAllTranspositions($app);
-
 		$testData = json_decode(
 			file_get_contents($app['neoconfig']['test_all_transpositions_expected']),
 			true
@@ -202,6 +197,10 @@ class AdminTools
 
 		$app['neouser']->lowest_note  = $testData['singerLowestVoice'];
 		$app['neouser']->highest_note = $testData['singerHighestVoice'];
+
+		//Beware that it will generate a report with the songs of the current locale only.
+		$app['locale'] = 'es';
+		$allSongs = $allSongsController->getAllTranspositions($app);
 
 		$testResult = array();
 
