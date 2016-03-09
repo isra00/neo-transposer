@@ -10,6 +10,8 @@ use \NeoTransposer\NeoApp;
  */
 class AdminTools
 {
+	protected $testAllTranspositionsBook = 2;
+
 	/**
 	 * Populate the country column of the user table with GeoIP.
 	 * 
@@ -198,9 +200,24 @@ class AdminTools
 		$app['neouser']->lowest_note  = $testData['singerLowestVoice'];
 		$app['neouser']->highest_note = $testData['singerHighestVoice'];
 
-		//Beware that it will generate a report with the songs of the current locale only.
-		$app['locale'] = 'es';
-		$allSongs = $allSongsController->getAllTranspositions($app);
+		$sql = <<<SQL
+SELECT id_song
+FROM song 
+WHERE id_book = ? 
+ORDER BY id_song
+SQL;
+
+		$ids = $app['db']->fetchAll($sql, array($this->testAllTranspositionsBook));
+
+		$allSongs = array();
+
+		foreach ($ids as $id)
+		{
+			$song = TransposedSong::create($id['id_song'], $app);
+			$song->transpose();
+
+			$allSongs[] = $song;
+		}
 
 		$testResult = array();
 
@@ -209,29 +226,91 @@ class AdminTools
 			$testResult[$transposedSong->song->idSong] = array(
 				'songLowestNote' 	=> $transposedSong->song->lowestNote,
 				'songHighestNote' 	=> $transposedSong->song->highestNote,
-				'offset' 			=> $transposedSong->transpositions[0]->offset,
-				'lowestNote' 		=> $transposedSong->transpositions[0]->lowestNote,
-				'highestNote' 		=> $transposedSong->transpositions[0]->highestNote,
-				'score' 			=> $transposedSong->transpositions[0]->score,
-				'capo' 				=> $transposedSong->transpositions[0]->getCapo(),
-				'chords'			=> join(',', $transposedSong->transpositions[0]->chords)
+				'centered1' => array(
+					'offset' 			=> $transposedSong->transpositions[0]->offset,
+					'lowestNote' 		=> $transposedSong->transpositions[0]->lowestNote,
+					'highestNote' 		=> $transposedSong->transpositions[0]->highestNote,
+					'score' 			=> $transposedSong->transpositions[0]->score,
+					'capo' 				=> $transposedSong->transpositions[0]->getCapo(),
+					'chords'			=> join(',', $transposedSong->transpositions[0]->chords)
+				),
+				'centered2' => array(
+					'offset' 			=> $transposedSong->transpositions[1]->offset,
+					'lowestNote' 		=> $transposedSong->transpositions[1]->lowestNote,
+					'highestNote' 		=> $transposedSong->transpositions[1]->highestNote,
+					'score' 			=> $transposedSong->transpositions[1]->score,
+					'capo' 				=> $transposedSong->transpositions[1]->getCapo(),
+					'chords'			=> join(',', $transposedSong->transpositions[1]->chords)
+				)
 			);
+
+			if ($transposedSong->not_equivalent)
+			{
+				$testResult[$transposedSong->song->idSong]['notEquivalent'] = array(
+					'offset' 			=> $transposedSong->not_equivalent->offset,
+					'lowestNote' 		=> $transposedSong->not_equivalent->lowestNote,
+					'highestNote' 		=> $transposedSong->not_equivalent->highestNote,
+					'score' 			=> $transposedSong->not_equivalent->score,
+					'capo' 				=> $transposedSong->not_equivalent->getCapo(),
+					'chords'			=> join(',', $transposedSong->not_equivalent->chords)
+				);
+			}
 		}
 
 		$output = '';
 
 		foreach ($testResult as $idSong=>$result)
 		{
-			if ($difference = array_diff($result, $testData['expectedResults'][$idSong]))
+			if ($difference = $this->diffTestResults($result, $testData['expectedResults'][$idSong]))
 			{
 				$output .= "\n<strong>Song #$idSong</strong>\n";
 				foreach ($difference as $property=>$resultValue)
 				{
-					$output .= "$property:\texpected <em>" . $testData['expectedResults'][$idSong][$property] . '</em> but got <em>' . $resultValue . "</em>\n";
+					if (is_array($resultValue))
+					{
+						$output .= 'Transposition ' . $property . ":\n";
+
+						foreach ($resultValue as $transProperty=>$transResultValue)
+						{
+							$output .= "\t$transProperty: expected <em>" . $testData['expectedResults'][$idSong][$property][$transProperty] . '</em> but got <em>' . $transResultValue . "</em>\n";
+						}
+					}
+					else
+					{
+						$output .= "$property: expected <em>" . $testData['expectedResults'][$idSong][$property] . '</em> but got <em>' . $resultValue . "</em>\n";
+					}
 				}
 			}
 		}
 
 		return empty($output) ? 'Test <strong class="green">SUCCESSFUL</strong>: song transpositions are identical to expected :-)' : $output;
+	}
+
+	protected function diffTestResults($actual, $expected)
+	{
+		$scalarProperties = array('songLowestNote', 'songHighestNote');
+		$arrayProperties = array('centered1', 'centered2', 'notEquivalent');
+
+		$diff = array_diff(
+			array_intersect_key($actual,   array_flip($scalarProperties)),
+			array_intersect_key($expected, array_flip($scalarProperties))
+		);
+
+		$transpositionsDiff = array();
+
+		foreach (array_intersect_key($actual, array_flip($arrayProperties)) as $type=>$transposition)
+		{
+			if ($transDiff = array_diff($transposition, $expected[$type]))
+			{
+				$transpositionsDiff[$type] = $transDiff;
+			}
+		}
+
+		if ($transpositionsDiff)
+		{
+			$diff = array_merge($diff, $transpositionsDiff);
+		}
+
+		return $diff;
 	}
 }
