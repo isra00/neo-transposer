@@ -46,15 +46,19 @@ class AdminDashboard
 					$toolOutput = $tools->refreshCss($app);
 					break;
 
-				case 'testAllTranspositions':
-					$toolOutput = $tools->testAllTranspositions($app);
-					break;
-
 				case 'checkChordOrder':
 					$toolOutput = $tools->checkChordOrder($app);
 					$toolOutput = empty($toolOutput)
 						? 'NO inconsistences found :-)'
 						: 'Songs with problems: ' . implode(', ', $toolOutput);
+					break;
+
+				case 'testAllTranspositions':
+					$toolOutput = $tools->testAllTranspositions($app);
+					break;
+
+				case 'getVoiceRangeOfGoodUsers':
+					$toolOutput = $tools->getVoiceRangeOfGoodUsers($app);
 					break;
 			}
 		}

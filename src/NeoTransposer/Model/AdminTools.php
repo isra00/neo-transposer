@@ -63,6 +63,8 @@ class AdminTools
 	 * 
 	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return string                     Check results, to be displayed.
+	 * 
+	 * @todo Añadir el mismo checkeo para voice range de los usuarios!!!
 	 */
 	public function checkLowerHigherNotes(NeoApp $app)
 	{
@@ -252,12 +254,21 @@ SQL;
 					'highestNote' 		=> $transposedSong->not_equivalent->highestNote,
 					'score' 			=> $transposedSong->not_equivalent->score,
 					'capo' 				=> $transposedSong->not_equivalent->getCapo(),
-					'chords'			=> join(',', $transposedSong->not_equivalent->chords)
+					'deviationFromPerfect' => $transposedSong->not_equivalent->deviationFromPerfect,
+					'chords'			=> join(',', $transposedSong->not_equivalent->chords),
 				);
 			}
 		}
 
 		$output = '';
+
+		if ($missingSongs = array_diff(
+			array_keys($testData['expectedResults']), 
+			array_keys($testResult)
+		))
+		{
+			$output .= '<strong>Missing songs: ' . join(', ', $missingSongs) . "</strong>\n";
+		}
 
 		foreach ($testResult as $idSong=>$result)
 		{
@@ -277,7 +288,19 @@ SQL;
 					}
 					else
 					{
-						$output .= "$property: expected <em>" . $testData['expectedResults'][$idSong][$property] . '</em> but got <em>' . $resultValue . "</em>\n";
+						if (isset($testData['expectedResults'][$idSong][$property]))
+						{
+							if (is_array($testData['expectedResults'][$idSong][$property]))
+							{
+								$testData['expectedResults'][$idSong][$property] = join('; ', $testData['expectedResults'][$idSong][$property]);
+							}
+
+							$output .= "$property: expected <em>" . ((string) $testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
+						}
+						else
+						{
+							$output .= "Unexpected property $property <em>" . $resultValue . "</em> not specified in test data\n";
+						}
 					}
 				}
 			}
@@ -300,6 +323,12 @@ SQL;
 
 		foreach (array_intersect_key($actual, array_flip($arrayProperties)) as $type=>$transposition)
 		{
+			if (!isset($expected[$type]))
+			{
+				$transpositionsDiff[$type] = '[unexpected]';
+				continue;
+			}
+
 			if ($transDiff = array_diff($transposition, $expected[$type]))
 			{
 				$transpositionsDiff[$type] = $transDiff;
@@ -311,6 +340,36 @@ SQL;
 			$diff = array_merge($diff, $transpositionsDiff);
 		}
 
+		$missingProperties = array_diff(array_keys($expected), array_keys($actual));
+
+		if ($missingProperties)
+		{
+			$missingProperties = array_flip($missingProperties);
+			foreach ($missingProperties as &$value)
+			{
+				$value = 'missing';
+			}
+			$diff = array_merge($diff, $missingProperties);
+		}
+
 		return $diff;
+	}
+
+	public function getVoiceRangeOfGoodUsers(NeoApp $app)
+	{
+		$goodUsers = $app['db']->fetchAll('SELECT id_user, wizard_step1, lowest_note, highest_note FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
+		$output = '';
+		
+		$nc = new NotesCalculator;
+
+		foreach ($goodUsers as $user)
+		{
+			$output .= $user['id_user'] . ',' . $user['wizard_step1'] . ',' . $user['lowest_note'] . ","
+			 . array_search($user['lowest_note'], $nc->numbered_scale) . ","
+			 . $user['highest_note'] . ","
+			 . array_search($user['highest_note'], $nc->numbered_scale) . "\n";
+		}
+
+		return $output;
 	}
 }
