@@ -4,6 +4,8 @@ namespace NeoTransposer\Model;
 
 /**
  * Transpose a given song automatically, given the singer's voice.
+ * 
+ * @todo Unify calculation method names: get/find/calculate...
  */
 class AutomaticTransposer
 {
@@ -73,11 +75,13 @@ class AutomaticTransposer
 	/**
 	 * This is the core algorithm for Automatic transposition.
 	 *
-	 * Given the the lowest and highest note of the singer and of the song,
-	 * the algorithm tries to locate the song in the middle of the singer's
-	 * voice range through simple arithmetics: once calculated the offset
-	 * between the original song lowest note and the ideal position, we
+	 * Given the the lowest and highest note of the singer and of the song, the 
+	 * algorithm transposes the song locating its range in the middle of the
+	 * singer's voice range through simple arithmetics: calculate the offset 
+	 * between the original song's lowest note and the ideal position and 
 	 * transpose each chord using that offset.
+	 * 
+	 * @todo Rename to "centered transposition". There is nothing perfect in this world.
 	 * 
 	 * @param  int 				$forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 * @return Transposition 	The transposition matching that voice.
@@ -89,20 +93,24 @@ class AutomaticTransposer
 			return $this->perfectTransposition;
 		}
 
-		/*
-		 * 1) Measure song and singer wideness.
-		 */
-		$song_wideness = $this->nc->distanceWithOctave($this->song_highest_note, $this->song_lowest_note);
-		$singer_wideness = $this->nc->distanceWithOctave($this->singer_highest_note, $this->singer_lowest_note);
+		$song_wideness = $this->nc->distanceWithOctave(
+			$this->song_highest_note, 
+			$this->song_lowest_note
+		);
+		
+		$singer_wideness = $this->nc->distanceWithOctave(
+			$this->singer_highest_note, 
+			$this->singer_lowest_note
+		);
 
 		/*
-		 * 2) Calculate the offset
-		 * 
-		 * If song is wider than singer, we locate it in the bottom, so that when
-		 * the song goes high, the singer can sing one octave down. If not (normally),
-		 * we locate it in the middle, in order to be more comfortable. Note that
-		 * when the middle ((singer_wideness - song_wideness) / 2) is not an
-		 * integer, it will be rounded up.
+		 * The song is located in the center of singer's range, in order to be
+		 * more comfortable. Note that when the middle 
+		 * ((singer_wideness - song_wideness) / 2) is not an integer, it will be
+		 * rounded up. If the song's range is wider than the singer's, it will
+		 * be localted in the bottom, so that the exceeding notes will be high.
+		 * We do this because when it happens, the singer can sing those notes
+		 * one octave down. 
 		 */
 		$offset_from_singer_lowest = ($song_wideness >= $singer_wideness)
 			? 0
@@ -114,21 +122,16 @@ class AutomaticTransposer
 		}
 
 		/*
-		 * 3) Calculate the offset for transposition given the singer's lowest
-		 * note and the song and singer wideness.
+		 * Given the offset_from_singer_lowest, now we calculate the offset for
+		 * transposing the chords.
 		 */
 		$perfect_offset = intval(
 			(-1) * $this->nc->distanceWithOctave($this->song_lowest_note, $this->singer_lowest_note)
 			+ $offset_from_singer_lowest
 		);
 
-		/*
-		 * 4) Transpose the chords with the calculated offset.
-		 */
-		$transported_chords = $this->nc->transposeChords($this->original_chords, $perfect_offset);
-
 		$perfectTransposition = new Transposition(
-			$transported_chords,
+			$this->nc->transposeChords($this->original_chords, $perfect_offset),
 			0,
 			false,
 			$perfect_offset,
@@ -176,7 +179,8 @@ class AutomaticTransposer
 				($transposedChords == $this->original_chords),
 				$transposition->offset,
 				$transposition->lowestNote,
-				$transposition->highestNote
+				$transposition->highestNote,
+				$transposition->deviationFromPerfect
 			);
 		}
 
@@ -237,17 +241,39 @@ class AutomaticTransposer
 	}
 
 	/**
-	 * Find alternative NOT-equivalent, but near (up to 1 semitone up or down) transposition.
+	 * Find surrounding (-1 / 1 semitone) transposition with easier chords.
 	 * 
 	 * @return Transposition A non-equivalent transposition (yes, only one).
 	 */
 	function findAlternativeNotEquivalent()
 	{
-		$near_transpositions = array();
+		$nearTranspositions = $this->getSurroundingTranspositions(
+			$this->offsetsNotEquivalent,
+			$this->getTranspositions()[0]->score
+		);
 
+		if (!empty($nearTranspositions))
+		{
+			$notEquivalent = $this->sortTranspositionsByEase($nearTranspositions);
+			return $notEquivalent[0];
+		}
+	}
+
+	/**
+	 * Get transpositions higher or lower than the centered (perfect).
+	 * 
+	 * @param array		$range				The range in semitones, e.g. [-2, -1]
+	 * @param integer	$maxScore			Return only transpositions with score lower than this.
+	 * @param integer	$reduceSingerLimits	Singer's voice range will be reduced in the top and bottom by this number of semitones.
+	 * @return array	An array of Transposition objects.
+	 */
+	function getSurroundingTranspositions($range, $maxScore, $reduceSingerLimits=false)
+	{
 		$perfectTransposition = $this->getPerfectTransposition();
 
-		foreach ($this->offsetsNotEquivalent as $dif)
+		$nearTranspositions = array();
+
+		foreach ($range as $dif)
 		{
 			$near = new Transposition(
 				$this->nc->transposeChords($perfectTransposition->chords, $dif),
@@ -259,38 +285,61 @@ class AutomaticTransposer
 				$dif
 			);
 
-			if ($this->original_chords == $near->chords)
-			{
-				$near->setAsBook(true);
-			}
+			$nearAndItsEquivalentsWithCapo = $this->sortTranspositionsByEase(
+				array_merge(
+					array($near),
+					$this->findEquivalentsWithCapo($near)
+				)
+			);
 
-			if ($this->first_chord_is_key)
+			foreach ($nearAndItsEquivalentsWithCapo as $notEquivalent)
 			{
-				$near->setAlternativeChords($this->nc);
-			}
 
-			//If it's too low or too high, discard it
-			if ($this->nc->distanceWithOctave($near->lowestNote, $this->singer_lowest_note) < 0)
-			{
-				continue;
-			}
+				if ($this->original_chords == $notEquivalent->chords)
+				{
+					$notEquivalent->setAsBook(true);
+				}
 
-			if ($this->nc->distanceWithOctave($near->highestNote, $this->singer_highest_note) > 0)
-			{
-				continue;
-			}
+				if ($this->first_chord_is_key)
+				{
+					$notEquivalent->setAlternativeChords($this->nc);
+				}
 
-			//If it's not better than the best of the "perfects", discard it
-			$perfectAndEquivalent = $this->getTranspositions();
-			if ($perfectAndEquivalent[0]->score <= $near->score)
-			{
-				continue;
-			}
+				//If it's too low or too high, discard it
+				if ($this->nc->distanceWithOctave($notEquivalent->lowestNote, $this->singer_lowest_note) < 0)
+				{
+					continue;
+				}
 
-			$near_transpositions[] = $near;
+				if ($this->nc->distanceWithOctave($notEquivalent->highestNote, $this->singer_highest_note) > 0)
+				{
+					continue;
+				}
+
+				if ($maxScore <= $notEquivalent->score)
+				{
+					continue;
+				}
+
+				/*
+				 * Disable the non-equivalents with capo. Remove when ready to 
+				 * deploy. How to deploy? First step, prefer always the 
+				 * notEquivalent without capo. This way, no notEquivalent will
+				 * change, but in some cases a notEquivalent with capo will be
+				 * shown where no notEquivalent was being shown (because the
+				 * notEquivalent had no lower score than the lowest centered).
+				 * Second step, think and decide about offering notEquivalents 
+				 * with capo replacing the one without capo if score is lower
+				 */
+				if ($notEquivalent->getCapo())
+				{
+					continue;
+				}
+
+				$nearTranspositions[] = $notEquivalent;
+			}
 		}
 
-		$not_equivalent = $this->sortTranspositionsByEase($near_transpositions);
-		return (!empty($not_equivalent)) ? $not_equivalent[0] : null;
+		return $nearTranspositions;
 	}
 }
