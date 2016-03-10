@@ -86,7 +86,7 @@ class AutomaticTransposer
 	 * @param  int 				$forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 * @return Transposition 	The transposition matching that voice.
 	 */
-	function getPerfectTransposition($forceVoiceLimit=false)
+	public function getPerfectTransposition($forceVoiceLimit=false)
 	{
 		if (!empty($this->perfectTransposition))
 		{
@@ -165,7 +165,7 @@ class AutomaticTransposer
 	 * @param  Transposition $transposition A given transposition without capo.
 	 * @return array Array of <Transposition> with capo from 1 to 5.
 	 */
-	function findEquivalentsWithCapo(Transposition $transposition)
+	public function findEquivalentsWithCapo(Transposition $transposition)
 	{
 		$withCapo = array();
 
@@ -193,7 +193,7 @@ class AutomaticTransposer
 	 * @param  array $transpositions Array of Transpositions, with the score already set.
 	 * @return array The sorted array
 	 */
-	function sortTranspositionsByEase(array $transpositions)
+	public function sortTranspositionsByEase(array $transpositions)
 	{
 		usort($transpositions, function($one, $two) {
 			return ($one->score < $two->score) ? -1 : 1;
@@ -210,7 +210,7 @@ class AutomaticTransposer
 	 * @param  int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 * @return 	array 	Array of Transposition objects, sorted by chord ease.
 	 */
-	function getTranspositions($limitTranspositions=2, $forceVoiceLimit=false)
+	public function getTranspositions($limitTranspositions=2, $forceVoiceLimit=false)
 	{
 		if (empty($this->perfectAndEquivalent))
 		{
@@ -245,7 +245,7 @@ class AutomaticTransposer
 	 * 
 	 * @return Transposition A non-equivalent transposition (yes, only one).
 	 */
-	function findAlternativeNotEquivalent()
+	public function findAlternativeNotEquivalent()
 	{
 		$nearTranspositions = $this->getSurroundingTranspositions(
 			$this->offsetsNotEquivalent,
@@ -267,7 +267,7 @@ class AutomaticTransposer
 	 * @param integer	$reduceSingerLimits	Singer's voice range will be reduced in the top and bottom by this number of semitones.
 	 * @return array	An array of Transposition objects.
 	 */
-	function getSurroundingTranspositions($range, $maxScore, $reduceSingerLimits=false)
+	protected function getSurroundingTranspositions($range, $maxScore, $reduceSingerLimits=false)
 	{
 		$perfectTransposition = $this->getPerfectTransposition();
 
