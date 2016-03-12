@@ -254,7 +254,7 @@ SQL;
 					'highestNote' 		=> $transposedSong->not_equivalent->highestNote,
 					'score' 			=> $transposedSong->not_equivalent->score,
 					'capo' 				=> $transposedSong->not_equivalent->getCapo(),
-					'deviationFromPerfect' => $transposedSong->not_equivalent->deviationFromPerfect,
+					'deviationFromCentered' => $transposedSong->not_equivalent->deviationFromCentered,
 					'chords'			=> join(',', $transposedSong->not_equivalent->chords),
 				);
 			}

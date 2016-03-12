@@ -13,6 +13,7 @@ use \NeoTransposer\Model\Song;
  * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
  * 
  * @todo Rename to SongWithTranspositions? More clarity (transpose* class are too many) and ontological accuracy.
+ * @todo CamelCase-ize
  */
 class TransposedSong
 {
@@ -67,7 +68,7 @@ class TransposedSong
 
 	/**
 	 * Main method to be used by the clients of this class. It returns the
-	 * perfect and equivalent transpositions for a given song, sorted by ease.
+	 * centered and equivalent transpositions for a given song, sorted by ease.
 	 * 
 	 * @param  int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 */

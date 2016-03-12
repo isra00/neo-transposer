@@ -65,10 +65,10 @@ class Transposition
 	public $highestNote;
 
 	/**
-	 * Deviation from the perfect transposition (in semitones).
+	 * Deviation from the centered transposition (in semitones).
 	 * @var integer
 	 */
-	public $deviationFromPerfect = 0;
+	public $deviationFromCentered = 0;
 
 	/*
 	 * The chords, ordered from easier to harder. This is according to *MY*
@@ -95,7 +95,7 @@ class Transposition
 		'A#m', 'Cm', 'G#7', 'D#', 'D#m', 'D#7', 'C#dim', 'Gm6'
 	);
 
-	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromPerfect=0)
+	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromCentered=0)
 	{
 		$this->chords		= $chords;
 		$this->capo			= $capo;
@@ -103,7 +103,7 @@ class Transposition
 		$this->offset 		= $offset;
 		$this->lowestNote 	= $lowest_note;
 		$this->highestNote 	= $highest_note;
-		$this->deviationFromPerfect = $deviationFromPerfect;
+		$this->deviationFromCentered = $deviationFromCentered;
 
 		$this->setScore();
 	}

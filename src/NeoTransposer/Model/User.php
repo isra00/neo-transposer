@@ -7,6 +7,11 @@ use \NeoTransposer\Persistence\UserPersistence;
 use \NeoTransposer\Model\NotesCalculator;
 use \NeoTransposer\Model\NotesNotation;
 
+/**
+ * Represents a user
+ * 
+ * @todo CamelCase-ize
+ */
 class User
 {
 	public $id_user;
@@ -19,7 +24,7 @@ class User
 	public $wizard_highest_attempts = 0;
 
 	/**
-	 * Simple constructor. Check UserPersistence::fetchUserFromEmail() to create from DB.
+	 * Simple constructor. Use UserPersistence::fetchUserFromEmail() to create from DB.
 	 * 
 	 * @param string 	$email         	User email
 	 * @param int 		$id_user       	User ID

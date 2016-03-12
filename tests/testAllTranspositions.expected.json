@@ -424,7 +424,7 @@
 				"highestNote":"E3",
 				"score":15,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Am,G,C,Em"
 			}
 		},
@@ -1055,7 +1055,7 @@
 				"highestNote":"E3",
 				"score":26,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,Am,B7,B7"
 			}
 		},
@@ -1594,7 +1594,7 @@
 				"highestNote":"E3",
 				"score":54,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"C,Em,F,Dm6,G7,E"
 			}
 		},
@@ -1926,7 +1926,7 @@
 				"highestNote":"D3",
 				"score":29,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"G,Bm,Em,C"
 			}
 		},
@@ -2097,7 +2097,7 @@
 				"highestNote":"C3",
 				"score":14,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,Am,B7"
 			}
 		},
@@ -2429,7 +2429,7 @@
 				"highestNote":"C3",
 				"score":14,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,B7,Am"
 			}
 		},
@@ -2508,7 +2508,7 @@
 				"highestNote":"C3",
 				"score":2,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,Am"
 			}
 		},
@@ -2587,7 +2587,7 @@
 				"highestNote":"E3",
 				"score":27,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,B7,Am,G,C"
 			}
 		},
@@ -2620,7 +2620,7 @@
 				"highestNote":"C3",
 				"score":12,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,B7"
 			}
 		},
@@ -3527,7 +3527,7 @@
 				"highestNote":"E3",
 				"score":40,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,D,G,A,B7,Am,B7"
 			}
 		},
@@ -3583,7 +3583,7 @@
 				"highestNote":"E3",
 				"score":49,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,Am,B7,B7,G,Bm"
 			}
 		},
@@ -3708,7 +3708,7 @@
 				"highestNote":"C3",
 				"score":20,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,Am,B7,C"
 			}
 		},
@@ -4592,7 +4592,7 @@
 				"highestNote":"D3",
 				"score":36,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,C,D7,G,B7"
 			}
 		},
@@ -4648,7 +4648,7 @@
 				"highestNote":"E3",
 				"score":29,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"E,F,G,C,Am"
 			}
 		},
@@ -4888,7 +4888,7 @@
 				"highestNote":"E3",
 				"score":42,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,B7,Am,C,E7,C7"
 			}
 		},
@@ -5105,7 +5105,7 @@
 				"highestNote":"E3",
 				"score":24,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,B7,D,C,Am"
 			}
 		},
@@ -5184,7 +5184,7 @@
 				"highestNote":"C3",
 				"score":27,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,B7,G,C,Am"
 			}
 		},
@@ -5263,7 +5263,7 @@
 				"highestNote":"E3",
 				"score":14,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Em,Am,B7"
 			}
 		},
@@ -5319,7 +5319,7 @@
 				"highestNote":"E3",
 				"score":8,
 				"capo":0,
-				"deviationFromPerfect":1,
+				"deviationFromCentered":1,
 				"chords":"Am,Dm,E"
 			}
 		},

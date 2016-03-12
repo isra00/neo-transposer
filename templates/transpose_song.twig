@@ -57,7 +57,7 @@
 </div>
 
 {% if song.not_equivalent %}
-{% set difference = (song.not_equivalent.deviationFromPerfect > 0) ? 'higher'|trans : 'lower'|trans %}
+{% set difference = (song.not_equivalent.deviationFromCentered > 0) ? 'higher'|trans : 'lower'|trans %}
 <p class="explanation">{% trans with {'%difference%': difference } %}This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:{% endtrans %}</p>
 <div class="transpositions-list">
 	{{ self.printTransposition(song.not_equivalent, song.song.originalChords) }}

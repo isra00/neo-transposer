@@ -46,7 +46,7 @@ return array(
 
 	'css_cache'			=> '4723e58f10a4d95037a4aab0bc8744ff',
 
-	'sitemap_lastmod'	=> '2015-12-31T10:00Z',
+	'sitemap_lastmod'	=> '2016-03-12T10:00Z',
 
 	'seo_title_suffix'	=> 'Transpose chords',
 

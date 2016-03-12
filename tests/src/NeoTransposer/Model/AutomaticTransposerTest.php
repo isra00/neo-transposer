@@ -21,7 +21,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetPerfectTransposition()
+    public function testGetCenteredTransposition()
     {
         $expected = new Transposition(
             array('Bm', 'Em', 'G', 'D'),
@@ -35,11 +35,11 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $expected,
-            $this->transposer->getPerfectTransposition()
+            $this->transposer->getCenteredTransposition()
         );
     }
 
-    public function testFindPerfectTranspositionAsBook()
+    public function testFindCenteredTranspositionAsBook()
     {
         $transposer = new AutomaticTransposer(
             'F1', 'F3', 'B1', 'B2', array('Bm', 'Em', 'G', 'D'), false
@@ -49,7 +49,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
             array('Bm', 'Em', 'G', 'D'), 0, true, 0, 'B1', 'B2', 0
         );
 
-        $this->assertEquals($expected, $transposer->getPerfectTransposition());
+        $this->assertEquals($expected, $transposer->getCenteredTransposition());
     }
 
     public function testFindEquivalentsWithCapo()
@@ -109,7 +109,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $expected,
-            $transposer->getPerfectTransposition(AutomaticTransposer::FORCE_HIGHEST)
+            $transposer->getCenteredTransposition(AutomaticTransposer::FORCE_HIGHEST)
         );
     }
 
@@ -125,7 +125,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $expected,
-            $transposer->getPerfectTransposition(AutomaticTransposer::FORCE_LOWEST)
+            $transposer->getCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
         );
     }
 }
