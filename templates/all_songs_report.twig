@@ -49,9 +49,8 @@
 							<span class="chord-pair">{{ original_chord|raw }}
 								&rarr;
 								{{ transposition.chordsForPrint[i]|raw }}
-								;
 							</span>
-							{% if not loop.last %} &nbsp; {% endif %}
+							{% if not loop.last %} ; {% endif %}
 						{%- endfor %}
 					{% endif %}
 				</li>
