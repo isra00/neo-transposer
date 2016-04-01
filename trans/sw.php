@@ -134,8 +134,8 @@ return array(
 	'with capo %n%'
 	=> 'capo %n%',
 	
-	'(no capo)'
-	=> '(bila capo)',
+	'no capo'
+	=> 'bila capo',
 
 	'(same chords as in the book)'
 	=> '(kordi kama kwenye kitabu)',
