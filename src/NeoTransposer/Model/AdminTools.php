@@ -194,6 +194,9 @@ class AdminTools
 	{
 		$allSongsController = new \NeoTransposer\Controllers\AllSongsReport();
 
+		/** @todo Añadir control de errores: 1) no existe el atributo app['neoconfig']['test_all_transpositions_expected'
+		2) el fichero especificado no existe */
+
 		$testData = json_decode(
 			file_get_contents($app['neoconfig']['test_all_transpositions_expected']),
 			true
