@@ -2,12 +2,27 @@
 	Options -MultiViews
 	RewriteEngine On
 
-	# Cambio de dominio (sept/2016): redirigir todo excepto Login (para que el aviso sea visible)
+	# Cambio de dominio (sept/2016)
+
+	#Todas las peticiones a /* (excepto /) sin referer serán redirigidas a .com/*?newdomain
+	#Peticiones a login desde / no llevan referer, porque / se lo come.
+	#	Para evitarlo, peticiones a / sin referer redirige directamente a .com/{lang}/login?newdomain
+	#	La redirección de / se maneja en PHP (Controllers/Index)
+
+	# Si no hay referer: redir con aviso
 	RewriteCond %{HTTP_HOST} !^neo\-transposer\.com$ [NC]
-	RewriteCond %{REQUEST_URI} !^\/es\/login.*$
-	RewriteCond %{REQUEST_URI} !^\/sw\/login.*$
+	RewriteCond %{REQUEST_URI} !^$
+	RewriteCond %{HTTP_REFERER} ^$
 	RewriteCond %{REQUEST_URI} !index.php
-	RewriteRule ^(.*)$ http://neo-transposer.com/$1 [R=301,L]
+	RewriteRule ^(.+)$ http://neo-transposer.com/$1?newdomain [R=301,L]
+
+	# Todas las demás: redir sin aviso, pero trackeando el origen
+	RewriteCond %{HTTP_HOST} !^neo\-transposer\.com$ [NC]
+	RewriteCond %{REQUEST_URI} !^/$
+	RewriteCond %{REQUEST_URI} !index.php
+	RewriteRule ^(.+)$ http://neo-transposer.com/$1?referer=%{HTTP_REFERER} [R=301,L]
+
+	# Fin de las reglas para el cambio de dominio. Sigue lo normal.
 
 	#RewriteRule ^en/login / [L,R=temp]
 

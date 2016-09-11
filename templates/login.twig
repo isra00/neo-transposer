@@ -82,16 +82,16 @@
 		</section>
 	</div>
 
-	{% if app.request.host != app.neoconfig.new_domain %}
+	{% if show_popup_new_domain %}
 	<div id="dark-bg"></div>
-	<div class="great-dialog">
+	<div id="great-dialog">
 
-		<h2>{% trans with {'%domain%': app.neoconfig.new_domain } %}Neo-Transposer changes its address to: <strong><a href="http://%domain%">%domain%</a></strong>{% endtrans %}
-			<i>{% trans %}If you have a bookmark, please update it.<br>This address will not work after November 6<sup>th</sup>.{% endtrans %}</i>
+		<h2>{% trans with {'%domain%': app.neoconfig.new_domain } %}Neo-Transposer has moved to <strong>%domain%</strong>{% endtrans %}
+			<i>{% trans %}If you have a bookmark, please update it.<br>The old neo-transposer.leviticus.co.tz will not work  after November 6<sup>th</sup>.{% endtrans %}</i>
 		</h2>
 
 		<p class="center">
-			<a href="http://neo-transposer.com" class="flatbutton red">{% trans %}Go to the new website{% endtrans %}</a>
+			<a href="javascript:void(0)" class="flatbutton red" onclick="document.getElementById('dark-bg').style.display='none';document.getElementById('great-dialog').style.display='none';">{% trans %}Got it{% endtrans %}</a>
 		</p>
 	</div>
 	{% endif %}

@@ -308,6 +308,36 @@ footer {
 			margin: 1em 0 0 1em;
 		}
 
+.new-domain-warning {
+	background: #E74E4E;
+	color: white;
+	padding: .5em;
+	box-shadow: 2px 2px 5px silver;
+}
+	.new-domain-warning h3 {
+		background: url(img/house.png) left top no-repeat;
+		padding-left: 40px;
+		font-size: 1.1em;
+	}
+		.new-domain-warning h3 i {
+			font-style: normal;
+			font-size: .9em;
+		}
+
+	.new-domain-warning a {
+		color: white;
+	}
+	.new-domain-warning i {
+		display: block;
+		margin-top: .2em;
+	}
+
+	.new-domain-warning .x {
+		float: right;
+		margin: 0;
+		font-size: 1.5em;
+	}
+
 /*
  * LOGIN
  */
@@ -393,9 +423,10 @@ footer {
 	top: 0;
 	left: 0;
 	background-color: rgba(0, 0, 0, .5);
+	z-index: 1;
 }
 
-.great-dialog {
+#great-dialog {
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -407,17 +438,18 @@ footer {
 	background: rgba(255, 255, 255, .95);
 	padding: 1rem;
 	box-shadow: 2px 2px 10px #444;
+	z-index: 2;
 }
 
-	.great-dialog h2 {
+	#great-dialog h2 {
 		text-align: center;
 		line-height: 130%;
 	}
-		.great-dialog h2 a {
+		#great-dialog h2 a {
 			display: inline-block;
 		}
 
-		.great-dialog h2 i {
+		#great-dialog h2 i {
 			display: block;
 			font-style: normal;
 			color: gray;
@@ -425,7 +457,7 @@ footer {
 			margin-top: .5em;
 		}
 
-	.great-dialog .flatbutton.red {
+	#great-dialog .flatbutton.red {
 		padding: .5em 1em;
 		font-size: 1.5em;
 		border: 2px solid #D32F2F;
@@ -1255,7 +1287,7 @@ input[type=text] {
 
 
 
-	.great-dialog {
+	#great-dialog {
 		top: 2%;
 		left: 2%;
 		right: 2%;
