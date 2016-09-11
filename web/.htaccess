@@ -2,7 +2,14 @@
 	Options -MultiViews
 	RewriteEngine On
 
-	RewriteRule ^en/login / [L,R=temp]
+	# Cambio de dominio (sept/2016): redirigir todo excepto Login (para que el aviso sea visible)
+	RewriteCond %{HTTP_HOST} !^neo\-transposer\.com$ [NC]
+	RewriteCond %{REQUEST_URI} !^\/es\/login.*$
+	RewriteCond %{REQUEST_URI} !^\/sw\/login.*$
+	RewriteCond %{REQUEST_URI} !index.php
+	RewriteRule ^(.*)$ http://neo-transposer.com/$1 [R=301,L]
+
+	#RewriteRule ^en/login / [L,R=temp]
 
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ index.php [QSA,L]
@@ -13,6 +20,7 @@
 	Redirect 301 "/book/1" "/nyimbo-njia-neokatekumenato"
 	Redirect 301 "/book/2" "/cantos-camino-neocatecumenal"
 	Redirect 301 "/transpose/oh-jesus-amor-mio-[estrofa-por-abajo]" "/oh-jesus-amor-mio"
+
 </IfModule>
 
 <ifModule mod_gzip.c>

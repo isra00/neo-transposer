@@ -43,6 +43,15 @@ return array(
 	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.'
 	=> 'Esta página web es iniciativa personal de un miembro del Camino Neocatecumenal pero NO representa oficialmente ni está afiliada de ningún modo al Camino Neocatecumenal o a sus responsables. El libro de cantos “Resucitó” es &copy; Kiko Argüello 2014.',
 
+	'Neo-Transposer changes its address to: <strong><a href="http://%domain%">%domain%</a></strong>'
+	=> 'Neo-Transposer cambia de dirección: <strong><a href="http://%domain%">%domain%</a></strong>',
+
+	'If you have a bookmark, please update it.<br>This address will not work after November 6<sup>th</sup>.'
+	=> 'Si usas un marcador (favorito), por favor actualízalo.<br>Esta dirección dejará de funcionar el 6 de noviembre.',
+
+	'Go to the new website'
+	=> 'Ir a la nueva web',
+
 	//User voice
 	'Your voice'
 	=> 'Tu voz',

@@ -22,7 +22,7 @@
 			
 			<div class="field block full-width">
 				<label for="email">{% trans %}Please, type your e-mail:{% endtrans %}</label>
-				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required>
+				<input type="email" name="email" id="email" value="{{ post.email }}" {% if app.request.host == app.neoconfig.new_domain %}autofocus {% endif %}required>
 			</div>
 			<div class="field block full-width">
 				<button type="submit" name="sent" class="bigbutton">{% trans %}Enter{% endtrans %}</button>
@@ -81,6 +81,20 @@
 
 		</section>
 	</div>
+
+	{% if app.request.host != app.neoconfig.new_domain %}
+	<div id="dark-bg"></div>
+	<div class="great-dialog">
+
+		<h2>{% trans with {'%domain%': app.neoconfig.new_domain } %}Neo-Transposer changes its address to: <strong><a href="http://%domain%">%domain%</a></strong>{% endtrans %}
+			<i>{% trans %}If you have a bookmark, please update it.<br>This address will not work after November 6<sup>th</sup>.{% endtrans %}</i>
+		</h2>
+
+		<p class="center">
+			<a href="http://neo-transposer.com" class="flatbutton red">{% trans %}Go to the new website{% endtrans %}</a>
+		</p>
+	</div>
+	{% endif %}
 
 	{# <script>
 	{% import 'base.twig' as self %}
