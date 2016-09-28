@@ -34,6 +34,7 @@ SQL;
 		);
 
 		$app['locale'] = $app['books'][$id_book]['locale'];
+		$app['translator']->setLocale($app['locale']);
 
 		return $app->render('book.twig', array(
 			'page_title'	 	=> $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name'])),

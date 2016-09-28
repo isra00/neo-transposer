@@ -2,8 +2,8 @@
 
 namespace NeoTransposer;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use \Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\HttpFoundation\Response;
 use \Silex\Application;
 use \NeoTransposer\Model\User;
 
@@ -126,12 +126,12 @@ class NeoApp extends Application
 
 		//Custom Twig filter for printing notes in different notations.
 		//@todo Esto solo se usa una vez... es realmente necesario?
-		$this['twig'] = $this->share($this->extend('twig', function($twig) {
+		$this['twig'] = $this->extend('twig', function($twig) {
 			$twig->addFilter(new \Twig_SimpleFilter('notation', function ($str, $notation) {
 				return \NeoTransposer\Model\NotesNotation::getNotation($str, $notation);
 			}));
 			return $twig;
-		}));
+		});
 
 		$this->register(new \Silex\Provider\DoctrineServiceProvider(), array(
 			'db.options' => array(
@@ -144,13 +144,14 @@ class NeoApp extends Application
 			),
 		));
 
-		$this->register(new \Silex\Provider\UrlGeneratorServiceProvider());
-
 		//A quick & dirty way to set persistent sessions...
 		ini_set('session.gc_maxlifetime', $this->cookie_lifetime);
 		$this['session.storage.options'] = array('cookie_lifetime' => $this->cookie_lifetime);
 		$this->register(new \Silex\Provider\SessionServiceProvider());
 
+		$this->register(new \Silex\Provider\RoutingServiceProvider());
+		
+		$this->register(new \Silex\Provider\LocaleServiceProvider());
 		$this->register(new \Silex\Provider\TranslationServiceProvider());
 		$translations = array();
 		foreach ($this['neoconfig']['languages'] as $locale=>$details)
@@ -168,7 +169,7 @@ class NeoApp extends Application
 	 */
 	protected function registerCustomServices()
 	{
-		$this['books'] = $this->share(function($app) {
+		$this['books'] = function($app) {
 			$books = $app['db']->fetchAll('SELECT * FROM book');
 			$books_nice = array();
 			foreach ($books as $book)
@@ -176,7 +177,7 @@ class NeoApp extends Application
 				$books_nice[$book['id_book']] = $book;
 			}
 			return $books_nice;
-		});
+		};
 
 		$this['chord_printers.get'] = $this->protect(function($printer) {
 			$printer = "\NeoTransposer\Model\ChordPrinter\ChordPrinter$printer";

@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Persistence\UserPersistence;
 use \NeoTransposer\Model\NotesCalculator;
 use \NeoTransposer\Model\NotesNotation;
+use \Symfony\Component\Translation\Translator;
 
 /**
  * Represents a user
@@ -113,11 +114,11 @@ class User
 	/**
 	 * Format the voice of the User as lowest_note - highest note +x octaves
 	 * 
-	 * @param  \Silex\Translator 	$trans 		The Translator service.
-	 * @param  string 				$notation 	The notation (american/latin).
-	 * @return string 							Formatted string.
+	 * @param  Translator 	$trans 		The Translator service.
+	 * @param  string 		$notation 	The notation (american/latin).
+	 * @return string 					Formatted string.
 	 */
-	function getVoiceAsString(\Silex\Translator $trans, $notation='american')
+	function getVoiceAsString(Translator $trans, $notation='american')
 	{
 		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->lowest_note, $this->highest_note);
 	}

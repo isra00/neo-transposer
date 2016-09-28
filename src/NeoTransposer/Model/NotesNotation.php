@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Model;
 
-use \Silex\Translator;
+use \Symfony\Component\Translation\Translator;
 
 /**
  * Support for different nomenclatures for notes (american and latin so far).

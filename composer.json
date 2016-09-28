@@ -1,17 +1,21 @@
 {
+    "name": "isra00/neo-transposer",
+    "description": " Automatically transpose the chords of the songs of the Neocatechumenal Way so they fit the singer's voice",
+    "license": "GPL-3.0+",
+
     "require": {
-        "silex/silex": "~1.3",
-        "twig/twig": "~1.0",
-        "symfony/twig-bridge": "~2.3",
+        "silex/silex": "~2.0",
+        "twig/twig": "~1.24",
+        "symfony/twig-bridge": "~3.1",
+        "symfony/translation": "~3.1",
+        "symfony/security": "~3.1",
         "doctrine/dbal": "2.5.*",
-        "symfony/translation": "~2.3",
-        "geoip2/geoip2": "dev-master",
-        "symfony/security": "~2.3"
+        "geoip2/geoip2": "~2"
     },
 
     "autoload": {
-	    "psr-4" : {
-	        "NeoTransposer\\": "src/NeoTransposer"
-	    }
-	}
+        "psr-4" : {
+            "NeoTransposer\\": "src/NeoTransposer"
+        }
+    }
 }
