@@ -4,7 +4,6 @@ vendor
 web/static/style.min.css
 TODO
 config.php
-web/cache-pdf/*
 web/resucito-imgs/
 .sublime-project
 .sublime-project.sublime-workspace
