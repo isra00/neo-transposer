@@ -316,11 +316,17 @@ SQL;
 		return $this->app['db']->fetchAll($sql);
 	}
 
+	/**
+	 * Get the names of all countries in user.country by geo-locating any IP for
+	 * each country
+	 */
 	protected function getCountryNamesList()
 	{
 		$dbfile = $this->app['root_dir'] . '/' . $this->app['neoconfig']['mmdb'] . '.mmdb';
 		$reader = new \GeoIp2\Database\Reader($dbfile);
 
+		//ONLY_FULL_GROUP_BY mode (default in MySQL>5.7) makes the query fail
+		$this->app['db']->query("SET @@sql_mode=''");
 		$ips_for_country = $this->app['db']->fetchAll('SELECT country, register_ip FROM user WHERE NOT country IS NULL GROUP BY country');
 		$country_names = array();
 
