@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ChordCorrectionPanel
 {
-	public function get(Request $req, \NeoTransposer\NeoApp $app)
+	public function get(\NeoTransposer\NeoApp $app)
 	{
 		$app['locale'] = 'es';
 

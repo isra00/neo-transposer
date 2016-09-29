@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Book
 {
-	public function get(Request $req, \NeoTransposer\NeoApp $app, $id_book)
+	public function get(\NeoTransposer\NeoApp $app, $id_book)
 	{
 		if (empty($app['books'][$id_book]))
 		{

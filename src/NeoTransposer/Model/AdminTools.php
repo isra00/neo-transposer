@@ -192,8 +192,6 @@ class AdminTools
 	 */
 	public function testAllTranspositions(NeoApp $app)
 	{
-		$allSongsController = new \NeoTransposer\Controllers\AllSongsReport();
-
 		/** @todo Añadir control de errores: 1) no existe el atributo app['neoconfig']['test_all_transpositions_expected'
 		2) el fichero especificado no existe */
 
