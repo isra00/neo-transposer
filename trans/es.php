@@ -83,8 +83,8 @@ return array(
 	'If you don\'t know your highest and lowest note, click here'
 	=> 'Si no sabes tu nota mínima y máxima, haz click aquí',
 
-	'We are ready!'
-	=> '¡Todo listo!',
+	'Continue'
+	=> 'Continuar',
 
 	'Are you sure that is your real voice range? If you don\'t know, you can use the assistant to measure it.'
 	=> '¿Estás seguro de que esas son tus notas mínima y máxima? Si no sabes, puedes usar el asistente para medir tu voz.',

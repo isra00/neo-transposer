@@ -83,8 +83,8 @@ return array(
 	'If you don\'t know your highest and lowest note, click here'
 	=> 'Usipozijua nota za sauti yako, piga click hapa.',
 
-	'We are ready!'
-	=> 'Tayari!',
+	'Continue'
+	=> 'Endelea',
 
 	'Are you sure that is your real voice range? If you don\'t know, you can use the assistant to measure it.'
 	=> 'Una uhakika ya nota hizo? Usipozijua unaweza kuzipima hapa hivi.',
