@@ -4,7 +4,7 @@ namespace NeoTransposer\Model;
 
 class TranspositionChart
 {
-	public static function getChart(Song $song, $transposition, $singer)
+	public static function getChart(Song $song, Transposition $transposition, User $singer)
 	{
 		$nc = new \NeoTransposer\Model\NotesCalculator;
 

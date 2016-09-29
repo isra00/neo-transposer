@@ -186,7 +186,7 @@ class AutomaticTransposer
 	 */
 	public function sortTranspositionsByEase(array $transpositions)
 	{
-		usort($transpositions, function($one, $two) {
+		usort($transpositions, function(Transposition $one, Transposition $two) {
 			return ($one->score < $two->score) ? -1 : 1;
 		});
 
