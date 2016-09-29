@@ -3080,8 +3080,8 @@
 				"lowestNote":"A1",
 				"highestNote":"E3",
 				"score":47,
-				"capo":3,
-				"chords":"Bm,D,Em,F#7"
+				"capo":0,
+				"chords":"Dm,F,Gm,A7"
 			}
 		},
 		"275":
@@ -3485,17 +3485,17 @@
 				"lowestNote":"B1",
 				"highestNote":"D3",
 				"score":29,
-				"capo":0,
-				"chords":"C,E,Am,G,F"
-			}
-			,"centered2":
+				"capo":5,
+				"chords":"G,B7,Em,D,C"
+			},
+			"centered2":
 			{
 				"offset":-2,
 				"lowestNote":"B1",
 				"highestNote":"D3",
 				"score":29,
-				"capo":5,
-				"chords":"G,B7,Em,D,C"
+				"capo":0,
+				"chords":"C,E,Am,G,F"
 			}
 		},
 		"293":
