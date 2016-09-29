@@ -21,8 +21,6 @@ class NeoApp extends Application
 	 */
 	protected $swahili_countries = array('TZ', 'KE');
 
-	protected $cookie_lifetime = 2678400; //1 month
-
 	protected $notifications = array('error'=>array(), 'success'=>array());
 
 	/**
@@ -144,11 +142,7 @@ class NeoApp extends Application
 			),
 		));
 
-		//A quick & dirty way to set persistent sessions...
-		ini_set('session.gc_maxlifetime', $this->cookie_lifetime);
-		$this['session.storage.options'] = array('cookie_lifetime' => $this->cookie_lifetime);
 		$this->register(new \Silex\Provider\SessionServiceProvider());
-
 		$this->register(new \Silex\Provider\RoutingServiceProvider());
 		
 		$this->register(new \Silex\Provider\LocaleServiceProvider());
