@@ -2,7 +2,6 @@
 
 namespace NeoTransposer\Model;
 
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use \NeoTransposer\NeoApp;
 
 /**

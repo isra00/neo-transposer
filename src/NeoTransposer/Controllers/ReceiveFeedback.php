@@ -3,7 +3,6 @@
 namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * AJAX Controller to receive/record user feedback. This URL has NO CONTENT.

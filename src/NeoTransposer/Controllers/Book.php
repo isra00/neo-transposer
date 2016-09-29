@@ -2,8 +2,6 @@
 
 namespace NeoTransposer\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
-
 /**
  * Book page: show list of songs belonging to a given book.
  */

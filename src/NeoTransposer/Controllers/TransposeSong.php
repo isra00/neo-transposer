@@ -2,7 +2,6 @@
 
 namespace NeoTransposer\Controllers;
 
-use \NeoTransposer\Model\Song;
 use \NeoTransposer\Model\TransposedSong;
 use \NeoTransposer\Model\TranspositionChart;
 use \NeoTransposer\Model\NotesCalculator;

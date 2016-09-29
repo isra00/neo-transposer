@@ -2,10 +2,6 @@
 
 namespace NeoTransposer\Controllers;
 
-use \NeoTransposer\Model\AutomaticTransposer;
-use \NeoTransposer\TranspositionChart;
-use \NeoTransposer\Model\NotesCalculator;
-
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 

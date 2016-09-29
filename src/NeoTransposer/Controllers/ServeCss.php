@@ -2,8 +2,6 @@
 
 namespace NeoTransposer\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
-
 /**
  * Controller that serves merged+compressed CSS files for the app.
  */

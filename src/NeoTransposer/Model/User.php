@@ -4,7 +4,6 @@ namespace NeoTransposer\Model;
 
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Persistence\UserPersistence;
-use \NeoTransposer\Model\NotesCalculator;
 use \NeoTransposer\Model\NotesNotation;
 use \Symfony\Component\Translation\Translator;
 
