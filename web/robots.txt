@@ -1,4 +1,4 @@
-Sitemap: http://neo-transposer.leviticus.co.tz/sitemap.xml
+Sitemap: http://neo-transposer.com/sitemap.xml
 
 User-agent: *
 Disallow: /sura-yako
