@@ -22,7 +22,7 @@
 			
 			<div class="field block full-width">
 				<label for="email">{% trans %}Please, type your e-mail:{% endtrans %}</label>
-				<input type="email" name="email" id="email" value="{{ post.email }}" {% if app.request.host == app.neoconfig.new_domain %}autofocus {% endif %}required>
+				<input type="email" name="email" id="email" value="{{ post.email }}" {% if global.request.host == app.neoconfig.new_domain %}autofocus {% endif %}required>
 			</div>
 			<div class="field block full-width">
 				<button type="submit" name="sent" class="bigbutton">{% trans %}Enter{% endtrans %}</button>

@@ -2,7 +2,7 @@
 <html lang="{{ app.locale }}">
 <head>
 
-{% if current_route == 'transpose_song' and app.request.attributes.get('id_song') == 'el-mesias-leon-para-vencer' %}
+{% if current_route == 'transpose_song' and global.request.attributes.get('id_song') == 'el-mesias-leon-para-vencer' %}
 <!-- Google Analytics Content Experiment code -->
 <script>function utmx_section(){}function utmx(){}(function(){var
 k='95326089-0',d=document,l=d.location,c=d.cookie;
@@ -23,8 +23,8 @@ valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>{{ page_title }}</title>
-	<link rel="stylesheet" href="{{ app.request.basepath }}/static/{% if app.debug %}style{% else %}{{ app.neoconfig.css_cache }}{% endif %}.css" type="text/css" />
-	<link rel="apple-touch-icon" href="{{ app.request.basepath }}/static/img/apple-touch-icon.png">
+	<link rel="stylesheet" href="{{ global.request.basepath }}/static/{% if global.debug %}style{% else %}{{ app.neoconfig.css_cache }}{% endif %}.css" type="text/css" />
+	<link rel="apple-touch-icon" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
 
 	<meta property="og:url" content="{{ app.absoluteUriWithoutQuery }}">
 	<meta property="og:title" content="{{ page_title }}">
@@ -36,7 +36,7 @@ valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
 	<meta name="description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}" />
 	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
 
-	{% if app.debug -%}
+	{% if global.debug -%}
 	<script>var ga = function() {}</script>
 	{%- else -%}
 	<script>
@@ -118,7 +118,7 @@ valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
 	</footer>
 
 	{% macro loadJsFramework() -%}
-	<script src="{{ app.request.basepath }}/static/zepto.min.js"></script>
+	<script src="{{ global.request.basepath }}/static/zepto.min.js"></script>
 	{%- endmacro %}
 
 	<script>

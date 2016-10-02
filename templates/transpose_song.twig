@@ -8,7 +8,7 @@
 			<tr><th {% if not transposition.getAsBook %}colspan="3"{% endif %}>
 				{{ transposition.chordsForPrint[0]|raw }}
 				<span class="capo">{{ transposition.capoForPrint }}</span>
-				{% if app.debug -%}
+				{% if global.debug -%}
 				<small class="score">[{{ transposition.score|round }}]</small>
 				{%- endif %}
 			</th></tr>
@@ -18,7 +18,7 @@
 			<tr>
 				<td class="original">{{ chord|raw }}</td>
 				<td class="arrow center">&rarr;</td>
-				{% if app.debug -%}
+				{% if global.debug -%}
 				<td class="chord-score">
 					{{ transposition.scoreMap[transposition.chords[loop.index0]] }}
 				</td>
@@ -42,7 +42,7 @@
 		<div class="inside">
 			<div class="more-inside">
 				<p>{% trans with {'%song%': song.song.title } %}Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!{% endtrans %}</p>
-				{{ login.login_form('', app.request.getRequestUri) }}
+				{{ login.login_form('', global.request.getRequestUri) }}
 			</div>
 		</div>
 	</div>
@@ -50,7 +50,7 @@
 
 <h1>
 	{{ song.song.title }}
-	<small>{% if app.debug %}[{{ song.song.idSong }}]{% endif %}</small>
+	<small>{% if global.debug %}[{{ song.song.idSong }}]{% endif %}</small>
 </h1>
 
 <p class="explanation">{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</p>
@@ -104,7 +104,7 @@
 
 <div class="your-voice">
 	<em>{% trans %}Your voice:{% endtrans %}</em> {{ your_voice|raw }}
-	<a href="{{ path('user_voice', {'_locale': app.locale, 'redirect': app.request.getRequestUri}) }}" class="small-button">{% trans %}Change{% endtrans %}</a>
+	<a href="{{ path('user_voice', {'_locale': app.locale, 'redirect': global.request.getRequestUri}) }}" class="small-button">{% trans %}Change{% endtrans %}</a>
 </div>
 
 <p class="tip">{% trans %}Beware that this is the best key for your voice, but might not be the best one for the assembly.{% endtrans %}</p>
@@ -148,7 +148,7 @@ NT = {
 			{
 				id_song: {{ song.song.idSong }},
 				worked: iAnswer,
-				referer: '{{ app.request.server.get('HTTP_REFERER') }}'
+				referer: '{{ global.request.server.get('HTTP_REFERER') }}'
 			}
 		);
 	}

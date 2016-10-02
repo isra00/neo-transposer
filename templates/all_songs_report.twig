@@ -5,7 +5,7 @@
 	{% if print_css_code %}
 		<style>{{ print_css_code|raw }}</style>
 	{% else %}
-		<link rel="stylesheet" href="{{ app.request.basepath }}/static/print.css" type="text/css" media="print" />
+		<link rel="stylesheet" href="{{ global.request.basePath }}/static/print.css" type="text/css" media="print" />
 	{% endif %}
 
 {% endblock %}
