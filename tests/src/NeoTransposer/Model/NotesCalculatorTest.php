@@ -58,7 +58,15 @@ class NotesCalculatorTest extends PHPUnit_Framework_TestCase
 
     public function testLowestNote()
     {
-    	$this->assertEquals('B1', $this->nc->lowestNote(array('B3', 'C2', 'B1')));
+        $this->assertEquals('B1', $this->nc->lowestNote(array('B3', 'C2', 'B1')));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testLowestNoteInvalidNote()
+    {
+    	$this->nc->lowestNote(array('H1', 'C2'));
     }
 
     public function testArrayIndex()

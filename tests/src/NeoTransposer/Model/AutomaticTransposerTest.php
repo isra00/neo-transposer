@@ -70,14 +70,19 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 
     public function testSortTranspositionsByEase()
     {
-        $a = new StdClass;
-        $a->score = 10;
-        $b = new StdClass;
-        $b->score = 20;
+        $transpositionMockA = $this->getMockBuilder(Transposition::class)
+                          ->disableOriginalConstructor()
+                          ->setMethods(['trans'])
+                          ->getMock();
+
+        $transpositionMockB = clone $transpositionMockA;
+
+        $transpositionMockA->score = 10;
+        $transpositionMockB->score = 20;
 
         $this->assertEquals(
-            array($a, $b),
-            $this->transposer->sortTranspositionsByEase(array($b, $a))
+            array($transpositionMockA, $transpositionMockB),
+            $this->transposer->sortTranspositionsByEase(array($transpositionMockB, $transpositionMockA))
         );
     }
 
