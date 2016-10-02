@@ -19,8 +19,9 @@ class ChordCorrectionPanel
 		}
 
 		$chords = $app['db']->fetchAll(
-			'SELECT * FROM song_chord JOIN song USING (id_song) WHERE id_song IN ('
-			. implode(', ', array_keys($problematic)) . ') ORDER BY id_song, position'
+			'SELECT * FROM song_chord JOIN song USING (id_song) WHERE id_song IN (?) ORDER BY id_song, position',
+			array(array_keys($problematic)),
+            array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
 		);
 
 		$songs = array();
