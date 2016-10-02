@@ -132,8 +132,6 @@ class NotesCalculator
 	 * @param  string 	$chordName 	Chord name, according to the syntax admitted by read_chord().
 	 * @param  integer 	$amount 	Number of semitones to add or substract.
 	 * @return string 				Final chord.
-	 * 
-	 * @todo Rename "transport" => "transpose"
 	 */
 	function transportChord($chordName, $amount)
 	{

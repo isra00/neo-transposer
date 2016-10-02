@@ -11,9 +11,6 @@ use \NeoTransposer\Model\Song;
  *
  * This class is in an upper level than AutomaticTransposer and is intended to
  * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
- * 
- * @todo Rename to SongWithTranspositions? More clarity (transpose* class are too many) and ontological accuracy.
- * @todo CamelCase-ize
  */
 class TransposedSong
 {

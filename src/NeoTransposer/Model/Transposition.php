@@ -89,14 +89,6 @@ class Transposition
 	 * Therefore, it also depends on how much each chord is actually used in the
 	 * songs of the Way.
 	 *
-	 * @todo Añadir acordes que, aunque no están en el libro, podrían salir por
-	 *       ser transposiciones de estos.
-	 *
-	 * @todo Cambiar sistema para ponderar acordes. Por ejemplo, Am y E tienen
-	 *       la misma puntuación, mientras que D# debería tener más puntuación
-	 *       que la que tiene ahora (por posiciones consecutivas), para evitarlo
-	 *       a toda costa.
-	 *
 	 * @var array
 	 */
 	protected static $easyChords = array(
@@ -186,7 +178,6 @@ class Transposition
 	public function setAsBook($asBook)
 	{
 		$this->asBook = $asBook;
-		$this->setScore(); /** @todo ¿Podría no hacer falta ya? */
 	}
 
 	public function getAsBook()

@@ -7,8 +7,6 @@ use \NeoTransposer\Model\User;
 
 /**
  * Persistence layer for the User entity.
- * 
- * @todo Remove static methods, pass $db to constructor.
  */
 class UserPersistence
 {

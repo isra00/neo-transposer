@@ -62,8 +62,6 @@ class AdminTools
 	 * 
 	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return string                     Check results, to be displayed.
-	 * 
-	 * @todo Añadir el mismo checkeo para voice range de los usuarios!!!
 	 */
 	public function checkLowerHigherNotes(NeoApp $app)
 	{
@@ -183,17 +181,11 @@ class AdminTools
 	 * A functional test for detecting changes in the transposition algorithm.
 	 * It generates an AllSongsReport and compares it with a pre-stored result set.
 	 * 
-	 * @todo Implementar detección de cambio de prioridad (p. ej., que la transposición esperada #0
-	 *       ahora es #1 y la esperada #1 es 0).
-	 * 
 	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return string                     Check results (to be displayed).
 	 */
 	public function testAllTranspositions(NeoApp $app)
 	{
-		/** @todo Añadir control de errores: 1) no existe el atributo app['neoconfig']['test_all_transpositions_expected'
-		2) el fichero especificado no existe */
-
 		$testData = json_decode(
 			file_get_contents($app['neoconfig']['test_all_transpositions_expected']),
 			true

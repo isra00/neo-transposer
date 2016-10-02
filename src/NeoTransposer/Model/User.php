@@ -9,8 +9,6 @@ use \Symfony\Component\Translation\Translator;
 
 /**
  * Represents a user
- * 
- * @todo CamelCase-ize
  */
 class User
 {
