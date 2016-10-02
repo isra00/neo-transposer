@@ -70,6 +70,12 @@ class Transposition
 	 */
 	public $deviationFromCentered = 0;
 
+	/**
+	 * Used only for debug
+	 * @var array
+	 */
+	public $scoreMap = array();
+
 	/*
 	 * The chords, ordered from easier to harder. This is according to *MY*
 	 * experience as cantor and the cantors i've met. It does not take into
@@ -92,7 +98,9 @@ class Transposition
 		'Em', 'E', 'Am', 'A', 'D', 'Dm', 'C', 'G', 'E7', 'A7', 'G7', 'D7', 'B7',
 		'F', 'C7', 'F#', 'Bm', 'F#m', 'G#', 'G#m', 'Gm', 'A#', 'C#', 'C#7', 
 		'Dm9', 'F7', 'F7M', 'F#7', 'B', 'Em6', 'Dm5', 'Fm', 'Am6', 'A#7', 'C#m',
-		'A#m', 'Cm', 'G#7', 'D#', 'D#m', 'D#7', 'C#dim', 'Gm6'
+		'A#m', 'Cm', 'G#7', 'D#', 'D#m', 'D#7', 'C#dim', 'Em9', 'Am9', 'Gm6', 
+		'D#m9', 'E7M', 'D7M', 'A7M', 'F#7M', 'D#7M', 'Fm6', 'D#m6', 'Dm6',
+		'Fm9', 'Gm9', 'Bm9', 'G7M', 'Cm9', 'A#m9', 'G#m9', 'F#m9', 'C#m9', 'G#7M',
 	);
 
 	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromCentered=0)
@@ -113,6 +121,46 @@ class Transposition
 	 */
 	public function setScore()
 	{
+		$this->setScoreWithNewSystem();
+	}
+
+	protected function setScoreWithNewSystem()
+	{
+		$scores = include '/var/www/html/transposer/config.scores.php';
+
+		$this->score = 0;
+
+		foreach ($this->chords as $chord)
+		{
+			$scoreForThisChord = 0;
+
+			if (isset($scores['chords'][$chord]))
+			{
+				$scoreForThisChord = $scores['chords'][$chord];
+			}
+			else
+			{
+				foreach ($scores['patterns'] as $pattern=>$score)
+				{
+					if (preg_match("/$pattern/", $chord))
+					{
+						$scoreForThisChord = $score;
+					}
+				}
+
+				if (0 == $scoreForThisChord)
+				{
+					throw new \Exception("Unknown chord: $chord");
+				}
+			}
+
+			$this->scoreMap[$chord] = $scoreForThisChord;
+			$this->score += $scoreForThisChord;
+		}
+	}
+
+	protected function setScoreWithOldSystem()
+	{
 		$this->score = 0;
 
 		foreach ($this->chords as $chord)
@@ -121,9 +169,11 @@ class Transposition
 
 			if (false === $score)
 			{
-				$score = count(self::$easyChords) / 1.8;
+				//throw new \Exception("Acorde $chord no encontrado");
+				$score = count(self::$easyChords) / 1.9;
 			}
 			
+			$this->scoreMap[$chord] = $score;
 			$this->score += $score;
 		}
 

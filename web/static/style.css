@@ -522,6 +522,12 @@ footer {
 		padding-left: 0;
 		padding-right: 0;
 	}
+	.transposition .chord-score {
+		padding: 0;
+		text-align: right;
+		font-size: .8em;
+		color: blue;
+	}
 	.transposition .transposed {
 		text-align: left;
 	}

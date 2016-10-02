@@ -18,6 +18,11 @@
 			<tr>
 				<td class="original">{{ chord|raw }}</td>
 				<td class="arrow center">&rarr;</td>
+				{% if app.debug -%}
+				<td class="chord-score">
+					{{ transposition.scoreMap[transposition.chords[loop.index0]] }}
+				</td>
+				{%- endif %}
 				<td class="transposed">{{ transposition.chordsForPrint[loop.index0]|raw }}</td>
 			</tr>
 		{%- else -%}
