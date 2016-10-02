@@ -71,6 +71,11 @@ class Transposition
 	public $deviationFromCentered = 0;
 
 	/**
+	 * @var array
+	 */
+	public $scoresConfig;
+
+	/**
 	 * Used only for debug
 	 * @var array
 	 */
@@ -103,7 +108,7 @@ class Transposition
 		'Fm9', 'Gm9', 'Bm9', 'G7M', 'Cm9', 'A#m9', 'G#m9', 'F#m9', 'C#m9', 'G#7M',
 	);
 
-	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromCentered=0)
+	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromCentered=0, array $scoresConfig)
 	{
 		$this->chords		= $chords;
 		$this->capo			= $capo;
@@ -112,6 +117,7 @@ class Transposition
 		$this->lowestNote 	= $lowest_note;
 		$this->highestNote 	= $highest_note;
 		$this->deviationFromCentered = $deviationFromCentered;
+		$this->scoresConfig = $scoresConfig;
 
 		$this->setScore();
 	}
@@ -126,21 +132,19 @@ class Transposition
 
 	protected function setScoreWithNewSystem()
 	{
-		$scores = include '/var/www/html/transposer/config.scores.php';
-
 		$this->score = 0;
 
 		foreach ($this->chords as $chord)
 		{
 			$scoreForThisChord = 0;
 
-			if (isset($scores['chords'][$chord]))
+			if (isset($this->scoresConfig['chords'][$chord]))
 			{
-				$scoreForThisChord = $scores['chords'][$chord];
+				$scoreForThisChord = $this->scoresConfig['chords'][$chord];
 			}
 			else
 			{
-				foreach ($scores['patterns'] as $pattern=>$score)
+				foreach ($this->scoresConfig['patterns'] as $pattern=>$score)
 				{
 					if (preg_match("/$pattern/", $chord))
 					{

@@ -80,7 +80,8 @@ class TransposedSong
 			$this->song->lowestNote,
 			$this->song->highestNote, 
 			$this->song->originalChords,
-			$this->song->firstChordIsTone
+			$this->song->firstChordIsTone,
+			$this->app['neoconfig']['chord_scores']
 		);
 
 		$this->transpositions = $transposer->getTranspositions(2, $forceVoiceLimit);

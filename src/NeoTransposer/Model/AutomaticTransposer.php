@@ -47,6 +47,12 @@ class AutomaticTransposer
 	protected $offsetsNotEquivalent = array(-1, 1);
 
 	/**
+	 * Config passed to Transposition class to calculate chords difficulty.
+	 * @var array
+	 */
+	protected $scoresConfig;
+
+	/**
 	 * Constructor needs all the data to calculate the transpositions.
 	 * 
 	 * @param  string $singerLowestNote  Singer's lowest note
@@ -55,14 +61,15 @@ class AutomaticTransposer
 	 * @param  string $songHighestNote   Song's highest note
 	 * @param  array $originalChords      Song original chords
 	 */
-	function __construct($singerLowestNote, $singerHighestNote, $songLowestNote, $songHighestNote, $originalChords, $firstChordIsKey)
+	function __construct($singerLowestNote, $singerHighestNote, $songLowestNote, $songHighestNote, $originalChords, $firstChordIsKey, $scoresConfig)
 	{
-		$this->singerLowestNote = $singerLowestNote;
+		$this->singerLowestNote	 = $singerLowestNote;
 		$this->singerHighestNote = $singerHighestNote;
-		$this->songLowestNote = $songLowestNote;
-		$this->songHighestNote = $songHighestNote;
-		$this->originalChords = $originalChords;
-		$this->firstChordIsKey = $firstChordIsKey;
+		$this->songLowestNote	 = $songLowestNote;
+		$this->songHighestNote	 = $songHighestNote;
+		$this->originalChords	 = $originalChords;
+		$this->firstChordIsKey	 = $firstChordIsKey;
+		$this->scoresConfig		 = $scoresConfig;
 
 		$this->nc = new NotesCalculator;
 	}
@@ -127,7 +134,9 @@ class AutomaticTransposer
 			false,
 			$centeredOffset,
 			$this->nc->transposeNote($this->songLowestNote, $centeredOffset),
-			$this->nc->transposeNote($this->songHighestNote, $centeredOffset)
+			$this->nc->transposeNote($this->songHighestNote, $centeredOffset),
+			null,
+			$this->scoresConfig
 		);
 
 		// If the centered key is the same as in the book, return 0.
@@ -171,7 +180,8 @@ class AutomaticTransposer
 				$transposition->offset,
 				$transposition->lowestNote,
 				$transposition->highestNote,
-				$transposition->deviationFromCentered
+				$transposition->deviationFromCentered,
+				$this->scoresConfig
 			);
 		}
 
@@ -273,7 +283,8 @@ class AutomaticTransposer
 				$centeredTransposition->offset + $dif,
 				$this->nc->transposeNote($centeredTransposition->lowestNote, $dif),
 				$this->nc->transposeNote($centeredTransposition->highestNote, $dif),
-				$dif
+				$dif,
+				$this->scoresConfig
 			);
 
 			$nearAndItsEquivalentsWithCapo = $this->sortTranspositionsByEase(
