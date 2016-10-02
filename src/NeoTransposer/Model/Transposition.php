@@ -150,7 +150,7 @@ class Transposition
 
 				if (0 == $scoreForThisChord)
 				{
-					throw new \Exception("Unknown chord: $chord");
+					throw new SongDataException("Unknown chord: $chord");
 				}
 			}
 
@@ -169,7 +169,6 @@ class Transposition
 
 			if (false === $score)
 			{
-				//throw new \Exception("Acorde $chord no encontrado");
 				$score = count(self::$easyChords) / 1.9;
 			}
 			
