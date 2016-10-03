@@ -22,7 +22,7 @@ class NotesCalculator
 	 */
 	public $numbered_scale = array();
 
-	function __construct()
+	public function __construct()
 	{
 		// Fill the numbered_scale.
 		for ($i = 1; $i < 5; $i++)
@@ -71,7 +71,7 @@ class NotesCalculator
 	 * @param  integer 	$index 	Index to read
 	 * @return mixed 			The array element
 	 */
-	function arrayIndex($array, $index)
+	public function arrayIndex($array, $index)
 	{
 		if (abs($index) > count($array) - 1)
 		{
@@ -90,7 +90,7 @@ class NotesCalculator
 	 * @param  integer 	$offset The offset to transpose.
 	 * @return string         	The transposed note.
 	 */
-	function transposeNote($note, $offset)
+	public function transposeNote($note, $offset)
 	{
 		return $this->arrayIndex($this->numbered_scale, array_search($note, $this->numbered_scale) + $offset);
 	}
@@ -102,7 +102,7 @@ class NotesCalculator
 	 * @param  string 	$note2 	Another note, following the same pattern as $note1.
 	 * @return integer 			Distance in semitones.
 	 */
-	function distanceWithOctave($note1, $note2)
+	public function distanceWithOctave($note1, $note2)
 	{
 		return array_search($note1, $this->numbered_scale) - array_search($note2, $this->numbered_scale);
 	}
@@ -113,7 +113,7 @@ class NotesCalculator
 	 * @param  string 	$chordName 	Chord name, in standard notation.
 	 * @return array 				Associative array with 'fundamental' and 'attributes' key
 	 */
-	function readChord($chordName)
+	public function readChord($chordName)
 	{
 		$regexp = '/^([ABCDEFG]#?b?)([mM45679]*|dim)$/';
 		preg_match($regexp, $chordName, $match);
@@ -133,7 +133,7 @@ class NotesCalculator
 	 * @param  integer 	$amount 	Number of semitones to add or substract.
 	 * @return string 				Final chord.
 	 */
-	function transportChord($chordName, $amount)
+	public function transportChord($chordName, $amount)
 	{
 		$chord = $this->readChord($chordName);
 		$chord['fundamental'];
@@ -153,7 +153,7 @@ class NotesCalculator
 	 * @param  integer 	$amount 	Number of semitones to add or substract.
 	 * @return array 				Final set of chords.
 	 */
-	function transposeChords($chordList, $amount)
+	public function transposeChords($chordList, $amount)
 	{
 		$final_list = array();
 
