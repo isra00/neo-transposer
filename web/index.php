@@ -31,7 +31,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 	)
 ));
 
-$valid_locales = '(' . implode('|', array_keys($app['neoconfig']['languages'])) . ')';
+$validLocales = '(' . implode('|', array_keys($app['neoconfig']['languages'])) . ')';
 
 $controllers = 'NeoTransposer\\Controllers';
 
@@ -40,39 +40,39 @@ $app->get('/sitemap.xml', "$controllers\\Sitemap::get");
 
 $app->get('/{_locale}/login', "$controllers\\Login::run")
 	->method('GET|POST')
-	->assert('_locale', $valid_locales)
+	->assert('_locale', $validLocales)
 	->bind('login');
 
 $app->get('/{_locale}/user/voice', "$controllers\\UserVoice::get")
-	->assert('_locale', $valid_locales)
+	->assert('_locale', $validLocales)
 	->bind('user_voice')
 	->before($needsLogin);
 
 $app->get('/{_locale}/user/book', "$controllers\\UserBook::get")
-	->assert('_locale', $valid_locales)
+	->assert('_locale', $validLocales)
 	->bind('user_book')
 	->before($needsLogin);
 
 $app->get('/{_locale}/wizard', "$controllers\\WizardStepOne::stepOne")
-	->assert('_locale', $valid_locales)
+	->assert('_locale', $validLocales)
 	->method('GET|POST')
 	->bind('wizard_step1')
 	->before($needsLogin);
 
 $app->post('/{_locale}/wizard/lowest', "$controllers\\WizardEmpiric::lowest")
-	->assert('_locale', $valid_locales)
+	->assert('_locale', $validLocales)
 	->method('GET|POST')
 	->bind('wizard_empiric_lowest')
 	->before($needsLogin);
 
 $app->post('/{_locale}/wizard/highest', "$controllers\\WizardEmpiric::highest")
 	->method('GET|POST')
-	->assert('_locale', $valid_locales)
+	->assert('_locale', $validLocales)
 	->bind('wizard_empiric_highest')
 	->before($needsLogin);
 
 $app->get('/{_locale}/wizard/finish', "$controllers\\WizardEmpiric::finish")
-	->assert('_locale', $valid_locales)
+	->assert('_locale', $validLocales)
 	->bind('wizard_finish')
 	->before($needsLogin);
 
@@ -87,7 +87,7 @@ $app->post('/feedback', "$controllers\\ReceiveFeedback::post")
 	->bind('transposition_feedback');
 
 $app->get('/{_locale}/all-songs-report', "$controllers\\AllSongsReport::get")
-	->assert('_locale', $valid_locales)
+	->assert('_locale', $validLocales)
 	->bind('all_songs_report')
 	->before($needsLogin);
 	

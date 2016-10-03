@@ -42,8 +42,8 @@ class NotesCalculator
 	 */
 	public function lowestNote(array $notes)
 	{
-		$min_number = count($this->numbered_scale);
-		$min_note = null;
+		$minNumber = count($this->numbered_scale);
+		$minNote = null;
 
 		foreach ($notes as $note)
 		{
@@ -54,14 +54,14 @@ class NotesCalculator
 				throw new \InvalidArgumentException("'$note' is not a valid note");
 			}
 
-			if ($number < $min_number)
+			if ($number < $minNumber)
 			{
-				$min_number = $number;
-				$min_note = $note;
+				$minNumber = $number;
+				$minNote = $note;
 			}
 		}
 
-		return $min_note;
+		return $minNote;
 	}
 
 	/**
@@ -155,13 +155,13 @@ class NotesCalculator
 	 */
 	public function transposeChords($chordList, $amount)
 	{
-		$final_list = array();
+		$finalList = array();
 
 		foreach ($chordList as $chord)
 		{
-			$final_list[] = $this->transportChord($chord, $amount);
+			$finalList[] = $this->transportChord($chord, $amount);
 		}
 
-		return $final_list;
+		return $finalList;
 	}
 }

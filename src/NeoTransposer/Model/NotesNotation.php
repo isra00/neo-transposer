@@ -49,27 +49,27 @@ class NotesNotation
 	 * @param  string     $notation    Notation for notes (american|latin)
 	 * @param  string     $lowestNote  Lowest note of the voice range.
 	 * @param  string     $highestNote Highest note of the voice range.
-	 * @return string                  Something like "lowest_note - highest note +x octaves"
+	 * @return string                  Something like "lowestNote - highestNote +x octaves"
 	 */
 	public static function getVoiceRangeAsString(Translator $trans, $notation='american', $lowestNote, $highestNote)
 	{
 		$regexp = '/([ABCDEFG]#?b?)([0-9])/';
 		
 		preg_match($regexp, $lowestNote, $match);
-		$lowest_note = $match[1];
+		$lowestNote = $match[1];
 
 		preg_match($regexp, $highestNote, $match);
-		$highest_note = $match[1];
+		$highestNote = $match[1];
 
 		if ('latin' == $notation)
 		{
-			$lowest_note = NotesNotation::getNotation($lowest_note, 'latin');
-			$highest_note = NotesNotation::getNotation($highest_note, 'latin');
+			$lowestNote = NotesNotation::getNotation($lowestNote, 'latin');
+			$highestNote = NotesNotation::getNotation($highestNote, 'latin');
 		}
 
 		$octave = intval($match[2]);
 		$octave = $octave - 1;
 
-		return "$lowest_note &rarr; $highest_note +$octave " . $trans->trans('oct');
+		return "$lowestNote &rarr; $highestNote +$octave " . $trans->trans('oct');
 	}
 }

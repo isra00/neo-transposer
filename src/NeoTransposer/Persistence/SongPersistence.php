@@ -19,16 +19,16 @@ class SongPersistence
 	 */
 	public static function fetchSongById($idSong, \Doctrine\DBAL\Connection $db)
 	{
-		$field_id = 'slug';
+		$fieldId = 'slug';
 
 		if (preg_match('/^\d+$/', $idSong))
 		{
-			$field_id = 'id_song';
+			$fieldId = 'id_song';
 			$idSong = (int) $idSong;
 		}
 
 		$songDetails = $db->fetchAssoc(
-			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $field_id = ?",
+			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $fieldId = ?",
 			array($idSong)
 		);
 

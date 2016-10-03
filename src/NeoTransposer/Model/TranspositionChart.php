@@ -8,7 +8,7 @@ class TranspositionChart
 	{
 		$nc = new \NeoTransposer\Model\NotesCalculator;
 
-		$voice_chart = array(
+		$voiceChart = array(
 			'singer' => array(
 				'lowest'	=> $singer->lowest_note,
 				'highest'	=> $singer->highest_note,
@@ -31,18 +31,18 @@ class TranspositionChart
 			),
 		);
 
-		$voice_chart['transposed']['length'] = $voice_chart['original']['length'];
+		$voiceChart['transposed']['length'] = $voiceChart['original']['length'];
 
 		$min = $nc->lowestNote(array(
-			$voice_chart['singer']['lowest'],
-			$voice_chart['original']['lowest'],
-			$voice_chart['transposed']['lowest'],
+			$voiceChart['singer']['lowest'],
+			$voiceChart['original']['lowest'],
+			$voiceChart['transposed']['lowest'],
 		));
 
-		array_walk($voice_chart, function(&$voice) use ($min, $nc) {
+		array_walk($voiceChart, function(&$voice) use ($min, $nc) {
 			$voice['offset'] = abs($nc->distanceWithOctave($min, $voice['lowest']));
 		});
 
-		return $voice_chart;
+		return $voiceChart;
 	}
 }

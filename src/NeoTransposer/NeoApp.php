@@ -19,7 +19,7 @@ class NeoApp extends Application
 	 * Swahili-speaking countries, for language detection based on IP.
 	 * @var array
 	 */
-	protected $swahili_countries = array('TZ', 'KE');
+	protected $swahiliCountries = array('TZ', 'KE');
 
 	protected $notifications = array('error'=>array(), 'success'=>array());
 
@@ -106,7 +106,7 @@ class NeoApp extends Application
 			return;
 		}
 
-		if (false !== array_search($record->country->isoCode, $this->swahili_countries))
+		if (false !== array_search($record->country->isoCode, $this->swahiliCountries))
 		{
 			$this['locale'] = 'sw';
 		}
@@ -164,12 +164,12 @@ class NeoApp extends Application
 	{
 		$this['books'] = function($app) {
 			$books = $app['db']->fetchAll('SELECT * FROM book');
-			$books_nice = array();
+			$booksNice = array();
 			foreach ($books as $book)
 			{
-				$books_nice[$book['id_book']] = $book;
+				$booksNice[$book['id_book']] = $book;
 			}
-			return $books_nice;
+			return $booksNice;
 		};
 
 		$this['chord_printers.get'] = $this->protect(function($printer) {
@@ -226,14 +226,14 @@ class NeoApp extends Application
 	protected function setPageTitle(&$parameters)
 	{
 		//Defined by SEO rules
-		$max_title_length = 55;
+		$maxTitleLength = 55;
 
 		$software = $this['neoconfig']['software_name'];
 		$suffix = $this->trans($this['neoconfig']['seo_title_suffix']);
 
 		if (isset($parameters['page_title']))
 		{
-			if (strlen($parameters['page_title']) < $max_title_length - strlen($suffix))
+			if (strlen($parameters['page_title']) < $maxTitleLength - strlen($suffix))
 			{
 				$parameters['page_title'] = $parameters['page_title'] . " · $suffix";
 			}
