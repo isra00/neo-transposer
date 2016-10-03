@@ -54,7 +54,6 @@ class InsertSong
 		$app->addNotification('success', 'Song inserted');
 
 		return $this->get(
-			$request, 
 			$app, 
 			array('id_book' => $request->get('id_book'))
 		);
