@@ -60,24 +60,6 @@ class InsertSong
 		);
 	}
 
-	/**
-	 * Use this function to set the slug on those songs which don't have.
-	 * 
-	 * @param  \Doctrine\DBAL\Connection $db A DB connection
-	 */
-	function slugizedb(\Doctrine\DBAL\Connection $db)
-	{
-		$songs = $db->fetchAll("SELECT * FROM song WHERE slug IS NULL OR slug = ''");
-		foreach ($songs as $song)
-		{
-			$db->update(
-				'song',
-				array('slug' => $this->urlize($song['title'])),
-				array('id_song' => $song['id_song'])
-			);
-		}
-	}
-
 	protected function getSlug(Request $request)
 	{
 		$candidate = $this->urlize($request->get('title'));
