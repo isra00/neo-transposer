@@ -123,7 +123,6 @@ class NeoApp extends Application
 		));
 
 		//Custom Twig filter for printing notes in different notations.
-		//@todo Esto solo se usa una vez... es realmente necesario?
 		$this['twig'] = $this->extend('twig', function(\Twig_Environment $twig) {
 			$twig->addFilter(new \Twig_SimpleFilter('notation', function ($str, $notation) {
 				return \NeoTransposer\Model\NotesNotation::getNotation($str, $notation);
