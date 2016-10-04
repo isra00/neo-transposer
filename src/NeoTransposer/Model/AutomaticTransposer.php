@@ -256,12 +256,22 @@ class AutomaticTransposer
 		if (!empty($nearTranspositions))
 		{
 			$notEquivalent = $this->sortTranspositionsByEase($nearTranspositions);
+
+			//For algorithm conservatism, no-capo takes always precedence.
+			foreach ($notEquivalent as $transposition)
+			{
+				if (0 == $transposition->getCapo())
+				{
+					$notEquivalent[0] = $transposition;
+				}
+			}
+
 			return $notEquivalent[0];
 		}
 	}
 
 	/**
-	 * Get transpositions higher or lower than the centered.
+	 * Get transpositions higher and lower than the centered.
 	 * 
 	 * @param array		$range				The range in semitones, e.g. [-2, -1]
 	 * @param integer	$maxScore			Return only transpositions with score lower than this.
@@ -339,7 +349,7 @@ class AutomaticTransposer
 				 */
 				if ($notEquivalent->getCapo())
 				{
-					continue;
+					//continue;
 				}
 
 				$nearTranspositions[] = $notEquivalent;

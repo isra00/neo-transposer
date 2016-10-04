@@ -62,6 +62,15 @@
 				"score": 24,
 				"capo": 4,
 				"chords": "F#m,C#,Bm,D"
+			},
+			"notEquivalent": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 9,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,B7,Am,C"
 			}
 		},
 		"29": {
@@ -142,6 +151,15 @@
 				"score": 26,
 				"capo": 4,
 				"chords": "F#m,Bm,C#,E,D"
+			},
+			"notEquivalent": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 11,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,Am,B7,D,C"
 			}
 		},
 		"149": {
@@ -282,6 +300,15 @@
 				"score": 43,
 				"capo": 4,
 				"chords": "B,D,E,F#7,Bm,Em,F#m,F#"
+			},
+			"notEquivalent": {
+				"offset": -2,
+				"lowestNote": "C2",
+				"highestNote": "B2",
+				"score": 16,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "A,C,D,E7,Am,Dm,Em,E"
 			}
 		},
 		"156": {
@@ -391,6 +418,15 @@
 				"score": 27,
 				"capo": 4,
 				"chords": "F#m,E,C#,D,C#7"
+			},
+			"notEquivalent": {
+				"offset": -5,
+				"lowestNote": "C2",
+				"highestNote": "C3",
+				"score": 13,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,D,B7,C,B7"
 			}
 		},
 		"161": {
@@ -1549,6 +1585,15 @@
 				"score": 33,
 				"capo": 4,
 				"chords": "F#m,F#7,Bm,C#,D"
+			},
+			"notEquivalent": {
+				"offset": -5,
+				"lowestNote": "C2",
+				"highestNote": "B2",
+				"score": 12,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,E7,Am,B7,C"
 			}
 		},
 		"220": {
@@ -1778,6 +1823,15 @@
 				"score": 32,
 				"capo": 4,
 				"chords": "F#m,C#7,D,C#,Bm"
+			},
+			"notEquivalent": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 13,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,B7,C,B7,Am"
 			}
 		},
 		"231": {
@@ -1967,6 +2021,15 @@
 				"score": 48,
 				"capo": 4,
 				"chords": "F#m5,Bm,C#,F#m,E,A,D"
+			},
+			"notEquivalent": {
+				"offset": -5,
+				"lowestNote": "C2",
+				"highestNote": "C3",
+				"score": 37,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em5,Am,B7,Em,D,G,C"
 			}
 		},
 		"240": {
@@ -3241,6 +3304,15 @@
 				"score": 26,
 				"capo": 4,
 				"chords": "F#m,E,D,C#,Bm"
+			},
+			"notEquivalent": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 11,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,D,C,B7,Am"
 			}
 		},
 		"302": {
@@ -3261,6 +3333,15 @@
 				"score": 17,
 				"capo": 4,
 				"chords": "F#m,C#7,D7"
+			},
+			"notEquivalent": {
+				"offset": -5,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 10,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,B7,C7"
 			}
 		},
 		"303": {
@@ -3441,6 +3522,15 @@
 				"score": 28,
 				"capo": 4,
 				"chords": "F#m,Bm,C#,E,A,D"
+			},
+			"notEquivalent": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 13,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,Am,B7,D,G,C"
 			}
 		},
 		"312": {
@@ -3481,6 +3571,15 @@
 				"score": 26,
 				"capo": 4,
 				"chords": "F#m,Bm,D,C#,E"
+			},
+			"notEquivalent": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 11,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,Am,C,B7,D"
 			}
 		},
 		"314": {
@@ -3701,6 +3800,15 @@
 				"score": 18,
 				"capo": 4,
 				"chords": "F#m,E,D,C#7"
+			},
+			"notEquivalent": {
+				"offset": 5,
+				"lowestNote": "C2",
+				"highestNote": "C3",
+				"score": 9,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,D,C,B7"
 			}
 		},
 		"334": {
@@ -4079,6 +4187,15 @@
 				"score": 20,
 				"capo": 4,
 				"chords": "Bm,F#m,Em,F#"
+			},
+			"notEquivalent": {
+				"offset": 0,
+				"lowestNote": "A#1",
+				"highestNote": "D3",
+				"score": 7,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Am,Em,Dm,E"
 			}
 		},
 		"353": {
@@ -4119,6 +4236,15 @@
 				"score": 55,
 				"capo": 1,
 				"chords": "Dm,Gm,Gm6,C7,F,A,Am,A#"
+			},
+			"notEquivalent": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 32,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Am,Dm,Dm6,G7,C,E,Em,F"
 			}
 		},
 		"355": {
@@ -4408,6 +4534,15 @@
 				"score": 34,
 				"capo": 4,
 				"chords": "F#m,Bm,C#7,D,C#,E"
+			},
+			"notEquivalent": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 15,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Em,Am,B7,C,B7,D"
 			}
 		},
 		"408": {
