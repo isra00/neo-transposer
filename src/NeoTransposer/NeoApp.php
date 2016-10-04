@@ -65,9 +65,6 @@ class NeoApp extends Application
 				. '://'
 				. $request->getHttpHost()
 				. $request->getBasePath();
-
-			//If debug=1, Twig enables strict variables. We disable it always.
-			$app['twig']->disableStrictVariables();
 		});
 	}
 
@@ -125,7 +122,8 @@ class NeoApp extends Application
 		$this->register(new \Silex\Provider\TwigServiceProvider(), array(
 			'twig.path' => $this['neoconfig']['templates_dir'],
 			'twig.options' => array(
-				'cache' => $rootDir . '/cache/twig'
+				'cache' => $rootDir . '/cache/twig',
+				'strict_variables' => false
 			)
 		));
 
