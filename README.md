@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/isra00/neo-transposer.svg?branch=master)](https://travis-ci.org/isra00/neo-transposer)
+
 ### Misión ###
 
 Ayudar a los cantores del Camino en temas técnicos para que desarrollen más eficazmente su carisma.
