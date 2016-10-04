@@ -4,6 +4,7 @@ require '../vendor/autoload.php';
 
 use \Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\NeoApp;
+use \Silex\Provider;
 
 $app = new NeoApp(
 	require __DIR__ . '/../config.php',
@@ -21,7 +22,7 @@ $needsLogin = function (Request $req, NeoApp $app) {
 	}
 };
 
-$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+$app->register(new Provider\SecurityServiceProvider(), array(
 	'security.firewalls' => array(
 		'test' => array(
 			'pattern'	=> '^/admin',
@@ -30,6 +31,16 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 		)
 	)
 ));
+
+if ($app['debug'])
+{
+	$app->register(new Provider\HttpFragmentServiceProvider());
+	$app->register(new Provider\ServiceControllerServiceProvider());
+	$app->register(new Provider\WebProfilerServiceProvider(), array(
+	    'profiler.cache_dir' 	=> __DIR__ . '/../cache/profiler',
+	    'profiler.mount_prefix' => '/admin/_profiler',
+	));
+}
 
 $validLocales = '(' . implode('|', array_keys($app['neoconfig']['languages'])) . ')';
 

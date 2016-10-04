@@ -10,7 +10,8 @@
         "symfony/translation": "~3.1",
         "symfony/security": "~3.1",
         "doctrine/dbal": "2.5.*",
-        "geoip2/geoip2": "~2"
+        "geoip2/geoip2": "~2",
+        "silex/web-profiler": "^2.0"
     },
 
     "autoload": {
