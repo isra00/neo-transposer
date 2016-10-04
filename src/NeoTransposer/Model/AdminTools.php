@@ -364,4 +364,19 @@ SQL;
 
 		return $output;
 	}
+
+	public function detectOrphanChords(NeoApp $app)
+	{
+		$sql = <<<SQL
+SELECT song_chord.id_song id_song FROM song_chord
+LEFT JOIN song ON song.id_song = song_chord.id_song
+WHERE song.id_song IS NULL
+SQL;
+		$orphanIdSongs = array_column($app['db']->fetchAll($sql), 'id_song');
+
+		return (empty($orphanIdSongs))
+			? 'Good! No orphan chord detected.'
+			: count($orphanIdSongs) . ' orphan id_song detected! Remove them with'
+				. "\nDELETE FROM song_chord WHERE id_song IN (" . implode(', ', $orphanIdSongs) . ')';
+	}
 }

@@ -59,6 +59,10 @@ class AdminDashboard
 				case 'getVoiceRangeOfGoodUsers':
 					$toolOutput = $tools->getVoiceRangeOfGoodUsers($app);
 					break;
+
+				case 'detectOrphanChords':
+					$toolOutput = $tools->detectOrphanChords($app);
+					break;
 			}
 		}
 
