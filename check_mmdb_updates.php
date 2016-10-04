@@ -16,4 +16,4 @@ exec("wget -q http://geolite.maxmind.com/download/geoip/database/GeoLite2-Countr
 exec("gzip -df $last_md5.mmdb.gz");
 
 rename("$last_md5.mmdb", $neoconfig['mmdb']);
-die($neoconfig['mmdb'] . " updated with version $last_md5\n");
+echo $neoconfig['mmdb'] . " updated with version $last_md5\n";
