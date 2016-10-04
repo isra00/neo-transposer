@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Model;
 
-use \Symfony\Component\Translation\Translator;
+use \Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Support for different nomenclatures for notes (american and latin so far).
@@ -51,7 +51,7 @@ class NotesNotation
 	 * @param  string     $highestNote Highest note of the voice range.
 	 * @return string                  Something like "lowestNote - highestNote +x octaves"
 	 */
-	public static function getVoiceRangeAsString(Translator $trans, $notation='american', $lowestNote, $highestNote)
+	public static function getVoiceRangeAsString(TranslatorInterface $trans, $notation='american', $lowestNote, $highestNote)
 	{
 		$regexp = '/([ABCDEFG]#?b?)([0-9])/';
 		

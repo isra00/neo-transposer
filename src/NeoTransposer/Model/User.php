@@ -5,7 +5,7 @@ namespace NeoTransposer\Model;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Persistence\UserPersistence;
 use \NeoTransposer\Model\NotesNotation;
-use \Symfony\Component\Translation\Translator;
+use \Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Represents a user
@@ -115,7 +115,7 @@ class User
 	 * @param  string 		$notation 	The notation (american/latin).
 	 * @return string 					Formatted string.
 	 */
-	public function getVoiceAsString(Translator $trans, $notation='american')
+	public function getVoiceAsString(TranslatorInterface $trans, $notation='american')
 	{
 		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->lowest_note, $this->highest_note);
 	}
