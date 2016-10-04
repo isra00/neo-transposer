@@ -21,7 +21,7 @@ class AdminTools
 	{
 		$ips = $app['db']->fetchAll('SELECT register_ip FROM user');
 
-		$reader = new \GeoIp2\Database\Reader($app['root_dir'] . '/' . $app['neoconfig']['mmdb'] . '.mmdb');
+		$reader = new \GeoIp2\Database\Reader($app['root_dir'] . '/' . $app['neoconfig']['mmdb']);
 
 		foreach ($ips as $ip)
 		{
