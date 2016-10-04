@@ -25,17 +25,18 @@ class NeoApp extends Application
 
 	/**
 	 * Load config, register services in Silex and set before() filter.
-	 * @param [type] $config   [description]
-	 * @param [type] $root_dir [description]
+	 * 
+	 * @param string $config   Configuration array, loaded from config.php
+	 * @param string $rootDir Local FS path to the app root (where composes.json is)
 	 */
-	public function __construct($config, $root_dir)
+	public function __construct($config, $rootDir)
 	{
 		parent::__construct();
 
 		$this['neoconfig'] = $config;
-		$this['root_dir'] = $root_dir;
+		$this['root_dir'] = $rootDir;
 
-		$this->registerSilexServices();
+		$this->registerSilexServices($rootDir);
 		$this->registerCustomServices();
 
 		if (!empty($config['debug']))
@@ -114,12 +115,18 @@ class NeoApp extends Application
 
 	/**
 	 * Register some Silex services used in the app.
+	 * 
+	 * @param string $rootDir Real FS path to app root, where the cache/ dir is.
+	 * 
 	 * @see composer.json, since some of these services require ext dependencies.
 	 */
-	protected function registerSilexServices()
+	protected function registerSilexServices($rootDir)
 	{
 		$this->register(new \Silex\Provider\TwigServiceProvider(), array(
-			'twig.path' => $this['neoconfig']['templates_dir']
+			'twig.path' => $this['neoconfig']['templates_dir'],
+			'twig.options' => array(
+				'cache' => $rootDir . '/cache/twig'
+			)
 		));
 
 		//Custom Twig filter for printing notes in different notations.
