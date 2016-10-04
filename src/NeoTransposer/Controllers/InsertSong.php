@@ -33,6 +33,8 @@ class InsertSong
 			'title' => $request->get('title'),
 			'lowest_note' => $request->get('lowest_note'),
 			'highest_note' => $request->get('highest_note'),
+			'people_lowest_note' => $request->get('people_lowest_note'),
+			'people_highest_note' => $request->get('people_highest_note'),
 			'first_chord_is_tone' => str_replace('on', '1', $request->get('first_chord_is_key')),
 			'slug' => $this->getSlug($request),
 		));
