@@ -14,10 +14,15 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 	 */
 	protected $transposer;
 
+    protected $chordsScoreConfig;
+
     public function setUp()
     {
+        //root dir should be in includePath from phpunit.xml
+        $this->chordsScoreConfig = include './config.scores.php';
+
         $this->transposer = new AutomaticTransposer(
-            'G1', 'G3', 'B1', 'B2', array('Am', 'Dm', 'F', 'C'), false
+            'G1', 'G3', 'B1', 'B2', array('Am', 'Dm', 'F', 'C'), false, $this->chordsScoreConfig
         );
     }
 
@@ -30,7 +35,8 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
             2,
             'C#2',
             'C#3',
-            0
+            0,
+            $this->chordsScoreConfig
         );
 
         $this->assertEquals(
@@ -42,11 +48,11 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
     public function testFindCenteredTranspositionAsBook()
     {
         $transposer = new AutomaticTransposer(
-            'F1', 'F3', 'B1', 'B2', array('Bm', 'Em', 'G', 'D'), false
+            'F1', 'F3', 'B1', 'B2', array('Bm', 'Em', 'G', 'D'), false, $this->chordsScoreConfig
         );
 
         $expected = new Transposition(
-            array('Bm', 'Em', 'G', 'D'), 0, true, 0, 'B1', 'B2', 0
+            array('Bm', 'Em', 'G', 'D'), 0, true, 0, 'B1', 'B2', 0, $this->chordsScoreConfig
         );
 
         $this->assertEquals($expected, $transposer->getCenteredTransposition());
@@ -54,15 +60,15 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 
     public function testFindEquivalentsWithCapo()
     {
-        $testTransposition = new Transposition(array('Bm', 'Em', 'G', 'D'), 0, false);
+        $testTransposition = new Transposition(array('Bm', 'Em', 'G', 'D'), 0, false, null, null, null, null, $this->chordsScoreConfig);
         $equivalents = $this->transposer->findEquivalentsWithCapo($testTransposition);
         
         $expected = array(
-            1=>new Transposition(array('A#m', 'D#m', 'F#', 'C#'), 1, false),
-            new Transposition(array('Am', 'Dm', 'F', 'C'), 2, true),
-            new Transposition(array('G#m', 'C#m', 'E', 'B'), 3, false),
-            new Transposition(array('Gm', 'Cm', 'D#', 'A#'), 4, false),
-            new Transposition(array('F#m', 'Bm', 'D', 'A'), 5, false)
+            1=>new Transposition(array('A#m', 'D#m', 'F#', 'C#'), 1, false, null, null, null, null, $this->chordsScoreConfig),
+            new Transposition(array('Am', 'Dm', 'F', 'C'), 2, true, null, null, null, null, $this->chordsScoreConfig),
+            new Transposition(array('G#m', 'C#m', 'E', 'B'), 3, false, null, null, null, null, $this->chordsScoreConfig),
+            new Transposition(array('Gm', 'Cm', 'D#', 'A#'), 4, false, null, null, null, null, $this->chordsScoreConfig),
+            new Transposition(array('F#m', 'Bm', 'D', 'A'), 5, false, null, null, null, null, $this->chordsScoreConfig)
         );
 
         $this->assertEquals($expected, $equivalents);
@@ -89,11 +95,11 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
     public function testFindAlternativeNotEquivalent()
     {
         $transposer = new AutomaticTransposer(
-            'A1', 'D3', 'C#2', 'E3', array('D', 'F#', 'Bm', 'A', 'G'), false
+            'A1', 'D3', 'C#2', 'E3', array('D', 'F#', 'Bm', 'A', 'G'), false, $this->chordsScoreConfig
         );
 
         $expected = new Transposition(
-            array('C', 'E', 'Am', 'G', 'F'), 0, false, -2, 'B1', 'D3', 1, false
+            array('C', 'E', 'Am', 'G', 'F'), 0, false, -2, 'B1', 'D3', 1, $this->chordsScoreConfig
         );
 
         $this->assertEquals(
@@ -105,11 +111,11 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
     public function testForceHighestVoice()
     {
         $transposer = new AutomaticTransposer(
-            'A1', 'E3', 'E2', 'A2', array('Am', 'G'), false
+            'A1', 'E3', 'E2', 'A2', array('Am', 'G'), false, $this->chordsScoreConfig
         );
 
         $expected = new Transposition(
-            array('Em', 'D'), 0, false, 7, 'B2', 'E3', 0
+            array('Em', 'D'), 0, false, 7, 'B2', 'E3', 0, $this->chordsScoreConfig
         );
 
         $this->assertEquals(
@@ -121,11 +127,11 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
     public function testForceLowestVoice()
     {
         $transposer = new AutomaticTransposer(
-            'A1', 'E3', 'E2', 'A2', array('Am', 'G'), false
+            'A1', 'E3', 'E2', 'A2', array('Am', 'G'), false, $this->chordsScoreConfig
         );
 
         $expected = new Transposition(
-            array('Dm', 'C'), 0, false, -7, 'A1', 'D2', 0
+            array('Dm', 'C'), 0, false, -7, 'A1', 'D2', 0, $this->chordsScoreConfig
         );
 
         $this->assertEquals(

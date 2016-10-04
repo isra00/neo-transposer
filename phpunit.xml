@@ -21,4 +21,8 @@
 		<log type="coverage-html" target="tests/reports" charset="UTF-8"/>
 	</logging>
 
+	<php>
+		<includePath>.</includePath>
+	</php>
+
 </phpunit>
