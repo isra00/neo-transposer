@@ -4840,6 +4840,26 @@
 				"capo": 3,
 				"chords": "Bm,Em"
 			}
+		},
+		"461": {
+			"songLowestNote": "C2",
+			"songHighestNote": "F3",
+			"centered1": {
+				"offset": -2,
+				"lowestNote": "A#1",
+				"highestNote": "D#3",
+				"score": 9,
+				"capo": 3,
+				"chords": "Em,Am,B7,C"
+			},
+			"centered2": {
+				"offset": -2,
+				"lowestNote": "A#1",
+				"highestNote": "D#3",
+				"score": 21,
+				"capo": 5,
+				"chords": "Dm,Gm,A,A#"
+			}
 		}
 	}
 }
