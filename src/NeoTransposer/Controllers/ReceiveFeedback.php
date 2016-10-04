@@ -58,4 +58,4 @@ SQL;
 			return true;
 		}
 	}
-}		
+}
