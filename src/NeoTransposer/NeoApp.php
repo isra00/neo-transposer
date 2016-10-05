@@ -119,12 +119,16 @@ class NeoApp extends Application
 	 */
 	protected function registerSilexServices($rootDir)
 	{
+		if (!$this['debug'])
+		{
+			$twigOptions = array('cache' => $rootDir . '/cache/twig');
+		}
+
 		$this->register(new \Silex\Provider\TwigServiceProvider(), array(
 			'twig.path' => $this['neoconfig']['templates_dir'],
-			'twig.options' => array(
-				'cache' => $rootDir . '/cache/twig',
+			'twig.options' => array_merge($twigOptions, array(
 				'strict_variables' => false
-			)
+			))
 		));
 
 		//Custom Twig filter for printing notes in different notations.
