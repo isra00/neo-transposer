@@ -234,6 +234,13 @@ $(function() {
 			{
 				dialog.style.top = (window.innerHeight - dialog.offsetHeight) + "px";
 			}
+
+			if (!isTouchScreen)
+			{
+				event.target.addEventListener('mouseout', function() {
+					dialog.style.display = 'none';
+				});
+			}
 		}
 	}
 
@@ -257,13 +264,6 @@ $(function() {
 
 	dialog.addEventListener('click', closeDialog);
 	darkBackground.addEventListener('click', closeDialog);
-
-	if (!isTouchScreen)
-	{
-		event.target.addEventListener('mouseout', function() {
-			dialog.style.display = 'none';
-		});
-	}
 });
 </script>
 
