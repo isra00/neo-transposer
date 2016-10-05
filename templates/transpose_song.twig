@@ -138,6 +138,8 @@
 	</figure>
 </div>
 
+{% if app.neouser.isLoggedIn %}
+
 {% import 'base.twig' as self %}
 {{ self.loadJsFramework() }}
 
@@ -266,5 +268,7 @@ $(function() {
 	darkBackground.addEventListener('click', closeDialog);
 });
 </script>
+
+{% endif %}
 
 {% endblock %}
