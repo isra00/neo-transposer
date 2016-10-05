@@ -23,7 +23,9 @@
 					{{ transposition.scoreMap[transposition.chords[loop.index0]] }}
 				</td>
 				{%- endif %}
-				<td class="transposed">{{ transposition.chordsForPrint[loop.index0]|raw }}</td>
+				<td class="transposed" data-chord="{{ transposition.chords[loop.index0] }}">
+					{{ transposition.chordsForPrint[loop.index0]|raw }}
+				</td>
 			</tr>
 		{%- else -%}
 			<tr><td class="as-book">{% trans %}(same chords as in the book){% endtrans %}</td></tr>
@@ -127,6 +129,15 @@
 	</table>
 </div>
 
+
+<div id="dark-bg"></div>
+<div id="chord-chart-dialog">
+	<figure>
+		<img id="chord-chart" src="" alt="" data-urlpattern="{{ global.request.basepath }}/static/img/chords/@.png">
+		<figcaption id="chord-chart-caption"></figcaption>
+	</figure>
+</div>
+
 {% import 'base.twig' as self %}
 {{ self.loadJsFramework() }}
 
@@ -172,6 +183,87 @@ $(function() {
 		ga('send', 'event', 'FeedbackTransposition', 'NotWorked', '{{ song.song.title }}');
 	});
 
+	function openChordChartDialog(event)
+	{
+		var chordName = event.target.parentNode.dataset.chord;
+
+		//5th chords are wrong in the ES songbook. They mean 9th -_-
+		chordName = chordName.replace(/5$/, '9');
+
+		chordChartImg.addEventListener('error', function(event) {
+			event.target.src = '{{ global.request.basepath }}/static/img/chords/unknown-{{ app.locale }}.png';
+		});
+
+		chordChartImg.setAttribute(
+			'src',
+			chordChartImg.dataset.urlpattern.replace('@', chordName.replace('#', 's'))
+		);
+
+		chordChartImg.setAttribute('alt', event.target.innerHTML);
+
+		chordChartCaption.innerHTML = event.target.innerHTML;
+
+		if (isTouchScreen)
+		{
+			dialog.style.display = 'block';
+			darkBackground.style.display = 'block';
+		}
+		else
+		{
+			// Position the dialog next to the chord.
+			var dialogTop = event.target.parentNode.offsetTop + event.target.parentNode.offsetHeight;
+				dialogLeft = event.target.parentNode.getBoundingClientRect().left + event.target.parentNode.offsetWidth;
+
+			dialog.style.position = 'fixed';
+			dialog.style.margin = '0';
+			dialog.style.top = dialogTop + "px";
+			dialog.style.left = dialogLeft + "px";
+
+			dialog.style.display = 'block';
+
+			// If it gets out of the limits of the screen, place at in the corner.
+			var currentRight = dialog.getBoundingClientRect().left + dialog.offsetWidth;
+			var currentBottom = dialog.getBoundingClientRect().top + dialog.offsetHeight;
+
+			if (currentRight > window.innerWidth)
+			{
+				dialog.style.left = (window.innerWidth - dialog.offsetWidth) + "px";
+			}
+
+			if (currentBottom > window.innerHeight)
+			{
+				dialog.style.top = (window.innerHeight - dialog.offsetHeight) + "px";
+			}
+		}
+	}
+
+	var isTouchScreen 	  = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
+		dialog 			  = document.getElementById('chord-chart-dialog'),
+		chordChartImg 	  = document.getElementById('chord-chart'),
+		chordChartCaption = document.getElementById('chord-chart-caption'),
+		darkBackground 	  = document.getElementById('dark-bg');
+
+	$(".transposed span").click(openChordChartDialog);
+
+	if (!isTouchScreen)
+	{
+		$(".transposed span").mouseover(openChordChartDialog);
+	}
+
+	var closeDialog = function() {
+		dialog.style.display = 'none';
+		darkBackground.style.display = 'none';
+	};
+
+	dialog.addEventListener('click', closeDialog);
+	darkBackground.addEventListener('click', closeDialog);
+
+	if (!isTouchScreen)
+	{
+		event.target.addEventListener('mouseout', function() {
+			dialog.style.display = 'none';
+		});
+	}
 });
 </script>
 

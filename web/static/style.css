@@ -174,7 +174,7 @@ footer {
 	margin: 1em 0;
 	/*font-style: italic;*/
 	color: #444;
-	background: #eee url(img/dialog-information.png) 10px 13px no-repeat;
+	background: #eee url(img/dialog-information-fs8.png) 10px 13px no-repeat;
 	padding: 1em 1em .8em 65px;
 	min-height: 60px;
 }
@@ -531,9 +531,45 @@ footer {
 	.transposition .transposed {
 		text-align: left;
 	}
+	.transposition .transposed span {
+		cursor: help;
+	}
 	.transposition .as-book {
 		font-size: .85em;
 	}
+
+.transpose-song #dark-bg {
+	display: none;
+}
+
+.transpose-song #chord-chart-dialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-left: -90px;
+	margin-top: -150px;
+	width: 180px;
+	height: 150px;
+	padding: 1em 1em .5em;
+	z-index: 2;
+
+	display: none;
+	border: 0;
+	border-radius: 4px;
+	box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+	background: #fafafa;
+	text-align: center;
+}
+
+#chord-chart-dialog figure {
+	margin: .5em 0 0;
+}
+#chord-chart-dialog figcaption {
+	text-align: center;
+	margin-top: .2em;
+	color: #e00;
+	font-size: 1.3em;
+}
 
 .chord {
 	color: #e00;
