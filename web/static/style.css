@@ -763,12 +763,23 @@ h2.step-1 {
 	font-family: monospace;
 	background: rgb(253, 253, 248);
 	box-shadow: 0px 2px .5em silver;
-	padding: 1.3em;
+	padding: 0;
 	display: inline-block;
 	color: #333;
-	max-width: 18rem;
 	font-size: 1.1em;
+	max-width: 100%;
+
+	white-space: nowrap;
+	overflow-y: hidden;
+	overflow-x: scroll;
+	-webkit-overflow-scrolling: touch;
 }
+	.pre-song .inside {
+		margin: 1rem;
+		max-width: none;
+		display: inline-block;
+	}
+
 	.pre-song .capo {
 		color: #e00;
 	}
@@ -791,6 +802,7 @@ h2.step-1 {
 	display: inline-block;
 	vertical-align: top;
 	margin-left: 3rem;
+	margin-top: 1em;
 	max-width: 16rem;
 }
 	.wizard-empiric .answer h3 {

@@ -12,10 +12,12 @@
 		<p class="instructions">{% block instructions %}{% endblock %}</p>
 
 		<div class="pre-song">
-			<h5>{{ song_title}}</h5>
-			<strong class="capo blink">{{ song_capo }}</strong>
-			<br><br>
-			{{ song|raw }}
+			<div class="inside">
+				<h5>{{ song_title}}</h5>
+				<strong class="capo blink">{{ song_capo }}</strong>
+				<br><br>
+				{{ song|raw }}
+			</div>
 		</div>
 
 		<form class="answer" method="post" action="{{ global.request.getRequestUri }}" id="form-answer">
