@@ -202,6 +202,9 @@ $(function() {
 		);
 
 		chordChartImg.setAttribute('alt', event.target.innerHTML);
+		chordChartImg.addEventListener('load', function() {
+			dialog.style.width = chordChartImg.offsetWidth + 'px';
+		});
 
 		chordChartCaption.innerHTML = event.target.innerHTML;
 
