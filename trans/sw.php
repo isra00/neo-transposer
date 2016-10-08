@@ -112,11 +112,11 @@ return array(
 	'Other languages'
 	=> 'Lugha nyingine',
 
-/*	'You have reported the proposed transposition as valid'
-	=> 'Has reportado los acordes propuestos como válidos',
+	'You have reported the proposed transposition as valid'
+	=> 'Umethibitisha kodi zilizopendekezwa kwamba zinafaa sauti yako.',
 
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
-	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',*/
+	=> 'Ingia hapa ili uweze kubadilisha ufunguo za nyimbo za Neo.',
 
 	'<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won\'t need Internet every time you need to check a transposition :-)'
 	=> '<strong>NEW: <a href="%url%">Jipatie ripoti ya nyimbo zote</a></strong> na kordi zilizobadilishwa kwa sauti yako. Hivyo hutahitaji Internet kila unapotaka kupata transposition :-)',
