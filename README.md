@@ -21,6 +21,6 @@ El cantor, especialmente el novato o con pocos conocimientos musicales, se ve in
 
  1. Clone the git repository.
  2. Install the dependencies with `composer install`.
- 3. Create a MySQL database and dump the file tables_and_data.sql in it.
+ 3. Create a MySQL database and dump song_data.sql on it.
  4. Adjust the config.php with your DB data.
  5. Check that .htaccess and the Apache config are OK.
