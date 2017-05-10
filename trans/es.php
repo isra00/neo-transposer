@@ -118,11 +118,8 @@ return array(
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
 	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',
 
-	'Download or print <small>All songs report</small>'
-	=> 'Descarga o imprime <small>Todos los cantos</small>',
-
-	'<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.'
-	=> '<strong>NUEVO</strong>: ahora que ya tienes las transposiciones, esta otra aplicación te ayudará a elegir los cantos apropiados. Te presento el <strong><a href="%url%">Léxico del Resucitó</a></strong>.',
+	'<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won\'t need Internet every time you need to check a transposition :-)'
+	=> '<strong>NUEVO: <a href="%url%">Descarga todos los cantos</a></strong> transportados para tu voz. Así no necesitarás conexión a Internet cada vez que quieras consultar un canto :-)',
 
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'

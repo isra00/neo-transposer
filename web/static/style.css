@@ -255,33 +255,6 @@ footer {
 		display: inline-block;
 	}
 
-.tip.new.resucilex {
-	background: black url(img/resucilex-banner.png) left -16px no-repeat;
-	color: #ddd;
-	border-right: 2px solid gray;
-	padding-left: 70px;
-}
-
-.link-all-report-wrapper {
-	background: white;
-	box-shadow: 0 0 10px white;
-	float: right;
-	margin-right: 2px;
-	text-align: center;
-	display: block;
-}
-
-a.link-all-report {
-	background-color: #eee;
-	padding: .5em .7em .5em 40px;
-	display: inline-block;
-	background-position: .7em .7em!important;
-	text-align: left;
-}
-	.link-all-report small {
-		display: block;
-	}
-
 .song-index {
 	margin: 0;
 	padding: 0;
@@ -925,6 +898,17 @@ h2.step-1 {
 			display: inline-block;
 		}
 
+	a.btn-icon {
+		background-position: .7em .5em;
+		background-repeat: no-repeat;
+		padding-left: 40px;
+	}
+	.icon-download {
+		background-image: url(img/icon-dl.png);
+	}
+	.icon-print {
+		background-image: url(img/icon-print.png);
+	}
 
 /* Admin Dashboard */
 .admin-dashboard {
@@ -1169,19 +1153,6 @@ input[type=text] {
 		padding: .3em .5em;
 		font-size: 1.1em;
 	}
-
-a.btn-icon {
-	background-position: .7em .5em;
-	background-repeat: no-repeat;
-	padding-left: 40px;
-}
-.icon-download {
-	background-image: url(img/icon-dl.png);
-}
-.icon-print {
-	background-image: url(img/icon-print.png);
-}
-
 .btn-neutral {
 	background-color: #eee;
 	color: #333;
@@ -1408,15 +1379,6 @@ a.btn-icon {
 
 	.tip.new {
 		background-image: none;
-		font-size: .9em;
-	}
-
-	.link-all-report-wrapper {
-		background: none;
-		box-shadow: none;
-		float: none;
-		margin-right: 0;
-		margin-bottom: .5em;
 	}
 
 	.song-index li a:active {

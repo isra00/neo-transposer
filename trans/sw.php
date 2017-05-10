@@ -118,11 +118,8 @@ return array(
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
 	=> 'Ingia hapa ili uweze kubadilisha ufunguo za nyimbo za Neo.',
 
-	'Download or print <small>All songs report</small>'
-	=> 'Pakua au chapisha <small>ripoti ya nyimbo zote</small>',
-
-	'<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.'
-	=> '<strong>NEW</strong>: ukiisha pata transpositions zinazokuwezesha kuimba, hii app mpya itakusaidia kuchagua nyimbo zifaazo. Karibu kwenye <strong><a href="%url%">Itifaki ya Amefufuka</a></strong>.',
+	'<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won\'t need Internet every time you need to check a transposition :-)'
+	=> '<strong>NEW: <a href="%url%">Jipatie ripoti ya nyimbo zote</a></strong> na kordi zilizobadilishwa kwa sauti yako. Hivyo hutahitaji Internet kila unapotaka kupata transposition :-)',
 
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
