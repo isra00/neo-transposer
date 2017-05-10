@@ -38,9 +38,15 @@
 
 {% endif %}
 
-<div class="tip new">
-	{% trans with { '%url%': path('all_songs_report', {_locale: app.locale}) } %}<strong>NEW: <a href="%url%">Download all the songs</a></strong> transposed for your voice. This way you won't need Internet every time you need to check a transposition :-) {% endtrans %}
+{% if app.locale == 'es' %}
+<div class="tip new resucilex">
+	{% trans with { '%url%': 'http://lexicon.neo-transposer.com/' } %}<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.{% endtrans %}
 </div>
+{% endif %}
+
+<span class="link-all-report-wrapper">
+	<a class="link-all-report btn-neutral btn-icon icon-download" href="{{ path('all_songs_report', {_locale: app.locale}) }}">{% trans %}Download or print <small>All songs report</small>{% endtrans %}</a>
+</span>
 
 <ul class="song-index">
 {% for song in songs %}
