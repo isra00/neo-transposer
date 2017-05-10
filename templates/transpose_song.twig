@@ -71,6 +71,14 @@
 </div>
 {% endif %}
 
+{% if song.peopleCompatible %}
+{% set difference = (song.not_equivalent.deviationFromCentered > 0) ? 'higher'|trans : 'lower'|trans %}
+<p class="explanation">{% trans with {'%difference%': difference } %}This other transposition is a bit %difference%, but it fits the song into the people's standard voice range:{% endtrans %}</p>
+<div class="transpositions-list">
+	{{ self.printTransposition(song.peopleCompatible, song.song.originalChords) }}
+</div>
+{% endif %}
+
 <a name="feedback"></a>
 
 {% if app.neouser.isLoggedIn %}

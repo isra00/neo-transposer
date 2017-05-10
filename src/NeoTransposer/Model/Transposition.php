@@ -8,7 +8,7 @@ use \NeoTransposer\NeoApp;
 /**
  * Represents a transposition of a song, with transported chords, capo, etc.
  */
-class Transposition
+class Transposition extends \NeoTransposer\AppAccess
 {
 	/**
 	 * Transposed chords
@@ -71,17 +71,12 @@ class Transposition
 	public $deviationFromCentered = 0;
 
 	/**
-	 * @var array
-	 */
-	public $scoresConfig;
-
-	/**
 	 * Used only for debug
 	 * @var array
 	 */
 	public $scoreMap = array();
 
-	public function __construct($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromCentered=0, array $scoresConfig)
+	public function setTranspositionData($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromCentered=0)
 	{
 		$this->chords		= $chords;
 		$this->capo			= $capo;
@@ -90,9 +85,10 @@ class Transposition
 		$this->lowestNote 	= $lowest_note;
 		$this->highestNote 	= $highest_note;
 		$this->deviationFromCentered = $deviationFromCentered;
-		$this->scoresConfig = $scoresConfig;
 
 		$this->setScore();
+
+		return $this;
 	}
 
 	/**
@@ -102,17 +98,19 @@ class Transposition
 	{
 		$this->score = 0;
 
+		$scoresConfig = $this->app['neoconfig']['chord_scores'];
+
 		foreach ($this->chords as $chord)
 		{
 			$scoreForThisChord = 0;
 
-			if (isset($this->scoresConfig['chords'][$chord]))
+			if (isset($scoresConfig['chords'][$chord]))
 			{
-				$scoreForThisChord = $this->scoresConfig['chords'][$chord];
+				$scoreForThisChord = $scoresConfig['chords'][$chord];
 			}
 			else
 			{
-				foreach ($this->scoresConfig['patterns'] as $pattern=>$score)
+				foreach ($scoresConfig['patterns'] as $pattern=>$score)
 				{
 					if (preg_match("/$pattern/", $chord))
 					{
@@ -146,6 +144,8 @@ class Transposition
 	 * available in the template.
 	 * 
 	 * @param NeoApp $app The Silex-Neo app object.
+	 * 
+	 * @todo remove param. Now $app is accessible through $this->app
 	 */
 	public function setCapoForPrint(NeoApp $app)
 	{

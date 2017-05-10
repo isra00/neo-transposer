@@ -12,6 +12,9 @@ class Song
 	public $highestNote;
 	public $slug;
 	public $firstChordIsTone;
+	public $peopleLwestNote;
+	public $peopleHighestNote;
+
 	public $bookChordPrinter;
 	public $bookLocale;
 	public $originalChords = array();
@@ -26,6 +29,8 @@ class Song
 		$this->highestNote 			= $dbColumns['highest_note'];
 		$this->slug 				= $dbColumns['slug'];
 		$this->firstChordIsTone		= $dbColumns['first_chord_is_tone'];
+		$this->peopleLowestNote 	= $dbColumns['people_lowest_note'];
+		$this->peopleHighestNote 	= $dbColumns['people_highest_note'];
 		$this->bookChordPrinter 	= $dbColumns['chord_printer'];
 		$this->bookLocale 			= $dbColumns['locale'];
 

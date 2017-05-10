@@ -192,6 +192,18 @@ class NeoApp extends Application
 		}
 
 		$this['neouser'] = $this['session']->get('user');
+
+		$this['new.AutomaticTransposer'] = $this->factory(function ($app) {
+			return new \NeoTransposer\Model\AutomaticTransposer($app);
+		});
+
+		$this['new.Transposition'] = $this->factory(function ($app) {
+			return new \NeoTransposer\Model\Transposition($app);
+		});
+
+		$this['new.PeopleCompatibleTransposition'] = $this->factory(function ($app) {
+			return new \NeoTransposer\Model\PeopleCompatibleTransposition($app);
+		});
 	}
 
 	/**

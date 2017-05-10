@@ -71,20 +71,25 @@ class TransposedSong
 	 */
 	public function transpose($forceVoiceLimit=false)
 	{
-		$transposer = new AutomaticTransposer(
+		$transposer = $this->app['new.AutomaticTransposer'];
+		
+		$transposer->setTransposerData(
 			$this->app['neouser']->lowest_note,
 			$this->app['neouser']->highest_note,
 			$this->song->lowestNote,
-			$this->song->highestNote, 
+			$this->song->highestNote,
 			$this->song->originalChords,
 			$this->song->firstChordIsTone,
-			$this->app['neoconfig']['chord_scores']
+			$this->song->peopleHighestNote,
+			$this->song->peopleLowestNote
 		);
 
 		$this->transpositions = $transposer->getTranspositions(2, $forceVoiceLimit);
 		$this->not_equivalent = $transposer->findAlternativeNotEquivalent();
+		$this->peopleCompatible = $transposer->getPeopleCompatible();
 
 		$this->prepareForPrint();
+
 	}
 
 	/**
@@ -106,6 +111,12 @@ class TransposedSong
 		{
 			$this->not_equivalent = $printer->printTransposition($this->not_equivalent);
 			$this->not_equivalent->setCapoForPrint($this->app);
+		}
+
+		if (isset($this->peopleCompatible))
+		{
+			$this->peopleCompatible = $printer->printTransposition($this->peopleCompatible);
+			$this->peopleCompatible->setCapoForPrint($this->app);
 		}
 	}
 }

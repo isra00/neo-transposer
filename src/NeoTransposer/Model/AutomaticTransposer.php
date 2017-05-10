@@ -8,7 +8,7 @@ namespace NeoTransposer\Model;
  * 
  * @todo Unify calculation method names: get/find/calculate...
  */
-class AutomaticTransposer
+class AutomaticTransposer extends \NeoTransposer\AppAccess
 {
 	const FORCE_LOWEST  = 1;
 	const FORCE_HIGHEST = 2;
@@ -46,11 +46,8 @@ class AutomaticTransposer
 	 */
 	protected $offsetsNotEquivalent = array(-1, 1);
 
-	/**
-	 * Config passed to Transposition class to calculate chords difficulty.
-	 * @var array
-	 */
-	protected $scoresConfig;
+	protected $songPeopleLowestNote;
+	protected $songPeopleHighestNote;
 
 	/**
 	 * Constructor needs all the data to calculate the transpositions.
@@ -61,7 +58,7 @@ class AutomaticTransposer
 	 * @param  string $songHighestNote   Song's highest note
 	 * @param  array $originalChords      Song original chords
 	 */
-	function __construct($singerLowestNote, $singerHighestNote, $songLowestNote, $songHighestNote, $originalChords, $firstChordIsKey, $scoresConfig)
+	function setTransposerData($singerLowestNote, $singerHighestNote, $songLowestNote, $songHighestNote, $originalChords, $firstChordIsKey, $songPeopleHighestNote, $songPeopleLowestNote)
 	{
 		$this->singerLowestNote	 = $singerLowestNote;
 		$this->singerHighestNote = $singerHighestNote;
@@ -69,7 +66,8 @@ class AutomaticTransposer
 		$this->songHighestNote	 = $songHighestNote;
 		$this->originalChords	 = $originalChords;
 		$this->firstChordIsKey	 = $firstChordIsKey;
-		$this->scoresConfig		 = $scoresConfig;
+		$this->songPeopleHighestNote = $songPeopleHighestNote;
+		$this->songPeopleLowestNote  = $songPeopleLowestNote;
 
 		$this->nc = new NotesCalculator;
 	}
@@ -128,15 +126,14 @@ class AutomaticTransposer
 			+ $offsetFromSingerLowest
 		);
 
-		$centeredTransposition = new Transposition(
+		$centeredTransposition = $this->app['new.Transposition']->setTranspositionData(
 			$this->nc->transposeChords($this->originalChords, $centeredOffset),
 			0,
 			false,
 			$centeredOffset,
 			$this->nc->transposeNote($this->songLowestNote, $centeredOffset),
 			$this->nc->transposeNote($this->songHighestNote, $centeredOffset),
-			null,
-			$this->scoresConfig
+			null
 		);
 
 		// If the centered key is the same as in the book, return 0.
@@ -173,15 +170,14 @@ class AutomaticTransposer
 		{
 			$transposedChords = $this->nc->transposeChords($transposition->chords, $i * (-1));
 
-			$withCapo[$i] = new Transposition(
+			$withCapo[$i] = $this->app['new.Transposition']->setTranspositionData(
 				$transposedChords,
 				$i,
 				($transposedChords == $this->originalChords),
 				$transposition->offset,
 				$transposition->lowestNote,
 				$transposition->highestNote,
-				$transposition->deviationFromCentered,
-				$this->scoresConfig
+				$transposition->deviationFromCentered
 			);
 		}
 
@@ -286,15 +282,14 @@ class AutomaticTransposer
 
 		foreach ($range as $dif)
 		{
-			$near = new Transposition(
+			$near = $this->app['new.Transposition']->setTranspositionData(
 				$this->nc->transposeChords($centeredTransposition->chords, $dif),
 				0,
 				false,
 				$centeredTransposition->offset + $dif,
 				$this->nc->transposeNote($centeredTransposition->lowestNote, $dif),
 				$this->nc->transposeNote($centeredTransposition->highestNote, $dif),
-				$dif,
-				$this->scoresConfig
+				$dif
 			);
 
 			$nearAndItsEquivalentsWithCapo = $this->sortTranspositionsByEase(
@@ -357,5 +352,78 @@ class AutomaticTransposer
 		}
 
 		return $nearTranspositions;
+	}
+
+	function setSongPeopleRange($songPeopleHighestNote, $songPeopleLowestNote)
+	{
+		$this->songPeopleHighestNote = $songPeopleHighestNote;
+		$this->songPeopleLowestNote  = $songPeopleLowestNote;
+	}
+
+	function getPeopleCompatible()
+	{
+		if (empty($this->songPeopleLowestNote))
+		{
+			var_dump("No hay people data");
+			return;
+		}
+
+		// @todo Crear una clase VoiceRange y usarla en todas partes?
+		$peopleRange = ['lowest' => 'B1', 'highest' => 'B2'];
+
+		$centeredTransposition = $this->getCenteredTransposition();
+
+		$centeredForPeopleRange = [
+			'lowest'  => $this->nc->transposeNote($this->songPeopleLowestNote, $centeredTransposition->offset),
+			'highest' => $this->nc->transposeNote($this->songPeopleHighestNote, $centeredTransposition->offset)
+		];
+	
+		if ($this->centeredTranspositionIsWithinPeopleRange($centeredForPeopleRange, $peopleRange))
+		{
+			var_dump("No hace falta porque ya está en el people range");
+			return;
+		}
+
+		$peopleDistanceToLimit = $this->nc->distanceWithOctave($peopleRange['highest'], $centeredForPeopleRange['highest']);
+
+		$offsetForPeople = $centeredTransposition->offset + $peopleDistanceToLimit;
+
+		$singerRangeApplyingOffsetForPeople = [
+			'lowest'  => $this->nc->transposeNote($this->songLowestNote,  $offsetForPeople),
+			'highest' => $this->nc->transposeNote($this->songHighestNote, $offsetForPeople)
+		];
+
+		if ($this->nc->distanceWithOctave($this->singerHighestNote, $singerRangeApplyingOffsetForPeople['highest']) < 0)
+		{
+			var_dump("La people resulta demasiado alta para el cantor");
+			return;
+		}
+
+		if ($this->nc->distanceWithOctave($singerRangeApplyingOffsetForPeople['highest'], $this->singerLowestNote) < 0)
+		{
+			var_dump("La people resulta demasiado baja para el cantor");
+			return;
+		}
+
+		$peopleCompatibleTransposition = $this->app['new.PeopleCompatibleTransposition']->setTranspositionData(
+			$this->nc->transposeChords($this->originalChords, $offsetForPeople),
+			0,
+			($offsetForPeople == 0),
+			$offsetForPeople,
+			$singerRangeApplyingOffsetForPeople['lowest'],
+			$singerRangeApplyingOffsetForPeople['highest'],
+			$peopleDistanceToLimit
+		);
+
+		$peopleCompatibleTransposition->peopleLowestNote = $this->nc->transposeNote($centeredForPeopleRange['lowest'],  $peopleDistanceToLimit);
+		$peopleCompatibleTransposition->peopleHighestNote = $this->nc->transposeNote($centeredForPeopleRange['highest'], $peopleDistanceToLimit);
+
+		return $peopleCompatibleTransposition;
+	}
+
+	protected function centeredTranspositionIsWithinPeopleRange($centeredForPeopleRange, $peopleRange)
+	{
+		return ($this->nc->distanceWithOctave($centeredForPeopleRange['highest'], $peopleRange['highest']) < 0)
+			&& ($this->nc->distanceWithOctave($peopleRange['lowest'], $centeredForPeopleRange['lowest']) < 0);
 	}
 }

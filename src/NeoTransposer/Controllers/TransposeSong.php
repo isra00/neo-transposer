@@ -61,7 +61,7 @@ class TransposeSong
 		return $app->render('transpose_song.twig', array_merge($tpl, array(
 			'song'				=> $transposedSong,
 			'your_voice'		=> $your_voice,
-			'voice_chart'		=> TranspositionChart::getChart($transposedSong->song, $transposedSong->transpositions[0], $app['neouser']),
+			'voice_chart'		=> TranspositionChart::getChart($transposedSong->song, $transposedSong->transpositions[0], $app['neouser'], $transposedSong->peopleCompatible),
 			'page_title'		=> $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $transposedSong->song->title)),
 			'header_link'		=> $app['url_generator']->generate('book_' . $transposedSong->song->idBook),
 			'meta_canonical'	=> $app['url_generator']->generate(

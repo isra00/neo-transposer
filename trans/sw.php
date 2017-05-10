@@ -165,7 +165,7 @@ return array(
 	=> 'Ufunguo ukibadilishwa:',
 
 	'Show voice chart'
-	=> 'Onyesha chati ya sauti',
+	=> 'Onyesha kielelezo cha nota za sauti',
 
 	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
 	=> 'Neo-Transposer inakusaidia kwa kubadilisha ufunguo ya kordi za <strong>%song%</strong> ili zifae sauti yako. ¡Andika barua pepe yako, fuata maelekezo na utapata mara moja kordi za nyimbo zote za Njia ya Neokatekumenato!',

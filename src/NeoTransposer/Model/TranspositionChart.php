@@ -4,7 +4,11 @@ namespace NeoTransposer\Model;
 
 class TranspositionChart
 {
-	public static function getChart(Song $song, Transposition $transposition, User $singer)
+	/**
+	 * @todo Avoid static stuff!
+	 * @todo En vez de dos argumentos Transposition, un array con transposiciones ilimitadas, que tenga el objeto Transposition y todos los demás datos necesarios para imprimirlo, etc
+	 */
+	public static function getChart(Song $song, Transposition $transposition, User $singer, Transposition $peopleCompatible = null)
 	{
 		$nc = new \NeoTransposer\Model\NotesCalculator;
 
@@ -31,13 +35,34 @@ class TranspositionChart
 			),
 		);
 
+		if ($peopleCompatible)
+		{
+			$voiceChart['peopleCompatible'] = array(
+				'lowest'	=> $peopleCompatible->lowestNote,
+				'highest'	=> $peopleCompatible->highestNote,
+				'peopleLowest'	=> $peopleCompatible->peopleLowestNote,
+				'peopleHighest'	=> $peopleCompatible->peopleHighestNote,
+				'length'	=> abs($nc->distanceWithOctave($peopleCompatible->lowestNote, $peopleCompatible->highestNote)) - 1,
+				'caption'	=> 'People:',
+				'css'		=> 'people-compatible'
+			);
+		}
+
 		$voiceChart['transposed']['length'] = $voiceChart['original']['length'];
 
-		$min = $nc->lowestNote(array(
+		/** @todo Esto se puede simplificar con array_column (incluyendo el peopleCompatible)? */
+		$lowestNotes = array(
 			$voiceChart['singer']['lowest'],
 			$voiceChart['original']['lowest'],
 			$voiceChart['transposed']['lowest'],
-		));
+		);
+
+		if (isset($voiceChart['peopleCompatible']))
+		{
+			$lowestNotes[] = $voiceChart['peopleCompatible']['lowest'];
+		}
+
+		$min = $nc->lowestNote($lowestNotes);
 
 		array_walk($voiceChart, function(&$voice) use ($min, $nc) {
 			$voice['offset'] = abs($nc->distanceWithOctave($min, $voice['lowest']));

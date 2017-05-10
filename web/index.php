@@ -32,7 +32,7 @@ $app->register(new Provider\SecurityServiceProvider(), array(
 	)
 ));
 
-if ($app['debug'])
+/*if ($app['debug'])
 {
 	$app->register(new Provider\HttpFragmentServiceProvider());
 	$app->register(new Provider\ServiceControllerServiceProvider());
@@ -40,7 +40,7 @@ if ($app['debug'])
 	    'profiler.cache_dir' 	=> __DIR__ . '/../cache/profiler',
 	    'profiler.mount_prefix' => '/admin/_profiler',
 	));
-}
+}*/
 
 $validLocales = '(' . implode('|', array_keys($app['neoconfig']['languages'])) . ')';
 

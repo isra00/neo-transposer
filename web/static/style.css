@@ -735,6 +735,13 @@ footer {
 	.voicechart .transposed-song td.note {
 		background: green;
 	}
+	.voicechart .people-compatible td {
+		color: fuchsia;
+		background: white;
+	}
+	.voicechart .people-compatible td.note {
+		background: fuchsia;
+	}
 
 
 /* Wizard */
