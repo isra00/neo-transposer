@@ -203,9 +203,9 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * Main method to be used by the clients of this class. It returns the
 	 * centered and equivalent transpositions for a given song, sorted by ease.
 	 * 
-	 * @param 	integer $limitTranspositions Limit of equivalent transpositions to return
-	 * @param  int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
-	 * @return 	array 	Array of Transposition objects, sorted by chord ease.
+	 * @param	integer $limitTranspositions Limit of equivalent transpositions to return
+	 * @param	int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
+	 * @return	array 	Array of Transposition objects, sorted by chord ease.
 	 */
 	public function getTranspositions($limitTranspositions=2, $forceVoiceLimit=false)
 	{
@@ -238,7 +238,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	}
 
 	/**
-	 * Find surrounding (-1 / 1 semitone) transposition with easier chords.
+	 * Find surrounding (-1 / +1 semitone) transposition with easier chords.
 	 * 
 	 * @return Transposition A non-equivalent transposition (yes, only one).
 	 */
@@ -380,11 +380,14 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	
 		if ($this->centeredTranspositionIsWithinPeopleRange($centeredForPeopleRange, $peopleRange))
 		{
-			var_dump("No hace falta porque ya está en el people range");
+			//var_dump("No hace falta porque ya está en el people range");
 			return;
 		}
 
-		$peopleDistanceToLimit = $this->nc->distanceWithOctave($peopleRange['highest'], $centeredForPeopleRange['highest']);
+		$peopleDistanceToLimit = $this->nc->distanceWithOctave(
+			$peopleRange['highest'], 
+			$centeredForPeopleRange['highest']
+		);
 
 		$offsetForPeople = $centeredTransposition->offset + $peopleDistanceToLimit;
 
@@ -395,13 +398,13 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 
 		if ($this->nc->distanceWithOctave($this->singerHighestNote, $singerRangeApplyingOffsetForPeople['highest']) < 0)
 		{
-			var_dump("La people resulta demasiado alta para el cantor");
+			//var_dump("La people resulta demasiado alta para el cantor");
 			return;
 		}
 
 		if ($this->nc->distanceWithOctave($singerRangeApplyingOffsetForPeople['highest'], $this->singerLowestNote) < 0)
 		{
-			var_dump("La people resulta demasiado baja para el cantor");
+			//var_dump("La people resulta demasiado baja para el cantor");
 			return;
 		}
 

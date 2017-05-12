@@ -75,9 +75,11 @@ REG;
 		}
 		else
 		{
+			$id_book = !empty($user->id_book) ? $user->id_book : 1;
+
 			$target = $req->get('redirect')
 				? $req->get('redirect')
-				: $app['url_generator']->generate('book_' . $user->id_book);
+				: $app['url_generator']->generate("book_$id_book");
 
 			return $app->redirect($target);
 		}

@@ -10,7 +10,7 @@ namespace NeoTransposer\Model\ChordPrinter;
  * -Major is default.
  * -Minor as "m". Example: "Am" = A minor.
  * -Diminished as "dim".
- * -A number represents the nth interval added. Example: "C7" = C seventh.
+ * -A number represents the n-th interval added. Example: "C7" = C seventh.
  * -Augmented (major) interval as "M" after the number. Example: "C7M"
  */
 abstract class ChordPrinter

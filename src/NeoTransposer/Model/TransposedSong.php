@@ -31,6 +31,11 @@ class TransposedSong
 	public $not_equivalent;
 
 	/**
+	 * @var PeopleCompatibleTransposition
+	 */
+	public $peopleCompatible;
+
+	/**
 	 * @var NeoTransposer\NeoApp;
 	 */
 	protected $app;
@@ -86,7 +91,11 @@ class TransposedSong
 
 		$this->transpositions = $transposer->getTranspositions(2, $forceVoiceLimit);
 		$this->not_equivalent = $transposer->findAlternativeNotEquivalent();
-		$this->peopleCompatible = $transposer->getPeopleCompatible();
+		
+		if ($this->app['neoconfig']['people_compatible'])
+		{
+			$this->peopleCompatible = $transposer->getPeopleCompatible();
+		}
 
 		$this->prepareForPrint();
 
@@ -100,6 +109,8 @@ class TransposedSong
 		$printer = $this->app['chord_printers.get']($this->song->bookChordPrinter);
 
 		$this->song->originalChords = $printer->printChordset($this->song->originalChords);
+
+		/** @todo Fix this code repetition */
 
 		foreach ($this->transpositions as &$transposition)
 		{

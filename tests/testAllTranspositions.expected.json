@@ -94,23 +94,23 @@
 			}
 		},
 		"145": {
-			"songLowestNote": "A1",
+			"songLowestNote": "E1",
 			"songHighestNote": "B2",
 			"centered1": {
-				"offset": 3,
-				"lowestNote": "C2",
-				"highestNote": "D3",
+				"offset": 5,
+				"lowestNote": "A1",
+				"highestNote": "E3",
 				"score": 25,
 				"capo": 3,
 				"chords": "Am,A7,Dm9,F7M,E"
 			},
 			"centered2": {
-				"offset": 3,
-				"lowestNote": "C2",
-				"highestNote": "D3",
-				"score": 55,
-				"capo": 1,
-				"chords": "Bm,B7,Em9,G7M,F#"
+				"offset": 5,
+				"lowestNote": "A1",
+				"highestNote": "E3",
+				"score": 48,
+				"capo": 0,
+				"chords": "Dm,D7,Gm9,A#7M,A"
 			}
 		},
 		"146": {

@@ -53,6 +53,7 @@ return array(
 		'Cm9'	=> 21,
 	),
 
+	//Instead of specifying each and every possible chord, use regexp for unusual chords:
 	'patterns' => array(
 		'.?m6'	=> 19,
 		'.?#m6'	=> 20,
