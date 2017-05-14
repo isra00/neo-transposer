@@ -42,8 +42,7 @@ SQL;
 			'meta_description'	=> $app->trans(
 				'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.',
 				array('%lang%' => $app['books'][$id_book]['lang_name'])
-			),
-			'new_domain_warning' => (time() < strtotime($app['neoconfig']['transition_date'])),
+			)
 		));
 	}
 }

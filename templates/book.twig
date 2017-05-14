@@ -4,16 +4,6 @@
 
 {% block content %}
 
-{% if new_domain_warning %}
-<div class="new-domain-warning">
-	<a class="x" href="javascript:void(0)" onclick="this.parentNode.style.display='none'">⨯</a>
-	<h3>
-		{% trans with {'%domain%': app.neoconfig.new_domain } %}Neo-Transposer has moved to <strong>%domain%</strong>{% endtrans %}
-		<i>{% trans %}If you have a bookmark, please update it.<br>The old neo-transposer.leviticus.co.tz will not work  after November 6<sup>th</sup>.{% endtrans %}</i>
-	</h3>
-</div>
-{% endif %}
-
 <h1>{% trans %}Songs of the Neocatechumenal Way{% endtrans %}</h1>
 <h2>
 	{% if app.neouser.isLoggedIn %}

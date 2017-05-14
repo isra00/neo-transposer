@@ -43,15 +43,6 @@ return array(
 	/*'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.'
 	=> 'Esta página web es iniciativa personal de un miembro del Camino Neocatecumenal pero NO representa oficialmente ni está afiliada de ningún modo al Camino Neocatecumenal o a sus responsables. El libro de cantos “Resucitó” es &copy; Kiko Argüello 2014.',*/
 
-	'Neo-Transposer has moved to <strong>%domain%</strong>'
-	=> 'Neo-Transposer imehama kwenda: <strong>%domain%</strong>',
-
-	'If you have a bookmark, please update it.<br>The old neo-transposer.leviticus.co.tz will not work  after November 6<sup>th</sup>.'
-	=> 'Ukitumia bookmark, tafadhali uibadilishe.<br>neo-transposer.leviticus.co.tz haitafanya kazi kuanzia tarehe 6 novemba.',
-
-	'Got it'
-	=> 'Sawa',
-
 	//User voice
 	'Your voice'
 	=> 'Sauti yako',
