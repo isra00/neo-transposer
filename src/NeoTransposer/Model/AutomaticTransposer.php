@@ -238,7 +238,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	}
 
 	/**
-	 * Find surrounding (-1 / +1 semitone) transposition with easier chords.
+	 * Find one surrounding (-1 / +1 semitone) transposition with easier chords.
+	 * If calculates also its equivalents with capo.
 	 * 
 	 * @return Transposition A non-equivalent transposition (yes, only one).
 	 */
@@ -251,18 +252,18 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 
 		if (!empty($nearTranspositions))
 		{
-			$notEquivalent = $this->sortTranspositionsByEase($nearTranspositions);
+			$notEquivalentSorted = $this->sortTranspositionsByEase($nearTranspositions);
 
 			//For algorithm conservatism, no-capo takes always precedence.
-			foreach ($notEquivalent as $transposition)
+			foreach ($notEquivalentSorted as $transposition)
 			{
 				if (0 == $transposition->getCapo())
 				{
-					$notEquivalent[0] = $transposition;
+					$notEquivalentSorted[0] = $transposition;
 				}
 			}
 
-			return $notEquivalent[0];
+			return $notEquivalentSorted[0];
 		}
 	}
 

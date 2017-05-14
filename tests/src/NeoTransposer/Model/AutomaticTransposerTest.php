@@ -14,129 +14,159 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 	 */
 	protected $transposer;
 
-    protected $chordsScoreConfig;
+	protected $chordsScoreConfig;
 
-    public function setUp()
-    {
-        //root dir should be in includePath from phpunit.xml
-        $this->chordsScoreConfig = include './config.scores.php';
+	protected $app;
 
-        $this->transposer = new AutomaticTransposer(
-            'G1', 'G3', 'B1', 'B2', array('Am', 'Dm', 'F', 'C'), false, $this->chordsScoreConfig
-        );
-    }
+	public function setUp()
+	{
+		//root dir should be in includePath from phpunit.xml
+		$this->chordsScoreConfig = include './config.scores.php';
 
-    public function testGetCenteredTransposition()
-    {
-        $expected = new Transposition(
-            array('Bm', 'Em', 'G', 'D'),
-            0,
-            false,
-            2,
-            'C#2',
-            'C#3',
-            0,
-            $this->chordsScoreConfig
-        );
+		$this->transposer = new AutomaticTransposer($this->getSilexApp());
+		$this->transposer->setTransposerData(
+			'G1', 'G3', 'B1', 'B2', ['Am', 'Dm', 'F', 'C'], false, $this->chordsScoreConfig, 'B1', 'B2'
+		);
+	}
 
-        $this->assertEquals(
-            $expected,
-            $this->transposer->getCenteredTransposition()
-        );
-    }
+	protected function getSilexApp()
+	{
+		if (empty($this->app))
+		{
+			$this->app = new \Silex\Application;
+			$this->app['neoconfig'] = ['chord_scores' => $this->chordsScoreConfig];
 
-    public function testFindCenteredTranspositionAsBook()
-    {
-        $transposer = new AutomaticTransposer(
-            'F1', 'F3', 'B1', 'B2', array('Bm', 'Em', 'G', 'D'), false, $this->chordsScoreConfig
-        );
+			$this->app['new.Transposition'] = $this->getNewTransposition();
+		}
 
-        $expected = new Transposition(
-            array('Bm', 'Em', 'G', 'D'), 0, true, 0, 'B1', 'B2', 0, $this->chordsScoreConfig
-        );
+		return $this->app;
+	}
 
-        $this->assertEquals($expected, $transposer->getCenteredTransposition());
-    }
+	protected function getNewTransposition()
+	{
+		return new \NeoTransposer\Model\Transposition($this->app);
+	}
 
-    public function testFindEquivalentsWithCapo()
-    {
-        $testTransposition = new Transposition(array('Bm', 'Em', 'G', 'D'), 0, false, null, null, null, null, $this->chordsScoreConfig);
-        $equivalents = $this->transposer->findEquivalentsWithCapo($testTransposition);
-        
-        $expected = array(
-            1=>new Transposition(array('A#m', 'D#m', 'F#', 'C#'), 1, false, null, null, null, null, $this->chordsScoreConfig),
-            new Transposition(array('Am', 'Dm', 'F', 'C'), 2, true, null, null, null, null, $this->chordsScoreConfig),
-            new Transposition(array('G#m', 'C#m', 'E', 'B'), 3, false, null, null, null, null, $this->chordsScoreConfig),
-            new Transposition(array('Gm', 'Cm', 'D#', 'A#'), 4, false, null, null, null, null, $this->chordsScoreConfig),
-            new Transposition(array('F#m', 'Bm', 'D', 'A'), 5, false, null, null, null, null, $this->chordsScoreConfig)
-        );
+	public function testGetCenteredTransposition()
+	{
+		$expected = $this->getNewTransposition();
+		$expected->setTranspositionData(
+			['Bm', 'Em', 'G', 'D'],
+			0,
+			false,
+			2,
+			'C#2',
+			'C#3',
+			0
+		);
 
-        $this->assertEquals($expected, $equivalents);
-    }
+		$this->assertEquals(
+			$expected,
+			$this->transposer->getCenteredTransposition()
+		);
+	}
 
-    public function testSortTranspositionsByEase()
-    {
-        $transpositionMockA = $this->getMockBuilder(Transposition::class)
-                          ->disableOriginalConstructor()
-                          ->setMethods(['trans'])
-                          ->getMock();
+	public function testFindCenteredTranspositionAsBook()
+	{
+		$this->transposer->setTransposerData(
+			'F1', 'F3', 'B1', 'B2', ['Bm', 'Em', 'G', 'D'], false, $this->chordsScoreConfig, 'B1', 'B2'
+		);
 
-        $transpositionMockB = clone $transpositionMockA;
+		$expected = $this->getNewTransposition();
+		$expected->setTranspositionData(
+			['Bm', 'Em', 'G', 'D'], 0, true, 0, 'B1', 'B2', 0, $this->chordsScoreConfig, 'B1', 'B2'
+		);
 
-        $transpositionMockA->score = 10;
-        $transpositionMockB->score = 20;
+		$this->assertEquals($expected, $this->transposer->getCenteredTransposition());
+	}
 
-        $this->assertEquals(
-            array($transpositionMockA, $transpositionMockB),
-            $this->transposer->sortTranspositionsByEase(array($transpositionMockB, $transpositionMockA))
-        );
-    }
+	/*public function testFindEquivalentsWithCapo()
+	{
+		$testTransposition = $this->getNewTransposition();
+		$testTransposition->setTranspositionData(array('Bm', 'Em', 'G', 'D'), 0, false, null, null, null, null, $this->chordsScoreConfig, 'B1', 'B2');
+		$equivalents = $this->transposer->findEquivalentsWithCapo($testTransposition);
+		
+		$expected = [
+			1=> $this->getNewTransposition()->setTranspositionData(['A#m', 'D#m', 'F#', 'C#'], 1, false, null, null, null, null, $this->chordsScoreConfig),
+			$this->getNewTransposition()->setTranspositionData(['Am', 'Dm', 'F', 'C'], 2, true, null, null, null, null, $this->chordsScoreConfig),
+			$this->getNewTransposition()->setTranspositionData(['G#m', 'C#m', 'E', 'B'], 3, false, null, null, null, null, $this->chordsScoreConfig),
+			$this->getNewTransposition()->setTranspositionData(['Gm', 'Cm', 'D#', 'A#'], 4, false, null, null, null, null, $this->chordsScoreConfig),
+			$this->getNewTransposition()->setTranspositionData(['F#m', 'Bm', 'D', 'A'], 5, false, null, null, null, null, $this->chordsScoreConfig)
+		];
 
-    public function testFindAlternativeNotEquivalent()
-    {
-        $transposer = new AutomaticTransposer(
-            'A1', 'D3', 'C#2', 'E3', array('D', 'F#', 'Bm', 'A', 'G'), false, $this->chordsScoreConfig
-        );
+		$this->assertEquals($expected, $equivalents);
+	}*/
 
-        $expected = new Transposition(
-            array('C', 'E', 'Am', 'G', 'F'), 0, false, -2, 'B1', 'D3', 1, $this->chordsScoreConfig
-        );
+	public function testSortTranspositionsByEase()
+	{
+		$transpositionMockA = $this->getMockBuilder(Transposition::class)
+						  ->disableOriginalConstructor()
+						  ->setMethods(['trans'])
+						  ->getMock();
 
-        $this->assertEquals(
-            $expected,
-            $transposer->findAlternativeNotEquivalent()
-        );
-    }
+		$transpositionMockB = clone $transpositionMockA;
 
-    public function testForceHighestVoice()
-    {
-        $transposer = new AutomaticTransposer(
-            'A1', 'E3', 'E2', 'A2', array('Am', 'G'), false, $this->chordsScoreConfig
-        );
+		$transpositionMockA->score = 10;
+		$transpositionMockB->score = 20;
 
-        $expected = new Transposition(
-            array('Em', 'D'), 0, false, 7, 'B2', 'E3', 0, $this->chordsScoreConfig
-        );
+		$this->assertEquals(
+			[$transpositionMockA, $transpositionMockB],
+			$this->transposer->sortTranspositionsByEase([$transpositionMockB, $transpositionMockA])
+		);
+	}
 
-        $this->assertEquals(
-            $expected,
-            $transposer->getCenteredTransposition(AutomaticTransposer::FORCE_HIGHEST)
-        );
-    }
+	public function testFindAlternativeNotEquivalent()
+	{
+		$this->transposer->setTransposerData(
+			'A1', 'D3', 'C#2', 'E3', ['D', 'F#', 'Bm', 'A', 'G'], false, $this->chordsScoreConfig, 'B1', 'B2'
+		);
 
-    public function testForceLowestVoice()
-    {
-        $transposer = new AutomaticTransposer(
-            'A1', 'E3', 'E2', 'A2', array('Am', 'G'), false, $this->chordsScoreConfig
-        );
+		$expected = $this->getNewTransposition();
+		$expected->setTranspositionData(
+			['D', 'F#', 'Bm', 'A', 'G'], 5, true, -3, 'A#1', 'C#3', 1, $this->chordsScoreConfig
+		);
 
-        $expected = new Transposition(
-            array('Dm', 'C'), 0, false, -7, 'A1', 'D2', 0, $this->chordsScoreConfig
-        );
+		$actual 			= $this->transposer->findAlternativeNotEquivalent();
+		$expected->scoreMap = null;
+		$actual->scoreMap 	= null;
 
-        $this->assertEquals(
-            $expected,
-            $transposer->getCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
-        );
-    }
+		$this->assertEquals(
+			$expected,
+			$actual
+		);
+	}
+
+	public function testForceHighestVoice()
+	{
+		$this->transposer->setTransposerData(
+			'A1', 'E3', 'E2', 'A2', ['Am', 'G'], false, $this->chordsScoreConfig, 'B1', 'B2'
+		);
+
+		$expected = $this->getNewTransposition();
+		$expected->setTranspositionData(
+			['Em', 'D'], 0, false, 7, 'B2', 'E3', 0, $this->chordsScoreConfig
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->getCenteredTransposition(AutomaticTransposer::FORCE_HIGHEST)
+		);
+	}
+
+	public function testForceLowestVoice()
+	{
+		$this->transposer->setTransposerData(
+			'A1', 'E3', 'E2', 'A2', ['Am', 'G'], false, $this->chordsScoreConfig, 'B1', 'B2'
+		);
+
+		$expected = $this->getNewTransposition();
+		$expected->setTranspositionData(
+			['Dm', 'C'], 0, false, -7, 'A1', 'D2', 0, $this->chordsScoreConfig
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->getCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
+		);
+	}
 }
