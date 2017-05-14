@@ -8,7 +8,7 @@ namespace NeoTransposer\Controllers;
 class ServeCss
 {
 	protected $src_file = '/static/style.css';
-	protected $min_file = '/static/%s.css';
+	protected $min_file = '/static/compiled-%s.css';
 
 	/**
 	 * This mechanism for minimizing CSS takes advantage of the RewriteRule:

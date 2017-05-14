@@ -8,3 +8,4 @@ web/resucito-imgs/
 .sublime-project
 .sublime-project.sublime-workspace
 cache/profiler
+web/static/compiled-*.css

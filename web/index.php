@@ -109,7 +109,7 @@ $app->get('/admin/chord-correction', "$controllers\\ChordCorrectionPanel::get");
 $app->post('/admin/chord-correction', "$controllers\\ChordCorrectionPanel::post")
 	->bind('chord_correction_panel');
 
-$app->get('/static/' . $app['neoconfig']['css_cache'] . '.css', "$controllers\\ServeCss::get");
+$app->get('/static/compiled-' . $app['neoconfig']['css_cache'] . '.css', "$controllers\\ServeCss::get");
 
 //SEO-friendly URLs for books
 foreach ($app['neoconfig']['book_url'] as $id_book=>$slug)
