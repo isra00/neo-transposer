@@ -54,7 +54,8 @@ class User
 	 */
 	public function persist(\Doctrine\DBAL\Connection $db, Request $request)
 	{
-		UserPersistence::persist($this, $db, $request);
+		$userPersistence = new UserPersistence($db);
+		$userPersistence->persist($this, $request);
 	}
 
 	/**

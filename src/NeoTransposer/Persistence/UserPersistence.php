@@ -7,23 +7,33 @@ use \NeoTransposer\Model\User;
 
 /**
  * Persistence layer for the User entity.
- * 
- * @todo Hacer métodos no estáticos. Pasar $db en constructor.
  */
 class UserPersistence
 {
 	/**
+	 * @var \Doctrine\DBAL\Connection
+	 */
+	protected $db;
+
+	/**
+	 * @param \Doctrine\DBAL\Connection $db A DBAL connection.
+	 */
+	public function __construct(\Doctrine\DBAL\Connection $db)
+	{
+		$this->db = $db;
+	}
+
+	/**
 	 * Factory: get a User object from the DB
 	 * 
 	 * @param  string 						$email 	User e-mail
-	 * @param  \Doctrine\DBAL\Connection 	$db 	Database connection.
 	 * @return User        					The User instance for that e-mail.
 	 */
-	public static function fetchUserFromEmail($email, \Doctrine\DBAL\Connection $db)
+	public function fetchUserFromEmail($email)
 	{
 		$sql = 'SELECT * FROM user WHERE email LIKE ?';
 		
-		if ($userdata = $db->fetchAssoc($sql, array($email)))
+		if ($userdata = $this->db->fetchAssoc($sql, array($email)))
 		{
 			return new User(
 				$userdata['email'],
@@ -42,15 +52,14 @@ class UserPersistence
 	 * Create or update the user in the database.
 	 * 
 	 * @param  NeoTransposer\Model\User 			$user 	The User object to persist.
-	 * @param  \Doctrine\DBAL\Connection 	$db 	A DB connection.
 	 * @param  \Symfony\Component\HttpFoundation\Request $request The Request, for fetching the client IP.
 	 * @return integer The user ID, if it was not set.
 	 */
-	public static function persist(User $user, \Doctrine\DBAL\Connection $db, Request $request)
+	public function persist(User $user, Request $request)
 	{
 		if ($user->id_user)
 		{
-			return $db->update('user',
+			return $this->db->update('user',
 				array(
 					'lowest_note'	=> $user->lowest_note,
 					'highest_note'	=> $user->highest_note,
@@ -62,7 +71,7 @@ class UserPersistence
 			);
 		}
 
-		$db->insert('user', array(
+		$this->db->insert('user', array(
 			'email'			=> $user->email,
 			'lowest_note'	=> $user->lowest_note,
 			'highest_note'	=> $user->highest_note,
@@ -70,6 +79,6 @@ class UserPersistence
 			'register_ip'	=> $request->getClientIp()
 		));
 
-		return $user->id_user = $db->lastInsertId();
+		return $user->id_user = $this->db->lastInsertId();
 	}
 }

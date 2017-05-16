@@ -50,7 +50,9 @@ REG;
 			));
 		}
 
-		if (!$user = UserPersistence::fetchUserFromEmail($req_email, $app['db']))
+		$userPersistence = new UserPersistence($app['db']);
+
+		if (!$user = $userPersistence->fetchUserFromEmail($req_email, $app['db']))
 		{
 			$user = new User($req_email);
 			$user->persist($app['db'], $req);
