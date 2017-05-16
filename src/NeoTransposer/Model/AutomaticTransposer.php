@@ -365,7 +365,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	{
 		if (empty($this->songPeopleLowestNote))
 		{
-			var_dump("No hay people data");
+			//var_dump("No hay people data");
 			return;
 		}
 

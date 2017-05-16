@@ -20,7 +20,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		//root dir should be in includePath from phpunit.xml
+		//includePath must be defined in phpunit.xml
 		$this->chordsScoreConfig = include './config.scores.php';
 
 		$this->transposer = new AutomaticTransposer($this->getSilexApp());
@@ -36,7 +36,9 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 			$this->app = new \Silex\Application;
 			$this->app['neoconfig'] = ['chord_scores' => $this->chordsScoreConfig];
 
-			$this->app['new.Transposition'] = $this->getNewTransposition();
+			$this->app['new.Transposition'] = $this->app->factory(function ($app) {
+				return new \NeoTransposer\Model\Transposition($app);
+			});
 		}
 
 		return $this->app;
@@ -80,11 +82,10 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $this->transposer->getCenteredTransposition());
 	}
 
-	/*public function testFindEquivalentsWithCapo()
+	public function testFindEquivalentsWithCapo()
 	{
 		$testTransposition = $this->getNewTransposition();
 		$testTransposition->setTranspositionData(array('Bm', 'Em', 'G', 'D'), 0, false, null, null, null, null, $this->chordsScoreConfig, 'B1', 'B2');
-		$equivalents = $this->transposer->findEquivalentsWithCapo($testTransposition);
 		
 		$expected = [
 			1=> $this->getNewTransposition()->setTranspositionData(['A#m', 'D#m', 'F#', 'C#'], 1, false, null, null, null, null, $this->chordsScoreConfig),
@@ -94,8 +95,10 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 			$this->getNewTransposition()->setTranspositionData(['F#m', 'Bm', 'D', 'A'], 5, false, null, null, null, null, $this->chordsScoreConfig)
 		];
 
+		$equivalents = $this->transposer->findEquivalentsWithCapo($testTransposition);
+
 		$this->assertEquals($expected, $equivalents);
-	}*/
+	}
 
 	public function testSortTranspositionsByEase()
 	{
@@ -121,14 +124,12 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 			'A1', 'D3', 'C#2', 'E3', ['D', 'F#', 'Bm', 'A', 'G'], false, $this->chordsScoreConfig, 'B1', 'B2'
 		);
 
+		$actual = $this->transposer->findAlternativeNotEquivalent();
+
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
-			['D', 'F#', 'Bm', 'A', 'G'], 5, true, -3, 'A#1', 'C#3', 1, $this->chordsScoreConfig
+			['C', 'E', 'Am', 'G', 'F'], 0, false, -2, 'B1', 'D3', 1
 		);
-
-		$actual 			= $this->transposer->findAlternativeNotEquivalent();
-		$expected->scoreMap = null;
-		$actual->scoreMap 	= null;
 
 		$this->assertEquals(
 			$expected,
