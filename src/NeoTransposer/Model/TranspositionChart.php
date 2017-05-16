@@ -5,25 +5,31 @@ namespace NeoTransposer\Model;
 class TranspositionChart
 {
 	/**
-	 * @todo Avoid static stuff!
+	 * @var \NeoTransposer\Model\NotesCalculator
+	 */
+	protected $nc;
+
+	public function __construct(\NeoTransposer\Model\NotesCalculator $nc)
+	{
+		$this->nc = $nc;
+	}
+	/**
 	 * @todo En vez de dos argumentos Transposition, un array con transposiciones ilimitadas, que tenga el objeto Transposition y todos los demás datos necesarios para imprimirlo, etc
 	 */
-	public static function getChart(Song $song, Transposition $transposition, User $singer, Transposition $peopleCompatible = null)
+	public function getChart(Song $song, Transposition $transposition, User $singer, Transposition $peopleCompatible = null)
 	{
-		$nc = new \NeoTransposer\Model\NotesCalculator;
-
 		$voiceChart = array(
 			'singer' => array(
 				'lowest'	=> $singer->lowest_note,
 				'highest'	=> $singer->highest_note,
-				'length'	=> abs($nc->distanceWithOctave($singer->lowest_note, $singer->highest_note)) - 1,
+				'length'	=> abs($this->nc->distanceWithOctave($singer->lowest_note, $singer->highest_note)) - 1,
 				'caption'	=> 'Your voice:',
 				'css'		=> 'singer'
 			),
 			'original' => array(
 				'lowest'	=> $song->lowestNote,
 				'highest'	=> $song->highestNote,
-				'length'	=> abs($nc->distanceWithOctave($song->lowestNote, $song->highestNote)) - 1,
+				'length'	=> abs($this->nc->distanceWithOctave($song->lowestNote, $song->highestNote)) - 1,
 				'caption'	=> 'Original chords:',
 				'css'		=> 'original-song'
 			),
@@ -42,7 +48,7 @@ class TranspositionChart
 				'highest'	=> $peopleCompatible->highestNote,
 				'peopleLowest'	=> $peopleCompatible->peopleLowestNote,
 				'peopleHighest'	=> $peopleCompatible->peopleHighestNote,
-				'length'	=> abs($nc->distanceWithOctave($peopleCompatible->lowestNote, $peopleCompatible->highestNote)) - 1,
+				'length'	=> abs($this->nc->distanceWithOctave($peopleCompatible->lowestNote, $peopleCompatible->highestNote)) - 1,
 				'caption'	=> 'People:',
 				'css'		=> 'people-compatible'
 			);
@@ -62,7 +68,9 @@ class TranspositionChart
 			$lowestNotes[] = $voiceChart['peopleCompatible']['lowest'];
 		}
 
-		$min = $nc->lowestNote($lowestNotes);
+		$min = $this->nc->lowestNote($lowestNotes);
+
+		$nc = $this->nc;
 
 		array_walk($voiceChart, function(&$voice) use ($min, $nc) {
 			$voice['offset'] = abs($nc->distanceWithOctave($min, $voice['lowest']));
