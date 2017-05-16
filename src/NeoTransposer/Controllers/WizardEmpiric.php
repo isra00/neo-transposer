@@ -148,7 +148,7 @@ class WizardEmpiric
 			'song'			=> $songText->getHtmlTextWithChords($transposedChords),
 			'song_title'	=> $transposedSong->song->title,
 			'song_key'		=> $transposedChords[0],
-			'song_capo'		=> $transposedSong->transpositions[0]->getCapoForPrint($app),
+			'song_capo'		=> $transposedSong->transpositions[0]->getCapoForPrint(),
 		);
 	}
 

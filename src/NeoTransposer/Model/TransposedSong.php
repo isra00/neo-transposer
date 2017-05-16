@@ -115,19 +115,16 @@ class TransposedSong
 		foreach ($this->transpositions as &$transposition)
 		{
 			$transposition = $printer->printTransposition($transposition);
-			$transposition->setCapoForPrint($this->app);
 		}
 
 		if ($this->not_equivalent)
 		{
 			$this->not_equivalent = $printer->printTransposition($this->not_equivalent);
-			$this->not_equivalent->setCapoForPrint($this->app);
 		}
 
 		if (isset($this->peopleCompatible))
 		{
 			$this->peopleCompatible = $printer->printTransposition($this->peopleCompatible);
-			$this->peopleCompatible->setCapoForPrint($this->app);
 		}
 	}
 }

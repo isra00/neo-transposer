@@ -38,7 +38,7 @@ class Transposition extends \NeoTransposer\AppAccess
 	 * Capo number for the transposition, ready to be shown in the UI.
 	 * @var string
 	 */
-	public $capoForPrint;
+	protected $capoForPrint;
 
 	/**
 	 * Whether the transposition is the same as the original one.
@@ -140,31 +140,15 @@ class Transposition extends \NeoTransposer\AppAccess
 	}
 
 	/**
-	 * It is necessary to split setter and getter because setter requires NeoApp param, which is not
-	 * available in the template.
-	 * 
-	 * @param NeoApp $app The Silex-Neo app object.
-	 * 
-	 * @todo remove param. Now $app is accessible through $this->app
+	 * Returns a friendly-formatted string with the capo of the transposition.
 	 */
-	public function setCapoForPrint(NeoApp $app)
-	{
-		$this->capoForPrint = ($this->capo)
-				? $app->trans('with capo %n%', array('%n%' => $this->capo))
-				: $app->trans('no capo');
-	}
-
-	/**
-	 * This method should not be invoked from template, because it requires the NeoApp param.
-	 * Template should invoke the public attribute capoForPrint, previously set in the controller.
-	 * 
-	 * @param NeoApp $app The Silex-Neo app object.
-	 */
-	public function getCapoForPrint(NeoApp $app)
+	public function getCapoForPrint()
 	{
 		if (empty($this->capoForPrint))
 		{
-			$this->setCapoForPrint($app);
+			$this->capoForPrint = ($this->capo)
+				? $this->app->trans('with capo %n%', array('%n%' => $this->capo))
+				: $this->app->trans('no capo');
 		}
 
 		return $this->capoForPrint;
