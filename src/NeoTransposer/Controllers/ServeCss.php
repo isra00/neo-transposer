@@ -24,16 +24,16 @@ class ServeCss
 
 		$fields_string = 'input=' . $source_css;
 
-		$ch = curl_init();
+		$curl = curl_init();
 
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_URL, 'http://cssminifier.com/raw');
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_URL, 'http://cssminifier.com/raw');
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $fields_string);
 
-		$min_css = curl_exec($ch);
-		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
+		$min_css = curl_exec($curl);
+		$http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		curl_close($curl);
 
 		// If external service fails, store the original.
 		if ('200' != $http_status)

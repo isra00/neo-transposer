@@ -44,23 +44,21 @@ class AllSongsReport
 
 		$responseBody = $app->render('all_songs_report.twig', $tplVars);
 
-		if ($req->get('dl'))
-		{
-			$filename = $app->trans('Transpositions')
-			 . '-' . str_replace('#', 'd', $app['neouser']->lowest_note . '-' . $app['neouser']->highest_note)
-			 . '.html';
-
-			return new Response($responseBody, 200, array(
-				'Cache-Control' 		=> 'private',
-				'Content-Type' 			=> 'application/stream',
-				'Content-Length' 		=> strlen($responseBody),
-				'Content-Disposition' 	=> 'attachment; filename=' . $filename,
-			));
-		}
-		else
+		if (!$req->get('dl'))
 		{
 			return $responseBody;
 		}
+		
+		$filename = $app->trans('Transpositions')
+		 . '-' . str_replace('#', 'd', $app['neouser']->lowest_note . '-' . $app['neouser']->highest_note)
+		 . '.html';
+
+		return new Response($responseBody, 200, array(
+			'Cache-Control' 		=> 'private',
+			'Content-Type' 			=> 'application/stream',
+			'Content-Length' 		=> strlen($responseBody),
+			'Content-Disposition' 	=> 'attachment; filename=' . $filename,
+		));
 	}
 
 	/**

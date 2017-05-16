@@ -29,41 +29,23 @@ class AdminDashboard
 
 		if ($tool = $req->get('tool'))
 		{
-			$tools = new \NeoTransposer\Model\AdminTools;
+			$toolsMethods = [
+				'populateCountry', 
+				'checkLowerHigherNotes', 
+				'refreshCss',
+				'testAllTranspositions',
+				'getVoiceRangeOfGoodUsers',
+				'detectOrphanChords',
+				'checkChordOrder'
+			];
 
-			switch ($tool)
+			if (false === array_search($tool, $toolsMethods))
 			{
-				case 'populateCountry':
-					$toolOutput = $tools->populateCountry($app);
-					break;
-
-				case 'checkLowerHigherNotes':
-					$toolOutput = $tools->checkLowerHigherNotes($app);
-					break;
-
-				case 'refreshCss':
-					$toolOutput = $tools->refreshCss($app);
-					break;
-
-				case 'checkChordOrder':
-					$toolOutput = $tools->checkChordOrder($app);
-					$toolOutput = empty($toolOutput)
-						? 'NO inconsistences found :-)'
-						: 'Songs with problems: ' . implode(', ', $toolOutput);
-					break;
-
-				case 'testAllTranspositions':
-					$toolOutput = $tools->testAllTranspositions($app);
-					break;
-
-				case 'getVoiceRangeOfGoodUsers':
-					$toolOutput = $tools->getVoiceRangeOfGoodUsers($app);
-					break;
-
-				case 'detectOrphanChords':
-					$toolOutput = $tools->detectOrphanChords($app);
-					break;
+				$app->abort(404);
 			}
+
+			$tools = new \NeoTransposer\Model\AdminTools;
+			$toolOutput = $tools->{$tool}($app);
 		}
 
 		return $app->render('admin_dashboard.twig', array(
@@ -105,7 +87,7 @@ SQL;
 
 		$answers = array('no', 'yes');
 
-		foreach ($global_performance as $group=>&$raw_data)
+		foreach ($global_performance as &$raw_data)
 		{
 			$feedback_data = array('yes'=>0, 'no'=>0, 'total'=>0);
 			foreach ($raw_data as $row)
@@ -378,12 +360,12 @@ JOIN
 GROUP BY user.country order by total desc
 SQL;
 
-		$good_users_country_raw = $this->app['db']->fetchAll($sql);
+		$goodUsersCountryRaw = $this->app['db']->fetchAll($sql);
 
-		$good_users_country = array();
-		foreach ($good_users_country_raw as $row)
+		$goodUsersCountry = array();
+		foreach ($goodUsersCountryRaw as $row)
 		{
-			$good_users_country[$row['country']] = $row['good'] / $row['total'];
+			$goodUsersCountry[$row['country']] = $row['good'] / $row['total'];
 		}
 
 		foreach ($countries as $country)
@@ -415,7 +397,7 @@ SQL;
 			{
 				$performance[$country] = $countryPerformance[0];
 				$performance[$country]['country_name'] 	= $country_names[$country];
-				$performance[$country]['good_users']	= $good_users_country[$country];
+				$performance[$country]['good_users']	= $goodUsersCountry[$country];
 			}
 		}
 

@@ -74,7 +74,7 @@ class TransposedSong
 	 * 
 	 * @param  int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 */
-	public function transpose($forceVoiceLimit=false)
+	public function transpose($forceVoiceLimit=null)
 	{
 		$transposer = $this->app['new.AutomaticTransposer'];
 		

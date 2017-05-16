@@ -173,7 +173,9 @@ class AdminTools
 			$last_position = $chord['position'];
 		}
 
-		return $output;
+		return empty($output)
+			? 'NO inconsistences found :-)'
+			: 'Songs with problems: ' . implode(', ', $output);
 	}
 
 

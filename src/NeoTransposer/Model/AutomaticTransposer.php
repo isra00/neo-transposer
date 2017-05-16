@@ -84,7 +84,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param  int 				$forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 * @return Transposition 	The transposition matching that voice.
 	 */
-	public function getCenteredTransposition($forceVoiceLimit=false)
+	public function getCenteredTransposition($forceVoiceLimit=null)
 	{
 		if (!empty($this->centeredTransposition))
 		{

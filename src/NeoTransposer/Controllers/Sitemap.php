@@ -21,9 +21,9 @@ class Sitemap
 
 		$time = $app['neoconfig']['sitemap_lastmod'];
 
-		$languages = $app['neoconfig']['languages'];
+		$languages = array_keys($app['neoconfig']['languages']);
 
-		foreach ($languages as $lang=>$details)
+		foreach ($languages as $lang)
 		{
 			$urls[] = array(
 				'loc' => $app->url('login', array('_locale' => $lang)),

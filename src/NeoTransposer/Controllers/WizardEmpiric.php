@@ -133,7 +133,7 @@ class WizardEmpiric
 		)));
 	}
 
-	public function prepareSongForTest($wizard_config_song, NeoApp $app, $forceVoiceLimit=false)
+	public function prepareSongForTest($wizard_config_song, NeoApp $app, $forceVoiceLimit=null)
 	{
 		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
