@@ -27,7 +27,7 @@ class UserVoice
 			{
 				if ($book['locale'] == $app['locale'])
 				{
-					$redirect = $app['url_generator']->generate('book_' . $book['id_book']);
+					$redirect = $app->path('book_' . $book['id_book']);
 					$app['neouser']->id_book = $book['id_book'];
 					$app['neouser']->persist($app['db'], $request);
 				}

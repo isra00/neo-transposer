@@ -3,7 +3,6 @@
 namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Implements a XML Sitemap with login, book and song pages.
@@ -27,7 +26,7 @@ class Sitemap
 		foreach ($languages as $lang=>$details)
 		{
 			$urls[] = array(
-				'loc' => $app['url_generator']->generate('login', array('_locale' => $lang), UrlGeneratorInterface::ABSOLUTE_URL),
+				'loc' => $app->url('login', array('_locale' => $lang)),
 				'priority' => 1,
 				'changefreq' => 'daily',
 				'lastmod' => $time
@@ -38,7 +37,7 @@ class Sitemap
 		foreach ($books as $book)
 		{
 			$urls[] = array(
-				'loc' => $app['url_generator']->generate('book_' . $book['id_book'], array(), UrlGeneratorInterface::ABSOLUTE_URL),
+				'loc' => $app->url('book_' . $book['id_book'], array()),
 				'priority' => 1,
 				'changefreq' => 'daily',
 				'lastmod' => $time
@@ -52,10 +51,9 @@ class Sitemap
 		foreach ($songs as $song)
 		{
 			$urls[] = array(
-				'loc' => $app['url_generator']->generate(
+				'loc' => $app->url(
 					'transpose_song', 
-					array('id_song' => $song['slug']), 
-					UrlGeneratorInterface::ABSOLUTE_URL
+					array('id_song' => $song['slug'])
 				),
 				'priority' => '0.8',
 				'changefreq' => 'weekly',

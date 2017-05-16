@@ -75,7 +75,7 @@ class WizardEmpiric
 			$app['neouser']->lowest_note = $this->nc->transposeNote($app['neouser']->lowest_note, +1);
 			$app['neouser']->highest_note = $this->nc->transposeNote($app['neouser']->highest_note, +1);
 
-			return $app->redirect($app['url_generator']->generate('wizard_empiric_highest'));
+			return $app->redirect($app->path('wizard_empiric_highest'));
 		}
 
 		//If too low, next "yes" won't work as usual
@@ -122,7 +122,7 @@ class WizardEmpiric
 		if ('no' == $req->get('can_sing') || $app['neouser']->highest_note == 'C1')
 		{
 			$app['neouser']->highest_note = $this->nc->transposeNote($app['neouser']->highest_note, -1);
-			return $app->redirect($app['url_generator']->generate('wizard_finish'));
+			return $app->redirect($app->path('wizard_finish'));
 		}
 
 		$tpl = $this->prepareSongForTest('highest', $app, AutomaticTransposer::FORCE_HIGHEST);
@@ -173,7 +173,7 @@ class WizardEmpiric
 
 		return $app->render('wizard_finish.twig', array(
 			'your_voice'	=> $your_voice,
-			'go_to_book'	=> $app['url_generator']->generate('book_' . $go_to_book)
+			'go_to_book'	=> $app->path('book_' . $go_to_book)
 		));
 	}
 }

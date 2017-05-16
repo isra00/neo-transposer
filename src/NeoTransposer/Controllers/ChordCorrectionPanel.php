@@ -74,6 +74,6 @@ class ChordCorrectionPanel
 			}
 		}
 
-		return $app->redirect($app['url_generator']->generate($req->attributes->get('_route')));
+		return $app->redirect($app->path($req->attributes->get('_route')));
 	}
 }

@@ -44,6 +44,6 @@ class WizardStepOne
 
 		$app['neouser']->wizard_step1 = $req->get('gender');
 
-		return $app->redirect($app['url_generator']->generate('wizard_empiric_lowest') . '#instructions');
+		return $app->redirect($app->path('wizard_empiric_lowest') . '#instructions');
 	}
 }

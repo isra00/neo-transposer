@@ -49,7 +49,7 @@ SQL;
 			//Progressive enhancement: support form submission without AJAX, then refresh the page.
 			if (!$req->isXmlHttpRequest())
 			{
-				return $app->redirect($app['url_generator']->generate(
+				return $app->redirect($app->path(
 					'transpose_song',
 					array('id_song' => $req->get('id_song'))
 				) . '?fb=' . str_replace(array('1', '0'), array('yes', 'no'), $worked) . '#feedback');

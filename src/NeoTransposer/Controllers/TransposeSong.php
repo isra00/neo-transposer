@@ -7,7 +7,6 @@ use \NeoTransposer\Model\TranspositionChart;
 use \NeoTransposer\Model\NotesCalculator;
 
 use \Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Transpose Song page: transpose the given song for the singer's voice range.
@@ -29,7 +28,7 @@ class TransposeSong
 			{
 				$app->setLocaleAutodetect($req);
 				
-				return $app->redirect($app['url_generator']->generate(
+				return $app->redirect($app->path(
 					'user_voice', 
 					array('_locale' => $app['locale'])
 				));
@@ -63,21 +62,17 @@ class TransposeSong
 			'your_voice'		=> $your_voice,
 			'voice_chart'		=> TranspositionChart::getChart($transposedSong->song, $transposedSong->transpositions[0], $app['neouser'], $transposedSong->peopleCompatible),
 			'page_title'		=> $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $transposedSong->song->title)),
-			'header_link'		=> $app['url_generator']->generate('book_' . $transposedSong->song->idBook),
-			'meta_canonical'	=> $app['url_generator']->generate(
-				'transpose_song',
-				array('id_song' => $transposedSong->song->slug),
-				UrlGeneratorInterface::ABSOLUTE_URL
-			),
+			'header_link'		=> $app->path('book_' . $transposedSong->song->idBook),
+			'meta_canonical'	=> $app->url('transpose_song', ['id_song' => $transposedSong->song->slug]),
 			'meta_description'	=> $app->trans(
 				'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
-				array('%song%' => $transposedSong->song->title)
+				['%song%' => $transposedSong->song->title]
 			),
 			'feedback'			=> $this->getFeedbackForUser($app['db'], $app['neouser']->id_user, $transposedSong->song->idSong),
 
 			//If user's highest note is in the 1st octave, we suggest strongly using the wizard
 			'user_first_octave' => $user_first_octave,
-			'url_wizard' 		=> $app['url_generator']->generate('wizard_step1', array('_locale' => $app['locale'])),
+			'url_wizard' 		=> $app->path('wizard_step1', ['_locale' => $app['locale']]),
 
 			//Non-JS browsers show message after clicking on feedback
 			'non_js_fb'			=>  $req->get('fb')

@@ -31,7 +31,7 @@ class SetUserData
 		{
 			if (strpos($request->get('highest_note'), '1'))
 			{
-				return $app->redirect($app['url_generator']->generate(
+				return $app->redirect($app->path(
 					'user_voice', 
 					array('bad_voice_range'=>'1')
 				));
@@ -44,7 +44,7 @@ class SetUserData
 
 		return $app->redirect($request->get('redirect')
 			? $request->get('redirect')
-			: $app['url_generator']->generate('book_' . $app['neouser']->id_book)
+			: $app->path('book_' . $app['neouser']->id_book)
 		);
 	}
 }

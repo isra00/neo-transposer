@@ -23,12 +23,12 @@ class Index
 
 		if ($app['neouser']->id_book)
 		{
-			return $app->redirect($app['url_generator']->generate(
+			return $app->redirect($app->path(
 				'book_' . $app['neouser']->id_book
 			));
 		}
 
-		return $app->redirect($app['url_generator']->generate(
+		return $app->redirect($app->path(
 			'login',
 			['_locale' => $app['locale']]
 		));
