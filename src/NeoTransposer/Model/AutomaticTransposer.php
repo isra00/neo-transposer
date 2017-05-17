@@ -3,10 +3,19 @@
 namespace NeoTransposer\Model;
 
 /**
- * Core Transposer class, implementing three types of transpositions: centered,
- * equivalents of the centered, non equivalent.
+ * Core algorithm for transposing songs. It implementing three types of transpositions: 
+ *
+ * - centered: the song voice range is transposed to the center of singer's voice range.
+ * - equivalentsWithCapo: transpositions equivalent to the centered using capo 1 to 5, searching one whose chords are easier than the centered.
+ * - notEquivalent: transpose the centered ±1 and get its equivalents with capo, searching one whose chords are easier than the centered and the equivalentsWithCapo.
+ * - peopleCompatible: transposition that is within the singer's voice range but also withing the people's voice range in the parts of the song that are sung by the people. Additional data is required (people_lowest_note, people_highest_note) for each song.
  * 
- * @todo Unify calculation method names: get/find/calculate...
+ * Additionally, after transposing the chords, some chords that are difficult to
+ * beginners are replaced by others somehow equivalent, like B7 instead of B. This
+ * is only done if the song data has the flag firstChordIsKey enabled.
+ * 
+ * The flag forceVoiceLimit is not used in real life transpositions, but only in
+ * the Empiric Wizard to force the singer to use the lowest or highest voice.
  */
 class AutomaticTransposer extends \NeoTransposer\AppAccess
 {
@@ -14,7 +23,6 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	const FORCE_HIGHEST = 2;
 
 	/**
-	 * Instance of NotesCalculator used for calculating transpositions.
 	 * @var NotesCalculator
 	 */
 	protected $nc;
@@ -25,6 +33,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	protected $songHighestNote;
 	protected $originalChords;
 	protected $firstChordIsKey;
+	protected $songPeopleLowestNote;
+	protected $songPeopleHighestNote;
 
 	/**
 	 * The calculated centered transposition.
@@ -39,24 +49,21 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	protected $centeredAndEquivalent;
 
 	/**
-	 * Offsets from the centered transposition (in semitones) used for searching
-	 * nonEquivalent transpositions.
+	 * Offsets (in semitones) from the centered transposition, used for
+	 * searching nonEquivalent transpositions.
 	 * 
 	 * @var array
 	 */
 	protected $offsetsNotEquivalent = array(-1, 1);
 
-	protected $songPeopleLowestNote;
-	protected $songPeopleHighestNote;
-
 	/**
 	 * Constructor needs all the data to calculate the transpositions.
 	 * 
-	 * @param  string $singerLowestNote  Singer's lowest note
-	 * @param  string $singerHighestNote Singer's highest note
-	 * @param  string $songLowestNote    Song's lowest note
-	 * @param  string $songHighestNote   Song's highest note
-	 * @param  array $originalChords      Song original chords
+	 * @param	string	$singerLowestNote	Singer's lowest note
+	 * @param	string	$singerHighestNote	Singer's highest note
+	 * @param	string	$songLowestNote		Song's lowest note
+	 * @param	string	$songHighestNote	Song's highest note
+	 * @param	array	$originalChords		Song original chords
 	 */
 	function setTransposerData($singerLowestNote, $singerHighestNote, $songLowestNote, $songHighestNote, $originalChords, $firstChordIsKey, $songPeopleHighestNote, $songPeopleLowestNote)
 	{
@@ -103,11 +110,11 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 
 		/*
 		 * The song is located in the center of singer's range, but if middle is
-		 * not an integer, it will be rounded up. If the song's range is wider
-		 * than the singer's, it will be located in the bottom, so that notes
-		 * exceeding notes will be high. We do this because when it happens, 
-		 * the singer can sing those notes one octave down; as well as when 
-		 * forceVoiceLimit is FORCE_LOWEST.
+		 * not an integer (odd number), it will be rounded up. If the song's 
+		 * range is wider than the singer's, it will be located in the bottom, 
+		 * so that notes exceeding notes will be high. We do this because when 
+		 * it happens, the singer can sing those notes one octave down; as well 
+		 * as when forceVoiceLimit is FORCE_LOWEST.
 		 */
 		$offsetFromSingerLowest = ($songWideness >= $singerWideness)
 			? 0
