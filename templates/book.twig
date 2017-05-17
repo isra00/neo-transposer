@@ -4,6 +4,12 @@
 
 {% block content %}
 
+{% if app.locale == 'es' %}
+<div class="tip new resucilex">
+	{% trans with { '%url%': 'http://lexicon.neo-transposer.com/' } %}<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.{% endtrans %}
+</div>
+{% endif %}
+
 <h1>{% trans %}Songs of the Neocatechumenal Way{% endtrans %}</h1>
 <h2>
 	{% if app.neouser.isLoggedIn %}
@@ -26,12 +32,6 @@
 		</div>
 	</div>
 
-{% endif %}
-
-{% if app.locale == 'es' %}
-<div class="tip new resucilex">
-	{% trans with { '%url%': 'http://lexicon.neo-transposer.com/' } %}<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.{% endtrans %}
-</div>
 {% endif %}
 
 <span class="link-all-report-wrapper">
