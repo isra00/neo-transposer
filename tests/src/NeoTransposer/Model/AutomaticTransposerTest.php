@@ -49,7 +49,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 		return new \NeoTransposer\Model\Transposition($this->app);
 	}
 
-	public function testGetCenteredTransposition()
+	public function testCalculateCenteredTransposition()
 	{
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
@@ -64,7 +64,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			$expected,
-			$this->transposer->getCenteredTransposition()
+			$this->transposer->calculateCenteredTransposition()
 		);
 	}
 
@@ -79,10 +79,10 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 			['Bm', 'Em', 'G', 'D'], 0, true, 0, 'B1', 'B2', 0, $this->chordsScoreConfig, 'B1', 'B2'
 		);
 
-		$this->assertEquals($expected, $this->transposer->getCenteredTransposition());
+		$this->assertEquals($expected, $this->transposer->calculateCenteredTransposition());
 	}
 
-	public function testFindEquivalentsWithCapo()
+	public function testCalculateEquivalentsWithCapo()
 	{
 		$testTransposition = $this->getNewTransposition();
 		$testTransposition->setTranspositionData(array('Bm', 'Em', 'G', 'D'), 0, false, null, null, null, null, $this->chordsScoreConfig, 'B1', 'B2');
@@ -95,7 +95,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 			$this->getNewTransposition()->setTranspositionData(['F#m', 'Bm', 'D', 'A'], 5, false, null, null, null, null, $this->chordsScoreConfig)
 		];
 
-		$equivalents = $this->transposer->findEquivalentsWithCapo($testTransposition);
+		$equivalents = $this->transposer->calculateEquivalentsWithCapo($testTransposition);
 
 		$this->assertEquals($expected, $equivalents);
 	}
@@ -118,13 +118,13 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 		);
 	}
 
-	public function testFindAlternativeNotEquivalent()
+	public function testCalculateAlternativeNotEquivalent()
 	{
 		$this->transposer->setTransposerData(
 			'A1', 'D3', 'C#2', 'E3', ['D', 'F#', 'Bm', 'A', 'G'], false, $this->chordsScoreConfig, 'B1', 'B2'
 		);
 
-		$actual = $this->transposer->findAlternativeNotEquivalent();
+		$actual = $this->transposer->calculateAlternativeNotEquivalent();
 
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
@@ -150,7 +150,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			$expected,
-			$this->transposer->getCenteredTransposition(AutomaticTransposer::FORCE_HIGHEST)
+			$this->transposer->calculateCenteredTransposition(AutomaticTransposer::FORCE_HIGHEST)
 		);
 	}
 
@@ -167,7 +167,7 @@ class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			$expected,
-			$this->transposer->getCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
+			$this->transposer->calculateCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
 		);
 	}
 }

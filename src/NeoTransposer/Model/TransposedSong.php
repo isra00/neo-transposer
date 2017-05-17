@@ -90,11 +90,11 @@ class TransposedSong
 		);
 
 		$this->transpositions = $transposer->getTranspositions(2, $forceVoiceLimit);
-		$this->not_equivalent = $transposer->findAlternativeNotEquivalent();
+		$this->not_equivalent = $transposer->calculateAlternativeNotEquivalent();
 		
 		if ($this->app['neoconfig']['people_compatible'])
 		{
-			$this->peopleCompatible = $transposer->getPeopleCompatible();
+			$this->peopleCompatible = $transposer->calculatePeopleCompatible();
 		}
 
 		$this->prepareForPrint();

@@ -84,7 +84,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param  int 				$forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 * @return Transposition 	The transposition matching that voice.
 	 */
-	public function getCenteredTransposition($forceVoiceLimit=null)
+	public function calculateCenteredTransposition($forceVoiceLimit=null)
 	{
 		if (!empty($this->centeredTransposition))
 		{
@@ -162,7 +162,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param  Transposition $transposition A given transposition without capo.
 	 * @return array Array of <Transposition> with capo from 1 to 5.
 	 */
-	public function findEquivalentsWithCapo(Transposition $transposition)
+	public function calculateEquivalentsWithCapo(Transposition $transposition)
 	{
 		$withCapo = array();
 
@@ -211,8 +211,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	{
 		if (empty($this->centeredAndEquivalent))
 		{
-			$centeredTransposition = $this->getCenteredTransposition($forceVoiceLimit);
-			$equivalents = $this->findEquivalentsWithCapo($centeredTransposition, $this->originalChords);
+			$centeredTransposition = $this->calculateCenteredTransposition($forceVoiceLimit);
+			$equivalents = $this->calculateEquivalentsWithCapo($centeredTransposition, $this->originalChords);
 
 			$centeredAndEquivalent = array_merge(array($centeredTransposition), $equivalents);
 			$centeredAndEquivalent = $this->sortTranspositionsByEase($centeredAndEquivalent);
@@ -243,9 +243,9 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * 
 	 * @return Transposition A non-equivalent transposition (yes, only one).
 	 */
-	public function findAlternativeNotEquivalent()
+	public function calculateAlternativeNotEquivalent()
 	{
-		$nearTranspositions = $this->getSurroundingTranspositions(
+		$nearTranspositions = $this->calculateSurroundingTranspositions(
 			$this->offsetsNotEquivalent,
 			$this->getTranspositions()[0]->score
 		);
@@ -275,9 +275,9 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param integer	$reduceSingerLimits	Singer's voice range will be reduced in the top and bottom by this number of semitones.
 	 * @return array	An array of Transposition objects.
 	 */
-	protected function getSurroundingTranspositions($range, $maxScore, $reduceSingerLimits=false)
+	protected function calculateSurroundingTranspositions($range, $maxScore, $reduceSingerLimits=false)
 	{
-		$centeredTransposition = $this->getCenteredTransposition();
+		$centeredTransposition = $this->calculateCenteredTransposition();
 
 		$nearTranspositions = array();
 
@@ -296,7 +296,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 			$nearAndItsEquivalentsWithCapo = $this->sortTranspositionsByEase(
 				array_merge(
 					array($near),
-					$this->findEquivalentsWithCapo($near)
+					$this->calculateEquivalentsWithCapo($near)
 				)
 			);
 
@@ -361,7 +361,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		$this->songPeopleLowestNote  = $songPeopleLowestNote;
 	}
 
-	function getPeopleCompatible()
+	function calculatePeopleCompatible()
 	{
 		if (empty($this->songPeopleLowestNote))
 		{
@@ -372,7 +372,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		// @todo Crear una clase VoiceRange y usarla en todas partes?
 		$peopleRange = ['lowest' => 'B1', 'highest' => 'B2'];
 
-		$centeredTransposition = $this->getCenteredTransposition();
+		$centeredTransposition = $this->calculateCenteredTransposition();
 
 		$centeredForPeopleRange = [
 			'lowest'  => $this->nc->transposeNote($this->songPeopleLowestNote, $centeredTransposition->offset),
