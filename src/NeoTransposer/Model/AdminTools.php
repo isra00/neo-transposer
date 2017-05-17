@@ -124,7 +124,7 @@ class AdminTools
 	 */
 	public function refreshCss(NeoApp $app)
 	{
-		$cache_file = $app['root_dir'] . '/web/static/' . $app['neoconfig']['css_cache'] . '.css';
+		$cache_file = $app['root_dir'] . '/web/static/compiled-' . $app['neoconfig']['css_cache'] . '.css';
 		
 		if (!file_exists($cache_file))
 		{
