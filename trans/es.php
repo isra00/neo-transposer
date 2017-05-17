@@ -333,4 +333,8 @@ return array(
 
 	'Transpositions'
 	=> 'Transposiciones',
+
+	//Manifesto
+	'Manifesto'
+	=> 'Manifiesto',
 );

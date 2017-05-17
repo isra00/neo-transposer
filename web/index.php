@@ -125,4 +125,11 @@ $app->get('/get-lucky', "$controllers\\TransposeSong::get")
 $app->get('/sura-yako', "$controllers\\TransposeSong::get")
 	->value('id_song', 319);
 
+$app->get('/{_locale}/manifiesto', function() use ($app)
+{
+	return $app->render('manifesto.twig', array(
+		'page_title' => $app->trans('Manifesto'),
+	));
+})->assert('_locale', 'es');;
+
 $app->run();

@@ -1222,6 +1222,23 @@ a.btn-icon {
 	}
 
 /*
+ * Manifesto
+ */
+.static-page .main {
+	font-size: 1.1em;
+	background: #fcfcf7;
+	box-shadow: 1px 1px 5px silver;
+}
+	.static-page .main .inside {
+		padding: 1em 3em;
+		margin-top: 2em;
+	}
+	.static-page .main h1 {
+		margin-top: 0;
+	}
+
+
+/*
  * Other
  */
 .software-name {
@@ -1426,4 +1443,19 @@ a.btn-icon {
 		width: auto;
 		margin: 0 0 .5rem;
 	}
+
+	/*
+	 * Manifesto
+	 */
+	.static-page .main {
+		margin-top: 1em;
+		font-size: 1em;
+	}
+
+		.static-page .main .inside {
+			padding: 0 .5em .5em;
+		}
+		.static-page .main h1 {
+			margin-top: 0;
+		}
 }
