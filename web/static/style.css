@@ -68,7 +68,7 @@ hr {
 	overflow: hidden;
 	color: white;
 	text-align: right;
-	padding: .3rem .5rem;
+	padding: .4rem .5rem;
 	box-shadow: 0 1px 5px silver;
 }
 	.header .inside {
@@ -258,9 +258,9 @@ footer {
 .tip.new.resucilex {
 	background: black url(img/resucilex-banner.png) left -16px no-repeat;
 	color: #ddd;
-	border-right: 2px solid gray;
 	padding-left: 70px;
 	line-height: 140%;
+	margin-bottom: 1.5em;
 }
 
 .link-all-report-wrapper {
@@ -1273,6 +1273,7 @@ a.btn-icon {
 		font-size: 1.1em;
 	}
 
+	/* Layout */
 	.header .inside {
 		width: auto;
 		margin: 0;
@@ -1329,6 +1330,7 @@ a.btn-icon {
 		width: auto;
 	}
 
+	/* Book */
 	.change-book {
 		float: none;
 		display: block;
@@ -1342,10 +1344,13 @@ a.btn-icon {
 			padding-left: 65px;
 		}
 
-
 	.tip.new {
 		background-image: none;
 		font-size: .9em;
+	}
+
+	.song-index {
+		margin-top: 1em;
 	}
 
 	.link-all-report-wrapper {
@@ -1354,6 +1359,8 @@ a.btn-icon {
 		float: none;
 		margin-right: 0;
 		margin-bottom: .5em;
+		margin-top: .5em;
+		text-align: left;
 	}
 
 	.song-index li a:active {
@@ -1393,6 +1400,16 @@ a.btn-icon {
 			display: block;
 			margin: 0;		
 		}
+
+	.transpose-song .your-voice {
+		font-size: .95em;
+	}
+		.transpose-song .your-voice .small-button {
+			font-size: 1.1em;
+		}
+	.transpose-song .tip {
+		font-size: .9em;
+	}
 
 	/* User voice */
 	.page-user-voice .wizard-button {
