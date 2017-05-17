@@ -17,7 +17,7 @@ abstract class ChordPrinter
 {
 	protected $cssClass = 'chord';
 
-	public function printTransposition($transposition)
+	public function printTransposition(\NeoTransposer\Model\Transposition $transposition)
 	{
 		$transposition->chordsForPrint = $this->printChordset($transposition->chords);
 		return $transposition;

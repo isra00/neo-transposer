@@ -110,21 +110,17 @@ class TransposedSong
 
 		$this->song->originalChords = $printer->printChordset($this->song->originalChords);
 
-		/** @todo Fix this code repetition */
+		$transpositionsToPrint = array_merge(
+			$this->transpositions, 
+			[$this->not_equivalent, $this->peopleCompatible]
+		);
 
-		foreach ($this->transpositions as &$transposition)
+		foreach ($transpositionsToPrint as &$transposition)
 		{
-			$transposition = $printer->printTransposition($transposition);
-		}
-
-		if ($this->not_equivalent)
-		{
-			$this->not_equivalent = $printer->printTransposition($this->not_equivalent);
-		}
-
-		if (isset($this->peopleCompatible))
-		{
-			$this->peopleCompatible = $printer->printTransposition($this->peopleCompatible);
+			if (!empty($transposition))
+			{
+				$transposition = $printer->printTransposition($transposition);
+			}
 		}
 	}
 }
