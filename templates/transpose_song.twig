@@ -197,7 +197,7 @@ $(function() {
 	{
 		var chordName = event.target.parentNode.dataset.chord;
 
-		//5th chords are wrong in the ES songbook. They mean 9th -_-
+		//5th chords are wrong in the ES songbook. They are actually 9th -_-
 		chordName = chordName.replace(/5$/, '9');
 
 		chordChartImg.addEventListener('error', function(event) {
@@ -227,16 +227,16 @@ $(function() {
 			var dialogTop = event.target.parentNode.offsetTop + event.target.parentNode.offsetHeight;
 				dialogLeft = event.target.parentNode.getBoundingClientRect().left + event.target.parentNode.offsetWidth;
 
-			dialog.style.position = 'fixed';
-			dialog.style.margin = '0';
-			dialog.style.top = dialogTop + "px";
-			dialog.style.left = dialogLeft + "px";
+			dialog.style.position 	= 'fixed';
+			dialog.style.margin 	= '0';
+			dialog.style.top 		= dialogTop + "px";
+			dialog.style.left 		= dialogLeft + "px";
 
 			dialog.style.display = 'block';
 
 			// If it gets out of the limits of the screen, place at in the corner.
-			var currentRight = dialog.getBoundingClientRect().left + dialog.offsetWidth;
-			var currentBottom = dialog.getBoundingClientRect().top + dialog.offsetHeight;
+			var currentRight  = dialog.getBoundingClientRect().left + dialog.offsetWidth,
+				currentBottom = dialog.getBoundingClientRect().top + dialog.offsetHeight;
 
 			if (currentRight > window.innerWidth)
 			{

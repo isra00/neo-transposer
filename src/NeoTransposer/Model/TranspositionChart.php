@@ -9,73 +9,45 @@ class TranspositionChart
 	 */
 	protected $nc;
 
-	public function __construct(\NeoTransposer\Model\NotesCalculator $nc)
+	/**
+	 * @var array
+	 */
+	protected $voiceChart = [];
+
+	public function __construct(\NeoTransposer\Model\NotesCalculator $nc, Song $song, User $singer)
 	{
 		$this->nc = $nc;
+
+		$this->addVoice('Your voice:', 'singer', $singer->lowest_note, $singer->highest_note);
+		$this->addVoice('Original chords:', 'original-song', $song->lowestNote, $song->highestNote);
 	}
-	/**
-	 * @todo En vez de dos argumentos Transposition, un array con transposiciones ilimitadas, que tenga el objeto Transposition y todos los demás datos necesarios para imprimirlo, etc
-	 */
-	public function getChart(Song $song, Transposition $transposition, User $singer, Transposition $peopleCompatible = null)
+
+	public function addVoice($caption, $cssClass, $lowestNote, $highestNote)
 	{
-		$voiceChart = array(
-			'singer' => array(
-				'lowest'	=> $singer->lowest_note,
-				'highest'	=> $singer->highest_note,
-				'length'	=> abs($this->nc->distanceWithOctave($singer->lowest_note, $singer->highest_note)) - 1,
-				'caption'	=> 'Your voice:',
-				'css'		=> 'singer'
-			),
-			'original' => array(
-				'lowest'	=> $song->lowestNote,
-				'highest'	=> $song->highestNote,
-				'length'	=> abs($this->nc->distanceWithOctave($song->lowestNote, $song->highestNote)) - 1,
-				'caption'	=> 'Original chords:',
-				'css'		=> 'original-song'
-			),
-			'transposed' => array(
-				'lowest'	=> $transposition->lowestNote,
-				'highest'	=> $transposition->highestNote,
-				'caption'	=> 'Transposed:',
-				'css'		=> 'transposed-song'
-			),
-		);
+		$this->voiceChart[] = [
+			'caption'	=> $caption,
+			'css'		=> $cssClass,
+			'lowest'	=> $lowestNote,
+			'highest'	=> $highestNote,
+			'length'	=> abs($this->nc->distanceWithOctave($lowestNote, $highestNote)) - 1,
+		];
+	}
 
-		if ($peopleCompatible)
-		{
-			$voiceChart['peopleCompatible'] = array(
-				'lowest'	=> $peopleCompatible->lowestNote,
-				'highest'	=> $peopleCompatible->highestNote,
-				'peopleLowest'	=> $peopleCompatible->peopleLowestNote,
-				'peopleHighest'	=> $peopleCompatible->peopleHighestNote,
-				'length'	=> abs($this->nc->distanceWithOctave($peopleCompatible->lowestNote, $peopleCompatible->highestNote)) - 1,
-				'caption'	=> 'People:',
-				'css'		=> 'people-compatible'
-			);
-		}
+	public function addTransposition($caption, $cssClass, Transposition $transposition)
+	{
+		$this->addVoice($caption, $cssClass, $transposition->lowestNote, $transposition->highestNote);
+	}
+	
+	public function getChart()
+	{
+		$min = $this->nc->lowestNote(array_column($this->voiceChart, 'lowest'));
 
-		$voiceChart['transposed']['length'] = $voiceChart['original']['length'];
+		$nc  = $this->nc;
 
-		/** @todo Esto se puede simplificar con array_column (incluyendo el peopleCompatible)? */
-		$lowestNotes = array(
-			$voiceChart['singer']['lowest'],
-			$voiceChart['original']['lowest'],
-			$voiceChart['transposed']['lowest'],
-		);
-
-		if (isset($voiceChart['peopleCompatible']))
-		{
-			$lowestNotes[] = $voiceChart['peopleCompatible']['lowest'];
-		}
-
-		$min = $this->nc->lowestNote($lowestNotes);
-
-		$nc = $this->nc;
-
-		array_walk($voiceChart, function(&$voice) use ($min, $nc) {
+		array_walk($this->voiceChart, function(&$voice) use ($min, $nc) {
 			$voice['offset'] = abs($nc->distanceWithOctave($min, $voice['lowest']));
 		});
 
-		return $voiceChart;
+		return $this->voiceChart;
 	}
 }

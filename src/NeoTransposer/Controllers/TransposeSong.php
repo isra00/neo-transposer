@@ -57,12 +57,17 @@ class TransposeSong
 			< 12
 		);
 
-		$transpositionChart = new TranspositionChart($nc);
+		$transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser']);
+		$transpositionChart->addTransposition(
+			'Transposed:', 
+			'transposed-song', 
+			$transposedSong->transpositions[0]
+		);
 
 		return $app->render('transpose_song.twig', array_merge($tpl, array(
 			'song'				=> $transposedSong,
 			'your_voice'		=> $your_voice,
-			'voice_chart'		=> $transpositionChart->getChart($transposedSong->song, $transposedSong->transpositions[0], $app['neouser'], $transposedSong->peopleCompatible),
+			'voice_chart'		=> $transpositionChart->getChart(),
 			'page_title'		=> $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $transposedSong->song->title)),
 			'header_link'		=> $app->path('book_' . $transposedSong->song->idBook),
 			'meta_canonical'	=> $app->url('transpose_song', ['id_song' => $transposedSong->song->slug]),
