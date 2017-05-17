@@ -72,7 +72,7 @@ return array(
 	=> 'okt',
 
 	'If you don\'t know your highest and lowest note, click here'
-	=> 'Usipozijua nota za sauti yako, piga click hapa.',
+	=> 'Usipozijua nota za sauti yako, bonyeza hapa.',
 
 	'Continue'
 	=> 'Endelea',
@@ -84,7 +84,7 @@ return array(
 	=> 'Nota za sauti ni kitu gani?',
 
 	'Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.'
-	=> 'Kila mmoja ana sauti yake: wengine wanaimba na sauti ya juu, wengine na ya chini. Kujua nota za sauti yako maana yake kujua bila kubabaika vikomo vya sauti yako: nota gani ya chini na nota gani ya juu unaweza kufikia.',
+	=> 'Kila mmoja ana sauti yake: wengine wanaimba na sauti ya juu, wengine na ya chini. Kujua nota za sauti yako maana yake kujua kwa hakika mipaka ya sauti yako: nota gani ya chini na nota gani ya juu unaweza kufikia.',
 
 	//User Book
 	'Choose language'
@@ -229,7 +229,7 @@ return array(
 	=> 'Wala juu wala chini kuliko wanawake wengi / sijui',
 
 	'Next step &rarr;'
-	=> 'Inayofuata &rarr;',
+	=> 'Ifuatayo &rarr;',
 
 	// Wizard empiric instructions
 
@@ -240,10 +240,10 @@ return array(
 	=> 'Sasa unatakiwa kuimba kiitikio cha wimbo kinachofuata katika ufunguo fulani. Uchukue gitaa yako na kukiimba katika ufunguo ule ule.',
 
 	'If it is too low for you, click on “No, it\'s too low”. If you were able to sing it, click on “Yes”. Then, I will transpose the song so it will be a bit lower, and you should try again. We will keep repeating the exercise until you can\'t sing lower'
-	=> 'Ikiwa sauti iko chini sana kwako, piga “La, chini sana”. Ukifanikiwa kukiimba, piga “Ndiyo”. Kisha, nitakishusha ili kiwe chini kidogo zaidi, na itabidi ujaribu kuimba tena. Tutarudia zoezi hili mpaka ushindwe kuimba chini zaidi.',
+	=> 'Ikiwa sauti iko chini sana kwako, piga “La, chini sana”. Ukifanikiwa kukiimba, piga “Ndiyo”. Kisha, nitazishusha korzi za wimbo ili uwe chini kidogo zaidi, na itabidi ujaribu kuimba tena. Tutarudia zoezi hili mpaka ushindwe kuimba chini zaidi.',
 
 	'Try to do your best to sing with your lowest possible voice, since this test tries to find the limits of your voice.'
-	=> 'Ujaribu kujitahidi kuimba na sauti yako ya chini kabisa, kwa sababu kipimo hiki kinatafuta vikomo vya sauti yako.',
+	=> 'Ujitahidi kuimba na sauti yako ya chini kabisa, kwa sababu kipimo hiki kinatafuta vikomo vya sauti yako.',
 
 	'Understood'
 	=> 'Nimeelewa',
@@ -253,7 +253,7 @@ return array(
 	=> 'Hatua ya 2: kutafuta nota yako ya chini',
 
 	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won\'t be able to sing loud enough in the community!'
-	=> 'Jaribu kuimba kiitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unapaswa kukiimba na sauti ya chini, lakini usishuke sana ili uweze kuimba kwa nguvu.',
+	=> 'Jaribu kuimba kiitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unapaswa kukiimba na sauti ya chini, lakini bila kushuka sana, au sauti yako haitasikika.',
 
 	'Could you sing it?'
 	=> 'Umefanikiwa kukiimba?',
@@ -273,7 +273,7 @@ return array(
 	'Repeat the test'
 	=> 'Rudia tena kipimo',
 
-/*	'If you have chosen properly your voice in the previous step and you have sang the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type... or if you are sure that this super-low voice is yours, just go to the next step:'
+/*	'If you have chosen properly your voice in the previous step and you have sung the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type... or if you are sure that this super-low voice is yours, just go to the next step:'
 	=> 'Si has elegido correctamente tu voz en el paso anterior y has cantado en todas las pruebas en el tono correcto con voz grave, es prácticamente imposible que puedas cantar más grave de eso. Quizá debas volver al paso anterior y elegir mejor qué tipo de voz es la tuya... o si estás seguro de que esa voz de ultratumba es la tuya, pasa al siguiente paso:',*/
 
 	'Go to the next step'
@@ -285,7 +285,7 @@ return array(
 	=> 'Hatua ya 3: kutafuta nota yako ya juu',
 
 	'Now try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong> with the following chords. Remember: you must sing it <strong>with high voice</strong>, but without doing falsetto! Make a little effort, we are almost done!'
-	=> 'Sasa jaribu kuimba kiitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unapaswa kuimba na <strong>sauti ya juu</strong>, lakini usifanye falsetto. Jitahidi, tunakaribia mwisho!',
+	=> 'Sasa jaribu kuimba kiitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unapaswa kuimba na <strong>sauti ya juu</strong>, lakini usifanye <i>falsetto</i>. Jitahidi, tunakaribia kumaliza!',
 
 	'No, that\'s too high'
 	=> 'La, ni juu sana',
