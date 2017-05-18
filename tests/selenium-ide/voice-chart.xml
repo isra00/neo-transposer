@@ -4,7 +4,7 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://neo-transposer.com/" />
-<title>Voice chart</title>
+<title>Voice chart click → visible</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
@@ -41,7 +41,6 @@
 	<td>css=table.voicechart</td>
 	<td>true</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
