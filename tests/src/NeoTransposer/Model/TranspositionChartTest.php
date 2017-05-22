@@ -2,7 +2,7 @@
 
 use \NeoTransposer\Model\{TranspositionChart, AutomaticTransposer, Song, User, Transposition};
 
-class TranspositionChartTest extends PHPUnit_Framework_TestCase
+class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 {
 	public function testGetChart()
 	{

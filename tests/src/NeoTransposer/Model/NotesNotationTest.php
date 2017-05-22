@@ -2,7 +2,7 @@
 
 use \NeoTransposer\Model\NotesNotation;
 
-class NotesNotationTest extends PHPUnit_Framework_TestCase
+class NotesNotationTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var NotesNotation

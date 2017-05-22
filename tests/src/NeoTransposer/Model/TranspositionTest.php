@@ -3,7 +3,7 @@
 use \NeoTransposer\Model\Transposition;
 use \NeoTransposer\Model\NotesCalculator;
 
-class TranspositionTest extends PHPUnit_Framework_TestCase
+class TranspositionTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * Fixture of the SUT.

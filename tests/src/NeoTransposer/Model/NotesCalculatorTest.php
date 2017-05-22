@@ -2,7 +2,7 @@
 
 use \NeoTransposer\Model\NotesCalculator;
 
-class NotesCalculatorTest extends PHPUnit_Framework_TestCase
+class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * Fixture of the SUT.
@@ -36,7 +36,7 @@ class NotesCalculatorTest extends PHPUnit_Framework_TestCase
 
     public function testReadChordNotRecognized()
     {
-        $this->setExpectedException('Exception');
+        $this->expectException('Exception');
         $this->nc->readChord('Cmaj7');
     }
 

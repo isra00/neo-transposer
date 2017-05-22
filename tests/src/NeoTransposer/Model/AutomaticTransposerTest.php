@@ -6,7 +6,7 @@ use \NeoTransposer\Model\Transposition;
 /**
  * @todo Add some corner cases to transposition algorithms
  */
-class AutomaticTransposerTest extends PHPUnit_Framework_TestCase
+class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * An instance of the class under test
