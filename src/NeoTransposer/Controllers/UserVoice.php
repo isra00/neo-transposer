@@ -3,6 +3,7 @@
 namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
+use \NeoTransposer\Model\NotesNotation;
 
 /**
  * Page for the user to set his/her voice range, or to go to the Wizard.
@@ -34,11 +35,20 @@ class UserVoice
 			}
 		}
 
+		$accousticScaleNice = [];
+		foreach ($nc->accoustic_scale as $note)
+		{
+			$accousticScaleNice[] = NotesNotation::getNotation(
+				$note, 
+				$app['neoconfig']['languages'][$app['locale']]['notation']
+			);
+		}
+
 		return $app->render('user_voice.twig', array(
 			'page_title'			=> $app->trans('Your voice'),
 			'scale'					=> $nc->numbered_scale,
 			'accoustic_scale'		=> $nc->accoustic_scale,
-			'current_notation'		=> $app['neoconfig']['languages'][$app['locale']]['notation'],
+			'accoustic_scale_nice'	=> $accousticScaleNice,
 			'redirect'				=> $redirect
 		));
 	}

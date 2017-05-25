@@ -132,14 +132,6 @@ class NeoApp extends Application
 			))
 		));
 
-		//Custom Twig filter for printing notes in different notations.
-		$this['twig'] = $this->extend('twig', function(\Twig_Environment $twig) {
-			$twig->addFilter(new \Twig_SimpleFilter('notation', function ($str, $notation) {
-				return \NeoTransposer\Model\NotesNotation::getNotation($str, $notation);
-			}));
-			return $twig;
-		});
-
 		$this->register(new \Silex\Provider\DoctrineServiceProvider(), array(
 			'db.options' => array(
 				'driver'	=> 'pdo_mysql',
