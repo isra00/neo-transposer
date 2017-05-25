@@ -10,8 +10,8 @@ class ChordCorrectionPanel
 	{
 		$app['locale'] = 'es';
 
-		$adminTools = new \NeoTransposer\Model\AdminTools;
-		$problematic = $adminTools->checkChordOrder($app);
+		$adminTools = new \NeoTransposer\Model\AdminTools($app);
+		$problematic = $adminTools->checkChordOrder();
 
 		if ('NO inconsistences found :-)' == $problematic)
 		{

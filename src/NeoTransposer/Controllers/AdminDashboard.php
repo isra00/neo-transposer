@@ -44,8 +44,8 @@ class AdminDashboard
 				$app->abort(404);
 			}
 
-			$tools = new \NeoTransposer\Model\AdminTools;
-			$toolOutput = $tools->{$tool}($app);
+			$tools = new \NeoTransposer\Model\AdminTools($app);
+			$toolOutput = $tools->{$tool}();
 		}
 
 		return $app->render('admin_dashboard.twig', array(

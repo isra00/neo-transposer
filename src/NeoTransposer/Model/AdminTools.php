@@ -7,21 +7,21 @@ use \NeoTransposer\NeoApp;
 /**
  * Administrator's tools.
  */
-class AdminTools
+class AdminTools extends \NeoTransposer\AppAccess
 {
 	protected $testAllTranspositionsBook = 2;
 
 	/**
 	 * Populate the country column of the user table with GeoIP.
 	 * 
-	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
+	 * @param  \NeoTransposer\NeoApp $this->app The NeoApp object.
 	 * @return string                     Just a confirmation message.
 	 */
-	public function populateCountry(NeoApp $app)
+	public function populateCountry()
 	{
-		$ips = $app['db']->fetchAll('SELECT register_ip FROM user');
+		$ips = $this->app['db']->fetchAll('SELECT register_ip FROM user');
 
-		$reader = new \GeoIp2\Database\Reader($app['root_dir'] . '/' . $app['neoconfig']['mmdb']);
+		$reader = new \GeoIp2\Database\Reader($this->app['root_dir'] . '/' . $this->app['neoconfig']['mmdb']);
 
 		foreach ($ips as $ip)
 		{
@@ -41,7 +41,7 @@ class AdminTools
 				continue;
 			}
 
-			$app['db']->update(
+			$this->app['db']->update(
 				'user',
 				array('country' => $record->country->isoCode),
 				array('register_ip' => $ip)
@@ -60,12 +60,11 @@ class AdminTools
 	 * - lowest_note_assembly < lowest_note
 	 * - highest_note_assembly > highest_note
 	 * 
-	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
-	 * @return string                     Check results, to be displayed.
+	 * @return string Check results, to be displayed.
 	 */
-	public function checkLowerHigherNotes(NeoApp $app)
+	public function checkLowerHigherNotes()
 	{
-		$songs = $app['db']->fetchAll('SELECT * FROM song');
+		$songs = $this->app['db']->fetchAll('SELECT * FROM song');
 
 		$nc = new NotesCalculator;
 
@@ -119,33 +118,31 @@ class AdminTools
 	 * Remove the minified CSS file, so that a new one will be generated in the
 	 * next request.
 	 * 
-	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return [type]                     An unsignificant message for the admin.
 	 */
-	public function refreshCss(NeoApp $app)
+	public function refreshCss()
 	{
-		$cache_file = $app['root_dir'] . '/web/static/compiled-' . $app['neoconfig']['css_cache'] . '.css';
+		$cache_file = $this->app['root_dir'] . '/web/static/compiled-' . $this->app['neoconfig']['css_cache'] . '.css';
 		
 		if (!file_exists($cache_file))
 		{
-			return 'CSS cache ' . $app['neoconfig']['css_cache'] . ' file is not present';
+			return 'CSS cache ' . $this->app['neoconfig']['css_cache'] . ' file is not present';
 		}
 
 		if (unlink($cache_file))
 		{
-			return 'Removed CSS cache file ' . $app['neoconfig']['css_cache'];
+			return 'Removed CSS cache file ' . $this->app['neoconfig']['css_cache'];
 		}
 	}
 
 	/**
 	 * Check that all songs have chords in correlative order starting by zero.
 	 * 
-	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
 	 * @return string                     Check results (to be displayed).
 	 */
-	public function checkChordOrder(NeoApp $app)
+	public function checkChordOrder()
 	{
-		$chords = $app['db']->fetchAll(
+		$chords = $this->app['db']->fetchAll(
 			'SELECT * FROM `song_chord` ORDER BY id_song ASC, position ASC'
 		);
 
@@ -183,18 +180,17 @@ class AdminTools
 	 * A functional test for detecting changes in the transposition algorithm.
 	 * It generates an AllSongsReport and compares it with a pre-stored result set.
 	 * 
-	 * @param  \NeoTransposer\NeoApp $app The NeoApp object.
-	 * @return string                     Check results (to be displayed).
+	 * @return string Check results (to be displayed).
 	 */
-	public function testAllTranspositions(NeoApp $app)
+	public function testAllTranspositions()
 	{
 		$testData = json_decode(
-			file_get_contents($app['neoconfig']['test_all_transpositions_expected']),
+			file_get_contents($this->app['neoconfig']['test_all_transpositions_expected']),
 			true
 		);
 
-		$app['neouser']->lowest_note  = $testData['singerLowestVoice'];
-		$app['neouser']->highest_note = $testData['singerHighestVoice'];
+		$this->app['neouser']->lowest_note  = $testData['singerLowestVoice'];
+		$this->app['neouser']->highest_note = $testData['singerHighestVoice'];
 
 		$sql = <<<SQL
 SELECT id_song
@@ -203,13 +199,13 @@ WHERE id_book = ?
 ORDER BY id_song
 SQL;
 
-		$ids = $app['db']->fetchAll($sql, array($this->testAllTranspositionsBook));
+		$ids = $this->app['db']->fetchAll($sql, array($this->testAllTranspositionsBook));
 
 		$allSongs = array();
 
 		foreach ($ids as $id)
 		{
-			$song = TransposedSong::create($id['id_song'], $app);
+			$song = TransposedSong::create($id['id_song'], $this->app);
 			$song->transpose();
 
 			$allSongs[] = $song;
@@ -300,7 +296,7 @@ SQL;
 			}
 		}
 
-		return empty($output) ? 'Test <strong class="green">SUCCESSFUL</strong>: song transpositions are identical to expected :-)' : $output;
+		return empty($output) ? 'Test SUCCESSFUL: song transpositions are identical to expected :-)' : $output;
 	}
 
 	protected function diffTestResults($actual, $expected)
@@ -349,9 +345,9 @@ SQL;
 		return $diff;
 	}
 
-	public function getVoiceRangeOfGoodUsers(NeoApp $app)
+	public function getVoiceRangeOfGoodUsers()
 	{
-		$goodUsers = $app['db']->fetchAll('SELECT id_user, wizard_step1, lowest_note, highest_note FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
+		$goodUsers = $this->app['db']->fetchAll('SELECT id_user, wizard_step1, lowest_note, highest_note FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
 		$output = '';
 		
 		$nc = new NotesCalculator;
@@ -367,14 +363,14 @@ SQL;
 		return $output;
 	}
 
-	public function detectOrphanChords(NeoApp $app)
+	public function detectOrphanChords()
 	{
 		$sql = <<<SQL
 SELECT song_chord.id_song id_song FROM song_chord
 LEFT JOIN song ON song.id_song = song_chord.id_song
 WHERE song.id_song IS NULL
 SQL;
-		$orphanIdSongs = array_column($app['db']->fetchAll($sql), 'id_song');
+		$orphanIdSongs = array_column($this->app['db']->fetchAll($sql), 'id_song');
 
 		return (empty($orphanIdSongs))
 			? 'Good! No orphan chord detected.'
