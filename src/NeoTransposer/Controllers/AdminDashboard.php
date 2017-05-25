@@ -36,7 +36,8 @@ class AdminDashboard
 				'testAllTranspositions',
 				'getVoiceRangeOfGoodUsers',
 				'detectOrphanChords',
-				'checkChordOrder'
+				'checkChordOrder',
+				'checkUserLowerHigherNotes'
 			];
 
 			if (false === array_search($tool, $toolsMethods))
