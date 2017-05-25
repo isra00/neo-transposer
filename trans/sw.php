@@ -185,11 +185,11 @@ return array(
 	'Maybe you didn\'t measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.'
 	=> 'Labda hujapima vizuri sauti yako. <a href="%url%">Piga hapa kwa kuipima tena</a>.',
 
-/*	'Maybe you are not singing the song the same way it was analysed for the application'
-	=> 'Quizá no lo has cantado de la misma forma que ha sido analizado para esta aplicación.',
+	'Maybe you are not singing the song the same way it was analysed for the application'
+	=> 'Labda hujaimba kama vile wimbo ulivyochunguliwa kwa programu hii.',
 
 	'Maybe you are not singing in the same tone as the guitar'
-	=> 'Quizá no estás cantando en el mismo tono que la guitarra.',*/
+	=> 'Labda hujaimba sawa sawa kulingana na gitaa.',
 
 	//Wizard first step
 	'Voice measure wizard'
