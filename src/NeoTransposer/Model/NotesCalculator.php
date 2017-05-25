@@ -127,13 +127,13 @@ class NotesCalculator
 	}
 
 	/**
-	 * Transports a chord adding or substracting semitones.
+	 * Transpose a chord adding or substracting semitones.
 	 * 
 	 * @param  string 	$chordName 	Chord name, according to the syntax admitted by read_chord().
 	 * @param  integer 	$amount 	Number of semitones to add or substract.
 	 * @return string 				Final chord.
 	 */
-	public function transportChord($chordName, $amount)
+	public function transposeChord($chordName, $amount)
 	{
 		$chord = $this->readChord($chordName);
 		$chord['fundamental'];
@@ -147,7 +147,7 @@ class NotesCalculator
 	}
 
 	/*
-	 * Transports a set of chords adding or substracting semitones.
+	 * Transpose a set of chords adding or substracting semitones.
 	 * 
 	 * @param  array 	$chordList 	An array of chords.
 	 * @param  integer 	$amount 	Number of semitones to add or substract.
@@ -159,7 +159,7 @@ class NotesCalculator
 
 		foreach ($chordList as $chord)
 		{
-			$finalList[] = $this->transportChord($chord, $amount);
+			$finalList[] = $this->transposeChord($chord, $amount);
 		}
 
 		return $finalList;

@@ -40,11 +40,11 @@ class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
         $this->nc->readChord('Cmaj7');
     }
 
-    public function transportChord()
+    public function testTransposeChord()
     {
         $this->assertEquals(
             'D#m7',
-            $this->nc->transportChord('C#m7', 2)
+            $this->nc->transposeChord('C#m7', 2)
         );
     }
 
