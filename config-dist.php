@@ -50,6 +50,7 @@ return array(
 	'seo_title_suffix'	=> 'Transpose chords',
 
 	'debug'				=> true,
+	'profile'			=> true,
 
 	'people_compatible' => false,
 );

@@ -32,15 +32,18 @@ $app->register(new Provider\SecurityServiceProvider(), array(
 	)
 ));
 
-/*if ($app['debug'])
+if (!empty($app['neoconfig']['profile']))
 {
-	$app->register(new Provider\HttpFragmentServiceProvider());
-	$app->register(new Provider\ServiceControllerServiceProvider());
-	$app->register(new Provider\WebProfilerServiceProvider(), array(
-	    'profiler.cache_dir' 	=> __DIR__ . '/../cache/profiler',
-	    'profiler.mount_prefix' => '/admin/_profiler',
-	));
-}*/
+	if ($app['debug'])
+	{
+		$app->register(new Provider\HttpFragmentServiceProvider());
+		$app->register(new Provider\ServiceControllerServiceProvider());
+		$app->register(new Provider\WebProfilerServiceProvider(), array(
+		    'profiler.cache_dir' 	=> __DIR__ . '/../cache/profiler',
+		    'profiler.mount_prefix' => '/admin/_profiler',
+		));
+	}
+}
 
 $validLocales = '(' . implode('|', array_keys($app['neoconfig']['languages'])) . ')';
 
