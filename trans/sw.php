@@ -132,7 +132,7 @@ return array(
 	=> 'Imba wimbo huu ukitumia kordi zinazofuata. Chaguo la kwanza lina kordi rahisi zaidi:',
 
 	'Beware that this is the best key for your voice, but might not be the best one for the assembly.'
-	=> 'Kumbuka: ufunguo huu ni bora kwa sauti yako binafsi, lakini labda hautakuwa mzuri kwa watu wa kusanyiko kwa jumla.',
+	=> 'Kumbuka: ufunguo huu ni bora kwa sauti yako binafsi, lakini labda hautawafaa watu wa kusanyiko kwa jumla.',
 
 	'with capo %n%'
 	=> 'capo %n%',
