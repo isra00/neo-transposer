@@ -29,15 +29,15 @@
 
 <ifModule mod_expires.c>
 	ExpiresActive On
-	ExpiresDefault "access plus 1 seconds"
-	ExpiresByType text/html "access plus 1 seconds"
+	ExpiresDefault 							"access plus 1 seconds"
+	ExpiresByType text/html 				"access plus 1 seconds"
 	AddType image/x-icon .ico
-	ExpiresByType image/x-icon "access plus 2592000 seconds"
-	ExpiresByType image/gif "access plus 2592000 seconds"
-	ExpiresByType image/jpeg "access plus 2592000 seconds"
-	ExpiresByType image/png "access plus 2592000 seconds"
-	ExpiresByType text/css "access plus 31104000 seconds"
-	ExpiresByType text/javascript "access plus 2592000 seconds"
-	ExpiresByType application/x-javascript "access plus 2592000 seconds"
-	ExpiresByType application/javascript "access plus 2592000 seconds"
+	ExpiresByType image/x-icon 				"access plus 2 months"
+	ExpiresByType image/gif 				"access plus 2 months"
+	ExpiresByType image/jpeg 				"access plus 2 months"
+	ExpiresByType image/png 				"access plus 2 months"
+	ExpiresByType text/css 					"access plus 1 year"
+	ExpiresByType text/javascript 			"access plus 1 month"
+	ExpiresByType application/x-javascript 	"access plus 1 month"
+	ExpiresByType application/javascript 	"access plus 1 month"
 </ifModule>
