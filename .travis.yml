@@ -6,4 +6,3 @@ before_script: composer install
 
 script: 
  - phpunit
- - php tests/testAllTranspositions.php
