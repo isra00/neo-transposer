@@ -200,7 +200,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	public function sortTranspositionsByEase(array $transpositions)
 	{
 		usort($transpositions, function(Transposition $one, Transposition $two) {
-			return ($one->score < $two->score) ? -1 : 1;
+			return $one->score <=> $two->score;
 		});
 
 		return $transpositions;
