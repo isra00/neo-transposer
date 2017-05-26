@@ -2866,9 +2866,9 @@
 				"offset": -5,
 				"lowestNote": "C2",
 				"highestNote": "D3",
-				"score": 15,
+				"score": 9,
 				"capo": 0,
-				"chords": "E,B7,C,Bm"
+				"chords": "E,B7,C,Em"
 			},
 			"centered2": {
 				"offset": -5,
@@ -2876,7 +2876,7 @@
 				"highestNote": "D3",
 				"score": 15,
 				"capo": 2,
-				"chords": "D,A,A#,Am"
+				"chords": "D,A,A#,Dm"
 			}
 		},
 		"282": {
