@@ -55,7 +55,7 @@ REG;
 		if (!$user = $userPersistence->fetchUserFromEmail($req_email, $app['db']))
 		{
 			$user = new User($req_email);
-			$user->persist($app['db'], $req);
+			$user->persist($app['db'], $req->getClientIp());
 		}
 
 		$app['session']->set('user', $user);

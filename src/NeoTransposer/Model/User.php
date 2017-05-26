@@ -12,6 +12,18 @@ use \Symfony\Component\Translation\TranslatorInterface;
  */
 class User
 {
+	/**
+	 * The performance below which we consider a user unhappy.
+	 * @type float
+	 */
+	const UNHAPPY_THRESHOLD_PERF = .5;
+
+	/**
+	 * The minimum number of feedback reports for considering a user unhappy if their performance < UNHAPPY_THRESHOLD_PERF
+	 * @type int
+	 */
+	const UNHAPPY_THRESHOLD_REPORTS = 5;
+
 	public $id_user;
 	public $email;
 	public $lowest_note;
@@ -20,6 +32,8 @@ class User
 	public $wizard_step1;
 	public $wizard_lowest_attempts = 0;
 	public $wizard_highest_attempts = 0;
+	public $isUnhappy = 0;
+	public $choseStd = 0;
 
 	/**
 	 * Simple constructor. Use UserPersistence::fetchUserFromEmail() to create from DB.
@@ -32,30 +46,34 @@ class User
 	 * @param int 		wizard_step1	Option checked in Wizard First Step
 	 * @param string 	wizard_lowest_attempts No. of attempts in Wizard Lowest note.
 	 * @param string 	wizard_highest_attempts No. of attempts in Wizard Lowest note.
+	 * @param boolean 	isUnhappy 		Whether the user has been classified as unhappy.
+	 * @param int 		choseStd 		Timestamp when unhappy user chose a standard voice range.
 	 */
-	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null)
+	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null, $isUnhappy=null, $choseStd=null)
 	{
- 		$this->id_user = $id_user;
-		$this->email = $email;
-		$this->lowest_note = $lowest_note;
+ 		$this->id_user 		= $id_user;
+		$this->email 		= $email;
+		$this->lowest_note 	= $lowest_note;
 		$this->highest_note = $highest_note;
-		$this->id_book = $id_book;
+		$this->id_book 		= $id_book;
 		$this->wizard_step1 = $wizard_step1;
 		$this->wizard_lowest_attempts = $wizard_lowest_attempts;
 		$this->wizard_highest_attempts = $wizard_highest_attempts;
+		$this->isUnhappy 	= $isUnhappy;
+		$this->choseStd 	= $choseStd;
 	}
 
 	/**
 	 * Create or update the user in the database.
 	 * 
 	 * @param  \Doctrine\DBAL\Connection $db A DB connection.
-	 * @param  Symfony\Component\HttpFoundation\Request $request The Request, for fetching the client IP.
+	 * @param  string $registerIp The IP address with which the user registered.
 	 * @return integer The user ID, if it was not set.
 	 */
-	public function persist(\Doctrine\DBAL\Connection $db, Request $request)
+	public function persist(\Doctrine\DBAL\Connection $db, $registerIp = null)
 	{
 		$userPersistence = new UserPersistence($db);
-		$userPersistence->persist($this, $request);
+		$userPersistence->persist($this, $registerIp);
 	}
 
 	/**
@@ -119,5 +137,18 @@ class User
 	public function getVoiceAsString(TranslatorInterface $trans, $notation='american')
 	{
 		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->lowest_note, $this->highest_note);
+	}
+
+	public function setUnhappy(\Doctrine\DBAL\Connection $db)
+	{
+		$userPersistence = new UserPersistence($db);
+		$performance = $userPersistence->fetchUserPerformance($this);
+
+		if ($performance['performance'] < self::UNHAPPY_THRESHOLD_PERF && $performance['reports'] >= self::UNHAPPY_THRESHOLD_REPORTS)
+		{
+			$this->isUnhappy = 1;
+			$this->choseStd  = null;
+			$this->persist($db);
+		}
 	}
 }

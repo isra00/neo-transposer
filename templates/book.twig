@@ -4,9 +4,22 @@
 
 {% block content %}
 
-{% if app.locale == 'es' %}
+{% if app.locale == 'es' and not app.neouser.isUnhappy %}
 <div class="tip new resucilex">
 	{% trans with { '%url%': 'http://lexicon.neo-transposer.com/' } %}<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.{% endtrans %}
+</div>
+{% endif %}
+
+{% if app.neouser.isUnhappy and not app.neouser.choseStd %}
+<div class="tip no-icon">
+	<h2><span class="red">&#128534;</span> {% trans %}Something is going wrong{% endtrans %}</h2>
+	<p>{% trans %}Until now, almost all transpositions have <strong>not</strong> worked for you. Perhaps your voice range you set is not the actual one.{% endtrans %}</p>
+	<p>{% trans  with {'%url%': path('wizard_step1', {'_locale': app.locale}) } %}Try to <strong><a href="%url%">do again the voice test</a></strong>. That may improve your results. If not, just choose whether you have female or male voice and Neo-Transposer will set for you a standard voice range. That will make you get better transpoositions!{% endtrans %}</p>
+	<p class="standard-voice-selection">
+		<a href="{{ path('set_user_data', {'lowest_note': app.neoconfig.voice_wizard.standard_voices.female[0], 'highest_note': app.neoconfig.voice_wizard.standard_voices.female[1], 'chose_std': true }) }}" class="flatbutton red bigbutton">{% trans %}<span>My voice is </span>female{% endtrans %}</a> 
+		<a href="{{ path('set_user_data', {'lowest_note': app.neoconfig.voice_wizard.standard_voices.male[0], 'highest_note': app.neoconfig.voice_wizard.standard_voices.male[1], 'chose_std': true }) }}" class="flatbutton red bigbutton">{% trans %}<span>My voice is </span>male{% endtrans %}</a>
+	</p>
+
 </div>
 {% endif %}
 

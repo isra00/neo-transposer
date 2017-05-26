@@ -30,7 +30,7 @@ class UserVoice
 				{
 					$redirect = $app->path('book_' . $book['id_book']);
 					$app['neouser']->id_book = $book['id_book'];
-					$app['neouser']->persist($app['db'], $request);
+					$app['neouser']->persist($app['db'], $request->getClientIp());
 				}
 			}
 		}

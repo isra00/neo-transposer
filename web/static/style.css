@@ -178,6 +178,11 @@ footer {
 	padding: 1em 1em .8em 65px;
 	min-height: 60px;
 }
+	.tip.no-icon {
+		background-image: none;
+		padding-left: 1em;
+	}
+
 	.tip h3 {
 		margin-top: 0;
 		margin-bottom: 0;
@@ -335,6 +340,10 @@ a.link-all-report {
 			vertical-align: top;
 			margin: 1em 0 0 1em;
 		}
+
+	.standard-voice-selection a:first-child {
+		margin-right: 1em;
+	}
 
 /*
  * LOGIN
@@ -1028,8 +1037,9 @@ h2.step-1 {
 	padding: .3em .6em;
 	font-size: 1.3em;
 }
-.error {
-	color: red;
+.error, 
+.red {
+	color: #D32F2F;
 }
 .field.block {
 	margin-top: .5em;	
@@ -1365,6 +1375,10 @@ a.btn-icon {
 
 	.song-index li a:active {
 		background: #f4f4f4;
+	}
+
+	.standard-voice-selection a span {
+		display: none;
 	}
 		
 	/* TransposeSong */

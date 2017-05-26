@@ -46,6 +46,8 @@ SQL;
 				$app['neouser']->highest_note,
 			));
 
+			$app['neouser']->setUnhappy($app['db']);
+
 			//Progressive enhancement: support form submission without AJAX, then refresh the page.
 			if (!$req->isXmlHttpRequest())
 			{

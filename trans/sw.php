@@ -115,6 +115,21 @@ return array(
 	'<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.'
 	=> '<strong>NEW</strong>: ukiisha pata transpositions zinazokuwezesha kuimba, hii app mpya itakusaidia kuchagua nyimbo zifaazo. Karibu kwenye <strong><a href="%url%">Itifaki ya Amefufuka</a></strong>.',
 
+	'Something is going wrong'
+	=> 'Mambo hayaendi sawa',
+
+	'Until now, almost all transpositions have <strong>not</strong> worked for you. Perhaps your voice range you set is not the actual one.'
+	=> 'Mpaka sasa, karibia transpositions zote <strong>hazijakufaa</strong>. Labda nota za sauti zilizosetiwa si za sauti yako halisi.',
+
+	'Try to <strong><a href="%url%">do again the voice test</a></strong>. That may improve your results. If not, just choose whether you have female or male voice and Neo-Transposer will set for you a standard voice range. That will make you get better transpoositions!'
+	=> 'Jaribu <strong><a href="%url%">kupima upya sauti yako</a></strong>, labda hiyo itasaidia kupata matokeo mazuri zaidi. Vinginevyo, chagua tu kama sauti yako ni ya kike ama ya kiume, na Neo-Transposer itatafuta nota za kawaida. Hivyo utapata transpositions zitakazokufaa zaidi!',
+
+	'<span>My voice is </span>female'
+	=> '<span>Sauti yangu ni </span>ya kike',
+
+	'<span>My voice is </span>male'
+	=> '<span>Sauti yangu ni </span>ya kiume',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Njia ya Neokatekumenato)',

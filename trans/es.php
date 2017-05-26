@@ -115,6 +115,21 @@ return array(
 	'<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.'
 	=> '<strong>NUEVO</strong>: ahora que ya tienes las transposiciones, esta otra aplicación te ayudará a elegir los cantos apropiados. Te presento el <strong><a href="%url%">Léxico del Resucitó</a></strong>.',
 
+	'Something is going wrong'
+	=> 'Algo va mal',
+
+	'Until now, almost all transpositions have <strong>not</strong> worked for you. Perhaps your voice range you set is not the actual one.'
+	=> 'Hasta ahora, casi todas las transposiciones <strong>no</strong> te han funcionado. Es posible que el rango vocal que has puesto no sea el tuyo realmente.',
+
+	'Try to <strong><a href="%url%">do again the voice test</a></strong>. That may improve your results. If not, just choose whether you have female or male voice and Neo-Transposer will set for you a standard voice range. That will make you get better transpoositions!'
+	=> 'Prueba a <strong><a href="%url%">hacer de nuevo la prueba de voz</a></strong>, y quizá eso mejore tus resultados. Si no, simplemente selecciona si tienes voz de hombre o mujer y Neo-Transposer buscará un rango vocal estándar. Esto te dará transposiciones que te funcionarán mejor!',
+
+	'<span>My voice is </span>female'
+	=> '<span>Tengo voz de </span>Mujer',
+
+	'<span>My voice is </span>male'
+	=> '<span>Tengo voz de </span>Hombre',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Camino Neocatecumenal)',

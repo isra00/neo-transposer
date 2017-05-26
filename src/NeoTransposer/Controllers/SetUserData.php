@@ -27,6 +27,11 @@ class SetUserData
 			$app['neouser']->lowest_note = $request->get('lowest_note');
 		}
 
+		if ($request->get('chose_std'))
+		{
+			$app['neouser']->choseStd = date('Y-m-d H:i:s');
+		}
+
 		if ($request->get('highest_note'))
 		{
 			if (strpos($request->get('highest_note'), '1'))
@@ -40,7 +45,7 @@ class SetUserData
 			$app['neouser']->highest_note = $request->get('highest_note');
 		}
 
-		$app['neouser']->persist($app['db'], $request);
+		$app['neouser']->persist($app['db'], $request->getClientIp());
 
 		return $app->redirect($request->get('redirect')
 			? $request->get('redirect')

@@ -155,7 +155,7 @@ class WizardEmpiric
 	public function finish(Request $req, NeoApp $app)
 	{
 		//Only when wizard is finished, voice range is stored in DB
-		$app['neouser']->persist($app['db'], $req);
+		$app['neouser']->persist($app['db'], $req->getClientIp());
 
 		$your_voice = $app['neouser']->getVoiceAsString(
 			$app['translator'],
