@@ -3,7 +3,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 $app = new \NeoTransposer\NeoApp(
-	require __DIR__ . '/../config.php',
+	require __DIR__ . '/../config-dist.php',
 	realpath(__DIR__ . '/..')
 );
 
