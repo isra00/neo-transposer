@@ -15,12 +15,15 @@ class User
 {
 	/**
 	 * The performance below which we consider a user unhappy.
+	 * 
 	 * @type float
 	 */
 	const UNHAPPY_THRESHOLD_PERF = .5;
 
 	/**
-	 * The minimum number of feedback reports for considering a user unhappy if their performance < UNHAPPY_THRESHOLD_PERF
+	 * The minimum number of feedback reports for considering a user unhappy if 
+	 * their performance < UNHAPPY_THRESHOLD_PERF
+	 * 
 	 * @type int
 	 */
 	const UNHAPPY_THRESHOLD_REPORTS = 5;
@@ -152,7 +155,7 @@ class User
 		}
 
 		$performance = $userPersistence->fetchUserPerformance($this);
-print_r($performance);
+
 		if ($performance['performance'] < self::UNHAPPY_THRESHOLD_PERF && $performance['reports'] >= self::UNHAPPY_THRESHOLD_REPORTS)
 		{
 			$this->isUnhappy = 1;
