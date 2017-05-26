@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Persistence\UserPersistence;
 use \NeoTransposer\Model\NotesNotation;
 use \Symfony\Component\Translation\TranslatorInterface;
+use \Doctrine\DBAL\Connection;
 
 /**
  * Represents a user
@@ -70,7 +71,7 @@ class User
 	 * @param  string $registerIp The IP address with which the user registered.
 	 * @return integer The user ID, if it was not set.
 	 */
-	public function persist(\Doctrine\DBAL\Connection $db, $registerIp = null)
+	public function persist(Connection $db, $registerIp = null)
 	{
 		$userPersistence = new UserPersistence($db);
 		$userPersistence->persist($this, $registerIp);
@@ -139,11 +140,19 @@ class User
 		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->lowest_note, $this->highest_note);
 	}
 
-	public function setUnhappy(\Doctrine\DBAL\Connection $db)
+	public function setUnhappy(Connection $db)
 	{
 		$userPersistence = new UserPersistence($db);
-		$performance = $userPersistence->fetchUserPerformance($this);
 
+		//If user was unhappy but has chosen a standard voice, don't make
+		//them unhappy again.
+		if ($this->choseStd)
+		{
+			return;
+		}
+
+		$performance = $userPersistence->fetchUserPerformance($this);
+print_r($performance);
 		if ($performance['performance'] < self::UNHAPPY_THRESHOLD_PERF && $performance['reports'] >= self::UNHAPPY_THRESHOLD_REPORTS)
 		{
 			$this->isUnhappy = 1;
