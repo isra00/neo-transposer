@@ -65,7 +65,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param	string	$songHighestNote	Song's highest note
 	 * @param	array	$originalChords		Song original chords
 	 */
-	function setTransposerData($singerLowestNote, $singerHighestNote, $songLowestNote, $songHighestNote, $originalChords, $firstChordIsKey, $songPeopleHighestNote, $songPeopleLowestNote)
+	public function setTransposerData($singerLowestNote, $singerHighestNote, $songLowestNote, $songHighestNote, $originalChords, $firstChordIsKey, $songPeopleHighestNote, $songPeopleLowestNote)
 	{
 		$this->singerLowestNote	 = $singerLowestNote;
 		$this->singerHighestNote = $singerHighestNote;
@@ -362,13 +362,13 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		return $nearTranspositions;
 	}
 
-	function setSongPeopleRange($songPeopleHighestNote, $songPeopleLowestNote)
+	public function setSongPeopleRange($songPeopleHighestNote, $songPeopleLowestNote)
 	{
 		$this->songPeopleHighestNote = $songPeopleHighestNote;
 		$this->songPeopleLowestNote  = $songPeopleLowestNote;
 	}
 
-	function calculatePeopleCompatible()
+	public function calculatePeopleCompatible()
 	{
 		if (empty($this->songPeopleLowestNote))
 		{

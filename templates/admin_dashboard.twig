@@ -293,16 +293,20 @@
 	<table class="data-table">
 		<thead><tr>
 			<th>ID</th>
-			<th>E-mail</th>
-			<th>FB</th>
+			<th>Unhappy</th>
+			<th>Action</th>
+			<th>Old perf</th>
+			<th>Current FB</th>
+			<th>Current perf</th>
 			<th>Total</th>
-			<th>Perf</th>
 		</tr></thead>
 		<tbody>
 	{% for user in unhappy_users %}
 			<tr>
 				<td>{{ user.id_user }}</td>
-				<td>{{ user.email }}</td>
+				<td>{{ user.time_unhappy|default('-') }}</td>
+				<td>{{ user.action|default('-') }}</td>
+				<td>{% if user.perf_before_action %}{{ user.perf_before_action|round(2) }}{% endif %}</td>
 				<td>
 					<div class="feedback-graph">
 						<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>
@@ -310,7 +314,7 @@
 					</div>
 				</td>
 				<td>{{ user.total }}</td>
-				<td>{{ user.perf|round(2) }}</td>
+				<td class="{% if user.perf_before_action %}{{ (user.perf > user.perf_before_action) ? 'green' : 'red' }}{% endif %}">{{ user.perf|round(2) }}</td>
 			</tr>
 	{% endfor %}
 		</tbody>

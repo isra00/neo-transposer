@@ -13,21 +13,6 @@ use \Doctrine\DBAL\Connection;
  */
 class User
 {
-	/**
-	 * The performance below which we consider a user unhappy.
-	 * 
-	 * @type float
-	 */
-	const UNHAPPY_THRESHOLD_PERF = .5;
-
-	/**
-	 * The minimum number of feedback reports for considering a user unhappy if 
-	 * their performance < UNHAPPY_THRESHOLD_PERF
-	 * 
-	 * @type int
-	 */
-	const UNHAPPY_THRESHOLD_REPORTS = 5;
-
 	public $id_user;
 	public $email;
 	public $lowest_note;
@@ -36,8 +21,6 @@ class User
 	public $wizard_step1;
 	public $wizard_lowest_attempts = 0;
 	public $wizard_highest_attempts = 0;
-	public $isUnhappy = 0;
-	public $choseStd = 0;
 
 	/**
 	 * Simple constructor. Use UserPersistence::fetchUserFromEmail() to create from DB.
@@ -63,8 +46,6 @@ class User
 		$this->wizard_step1 = $wizard_step1;
 		$this->wizard_lowest_attempts = $wizard_lowest_attempts;
 		$this->wizard_highest_attempts = $wizard_highest_attempts;
-		$this->isUnhappy 	= $isUnhappy;
-		$this->choseStd 	= $choseStd;
 	}
 
 	/**
@@ -141,26 +122,5 @@ class User
 	public function getVoiceAsString(TranslatorInterface $trans, $notation='american')
 	{
 		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->lowest_note, $this->highest_note);
-	}
-
-	public function setUnhappy(Connection $db)
-	{
-		$userPersistence = new UserPersistence($db);
-
-		//If user was unhappy but has chosen a standard voice, don't make
-		//them unhappy again.
-		if ($this->choseStd)
-		{
-			return;
-		}
-
-		$performance = $userPersistence->fetchUserPerformance($this);
-
-		if ($performance['performance'] < self::UNHAPPY_THRESHOLD_PERF && $performance['reports'] >= self::UNHAPPY_THRESHOLD_REPORTS)
-		{
-			$this->isUnhappy = 1;
-			$this->choseStd  = null;
-			$this->persist($db);
-		}
 	}
 }

@@ -1037,10 +1037,6 @@ h2.step-1 {
 	padding: .3em .6em;
 	font-size: 1.3em;
 }
-.error, 
-.red {
-	color: #D32F2F;
-}
 .field.block {
 	margin-top: .5em;	
 }
@@ -1178,6 +1174,19 @@ a.btn-icon {
 }
 .green {
 	color: green;
+}
+td.green {
+	background: green;
+	color: white;
+}
+
+.error, 
+.red {
+	color: #D32F2F;
+}
+td.red {
+	background: #D32F2F;
+	color: white;
 }
 
 .margintop {

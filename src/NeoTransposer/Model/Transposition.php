@@ -3,7 +3,6 @@
 namespace NeoTransposer\Model;
 
 use \NeoTransposer\Model\NotesCalculator;
-use \NeoTransposer\NeoApp;
 
 /**
  * Represents a transposition of a song, with transported chords, capo, etc.

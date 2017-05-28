@@ -3,6 +3,7 @@
 namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
+use \NeoTransposer\Model\UnhappyUser;
 
 /**
  * Administrator's dashboard.
@@ -17,15 +18,14 @@ class AdminDashboard
 
 	public function get(Request $req, \NeoTransposer\NeoApp $app)
 	{
-		$app['locale'] = 'es';
-		
-		$this->app = $app;
+		$app['locale'] 	= 'es';
+		$this->app 		= $app;
 
-		$user_count = $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user');
-		$good_users = $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
+		$user_count 	= $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user');
+		$good_users 	= $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
 		$users_reporting_fb = $app['db']->fetchColumn('select count(distinct id_user) from transposition_feedback');
 
-		$toolOutput = '';
+		$toolOutput 	= '';
 
 		if ($tool = $req->get('tool'))
 		{
@@ -45,7 +45,7 @@ class AdminDashboard
 				$app->abort(404);
 			}
 
-			$tools = new \NeoTransposer\Model\AdminTools($app);
+			$tools 		= new \NeoTransposer\Model\AdminTools($app);
 			$toolOutput = $tools->{$tool}();
 		}
 
@@ -161,7 +161,7 @@ SQL;
 	protected function getUnhappyUsers()
 	{
 		$sql = <<<SQL
-SELECT user.id_user, user.email, y.yes yes, n.no no, y.yes + n.no total, yes/(y.yes + n.no) perf
+SELECT unhappy_user.*, user.id_user id_user, user.email, y.yes yes, n.no no, y.yes + n.no total, yes/(y.yes + n.no) perf
 FROM user
 JOIN
 (
@@ -177,11 +177,24 @@ JOIN
 	WHERE worked=0
 	GROUP BY id_user
 ) n ON y.id_user = n.id_user
-where yes/(y.yes + n.no) < 0.5
-ORDER BY total DESC
+LEFT JOIN unhappy_user ON n.id_user = unhappy_user.id_user
+WHERE 
+(
+	unhappy_user.id_user IS NULL
+	AND yes/(y.yes + n.no) < ?
+	AND (y.yes + n.no) >= ?
+)
+OR
+(
+	NOT unhappy_user.id_user IS NULL
+)
+ORDER BY took_action, time_unhappy, total DESC
 SQL;
 
-		return $this->app['db']->fetchAll($sql);
+		return $this->app['db']->fetchAll($sql,[
+			UnhappyUser::UNHAPPY_THRESHOLD_PERF, 
+			UnhappyUser::UNHAPPY_THRESHOLD_REPORTS
+		]);
 	}
 
 	protected function fetchGlobalPerfChrono()
@@ -408,5 +421,51 @@ SQL;
 		});
 
 		return $performance;
+	}
+
+	/**
+	 * @fixme ATENCIÓN! Esto falla como una escopeta de feria. El problema es que
+	 * NO es posible saber el performance antes de chose_std si después el
+	 * feedback se sobreescribe! Ya que la tabla transposition_feedback tiene
+	 * UNIQUE (id_user, id_song). La única forma de solucionarlo es guardando
+	 * en un nuevo campo el performance cuando eligió una voz estándar.
+	 */
+	protected function getUnhappyUsersProgression()
+	{
+		/*$unhappyWhoChose = $this->app['db']->fetchAll("SELECT id_user, wizard_step1, is_unhappy, chose_std FROM user WHERE NOT chose_std IS NULL OR NOT chose_std = ''");
+
+		$sql = <<<SQL
+SELECT worked, count(worked) count
+FROM `transposition_feedback`
+JOIN user ON transposition_feedback.id_user = user.id_user AND user.id_user = ? AND time @ user.chose_std
+group by worked
+SQL;
+
+		foreach ($unhappyWhoChose as &$user)
+		{
+			$fb = [
+				'before' => $this->app['db']->fetchAll(str_replace('@', '<', $sql), [$user['id_user']]),
+				'after'  => $this->app['db']->fetchAll(str_replace('@', '>', $sql), [$user['id_user']]),
+			];
+
+			$performanceBeforeAndAfter = [];
+
+			foreach ($fb as $moment=>$result)
+			{
+				$performanceData[$moment] = [0=>0, 1=>0];
+
+				foreach ($result as $row)
+				{
+					$performanceData[$moment][(int) $row['worked']] = (int) $row['count'];
+				}
+			}
+
+			foreach (['before', 'after'] as $moment)
+			{
+				$user[$moment] = (0 == $performanceData[$moment][0] + $performanceData[$moment][1])
+					? null 
+					: $performanceData[$moment][1] / ($performanceData[$moment][1] + $performanceData[$moment][0]);
+			}
+		}*/
 	}
 }

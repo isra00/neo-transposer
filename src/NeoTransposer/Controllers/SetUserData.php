@@ -27,11 +27,6 @@ class SetUserData
 			$app['neouser']->lowest_note = $request->get('lowest_note');
 		}
 
-		if ($request->get('chose_std'))
-		{
-			$app['neouser']->choseStd = date('Y-m-d H:i:s');
-		}
-
 		if ($request->get('highest_note'))
 		{
 			if (strpos($request->get('highest_note'), '1'))
@@ -46,6 +41,19 @@ class SetUserData
 		}
 
 		$app['neouser']->persist($app['db'], $request->getClientIp());
+
+		if ($request->get('unhappy_choose_std'))
+		{
+			$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
+
+			try {
+				$unhappy->chooseStandard($app['neouser'], $request->get('unhappy_choose_std'));
+			} 
+			catch (\UnexpectedValueException $e)
+			{
+				$app->abort(400, 'Bad value for URL parameter unhappy_choose_std');
+			}
+		}
 
 		return $app->redirect($request->get('redirect')
 			? $request->get('redirect')

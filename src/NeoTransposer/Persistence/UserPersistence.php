@@ -43,9 +43,7 @@ class UserPersistence
 				$userdata['id_book'],
 				$userdata['wizard_step1'],
 				$userdata['wizard_lowest_attempts'],
-				$userdata['wizard_highest_attempts'],
-				$userdata['is_unhappy'],
-				$userdata['chose_std']
+				$userdata['wizard_highest_attempts']
 			);
 		}
 	}
@@ -69,8 +67,6 @@ class UserPersistence
 					'wizard_step1' 	=> $user->wizard_step1,
 					'wizard_lowest_attempts' => $user->wizard_lowest_attempts,
 					'wizard_highest_attempts' => $user->wizard_highest_attempts,
-					'is_unhappy' 	=> $user->isUnhappy,
-					'chose_std' 	=> $user->choseStd,
 				], ['id_user' => (int) $user->id_user]
 			);
 		}

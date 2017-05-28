@@ -55,7 +55,7 @@ class WizardEmpiric
 	{
 		$action_no = $action_yes = null;
 
-		//If first, time, shouldn't click NO
+		//If this was the first time, the user shouldn't click NO.
 		if (null === $req->get('can_sing'))
 		{
 			$action_no = 'lowFirstTime';
@@ -162,14 +162,14 @@ class WizardEmpiric
 			$app['neoconfig']['languages'][$app['locale']]['notation']
 		);
 
-		//Redirect to the book of the current locale, auto-detected.
-		foreach ($app['books'] as $book)
-		{
-			if ($book['locale'] == $app['locale'])
-			{
-				$go_to_book = $book['id_book'];
-			}
-		}
+		//Link to the book of the current locale, auto-detected.
+		$go_to_book = array_keys($app['books'])[
+			array_search($app['locale'], array_column($app['books'], 'locale'))
+		];
+
+		//If user is unhappy, UnhappyUser will consider this as an action taken.
+		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
+		$unhappy->changedVoiceRangeFromWizard($app['neouser']);
 
 		return $app->render('wizard_finish.twig', array(
 			'your_voice'	=> $your_voice,
