@@ -322,7 +322,7 @@ return array(
 	=> 'Tupo tayari!',
 
 	'According to the tests, your voice range is:'
-	=> 'Kufuatana na kipimo, nota zako ni hizi:',
+	=> 'Kufuatana na vipimo, nota zako ni hizi:',
 
 	'Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer.'
 	=> 'Hongera! Sasa unaweza kupata automatic transpsitions katika Neo-Transposer.',

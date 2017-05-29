@@ -29,7 +29,7 @@ return array(
 	=> '<span>Lo difícil no es transportar el canto. Lo difícil es</span> <span>saber a qué tono debes transportarlo <strong>para tu voz</strong>.</span>',
 
 	'Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!'
-	=> 'Neo-Transposer calcula, en base a <strong>tu propia voz</strong>, la transposición perfecta para cada canto del Camino. Así de sencillo. Además, te ofrece alternativas para poder tocar los cantos con los acordes más fáciles. ¡Se acabaron las complicaciones!',
+	=> 'Neo-Transposer calcula, en base a <strong>tu propia voz</strong>, la transposición perfecta para cada canto del Camino. Además, te ofrece alternativas para poder tocar los cantos con los acordes más fáciles. ¡Se acabaron las complicaciones!',
 
 	'Please, type your e-mail:'
 	=> 'Por favor, introduce tu e-mail:',

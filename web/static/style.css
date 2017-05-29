@@ -372,6 +372,7 @@ a.link-all-report {
 			font-size: 1.5em;
 			text-align: center;
 			box-shadow: -3px 0 10px silver;
+			line-height: 130%;
 		}
 		.page-login .mkt h2 span {
 			display: block;
@@ -419,7 +420,7 @@ a.link-all-report {
 }
 .disclaimer {
 	font-style: italic;
-	font-size: .9em;
+	font-size: .85em;
 	color: #444;
 }
 
@@ -1305,15 +1306,18 @@ td.red {
 	}
 
 	.page-login .mkt {
-		background: none;
+		background: url(img/mkt-small.jpg) right 0 no-repeat;
+		background-size: auto auto;
 		height: auto;
 		padding: 0;
 	}
 		.page-login .mkt h2 {
-			padding: .5em 0;
-			background: #efefef;
+			padding: .5em .2em;
+			background: rgba(0,0,0,.7);
 			margin-top: 0;
 			font-size: 1.3em;
+			color: white;
+			text-shadow: none;
 		}
 			.page-login .mkt h2 span {
 				display: inline;
@@ -1323,6 +1327,7 @@ td.red {
 		display: block;
 		width: auto;
 		margin-right: 0;
+		font-size: .9em;
 	}
 	.page-login .login-form {
 		width: auto;
