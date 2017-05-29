@@ -16,7 +16,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 	 */
 	public function populateCountry()
 	{
-		$ips 	= $this->app['db']->fetchAll('SELECT register_ip FROM user');
+		$ips 	= $this->app['db']->fetchAll('SELECT register_ip FROM user WHERE country IS NULL');
 		$reader = $this->app['geoIp2Reader'];
 
 		foreach ($ips as $ip)
