@@ -321,8 +321,7 @@ SQL;
 	 */
 	protected function getCountryNamesList()
 	{
-		$dbfile = $this->app['root_dir'] . '/' . $this->app['neoconfig']['mmdb'];
-		$reader = new \GeoIp2\Database\Reader($dbfile);
+		$reader = $this->app['geoIp2Reader'];
 
 		//ONLY_FULL_GROUP_BY mode (default in MySQL>5.7) makes the query fail
 		$this->app['db']->query("SET @@sql_mode=''");

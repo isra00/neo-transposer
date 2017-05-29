@@ -376,7 +376,6 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 			return;
 		}
 
-		// @todo Crear una clase VoiceRange y usarla en todas partes?
 		$peopleRange = ['lowest' => 'B1', 'highest' => 'B2'];
 
 		$centeredTransposition = $this->calculateCenteredTransposition();

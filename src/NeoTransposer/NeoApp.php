@@ -95,7 +95,7 @@ class NeoApp extends Application
 		// Sample TZ IP: 197.187.253.205
 		$dbfile = $this['root_dir'] . '/' . $this['neoconfig']['mmdb'];
 		
-		$reader = new \GeoIp2\Database\Reader($dbfile);
+		$reader = $this['geoIp2Reader'];
 		try
 		{
 			$record = $reader->country($ip);
@@ -178,6 +178,11 @@ class NeoApp extends Application
 			$printer = "\NeoTransposer\Model\ChordPrinter\ChordPrinter$printer";
 			return new $printer();
 		});
+
+		$this['geoIp2Reader'] = function ($app) {
+			$dbfile = $app['root_dir'] . '/' . $app['neoconfig']['mmdb'];
+			return new \GeoIp2\Database\Reader($dbfile);
+		};
 
 		if (!$this['session']->get('user'))
 		{

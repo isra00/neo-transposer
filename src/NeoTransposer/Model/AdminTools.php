@@ -12,14 +12,12 @@ class AdminTools extends \NeoTransposer\AppAccess
 	/**
 	 * Populate the country column of the user table with GeoIP.
 	 * 
-	 * @param  \NeoTransposer\NeoApp $this->app The NeoApp object.
-	 * @return string                     Just a confirmation message.
+	 * @return string Just a confirmation message.
 	 */
 	public function populateCountry()
 	{
-		$ips = $this->app['db']->fetchAll('SELECT register_ip FROM user');
-
-		$reader = new \GeoIp2\Database\Reader($this->app['root_dir'] . '/' . $this->app['neoconfig']['mmdb']);
+		$ips 	= $this->app['db']->fetchAll('SELECT register_ip FROM user');
+		$reader = $this->app['geoIp2Reader'];
 
 		foreach ($ips as $ip)
 		{
@@ -146,7 +144,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 	 * Remove the minified CSS file, so that a new one will be generated in the
 	 * next request.
 	 * 
-	 * @return [type]                     An unsignificant message for the admin.
+	 * @return string An unsignificant message for the admin.
 	 */
 	public function refreshCss()
 	{
@@ -166,7 +164,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 	/**
 	 * Check that all songs have chords in correlative order starting by zero.
 	 * 
-	 * @return string                     Check results (to be displayed).
+	 * @return string Check results (to be displayed).
 	 */
 	public function checkChordOrder()
 	{
