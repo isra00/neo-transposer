@@ -35,6 +35,7 @@ return array(
 
 	'software_name'		=> 'Neo-Transposer',
 	'voice_wizard'		=> include 'config.wizard.php',
+	'chord_scores'		=> include 'config.scores.php',
 	'templates_dir'		=> __DIR__ . '/templates',
 	'test_all_transpositions_expected' => __DIR__ . '/tests/testAllTranspositions.expected.json',
 
