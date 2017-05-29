@@ -1,19 +1,19 @@
 services:
-	- mysql
+ - mysql
 
 before_install:
-	- mysql -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
-	- mysql transposer < song_data.sql
+ - mysql -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
+ - mysql transposer < song_data.sql
 
 language: 
-	- php
+ - php
 
 php:
-	- '7.0'
+ - '7.0'
 
 before_script: 
-	- composer install
+ - composer install
 
 script: 
-	- phpunit
-	- php tests/testAllTranspositions.php
+ - phpunit
+ - php tests/testAllTranspositions.php
