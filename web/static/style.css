@@ -1295,9 +1295,12 @@ td.red {
 	}
 
 	/* LOGIN */
-	.login-form {
+	.login-form,
+	.page-login .login-form {
 		display: block;
 		width: auto;
+		padding-left: .5em;
+		padding-right: .5em;
 	}
 
 	.page-login .inside {
@@ -1328,10 +1331,6 @@ td.red {
 		width: auto;
 		margin-right: 0;
 		font-size: .9em;
-	}
-	.page-login .login-form {
-		width: auto;
-		display: block;
 	}
 
 	.two-choices a {
@@ -1402,6 +1401,8 @@ td.red {
 			width: auto;
 			border: 0;
 			border-top: 1px solid silver;
+			padding-left: 3%;
+			padding-right: 3%;
 		}
 
 		.teaser .inside .more-inside p {
