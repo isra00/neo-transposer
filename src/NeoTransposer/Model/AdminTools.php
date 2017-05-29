@@ -2,8 +2,6 @@
 
 namespace NeoTransposer\Model;
 
-use \NeoTransposer\NeoApp;
-
 /**
  * Administrator's tools.
  */

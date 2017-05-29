@@ -33,10 +33,8 @@ class User
 	 * @param int 		wizard_step1	Option checked in Wizard First Step
 	 * @param string 	wizard_lowest_attempts No. of attempts in Wizard Lowest note.
 	 * @param string 	wizard_highest_attempts No. of attempts in Wizard Lowest note.
-	 * @param boolean 	isUnhappy 		Whether the user has been classified as unhappy.
-	 * @param int 		choseStd 		Timestamp when unhappy user chose a standard voice range.
 	 */
-	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null, $isUnhappy=null, $choseStd=null)
+	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null)
 	{
  		$this->id_user 		= $id_user;
 		$this->email 		= $email;

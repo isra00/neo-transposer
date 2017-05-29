@@ -49,8 +49,6 @@ SQL;
 			$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
 			$unhappy->setUnhappy($app['neouser']);
 
-			$userPersistence = new \NeoTransposer\Persistence\UserPersistence($app['db']);
-
 			//Progressive enhancement: support form submission without AJAX, then refresh the page.
 			if (!$req->isXmlHttpRequest())
 			{

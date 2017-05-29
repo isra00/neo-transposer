@@ -560,19 +560,6 @@ a.link-all-report {
 	line-height: 2em;
 	padding-bottom: 5px;
 }
-	/*.show-voice-chart a {
-		background: #eee;
-		color: #333;
-		font-size: .9em;
-		padding: .4em .7em;
-		box-shadow: 1px 1px 1px silver;
-	}
-		/** @todo Unificar con flatbutton */
-		.show-voice-chart a:hover {
-			/*background: grey;
-			color: white;*/
-/*			box-shadow: 1px 1px 5px silver;*/
-		}
 
 .transposition-feedback {
 	margin-top: 1em;
@@ -1261,9 +1248,7 @@ td.red {
  * Other
  */
 .software-name {
-	/* Avoid cut the word "Neo-" "Transposer" btw lines 
-	 * @todo Check if this can be done through disabling CSS cutting words
-	*/
+	/* Avoid cut the word "Neo-" "Transposer" btw lines */
 	display: inline-block; 
 }
 

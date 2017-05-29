@@ -2,7 +2,6 @@
 
 namespace NeoTransposer\Persistence;
 
-use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Model\User;
 
 /**
