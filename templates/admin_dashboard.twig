@@ -2,6 +2,14 @@
 
 {% block page_class %}admin-dashboard{% endblock %}
 
+{% macro feedbackGraph(yes, no, width = 100, additionalCssClass) %}
+	<div class="feedback-graph {{ additionalCssClass|default('') }}">
+		{% if yes %}<span class="yes" style="width: {{ ((yes / (yes + no)) * width)|round }}px">{{ yes }}</span>{% endif %}
+		{% if no %} <span class="no"  style="width: {{ ((no / (yes + no)) * width)|round }}px">{{ no }}</span>{% endif %}
+	</div>
+{% endmacro %}
+{% import _self as self %}
+
 {% block content %}
 
 <a name="top"></a>
@@ -70,32 +78,22 @@
 	{% for group, gp in global_performance %}
 	<p>
 		{{ group }}: {{ ((gp.yes / gp.total) * 100)|round }}% 
-		<div class="feedback-graph big-graph">
-			{% if gp.yes %}<span class="yes" style="width: {{ ((gp.yes / gp.total) * 200)|round }}px">{{ gp.yes }}</span>{% endif %}
-			{% if gp.no %}<span class="no" style="width: {{ ((gp.no / gp.total) * 200)|round }}px">{{ gp.no }}</span>{% endif %}
-		</div>
+		{{ self.feedbackGraph(gp.yes, gp.no, 200, 'big-graph') }}
 	</p>
 	{% endfor %}
 
 	{% set users_not_reporting_fb = user_count - users_reporting_fb %}
 	<h3>Users reporting feedback: {{ ((users_reporting_fb / user_count) * 100)|round }}%</h3>
-	<p>
-		<div class="feedback-graph">
-			<span class="yes" style="width: {{ ((users_reporting_fb / user_count) * 100)|round }}px">{{ users_reporting_fb }}</span>
-			<span class="no" style="width: {{ ((users_not_reporting_fb / user_count) * 100)|round }}px">{{ users_not_reporting_fb }}</span>
-		</div>
-	</p>
+	<p>{{ self.feedbackGraph(users_reporting_fb, users_not_reporting_fb) }}</p>
 
-	<h3>Songs with feedback</h3>
+	<h3>Songs by language</h3>
 
 	{% for book in songs_with_fb %}
 		{% set book_fb = book.total - book.nofb %}
 		
-		<p>{{ app.books[book.id_book].lang_name }}: {{ ((book_fb / book.total) * 100)|round }}% 
-			<div class="feedback-graph">
-				<span class="yes" style="width: {{ ((book_fb / book.total) * 100)|round }}px">{{ book_fb }}</span>
-				<span class="no" style="width: {{ (((book.nofb) / book.total) * 100)|round }}px">{{ book.nofb }}</span>
-			</div>
+		<p>
+			{{ app.books[book.id_book].lang_name }}: {{ ((book_fb / book.total) * 100)|round }}% received fb
+			{{ self.feedbackGraph(book_fb, book.nofb) }}
 		</p>
 	{% endfor %}
 </article>
@@ -118,12 +116,7 @@
 					<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ perf.country|lower }}.png" width="16" />&nbsp;
 					{{ perf.country_name }}
 				</td>
-				<td>
-					<div class="feedback-graph">
-						{% if perf.yes -%}<span class="yes" style="width: {{ ((perf.yes / perf.total) * 100)|round }}px">{{ perf.yes }}</span>{%- endif %}
-						{% if perf.no -%}<span class="no" style="width: {{ ((perf.no / perf.total) * 100)|round }}px">{{ perf.no }}</span>{%- endif %}
-					</div>
-				</td>
+				<td>{{ self.feedbackGraph(perf.yes, perf.no) }}</td>
 				<td>{{ perf.performance|round }}<small>%</small></td>
 				<td>{{ (perf.good_users * 100)|round }}<small>%</small></td>
 			</tr>
@@ -145,12 +138,7 @@
 	{% for day in good_users_chrono %}
 			<tr>
 				<td>{{ day.day }}</td>
-				<td>
-					<div class="feedback-graph">
-						<span class="yes" style="width: {{ ((day.goods / day.total) * 100)|round }}px">{{ day.goods }}</span>
-						<span class="no" style="width: {{ (((day.total - day.goods) / day.total) * 100)|round }}px">{{ day.total - day.goods }}</span>
-					</div>
-				</td>
+				<td>{{ self.feedbackGraph(day.goods, day.total) }}</td>
 				<td>{{ day.goods_rate }}</td>
 			</tr>
 	{% endfor %}
@@ -173,19 +161,9 @@
 	{% for day in global_perf_chrono %}
 			<tr>
 				<td>{{ day.day }}</td>
-				<td>
-					<div class="feedback-graph">
-						{% if day.c_yes %}<span class="yes" style="width: {{ ((day.c_yes / day.c_total) * 100)|round }}px">{{ day.c_yes }}</span>{% endif %}
-						{% if day.c_no %}<span class="no" style="width: {{ ((day.c_no / day.c_total) * 100)|round }}px">{{ day.c_no }}</span>{% endif %}
-					</div>
-				</td>
+				<td>{{ self.feedbackGraph(day.c_yes, day.c_no) }}</td>
 				<td>{{ day.c_performance|round }}<small>%</small></td>
-				<td>
-					<div class="feedback-graph">
-						{% if day.d_yes %}<span class="yes" style="width: {{ ((day.d_yes / day.d_total) * 100)|round }}px">{{ day.d_yes }}</span>{% endif %}
-						{% if day.d_no %}<span class="no" style="width: {{ ((day.d_no / day.d_total) * 100)|round }}px">{{ day.d_no }}</span>{% endif %}
-					</div>
-				</td>
+				<td>{{ self.feedbackGraph(day.d_yes, day.d_no) }}</td>
 				<td>{{ day.d_performance|round }}<small>%</small></td>
 			</tr>
 	{% endfor %}
@@ -200,20 +178,15 @@
 		<thead><tr>
 			<th>Song</th>
 			<th>Feedback</th>
-			<th>Performance</th>
-			<th>Wideness</th>
+			<th>Perf</th>
+			<th>Wide</th>
 		</tr></thead>
 
 		<tbody>
 	{% for song in feedback %}
 			<tr>
 				<td>{{ song.title }}</td>
-				<td>
-					<div class="feedback-graph">
-						{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
-						{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
-					</div>
-				</td>
+				<td>{{ self.feedbackGraph(song.yes, song.no) }}</td>
 				<td>{{ song.performance|round(2) }}</td>
 				<td>{{ song.wideness }}</td>
 			</tr>
@@ -231,7 +204,7 @@
 			<th>Feedback</th>
 			<th>Total</th>
 			<th>Perf</th>
-			<th>Wideness</th>
+			<th>Wide</th>
 		</tr></thead>
 
 		<tbody>
@@ -239,12 +212,7 @@
 		{% if song.performance < 0.5 %}
 			<tr>
 				<td>{{ song.title }}</td>
-				<td>
-					<div class="feedback-graph">
-						{% if song.yes %}<span class="yes" style="width: {{ ((song.yes / song.total) * 100)|round }}px">{{ song.yes }}</span>{% endif %}
-						{% if song.no %}<span class="no" style="width: {{ ((song.no / song.total) * 100)|round }}px">{{ song.no }}</span>{% endif %}
-					</div>
-				</td>
+				<td>{{ self.feedbackGraph(song.yes, song.no) }}</td>
 				<td>{{ song.yes + song.no }}
 				<td>{{ song.performance|round(2) }}</td>
 				<td>{{ song.wideness }}</td>
@@ -274,12 +242,7 @@
 				<td>{{ user.email }}</td>
 				<td>{{ user.lowest_note }} - {{ user.highest_note }}</td>
 				<td>{{ user.total }}</td>
-				<td>
-					<div class="feedback-graph">
-						<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>
-						<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>
-					</div>
-				</td>
+				<td>{{ self.feedbackGraph(user.yes, user.no) }}</td>
 				<td>{{ user.wizard_lowest_attempts }} / {{ user.wizard_highest_attempts }}</td>
 			</tr>
 	{% endfor %}
@@ -307,12 +270,7 @@
 				<td>{{ user.time_unhappy|default('-') }}</td>
 				<td>{{ user.action|default('-') }}</td>
 				<td>{% if user.perf_before_action %}{{ user.perf_before_action|round(2) }}{% endif %}</td>
-				<td>
-					<div class="feedback-graph">
-						<span class="yes" style="width: {{ ((user.yes / user.total) * 100)|round }}px">{{ user.yes }}</span>
-						<span class="no" style="width: {{ ((user.no / user.total) * 100)|round }}px">{{ user.no }}</span>
-					</div>
-				</td>
+				<td>{{ self.feedbackGraph(user.yes, user.no) }}</td>
 				<td>{{ user.total }}</td>
 				<td class="{% if user.perf_before_action %}{{ (user.perf > user.perf_before_action) ? 'green' : 'red' }}{% endif %}">{{ user.perf|round(2) }}</td>
 			</tr>
