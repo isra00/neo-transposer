@@ -18,24 +18,24 @@ class TranspositionChart
 	{
 		$this->nc = $nc;
 
-		$this->addVoice('Your voice:', 'singer', $singer->lowest_note, $singer->highest_note);
-		$this->addVoice('Original chords:', 'original-song', $song->lowestNote, $song->highestNote);
+		$this->addVoice('Your voice:', 'singer', $singer->range);
+		$this->addVoice('Original chords:', 'original-song', $song->range);
 	}
 
-	public function addVoice($caption, $cssClass, $lowestNote, $highestNote)
+	public function addVoice($caption, $cssClass, NotesRange $range)
 	{
 		$this->voiceChart[] = [
 			'caption'	=> $caption,
 			'css'		=> $cssClass,
-			'lowest'	=> $lowestNote,
-			'highest'	=> $highestNote,
-			'length'	=> abs($this->nc->distanceWithOctave($lowestNote, $highestNote)) - 1,
+			'lowest'	=> $range->lowest,
+			'highest'	=> $range->highest,
+			'length'	=> abs($this->nc->distanceWithOctave($range->lowest, $range->highest)) - 1,
 		];
 	}
 
 	public function addTransposition($caption, $cssClass, Transposition $transposition)
 	{
-		$this->addVoice($caption, $cssClass, $transposition->lowestNote, $transposition->highestNote);
+		$this->addVoice($caption, $cssClass, new NotesRange($transposition->lowestNote, $transposition->highestNote));
 	}
 	
 	public function getChart()

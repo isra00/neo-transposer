@@ -18,13 +18,13 @@ class TransposeSong
 		//For the teaser (not logged in), transpose for a standard male voice
 		if (!$app['neouser']->isLoggedIn())
 		{
-			$app['neouser']->lowest_note = 'B1';
-			$app['neouser']->highest_note = 'F#3';
+			$app['neouser']->range->lowest  = 'B1';
+			$app['neouser']->range->highest = 'F#3';
 		}
 		else
 		{
 			//If null user, redirect to User Settings
-			if (empty($app['neouser']->lowest_note))
+			if (empty($app['neouser']->range->lowest))
 			{
 				$app->setLocaleAutodetect($req);
 				
@@ -52,8 +52,8 @@ class TransposeSong
 		$nc = new NotesCalculator;
 
 		$user_first_octave = (
-			array_search($app['neouser']->highest_note, $nc->numbered_scale)
-			- array_search($app['neouser']->lowest_note, $nc->numbered_scale)
+			array_search($app['neouser']->range->highest, $nc->numbered_scale)
+			- array_search($app['neouser']->range->lowest, $nc->numbered_scale)
 			< 12
 		);
 

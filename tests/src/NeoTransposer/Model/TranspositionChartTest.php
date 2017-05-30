@@ -1,6 +1,6 @@
 <?php
 
-use \NeoTransposer\Model\{TranspositionChart, AutomaticTransposer, Song, User, Transposition};
+use \NeoTransposer\Model\{TranspositionChart, AutomaticTransposer, Song, User, Transposition, NotesRange};
 
 class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 {
@@ -24,14 +24,12 @@ class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 						->disableOriginalConstructor()
 						->getMock();
 
-		$mockSong->lowestNote 	= 'C1';
-		$mockSong->highestNote 	= 'C2';
+		$mockSong->range = new NotesRange('C1', 'C2');
 
 		$mockUser = $this->getMockBuilder(\NeoTransposer\Model\User::class)
 						->getMock();
 
-		$mockUser->lowest_note	= 'C1';
-		$mockUser->highest_note	= 'C2';
+		$mockUser->range = new NotesRange('C1', 'C2');
 
 		$mockTransposition = $this->getMockBuilder(\NeoTransposer\Model\Transposition::class)
 						->disableOriginalConstructor()

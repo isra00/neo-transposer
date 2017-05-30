@@ -79,14 +79,11 @@ class TransposedSong
 		$transposer = $this->app['new.AutomaticTransposer'];
 		
 		$transposer->setTransposerData(
-			$this->app['neouser']->lowest_note,
-			$this->app['neouser']->highest_note,
-			$this->song->lowestNote,
-			$this->song->highestNote,
+			new NotesRange($this->app['neouser']->range->lowest, $this->app['neouser']->range->highest),
+			new NotesRange($this->song->range->lowest, $this->song->range->highest),
 			$this->song->originalChords,
 			$this->song->firstChordIsTone,
-			$this->song->peopleHighestNote,
-			$this->song->peopleLowestNote
+			new NotesRange($this->song->peopleRange->highest, $this->song->peopleRange->lowest)
 		);
 
 		$this->transpositions = $transposer->getTranspositions(2, $forceVoiceLimit);

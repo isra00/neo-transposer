@@ -8,12 +8,10 @@ class Song
 	public $idBook;
 	public $page;
 	public $title;
-	public $lowestNote;
-	public $highestNote;
+	public $range;
 	public $slug;
 	public $firstChordIsTone;
-	public $peopleLwestNote;
-	public $peopleHighestNote;
+	public $peopleRange;
 
 	public $bookChordPrinter;
 	public $bookLocale;
@@ -21,19 +19,17 @@ class Song
 
 	public function __construct($dbColumns, $originalChords)
 	{
-		$this->idSong 				= $dbColumns['id_song'];
-		$this->idBook 				= $dbColumns['id_book'];
-		$this->page 				= $dbColumns['page'];
-		$this->title 				= $dbColumns['title'];
-		$this->lowestNote 			= $dbColumns['lowest_note'];
-		$this->highestNote 			= $dbColumns['highest_note'];
-		$this->slug 				= $dbColumns['slug'];
-		$this->firstChordIsTone		= $dbColumns['first_chord_is_tone'];
-		$this->peopleLowestNote 	= $dbColumns['people_lowest_note'];
-		$this->peopleHighestNote 	= $dbColumns['people_highest_note'];
-		$this->bookChordPrinter 	= $dbColumns['chord_printer'];
-		$this->bookLocale 			= $dbColumns['locale'];
+		$this->idSong 			= $dbColumns['id_song'];
+		$this->idBook 			= $dbColumns['id_book'];
+		$this->page 			= $dbColumns['page'];
+		$this->title 			= $dbColumns['title'];
+		$this->range 			= new NotesRange($dbColumns['lowest_note'], $dbColumns['highest_note']);
+		$this->slug 			= $dbColumns['slug'];
+		$this->firstChordIsTone	= $dbColumns['first_chord_is_tone'];
+		$this->peopleRange		= new NotesRange($dbColumns['people_lowest_note'], $dbColumns['people_highest_note']);
+		$this->bookChordPrinter = $dbColumns['chord_printer'];
+		$this->bookLocale 		= $dbColumns['locale'];
 
-		$this->originalChords 		= $originalChords;
+		$this->originalChords	= $originalChords;
 	}
 }

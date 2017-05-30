@@ -98,13 +98,24 @@ class NotesCalculator
 	/**
 	 * Calculates the absolute distance (in semitones) between two notes, with octave specified.
 	 * 
-	 * @param  string 	$note1 	Note, specified as [note name][octave number], e.g. E3.
-	 * @param  string 	$note2 	Another note, following the same pattern as $note1.
+	 * @param  string|NotesRange 	$note1 	Note, specified as [note name][octave number], e.g. E3. If NotesRange, no need of $note2.
+	 * @param  string 				$note2 	Another note, following the same pattern as $note1.
 	 * @return integer 			Distance in semitones.
 	 */
-	public function distanceWithOctave($note1, $note2)
+	public function distanceWithOctave($note1, $note2=null)
 	{
+		/*if ($note1 instanceof NotesRange)
+		{
+			$note2 = $note1->highest;
+			$note1 = $note1->lowest;
+		}*/
+
 		return array_search($note1, $this->numbered_scale) - array_search($note2, $this->numbered_scale);
+	}
+
+	public function rangeWideness(NotesRange $range)
+	{
+		return $this->distanceWithOctave($range->highest, $range->lowest);
 	}
 
 	/**

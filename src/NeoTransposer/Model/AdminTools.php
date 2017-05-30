@@ -215,8 +215,8 @@ class AdminTools extends \NeoTransposer\AppAccess
 			true
 		);
 
-		$this->app['neouser']->lowest_note  = $testData['singerLowestVoice'];
-		$this->app['neouser']->highest_note = $testData['singerHighestVoice'];
+		$this->app['neouser']->range->lowest  = $testData['singerLowestVoice'];
+		$this->app['neouser']->range->highest = $testData['singerHighestVoice'];
 
 		$sql = <<<SQL
 SELECT id_song
@@ -242,8 +242,8 @@ SQL;
 		foreach ($allSongs as $transposedSong)
 		{
 			$testResult[$transposedSong->song->idSong] = array(
-				'songLowestNote' 	=> $transposedSong->song->lowestNote,
-				'songHighestNote' 	=> $transposedSong->song->highestNote,
+				'songLowestNote' 	=> $transposedSong->song->range->lowest,
+				'songHighestNote' 	=> $transposedSong->song->range->highest,
 				'centered1' => array(
 					'offset' 			=> $transposedSong->transpositions[0]->offset,
 					'lowestNote' 		=> $transposedSong->transpositions[0]->lowestNote,

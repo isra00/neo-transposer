@@ -24,7 +24,7 @@ class SetUserData
 
 		if ($request->get('lowest_note'))
 		{
-			$app['neouser']->lowest_note = $request->get('lowest_note');
+			$app['neouser']->range->lowest = $request->get('lowest_note');
 		}
 
 		if ($request->get('highest_note'))
@@ -37,7 +37,7 @@ class SetUserData
 				));
 			}
 
-			$app['neouser']->highest_note = $request->get('highest_note');
+			$app['neouser']->range->highest = $request->get('highest_note');
 		}
 
 		$app['neouser']->persist($app['db'], $request->getClientIp());

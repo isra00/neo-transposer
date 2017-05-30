@@ -2,6 +2,7 @@
 
 use \NeoTransposer\Model\AutomaticTransposer;
 use \NeoTransposer\Model\Transposition;
+use \NeoTransposer\Model\NotesRange;
 
 /**
  * @todo Add some corner cases to transposition algorithms
@@ -25,7 +26,11 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 
 		$this->transposer = new AutomaticTransposer($this->getSilexApp());
 		$this->transposer->setTransposerData(
-			'G1', 'G3', 'B1', 'B2', ['Am', 'Dm', 'F', 'C'], false, $this->chordsScoreConfig, 'B1', 'B2'
+			new NotesRange('G1', 'G3'), 
+			new NotesRange('B1', 'B2'), 
+			['Am', 'Dm', 'F', 'C'], 
+			false, 
+			new NotesRange('B1', 'B2')
 		);
 	}
 
@@ -71,12 +76,12 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testFindCenteredTranspositionAsBook()
 	{
 		$this->transposer->setTransposerData(
-			'F1', 'F3', 'B1', 'B2', ['Bm', 'Em', 'G', 'D'], false, $this->chordsScoreConfig, 'B1', 'B2'
+			new NotesRange('F1', 'F3'), new NotesRange('B1', 'B2'), ['Bm', 'Em', 'G', 'D'], false, new NotesRange('B1', 'B2')
 		);
 
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
-			['Bm', 'Em', 'G', 'D'], 0, true, 0, 'B1', 'B2', 0, $this->chordsScoreConfig, 'B1', 'B2'
+			['Bm', 'Em', 'G', 'D'], 0, true, 0, 'B1', 'B2', 0, 'B1', 'B2'
 		);
 
 		$this->assertEquals($expected, $this->transposer->calculateCenteredTransposition());
@@ -85,7 +90,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testCalculateEquivalentsWithCapo()
 	{
 		$testTransposition = $this->getNewTransposition();
-		$testTransposition->setTranspositionData(array('Bm', 'Em', 'G', 'D'), 0, false, null, null, null, null, $this->chordsScoreConfig, 'B1', 'B2');
+		$testTransposition->setTranspositionData(array('Bm', 'Em', 'G', 'D'), 0, false, null, null, null, null, 'B1', 'B2');
 		
 		$expected = [
 			1=> $this->getNewTransposition()->setTranspositionData(['A#m', 'D#m', 'F#', 'C#'], 1, false, null, null, null, null, $this->chordsScoreConfig),
@@ -121,7 +126,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testCalculateAlternativeNotEquivalent()
 	{
 		$this->transposer->setTransposerData(
-			'A1', 'D3', 'C#2', 'E3', ['D', 'F#', 'Bm', 'A', 'G'], false, $this->chordsScoreConfig, 'B1', 'B2'
+			new NotesRange('A1', 'D3'), new NotesRange('C#2', 'E3'), ['D', 'F#', 'Bm', 'A', 'G'], false, new NotesRange('B1', 'B2')
 		);
 
 		$actual = $this->transposer->calculateAlternativeNotEquivalent();
@@ -140,7 +145,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testForceHighestVoice()
 	{
 		$this->transposer->setTransposerData(
-			'A1', 'E3', 'E2', 'A2', ['Am', 'G'], false, $this->chordsScoreConfig, 'B1', 'B2'
+			new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], false, new NotesRange('B1', 'B2')
 		);
 
 		$expected = $this->getNewTransposition();
@@ -157,7 +162,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testForceLowestVoice()
 	{
 		$this->transposer->setTransposerData(
-			'A1', 'E3', 'E2', 'A2', ['Am', 'G'], false, $this->chordsScoreConfig, 'B1', 'B2'
+			new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], false, new NotesRange('B1', 'B2')
 		);
 
 		$expected = $this->getNewTransposition();

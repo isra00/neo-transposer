@@ -15,8 +15,12 @@ class User
 {
 	public $id_user;
 	public $email;
-	public $lowest_note;
-	public $highest_note;
+
+	/**
+	 * @type NotesRange
+	 */
+	public $range;
+
 	public $id_book;
 	public $wizard_step1;
 	public $wizard_lowest_attempts = 0;
@@ -25,21 +29,19 @@ class User
 	/**
 	 * Simple constructor. Use UserPersistence::fetchUserFromEmail() to create from DB.
 	 * 
-	 * @param string 	$email         	User email
-	 * @param int 		$id_user       	User ID
-	 * @param string 	$lowest_note   	User lowest note
-	 * @param string 	$highest_note  	User highest note
-	 * @param int 		$id_book       	Book
-	 * @param int 		wizard_step1	Option checked in Wizard First Step
-	 * @param string 	wizard_lowest_attempts No. of attempts in Wizard Lowest note.
-	 * @param string 	wizard_highest_attempts No. of attempts in Wizard Lowest note.
+	 * @param string 		$email         	User email
+	 * @param int 			$id_user       	User ID
+	 * @param NotesRange 	$highest_note  	User highest note
+	 * @param int 			$id_book       	Book
+	 * @param int 			wizard_step1	Option checked in Wizard First Step
+	 * @param string 		wizard_lowest_attempts No. of attempts in Wizard Lowest note.
+	 * @param string 		wizard_highest_attempts No. of attempts in Wizard Lowest note.
 	 */
-	public function __construct($email=null, $id_user=null, $lowest_note=null, $highest_note=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null)
+	public function __construct($email=null, $id_user=null, NotesRange $range=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null)
 	{
  		$this->id_user 		= $id_user;
 		$this->email 		= $email;
-		$this->lowest_note 	= $lowest_note;
-		$this->highest_note = $highest_note;
+		$this->range 		= $range;
 		$this->id_book 		= $id_book;
 		$this->wizard_step1 = $wizard_step1;
 		$this->wizard_lowest_attempts = $wizard_lowest_attempts;
@@ -119,6 +121,6 @@ class User
 	 */
 	public function getVoiceAsString(TranslatorInterface $trans, $notation='american')
 	{
-		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->lowest_note, $this->highest_note);
+		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->range->lowest, $this->range->highest);
 	}
 }

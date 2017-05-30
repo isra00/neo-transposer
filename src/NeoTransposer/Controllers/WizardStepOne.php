@@ -39,8 +39,8 @@ class WizardStepOne
 			return $this->getStepOne($app);
 		}
 
-		$app['neouser']->lowest_note = $standard_voices[$req->get('gender')][0];
-		$app['neouser']->highest_note = $standard_voices[$req->get('gender')][1];
+		$app['neouser']->range->lowest  = $standard_voices[$req->get('gender')][0];
+		$app['neouser']->range->highest = $standard_voices[$req->get('gender')][1];
 
 		$app['neouser']->wizard_step1 = $req->get('gender');
 

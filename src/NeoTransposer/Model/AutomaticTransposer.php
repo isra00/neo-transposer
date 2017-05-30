@@ -27,14 +27,23 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 */
 	protected $nc;
 
-	protected $singerLowestNote;
-	protected $singerHighestNote;
-	protected $songLowestNote;
-	protected $songHighestNote;
+	/**
+	 * @type NotesRange
+	 */
+	protected $singerRange;
+
+	/**
+	 * @type NotesRange
+	 */
+	protected $songRange;
+
 	protected $originalChords;
 	protected $firstChordIsKey;
-	protected $songPeopleLowestNote;
-	protected $songPeopleHighestNote;
+
+	/**
+	 * @type NotesRange
+	 */
+	protected $songPeopleRange;
 
 	/**
 	 * The calculated centered transposition.
@@ -53,30 +62,28 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * searching nonEquivalent transpositions.
 	 * 
 	 * @var array
+	 * @todo Convert into constant? It seems that PHP>7 admits array constants.
 	 */
 	protected $offsetsNotEquivalent = array(-1, 1);
 
 	/**
-	 * Constructor needs all the data to calculate the transpositions.
+	 * Set all data needed to calculate the transpositions.
 	 * 
-	 * @param	string	$singerLowestNote	Singer's lowest note
-	 * @param	string	$singerHighestNote	Singer's highest note
-	 * @param	string	$songLowestNote		Song's lowest note
-	 * @param	string	$songHighestNote	Song's highest note
-	 * @param	array	$originalChords		Song original chords
+	 * @param	NotesRange	$singerRange		Singer's voice range
+	 * @param	NotesRange	$songRange			Song's voice range
+	 * @param	array		$originalChords		Song original chords
+	 * @param	boolean		$firstChordIsKey	Song original chords
+	 * @param	NotesRange	$songPeopleRange	Song's voice range for people
 	 */
-	public function setTransposerData($singerLowestNote, $singerHighestNote, $songLowestNote, $songHighestNote, $originalChords, $firstChordIsKey, $songPeopleHighestNote, $songPeopleLowestNote)
+	public function setTransposerData(NotesRange $singerRange, NotesRange $songRange, $originalChords, $firstChordIsKey, NotesRange $songPeopleRange=null)
 	{
-		$this->singerLowestNote	 = $singerLowestNote;
-		$this->singerHighestNote = $singerHighestNote;
-		$this->songLowestNote	 = $songLowestNote;
-		$this->songHighestNote	 = $songHighestNote;
-		$this->originalChords	 = $originalChords;
-		$this->firstChordIsKey	 = $firstChordIsKey;
-		$this->songPeopleHighestNote = $songPeopleHighestNote;
-		$this->songPeopleLowestNote  = $songPeopleLowestNote;
+		$this->singerRange	 	= $singerRange;
+		$this->songRange	 	= $songRange;
+		$this->originalChords	= $originalChords;
+		$this->firstChordIsKey	= $firstChordIsKey;
+		$this->songPeopleRange	= $songPeopleRange;
 
-		$this->nc = new NotesCalculator;
+		$this->nc				= new NotesCalculator;
 	}
 
 	/**
@@ -85,8 +92,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * Given the the lowest and highest note of the singer and of the song, the 
 	 * algorithm transposes the song locating its range in the middle of the
 	 * singer's voice range through simple arithmetics: calculate the offset 
-	 * between the original song's lowest note and the ideal position and 
-	 * transpose each chord using that offset.
+	 * between the original song's lowest note and the centered position, and 
+	 * then, transpose each chord using that offset.
 	 * 
 	 * @param  int 				$forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 * @return Transposition 	The transposition matching that voice.
@@ -98,15 +105,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 			return $this->centeredTransposition;
 		}
 
-		$songWideness = $this->nc->distanceWithOctave(
-			$this->songHighestNote, 
-			$this->songLowestNote
-		);
-		
-		$singerWideness = $this->nc->distanceWithOctave(
-			$this->singerHighestNote, 
-			$this->singerLowestNote
-		);
+		$songWideness 	= $this->nc->rangeWideness($this->songRange);
+		$singerWideness	= $this->nc->rangeWideness($this->singerRange);
 
 		/*
 		 * The song is located in the center of singer's range, but if middle is
@@ -129,7 +129,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		}
 
 		$centeredOffset = intval(
-			(-1) * $this->nc->distanceWithOctave($this->songLowestNote, $this->singerLowestNote)
+			(-1) * $this->nc->distanceWithOctave($this->songRange->lowest, $this->singerRange->lowest)
 			+ $offsetFromSingerLowest
 		);
 
@@ -138,8 +138,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 			0,
 			false,
 			$centeredOffset,
-			$this->nc->transposeNote($this->songLowestNote, $centeredOffset),
-			$this->nc->transposeNote($this->songHighestNote, $centeredOffset),
+			$this->nc->transposeNote($this->songRange->lowest, $centeredOffset),
+			$this->nc->transposeNote($this->songRange->highest, $centeredOffset),
 			null
 		);
 
@@ -321,12 +321,12 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 				}
 
 				//If it's too low or too high, discard it
-				if ($this->nc->distanceWithOctave($notEquivalent->lowestNote, $this->singerLowestNote) < 0)
+				if ($this->nc->distanceWithOctave($notEquivalent->lowestNote, $this->singerRange->lowest) < 0)
 				{
 					continue;
 				}
 
-				if ($this->nc->distanceWithOctave($notEquivalent->highestNote, $this->singerHighestNote) > 0)
+				if ($this->nc->distanceWithOctave($notEquivalent->highestNote, $this->singerRange->highest) > 0)
 				{
 					continue;
 				}
@@ -336,25 +336,6 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 					continue;
 				}
 
-				/*
-				 * Disable the non-equivalents with capo. Remove when ready to 
-				 * deploy. How to deploy? First step, prefer always the 
-				 * notEquivalent without capo. This way, no notEquivalent will
-				 * change, but in some cases a notEquivalent with capo will be
-				 * shown where no notEquivalent was being shown (because the
-				 * notEquivalent had no lower score than the lowest centered).
-				 * Second step, think and decide about offering notEquivalents 
-				 * with capo replacing the one without capo if score is lower.
-				 * Another way of soft-deploying is, after filling the DB with
-				 * the artistic offset, if the non-equivalent is as the artistic
-				 * requires (higher or lower), showing it as the first choice
-				 * (before the centered transposition).
-				 */
-				if ($notEquivalent->getCapo())
-				{
-					//continue;
-				}
-
 				$nearTranspositions[] = $notEquivalent;
 			}
 		}
@@ -362,27 +343,27 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		return $nearTranspositions;
 	}
 
-	public function setSongPeopleRange($songPeopleHighestNote, $songPeopleLowestNote)
+	/** @todo Is this really necessary? */
+	public function setSongPeopleRange($songPeopleRange)
 	{
-		$this->songPeopleHighestNote = $songPeopleHighestNote;
-		$this->songPeopleLowestNote  = $songPeopleLowestNote;
+		$this->songPeopleRange  = $songPeopleRange;
 	}
 
 	public function calculatePeopleCompatible()
 	{
-		if (empty($this->songPeopleLowestNote))
+		if (empty($this->songPeopleRange))
 		{
 			//var_dump("No hay people data");
 			return;
 		}
 
-		$peopleRange = ['lowest' => 'B1', 'highest' => 'B2'];
+		$peopleRange = new NotesRange('B1', 'B2');
 
 		$centeredTransposition = $this->calculateCenteredTransposition();
 
 		$centeredForPeopleRange = [
-			'lowest'  => $this->nc->transposeNote($this->songPeopleLowestNote, $centeredTransposition->offset),
-			'highest' => $this->nc->transposeNote($this->songPeopleHighestNote, $centeredTransposition->offset)
+			'lowest'  => $this->nc->transposeNote($this->songPeopleRange->lowest, $centeredTransposition->offset),
+			'highest' => $this->nc->transposeNote($this->songPeopleRange->highest, $centeredTransposition->offset)
 		];
 	
 		if ($this->centeredTranspositionIsWithinPeopleRange($centeredForPeopleRange, $peopleRange))
@@ -392,7 +373,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		}
 
 		$peopleDistanceToLimit = $this->nc->distanceWithOctave(
-			$peopleRange['highest'], 
+			$peopleRange->highest, 
 			$centeredForPeopleRange['highest']
 		);
 
@@ -431,6 +412,9 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		return $peopleCompatibleTransposition;
 	}
 
+	/**
+	 * @todo Move this logic to NotesNotation
+	 */
 	protected function centeredTranspositionIsWithinPeopleRange($centeredForPeopleRange, $peopleRange)
 	{
 		return ($this->nc->distanceWithOctave($centeredForPeopleRange['highest'], $peopleRange['highest']) < 0)

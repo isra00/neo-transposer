@@ -32,8 +32,8 @@
 	  ga('set','anonymizeIp', true);
 	  {% if app.neouser.isLoggedIn -%}
 	  ga('set', '&uid', '{{ app.neouser.id_user }}');
-	  ga('set', 'dimension2', '{{ app.neouser.lowest_note|default('-') }}');
-	  ga('set', 'dimension3', '{{ app.neouser.highest_note|default('-') }}');
+	  ga('set', 'dimension2', '{{ app.neouser.range.lowest|default('-') }}');
+	  ga('set', 'dimension3', '{{ app.neouser.range.highest|default('-') }}');
 	  {%- endif %}
 
 	  ga('send', 'pageview');

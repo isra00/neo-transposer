@@ -37,13 +37,13 @@ SQL;
 				$req->get('id_song'),
 				$app['neouser']->id_user,
 				$worked,
-				$app['neouser']->lowest_note,
-				$app['neouser']->highest_note,
+				$app['neouser']->range->lowest,
+				$app['neouser']->range->highest,
 				$req->get('id_song'),
 				$app['neouser']->id_user,
 				$worked,
-				$app['neouser']->lowest_note,
-				$app['neouser']->highest_note,
+				$app['neouser']->range->lowest,
+				$app['neouser']->range->highest,
 			));
 
 			$unhappy = new \NeoTransposer\Model\UnhappyUser($app);

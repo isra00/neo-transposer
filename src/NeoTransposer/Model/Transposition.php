@@ -81,6 +81,8 @@ class Transposition extends \NeoTransposer\AppAccess
 		$this->capo			= $capo;
 		$this->asBook 		= $asBook;
 		$this->offset 		= $offset;
+
+		/** @todo Pasar a NotesRange */
 		$this->lowestNote 	= $lowest_note;
 		$this->highestNote 	= $highest_note;
 		$this->deviationFromCentered = $deviationFromCentered;

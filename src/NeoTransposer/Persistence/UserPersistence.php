@@ -3,6 +3,7 @@
 namespace NeoTransposer\Persistence;
 
 use \NeoTransposer\Model\User;
+use \NeoTransposer\Model\NotesRange;
 
 /**
  * Persistence layer for the User entity.
@@ -37,8 +38,7 @@ class UserPersistence
 			return new User(
 				$userdata['email'],
 				$userdata['id_user'],
-				$userdata['lowest_note'],
-				$userdata['highest_note'],
+				new NotesRange($userdata['lowest_note'], $userdata['highest_note']),
 				$userdata['id_book'],
 				$userdata['wizard_step1'],
 				$userdata['wizard_lowest_attempts'],
@@ -60,8 +60,8 @@ class UserPersistence
 		{
 			return $this->db->update('user',
 				[
-					'lowest_note'	=> $user->lowest_note,
-					'highest_note'	=> $user->highest_note,
+					'lowest_note'	=> $user->range->lowest,
+					'highest_note'	=> $user->range->highest,
 					'id_book'		=> $user->id_book,
 					'wizard_step1' 	=> $user->wizard_step1,
 					'wizard_lowest_attempts' => $user->wizard_lowest_attempts,
@@ -72,8 +72,8 @@ class UserPersistence
 
 		$this->db->insert('user', array(
 			'email'			=> $user->email,
-			'lowest_note'	=> $user->lowest_note,
-			'highest_note'	=> $user->highest_note,
+			'lowest_note'	=> $user->range->lowest,
+			'highest_note'	=> $user->range->highest,
 			'id_book'		=> $user->id_book,
 			'register_ip'	=> $registerIp
 		));
