@@ -60,8 +60,8 @@ class UserPersistence
 		{
 			return $this->db->update('user',
 				[
-					'lowest_note'	=> $user->range->lowest,
-					'highest_note'	=> $user->range->highest,
+					'lowest_note'	=> $user->range->lowest ?? null,
+					'highest_note'	=> $user->range->highest ?? null,
 					'id_book'		=> $user->id_book,
 					'wizard_step1' 	=> $user->wizard_step1,
 					'wizard_lowest_attempts' => $user->wizard_lowest_attempts,
@@ -72,8 +72,8 @@ class UserPersistence
 
 		$this->db->insert('user', array(
 			'email'			=> $user->email,
-			'lowest_note'	=> $user->range->lowest,
-			'highest_note'	=> $user->range->highest,
+			'lowest_note'	=> $user->range->lowest ?? null,
+			'highest_note'	=> $user->range->highest ?? null,
 			'id_book'		=> $user->id_book,
 			'register_ip'	=> $registerIp
 		));

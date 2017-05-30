@@ -4,6 +4,7 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\NeoApp;
+use \NeoTransposer\Model\NotesRange;
 
 /**
  * First step of the Wizard: choose a pre-defined voice range. In the next step
@@ -37,6 +38,11 @@ class WizardStepOne
 		if (false === array_search($req->get('gender'), array_keys($standard_voices)))
 		{
 			return $this->getStepOne($app);
+		}
+
+		if (empty($app['neouser']->range))
+		{
+			$app['neouser']->range = new NotesRange;
 		}
 
 		$app['neouser']->range->lowest  = $standard_voices[$req->get('gender')][0];

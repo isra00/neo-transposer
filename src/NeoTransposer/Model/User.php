@@ -83,7 +83,7 @@ class User
 			return 'login';
 		}
 
-		if (empty($this->lowest_note))
+		if (empty($this->range->lowest))
 		{
 			$exempt = array(
 				'user_settings', 

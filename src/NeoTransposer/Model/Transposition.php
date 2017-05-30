@@ -52,16 +52,10 @@ class Transposition extends \NeoTransposer\AppAccess
 	public $offset = 0;
 
 	/**
-	 * Song's lowest note after transposing.
-	 * @var string
+	 * Song's lowest and highest note after transposing.
+	 * @var NotesRange
 	 */
-	public $lowestNote;
-
-	/**
-	 * Song's highest note after transposing.
-	 * @var string
-	 */
-	public $highestNote;
+	public $range;
 
 	/**
 	 * Deviation from the centered transposition (in semitones).
@@ -75,16 +69,14 @@ class Transposition extends \NeoTransposer\AppAccess
 	 */
 	public $scoreMap = array();
 
-	public function setTranspositionData($chords=array(), $capo=0, $asBook=false, $offset=0, $lowest_note=null, $highest_note=null, $deviationFromCentered=0)
+	public function setTranspositionData($chords=array(), $capo=0, $asBook=false, $offset=0, NotesRange $range=null, $deviationFromCentered=0)
 	{
 		$this->chords		= $chords;
 		$this->capo			= $capo;
 		$this->asBook 		= $asBook;
 		$this->offset 		= $offset;
 
-		/** @todo Pasar a NotesRange */
-		$this->lowestNote 	= $lowest_note;
-		$this->highestNote 	= $highest_note;
+		$this->range 		= $range;
 		$this->deviationFromCentered = $deviationFromCentered;
 
 		$this->setScore();

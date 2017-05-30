@@ -138,8 +138,10 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 			0,
 			false,
 			$centeredOffset,
-			$this->nc->transposeNote($this->songRange->lowest, $centeredOffset),
-			$this->nc->transposeNote($this->songRange->highest, $centeredOffset),
+			new NotesRange(
+				$this->nc->transposeNote($this->songRange->lowest, $centeredOffset),
+				$this->nc->transposeNote($this->songRange->highest, $centeredOffset)
+			),
 			null
 		);
 
@@ -182,8 +184,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 				$i,
 				($transposedChords == $this->originalChords),
 				$transposition->offset,
-				$transposition->lowestNote,
-				$transposition->highestNote,
+				$transposition->range,
 				$transposition->deviationFromCentered
 			);
 		}
@@ -295,8 +296,10 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 				0,
 				false,
 				$centeredTransposition->offset + $dif,
-				$this->nc->transposeNote($centeredTransposition->lowestNote, $dif),
-				$this->nc->transposeNote($centeredTransposition->highestNote, $dif),
+				new NotesRange(
+					$this->nc->transposeNote($centeredTransposition->range->lowest, $dif),
+					$this->nc->transposeNote($centeredTransposition->range->highest, $dif)
+				),
 				$dif
 			);
 
@@ -321,12 +324,12 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 				}
 
 				//If it's too low or too high, discard it
-				if ($this->nc->distanceWithOctave($notEquivalent->lowestNote, $this->singerRange->lowest) < 0)
+				if ($this->nc->distanceWithOctave($notEquivalent->range->lowest, $this->singerRange->lowest) < 0)
 				{
 					continue;
 				}
 
-				if ($this->nc->distanceWithOctave($notEquivalent->highestNote, $this->singerRange->highest) > 0)
+				if ($this->nc->distanceWithOctave($notEquivalent->range->highest, $this->singerRange->highest) > 0)
 				{
 					continue;
 				}
@@ -380,17 +383,17 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		$offsetForPeople = $centeredTransposition->offset + $peopleDistanceToLimit;
 
 		$singerRangeApplyingOffsetForPeople = [
-			'lowest'  => $this->nc->transposeNote($this->songLowestNote,  $offsetForPeople),
-			'highest' => $this->nc->transposeNote($this->songHighestNote, $offsetForPeople)
+			'lowest'  => $this->nc->transposeNote($this->songRange->lowest,  $offsetForPeople),
+			'highest' => $this->nc->transposeNote($this->songRange->highest, $offsetForPeople)
 		];
 
-		if ($this->nc->distanceWithOctave($this->singerHighestNote, $singerRangeApplyingOffsetForPeople['highest']) < 0)
+		if ($this->nc->distanceWithOctave($this->singerRange->highest, $singerRangeApplyingOffsetForPeople['highest']) < 0)
 		{
 			//var_dump("La people resulta demasiado alta para el cantor");
 			return;
 		}
 
-		if ($this->nc->distanceWithOctave($singerRangeApplyingOffsetForPeople['highest'], $this->singerLowestNote) < 0)
+		if ($this->nc->distanceWithOctave($singerRangeApplyingOffsetForPeople['highest'], $this->singerRange->lowest) < 0)
 		{
 			//var_dump("La people resulta demasiado baja para el cantor");
 			return;

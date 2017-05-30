@@ -246,16 +246,16 @@ SQL;
 				'songHighestNote' 	=> $transposedSong->song->range->highest,
 				'centered1' => array(
 					'offset' 			=> $transposedSong->transpositions[0]->offset,
-					'lowestNote' 		=> $transposedSong->transpositions[0]->lowestNote,
-					'highestNote' 		=> $transposedSong->transpositions[0]->highestNote,
+					'lowestNote' 		=> $transposedSong->transpositions[0]->range->lowest,
+					'highestNote' 		=> $transposedSong->transpositions[0]->range->highest,
 					'score' 			=> $transposedSong->transpositions[0]->score,
 					'capo' 				=> $transposedSong->transpositions[0]->getCapo(),
 					'chords'			=> join(',', $transposedSong->transpositions[0]->chords)
 				),
 				'centered2' => array(
 					'offset' 			=> $transposedSong->transpositions[1]->offset,
-					'lowestNote' 		=> $transposedSong->transpositions[1]->lowestNote,
-					'highestNote' 		=> $transposedSong->transpositions[1]->highestNote,
+					'lowestNote' 		=> $transposedSong->transpositions[1]->range->lowest,
+					'highestNote' 		=> $transposedSong->transpositions[1]->range->highest,
 					'score' 			=> $transposedSong->transpositions[1]->score,
 					'capo' 				=> $transposedSong->transpositions[1]->getCapo(),
 					'chords'			=> join(',', $transposedSong->transpositions[1]->chords)
@@ -266,8 +266,8 @@ SQL;
 			{
 				$testResult[$transposedSong->song->idSong]['notEquivalent'] = array(
 					'offset' 			=> $transposedSong->not_equivalent->offset,
-					'lowestNote' 		=> $transposedSong->not_equivalent->lowestNote,
-					'highestNote' 		=> $transposedSong->not_equivalent->highestNote,
+					'lowestNote' 		=> $transposedSong->not_equivalent->range->lowest,
+					'highestNote' 		=> $transposedSong->not_equivalent->range->highest,
 					'score' 			=> $transposedSong->not_equivalent->score,
 					'capo' 				=> $transposedSong->not_equivalent->getCapo(),
 					'deviationFromCentered' => $transposedSong->not_equivalent->deviationFromCentered,

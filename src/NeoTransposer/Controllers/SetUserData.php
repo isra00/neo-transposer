@@ -22,6 +22,11 @@ class SetUserData
 			$app['neouser']->id_book = intval($request->get('book'));
 		}
 
+		if (empty($app['neouser']->range) && ($request->get('lowest_note') || $request->get('highest_note')))
+		{
+			$app['neouser']->range = new NotesRange;
+		}
+
 		if ($request->get('lowest_note'))
 		{
 			$app['neouser']->range->lowest = $request->get('lowest_note');

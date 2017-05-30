@@ -62,8 +62,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 			0,
 			false,
 			2,
-			'C#2',
-			'C#3',
+			new NotesRange('C#2', 'C#3'),
 			0
 		);
 
@@ -81,7 +80,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
-			['Bm', 'Em', 'G', 'D'], 0, true, 0, 'B1', 'B2', 0, 'B1', 'B2'
+			['Bm', 'Em', 'G', 'D'], 0, true, 0, new NotesRange('B1', 'B2'), 0, 'B1', 'B2'
 		);
 
 		$this->assertEquals($expected, $this->transposer->calculateCenteredTransposition());
@@ -90,14 +89,14 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testCalculateEquivalentsWithCapo()
 	{
 		$testTransposition = $this->getNewTransposition();
-		$testTransposition->setTranspositionData(array('Bm', 'Em', 'G', 'D'), 0, false, null, null, null, null, 'B1', 'B2');
+		$testTransposition->setTranspositionData(['Bm', 'Em', 'G', 'D'], 0, false, null, null, null, null, 'B1', 'B2');
 		
 		$expected = [
-			1=> $this->getNewTransposition()->setTranspositionData(['A#m', 'D#m', 'F#', 'C#'], 1, false, null, null, null, null, $this->chordsScoreConfig),
-			$this->getNewTransposition()->setTranspositionData(['Am', 'Dm', 'F', 'C'], 2, true, null, null, null, null, $this->chordsScoreConfig),
-			$this->getNewTransposition()->setTranspositionData(['G#m', 'C#m', 'E', 'B'], 3, false, null, null, null, null, $this->chordsScoreConfig),
-			$this->getNewTransposition()->setTranspositionData(['Gm', 'Cm', 'D#', 'A#'], 4, false, null, null, null, null, $this->chordsScoreConfig),
-			$this->getNewTransposition()->setTranspositionData(['F#m', 'Bm', 'D', 'A'], 5, false, null, null, null, null, $this->chordsScoreConfig)
+			1=> $this->getNewTransposition()->setTranspositionData(['A#m', 'D#m', 'F#', 'C#'], 1, false),
+			$this->getNewTransposition()->setTranspositionData(['Am', 'Dm', 'F', 'C'], 2, true),
+			$this->getNewTransposition()->setTranspositionData(['G#m', 'C#m', 'E', 'B'], 3, false),
+			$this->getNewTransposition()->setTranspositionData(['Gm', 'Cm', 'D#', 'A#'], 4, false),
+			$this->getNewTransposition()->setTranspositionData(['F#m', 'Bm', 'D', 'A'], 5, false)
 		];
 
 		$equivalents = $this->transposer->calculateEquivalentsWithCapo($testTransposition);
@@ -133,7 +132,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
-			['C', 'E', 'Am', 'G', 'F'], 0, false, -2, 'B1', 'D3', 1
+			['C', 'E', 'Am', 'G', 'F'], 0, false, -2, new NotesRange('B1', 'D3'), 1
 		);
 
 		$this->assertEquals(
@@ -150,7 +149,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
-			['Em', 'D'], 0, false, 7, 'B2', 'E3', 0, $this->chordsScoreConfig
+			['Em', 'D'], 0, false, 7, new NotesRange('B2', 'E3'), 0
 		);
 
 		$this->assertEquals(
@@ -166,9 +165,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 		);
 
 		$expected = $this->getNewTransposition();
-		$expected->setTranspositionData(
-			['Dm', 'C'], 0, false, -7, 'A1', 'D2', 0, $this->chordsScoreConfig
-		);
+		$expected->setTranspositionData(['Dm', 'C'], 0, false, -7, new NotesRange('A1', 'D2'));
 
 		$this->assertEquals(
 			$expected,

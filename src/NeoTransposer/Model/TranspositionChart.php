@@ -35,7 +35,7 @@ class TranspositionChart
 
 	public function addTransposition($caption, $cssClass, Transposition $transposition)
 	{
-		$this->addVoice($caption, $cssClass, new NotesRange($transposition->lowestNote, $transposition->highestNote));
+		$this->addVoice($caption, $cssClass, $transposition->range);
 	}
 	
 	public function getChart()

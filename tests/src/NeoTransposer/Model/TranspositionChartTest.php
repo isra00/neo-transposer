@@ -35,8 +35,7 @@ class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 						->disableOriginalConstructor()
 						->getMock();
 
-		$mockTransposition->lowestNote 	= 'C1';
-		$mockTransposition->highestNote = 'C2';
+		$mockTransposition->range = new NotesRange('C1', 'C2');
 
 		$chart = new TranspositionChart($mockNc, $mockSong, $mockUser);
 		$chart->addTransposition('testCaption', 'testCssClass', $mockTransposition);

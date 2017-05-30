@@ -3,10 +3,10 @@
 namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
-use NeoTransposer\Controllers;
 use \NeoTransposer\NeoApp;
 use \NeoTransposer\Model\SongTextForWizard;
 use \NeoTransposer\Model\AutomaticTransposer;
+use \NeoTransposer\Model\NotesRange;
 
 /**
  * Wizard Empiric: measure the user's voice range through an empirical test.
@@ -60,6 +60,11 @@ class WizardEmpiric
 		if (null === $req->get('can_sing'))
 		{
 			$action_no = 'lowFirstTime';
+		}
+
+		if (empty($app['neouser']->range))
+		{
+			$app['neouser']->range = new NotesRange;
 		}
 
 		//If yes, lower down 1 semitone and retry
