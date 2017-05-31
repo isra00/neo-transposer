@@ -2,8 +2,9 @@
 
 namespace NeoTransposer\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use \NeoTransposer\Model\NotesRange;
 
 /**
  * Sets the user data and redirect. There is no response body.
