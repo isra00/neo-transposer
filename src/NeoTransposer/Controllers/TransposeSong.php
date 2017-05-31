@@ -2,10 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
-use \NeoTransposer\Model\TransposedSong;
-use \NeoTransposer\Model\TranspositionChart;
-use \NeoTransposer\Model\NotesCalculator;
-
+use \NeoTransposer\Model\{TransposedSong, NotesRange, TranspositionChart, NotesCalculator};
 use \Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,8 +15,7 @@ class TransposeSong
 		//For the teaser (not logged in), transpose for a standard male voice
 		if (!$app['neouser']->isLoggedIn())
 		{
-			$app['neouser']->range->lowest  = 'B1';
-			$app['neouser']->range->highest = 'F#3';
+			$app['neouser']->range = new NotesRange('B1', 'F#3');
 		}
 		else
 		{
