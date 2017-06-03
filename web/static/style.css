@@ -605,8 +605,12 @@ a.link-all-report {
 		.transposition-feedback button.no {
 			background: #c4392d;
 		}
+		.transposition-feedback button.lowlighted {
+			opacity: .7;
+		}
 			.transposition-feedback button.no:hover {
 				background-color: #E53A2B;
+				opacity: 1;
 			}
 	
 	.transposition-feedback .thanks {

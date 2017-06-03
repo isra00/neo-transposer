@@ -92,7 +92,7 @@
 			{% trans %}Yes{% endtrans %} {% if feedback == 'yes' %}&#10004;{% endif %}
 			<small>{% trans %}It has worked{% endtrans %}</small>
 		</button>
-		<button type="submit" name="worked" value="0" class="no {% if feedback == 'no' %}highlighted{% endif %}" id="feedback-no">
+		<button type="submit" name="worked" value="0" class="no {% if feedback == 'no' %}highlighted{% endif %} {% if feedback == 'yes' %}lowlighted{% endif %}" id="feedback-no">
 			{% trans %}No{% endtrans %}
 			<small>{% trans %}It hasn't worked{% endtrans %}</small>
 		</button>
