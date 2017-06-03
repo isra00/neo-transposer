@@ -109,13 +109,18 @@ SQL;
 SELECT 
   book.id_book, 
   song_count total,
-  sc.current
+  sc.current,
+  peopledata.peopledata
 FROM 
   book
 JOIN
 (
-  SELECT id_book, count(id_song) current FROM song GROUP BY id_book
+  SELECT id_book, COUNT(id_song) current FROM song GROUP BY id_book
 ) sc ON sc.id_book = book.id_book
+JOIN
+(
+  SELECT id_book, COUNT(id_song) peopledata FROM song WHERE NOT people_lowest_note = '' AND NOT people_lowest_note IS NULL GROUP BY id_book
+) peopledata ON peopledata.id_book = book.id_book
 SQL;
 
 		return $this->app['db']->fetchAll($sql);

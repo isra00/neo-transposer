@@ -53,7 +53,7 @@
 
 </article>
 
-<article>
+<article class="global-performance">
 	<h2>Global performance</h2>
 
 	<div class="circles-container">
@@ -65,11 +65,22 @@
 		</h4>
 	</div>
 
+	<h4>Availability</h4>
 	<div class="circles-container">
 	{% for book in song_availability %}
 		<h4 class="data-circle small-circle">
 			<span>{{ app.books[book.id_book].lang_name }}</span> 
 			<b>{{ ((book.current / book.total) * 100)|round(0, 'floor') }}<small>%</small></b>
+		</h4>
+	{% endfor %}
+	</div>
+
+	<h4>People voice range</h4>
+	<div class="circles-container people-data">
+	{% for book in song_availability %}
+		<h4 class="data-circle small-circle">
+			<span>{{ app.books[book.id_book].lang_name }}</span> 
+			<b>{{ ((book.peopledata / book.current) * 100)|round(0, 'floor') }}<small>%</small></b>
 		</h4>
 	{% endfor %}
 	</div>
@@ -260,8 +271,8 @@
 			<th>Action</th>
 			<th>Old perf</th>
 			<th>Current FB</th>
-			<th>Current perf</th>
 			<th>Total</th>
+			<th>Current perf</th>
 		</tr></thead>
 		<tbody>
 	{% for user in unhappy_users %}

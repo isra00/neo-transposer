@@ -900,6 +900,7 @@ h2.step-1 {
 		clear: both;
 		width: auto;
 	}
+
 	.admin-dashboard article h2 {
 		margin: 0 -0.5rem .5em;
 		padding: 0 .5rem .5em;
@@ -910,6 +911,9 @@ h2.step-1 {
 		color: #555;
 	}
 	.circles-container {
+		text-align: center;
+	}
+	.admin-dashboard article.global-performance h4 {
 		text-align: center;
 	}
 	.admin-dashboard .data-circle {
@@ -953,7 +957,7 @@ h2.step-1 {
 		max-width: 90px;
 		height: 90px;
 		max-height: 90px;
-		background-color: #92791e;
+		background-color: #911146;
 	}
 		.admin-dashboard .data-circle.small-circle span {
 			font-size: .8em;
@@ -961,6 +965,16 @@ h2.step-1 {
 		.admin-dashboard .data-circle.small-circle b {
 			font-size: 2em;
 		}
+			.admin-dashboard .data-circle.small-circle b small {
+				font-size: .6em;
+			}
+	.admin-dashboard .circles-container.people-data .data-circle {
+		background-color: #009393;
+	}
+	.admin-dashboard .circles-container.people-data .data-circle:first-child {
+		background-color: #d32f2f;
+		/*color: #5d5a22;*/
+	}
 
 .feedback-graph {
 	width: 102px;
