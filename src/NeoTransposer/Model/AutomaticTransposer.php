@@ -69,7 +69,6 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * searching nonEquivalent transpositions.
 	 * 
 	 * @var array
-	 * @todo Convert into constant? It seems that PHP>7 admits array constants.
 	 */
 	const OFFSETS_NOT_EQUIVALENT = [-1, 1];
 

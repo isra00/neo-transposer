@@ -181,7 +181,7 @@ class TransposedSong
 	/**
 	 * Check whether the given transposition is within people's range for the current song.
 	 */
-	public function isCompatibleWithPeople(Transposition $transposition, PeopleCompatibleCalculation $pcc)
+	public function isCompatibleWithPeople(Transposition $transposition)
 	{
 		//No people data, no compatible.
 		if (empty($this->song->peopleRange))

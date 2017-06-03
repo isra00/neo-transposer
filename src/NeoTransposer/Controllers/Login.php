@@ -4,7 +4,6 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Model\User;
-use \NeoTransposer\Model\NotesRange;
 use \NeoTransposer\Persistence\UserPersistence;
 
 /**
