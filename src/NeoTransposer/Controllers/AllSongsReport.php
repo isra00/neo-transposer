@@ -42,7 +42,8 @@ class AllSongsReport
 			$tplVars['header_link'] = $app['absoluteBasePath'];
 		}
 
-		$responseBody = $app->render('all_songs_report.twig', $tplVars);
+		$tpl = $req->get('dev') ? 'all_songs_report_dev' : 'all_songs_report';
+		$responseBody = $app->render("$tpl.twig", $tplVars);
 
 		if (!$req->get('dl'))
 		{
@@ -88,7 +89,7 @@ SQL;
 			$song = TransposedSong::create($id['id_song'], $app);
 			$song->transpose();
 
-			//Remove bracketed text from song title (used for aclarations)
+			//Remove bracketed text from song title (used for clarifications)
 			$song->song->title = preg_replace('/(.)\[.*\]/', '$1', $song->song->title);
 
 			$songs[] = $song;

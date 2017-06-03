@@ -2,15 +2,16 @@
 
 namespace NeoTransposer\Controllers;
 
-use \NeoTransposer\Model\{TransposedSong, NotesRange, TranspositionChart, NotesCalculator};
+use \NeoTransposer\Model\{TransposedSong, NotesRange, TranspositionChart, NotesCalculator, PeopleCompatibleCalculation};
 use \Symfony\Component\HttpFoundation\Request;
+use \NeoTransposer\NeoApp;
 
 /**
  * Transpose Song page: transpose the given song for the singer's voice range.
  */
 class TransposeSong
 {
-	public function get(\NeoTransposer\NeoApp $app, Request $req, $id_song)
+	public function get(NeoApp $app, Request $req, $id_song)
 	{
 		//For the teaser (not logged in), transpose for a standard male voice
 		if (!$app['neouser']->isLoggedIn())
@@ -38,8 +39,6 @@ class TransposeSong
 
 		$transposedSong->transpose();
 
-		$tpl = array();
-
 		$your_voice = $app['neouser']->getVoiceAsString(
 			$app['translator'],
 			$app['neoconfig']['languages'][$app['locale']]['notation']
@@ -47,20 +46,61 @@ class TransposeSong
 
 		$nc = new NotesCalculator;
 
-		$user_first_octave = (
-			array_search($app['neouser']->range->highest, $nc->numbered_scale)
-			- array_search($app['neouser']->range->lowest, $nc->numbered_scale)
-			< 12
-		);
+		$lessThanOneOctave = $nc->rangeWideness($app['neouser']->range) < 12;
 
-		$transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser']);
-		$transpositionChart->addTransposition(
-			'Transposed:', 
-			'transposed-song', 
-			$transposedSong->transpositions[0]
-		);
+		$transpositionChart = $this->generateTranspositionChart($nc, $app, $transposedSong);
 
-		return $app->render('transpose_song.twig', array_merge($tpl, array(
+		$tplVars = [];
+
+		if ($transposedSong->peopleCompatible)
+		{
+			$difference = ($transposedSong->peopleCompatible->deviationFromCentered > 0) 
+				? $app->trans('higher') 
+				: $app->trans('lower');
+			
+			if (PeopleCompatibleCalculation::ADJUSTED_WIDER == $transposedSong->peopleCompatibleStatus)
+			{
+				$peopleCompatibleMsg = $app->trans(
+					'This other transposition, though a bit %difference%, may probably fit better the people of the assembly. ', 
+					['%difference%' => $difference]
+				);
+			}
+			
+			if (PeopleCompatibleCalculation::ADJUSTED_WELL == $transposedSong->peopleCompatibleStatus)
+			{
+				$peopleCompatibleMsg = $app->trans(
+					'This other transposition, though a bit %difference%, fits well the people of the assembly. ', 
+					['%difference%' => $difference]
+				);
+
+				$tplVars['peopleCompatibleClass'] = 'star';
+			}
+
+			if (PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE == $transposedSong->peopleCompatibleStatus)
+			{
+				$peopleCompatibleMsg = $app->trans(
+					'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly. ', 
+					['%difference%' => $difference]
+				);
+			}
+
+			if (PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE == $transposedSong->peopleCompatibleStatus)
+			{
+				$peopleCompatibleMsg = $app->trans(
+					'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly. ', 
+					['%difference%' => $difference]
+				);
+			}
+
+			if ($transposedSong->peopleCompatible->score < $transposedSong->transpositions[0]->score)
+			{
+				$peopleCompatibleMsg .= $app->trans('And it has easier chords!');
+			}
+
+			$tplVars['peopleCompatibleMsg'] = $peopleCompatibleMsg;
+		}
+
+		return $app->render('transpose_song.twig', array_merge($tplVars, [
 			'song'				=> $transposedSong,
 			'your_voice'		=> $your_voice,
 			'voice_chart'		=> $transpositionChart->getChart(),
@@ -73,13 +113,40 @@ class TransposeSong
 			),
 			'feedback'			=> $this->getFeedbackForUser($app['db'], $app['neouser']->id_user, $transposedSong->song->idSong),
 
-			//If user's highest note is in the 1st octave, we suggest strongly using the wizard
-			'user_first_octave' => $user_first_octave,
+			'user_less_than_one_octave' => $lessThanOneOctave,
 			'url_wizard' 		=> $app->path('wizard_step1', ['_locale' => $app['locale']]),
 
 			//Non-JS browsers show message after clicking on feedback
 			'non_js_fb'			=>  $req->get('fb')
-		)));
+		]));
+	}
+
+	protected function generateTranspositionChart(NotesCalculator $nc, NeoApp $app, TransposedSong $transposedSong) : TranspositionChart
+	{
+		$transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser']);
+		$transpositionChart->addTransposition(
+			'Transposed:', 
+			'transposed-song', 
+			$transposedSong->transpositions[0]
+		);
+
+		if ($app['neoconfig']['people_compatible'] && $app['debug'])
+		{
+			if ($transposedSong->song->peopleRange)
+			{
+				$transpositionChart->addVoice('Original for people:', 'original-song', $transposedSong->song->peopleRange);
+				$transpositionChart->addVoice('Transposed for people:', 'transposed-song', $nc->transposeRange($transposedSong->song->peopleRange, $transposedSong->transpositions[0]->offset));
+				$transpositionChart->addVoice('People standard:', 'people-compatible', new NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]));
+			}
+			
+			if ($transposedSong->peopleCompatible)
+			{
+				$transpositionChart->addTransposition('Adjusted for you:', 'transposed-song', $transposedSong->peopleCompatible);
+				$transpositionChart->addVoice('Adjusted for people:', 'people-compatible', $transposedSong->peopleCompatible->peopleRange);
+			}
+		}
+
+		return $transpositionChart;
 	}
 
 	protected function getFeedbackForUser(\Doctrine\DBAL\Connection $db, $id_user, $id_song)

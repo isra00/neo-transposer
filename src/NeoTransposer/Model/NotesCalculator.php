@@ -94,6 +94,11 @@ class NotesCalculator
 	{
 		return $this->arrayIndex($this->numbered_scale, array_search($note, $this->numbered_scale) + $offset);
 	}
+
+	public function transposeRange(NotesRange $range, $offset)
+	{
+		return new NotesRange($this->transposeNote($range->lowest, $offset), $this->transposeNote($range->highest, $offset));
+	}
 	
 	/**
 	 * Calculates the absolute distance (in semitones) between two notes, with octave specified.
@@ -102,14 +107,8 @@ class NotesCalculator
 	 * @param  string 				$note2 	Another note, following the same pattern as $note1.
 	 * @return integer 			Distance in semitones.
 	 */
-	public function distanceWithOctave($note1, $note2=null)
+	public function distanceWithOctave(string $note1, string $note2=null)
 	{
-		/*if ($note1 instanceof NotesRange)
-		{
-			$note2 = $note1->highest;
-			$note1 = $note1->lowest;
-		}*/
-
 		return array_search($note1, $this->numbered_scale) - array_search($note2, $this->numbered_scale);
 	}
 

@@ -32,7 +32,7 @@ $app->register(new Provider\SecurityServiceProvider(), array(
 	)
 ));
 
-if (!empty($app['neoconfig']['profile']))
+if (!empty($app['neoconfig']['profiler']))
 {
 	if ($app['debug'])
 	{

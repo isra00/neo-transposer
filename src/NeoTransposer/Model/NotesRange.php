@@ -12,4 +12,10 @@ class NotesRange
 		$this->lowest  = $lowest;
 		$this->highest = $highest;
 	}
+
+	public function isWithinRange($otherRange, NotesCalculator $nc)
+	{
+		return ($nc->distanceWithOctave($this->highest, $otherRange->highest) <= 0)
+			&& ($nc->distanceWithOctave($otherRange->lowest, $this->lowest) <= 0);
+	}
 }

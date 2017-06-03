@@ -33,9 +33,12 @@
 	{% for song in songs %}
 		<li>
 			<h2>{{ song.song.page|default('&#248;')|raw }}
-			· {{ song.song.title }}</h2>
+			· {{ song.song.title }}
+			{% if global.debug %}[{{ song.song.idSong }}]{% endif %}
+			</h2>
 
 			<ul>
+{% block songTranspositions %}
 			{% for transposition in song.transpositions|slice(0,1) -%}
 				<li>
 					{% if transposition.capo %}
@@ -55,6 +58,7 @@
 					{% endif %}
 				</li>
 			{%- endfor %}
+{% endblock %}
 			</ul>
 		</li>
 	{% endfor %}

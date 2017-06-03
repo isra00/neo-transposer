@@ -26,7 +26,7 @@ class Song
 		$this->range 			= new NotesRange($dbColumns['lowest_note'], $dbColumns['highest_note']);
 		$this->slug 			= $dbColumns['slug'];
 		$this->firstChordIsTone	= $dbColumns['first_chord_is_tone'];
-		$this->peopleRange		= new NotesRange($dbColumns['people_lowest_note'], $dbColumns['people_highest_note']);
+		$this->peopleRange		= (!empty($dbColumns['people_lowest_note']) && !empty($dbColumns['people_highest_note'])) ? new NotesRange($dbColumns['people_lowest_note'], $dbColumns['people_highest_note']) : null;
 		$this->bookChordPrinter = $dbColumns['chord_printer'];
 		$this->bookLocale 		= $dbColumns['locale'];
 
