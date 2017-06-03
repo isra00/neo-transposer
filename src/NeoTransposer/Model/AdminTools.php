@@ -215,8 +215,10 @@ class AdminTools extends \NeoTransposer\AppAccess
 			true
 		);
 
-		$this->app['neouser']->range->lowest  = $testData['singerLowestVoice'];
-		$this->app['neouser']->range->highest = $testData['singerHighestVoice'];
+		$this->app['neouser']->range = new NotesRange(
+			$testData['singerLowestVoice'], 
+			$testData['singerHighestVoice']
+		);
 
 		$sql = <<<SQL
 SELECT id_song
