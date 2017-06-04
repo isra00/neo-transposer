@@ -168,20 +168,20 @@ SQL;
 		$sql = <<<SQL
 SELECT unhappy_user.*, user.id_user id_user, user.email, y.yes yes, n.no no, y.yes + n.no total, yes/(y.yes + n.no) perf
 FROM user
-JOIN
+LEFT JOIN
 (
 	SELECT id_user, COUNT(worked) yes
 	FROM transposition_feedback
 	WHERE worked=1
 	GROUP BY id_user
 ) y ON user.id_user = y.id_user
-JOIN
+LEFT JOIN
 (
 	SELECT id_user, COUNT(worked) no
 	FROM transposition_feedback
 	WHERE worked=0
 	GROUP BY id_user
-) n ON y.id_user = n.id_user
+) n ON user.id_user = n.id_user
 LEFT JOIN unhappy_user ON n.id_user = unhappy_user.id_user
 WHERE 
 (
