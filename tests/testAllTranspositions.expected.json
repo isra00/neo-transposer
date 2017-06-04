@@ -3446,22 +3446,31 @@
 		},
 		"308": {
 			"songLowestNote": "G1",
-			"songHighestNote": "E2",
+			"songHighestNote": "G2",
 			"centered1": {
-				"offset": 7,
-				"lowestNote": "D2",
-				"highestNote": "B2",
-				"score": 7,
-				"capo": 0,
-				"chords": "G,Em,C,D"
+				"offset": 6,
+				"lowestNote": "C#2",
+				"highestNote": "C#3",
+				"score": 13,
+				"capo": 4,
+				"chords": "D,Bm,G,A"
 			},
 			"centered2": {
+				"offset": 6,
+				"lowestNote": "C#2",
+				"highestNote": "C#3",
+				"score": 18,
+				"capo": 1,
+				"chords": "F,Dm,A#,C"
+			},
+			"notEquivalent": {
 				"offset": 7,
 				"lowestNote": "D2",
-				"highestNote": "B2",
-				"score": 13,
-				"capo": 5,
-				"chords": "D,Bm,G,A"
+				"highestNote": "D3",
+				"score": 7,
+				"capo": 0,
+				"deviationFromCentered": 1,
+				"chords": "G,Em,C,D"
 			}
 		},
 		"309": {
@@ -3744,11 +3753,11 @@
 		},
 		"331": {
 			"songLowestNote": "G2",
-			"songHighestNote": "E3",
+			"songHighestNote": "F3",
 			"centered1": {
 				"offset": -5,
 				"lowestNote": "D2",
-				"highestNote": "B2",
+				"highestNote": "C3",
 				"score": 7,
 				"capo": 0,
 				"chords": "G,Em,Am,D"
@@ -3756,7 +3765,7 @@
 			"centered2": {
 				"offset": -5,
 				"lowestNote": "D2",
-				"highestNote": "B2",
+				"highestNote": "C3",
 				"score": 12,
 				"capo": 5,
 				"chords": "D,Bm,Em,A"
@@ -4288,22 +4297,22 @@
 			}
 		},
 		"357": {
-			"songLowestNote": "E2",
+			"songLowestNote": "C2",
 			"songHighestNote": "F3",
 			"centered1": {
-				"offset": -4,
-				"lowestNote": "C2",
-				"highestNote": "C#3",
+				"offset": -2,
+				"lowestNote": "A#1",
+				"highestNote": "D#3",
 				"score": 26,
-				"capo": 1,
+				"capo": 3,
 				"chords": "G,D,C,Em,Am,B,B7,D7"
 			},
 			"centered2": {
-				"offset": -4,
-				"lowestNote": "C2",
-				"highestNote": "C#3",
+				"offset": -2,
+				"lowestNote": "A#1",
+				"highestNote": "D#3",
 				"score": 36,
-				"capo": 3,
+				"capo": 5,
 				"chords": "F,C,A#,Dm,Gm,A,A7,C7"
 			}
 		},
