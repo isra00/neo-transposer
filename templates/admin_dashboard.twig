@@ -282,7 +282,7 @@
 				<td>{{ user.action|default('-') }}</td>
 				<td>{% if user.perf_before_action %}{{ user.perf_before_action|round(2) }}{% endif %}</td>
 				<td>{{ self.feedbackGraph(user.yes, user.no) }}</td>
-				<td>{{ user.total }}</td>
+				<td>{{ 0 + user.total }}</td>
 				<td class="{% if user.perf_before_action %}{{ (user.perf > user.perf_before_action) ? 'green' : 'red' }}{% endif %}">{{ user.perf|round(2) }}</td>
 			</tr>
 	{% endfor %}
