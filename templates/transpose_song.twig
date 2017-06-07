@@ -87,7 +87,7 @@
 </p>
 {% endif %}
 
-{% if global.debug %}
+{% if global.debug and song.peopleCompatibleStatus %}
 <p class="tip no-icon"><big style="font-size: 2em">💭</big> {{ song.peopleCompatibleStatusMsg }}</p>
 {% endif %}
 

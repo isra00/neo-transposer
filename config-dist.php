@@ -38,6 +38,7 @@ return [
 	'templates_dir'		=> __DIR__ . '/templates',
 	'mmdb'				=> 'GeoLite2-Country.mmdb',
 	'test_all_transpositions_expected' => __DIR__ . '/tests/testAllTranspositions.expected.json',
+	'test_all_transpositions_expected_pc' => __DIR__ . '/tests/testAllTranspositions.expected.PeopleCompatible.json',
 	'css_cache'			=> '4723e58f10a4d95037a4aab0bc8744ff',
 
 	'analytics_id'		=> 'UA-57809429-1',
@@ -46,6 +47,8 @@ return [
 	'software_name'		=> 'Neo-Transposer',
 	'seo_title_suffix'	=> 'Transpose chords',
 
+	'admins'			=> ['your admin user' => ['ROLE_ADMIN', 'encrypted admin password']],
+
 	'people_range'		=> ['B1', 'B2'],
 
 	'debug'				=> true,
@@ -53,5 +56,7 @@ return [
 
 	//Feature flags
 	'hide_second_centered_if_not_equivalent' => true,
-	'people_compatible' => true,
+	'people_compatible' => false,
+
+	'people_compatible_users' => [5],
 ];
