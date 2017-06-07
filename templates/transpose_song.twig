@@ -5,7 +5,7 @@
 {% macro printTransposition(transposition, original_chords) -%}
 	<table class="transposition">
 		<thead>
-			<tr><th {% if not transposition.getAsBook %}colspan="3"{% endif %}>
+			<tr><th {% if not transposition.getAsBook %}colspan="{{ global.debug ? 4:3 }}"{% endif %}>
 				{{ transposition.chordsForPrint[0]|raw }}
 				<span class="capo">{{ transposition.getCapoForPrint() }}</span>
 				{% if global.debug -%}
@@ -72,11 +72,23 @@
 {% endif %}
 
 {% if song.peopleCompatible %}
-{% set difference = (song.not_equivalent.deviationFromCentered > 0) ? 'higher'|trans : 'lower'|trans %}
-<p class="explanation">{% trans with {'%difference%': difference } %}This other transposition is a bit %difference%, but it fits the song into the people's standard voice range:{% endtrans %}</p>
+<p class="explanation people-compatible {{ peopleCompatibleClass|default('') }}">
+	{{ peopleCompatibleMsg }}
+</p>
 <div class="transpositions-list">
 	{{ self.printTransposition(song.peopleCompatible, song.song.originalChords) }}
 </div>
+{% endif %}
+
+{% if song.isAlreadyPeopleCompatible %}
+<p class="tip icon-star tip-people-compatible">
+	{% trans %}With these chords the assembly too will be able to sing the song comfortably.{% endtrans %}
+	<small><a href="">{% trans %}Learn more{% endtrans %}</a></small>
+</p>
+{% endif %}
+
+{% if global.debug and song.peopleCompatibleStatus %}
+<p class="tip no-icon"><big style="font-size: 2em">💭</big> {{ song.peopleCompatibleStatusMsg }}</p>
 {% endif %}
 
 <a name="feedback"></a>
@@ -101,7 +113,7 @@
 	<div class="thanks {% if non_js_fb != 'yes' %}hidden{% endif %}" id="feedback-thanks">{% trans %}Happy to know that! :-){% endtrans %}</div>
 	
 	<ul id="reasons-no" class="{% if non_js_fb != 'no' %}hidden{% endif %}">
-		{% if user_first_octave %}
+		{% if user_less_than_one_octave %}
 		<li class="big">{% trans with {'%url%': url_wizard ~ "#afterNegativeFeedbackWithBadVoice"} %}It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.{% endtrans %}</li>
 		{% else %}
 		<li>{% trans with {'%url%': url_wizard ~ "#afterNegativeFeedback"} %}Maybe you didn't measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.{% endtrans %}</li>
@@ -116,8 +128,6 @@
 	<em>{% trans %}Your voice:{% endtrans %}</em> {{ your_voice|raw }}
 	<a href="{{ path('user_voice', {'_locale': app.locale, 'redirect': global.request.getRequestUri}) }}" class="small-button">{% trans %}Change{% endtrans %}</a>
 </div>
-
-<p class="tip">{% trans %}Beware that this is the best key for your voice, but might not be the best one for the assembly.{% endtrans %}</p>
 
 <p class="show-voice-chart">
 	<a href="javascript:void(0)" class="btn-neutral" onclick="NT.showChart(this.parentNode)">{% trans %}Show voice chart{% endtrans %}</a>

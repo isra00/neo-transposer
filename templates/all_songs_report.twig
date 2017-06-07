@@ -33,9 +33,12 @@
 	{% for song in songs %}
 		<li>
 			<h2>{{ song.song.page|default('&#248;')|raw }}
-			· {{ song.song.title }}</h2>
+			· {{ song.song.title }}
+			{% if global.debug %}<a href="{{ path('transpose_song', {'id_song' : song.song.idSong }) }}">[{{ song.song.idSong }}]</a>{% endif %}
+			</h2>
 
 			<ul>
+{% block songTranspositions %}
 			{% for transposition in song.transpositions|slice(0,1) -%}
 				<li>
 					{% if transposition.capo %}
@@ -55,6 +58,7 @@
 					{% endif %}
 				</li>
 			{%- endfor %}
+{% endblock %}
 			</ul>
 		</li>
 	{% endfor %}

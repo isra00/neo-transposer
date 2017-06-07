@@ -1,8 +1,12 @@
 <?php
 
-use \NeoTransposer\Model\AutomaticTransposer;
-use \NeoTransposer\Model\Transposition;
-use \NeoTransposer\Model\NotesRange;
+use \NeoTransposer\Model\{
+	AutomaticTransposer, 
+	Transposition, 
+	NotesRange, 
+	PeopleCompatibleTransposition, 
+	PeopleCompatibleCalculation
+};
 
 /**
  * @todo Add some corner cases to transposition algorithms
@@ -39,10 +43,17 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 		if (empty($this->app))
 		{
 			$this->app = new \Silex\Application;
-			$this->app['neoconfig'] = ['chord_scores' => $this->chordsScoreConfig];
+			$this->app['neoconfig'] = [
+				'chord_scores' => $this->chordsScoreConfig,
+				'people_range' => ['B1', 'B2'],
+			];
 
 			$this->app['new.Transposition'] = $this->app->factory(function ($app) {
 				return new \NeoTransposer\Model\Transposition($app);
+			});
+
+			$this->app['new.PeopleCompatibleTransposition'] = $this->app->factory(function ($app) {
+				return new \NeoTransposer\Model\PeopleCompatibleTransposition($app);
 			});
 		}
 
@@ -170,6 +181,170 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 		$this->assertEquals(
 			$expected,
 			$this->transposer->calculateCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
+		);
+	}
+
+	public function testPeopleCompatibleNoData()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], true
+		);
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA, 
+			null
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
+		);
+	}
+
+	public function testPeopleCompatibleAlreadyCompatible()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), new NotesRange('A2', 'F3'), ['Am', 'E'], true, new NotesRange('A2', 'D3')
+		);
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::ALREADY_COMPATIBLE, 
+			null
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
+		);
+	}
+
+	public function testPeopleCompatibleWiderThanSinger()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), new NotesRange('A1', 'F3'), ['Am', 'E'], true, new NotesRange('A2', 'D3')
+		);
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::WIDER_THAN_SINGER, 
+			null
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
+		);
+	}
+
+	public function testPeopleCompatibleWiderNotAdjusted()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), new NotesRange('D2', 'F#3'), ['Em', 'D'], true, new NotesRange('D2', 'E3')
+		);
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER, 
+			null
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
+		);
+	}
+
+	public function testPeopleCompatibleWiderAdjusted()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), new NotesRange('A1', 'D3'), ['Am', 'E'], true, new NotesRange('A1', 'D3')
+		);
+
+		$ppc = new \NeoTransposer\Model\PeopleCompatibleTransposition($this->app);
+		$ppc->setTranspositionData(['Am', 'E'], 2, true, 2, new NotesRange('B1', 'E3'), 1);
+		$ppc->peopleRange = new NotesRange('B1', 'E3');
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::ADJUSTED_WIDER, 
+			$ppc
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
+		);
+	}
+
+	public function testPeopleCompatibleAdjustedButStillTooHigh()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), 
+			new NotesRange('A1', 'D3'), 
+			['Am', 'Dm'], 
+			true, 
+			new NotesRange('G#2', 'D3')
+		);
+
+		$ppc = new \NeoTransposer\Model\PeopleCompatibleTransposition($this->app);
+		$ppc->setTranspositionData(['Em', 'Am'], 5, false, 0, new NotesRange('A1', 'D3'), -1);
+		$ppc->peopleRange = new NotesRange('G#2', 'D3');
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE, 
+			$ppc
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
+		);
+	}
+
+	public function testPeopleCompatibleAdjustedWellHigh()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), 
+			new NotesRange('B1', 'B2'), 
+			['D', 'Em'], 
+			false, 
+			new NotesRange('B1', 'B2')
+		);
+
+		$ppc = new \NeoTransposer\Model\PeopleCompatibleTransposition($this->app);
+		$ppc->setTranspositionData(['D', 'Em'], 0, true, 0, new NotesRange('B1', 'B2'), -2);
+		$ppc->peopleRange = new NotesRange('B1', 'B2');
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::ADJUSTED_WELL, 
+			$ppc
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
+		);
+	}
+
+	public function testPeopleCompatibleAdjustedWellLow()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), 
+			new NotesRange('B1', 'E3'), 
+			['Am', 'Dm', 'E'], 
+			true, 
+			new NotesRange('B1', 'F2')
+		);
+
+		$ppc = new \NeoTransposer\Model\PeopleCompatibleTransposition($this->app);
+		$ppc->setTranspositionData(['Am', 'Dm', 'E'], 0, true, 0, new NotesRange('B1', 'E3'), 1);
+		$ppc->peopleRange = new NotesRange('B1', 'F2');
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::ADJUSTED_WELL, 
+			$ppc
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
 		);
 	}
 }

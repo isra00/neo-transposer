@@ -105,6 +105,10 @@ hr {
 	margin: 1em auto 2em;
 	width: 40rem;
 }
+	.full-width .main { 
+		margin: 0 2%;
+		width: auto;
+	}
 
 .notification {
 	padding: .5em;
@@ -181,6 +185,14 @@ footer {
 	.tip.no-icon {
 		background-image: none;
 		padding-left: 1em;
+		min-height: auto;
+	}
+
+	.tip.icon-star {
+		background-image: url(img/icon-star.svg);
+		background-size: 48px 48px;
+		padding-left: 70px;
+		min-height: 50px;
 	}
 
 	.tip h3 {
@@ -445,6 +457,13 @@ a.link-all-report {
 	margin-bottom: 0;
 	clear: both;
 }
+	.explanation.people-compatible.star {
+		background: url(img/icon-star.svg) left top no-repeat;
+		padding-left: 40px;
+		background-size: 32px 32px;
+		min-height: 32px;
+		font-size: 1.1em;
+	}
 
 .transpositions-list {
 	overflow: hidden;
@@ -547,7 +566,7 @@ a.link-all-report {
 }
 .chord-sans {
 	color: #e00;
-	font-family: sans-serif;
+	font-family: 'Droid Sans', Arial, sans-serif;
 }
 .chord-color {
 	color: #e00;
@@ -644,6 +663,10 @@ a.link-all-report {
 	margin-top: 1.5em;
 }
 
+.tip.tip-people-compatible {
+	font-size: 1.1em;
+}
+
 #voicechart-container {
 	padding-bottom: 1em;
 	border-top: 1px solid silver;
@@ -697,11 +720,11 @@ a.link-all-report {
 		background: green;
 	}
 	.voicechart .people-compatible td {
-		color: fuchsia;
+		color: olive;
 		background: white;
 	}
 	.voicechart .people-compatible td.note {
-		background: fuchsia;
+		background: olive;
 	}
 
 

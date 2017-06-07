@@ -3,12 +3,12 @@
 namespace NeoTransposer\Model;
 
 /**
- * Core algorithm for transposing songs. It implementing three types of transpositions: 
+ * Core algorithm for transposing songs. It implementing four types of transpositions: 
  *
- * - centered: the song voice range is transposed to the center of singer's voice range.
- * - equivalentsWithCapo: transpositions equivalent to the centered using capo 1 to 5, searching one whose chords are easier than the centered.
- * - notEquivalent: transpose the centered ±1 and get its equivalents with capo, searching one whose chords are easier than the centered and the equivalentsWithCapo.
- * - peopleCompatible: transposition that is within the singer's voice range but also withing the people's voice range in the parts of the song that are sung by the people. Additional data is required (people_lowest_note, people_highest_note) for each song.
+ * 1) centered: the song voice range is transposed to the center of singer's voice range.
+ * 2) equivalentsWithCapo: transpositions equivalent to the centered using capo 1 to 5, searching one whose chords are easier than the centered.
+ * 3) notEquivalent: transpose the centered ±1 and get its equivalents with capo, searching one whose chords are easier than the centered and the equivalentsWithCapo.
+ * 4) peopleCompatible: transposition that is within the singer's voice range but also within the people's voice range in the parts of the song that are sung by the people. Additional data is required (people_lowest_note, people_highest_note) for each song.
  * 
  * Additionally, after transposing the chords, some chords that are difficult to
  * beginners are replaced by others somehow equivalent, like B7 instead of B. This
@@ -37,7 +37,14 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 */
 	protected $songRange;
 
+	/**
+	 * @type array
+	 */
 	protected $originalChords;
+
+	/**
+	 * @type boolean
+	 */
 	protected $firstChordIsKey;
 
 	/**
@@ -62,9 +69,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * searching nonEquivalent transpositions.
 	 * 
 	 * @var array
-	 * @todo Convert into constant? It seems that PHP>7 admits array constants.
 	 */
-	protected $offsetsNotEquivalent = array(-1, 1);
+	const OFFSETS_NOT_EQUIVALENT = [-1, 1];
 
 	/**
 	 * Set all data needed to calculate the transpositions.
@@ -168,10 +174,11 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * The criteria for which chords are easier or harder are implemented in
 	 * Transposition::setScore().
 	 * 
-	 * @param  Transposition $transposition A given transposition without capo.
-	 * @return array Array of <Transposition> with capo from 1 to 5.
+	 * @param 	Transposition	$transposition	A given transposition without capo.
+	 * @param	string			$dcFactory		Dependency Container factory for constructing Transposition objects
+	 * @return	array			Array of <Transposition> with capo from 1 to 5.
 	 */
-	public function calculateEquivalentsWithCapo(Transposition $transposition)
+	public function calculateEquivalentsWithCapo(Transposition $transposition, string $dcFactory='new.Transposition')
 	{
 		$withCapo = array();
 
@@ -179,7 +186,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		{
 			$transposedChords = $this->nc->transposeChords($transposition->chords, $i * (-1));
 
-			$withCapo[$i] = $this->app['new.Transposition']->setTranspositionData(
+			$withCapo[$i] = $this->app[$dcFactory]->setTranspositionData(
 				$transposedChords,
 				$i,
 				($transposedChords == $this->originalChords),
@@ -220,7 +227,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		if (empty($this->centeredAndEquivalent))
 		{
 			$centeredTransposition = $this->calculateCenteredTransposition($forceVoiceLimit);
-			$equivalents = $this->calculateEquivalentsWithCapo($centeredTransposition, $this->originalChords);
+			$equivalents = $this->calculateEquivalentsWithCapo($centeredTransposition);
 
 			$centeredAndEquivalent = array_merge(array($centeredTransposition), $equivalents);
 			$centeredAndEquivalent = $this->sortTranspositionsByEase($centeredAndEquivalent);
@@ -254,7 +261,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	public function calculateAlternativeNotEquivalent()
 	{
 		$nearTranspositions = $this->calculateSurroundingTranspositions(
-			$this->offsetsNotEquivalent,
+			self::OFFSETS_NOT_EQUIVALENT,
 			$this->getTranspositions()[0]->score
 		);
 
@@ -346,81 +353,204 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		return $nearTranspositions;
 	}
 
-	/** @todo Is this really necessary? */
-	public function setSongPeopleRange($songPeopleRange)
+	/**
+	 * Calculate transposition compatible with a standard range of people.
+	 * 
+	 * In this algorithm six cases may occur:
+	 * 1) No data in DB for the people range of the song: no adjustment done.
+	 * 2) The centeredTransposition already falls within people's range: no adjustment done.
+	 * 3) The song's range is wider than singer's range: no adjustment done.
+	 * 4) peopleSong range is wider or equal than people's range: move it (as 
+	 *    far as the singer's range allows) to the people range's bottom, so 
+	 *    that the excess is put in the highest notes. It is the same design 
+	 *    decision as in CenteredTransposition when the song's range > singer's 
+	 *    range.
+	 * 5) The centered transposition is too low for the people: it is raised up
+	 *    until peopleSong.lowest = people.lowest, but limited by the singer's
+	 *    range (i.e., singer.highest =< song.highest)
+	 * 6) The centered transposition is too high for the people: it is lowered
+	 *    down until peopleSong.highest = people.highest, but limited by the
+	 *    singer's range. This case and the former one presuppose that 
+	 *    peopleSong range is NOT wider than people's range.
+	 * 
+	 * The case that occured is reported in the returned PeopleCompatibleCalculation::$status
+	 * Calculations (offsets) are done based on the centeredTransposition.
+	 * This algorithm does not deal with the relation of this transposition
+	 * with others (i.e. hiding notEquivalent when there is peopleCompatible, etc.)
+	 */
+	public function calculatePeopleCompatible() : PeopleCompatibleCalculation
 	{
-		$this->songPeopleRange  = $songPeopleRange;
-	}
-
-	public function calculatePeopleCompatible()
-	{
+		// 1) No data in DB for the people range of the song: nothing is done
 		if (empty($this->songPeopleRange))
 		{
-			//var_dump("No hay people data");
-			return;
+			return new PeopleCompatibleCalculation(PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA);
 		}
 
-		$peopleRange = new NotesRange('B1', 'B2');
+		$peopleRange 			= new NotesRange($this->app['neoconfig']['people_range'][0], $this->app['neoconfig']['people_range'][1]);
+		$centeredTransposition	= $this->calculateCenteredTransposition();
+		$status					= null;
 
-		$centeredTransposition = $this->calculateCenteredTransposition();
-
-		$centeredForPeopleRange = [
-			'lowest'  => $this->nc->transposeNote($this->songPeopleRange->lowest, $centeredTransposition->offset),
-			'highest' => $this->nc->transposeNote($this->songPeopleRange->highest, $centeredTransposition->offset)
-		];
+		$peopleRangeInCentered	= new NotesRange(
+			$this->nc->transposeNote($this->songPeopleRange->lowest, $centeredTransposition->offset),
+			$this->nc->transposeNote($this->songPeopleRange->highest, $centeredTransposition->offset)
+		);
 	
-		if ($this->centeredTranspositionIsWithinPeopleRange($centeredForPeopleRange, $peopleRange))
+		// 2) The centeredTransposition already falls within people's range.
+		if ($peopleRangeInCentered->isWithinRange($peopleRange, $this->nc))
 		{
-			//var_dump("No hace falta porque ya está en el people range");
-			return;
+			return new PeopleCompatibleCalculation(PeopleCompatibleCalculation::ALREADY_COMPATIBLE);
 		}
 
-		$peopleDistanceToLimit = $this->nc->distanceWithOctave(
-			$peopleRange->highest, 
-			$centeredForPeopleRange['highest']
+		// 3) The song's range is wider than singer's range: do nothing.
+		if ($this->nc->rangeWideness($this->songRange) >= $this->nc->rangeWideness($this->singerRange))
+		{
+			return new PeopleCompatibleCalculation(PeopleCompatibleCalculation::WIDER_THAN_SINGER);
+		}
+
+		$fromPeopleLowestInCenteredToPeopleLowest = $this->nc->distanceWithOctave(
+			$peopleRange->lowest,
+			$peopleRangeInCentered->lowest
+		);
+		
+		$fromSingerLowestCenteredToSingerLowest   = $this->nc->distanceWithOctave(
+			$this->singerRange->lowest,
+			$this->centeredTransposition->range->lowest
 		);
 
-		$offsetForPeople = $centeredTransposition->offset + $peopleDistanceToLimit;
-
-		$singerRangeApplyingOffsetForPeople = [
-			'lowest'  => $this->nc->transposeNote($this->songRange->lowest,  $offsetForPeople),
-			'highest' => $this->nc->transposeNote($this->songRange->highest, $offsetForPeople)
-		];
-
-		if ($this->nc->distanceWithOctave($this->singerRange->highest, $singerRangeApplyingOffsetForPeople['highest']) < 0)
-		{
-			//var_dump("La people resulta demasiado alta para el cantor");
-			return;
-		}
-
-		if ($this->nc->distanceWithOctave($singerRangeApplyingOffsetForPeople['highest'], $this->singerRange->lowest) < 0)
-		{
-			//var_dump("La people resulta demasiado baja para el cantor");
-			return;
-		}
-
-		$peopleCompatibleTransposition = $this->app['new.PeopleCompatibleTransposition']->setTranspositionData(
-			$this->nc->transposeChords($this->originalChords, $offsetForPeople),
-			0,
-			($offsetForPeople == 0),
-			$offsetForPeople,
-			$singerRangeApplyingOffsetForPeople['lowest'],
-			$singerRangeApplyingOffsetForPeople['highest'],
-			$peopleDistanceToLimit
+		$fromSingerHighestCenteredToSingerHighest = $this->nc->distanceWithOctave(
+			$this->singerRange->highest,
+			$this->centeredTransposition->range->highest
 		);
 
-		$peopleCompatibleTransposition->peopleLowestNote = $this->nc->transposeNote($centeredForPeopleRange['lowest'],  $peopleDistanceToLimit);
-		$peopleCompatibleTransposition->peopleHighestNote = $this->nc->transposeNote($centeredForPeopleRange['highest'], $peopleDistanceToLimit);
+		// 4) peopleSong range is wider than people's range.
+		if ($this->nc->rangeWideness($this->songPeopleRange) > $this->nc->rangeWideness($peopleRange))
+		{
+			//If lowering, limit with singer's lowest. If raising, with highest.
+			$singerLimit = ($fromPeopleLowestInCenteredToPeopleLowest < 0)
+				? $fromSingerLowestCenteredToSingerLowest
+				: $fromSingerHighestCenteredToSingerHighest;
 
-		return $peopleCompatibleTransposition;
+			$offsetFromCentered = min(
+				abs($singerLimit),
+				abs($fromPeopleLowestInCenteredToPeopleLowest)
+			);
+
+			if ($fromPeopleLowestInCenteredToPeopleLowest < 0)
+			{
+				//When lowering, invert because of abs() above.
+				$offsetFromCentered = $offsetFromCentered * (-1);
+			}
+
+			if (0 == $offsetFromCentered)
+			{
+				return new PeopleCompatibleCalculation(PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER);
+			}
+
+			return $this->createPeopleCompatibleCalculation(
+				PeopleCompatibleCalculation::ADJUSTED_WIDER,
+				$offsetFromCentered,
+				$peopleRangeInCentered
+			);
+		}
+
+		// 5) The centered transposition is too low for the people
+		if ($fromPeopleLowestInCenteredToPeopleLowest > 0)
+		{
+			$offsetFromCentered = min(
+				abs($fromPeopleLowestInCenteredToPeopleLowest),
+				abs($fromSingerHighestCenteredToSingerHighest)
+			);
+
+			$status = (abs($offsetFromCentered) < abs($fromPeopleLowestInCenteredToPeopleLowest))
+				? PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE
+				: PeopleCompatibleCalculation::ADJUSTED_WELL;
+
+			return $this->createPeopleCompatibleCalculation(
+				$status,
+				$offsetFromCentered,
+				$peopleRangeInCentered
+			);
+		}
+
+		$fromPeopleHighestInCenteredToPeopleHighest = $this->nc->distanceWithOctave(
+			$peopleRange->highest,
+			$peopleRangeInCentered->highest
+		);
+
+		// 6) The centered transposition is too high for the people
+		if ($fromPeopleHighestInCenteredToPeopleHighest < 0)
+		{
+			$offsetFromCentered = min(
+				abs($fromPeopleHighestInCenteredToPeopleHighest),
+				abs($fromSingerLowestCenteredToSingerLowest)
+			) * (-1);
+
+			$status = (abs($offsetFromCentered) < abs($fromPeopleHighestInCenteredToPeopleHighest))
+				? PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE
+				: PeopleCompatibleCalculation::ADJUSTED_WELL;
+
+			return $this->createPeopleCompatibleCalculation(
+				$status, 
+				$offsetFromCentered,
+				$peopleRangeInCentered
+			);
+		}
+
+		throw new \Exception("This should never happen.");
 	}
 
 	/**
-	 * @todo Move this logic to NotesNotation
+	 * Create a PeopleCompatibleCalculation object given the status and the
+	 * offset from the centered transposition
+	 * 
+	 * @param	int			$status					One of PeopleCompatibleCalculation's constants.
+	 * @param	int			$offsetFromCentered		Offset of the peopleCompatible from centered.
+	 * @param	NotesRange	$peopleRangeInCentered	Voice range of the people in centered transposition.
+	 * 
+	 * @return	PeopleCompatibleCalculation	The PeopleCompatibleCalculation object.
 	 */
-	protected function centeredTranspositionIsWithinPeopleRange($centeredForPeopleRange, $peopleRange)
+	protected function createPeopleCompatibleCalculation($status, $offsetFromCentered, NotesRange $peopleRangeInCentered) : PeopleCompatibleCalculation
 	{
-		return ($this->nc->distanceWithOctave($centeredForPeopleRange['highest'], $peopleRange['highest']) < 0)
-			&& ($this->nc->distanceWithOctave($peopleRange['lowest'], $centeredForPeopleRange['lowest']) < 0);
+		$offsetFromOriginal = $this->centeredTransposition->offset + $offsetFromCentered;
+
+		$peopleCompatibleTransposition = $this->app['new.PeopleCompatibleTransposition']->setTranspositionData(
+			$this->nc->transposeChords($this->originalChords, $offsetFromOriginal),
+			0,
+			($offsetFromOriginal == 0),
+			$offsetFromOriginal,
+			$this->nc->transposeRange($this->songRange, $offsetFromOriginal),
+			$offsetFromCentered
+		);
+
+		$peopleCompatibleTransposition = $this->chooseEasiestEquivalentWithCapo($peopleCompatibleTransposition, 'new.PeopleCompatibleTransposition');
+
+		$peopleCompatibleTransposition->peopleRange	= $this->nc->transposeRange($peopleRangeInCentered, $offsetFromCentered);
+
+		return new PeopleCompatibleCalculation($status, $peopleCompatibleTransposition);
+	}
+
+	/**
+	 * Given a transposition, calculate its equivalents with capo and return the
+	 * easiest one.
+	 * 
+	 * @param Transposition	$transposition	The given transposition, with capo 0.
+	 * @param string		$dcFactory		Dependency Container factory for constructing Transposition objects
+	 */
+	protected function chooseEasiestEquivalentWithCapo(Transposition $transposition, string $dcFactory='new.Transposition') : Transposition
+	{
+		$equivalentsWithCapo = array_merge(
+			array($transposition),
+			$this->calculateEquivalentsWithCapo($transposition, $dcFactory)
+		);
+
+		foreach ($equivalentsWithCapo as &$trans)
+		{
+			if ($this->firstChordIsKey)
+			{
+				$trans->setAlternativeChords($this->nc);
+			}
+		}
+		
+		return $this->sortTranspositionsByEase($equivalentsWithCapo)[0];
 	}
 }

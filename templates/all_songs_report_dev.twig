@@ -1,0 +1,35 @@
+{% extends "all_songs_report.twig" %}
+
+{% import 'transpose_song.twig' as ts %}
+
+{% block page_class %}{{ parent() }} full-width{% endblock %}
+
+{% block songTranspositions %}
+
+<div class="transpositions-list">
+	{% for transposition in song.transpositions -%}
+		<div style="display: inline-block; vertical-align: top; box-shadow: 0 0 5px silver; margin: .5em; padding: .5em">
+			<h3>centered{{ loop.index }}</h3>
+			{{ ts.printTransposition(transposition, song.song.originalChords) }}
+		</div>
+	{% endfor %}
+
+	{% if song.not_equivalent %}
+	<div style="display: inline-block; vertical-align: top; box-shadow: 0 0 5px silver; margin: .5em; padding: .5em">
+		<h3>{{ (song.not_equivalent.deviationFromCentered > 0) ? '+' : '-' }}{{ song.not_equivalent.deviationFromCentered|abs }} notEquivalent</h3>
+		{{ ts.printTransposition(song.not_equivalent, song.song.originalChords) }}
+	</div>
+	{% endif %}
+
+	{% if song.peopleCompatibleStatus %}
+	<div style="display: inline-block; vertical-align: top; box-shadow: 0 0 5px silver; margin: .5em; padding: .5em; max-width: 270px; {% if song.not_equivalent and song.peopleCompatibleStatus %}border: 2px solid lime{% endif %}">
+		<h3>{{ (song.peopleCompatible.deviationFromCentered > 0) ? '+' : '-' }}{{ song.peopleCompatible.deviationFromCentered|abs }} pc {{ song.peopleCompatibleStatusMsg }}</h3>
+		{% if song.peopleCompatible %}
+		{{ ts.printTransposition(song.peopleCompatible, song.song.originalChords) }}
+		{% endif %}
+	</div>
+	{% endif %}
+
+</div>
+
+{% endblock %}

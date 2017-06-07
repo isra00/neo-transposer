@@ -7,7 +7,6 @@ namespace NeoTransposer\Model;
  */
 class AdminTools extends \NeoTransposer\AppAccess
 {
-	protected $testAllTranspositionsBook = 2;
 
 	/**
 	 * Populate the country column of the user table with GeoIP.
@@ -51,10 +50,10 @@ class AdminTools extends \NeoTransposer\AppAccess
 	 * Check songs that have one of the following conditions:
 	 * - lowest_note > highest_note 
 	 * - lowest_note == highest_note
-	 * - lowest_note_assembly > highest_note_assembly
-	 * - lowest_note_assembly == highest_note_assembly
-	 * - lowest_note_assembly < lowest_note
-	 * - highest_note_assembly > highest_note
+	 * - people_lowest_note > people_highest_note
+	 * - people_lowest_note == people_highest_note
+	 * - people_lowest_note < lowest_note
+	 * - people_highest_note > highest_note
 	 * 
 	 * @return string Check results, to be displayed.
 	 */
@@ -78,26 +77,26 @@ class AdminTools extends \NeoTransposer\AppAccess
 				$output[] = $song['id_song'] . ' highest_note == lowest_note!';
 			}
 
-			if (!empty($song['lowest_note_assembly']) && !empty($song['highest_note_assembly']))
+			if (!empty($song['people_lowest_note']) && !empty($song['people_highest_note']))
 			{
-				if ($song['lowest_note_assembly'] != $nc->lowestNote(array($song['lowest_note_assembly'], $song['highest_note_assembly'])))
+				if ($song['people_lowest_note'] != $nc->lowestNote(array($song['people_lowest_note'], $song['people_highest_note'])))
 				{
-					$output[] = $song['id_song'] . ' assembly lowest_note ' . $song['lowest_note_assembly'] . ' is higher than ' . $song['highest_note_assembly'] . '!';
+					$output[] = $song['id_song'] . ' assembly lowest_note ' . $song['people_lowest_note'] . ' is higher than ' . $song['people_highest_note'] . '!';
 				}
 
-				if ($song['lowest_note_assembly'] == $song['highest_note_assembly'])
+				if ($song['people_lowest_note'] == $song['people_highest_note'])
 				{
-					$output[] = $song['id_song'] . ' highest_note_assembly == lowest_note_assembly!';
+					$output[] = $song['id_song'] . ' people_highest_note == people_lowest_note!';
 				}
 
-				if (0 > $nc->distanceWithOctave($song['lowest_note_assembly'], $song['lowest_note']))
+				if (0 > $nc->distanceWithOctave($song['people_lowest_note'], $song['lowest_note']))
 				{
-					$output[] = $song['id_song'] . ' lowest_note_assembly < lowest_note!';
+					$output[] = $song['id_song'] . ' people_lowest_note < lowest_note!';
 				}
 
-				if (0 > $nc->distanceWithOctave($song['highest_note'], $song['highest_note_assembly']))
+				if (0 > $nc->distanceWithOctave($song['highest_note'], $song['people_highest_note']))
 				{
-					$output[] = $song['id_song'] . ' highest_note_assembly > highest_note!';
+					$output[] = $song['id_song'] . ' people_highest_note > highest_note!';
 				}
 			}
 		}
@@ -201,176 +200,10 @@ class AdminTools extends \NeoTransposer\AppAccess
 			: 'Songs with problems: ' . implode(', ', $output);
 	}
 
-
-	/**
-	 * A functional test for detecting changes in the transposition algorithm.
-	 * It generates an AllSongsReport and compares it with a pre-stored result set.
-	 * 
-	 * @return string Check results (to be displayed).
-	 */
 	public function testAllTranspositions()
 	{
-		$testData = json_decode(
-			file_get_contents($this->app['neoconfig']['test_all_transpositions_expected']),
-			true
-		);
-
-		$this->app['neouser']->range = new NotesRange(
-			$testData['singerLowestVoice'], 
-			$testData['singerHighestVoice']
-		);
-
-		$sql = <<<SQL
-SELECT id_song
-FROM song 
-WHERE id_book = ? 
-ORDER BY id_song
-SQL;
-
-		$ids = $this->app['db']->fetchAll($sql, array($this->testAllTranspositionsBook));
-
-		$allSongs = array();
-
-		foreach ($ids as $id)
-		{
-			$song = TransposedSong::create($id['id_song'], $this->app);
-			$song->transpose();
-
-			$allSongs[] = $song;
-		}
-
-		$testResult = array();
-
-		foreach ($allSongs as $transposedSong)
-		{
-			$testResult[$transposedSong->song->idSong] = array(
-				'songLowestNote' 	=> $transposedSong->song->range->lowest,
-				'songHighestNote' 	=> $transposedSong->song->range->highest,
-				'centered1' => array(
-					'offset' 			=> $transposedSong->transpositions[0]->offset,
-					'lowestNote' 		=> $transposedSong->transpositions[0]->range->lowest,
-					'highestNote' 		=> $transposedSong->transpositions[0]->range->highest,
-					'score' 			=> $transposedSong->transpositions[0]->score,
-					'capo' 				=> $transposedSong->transpositions[0]->getCapo(),
-					'chords'			=> join(',', $transposedSong->transpositions[0]->chords)
-				),
-				'centered2' => array(
-					'offset' 			=> $transposedSong->transpositions[1]->offset,
-					'lowestNote' 		=> $transposedSong->transpositions[1]->range->lowest,
-					'highestNote' 		=> $transposedSong->transpositions[1]->range->highest,
-					'score' 			=> $transposedSong->transpositions[1]->score,
-					'capo' 				=> $transposedSong->transpositions[1]->getCapo(),
-					'chords'			=> join(',', $transposedSong->transpositions[1]->chords)
-				)
-			);
-
-			if ($transposedSong->not_equivalent)
-			{
-				$testResult[$transposedSong->song->idSong]['notEquivalent'] = array(
-					'offset' 			=> $transposedSong->not_equivalent->offset,
-					'lowestNote' 		=> $transposedSong->not_equivalent->range->lowest,
-					'highestNote' 		=> $transposedSong->not_equivalent->range->highest,
-					'score' 			=> $transposedSong->not_equivalent->score,
-					'capo' 				=> $transposedSong->not_equivalent->getCapo(),
-					'deviationFromCentered' => $transposedSong->not_equivalent->deviationFromCentered,
-					'chords'			=> join(',', $transposedSong->not_equivalent->chords),
-				);
-			}
-		}
-
-		$output = '';
-
-		if ($missingSongs = array_diff(
-			array_keys($testData['expectedResults']), 
-			array_keys($testResult)
-		))
-		{
-			$output .= '<strong>Missing songs: ' . join(', ', $missingSongs) . "</strong>\n";
-		}
-
-		foreach ($testResult as $idSong=>$result)
-		{
-			if ($difference = $this->diffTestResults($result, $testData['expectedResults'][$idSong]))
-			{
-				$output .= "\n<strong>Song #$idSong</strong>\n";
-				foreach ($difference as $property=>$resultValue)
-				{
-					if (is_array($resultValue))
-					{
-						$output .= 'Transposition ' . $property . ":\n";
-
-						foreach ($resultValue as $transProperty=>$transResultValue)
-						{
-							$output .= "\t$transProperty: expected <em>" . $testData['expectedResults'][$idSong][$property][$transProperty] . '</em> but got <em>' . $transResultValue . "</em>\n";
-						}
-					}
-					else
-					{
-						if (isset($testData['expectedResults'][$idSong][$property]))
-						{
-							if (is_array($testData['expectedResults'][$idSong][$property]))
-							{
-								$testData['expectedResults'][$idSong][$property] = join('; ', $testData['expectedResults'][$idSong][$property]);
-							}
-
-							$output .= "$property: expected <em>" . ((string) $testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
-						}
-						else
-						{
-							$output .= "Unexpected property $property <em>" . $resultValue . "</em> not specified in test data\n";
-						}
-					}
-				}
-			}
-		}
-
-		return empty($output) ? 'Test SUCCESSFUL: song transpositions are identical to expected :-)' : $output;
-	}
-
-	protected function diffTestResults($actual, $expected)
-	{
-		$scalarProperties = array('songLowestNote', 'songHighestNote');
-		$arrayProperties = array('centered1', 'centered2', 'notEquivalent');
-
-		$diff = array_diff(
-			array_intersect_key($actual,   array_flip($scalarProperties)),
-			array_intersect_key($expected, array_flip($scalarProperties))
-		);
-
-		$transpositionsDiff = array();
-
-		foreach (array_intersect_key($actual, array_flip($arrayProperties)) as $type=>$transposition)
-		{
-			if (!isset($expected[$type]))
-			{
-				$transpositionsDiff[$type] = '[unexpected]';
-				continue;
-			}
-
-			if ($transDiff = array_diff($transposition, $expected[$type]))
-			{
-				$transpositionsDiff[$type] = $transDiff;
-			}
-		}
-
-		if ($transpositionsDiff)
-		{
-			$diff = array_merge($diff, $transpositionsDiff);
-		}
-
-		$missingProperties = array_diff(array_keys($expected), array_keys($actual));
-
-		if ($missingProperties)
-		{
-			$missingProperties = array_flip($missingProperties);
-			foreach ($missingProperties as &$value)
-			{
-				$value = 'missing';
-			}
-			$diff = array_merge($diff, $missingProperties);
-		}
-
-		return $diff;
+		$test = new TestAllTranspositions($this->app);
+		return $test->testAllTranspositions();
 	}
 
 	public function getVoiceRangeOfGoodUsers()

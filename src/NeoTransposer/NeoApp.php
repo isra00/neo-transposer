@@ -66,6 +66,8 @@ class NeoApp extends Application
 				. '://'
 				. $request->getHttpHost()
 				. $request->getBasePath();
+
+			$app->rolloutPeopleCompatible();
 		});
 	}
 
@@ -257,6 +259,18 @@ class NeoApp extends Application
 		else
 		{
 			$parameters['page_title'] = $software;
+		}
+	}
+
+	protected function rolloutPeopleCompatible()
+	{
+		if (isset($this['neoconfig']['people_compatible_users'])
+			&& !$this['neoconfig']['people_compatible'] 
+			&& false !== array_search($this['neouser']->id_user, $this['neoconfig']['people_compatible_users']))
+		{
+			$neoconfig = $this['neoconfig'];
+			$neoconfig['people_compatible'] = true;
+			$this['neoconfig'] = $neoconfig;
 		}
 	}
 }

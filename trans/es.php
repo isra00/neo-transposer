@@ -206,6 +206,27 @@ return array(
 	'Maybe you are not singing in the same tone as the guitar'
 	=> 'Quizá no estás cantando en el mismo tono que la guitarra.',
 
+	'This other transposition, though a bit %difference%, may probably fit better the people of the assembly. '
+	=> 'Esta otra transposición, aunque un poco %difference%, probablemente es mejor para la voz de la asamblea. ',
+
+	'This other transposition, though a bit %difference%, fits well the people of the assembly. '
+	=> 'Esta otra transposición, aunque un poco %difference%, encaja con la voz de la asamblea.',
+
+	'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly. '
+	=> 'Los acordes indicados arriba son buenos para tu voz, pero seguramente demasiado agudos para la asamblea. Esta transposición es %difference%, aunque para algunos hermanos seguirá siendo aguda. ',
+
+	'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly. '
+	=> 'Los acordes indicados arriba son buenos para tu voz, pero seguramente demasiado graves para la asamblea. Esta transposición es %difference%, aunque para algunos hermanos seguirá siendo grave. ',
+
+	'And it has easier chords!'
+	=> '¡Y son acordes más fáciles!',
+
+	'With these chords the assembly too will be able to sing the song comfortably.'
+	=> 'Con estos acordes, también la asamblea podrá cantar cómodamente el canto.',
+
+	'Learn more'
+	=> 'Más información',
+
 	//Wizard first step
 	'Voice measure wizard'
 	=> 'Asistente para medir tu voz',
