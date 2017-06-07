@@ -23,7 +23,7 @@
 
 	{% if song.peopleCompatibleStatus %}
 	<div style="display: inline-block; vertical-align: top; box-shadow: 0 0 5px silver; margin: .5em; padding: .5em; max-width: 270px; {% if song.not_equivalent and song.peopleCompatibleStatus %}border: 2px solid lime{% endif %}">
-		<h3>{{ (song.peopleCompatible.deviationFromCentered > 0) ? '+' : '-' }}{{ song.peopleCompatible.deviationFromCentered|abs }} pc {{ song.peopleCompatibleStatus }}</h3>
+		<h3>{{ (song.peopleCompatible.deviationFromCentered > 0) ? '+' : '-' }}{{ song.peopleCompatible.deviationFromCentered|abs }} pc {{ song.peopleCompatibleStatusMsg }}</h3>
 		{% if song.peopleCompatible %}
 		{{ ts.printTransposition(song.peopleCompatible, song.song.originalChords) }}
 		{% endif %}

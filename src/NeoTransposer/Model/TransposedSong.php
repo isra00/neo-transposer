@@ -44,6 +44,13 @@ class TransposedSong
 	public $peopleCompatibleStatus;
 
 	/**
+	 * Only for debugging.
+	 * 
+	 * @var int
+	 */
+	public $peopleCompatibleStatusMsg;
+
+	/**
 	 * Whether the centered (and optionally not_equivalent) are compatible with 
 	 * people range.
 	 * 
@@ -150,6 +157,7 @@ class TransposedSong
 	{
 		$pcCalculation 					 = $transposer->calculatePeopleCompatible();
 		$this->peopleCompatibleStatus 	 = $pcCalculation->status;
+		$this->peopleCompatibleStatusMsg = $pcCalculation->getStatusMsg();
 		$this->peopleCompatible 		 = $pcCalculation->peopleCompatibleTransposition;
 		$this->isAlreadyPeopleCompatible = (PeopleCompatibleCalculation::ALREADY_COMPATIBLE == $pcCalculation->status);
 

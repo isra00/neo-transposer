@@ -34,7 +34,7 @@
 		<li>
 			<h2>{{ song.song.page|default('&#248;')|raw }}
 			· {{ song.song.title }}
-			{% if global.debug %}[{{ song.song.idSong }}]{% endif %}
+			{% if global.debug %}<a href="{{ path('transpose_song', {'id_song' : song.song.idSong }) }}">[{{ song.song.idSong }}]</a>{% endif %}
 			</h2>
 
 			<ul>

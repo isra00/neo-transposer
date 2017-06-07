@@ -87,6 +87,10 @@
 </p>
 {% endif %}
 
+{% if global.debug %}
+<p class="tip no-icon"><big style="font-size: 2em">💭</big> {{ song.peopleCompatibleStatusMsg }}</p>
+{% endif %}
+
 <a name="feedback"></a>
 
 {% if app.neouser.isLoggedIn %}
