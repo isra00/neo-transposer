@@ -1,8 +1,12 @@
 <?php
 
-use \NeoTransposer\Model\AutomaticTransposer;
-use \NeoTransposer\Model\Transposition;
-use \NeoTransposer\Model\NotesRange;
+use \NeoTransposer\Model\{
+	AutomaticTransposer, 
+	Transposition, 
+	NotesRange, 
+	PeopleCompatibleTransposition, 
+	PeopleCompatibleCalculation
+};
 
 /**
  * @todo Add some corner cases to transposition algorithms
@@ -39,7 +43,10 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 		if (empty($this->app))
 		{
 			$this->app = new \Silex\Application;
-			$this->app['neoconfig'] = ['chord_scores' => $this->chordsScoreConfig];
+			$this->app['neoconfig'] = [
+				'chord_scores' => $this->chordsScoreConfig,
+				'people_range' => ['B1', 'B2'],
+			];
 
 			$this->app['new.Transposition'] = $this->app->factory(function ($app) {
 				return new \NeoTransposer\Model\Transposition($app);
@@ -170,6 +177,57 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 		$this->assertEquals(
 			$expected,
 			$this->transposer->calculateCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
+		);
+	}
+
+	public function testPeopleCompatibleNoData()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], true
+		);
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA, 
+			null
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
+		);
+	}
+
+	public function testPeopleCompatibleAlreadyCompatible()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), new NotesRange('A2', 'F3'), ['Am', 'E'], true, new NotesRange('A2', 'D3')
+		);
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::ALREADY_COMPATIBLE, 
+			null
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
+		);
+	}
+
+	public function testPeopleCompatibleWiderThanSinger()
+	{
+		$this->transposer->setTransposerData(
+			new NotesRange('A1', 'E3'), new NotesRange('A1', 'F3'), ['Am', 'E'], true, new NotesRange('A2', 'D3')
+		);
+
+		$expected = new PeopleCompatibleCalculation(
+			PeopleCompatibleCalculation::WIDER_THAN_SINGER, 
+			null
+		);
+
+		$this->assertEquals(
+			$expected,
+			$this->transposer->calculatePeopleCompatible()
 		);
 	}
 }
