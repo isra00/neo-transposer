@@ -63,6 +63,7 @@ class AdminDashboard
 			'feedback'				=> $req->get('long') ? $this->getFeedback() : null,
 			'good_users_chrono'		=> $req->get('long') ? $this->getGoodUsersChrono() : null,
 			'tool_output'			=> $toolOutput,
+			'countries'				=> $this->getCountryNamesList(),
 		));
 	}
 
@@ -297,7 +298,7 @@ JOIN
 	GROUP BY id_user
 ) n ON y.id_user = n.id_user
 ORDER BY total DESC
-LIMIT 20
+LIMIT 30
 SQL;
 		return $this->app['db']->fetchAll($sql);
 	}
@@ -326,6 +327,11 @@ SQL;
 	 */
 	protected function getCountryNamesList()
 	{
+		if (!empty($this->countryNames))
+		{
+			return $this->countryNames;
+		}
+
 		$reader = $this->app['geoIp2Reader'];
 
 		//ONLY_FULL_GROUP_BY mode (default in MySQL>5.7) makes the query fail
@@ -344,6 +350,7 @@ SQL;
 			}
 		}
 
+		$this->countryNames = $country_names;
 		return $country_names;
 	}
 

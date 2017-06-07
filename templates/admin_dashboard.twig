@@ -244,7 +244,8 @@
 			<th>Voice</th>
 			<th>FB</th>
 			<th>Perf</th>
-			<th>Lowest/highest attempts</th>
+			<th>Low/high attempts</th>
+			<th>Country</th>
 		</tr></thead>
 		<tbody>
 	{% for user in most_active_users %}
@@ -255,6 +256,8 @@
 				<td>{{ user.total }}</td>
 				<td>{{ self.feedbackGraph(user.yes, user.no) }}</td>
 				<td>{{ user.wizard_lowest_attempts }} / {{ user.wizard_highest_attempts }}</td>
+				<td><img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ user.country|lower }}.png" width="16" />&nbsp;
+					{{ countries[user.country] }}</td>
 			</tr>
 	{% endfor %}
 		</tbody>
