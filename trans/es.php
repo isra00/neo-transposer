@@ -227,6 +227,12 @@ return array(
 	'Learn more'
 	=> 'Más información',
 
+	'Which one has worked for you?'
+	=> '¿Cuál te ha funcionado?',
+
+	'assembly'
+	=> 'asamblea',
+
 	//Wizard first step
 	'Voice measure wizard'
 	=> 'Asistente para medir tu voz',

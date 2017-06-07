@@ -59,4 +59,6 @@ return [
 	'people_compatible' => false,
 
 	'people_compatible_users' => [5],
+
+	'detailed_feedback'	=> true,
 ];
