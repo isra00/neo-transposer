@@ -423,7 +423,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		);
 
 		// 4) peopleSong range is wider than people's range.
-		if ($this->nc->rangeWideness($this->songPeopleRange) >= $this->nc->rangeWideness($peopleRange))
+		if ($this->nc->rangeWideness($this->songPeopleRange) > $this->nc->rangeWideness($peopleRange))
 		{
 			//If lowering, limit with singer's lowest. If raising, with highest.
 			$singerLimit = ($fromPeopleLowestInCenteredToPeopleLowest < 0)
