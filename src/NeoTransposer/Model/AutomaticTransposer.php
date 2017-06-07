@@ -402,7 +402,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		}
 
 		// 3) The song's range is wider than singer's range: do nothing.
-		if ($this->nc->rangeWideness($this->songRange) > $this->nc->rangeWideness($this->singerRange))
+		if ($this->nc->rangeWideness($this->songRange) >= $this->nc->rangeWideness($this->singerRange))
 		{
 			return new PeopleCompatibleCalculation(PeopleCompatibleCalculation::WIDER_THAN_SINGER);
 		}
