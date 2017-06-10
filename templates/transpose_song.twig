@@ -225,7 +225,7 @@ NT = {
 		);
 	},
 
-	sendDetailedFeedback: function(transposition, pcStatus, deviation)
+	sendDetailedFeedback: function(transposition, deviation)
 	{
 		$.post(
 			'{{ path('transposition_feedback') }}',
@@ -234,7 +234,7 @@ NT = {
 				'worked': 1,
 				'referer': '{{ global.request.server.get('HTTP_REFERER') }}',
 				'transposition': transposition,
-				'pc_status': pcStatus,
+				'pc_status': '{{ song.peopleCompatibleStatusMsg }}',
 				'deviation': deviation,
 				'centered_score_rate': {{ song.transpositions[1].score / song.transpositions[0].score }}
 			}
@@ -249,7 +249,6 @@ NT = {
 		{
 			NT.sendDetailedFeedback(
 				e.currentTarget.dataset.transposition, 
-				'{{ song.peopleCompatibleStatusMsg }}',
 				e.currentTarget.dataset.deviation
 			);
 
@@ -257,14 +256,16 @@ NT = {
 			$(".answers").hide();
 			$("#feedback-thanks").show();
 		});
-	}
-};
+	},
 
-$(function() {
-
-	function openChordChartDialog(event)
+	openChordChartDialog: function(event)
 	{
-		var chordName = event.target.parentNode.dataset.chord;
+		var chordName 			= event.target.parentNode.dataset.chord,
+			chordChartImg		= document.getElementById('chord-chart'),
+			dialog 				= document.getElementById('chord-chart-dialog'),
+			chordChartCaption 	= document.getElementById('chord-chart-caption'),
+			isTouchScreen 	  	= window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
+			darkBackground 	  	= document.getElementById('dark-bg');
 
 		//5th chords are wrong in the ES songbook. They are actually 9th -_-
 		chordName = chordName.replace(/5$/, '9');
@@ -289,65 +290,66 @@ $(function() {
 		{
 			dialog.style.display = 'block';
 			darkBackground.style.display = 'block';
+			return;
 		}
-		else
+
+		// Position the dialog next to the chord.
+		var dialogTop  = event.target.parentNode.offsetTop + event.target.parentNode.offsetHeight;
+			dialogLeft = event.target.parentNode.getBoundingClientRect().left + event.target.parentNode.offsetWidth;
+
+		dialog.style.position 	= 'fixed';
+		dialog.style.margin 	= '0';
+		dialog.style.top 		= dialogTop + "px";
+		dialog.style.left 		= dialogLeft + "px";
+
+		dialog.style.display = 'block';
+
+		// If it gets out of the limits of the screen, place at in the corner.
+		var currentRight  = dialog.getBoundingClientRect().left + dialog.offsetWidth,
+			currentBottom = dialog.getBoundingClientRect().top + dialog.offsetHeight;
+
+		if (currentRight > window.innerWidth)
 		{
-			// Position the dialog next to the chord.
-			var dialogTop = event.target.parentNode.offsetTop + event.target.parentNode.offsetHeight;
-				dialogLeft = event.target.parentNode.getBoundingClientRect().left + event.target.parentNode.offsetWidth;
-
-			dialog.style.position 	= 'fixed';
-			dialog.style.margin 	= '0';
-			dialog.style.top 		= dialogTop + "px";
-			dialog.style.left 		= dialogLeft + "px";
-
-			dialog.style.display = 'block';
-
-			// If it gets out of the limits of the screen, place at in the corner.
-			var currentRight  = dialog.getBoundingClientRect().left + dialog.offsetWidth,
-				currentBottom = dialog.getBoundingClientRect().top + dialog.offsetHeight;
-
-			if (currentRight > window.innerWidth)
-			{
-				dialog.style.left = (window.innerWidth - dialog.offsetWidth) + "px";
-			}
-
-			if (currentBottom > window.innerHeight)
-			{
-				dialog.style.top = (window.innerHeight - dialog.offsetHeight) + "px";
-			}
-
-			if (!isTouchScreen)
-			{
-				event.target.addEventListener('mouseout', function() {
-					dialog.style.display = 'none';
-				});
-			}
+			dialog.style.left = (window.innerWidth - dialog.offsetWidth) + "px";
 		}
-	}
 
-	var isTouchScreen 	  = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
-		dialog 			  = document.getElementById('chord-chart-dialog'),
-		chordChartImg 	  = document.getElementById('chord-chart'),
-		chordChartCaption = document.getElementById('chord-chart-caption'),
-		darkBackground 	  = document.getElementById('dark-bg');
+		if (currentBottom > window.innerHeight)
+		{
+			dialog.style.top = (window.innerHeight - dialog.offsetHeight) + "px";
+		}
 
-	$(".transposed span").click(openChordChartDialog);
+		event.target.addEventListener('mouseout', function() {
+			dialog.style.display = 'none';
+		});
+	},
 
-	if (!isTouchScreen)
+	initializeChordChartDialog: function()
 	{
-		$(".transposed span").mouseover(openChordChartDialog);
+		var isTouchScreen 	  = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
+			dialog 			  = document.getElementById('chord-chart-dialog'),
+			darkBackground 	  = document.getElementById('dark-bg');
+
+		$(".transposed span").click(NT.openChordChartDialog);
+
+		if (!isTouchScreen)
+		{
+			$(".transposed span").mouseover(NT.openChordChartDialog);
+		}
+
+		var closeDialog = function() {
+			dialog.style.display = 'none';
+			darkBackground.style.display = 'none';
+			document.getElementById("detailed-feedback-container").style.display = 'none';
+		};
+
+		dialog.addEventListener('click', closeDialog);
+		darkBackground.addEventListener('click', closeDialog);
 	}
+};
 
-	var closeDialog = function() {
-		dialog.style.display = 'none';
-		darkBackground.style.display = 'none';
-		document.getElementById("detailed-feedback-container").style.display = 'none';
-	};
+$(function() {
 
-	dialog.addEventListener('click', closeDialog);
-	darkBackground.addEventListener('click', closeDialog);
-
+	NT.initializeChordChartDialog();
 
 	$("#feedback-yes").click(function(e) {
 		e.preventDefault();
