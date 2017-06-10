@@ -235,7 +235,8 @@ NT = {
 				'referer': '{{ global.request.server.get('HTTP_REFERER') }}',
 				'transposition': transposition,
 				'pc_status': pcStatus,
-				'deviation': deviation
+				'deviation': deviation,
+				'centered_score_rate': {{ song.transpositions[1].score / song.transpositions[0].score }}
 			}
 		);
 	},
