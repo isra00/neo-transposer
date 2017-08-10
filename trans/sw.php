@@ -107,7 +107,7 @@ return array(
 	=> 'Umethibitisha kodi zilizopendekezwa kwamba zinafaa sauti yako.',
 
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
-	=> 'Ingia hapa ili uweze kubadilisha ufunguo za nyimbo za Neo.',
+	=> 'Ingia hapa ili uweze kubadilisha funguo za nyimbo za Neo.',
 
 	'Download or print <small>All songs report</small>'
 	=> 'Pakua au chapisha <small>ripoti ya nyimbo zote</small>',
