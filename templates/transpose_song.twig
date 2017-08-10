@@ -98,6 +98,9 @@
 <form class="transposition-feedback" method="post" action="{{ path('transposition_feedback') }}">
 
 	<input type="hidden" name="id_song" value="{{ song.song.idSong }}">
+	<input type="hidden" name="centered_score_rate" value="{{ song.transpositions[1].score / song.transpositions[0].score }}">
+	<input type="hidden" name="deviation" value="{{ song.not_equivalent.deviationFromCentered ?: song.peopleCompatible.deviationFromCentered ?: null }}">
+	<input type="hidden" name="pc_status" value="{{ song.peopleCompatibleStatusMsg|default('') }}">
 
 	<p class="answers" {% if non_js_fb %}style="display: none"{% endif %}>
 		<button type="submit" name="worked" value="1" class="yes {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes" {% if feedback == 'yes' %}title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}"{% endif %}>
@@ -220,7 +223,10 @@ NT = {
 			{
 				id_song: {{ song.song.idSong }},
 				worked: iAnswer,
-				referer: '{{ global.request.server.get('HTTP_REFERER') }}'
+				referer: '{{ global.request.server.get('HTTP_REFERER') }}',
+				centered_score_rate: '{{ song.transpositions[1].score / song.transpositions[0].score }}',
+				deviation: '{{ song.not_equivalent.deviationFromCentered ?: song.peopleCompatible.deviationFromCentered ?: null }}',
+				pc_status: '{{ song.peopleCompatibleStatusMsg|default('') }}',
 			}
 		);
 	},
@@ -353,14 +359,13 @@ $(function() {
 
 	$("#feedback-yes").click(function(e) {
 		e.preventDefault();
-
-{% if app.neoconfig.detailed_feedback %}
-		NT.showDetailedFeedbackDialog();
-{% else %}
 		$(".answers").hide();
 		$("#feedback-thanks").show();
 		NT.sendFeedback(1);
 		ga('send', 'event', 'FeedbackTransposition', 'Worked', '{{ song.song.title }}');
+
+{% if app.neoconfig.detailed_feedback %}
+		NT.showDetailedFeedbackDialog();
 {% endif %}
 
 	});

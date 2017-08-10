@@ -58,7 +58,7 @@ SQL;
 				$app['neouser']->range->lowest,
 				$app['neouser']->range->highest,
 				$req->get('transposition'),
-				$req->get('pc_status'),
+				$req->get('pc_status') ?: null,
 				$req->get('deviation') ? intval($req->get('deviation')) : null,
 				$req->get('centered_score_rate'),
 			));
