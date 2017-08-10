@@ -20,7 +20,7 @@ return array(
 
 	//Login
 	'Transpose the songs of the Neocatechumenal Way · Neo-Transposer'
-	=> 'Badilia ufunguo wa kordi ya nyimbo za Njia ya Neokatekumenato',
+	=> 'Badilisha ufunguo wa kordi ya nyimbo za Njia ya Neokatekumenato',
 
 	'Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!'
 	=> 'Badilisha ufunguo wa nyimbo za Njia ya Neokatekumenato na Neo-Transposer. Kordi kamili kwa sauti yako!',
@@ -135,7 +135,7 @@ return array(
 	=> '%song% (Njia ya Neokatekumenato)',
 
 	'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!'
-	=> 'Neo-Transposer inabadilia ufunguo wa &quot;%song%&quot; (wimbo wa Njia ya Neokatekumenato) kulingana na sauti yako binafsi ili uweze kuimba na hakika!',
+	=> 'Neo-Transposer inabadilisha ufunguo wa &quot;%song%&quot; (wimbo wa Njia ya Neokatekumenato) kulingana na sauti yako binafsi ili uweze kuimba na hakika!',
 
 	'Your voice:'
 	=> 'Sauti yako:',
