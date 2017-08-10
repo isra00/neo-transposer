@@ -57,13 +57,17 @@ class AdminDashboard
 			'users_reporting_fb'	=> $users_reporting_fb,
 			'unhappy_users'			=> $this->getUnhappyUsers(),
 			'songs_with_fb'			=> $this->getSongsWithFeedback(),
-			'most_active_users'		=> $this->getMostActiveUsers(),
+			'most_active_users'		=> $req->get('long') ? $this->getMostActiveUsers() : null,
 			'perf_by_country'		=> $this->getPerformanceByCountry(),
 			'global_perf_chrono'	=> $req->get('long') ? $this->fetchGlobalPerfChrono() : null,
 			'feedback'				=> $req->get('long') ? $this->getFeedback() : null,
 			'good_users_chrono'		=> $req->get('long') ? $this->getGoodUsersChrono() : null,
 			'tool_output'			=> $toolOutput,
 			'countries'				=> $this->getCountryNamesList(),
+			'dfb_transposition'		=> $this->getDFBTransposition(),
+			'dfb_pc_status'			=> $this->getDFBPcStatus(),
+			'dfb_centered_scorerate'=> $this->getDFBCenteredScoreRate(),
+			'dfb_deviation'			=> $this->getDFBDeviation()
 		));
 	}
 
@@ -432,5 +436,70 @@ SQL;
 		});
 
 		return $performance;
+	}
+
+	protected function getDFBTransposition()
+	{
+		$sql = <<<SQL
+SELECT transposition, count(*) fbs
+FROM transposition_feedback
+WHERE worked = 1
+GROUP BY transposition
+ORDER BY fbs DESC
+SQL;
+		$fbsByTransposition = $this->app['db']->fetchAll($sql);
+
+		$total = array_sum(array_column($fbsByTransposition, 'fbs'));
+		foreach ($fbsByTransposition as &$fbs)
+		{
+			$fbs['fbs_relative'] = $fbs['fbs'] / $total;
+		}
+
+		return $fbsByTransposition;
+	}
+
+	protected function getDFBPcStatus()
+	{
+		$sql = <<<SQL
+SELECT pc_status, SUM(fbs) fbss, SUM(Case When transposition = 'peopleCompatible' THEN fbs ELSE 0 End) chosePeopleCompatible
+FROM
+(
+  SELECT pc_status, transposition, count(*) fbs
+  FROM `transposition_feedback`
+  where not pc_status is null
+  group by pc_status, transposition
+) sub
+GROUP BY pc_status
+ORDER BY pc_status;
+SQL;
+
+		return $this->app['db']->fetchAll($sql);
+	}
+
+	protected function getDFBCenteredScoreRate()
+	{
+		$sql = <<<SQL
+SELECT id_song, title, time, centered_score_rate
+FROM transposition_feedback
+JOIN song USING (id_song)
+WHERE transposition = 'centered2'
+AND NOT centered_score_rate IS NULL
+ORDER BY song.id_book, centered_score_rate DESC
+SQL;
+
+		return $this->app['db']->fetchAll($sql);
+	}
+
+	protected function getDFBDeviation()
+	{
+		$sql = <<<SQL
+SELECT transposition, deviation_from_center, count(*) fbs
+FROM transposition_feedback
+WHERE NOT deviation_from_center IS NULL
+GROUP BY transposition, deviation_from_center
+ORDER BY deviation_from_center
+SQL;
+
+		return $this->app['db']->fetchAll($sql);
 	}
 }

@@ -997,6 +997,9 @@ h2.step-1 {
 		margin: .5rem;
 		border-radius: .3em;
 	}
+	.admin-dashboard article.half {
+		width: 47%
+	}
 	.admin-dashboard article.row {
 		display: block;
 		clear: both;
