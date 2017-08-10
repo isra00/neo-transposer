@@ -264,7 +264,7 @@
 	</table>
 </article>
 
-<article class="row">
+<article class="half">
 	<h2>Unhappy (fb < 0.5) users ({{ unhappy_users|length }})</h2>
 
 	<table class="data-table">
@@ -289,6 +289,92 @@
 				<td class="{% if user.perf_before_action %}{{ (user.perf > user.perf_before_action) ? 'green' : 'red' }}{% endif %}">{{ user.perf|round(2) }}</td>
 			</tr>
 	{% endfor %}
+		</tbody>
+	</table>
+</article>
+
+<article>
+	<h2>Detailed FB: transposition</h2>
+
+	<table class="data-table">
+		<thead><tr>
+			<th>Transposition</th>
+			<th>FBs</th>
+			<th>%</th>
+		</tr></thead>
+		<tbody>
+	{% for fbs in dfb_transposition %}
+			<tr>
+				<td>{{ fbs.transposition|default('[unspecified]') }}</td>
+				<td>{{ fbs.fbs }}</td>
+				<td>{{ (fbs.fbs_relative * 100)|round }}</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
+
+<article>
+	<h2>Detailed FB: PC status</h2>
+
+	<table class="data-table">
+		<thead><tr>
+			<th>PC Status</th>
+			<th>FBs</th>
+			<th>% PC</th>
+		</tr></thead>
+		<tbody>
+	{% for fbpc in dfb_pc_status %}
+			<tr>
+				<td>{{ fbpc.pc_status|default('[unspecified]') }}</td>
+				<td>{{ fbpc.fbss }}</td>
+				<td>{{ ((fbpc.chosePeopleCompatible / fbpc.fbss) * 100)|round }}<small>%</small></td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
+
+<article>
+	<h2>Detailed FB: centered score rate</h2>
+
+	<table class="data-table">
+		<thead><tr>
+			<th>Song#</th>
+			<th>Title</th>
+			<th>Time</th>
+			<th>Score rate</th>
+		</tr></thead>
+		<tbody>
+	{% for fb in dfb_centered_scorerate %}
+			<tr>
+				<td>{{ fb.id_song }}</td>
+				<td>{{ fb.title }}</td>
+				<td>{{ fb.time }}</td>
+				<td>{{ fb.centered_score_rate }}</td>
+			</tr>
+	{% endfor %}
+		</tbody>
+	</table>
+</article>
+
+<article>
+	<h2>Detailed FB: deviation from center</h2>
+
+	<table class="data-table">
+		<thead><tr>
+			<th>Transposition</th>
+			<th>Deviation</th>
+			<th># fb 👍</th>
+		</tr></thead>
+		<tbody>
+		{% for row in dfb_deviation %}
+			<tr>
+				<td>{{ row.transposition }}</td>
+				<td>{{ row.deviation_from_center }}</td>
+				<td>{{ row.fbs }}</td>
+			</tr>
+		{% endfor %}
 		</tbody>
 	</table>
 </article>

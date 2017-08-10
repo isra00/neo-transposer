@@ -158,6 +158,47 @@
 
 {% if app.neouser.isLoggedIn %}
 
+{% if app.neoconfig.detailed_feedback %}
+<div id="detailed-feedback-container">
+	<div id="detailed-feedback-dialog">
+		<h4>{% trans %}Which one has worked for you?{% endtrans %}</h4>
+		<ul id="transpositions-feedback">
+{% for trans in song.transpositions %}
+			<li>
+				<a href="javascript:void(0)" class="detailed-fb-choice" data-transposition="centered{{ loop.index }}" data-deviation="">
+					<span class="chord-sans">{{ trans.chordsForPrint[0]|raw }}</span> 
+					<span class="capo">{{ trans.getCapoForPrint() }}</span>
+					<span class="circle"></span>
+				</a>
+			</li>
+{% endfor %}
+
+{% if song.not_equivalent %}
+			<li>
+				<a href="javascript:void(0)" class="detailed-fb-choice" data-transposition="notEquivalent" data-deviation="{{ song.not_equivalent.deviationFromCentered }}">
+					<span class="chord-sans">{{ song.not_equivalent.chordsForPrint[0]|raw }}</span> 
+					<span class="capo">{{ song.not_equivalent.getCapoForPrint() }}</span>
+					<small>★ {{ difference }}</small>
+					<span class="circle"></span>
+				</a>
+			</li>
+{% endif %}
+
+{% if song.peopleCompatible %}
+			<li>
+				<a href="javascript:void(0)" class="detailed-fb-choice" data-transposition="peopleCompatible" data-deviation="{{ song.peopleCompatible.deviationFromCentered }}">
+					<span class="chord-sans">{{ song.peopleCompatible.chordsForPrint[0]|raw }}</span> 
+					<span class="capo">{{ song.peopleCompatible.getCapoForPrint() }}</span>
+					<small>★ {% trans %}assembly{% endtrans %}</small>
+					<span class="circle"></span>
+				</a>
+			</li>
+{% endif %}
+		</ul>
+	</div>
+</div>
+{% endif %}
+
 {% import 'base.twig' as self %}
 {{ self.loadJsFramework() }}
 
@@ -182,30 +223,49 @@ NT = {
 				referer: '{{ global.request.server.get('HTTP_REFERER') }}'
 			}
 		);
-	}
-};
+	},
 
-$(function() {
-
-	$("#feedback-yes").click(function(e) {
-		e.preventDefault();
-		$(".answers").hide();
-		$("#feedback-thanks").show();
-		NT.sendFeedback(1);
-		ga('send', 'event', 'FeedbackTransposition', 'Worked', '{{ song.song.title }}');
-	});
-
-	$("#feedback-no").click(function(e) {
-		e.preventDefault();
-		$(".question").add(".answers").hide();
-		$("#reasons-no").show();
-		NT.sendFeedback(0);
-		ga('send', 'event', 'FeedbackTransposition', 'NotWorked', '{{ song.song.title }}');
-	});
-
-	function openChordChartDialog(event)
+	sendDetailedFeedback: function(transposition, deviation)
 	{
-		var chordName = event.target.parentNode.dataset.chord;
+		$.post(
+			'{{ path('transposition_feedback') }}',
+			{
+				'id_song': {{ song.song.idSong }},
+				'worked': 1,
+				'referer': '{{ global.request.server.get('HTTP_REFERER') }}',
+				'transposition': transposition,
+				'pc_status': '{{ song.peopleCompatibleStatusMsg }}',
+				'deviation': deviation,
+				'centered_score_rate': {{ song.transpositions[1].score / song.transpositions[0].score }}
+			}
+		);
+	},
+
+	showDetailedFeedbackDialog: function()
+	{
+		$("#dark-bg").add("#detailed-feedback-container").show();
+
+		$(".detailed-fb-choice").click(function (e)
+		{
+			NT.sendDetailedFeedback(
+				e.currentTarget.dataset.transposition, 
+				e.currentTarget.dataset.deviation
+			);
+
+			$("#dark-bg").add("#detailed-feedback-container").hide();
+			$(".answers").hide();
+			$("#feedback-thanks").show();
+		});
+	},
+
+	openChordChartDialog: function(event)
+	{
+		var chordName 			= event.target.parentNode.dataset.chord,
+			chordChartImg		= document.getElementById('chord-chart'),
+			dialog 				= document.getElementById('chord-chart-dialog'),
+			chordChartCaption 	= document.getElementById('chord-chart-caption'),
+			isTouchScreen 	  	= window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
+			darkBackground 	  	= document.getElementById('dark-bg');
 
 		//5th chords are wrong in the ES songbook. They are actually 9th -_-
 		chordName = chordName.replace(/5$/, '9');
@@ -230,63 +290,88 @@ $(function() {
 		{
 			dialog.style.display = 'block';
 			darkBackground.style.display = 'block';
+			return;
 		}
-		else
+
+		// Position the dialog next to the chord.
+		var dialogTop  = event.target.parentNode.offsetTop + event.target.parentNode.offsetHeight;
+			dialogLeft = event.target.parentNode.getBoundingClientRect().left + event.target.parentNode.offsetWidth;
+
+		dialog.style.position 	= 'fixed';
+		dialog.style.margin 	= '0';
+		dialog.style.top 		= dialogTop + "px";
+		dialog.style.left 		= dialogLeft + "px";
+
+		dialog.style.display = 'block';
+
+		// If it gets out of the limits of the screen, place at in the corner.
+		var currentRight  = dialog.getBoundingClientRect().left + dialog.offsetWidth,
+			currentBottom = dialog.getBoundingClientRect().top + dialog.offsetHeight;
+
+		if (currentRight > window.innerWidth)
 		{
-			// Position the dialog next to the chord.
-			var dialogTop = event.target.parentNode.offsetTop + event.target.parentNode.offsetHeight;
-				dialogLeft = event.target.parentNode.getBoundingClientRect().left + event.target.parentNode.offsetWidth;
-
-			dialog.style.position 	= 'fixed';
-			dialog.style.margin 	= '0';
-			dialog.style.top 		= dialogTop + "px";
-			dialog.style.left 		= dialogLeft + "px";
-
-			dialog.style.display = 'block';
-
-			// If it gets out of the limits of the screen, place at in the corner.
-			var currentRight  = dialog.getBoundingClientRect().left + dialog.offsetWidth,
-				currentBottom = dialog.getBoundingClientRect().top + dialog.offsetHeight;
-
-			if (currentRight > window.innerWidth)
-			{
-				dialog.style.left = (window.innerWidth - dialog.offsetWidth) + "px";
-			}
-
-			if (currentBottom > window.innerHeight)
-			{
-				dialog.style.top = (window.innerHeight - dialog.offsetHeight) + "px";
-			}
-
-			if (!isTouchScreen)
-			{
-				event.target.addEventListener('mouseout', function() {
-					dialog.style.display = 'none';
-				});
-			}
+			dialog.style.left = (window.innerWidth - dialog.offsetWidth) + "px";
 		}
-	}
 
-	var isTouchScreen 	  = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
-		dialog 			  = document.getElementById('chord-chart-dialog'),
-		chordChartImg 	  = document.getElementById('chord-chart'),
-		chordChartCaption = document.getElementById('chord-chart-caption'),
-		darkBackground 	  = document.getElementById('dark-bg');
+		if (currentBottom > window.innerHeight)
+		{
+			dialog.style.top = (window.innerHeight - dialog.offsetHeight) + "px";
+		}
 
-	$(".transposed span").click(openChordChartDialog);
+		event.target.addEventListener('mouseout', function() {
+			dialog.style.display = 'none';
+		});
+	},
 
-	if (!isTouchScreen)
+	initializeChordChartDialog: function()
 	{
-		$(".transposed span").mouseover(openChordChartDialog);
+		var isTouchScreen 	  = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
+			dialog 			  = document.getElementById('chord-chart-dialog'),
+			darkBackground 	  = document.getElementById('dark-bg');
+
+		$(".transposed span").click(NT.openChordChartDialog);
+
+		if (!isTouchScreen)
+		{
+			$(".transposed span").mouseover(NT.openChordChartDialog);
+		}
+
+		var closeDialog = function() {
+			dialog.style.display = 'none';
+			darkBackground.style.display = 'none';
+			document.getElementById("detailed-feedback-container").style.display = 'none';
+		};
+
+		dialog.addEventListener('click', closeDialog);
+		darkBackground.addEventListener('click', closeDialog);
 	}
+};
 
-	var closeDialog = function() {
-		dialog.style.display = 'none';
-		darkBackground.style.display = 'none';
-	};
+$(function() {
 
-	dialog.addEventListener('click', closeDialog);
-	darkBackground.addEventListener('click', closeDialog);
+	NT.initializeChordChartDialog();
+
+	$("#feedback-yes").click(function(e) {
+		e.preventDefault();
+
+{% if app.neoconfig.detailed_feedback %}
+		NT.showDetailedFeedbackDialog();
+{% else %}
+		$(".answers").hide();
+		$("#feedback-thanks").show();
+		NT.sendFeedback(1);
+		ga('send', 'event', 'FeedbackTransposition', 'Worked', '{{ song.song.title }}');
+{% endif %}
+
+	});
+
+	$("#feedback-no").click(function(e) {
+		e.preventDefault();
+		$(".question").add(".answers").hide();
+		$("#reasons-no").show();
+		NT.sendFeedback(0);
+		ga('send', 'event', 'FeedbackTransposition', 'NotWorked', '{{ song.song.title }}');
+	});
 });
 </script>
 

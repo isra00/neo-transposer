@@ -227,6 +227,12 @@ return array(
 	'Learn more'
 	=> 'Maelezo zaidi',
 
+	'Which one has worked for you?'
+	=> 'Ipi imekufaa?',
+
+	'assembly'
+	=> 'kusanyiko',
+
 	//Wizard first step
 	'Voice measure wizard'
 	=> 'Kupima sauti yako',

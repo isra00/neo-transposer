@@ -21,15 +21,23 @@ INSERT INTO transposition_feedback (
 	worked,
 	user_lowest_note,
 	user_highest_note,
-	time
-) VALUES (?, ?, ?, ?, ?, NOW())
+	time,
+	transposition,
+	pc_status,
+	deviation_from_center,
+	centered_score_rate
+) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)
 ON DUPLICATE KEY UPDATE
 	id_song = ?,
 	id_user = ?,
 	worked = ?,
 	user_lowest_note = ?,
 	user_highest_note = ?,
-	time = NOW()
+	time = NOW(),
+	transposition = ?,
+	pc_status = ?,
+	deviation_from_center = ?,
+	centered_score_rate = ?
 SQL;
 			$worked = (int) $req->get('worked');
 
@@ -39,11 +47,20 @@ SQL;
 				$worked,
 				$app['neouser']->range->lowest,
 				$app['neouser']->range->highest,
+				$req->get('transposition'),
+				$req->get('pc_status'),
+				$req->get('deviation') ? intval($req->get('deviation')) : null,
+				$req->get('centered_score_rate'),
+
 				$req->get('id_song'),
 				$app['neouser']->id_user,
 				$worked,
 				$app['neouser']->range->lowest,
 				$app['neouser']->range->highest,
+				$req->get('transposition'),
+				$req->get('pc_status'),
+				$req->get('deviation') ? intval($req->get('deviation')) : null,
+				$req->get('centered_score_rate'),
 			));
 
 			$unhappy = new \NeoTransposer\Model\UnhappyUser($app);

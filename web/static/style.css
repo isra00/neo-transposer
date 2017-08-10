@@ -727,6 +727,81 @@ a.link-all-report {
 		background: olive;
 	}
 
+.transpose-song #detailed-feedback-container {
+	position: fixed;
+	overflow: visible;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	height: 50%;
+	margin: 0;
+	padding: 0;
+	z-index: 2;
+	display: none;
+}
+
+.transpose-song #detailed-feedback-dialog {
+	display: block;
+	margin: -7em auto 0;
+	width: 20em;
+	max-width: 95%;
+	height: auto;
+	padding: 0;
+	z-index: 2;
+
+	border: 0;
+	border-radius: 5px;
+	box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+	background: #fafafa;
+
+	font-size: 1.2em;
+}
+	#detailed-feedback-dialog h4 {
+		background: #D32F2F;
+		color: white;
+		padding: .6em;
+		font-size: 1em;
+		border-radius: 4px;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		margin-bottom: 0;
+	}
+	#detailed-feedback-dialog ul {
+		margin: .5em 0;
+		padding: 0 0 .5em;
+		list-style-type: none;
+	}
+	#detailed-feedback-dialog li {
+		border-top: 1px solid silver;
+	}
+	#detailed-feedback-dialog li:first-child {
+		border-top: none;
+	}
+	#detailed-feedback-dialog li:hover {
+		background: #eee;
+	}
+		#detailed-feedback-dialog li a {
+			color: inherit;
+			display: block;
+			padding: .6em 1em;
+		}
+		#detailed-feedback-dialog li small {
+			color: gray;
+			font-size: .8em;
+			padding-left: .5em;
+		}
+		#detailed-feedback-dialog li a .circle {
+			float: right;
+			font-size: 2em;
+			line-height: 40%;
+			color: #444;
+		}
+		#detailed-feedback-dialog li a .circle::before {
+			content: "○"
+		}
+		#detailed-feedback-dialog li a:hover .circle::before {
+			content: "●"
+		}
 
 /* Wizard */
 .gender-selection {
@@ -921,6 +996,9 @@ h2.step-1 {
 		box-shadow: 1px 1px 1px #eee;
 		margin: .5rem;
 		border-radius: .3em;
+	}
+	.admin-dashboard article.half {
+		width: 47%
 	}
 	.admin-dashboard article.row {
 		display: block;
