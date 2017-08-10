@@ -173,6 +173,9 @@ return array(
 	'Transposed:'
 	=> 'Ufunguo ukibadilishwa:',
 
+	'Adjusted for people:'
+	=> 'Kwa kusanyiko:',
+
 	'Show voice chart'
 	=> 'Onyesha kielelezo cha nota za sauti',
 

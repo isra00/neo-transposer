@@ -130,9 +130,9 @@ class TransposeSong
 			$transposedSong->transpositions[0]
 		);
 
-		if ($app['neoconfig']['people_compatible'] && $app['debug'])
+		if ($app['neoconfig']['people_compatible'])
 		{
-			if ($transposedSong->song->peopleRange)
+			if ($transposedSong->song->peopleRange && $app['debug'])
 			{
 				$transpositionChart->addVoice('Original for people:', 'original-song', $transposedSong->song->peopleRange);
 				$transpositionChart->addVoice('Transposed for people:', 'transposed-song', $nc->transposeRange($transposedSong->song->peopleRange, $transposedSong->transpositions[0]->offset));
@@ -141,7 +141,11 @@ class TransposeSong
 			
 			if ($transposedSong->peopleCompatible)
 			{
-				$transpositionChart->addTransposition('Adjusted for you:', 'transposed-song', $transposedSong->peopleCompatible);
+				if ($app['debug'])
+				{
+					$transpositionChart->addTransposition('Adjusted for you:', 'transposed-song', $transposedSong->peopleCompatible);
+				}
+				
 				$transpositionChart->addVoice('Adjusted for people:', 'people-compatible', $transposedSong->peopleCompatible->peopleRange);
 			}
 		}

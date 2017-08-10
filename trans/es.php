@@ -173,6 +173,9 @@ return array(
 	'Transposed:'
 	=> 'Transportado:',
 
+	'Adjusted for people:'
+	=> 'Ajustado para asamblea:',
+
 	'Show voice chart'
 	=> 'Mostrar gráfica',
 
