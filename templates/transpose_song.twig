@@ -72,7 +72,7 @@
 {% endif %}
 
 {% if song.peopleCompatible %}
-<p class="explanation people-compatible {{ peopleCompatibleClass|default('') }}">
+<p class="explanation people-compatible-info {{ peopleCompatibleClass|default('') }}">
 	{{ peopleCompatibleMsg }}
 	<small><a href="{{ url('people-compatible-info', {'_locale': app.locale}) }}">{% trans %}Learn more{% endtrans %}</a></small>
 </p>
@@ -82,7 +82,7 @@
 {% endif %}
 
 {% if song.isAlreadyPeopleCompatible %}
-<p class="tip people-compatible star">
+<p class="tip people-compatible-info star">
 	{% trans %}With these chords the assembly too will be able to sing the song comfortably.{% endtrans %}
 	<small><a href="{{ url('people-compatible-info', {'_locale': app.locale}) }}">{% trans %}Learn more{% endtrans %}</a></small>
 </p>

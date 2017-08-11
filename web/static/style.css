@@ -444,7 +444,7 @@ a.link-all-report {
 	clear: both;
 }
 
-.people-compatible {
+.people-compatible-info {
 	background-image: url(img/people.svg);
 	background-position: left .3em;
 	background-repeat: no-repeat;
@@ -452,11 +452,11 @@ a.link-all-report {
 	padding-left: 4.2em;
 	min-height: 2.5em;
 }
-	.people-compatible.tip {
+	.people-compatible-info.tip {
 		background-position: 1em .8em;
 		padding-left: 4.8em;
 	}
-.people-compatible.star {
+.people-compatible-info.star {
 	background-image: url(img/people-star.svg);
 }
 
