@@ -12,17 +12,17 @@
 
 	<p>Ya sabes que Neo-Transposer transporta los cantos para tu voz, o, con palabras técnicas, para tu rango de voz. Rango de voz significa todas las notas que eres capaz de cantar, desde la más grave (más baja) hasta la más aguda (más alta).</p>
 
-	<p>Hasta ahora, cada vez que entrabas en Neo-Transposer para tener la transposición de un canto, la aplicación te mostraba el siguiente mensaje:</p>
+	<p>Hasta ahora, cada vez que entrabas en Neo-Transposer para transportar un canto, la aplicación te mostraba el siguiente mensaje:</p>
 
 	<div class="tip from-outside">{% trans %}Beware that this is the best key for your voice, but might not be the best one for the assembly.{% endtrans %}</div>
 
-	<p>...y efectivamente, después de un cierto tiempo usando Neo-Transposer, te habrás dado cuenta de que después de transportar algunos cantos, tú puedes cantarlos con comodidad, pero el resto de la comunidad tiene dificultad para cantar el estribillo, porque resulta muy grave o muy agudo. Esto se debe a que cada persona tiene su rango de voz, no solo hombres diferente de las mujeres, sino hombres entre sí y mujeres entre sí. Por eso es natural que si has transportado un canto para <em>tu</em> voz, te resulte cómodo a ti pero no a otros.</p>
+	<p>...y efectivamente, después de un cierto tiempo usando Neo-Transposer, te habrás dado cuenta de que después de transportar algunos cantos, tú puedes cantarlos con comodidad, pero el resto de la comunidad tiene dificultad para cantar el estribillo, porque resulta muy grave o muy agudo. Esto se debe a que cada persona tiene su rango de voz, no solo el de los hombres diferente al de las mujeres, sino hombres entre sí y mujeres entre sí. Por eso es natural que si has transportado un canto para <em>tu</em> voz, te resulte cómodo a ti pero no a otros.</p>
 
-	<p>¿Cómo solucionar este problema? Depende del canto. Para algunos cantos es imposible "armonizar" el rango de voz del cantor con el rango de voz de la asamblea. Para otros, Neo-Transposer ha desarrollado las <strong>transposiciones compatibles con la asamblea</strong>. Estas transposiciones no solo tienen en cuenta el rango de voz del canto y del cantor, sino que también tienen en cuenta el rango de voz del canto en las partes que canta la asamblea y el rango de voz de la asamblea. Combinando esos cuatro rangos de voz, Neo-Transposer calcula unos acordes que, siempre dentro del rango de voz del cantor, haga que el estribillo esté también dentro del rango de voz de la asamblea.</p>
+	<p>¿Cómo solucionar este problema? Depende del canto. Para algunos cantos es imposible compatibilizar el rango de voz del cantor con el rango de voz de la asamblea. Para otros, Neo-Transposer ha desarrollado las <strong>transposiciones compatibles con la asamblea</strong>. Estas transposiciones no solo tienen en cuenta el rango del canto y del cantor, sino también las partes que canta la asamblea y su propio rango de voz. Combinando esos cuatro rangos, Neo-Transposer calcula unos acordes que, siempre dentro del rango de voz del cantor, haga que el estribillo esté también dentro del rango de voz de la asamblea.</p>
 
 	<p class="center"><img src="{{ global.request.basepath }}/static/img/perfect-key-pc.es.gif" alt="El tono perfecto de un canto es, idealmente, la intersección etre el tono más cómodo para el cantor, el tono más cómodo para la asamblea y el tono que mejor refleja la intención del canto" /></p>
 
-	<p>Pero ojo, es una aproximación. En la asamblea cada uno tiene un rango de voz diferente. No obstante, según mi experiencia personal como cantor, he definido un rango de voz estándar que considero que la mayoría de gente (hombres y mujeres) pueden cantar. Este rango de voz estándar es una estimación aproximada, siempre imperfecta. El rango es Si 2 &rarr; Si 3, suponiendo que las mujeres cantarán una octava por encima de los hombres (es decir, Si 3 &rarr; Si 4).</p>
+	<p>Pero atención, es una aproximación. En la asamblea cada uno tiene un rango de voz diferente. No obstante, según mi experiencia personal como cantor, he definido un rango de voz estándar que considero que la mayoría de gente (hombres y mujeres) pueden cantar. Este rango de voz estándar es una estimación aproximada, siempre imperfecta. El rango es Si 2 &rarr; Si 3, suponiendo que las mujeres cantarán una octava por encima de los hombres (es decir, Si 3 &rarr; Si 4).</p>
 
 	<p>Cuando Neo-Transposer transporta un canto para tu voz, pueden ocurrir tres casos diferentes:</p>
 
@@ -30,7 +30,7 @@
 
 	<p class="tip people-compatible star from-outside">{% trans %}With these chords the assembly too will be able to sing the song comfortably.{% endtrans %} <small><a href="javascript:void(0)">{% trans %}Learn more{% endtrans %}</a></small></p>
 
-	<p>2) La transposición adaptada <strong>a tu voz</strong> es demasiado grave o demasiado aguda para la asamblea. En este caso Neo-Transposer te ofrecerá una transposición que será más grave o más aguda que la tuya para que le también sea apropiada para la asamblea. Esta transposición (que llamamos “compatible con la asamblea”) <strong>está dentro de tu rango vocal, es decir, puedes cantarla</strong>, aunque será un poco más grave o más aguda que la primera transposición, que está calculada sin tener en cuenta la asamblea. En este caso, Neo-Transposer te lo indicará así:</p>
+	<p>2) La transposición adaptada <strong>a tu voz</strong> es demasiado grave o demasiado aguda para la asamblea. En este caso Neo-Transposer te ofrecerá una transposición que será más grave o más aguda que la tuya para que también sea apropiada para la asamblea. Esta transposición (que llamamos “compatible con la asamblea”) <strong>está dentro de tu rango vocal, es decir, puedes cantarla</strong>, aunque será un poco más grave o más aguda que la primera transposición, que está calculada sin tener en cuenta la asamblea. En este caso, Neo-Transposer te lo indicará así:</p>
 
 	<p class="explanation people-compatible star from-outside">{% trans with {'%difference%': 'lower'|trans } %}This other transposition, though a bit %difference%, fits well the people of the assembly.{% endtrans %}</p>
 
@@ -40,7 +40,7 @@
 
 	<p>Hay otros casos, pero no es el objetivo de este artículo explicar en profundidad el funcionamiento de Neo-Transposer.</p>
 
-	<p>Recuerda que todo este mecanismo es solo una estimación siempre imperfecta. El rango vocal que he definido como "estándar" de la asamblea nunca es totalmente exacto, hay comunidades que cantan los cantos de forma un poco diferente... en resumen: Neo-Transposer solo hace una aproximación, y nunca es 100% fiable. Incluso yo personalmente canto algunos salmos con acordes diferentes a los que me da la aplicación, porque <strong>una máquina no puede hacer el trabajo de una persona</strong>, al menos en este caso. Debes probar cada transposición y ver si realmente es apropiada, cambiar la cejilla (capo)... y si te funciona, ¡haz click en el botón verde!</p>
+	<p>Recuerda que todo este mecanismo es solo una estimación siempre imperfecta. El rango vocal de la asamblea que he definido como "estándar" nunca es totalmente exacto, hay comunidades que cantan los cantos de forma un poco diferente... en resumen: Neo-Transposer solo hace una aproximación, y nunca es 100% fiable. Incluso yo personalmente canto algunos salmos con acordes diferentes a los que me da la aplicación, porque <strong>una máquina no puede hacer el trabajo de una persona</strong>, al menos en este caso. Debes probar cada transposición y ver si realmente es apropiada, cambiar la cejilla (capo)... y si te funciona, ¡haz click en el botón verde!</p>
 
 	<p>Si tienes dudas o te interesa saber más, deja un comentario o escríbeme a <a href="mailto:neo-transposer@mail.com" class="inline-block">neo-transposer@mail.com</a>.</p>
 
