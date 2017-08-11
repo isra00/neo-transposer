@@ -130,14 +130,14 @@ $app->get('/sura-yako', "$controllers\\TransposeSong::get")
 
 $app->get('/{_locale}/manifiesto', function() use ($app)
 {
-	return $app->render('manifesto.twig', array(
+	return $app->render('pages/manifesto.' . $app['locale'] . '.twig', array(
 		'page_title' => $app->trans('Manifesto'),
 	));
 })->assert('_locale', 'es');
 
 $app->get('/{_locale}/transposiciones-compatibles-asamblea', function() use ($app)
 {
-	return $app->render('pages/people-compatible-info.es.twig', array(
+	return $app->render('pages/people-compatible-info.' . $app['locale'] . '.twig', array(
 		'page_title' 	=> $app->trans('Transposiciones compatibles con la asamblea'),
 	));
 })->assert('_locale', 'es')
