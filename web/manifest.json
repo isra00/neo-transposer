@@ -1,5 +1,7 @@
 {
 	"name": "Neo-Transposer",
+	"short_name": "Neo-Transposer",
+	"description": "Neo-Transposer transporta automáticamente los cantos del Camino por ti, para que encajen perfectamente con tu voz.",
 	"icons": [
 		{
 			"src": "static/img/android-chrome-192x192.png",
@@ -23,5 +25,6 @@
 		}
 	],
 	"background_color": "#D32F2F",
-	"display": "standalone"
+	"display": "standalone",
+	"start_url": "/"
 }
