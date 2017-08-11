@@ -4,8 +4,8 @@
 
 {% macro feedbackGraph(yes, no, width = 100, additionalCssClass) %}
 	<div class="feedback-graph {{ additionalCssClass|default('') }}">
-		{% if yes %}<span class="yes" style="width: {{ ((yes / (yes + no)) * width)|round }}px">{{ yes }}</span>{% endif %}
-		{% if no %} <span class="no"  style="width: {{ ((no / (yes + no)) * width)|round }}px">{{ no }}</span>{% endif %}
+		{% if yes %}<span class="yes" style="width: {{ min(96, ((yes / (yes + no)) * width)|round) }}px"><span>{{ yes }}</span></span>{% endif %}
+		{% if no %} <span class="no"  style="width: {{ min(96, ((no / (yes + no)) * width)|round) }}px"><span>{{ no }}</span></span>{% endif %}
 	</div>
 {% endmacro %}
 {% import _self as self %}
