@@ -288,6 +288,7 @@ NT = {
 
 		chordChartImg.setAttribute('alt', event.target.innerHTML);
 		chordChartImg.addEventListener('load', function() {
+			chordChartImg.style.visibility = 'visible';
 			dialog.style.width = chordChartImg.offsetWidth + 'px';
 		});
 
@@ -327,6 +328,7 @@ NT = {
 
 		event.target.addEventListener('mouseout', function() {
 			dialog.style.display = 'none';
+			chordChartImg.style.visibility = 'hidden';
 		});
 	},
 
