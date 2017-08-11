@@ -64,10 +64,7 @@
 					</h2>
 				{%- else -%}
 					{% if current_route == 'login' -%}
-					<h1>
-						{{ app.neoconfig.software_name }}
-						<small>{{ page_title }}</small>
-					</h1>
+					<h1>{{ app.neoconfig.software_name }}</h1>
 					{% else -%}
 					<h2>{{ app.neoconfig.software_name }}</h2>
 					{%- endif %}

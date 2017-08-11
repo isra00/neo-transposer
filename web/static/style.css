@@ -84,12 +84,6 @@ hr {
 		text-align: left;
 		float: left;
 	}
-		.header h1 small {
-			font-weight: lighter;
-			font-size: .8rem;
-			float: right;
-			display: none;
-		}
 	.header a {
 		color: white;
 	}
@@ -230,7 +224,6 @@ footer {
 				display: block;
 				font-size: .7em;
 				color: #333;
-				font-weight: lighter;
 			}
 
 .page-user-book .tip {
