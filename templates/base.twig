@@ -7,7 +7,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>{{ page_title }}</title>
 	<link rel="stylesheet" href="{{ global.request.basepath }}/static/{% if global.debug %}style{% else %}compiled-{{ app.neoconfig.css_cache }}{% endif %}.css" type="text/css" />
-	<link rel="apple-touch-icon" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
+	
+	<link rel="icon" type="image/svg+xml" sizes="512x512" href="{{ global.request.basepath }}/static/img/source/logo-red.svg">
+	<link rel="icon" type="image/png" sizes="512x512" href="{{ global.request.basepath }}/static/img/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="{{ global.request.basepath }}/static/img/android-chrome-192x192.png">
+	<link rel="icon" type="image/png" sizes="180x180" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
+	<link rel="apple-touch-icon"      sizes="180x180" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
+	<link rel="favicon" href="{{ global.request.basepath }}/favicon.ico">
+
+	<link rel="manifest" href="{{ global.request.basepath }}/manifest.json">
 
 	<meta property="og:url" content="{{ app.absoluteUriWithoutQuery }}">
 	<meta property="og:title" content="{{ page_title }}">
