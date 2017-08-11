@@ -94,7 +94,7 @@ class TransposeSong
 
 			if ($transposedSong->peopleCompatible->score < $transposedSong->transpositions[0]->score)
 			{
-				$peopleCompatibleMsg .= $app->trans('And it has easier chords!');
+				$peopleCompatibleMsg .= ' ' . $app->trans('And it has easier chords!');
 			}
 
 			$tplVars['peopleCompatibleMsg'] = $peopleCompatibleMsg;

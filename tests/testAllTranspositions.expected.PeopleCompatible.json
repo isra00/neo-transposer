@@ -4747,7 +4747,18 @@
 				"capo": 1,
 				"chords": "A,C#,F#m,D,Bm"
 			},
-			"peopleCompatibleStatus": 1
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C2",
+				"highestNote": "C#3",
+				"score": 17,
+				"capo": 2,
+				"chords": "G,B,Em,C,Am",
+				"deviationFromCentered": -1,
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
+			}
 		},
 		"330": {
 			"songLowestNote": "D#2",
@@ -4969,7 +4980,18 @@
 				"capo": 1,
 				"chords": "Bm,Em,C,B"
 			},
-			"peopleCompatibleStatus": 1
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "C2",
+				"highestNote": "C#3",
+				"score": 15,
+				"capo": 2,
+				"chords": "Am,Dm,A#,A",
+				"deviationFromCentered": -1,
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
+			}
 		},
 		"339": {
 			"songLowestNote": "B1",
@@ -4978,7 +5000,7 @@
 				"offset": -2,
 				"lowestNote": "A1",
 				"highestNote": "F3",
-				"score": 42,
+				"score": 32,
 				"capo": 3,
 				"chords": "B,Em,Am,D7,B7,C7M,C"
 			},
@@ -5064,7 +5086,7 @@
 				"capo": 5,
 				"chords": "A,C#,D,Bm,E,B7,A7,Em,Am"
 			},
-			"peopleCompatibleStatus": 1
+			"peopleCompatibleStatus": 3
 		},
 		"343": {
 			"songLowestNote": "E2",
@@ -5148,7 +5170,18 @@
 				"capo": 2,
 				"chords": "Bm,D,F#m,Em,F#,G"
 			},
-			"peopleCompatibleStatus": 1
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 14,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "Am,C,Em,Dm,E,F",
+				"peopleLowestNote": "F#2",
+				"peopleHighestNote": "B2"
+			}
 		},
 		"348": {
 			"songLowestNote": "D2",
@@ -5361,16 +5394,18 @@
 				"capo": 1,
 				"chords": "Dm,Gm,Gm6,C7,F,A,Am,A#"
 			},
-			"notEquivalent": {
+			"peopleCompatible": {
 				"offset": 0,
 				"lowestNote": "A1",
 				"highestNote": "D3",
 				"score": 32,
 				"capo": 5,
 				"deviationFromCentered": -1,
-				"chords": "Am,Dm,Dm6,G7,C,E,Em,F"
+				"chords": "Am,Dm,Dm6,G7,C,E,Em,F",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "E3"
 			},
-			"peopleCompatibleStatus": 1
+			"peopleCompatibleStatus": 6
 		},
 		"355": {
 			"songLowestNote": "B1",
