@@ -74,7 +74,7 @@
 {% if song.peopleCompatible %}
 <p class="explanation people-compatible {{ peopleCompatibleClass|default('') }}">
 	{{ peopleCompatibleMsg }}
-	<small><a href="{{ url('people-compatible-info-es', {'_locale': app.locale}) }}">{% trans %}Learn more{% endtrans %}</a></small>
+	<small><a href="{{ url('people-compatible-info', {'_locale': app.locale}) }}">{% trans %}Learn more{% endtrans %}</a></small>
 </p>
 <div class="transpositions-list">
 	{{ self.printTransposition(song.peopleCompatible, song.song.originalChords) }}
@@ -84,7 +84,7 @@
 {% if song.isAlreadyPeopleCompatible %}
 <p class="tip people-compatible star">
 	{% trans %}With these chords the assembly too will be able to sing the song comfortably.{% endtrans %}
-	<small><a href="{{ url('people-compatible-info-es', {'_locale': app.locale}) }}">{% trans %}Learn more{% endtrans %}</a></small>
+	<small><a href="{{ url('people-compatible-info', {'_locale': app.locale}) }}">{% trans %}Learn more{% endtrans %}</a></small>
 </p>
 {% endif %}
 
