@@ -61,7 +61,7 @@ class TransposeSong
 			if (PeopleCompatibleCalculation::ADJUSTED_WIDER == $transposedSong->peopleCompatibleStatus)
 			{
 				$peopleCompatibleMsg = $app->trans(
-					'This other transposition, though a bit %difference%, may probably fit better the people of the assembly. ', 
+					'This other transposition, though a bit %difference%, may probably fit better the people of the assembly.', 
 					['%difference%' => $difference]
 				);
 			}
@@ -69,7 +69,7 @@ class TransposeSong
 			if (PeopleCompatibleCalculation::ADJUSTED_WELL == $transposedSong->peopleCompatibleStatus)
 			{
 				$peopleCompatibleMsg = $app->trans(
-					'This other transposition, though a bit %difference%, fits well the people of the assembly. ', 
+					'This other transposition, though a bit %difference%, fits well the people of the assembly.', 
 					['%difference%' => $difference]
 				);
 
@@ -79,7 +79,7 @@ class TransposeSong
 			if (PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE == $transposedSong->peopleCompatibleStatus)
 			{
 				$peopleCompatibleMsg = $app->trans(
-					'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly. ', 
+					'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly.', 
 					['%difference%' => $difference]
 				);
 			}
@@ -87,7 +87,7 @@ class TransposeSong
 			if (PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE == $transposedSong->peopleCompatibleStatus)
 			{
 				$peopleCompatibleMsg = $app->trans(
-					'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly. ', 
+					'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly.', 
 					['%difference%' => $difference]
 				);
 			}

@@ -209,17 +209,17 @@ return array(
 	'Maybe you are not singing in the same tone as the guitar'
 	=> 'Labda hujaimba sawa sawa kulingana na gitaa.',
 
-	'This other transposition, though a bit %difference%, may probably fit better the people of the assembly. '
+	'This other transposition, though a bit %difference%, may probably fit better the people of the assembly.'
 	=> 'Kordi hizi, ijapo %difference% kidogo, labda zitawafaa pia sauti za watu wa kusanyiko. ',
 
-	'This other transposition, though a bit %difference%, fits well the people of the assembly. '
+	'This other transposition, though a bit %difference%, fits well the people of the assembly.'
 	=> 'Kordi hizi, ijapo %difference% kidogo, zinafaa kabisa sauti za watu wa kusanyiko.',
 
-	'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly. '
-	=> 'Kordi hizi za juu zinakufaa wewe, lakini zinakuwa juu sana kwa watu wa kusanyiko. Zinazofuata zimeshushwa kidogo, ingawa kwa wengine bado itakuwa juu. ',
+	'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly.'
+	=> 'Kordi hizi za juu zinakufaa wewe, lakini zinakuwa juu sana kwa watu wa kusanyiko. Zinazofuata zimeshushwa kidogo, ingawa kwa wengine bado itakuwa juu.',
 
-	'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly. '
-	=> 'Kordi hizi za juu zinakufaa wewe, lakini zinakuwa chini sana kwa watu wa kusanyiko. Zinazofuata zimepandishwa kidogo, ingawa kwa wengine bado itakuwa chini sana. ',
+	'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly.'
+	=> 'Kordi hizi za juu zinakufaa wewe, lakini zinakuwa chini sana kwa watu wa kusanyiko. Zinazofuata zimepandishwa kidogo, ingawa kwa wengine bado itakuwa chini sana.',
 
 	'And it has easier chords!'
 	=> ' Halafu kordi hizi ni rahisi zaidi!',

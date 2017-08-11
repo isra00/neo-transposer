@@ -140,7 +140,7 @@ $app->get('/{_locale}/transposiciones-compatibles-asamblea', function() use ($ap
 	return $app->render('pages/people-compatible-info.' . $app['locale'] . '.twig', array(
 		'page_title' 	=> $app->trans('Transposiciones compatibles con la asamblea'),
 	));
-})->assert('_locale', 'es')
+})->assert('_locale', $validLocales)
 	->bind('people-compatible-info-es');
 
 $app->run();

@@ -1,0 +1,51 @@
+{% extends "base.twig" %}
+
+{% block page_class %}static-page{% endblock %}
+
+{% block content %}
+
+<h3 class="section-title">KITUO CHA MAFUNZO</h3>
+
+<div class="inside">
+
+	<h1>Funguo zinazolifaa kusanyiko (<em>people-compatible transpositions</em>) ni kitu gani?</h1>
+
+	<p>Umeisha jua kwamba Neo-Transposer inabadilisha ufunguo wa nyimbo kwa ajili ya sauti yako binafsi, au kwa maneno ya kitaalamu, <em>voice range</em>. <em>Voice range</em> maana yake nota zote ambazo unaweza kuziimba, kuanzia ile ya chini kabisa mpaka ya juu kabisa.</p>
+
+	<p>Hapo nyuma, ulipokuwa unaingia Neo-Transpose kwa kubadilisha ufunguo wa wimbo, programu ilikuonesha onyo ifuatayo:</p>
+
+	<div class="tip from-outside">{% trans %}Beware that this is the best key for your voice, but might not be the best one for the assembly.{% endtrans %}</div>
+
+	<p>...kwa kweli, baada ya muda wa kutumia Neo-Transposer, bila shaka utakuwa umegundua kuwa unapobadilisha ufunguo wa wimbo wo wote, wewe unafanikiwa kuuimba kwa urahisi, lakini watu wengine wa jumuiya wanapata shida kwa kuimba kiitikio, maana sauti yake inakuwa ya chini mno au ya juu mno. Haya yanatokea kwa sababu kila mtu ana <em>voice range</em> yake, sio kati ya wanawake na wanaume tu, bali wanaume kati yao na wanawake kati yao pia. Ndiyo maana inawezekana kwamba, baada ya kubadilisha nyimbo kadhaa, nazo ziwe rahisi kwako kuimba ila sio kwa watu wengine.</p>
+
+	<p>Sasa tufanye nini na tatizo hili? Inategemea na wimbo. Kwa nyimbo kadhaa haiwezekani kuoanisha <em>voice range</em> ya mwimbaji na ile ya kusanyiko. Kwa nyimbo zingine, Neo-Transposer imeendeleza <strong>Funguo zinazolifaa kusanyiko (<em>people-compatible transpositions</em>)</strong>. Funguo hizi zinazingatia sio <em>voice range</em> ya wimbo na ya mwimbaji, bali pia zinazingatia <em>voice range</em> ya wimbo katika sehemu ambazo kusanyiko linaimba, na pia <em>voice range</em> ya kusanyiko. Kwa kulinganisha hizo <em>voice range</em> nne, Neo-Transposer inahesabu kordi ambazo zikiwa ndani ya <em>voice range</em> ya mwimbaji, zinafanya kiitikio kiwe ndani ya <em>voice range</em> ya kusanyiko.</p>
+
+	<p class="center"><img src="{{ global.request.basepath }}/static/img/perfect-key-pc.sw.gif" alt="El tono perfecto de un canto es, idealmente, la intersección etre el tono más cómodo para el cantor, el tono más cómodo para la asamblea y el tono que mejor refleja la intención del canto" /></p>
+
+	<p>Lakini ona, mahesabu haya ni kisio tu. Katika kusanyiko kila mmoja ana <em>voice range</em> yake, tofauti na ya mwenzake. Lakini kadiri ya uzoefu wangu kama mwimbaji, nimefafanua <em>voice range</em> ya kawaida (<em>standard</em>), ambayo nadhani watu wengi, waume kwa wake, wanaweza kuimba. Hii <em>voice range</em> ya kawaida (<em>standard</em>) ni kisio, isiyo kamili. Nayo ni B 2 &rarr; B 3, tukifikiri kuwa wanawake wataimba katika oktava moja juu ya wanaume, yaani B 3 &rarr; B 4).</p>
+
+	<p>Wakati Neo-Transposer inakubadilisha ufunguo wa wimbo fulani kwa ajili ya sauti yako, hali moja kati ya hizi tatu tofauti inaweza kutokea:</p>
+
+	<p>1) Hali iliyobora: ufunguo unaoifaa <strong>sauti yako</strong> tayari unaifaa sauti ya kawaida (<em>standard</em>) ya kusanyiko. Ikitokea hivyo, utaona onyo ifuatayo:</p>
+
+	<p class="tip people-compatible star from-outside">{% trans %}With these chords the assembly too will be able to sing the song comfortably.{% endtrans %} <small><a href="javascript:void(0)">{% trans %}Learn more{% endtrans %}</a></small></p>
+
+	<p>2) Ufunguo unaoifaa <strong>sauti yako</strong> ni wa chini mno ama wa juu mno kwa kusanyiko. Ikitokea hivyo, Neo-Transposer itakuonyesha ufunguo mwingine, ambao utakuwa wa juu au wa chini zaidi kuliko ule uliokufaa wewe, ili uweze kulifaa kusanyiko pia. Ufunguo huu (ambao tunauita “unalifaa kusanyiko”) <strong>bado upo ndani ya <em>voice range</em> yako, yaani, bado unaweza kuimba</strong>, ijapo itakuwa ni ya chini au ya juu zaidi kuliko ule wa kwanza, unaohesabiwa bila kulizingatia kusanyiko. Ikitokea hivyo, Neo-Transposer itakuonyesha ifuatavyo:</p>
+
+	<p class="explanation people-compatible star from-outside">{% trans with {'%difference%': 'lower'|trans } %}This other transposition, though a bit %difference%, fits well the people of the assembly.{% endtrans %}</p>
+
+	<p>3) Kuna nyimbo kadhaa ambazo <em>voice range</em> yake ni kubwa kuliko <em>voice range</em> ya kawaida (<em>standard</em>) ya kusanyiko. Maana yake, haiwezekani kamwe kusanyiko zima liweze kuimba kiitikio chote kwa urahisi.</p>
+
+	<p class="explanation people-compatible from-outside">{% trans with {'%difference%': 'lower'|trans } %}The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly.{% endtrans %}</p>
+
+	<p>Kuna mambo mengine mengi, lakini sio lengo la makala haya kuelezea michakato ya Neo-Transposer kwa ndani kabisa.</p>
+
+	<p>Kumbuka kwamba programu hii inakupa mapendekezo ya kisio, na haiaminiki 100%. Hata mimi binafsi mara kadhaa naimba nyimbo zingine kwa kordi tofauti na zile ambazo Neo-Transposer inanipa, kwa sababu <strong>mashine haiwezi kufanya kazi ya mwanadamu</strong>, angalau kazi hii. Unahitaji kufanya mazoezi ya kila ufunguo na kuona ikiwa inafaa ama la; au kuweka <em>capo</em> kwenye viumba vingine, nk. Na ukifanikiwa... bonyeza kwenye kitufe kijani (<em>green button</em>)!</p>
+
+	<p>Ukiwa na mashaka ama unataka kujua zaidi, unaweza kuniandikia baru pepe: <a href="mailto:neo-transposer@mail.com" class="inline-block">neo-transposer@mail.com</a>.</p>
+
+	<p class="article-footer">Tarehe 11 Agosti 2017</p>
+
+</div>
+
+{% endblock %}
