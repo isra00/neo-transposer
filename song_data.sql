@@ -358,7 +358,7 @@ INSERT INTO `song` VALUES (318,2,257,'Ven del Líbano','D2','B2','ven-del-libano
 INSERT INTO `song` VALUES (319,1,NULL,'Sura Yako','F2','A3','sura-yako',1,NULL,NULL,NULL);
 INSERT INTO `song` VALUES (327,2,23,'A ti levanto mis ojos (voz hombres+mujeres)','A1','F3','a-ti-levanto-mis-ojos-voz-hombres+mujeres',0,'A1','F3',NULL);
 INSERT INTO `song` VALUES (328,2,26,'A ti, Señor, se debe la alabanza en Sion','G1','C3','a-ti-señor-se-debe-la-alabanza-en-sion',0,'E2','C3',NULL);
-INSERT INTO `song` VALUES (329,2,39,'Ave María I','D2','E3','ave-maria-i',0,NULL,NULL,NULL);
+INSERT INTO `song` VALUES (329,2,39,'Ave María I','D2','E3','ave-maria-i',0,'D2','E3',NULL);
 INSERT INTO `song` VALUES (330,2,41,'Babilonia criminal','D#2','F#3','babilonia-criminal',0,'D#2','C3',NULL);
 INSERT INTO `song` VALUES (331,2,55,'Cristo es la Luz','G2','F3','cristo-es-la-luz',0,'G2','E3',NULL);
 INSERT INTO `song` VALUES (332,2,66,'El necio piensa que Dios no existe','D2','E3','el-necio-piensa-que-dios-no-existe',0,'D2','D#3',NULL);
@@ -367,15 +367,15 @@ INSERT INTO `song` VALUES (334,2,79,'Felicidad para el hombre','A1','F3','felici
 INSERT INTO `song` VALUES (335,2,83,'Hasta cuándo','A1','G#2','hasta-cuando',0,'A1','E2',NULL);
 INSERT INTO `song` VALUES (336,2,89,'Himno de Adviento','D2','D3','himno-de-adviento',0,'G2','D3',NULL);
 INSERT INTO `song` VALUES (337,2,90,'Himno de la Ascensión','G2','E3','himno-de-la-ascension',0,'G2','B2',NULL);
-INSERT INTO `song` VALUES (338,2,96,'La Salve','E2','F3','la-salve',0,NULL,NULL,NULL);
+INSERT INTO `song` VALUES (338,2,96,'La Salve','E2','F3','la-salve',0,'E2','F3',NULL);
 INSERT INTO `song` VALUES (339,2,104,'María, madre de la Iglesia','B1','G3','maria-madre-de-la-iglesia',0,'E2','G3',NULL);
 INSERT INTO `song` VALUES (340,2,108,'Me has seducido, Señor','B1','F3','me-has-seducido-señor',0,'C2','G2',NULL);
 INSERT INTO `song` VALUES (341,2,111,'Mucho me han perseguido','A1','D3','mucho-me-han-perseguido',0,'A1','D3',NULL);
-INSERT INTO `song` VALUES (342,2,112,'No está aquí, resucitó','G1','D#3','no-esta-aqui-resucito',0,NULL,NULL,NULL);
+INSERT INTO `song` VALUES (342,2,112,'No está aquí, resucitó','G1','D#3','no-esta-aqui-resucito',0,'G2','D3',NULL);
 INSERT INTO `song` VALUES (343,2,142,'Si me he refugiado en el Señor','E2','G3','si-me-he-refugiado-en-el-señor',0,'E2','C3',NULL);
 INSERT INTO `song` VALUES (344,2,147,'Te estoy llamando, Señor','D2','E3','te-estoy-llamando-señor',0,'E2','A#2',NULL);
 INSERT INTO `song` VALUES (345,2,155,'Ven, hijo del hombre','E2','D#3','ven-hijo-del-hombre',0,'G2','B2',NULL);
-INSERT INTO `song` VALUES (346,2,181,'Padre Nuestro','D2','D3','padre-nuestro',0,NULL,NULL,NULL);
+INSERT INTO `song` VALUES (346,2,181,'Padre Nuestro','D2','D3','padre-nuestro',0,'D2','D3',NULL);
 INSERT INTO `song` VALUES (406,2,233,'Adónde te escondiste amado','E2','F3','adonde-te-escondiste-amado',0,'G2','E3',NULL);
 INSERT INTO `song` VALUES (348,2,205,'Así habla el Amén','D2','D3','asi-habla-el-amen',0,'A2','D3',NULL);
 INSERT INTO `song` VALUES (349,2,209,'Débora','C2','D3','debora',0,'E2','D3',NULL);
@@ -383,7 +383,7 @@ INSERT INTO `song` VALUES (350,2,210,'El combate escatológico','B1','E3','el-co
 INSERT INTO `song` VALUES (351,2,216,'Escuchad islas lejanas [sin subir una octava en el estribillo]','G1','C#3','escuchad-islas-lejanas-sin-subir-una-octava-en-el-estribillo',0,'B1','C#3',NULL);
 INSERT INTO `song` VALUES (352,2,218,'He aquí que nuestro espejo es el Señor','A#1','D3','he-aqui-que-nuestro-espejo-es-el-señor',0,'D2','D3',NULL);
 INSERT INTO `song` VALUES (353,2,221,'Las armas de la Luz','A1','D3','las-armas-de-la-luz',0,'A1','D3',NULL);
-INSERT INTO `song` VALUES (354,2,226,'Señor, Tú me escrutas y conoces','A1','D3','señor-tu-me-escrutas-y-conoces',0,NULL,NULL,NULL);
+INSERT INTO `song` VALUES (354,2,226,'Señor, Tú me escrutas y conoces','A1','D3','señor-tu-me-escrutas-y-conoces',0,'D2','D3',NULL);
 INSERT INTO `song` VALUES (355,2,228,'Siéntate solitario y silencioso','B1','F#3','sientate-solitario-y-silencioso',0,'D2','D3',NULL);
 INSERT INTO `song` VALUES (356,2,231,'A la cena del Cordero','G2','F3','a-la-cena-del-cordero',1,'G2','D3',NULL);
 INSERT INTO `song` VALUES (357,2,232,'Abbá Padre','C2','F3','abba-padre',0,'C2','F3',NULL);
@@ -2476,4 +2476,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-07 17:43:29
+-- Dump completed on 2017-08-11 13:33:43
