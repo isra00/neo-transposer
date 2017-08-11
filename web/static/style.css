@@ -132,7 +132,7 @@ footer {
 }
 	footer p {
 		margin: 0;
-		line-height: 40px
+		line-height: 40px;
 	}
 
 /* USER VOICE */
@@ -199,14 +199,17 @@ footer {
 	margin: 1px;
 	padding: 0;
 	list-style: none;
-	/*border: 1px solid silver;*/
 	background: #f3f3f3;
 }
+
+.lang-sw .books {
+	margin-bottom: 2em;
+}
+
 	.books li {
 		margin: 0;
 		font-size: 1.4em;
 		border-top: 1px solid #ccc;
-		/*box-shadow: 0 0 2px #aaa;*/
 	}
 			.books li:first-child {
 				border-top: 0;
@@ -1439,6 +1442,27 @@ td.red {
 		width: auto;
 		margin: 0 .5em 1.5em;
 		overflow: hidden;
+	}
+
+.wrapper {
+	min-height: 0;
+	height: auto;
+	margin: 0;
+}
+	.push {
+		height: auto;
+		clear: both;
+	}
+
+footer {
+	height: auto;
+	max-height: none;
+	line-height: inherit;
+}
+	footer p {
+		margin: 0;
+		padding: 1em;
+		line-height: inherit;
 	}
 
 	/* LOGIN */
