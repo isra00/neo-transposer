@@ -133,6 +133,26 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 		);
 	}
 
+	public function testSortTranspositionsByEaseWhenEqualScorePrioritizeAsBook()
+	{
+		$transpositionMockA = $this->getMockBuilder(Transposition::class)
+				  ->disableOriginalConstructor()
+				  ->setMethods(['trans'])
+				  ->getMock();
+
+		$transpositionMockB = clone $transpositionMockA;
+
+		$transpositionMockA->score = 10;
+		$transpositionMockB->score = 10;
+
+		$transpositionMockA->setAsBook(true);
+
+		$this->assertEquals(
+			[$transpositionMockA, $transpositionMockB],
+			$this->transposer->sortTranspositionsByEase([$transpositionMockB, $transpositionMockA])
+		);
+	}
+
 	public function testCalculateAlternativeNotEquivalent()
 	{
 		$this->transposer->setTransposerData(

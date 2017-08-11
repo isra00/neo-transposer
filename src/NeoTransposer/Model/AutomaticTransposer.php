@@ -200,7 +200,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	}
 
 	/**
-	 * Sorts an array of Transpositions from easiest to hardest.
+	 * Sorts an array of Transpositions from lowest to highest score.
+	 * If two have same score but one is asBook, that one takes precedence.
 	 * 
 	 * @param  array $transpositions Array of Transpositions, with the score already set.
 	 * @return array The sorted array
@@ -208,7 +209,14 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	public function sortTranspositionsByEase(array $transpositions)
 	{
 		usort($transpositions, function(Transposition $one, Transposition $two) {
-			return $one->score <=> $two->score;
+
+			//If both have same score but one is asBook, that one goes first.
+			if ($one->score == $two->score)
+			{
+				return ($two->getAsBook()) ? 1 : 0;
+			}
+
+			return ($one->score < $two->score) ? -1 : 1;
 		});
 
 		return $transpositions;
