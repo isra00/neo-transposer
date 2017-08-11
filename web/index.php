@@ -133,6 +133,14 @@ $app->get('/{_locale}/manifiesto', function() use ($app)
 	return $app->render('manifesto.twig', array(
 		'page_title' => $app->trans('Manifesto'),
 	));
-})->assert('_locale', 'es');;
+})->assert('_locale', 'es');
+
+$app->get('/{_locale}/transposiciones-compatibles-asamblea', function() use ($app)
+{
+	return $app->render('pages/people-compatible-info.es.twig', array(
+		'page_title' 	=> $app->trans('Transposiciones compatibles con la asamblea'),
+	));
+})->assert('_locale', 'es')
+	->bind('people-compatible-info-es');
 
 $app->run();
