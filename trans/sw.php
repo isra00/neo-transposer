@@ -378,4 +378,41 @@ return array(
 
 	'Transpositions'
 	=> 'Transpositions',
+
+	//Manifesto
+	'Manifesto'
+	=> 'Tamko',
+
+	//Generic error pages
+	'Request error'
+	=> 'Kosa la kifundi katika ombi',
+
+	'Server error'
+	=> 'Kosa la kifundi katika server',
+
+	'Error %code%'
+	=> 'Error %code%',
+
+	//error-404
+	'Page not found'
+	=> 'Ukurasa haupo',
+
+	'The address you have requested does not exist, or has been removed.'
+	=> 'Anwani ulioiandika haipo, ama imefutwa.',
+
+	'You may have clicked on a broken link, or perhaps you wrote the URL manually and made a mistake.'
+	=> 'Labda umebonyeza kiungo kibovu, ama umeiandika mwenyewe anwani na umekosea.',
+
+	'You may try to go back to the <a href="%url%">home page</a>.'
+	=> 'Unaweza ukajaribu kurudi kwenye <a href="%url%">mwanzoni</a>.',
+
+	//error-500
+	'Internal error'
+	=> 'Kosa la kofundi la ndani',
+
+	'Sorry! Neo-Transposer has just failed internally.'
+	=> 'Samahani! Neo-Transposer imepata kosa la kifundi la ndani.',
+
+	'The administrator has been notified and will try to solve this as soon as possible.'
+	=> 'Mtawala ameisha taarifiwa, na atajaribu kurekebisha kosa hili mapema iwezekanavyo.',
 );

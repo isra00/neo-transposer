@@ -382,4 +382,37 @@ return array(
 	//Manifesto
 	'Manifesto'
 	=> 'Manifiesto',
+
+	//Generic error pages
+	'Request error'
+	=> 'Error en la petición',
+
+	'Server error'
+	=> 'Error en el servidor',
+
+	'Error %code%'
+	=> 'Error %code%',
+
+	//error-404
+	'Page not found'
+	=> 'Página no encontrada',
+
+	'The address you have requested does not exist, or has been removed.'
+	=> 'La dirección que buscas no existe, o ha sido eliminada.',
+
+	'You may have clicked on a broken link, or perhaps you wrote the URL manually and made a mistake.'
+	=> 'Quizá hiciste click en un enlace que tenía un error, o quizá has escrito a mano la dirección y te has confundido.',
+
+	'Try to go back to the <a href="%url%">home page</a>.'
+	=> 'Prueba a volver al <a href="%url%">inicio</a>.',
+
+	//error-500
+	'Internal error'
+	=> 'Error interno',
+
+	'Sorry! Neo-Transposer has just failed internally.'
+	=> 'Lo siento, Neo-Transposer ha fallado por dentro.',
+
+	'The administrator has been notified and will try to solve this as soon as possible.'
+	=> 'El administrador ya está sobre aviso e intentará arreglarlo cuanto antes.',
 );

@@ -1146,6 +1146,33 @@ h2.step-1 {
         margin: 0;
     }
 
+.error-page {
+	background: #eee;
+	color: gray;
+}
+	.error-page .header {
+		box-shadow: 0 1px 4px #444;
+	}
+	.error-page .main h1 {
+		font-size: 3em;
+		text-transform: uppercase;
+		margin-bottom: 1rem;
+		font-weight: bold;
+	}
+	.error-page .main  h2 {
+		margin-bottom: 2em;
+		font-size: 1.5em;
+	}
+	.error-page .main  h1,
+	.error-page .main  h2 {
+		color: gray;
+		text-align: center;
+	}
+	.error-page a {
+		font-weight: bold;
+		border-bottom: 1px dotted #D32F2F;
+	}
+
 /* Forms */
 .bigbutton {
 	padding: .3em .6em;

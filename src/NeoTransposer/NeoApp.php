@@ -39,6 +39,7 @@ class NeoApp extends Application
 
 		$this->registerSilexServices($rootDir);
 		$this->registerCustomServices();
+		$this->registerErrorHandler();
 
 		if (!empty($config['debug']))
 		{
@@ -200,6 +201,48 @@ class NeoApp extends Application
 
 		$this['new.PeopleCompatibleTransposition'] = $this->factory(function ($app) {
 			return new \NeoTransposer\Model\PeopleCompatibleTransposition($app);
+		});
+	}
+
+	protected function registerErrorHandler()
+	{
+		//Silex default error pages are better for debugging.
+		if ($this['neoconfig']['debug'])
+		{
+			return;
+		}
+
+		$this->error(function (\Exception $e, Request $request, $code) {
+
+			$this->setLocaleAutodetect($request);
+
+			//For unknown reasons, translator falls back to English. This needed.
+			$this['translator']->setLocale($this['locale']);
+
+			if (false !== array_search($code, [404, 500]))
+			{
+				return $this->render("error-$code.twig", array(
+					'error_code' => $code,
+				));
+			}
+
+			switch (intdiv($code, 100))
+			{
+				case 4:
+					$title = $this->trans('Request error');
+					break;
+				case 5:
+					$title = $this->trans('Server error');
+					break;
+				default:
+					$title = $this->trans('Unknown error');
+			}
+
+			return $this->render('error.twig', array(
+				'error_code' 		=> $code,
+				'error_title' 		=> $title,
+				'error_description' => $this->trans('Error %code%', ['%code%' => $code])
+			));
 		});
 	}
 

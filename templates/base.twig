@@ -98,12 +98,14 @@
 		<div class="push"></div>
 	</div>
 
+	{% block footer %}
 	<footer>
 		<p>
 			{% trans with { '%url%': 'http://github.com/isra00/neo-transposer' } %}Developed as <a href="%url%">free software</a> in Tanzania.{% endtrans %}
 			<a href="javascript:void(0)" onclick="go()">{%trans %}Contact{% endtrans %}</a>.
 		</p>
 	</footer>
+	{% endblock %}
 
 	{% macro loadJsFramework() -%}
 	<script src="{{ global.request.basepath }}/static/zepto.min.js"></script>

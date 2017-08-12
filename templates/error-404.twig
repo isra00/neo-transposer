@@ -1,0 +1,10 @@
+{% extends "error.twig" %}
+
+{% block content %}
+
+	<h1>{% trans %}Page not found{% endtrans %}</h1>
+	<h2>{% trans %}The address you have requested does not exist, or has been removed.{% endtrans %}</h2>
+	<p>&rarr; {% trans %}You may have clicked on a broken link, or perhaps you wrote the URL manually and made a mistake.{% endtrans %}</p>
+	<p>&rarr; {% trans with {'%url%': url('login', {'_locale': app.locale }) } %}Try to go back to the <a href="%url%">home page</a>.{% endtrans %}</p>
+	
+{% endblock %}
