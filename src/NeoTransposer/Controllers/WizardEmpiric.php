@@ -155,6 +155,7 @@ class WizardEmpiric
 			'song_title'	=> $transposedSong->song->title,
 			'song_key'		=> $transposedChords[0],
 			'song_capo'		=> $transposedSong->transpositions[0]->getCapoForPrint(),
+			'audio_file'	=> $wizard_config_song['id_song'] . '-' . $transposedSong->transpositions[0]->offset,
 		);
 	}
 

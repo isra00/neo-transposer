@@ -402,7 +402,6 @@ a.link-all-report {
 	}
 
 .login-form {
-	/*border: 1px solid silver;*/
 	background: #eee;
 	padding: .5em 1em 1em;
 	display: block;
@@ -829,7 +828,6 @@ h2.step-1 {
 	padding: 0;
 	display: inline-block;
 	color: #333;
-	font-size: 1.1em;
 	max-width: 100%;
 
 	white-space: nowrap;
@@ -837,12 +835,82 @@ h2.step-1 {
 	overflow-x: scroll;
 	-webkit-overflow-scrolling: touch;
 }
+
+	.pre-song .sound {
+		display: block;
+		overflow: hidden;
+		clear: both;
+		box-shadow: 1px 1px 2px silver;
+		background: #eee;
+		line-height: 2.5rem;
+		font-family: 'Droid Sans', Arial, sans-serif;
+		font-size: 1.1em;
+		font-weight: bold;
+		padding-left: .8em;
+	}
+		.pre-song .sound .play-control {
+			float: right;
+		    padding: 0 1rem;
+			margin-left: 1rem;
+			background: #D32F2F;
+			background: #D32F2F linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 95%);
+			box-shadow: 0 0 1px gray;
+			font-size: 1.5em;
+			color: white;
+			height: 100%;
+		}
+
+		.pre-song .sound .play-control.playing {
+			background: linear-gradient(270deg, #00585f, #d32f2f);
+			background-size: 200% 200%;
+			-webkit-animation: GradientAnimation 5s ease infinite;
+			   -moz-animation: GradientAnimation 5s ease infinite;
+			     -o-animation: GradientAnimation 5s ease infinite;
+			        animation: GradientAnimation 5s ease infinite;
+		}
+
+		@-webkit-keyframes GradientAnimation {
+		    0%   { background-position: 0% 50% }
+		    50%  { background-position: 100% 50% }
+		    100% { background-position: 0% 50% }
+		}
+		@-moz-keyframes GradientAnimation {
+		    0%   { background-position: 0% 50% }
+		    50%  { background-position: 100% 50% }
+		    100% { background-position: 0% 50% }
+		}
+		@-o-keyframes GradientAnimation {
+		    0%   { background-position: 0% 50% }
+		    50%  { background-position: 100% 50% }
+		    100% { background-position: 0% 50% }
+		}
+		@keyframes GradientAnimation {
+		    0%   { background-position: 0% 50% }
+		    50%  { background-position: 100% 50% }
+		    100% { background-position: 0% 50% }
+		}
+
+			.pre-song .sound .play-control i {
+				font-style: normal;
+				background: url(img/play-controls.gif) left top no-repeat;
+				width: 20px;
+				display: block;
+				line-height: 20px;
+				margin: .6rem 0;
+			}
+			.pre-song .sound .play-control.stopped i {
+				background-position: 0 top;
+			}
+			.pre-song .sound .play-control.playing i {
+				background-position: -20px top;
+			}
+
 	.pre-song .inside {
 		margin: 1rem;
 		max-width: none;
 		display: inline-block;
+		font-size: 1.1em;
 	}
-
 	.pre-song .capo {
 		color: #e00;
 	}
@@ -852,6 +920,7 @@ h2.step-1 {
 		text-transform: uppercase;
 		text-align: center;
 		margin-top: 0;
+		font-size: .9em;
 	}
 	.pre-song .chord {
 		font-size: .9em;
@@ -1622,6 +1691,9 @@ footer {
 			text-align: left;
 			clear: both;
 		}
+			.pre-song .inside {
+				font-size: 1.2em;
+			}
 		.wizard-empiric .answer {
 			margin-left: 0;
 			margin-top: 2em;
@@ -1670,6 +1742,15 @@ footer {
 		.static-page .main h1 {
 			margin-top: 0;
 		}
+}
+
+/******************************************************************************/
+
+@media only screen and (max-width: 25rem) {
+
+	.pre-song .inside {
+		font-size: 1em;
+	}
 }
 
 /******************************************************************************/
