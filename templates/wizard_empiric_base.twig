@@ -12,11 +12,13 @@
 		<p class="instructions">{% block instructions %}{% endblock %}</p>
 
 		<div class="pre-song">
+			{% if show_audio %}
 			<a href="javascript:void(0)" class="sound" id="sound">
 				<span id="play-control" class="play-control stopped"><i>&nbsp;</i></span>
 				Así debes cantarlo:
-				<audio src="{{ global.request.basepath }}/static/audio/{{ audio_file }}.mp3"></audio>
+				<audio src="{{ global.request.basepath }}{{ audio_file }}"></audio>
 			</a>
+			{% endif %}
 			<div class="inside">
 				<h5>{{ song_title}}</h5>
 				<strong class="capo blink">{{ song_capo }}</strong>

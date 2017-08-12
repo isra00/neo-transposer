@@ -847,6 +847,7 @@ h2.step-1 {
 		font-size: 1.1em;
 		font-weight: bold;
 		padding-left: .8em;
+		text-align: right;
 	}
 		.pre-song .sound .play-control {
 			float: right;
@@ -861,7 +862,7 @@ h2.step-1 {
 		}
 
 		.pre-song .sound .play-control.playing {
-			background: linear-gradient(270deg, #00585f, #d32f2f);
+			background: linear-gradient(270deg, #05727b, #d32f2f);
 			background-size: 200% 200%;
 			-webkit-animation: GradientAnimation 5s ease infinite;
 			   -moz-animation: GradientAnimation 5s ease infinite;
@@ -870,24 +871,24 @@ h2.step-1 {
 		}
 
 		@-webkit-keyframes GradientAnimation {
-		    0%   { background-position: 0% 50% }
-		    50%  { background-position: 100% 50% }
-		    100% { background-position: 0% 50% }
+			0%   { background-position: 0% 50%; }
+			50%  { background-position: 100% 50%; }
+			100% { background-position: 0% 50%; }
 		}
 		@-moz-keyframes GradientAnimation {
-		    0%   { background-position: 0% 50% }
-		    50%  { background-position: 100% 50% }
-		    100% { background-position: 0% 50% }
+			0%   { background-position: 0% 50%; }
+			50%  { background-position: 100% 50%; }
+			100% { background-position: 0% 50%; }
 		}
 		@-o-keyframes GradientAnimation {
-		    0%   { background-position: 0% 50% }
-		    50%  { background-position: 100% 50% }
-		    100% { background-position: 0% 50% }
+			0%   { background-position: 0% 50%; }
+			50%  { background-position: 100% 50%; }
+			100% { background-position: 0% 50%; }
 		}
 		@keyframes GradientAnimation {
-		    0%   { background-position: 0% 50% }
-		    50%  { background-position: 100% 50% }
-		    100% { background-position: 0% 50% }
+			0%   { background-position: 0% 50%; }
+			50%  { background-position: 100% 50%; }
+			100% { background-position: 0% 50%; }
 		}
 
 			.pre-song .sound .play-control i {
@@ -1690,6 +1691,7 @@ footer {
 		.pre-song {
 			text-align: left;
 			clear: both;
+			max-width: 100%;
 		}
 			.pre-song .inside {
 				font-size: 1.2em;
@@ -1746,7 +1748,7 @@ footer {
 
 /******************************************************************************/
 
-@media only screen and (max-width: 25rem) {
+@media only screen and (max-width: 20rem) {
 
 	.pre-song .inside {
 		font-size: 1em;
