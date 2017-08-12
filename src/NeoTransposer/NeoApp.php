@@ -232,6 +232,10 @@ class NeoApp extends Application
 			$this->setPageTitle($parameters);
 		}
 
+		$parameters['neoapp_css_file'] = $this['debug']
+			? 'style.css?nocache=' . mktime()
+			: 'compiled-' . $this['neoconfig']['css_cache'] . '.css';
+
 		$this['twig']->addGlobal('notifications', $this->notifications);
 		return $this['twig']->render($view, $parameters);
 	}
