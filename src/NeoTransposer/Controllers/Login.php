@@ -60,7 +60,7 @@ REG;
 
 		$app['session']->set('user', $user);
 
-		if (empty($user->range))
+		if (empty($user->range->lowest))
 		{
 			return $app->redirect($app['url_generator']->generate(
 				'user_voice', 
