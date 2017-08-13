@@ -1168,7 +1168,7 @@ h2.step-1 {
 		color: gray;
 		text-align: center;
 	}
-	.error-page a {
+	.error-page .main a {
 		font-weight: bold;
 		border-bottom: 1px dotted #D32F2F;
 	}
