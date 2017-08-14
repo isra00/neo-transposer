@@ -1146,6 +1146,17 @@ h2.step-1 {
         margin: 0;
     }
 
+/*
+ * INSERT SONG
+ */
+.insert-song input[type=text] {
+	width: 2.5em;
+	font-size: 1em;
+}
+.insert-song .field-title input[type=text] {
+	width: auto;
+}
+
 .error-page {
 	background: #eee;
 	color: gray;

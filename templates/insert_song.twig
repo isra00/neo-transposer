@@ -2,62 +2,80 @@
 
 {% block content %}
 
-	<h1>Insert song</h1>
+<h1>Insert song</h1>
 
-	<form method="post" action="{{ global.request.getRequestUri }}">
+<form class="insert-song" method="post" action="{{ global.request.getRequestUri }}">
 
-		<p>
-			<label for="book">Book:</label>
-			<select name="id_book" id="book">
-			{% for id, book in app.books %}
-				<option value="{{ id }}" {% if id == id_book %}selected="selected"{% endif %}>{{ book.lang_name }}</option>
-			{% endfor %}
-			</select>
-		</p>
+	<p>
+		<label for="book">Book:</label>
+		<select name="id_book" id="book">
+		{% for id, book in app.books %}
+			<option value="{{ id }}" {% if id == id_book %}selected="selected"{% endif %}>{{ book.lang_name }}</option>
+		{% endfor %}
+		</select>
+	</p>
 
-		<p>
-			<label for="title">Title:</label>
-			<input name="title" id="title" size="50" autofocus>
-		</p>
-		
-		<p>
-			<label for="page">Page:</label>
-			<input name="page" id="page" size="3">
-		</p>
+	<p class="field-title">
+		<label for="title">Title:</label>
+		<input name="title" id="title" size="50" autofocus required>
+	</p>
+	
+	<p>
+		<label for="page">Page:</label>
+		<input name="page" id="page" type="text" size="3" required pattern="^[0-9]+$">
+	</p>
 
-		<p>
-			<label for="lowest_note">Lowest note:</label>
-			<input name="lowest_note" id="lowest_note" size="3">
-		</p>
+	<p>
+		<label for="lowest_note">Lowest note:</label>
+		<input name="lowest_note" id="lowest_note" type="text" size="3" required pattern="^[ABCDEFG]#?[1-4]$">
+	</p>
 
-		<p>
-			<label for="highest_note">Highest note:</label>
-			<input name="highest_note" id="highest_note" size="3">
-		</p>
+	<p>
+		<label for="highest_note">Highest note:</label>
+		<input name="highest_note" id="highest_note" type="text" size="3" required pattern="^[ABCDEFG]#?[1-4]$">
+	</p>
 
-		<p>
-			<label for="people_lowest_note">People Lowest note:</label>
-			<input name="people_lowest_note" id="people_lowest_note" size="3">
-		</p>
+	<p>
+		<label for="people_lowest_note">People Lowest note:</label>
+		<input name="people_lowest_note" id="people_lowest_note" type="text" size="3" required pattern="^[ABCDEFG]#?[1-4]$">
+	</p>
 
-		<p>
-			<label for="people_highest_note">People Highest note:</label>
-			<input name="people_highest_note" id="people_highest_note" size="3">
-		</p>
+	<p>
+		<label for="people_highest_note">People Highest note:</label>
+		<input name="people_highest_note" id="people_highest_note" type="text" size="3" required pattern="^[ABCDEFG]#?[1-4]$">
+	</p>
 
-		<p>
-			<label>Chords:</label>
-			{% for i in 0..9 %}
-			<input name="chords[{{ i }}]" size="3"/> 
-			{% endfor %}
-		</p>
+	<p class="field-chords" id="field-chords">
+		<label>Chords:</label>
+		{% for i in 0..9 %}
+		<input name="chords[{{ i }}]" type="text" size="2" pattern="^([ABCDEFG]#?b?)([mM45679]*|dim)$"> 
+		{% endfor %}
+	</p>
 
-		<p>
-			<input type="checkbox" name="first_chord_is_key" checked="checked" id="first_chord_is_key">
-			<label for="first_chord_is_key">First chord = key</label>
-		</p>
+	<p>
+		<input type="checkbox" name="first_chord_is_key" checked="checked" id="first_chord_is_key">
+		<label for="first_chord_is_key">First chord = key</label>
+	</p>
 
-		<p><button type="submit" name="sent" class="bigbutton">Insert</button></p>
+	<p><button type="submit" id="submit" name="sent" class="bigbutton" disabled>Insert</button></p>
 
-	</form>
+</form>
+
+{% import 'base.twig' as self %}
+{{ self.loadJsFramework() }}
+
+<script>
+$(function() 
+{
+	document.getElementsByTagName("form")[0].addEventListener('change', function()
+	{
+		if (0 == $("form :invalid").length)
+		{
+			document.getElementById("submit").disabled = false;
+		}
+	});
+});
+
+</script>
+
 {% endblock %}
