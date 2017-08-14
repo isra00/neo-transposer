@@ -465,6 +465,9 @@ a.link-all-report {
 .people-compatible-info.star {
 	background-image: url(img/people-star.svg);
 }
+.explanation.people-compatible-info.star {
+	background-position: left top;
+}
 
 .transpositions-list {
 	overflow: hidden;
@@ -563,7 +566,7 @@ a.link-all-report {
 
 .chord {
 	color: #e00;
-	font-family: serif;
+	font-family: 'Times New Roman', 'Times', serif;
 }
 .chord-sans {
 	color: #e00;
