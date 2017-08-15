@@ -16,3 +16,15 @@ El cantor, especialmente el novato o con pocos conocimientos musicales, se ve in
  * Approach pedagógico: facilidad de uso pero informando de qué se está haciendo. Uso de lenguaje apropiado. Promover uso del Resucitó oficial.
  * Dad gratis lo que gratis habéis recibido: La aplicación será siempre gratuita.
  * Simplicidad.
+
+### How to add a new language ###
+
+ 1. Create a new row in the table `book`
+ 2. Create a friendly URL for the song list at config[-dist].php (key `book_url`)
+ 3. Translate the interface with a `trans/[lang code].php` file
+ 4. Declare the new language in config[-dist].php (key `languages`)
+ 5. Fill the DB with the songs!
+ 6. Set songs for the Voice Wizard in config.wizard.php
+ 7. Translate the static pages
+ 8. Create a web/static/img/chords/unknown-[lang code].png image
+ 9. Create a web/static/img/mkt-[lang code].jpg image for the home page

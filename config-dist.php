@@ -14,13 +14,14 @@ return [
 	'book_url' => [
 		1 => '/nyimbo-njia-neokatekumenato',
 		2 => '/cantos-camino-neocatecumenal',
+		3 => '/songs-neocatechumenal-way',
 	],
 	
 	'languages'	=> [
-		/*'en' => [
+		'en' => [
 			'name'		=> 'English',
 			'notation'	=> 'american'
-		],*/
+		],
 		'es' => [
 			'name'		=> 'Español',
 			'notation'	=> 'latin',

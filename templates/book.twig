@@ -65,8 +65,32 @@
 {% endfor %}
 </ul>
 
+{% if app.locale == 'en' and app.neouser.isLoggedIn %}
+<aside class="tip">
+	<h3>Missing some songs?</h3>
+	<p>The following songs from the British songbook are missing in Neo-Transposer.</p>
+	<table>
+		<tr><td style="background: #fef5bf">25</td><td>Berakah before meals</td></tr>
+		<tr><td style="background: #fef5bf">29</td><td>The Apostles’ Creed</td></tr>
+		<tr><td style="background: #fef5bf">30</td><td>Our Father</td></tr>
+		<tr><td style="background: white">139</td><td>He is not here, he has risen</td></tr>
+		<tr><td style="background: white">140</td><td>I will take you from the nations</td></tr>
+		<tr><td style="background: white">143</td><td>In the midst of a great crowd,</td></tr>
+		<tr><td style="background: white">144</td><td>Zaccheus</td></tr>
+		<tr><td style="background: #cae4b4">210</td><td>The Spirit of the Lord is upon me</td></tr>
+		<tr><td style="background: #a3dff4">268</td><td>My beloved is for me</td></tr>
+		<tr><td style="background: #a3dff4">278</td><td>Like honey flowing</td></tr>
+		<tr><td style="background: #a3dff4">292</td><td>You are beautiful, my beloved</td></tr>
+		<tr><td style="background: #a3dff4">294</td><td>This is my commandment</td></tr>
+		<tr><td style="background: #a3dff4">297</td><td>If you are risen with Christ</td></tr>
+	</table>
+	<p>Want them added? Please send me a recording of an itinerant in Britain singing any of them to <a href="mailto:neo-transposer@mail.com">neo-transposer@mail.com</a>. Thanks!</p>
+</aside>
+{% endif %}
+
+
 {% if app.locale == 'es' and app.neouser.isLoggedIn %}
-<aside class="tip no-title">
+<aside class="tip">
 	<h3>Aviso sobre el libro de cantos</h3>
 	<p>
 		Los títulos y acordes de los cantos son de la 20ª edición del Resucitó

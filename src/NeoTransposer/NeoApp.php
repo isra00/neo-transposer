@@ -165,7 +165,7 @@ class NeoApp extends Application
 	protected function registerCustomServices()
 	{
 		$this['books'] = function($app) {
-			$books = $app['db']->fetchAll('SELECT * FROM book');
+			$books = $app['db']->fetchAll('SELECT * FROM book ORDER BY id_book DESC');
 			$booksNice = array();
 			foreach ($books as $book)
 			{

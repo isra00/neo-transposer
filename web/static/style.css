@@ -465,6 +465,9 @@ a.link-all-report {
 .people-compatible-info.star {
 	background-image: url(img/people-star.svg);
 }
+.explanation.people-compatible-info.star {
+	background-position: left top;
+}
 
 .transpositions-list {
 	overflow: hidden;
@@ -563,11 +566,14 @@ a.link-all-report {
 
 .chord {
 	color: #e00;
-	font-family: serif;
+	font-family: 'Times New Roman', 'Times', serif;
 }
 .chord-sans {
 	color: #e00;
 	font-family: 'Droid Sans', Arial, sans-serif;
+}
+.chord-british {
+	font-style: italic;
 }
 .chord-color {
 	color: #e00;
@@ -856,6 +862,9 @@ h2.step-1 {
 	.pre-song .chord {
 		font-size: .9em;
 	}
+	.pre-song .chord-british {
+		font-size: 1.1em;
+	}
 
 .wizard-empiric .instructions {
 	margin-bottom: 2em;
@@ -953,6 +962,9 @@ h2.step-1 {
 		.all-songs-report .songs-list .chord-pair {
 			display: inline-block;
 		}
+	.all-songs-report .chord-british {
+		font-size: 1.1em;
+	}
 
 
 /* Admin Dashboard */
@@ -1471,6 +1483,9 @@ td.red {
 	.page-login.lang-sw .mkt {
 		background-image: url(img/mkt-sw.jpg);
 	}
+	.page-login.lang-en .mkt {
+		background-image: url(img/mkt-small.jpg);
+	}
 }
 
 /******************************************************************************/
@@ -1573,9 +1588,12 @@ footer {
 
 	.page-book .tip {
 		padding-left: 1em;
+		background-image: none;
 	}
 		.page-book .tip h3 {
-			padding-left: 65px;
+			padding-left: 1.7em;
+			background: url(img/dialog-information.png) left top no-repeat;
+			background-size: auto 1.2em;
 		}
 
 	.tip.new {

@@ -52,6 +52,31 @@ SONG
 		),
 	),
 
+	'en'	=> array(
+		'lowest' => array(
+			'id_song'				=> 519,
+			'override_highest_note'	=> 'F2',
+			'song_contents'			=> <<<SONG
+%0                 %1
+O Lord, you are my God,
+
+       %0
+I will exalt you!
+SONG
+		),
+
+		'highest' => array(
+			'id_song'		=> 569,
+			'song_contents'	=> <<<SONG
+%0                   %1        %2
+If the Lord does not build the house
+
+   %3                   %0
+in vain do the builders toil.
+SONG
+		),
+	),
+
 	'standard_voices'	=> array(
 		'male_high'		 => array('C#2', 'F#3'),
 		'male'			 => array('B1',	 'E3'),
