@@ -172,7 +172,7 @@ footer {
 	margin: 1em 0;
 	/*font-style: italic;*/
 	color: #444;
-	background: #eee url(img/dialog-information.png) 10px 13px no-repeat;
+	background: #eee url(img/dialog-information.gif) 10px 13px no-repeat;
 	padding: 1em 1em .8em 65px;
 	min-height: 60px;
 }
@@ -262,7 +262,7 @@ footer {
 	}
 
 .tip.new.resucilex {
-	background: black url(img/resucilex-banner.png) left -16px no-repeat;
+	background: black url(img/resucilex-banner.gif) left -16px no-repeat;
 	color: #ddd;
 	padding-left: 70px;
 	line-height: 140%;
