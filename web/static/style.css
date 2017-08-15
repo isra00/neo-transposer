@@ -572,6 +572,9 @@ a.link-all-report {
 	color: #e00;
 	font-family: 'Droid Sans', Arial, sans-serif;
 }
+.chord-british {
+	font-style: italic;
+}
 .chord-color {
 	color: #e00;
 }
@@ -1569,9 +1572,12 @@ footer {
 
 	.page-book .tip {
 		padding-left: 1em;
+		background-image: none;
 	}
 		.page-book .tip h3 {
-			padding-left: 65px;
+			padding-left: 1.7em;
+			background: url(img/dialog-information.png) left top no-repeat;
+			background-size: auto 1.2em;
 		}
 
 	.tip.new {

@@ -7,6 +7,8 @@ namespace NeoTransposer\Model\ChordPrinter;
  */
 class ChordPrinterEnglish extends ChordPrinter
 {
+	protected $cssClass = 'chord chord-british';
+
 	/**
 	 * Return a chord with English notation.
 	 * 
