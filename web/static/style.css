@@ -1015,7 +1015,7 @@ h2.step-1 {
 	.circles-container {
 		text-align: center;
 	}
-	.admin-dashboard article.global-performance h4 {
+	.admin-dashboard article.db-status h4 {
 		text-align: center;
 	}
 	.admin-dashboard .data-circle {
@@ -1351,6 +1351,10 @@ td.red {
 }
 .inline-block {
 	display: inline-block;
+}
+.clearfix {
+	overflow: hidden;
+	clear: both;
 }
 .blink {
     -webkit-animation-name: blinker;
