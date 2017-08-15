@@ -862,6 +862,9 @@ h2.step-1 {
 	.pre-song .chord {
 		font-size: .9em;
 	}
+	.pre-song .chord-british {
+		font-size: 1.1em;
+	}
 
 .wizard-empiric .instructions {
 	margin-bottom: 2em;
