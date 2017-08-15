@@ -1476,6 +1476,9 @@ td.red {
 	.page-login.lang-sw .mkt {
 		background-image: url(img/mkt-sw.jpg);
 	}
+	.page-login.lang-en .mkt {
+		background-image: url(img/mkt-small.jpg);
+	}
 }
 
 /******************************************************************************/
