@@ -959,6 +959,9 @@ h2.step-1 {
 		.all-songs-report .songs-list .chord-pair {
 			display: inline-block;
 		}
+	.all-songs-report .chord-british {
+		font-size: 1.1em;
+	}
 
 
 /* Admin Dashboard */
