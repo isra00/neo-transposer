@@ -383,6 +383,10 @@ return array(
 	'Manifesto'
 	=> 'Manifiesto',
 
+	//People-compatible info
+	'People-compatible transpositions'
+	=> 'Transposiciones compatibles con la asamblea',
+
 	//Generic error pages
 	'Request error'
 	=> 'Error en la petición',

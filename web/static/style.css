@@ -1418,6 +1418,7 @@ td.red {
 	}
 	.static-page .main h1 {
 		margin-top: 0;
+		hyphens: none;
 	}
 	.static-page .main h3 {
 		margin: 0;

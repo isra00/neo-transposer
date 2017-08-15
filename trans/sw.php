@@ -383,6 +383,10 @@ return array(
 	'Manifesto'
 	=> 'Tamko',
 
+	//People-compatible info
+	'People-compatible transpositions'
+	=> 'Kordi zinazowafaa watu wa kusanyiko pia',
+
 	//Generic error pages
 	'Request error'
 	=> 'Kosa la kifundi katika ombi',

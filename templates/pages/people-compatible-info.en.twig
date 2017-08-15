@@ -1,0 +1,51 @@
+{% extends "base.twig" %}
+
+{% block page_class %}static-page{% endblock %}
+
+{% block content %}
+
+<h3 class="section-title">(IN)FORMATION POINT</h3>
+
+<div class="inside">
+
+	<h1>What are the people-compatible transpositions?</h1>
+
+	<p>You already know that Neo-Transposer transposes the songs for your voice, or in a technical language, for your voice range. Voice range means all the notes that you are able to sing, from the lowest to the highest.</p>
+
+	<p>So far, everytime you entered Neo-Transposer for transposing a song, the app used to show this message:</p>
+
+	<div class="tip from-outside">{% trans %}Beware that this is the best key for your voice, but might not be the best one for the assembly.{% endtrans %}</div>
+
+	<p>Actually, you may have realised that after transposing some songs, it is easy for you to sing them comfortably, but the rest of the assembly gets trouble to sing the refrain, because it is too high or too low. This is because every person has their own voice range, not only men different to women, but man among them and women among them. That's way it is natural that when you transposed a song for <em>your</em> voice, it was comfortable for you but not for others.</p>
+
+	<p>How to solve this issue? Well, it depends on the song we are talking about. For some songs it is impossible to make compatible the singer's voice range with that of the assembly. For others, Neo-Transposer has developed the <strong>people-compatible transpositions</strong>. This transpositions take into account not only the range of the singer and the song, but also the one of the assembly and the parts of the song they sing (usually the refrain or chorus). By combining these four ranges Neo-Transposer calculates chords that, being within the singer's voice range, make the refrain be also within the people's range.</p>
+
+	<p class="center"><img src="{{ global.request.basepath }}/static/img/perfect-key-pc.en.gif" alt="Ideally, the perfect key for a song is the intersection of the most comfortable key for the singer, the most comfortable key for the people and the key that best reflects the song's intention." /></p>
+
+	<p>Take into account that this is just an approximation. In the assembly each person has a different voice range. But in my personal experience as a cantor, I have defined a standard voice range that I consider most of people (men and women) are able to sing. This standard voice range is an estimate, always imperfect. The range itself is B2 &rarr; B3, supposing that women will change one octave above men (i.e. B3 &rarr; B4).</p>
+
+	<p>When Neo-Transposer transposes a song for your voice and that of the assembly, one of these three different cases may occur:</p>
+
+	<p>1) In the best case, the transposition adapted <strong>to your voice</strong> is already, in itself, compatible with the standard voice range of the assembly. If this happens, you will see this message:</p>
+
+	<p class="tip people-compatible star from-outside">{% trans %}With these chords the assembly too will be able to sing the song comfortably.{% endtrans %} <small><a href="javascript:void(0)">{% trans %}Learn more{% endtrans %}</a></small></p>
+
+	<p>2) The transposition adapted <strong>to your voice</strong> is too low or too high for the assembly. In this case, Neo-Transposer will offer you another transposition which will be higher or lower than yours, so that it may also fit the assembly. This transposition (which we call “people-compatible”) <strong>is within your voice range, that means you can sing it</strong>, though it will be a bit lower or higher than the first one, which is calculated without taking into account the assembly. In that case, Neo-Transposer will indicate it thus:</p>
+
+	<p class="explanation people-compatible star from-outside">{% trans with {'%difference%': 'lower'|trans } %}This other transposition, though a bit %difference%, fits well the people of the assembly.{% endtrans %}</p>
+
+	<p>3) Some songs have a larger voice range than the assembly's standard voice range. That is, no matter which chords you use, it is virtually impossible for all the assembly to sing comfortably the refrain.</p>
+
+	<p class="explanation people-compatible from-outside">{% trans with {'%difference%': 'lower'|trans } %}The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly.{% endtrans %}</p>
+
+	<p>There are other cases, but it is not the aim of this article to explain the internals of Neo-Transposer in depth.</p>
+
+	<p>Remember that all this mechanism is just an always-imperfect approximation. The standard voice range that I have defined for the assembly is never exact, or there may be communities that sing the songs in a different way... in short: Neo-Transposer does only an approximation, and is never 100% reliable. Even I myself sing some songs with different chords from those the app yields, since <strong>a machine can't do the job of a person</strong>, at least in this case. You should test every transposition and check whether it really fits you, or you may change the capo... And please, if it works, click the green button!</p>
+
+	<p>If you have any question or are interested in knowing more, write me at <a href="mailto:neo-transposer@mail.com" class="inline-block">neo-transposer@mail.com</a>.</p>
+
+	<p class="article-footer">11<sup>th</sup> August, 2017</p>
+
+</div>
+
+{% endblock %}

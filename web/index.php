@@ -138,7 +138,7 @@ $app->get('/{_locale}/manifiesto', function() use ($app)
 $app->get('/{_locale}/people-compatible-transpositions', function() use ($app)
 {
 	return $app->render('pages/people-compatible-info.' . $app['locale'] . '.twig', array(
-		'page_title' 	=> $app->trans('Transposiciones compatibles con la asamblea'),
+		'page_title' 	=> $app->trans('People-compatible transpositions'),
 	));
 })->assert('_locale', $validLocales)
 	->bind('people-compatible-info');
