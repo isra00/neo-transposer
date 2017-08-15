@@ -1120,11 +1120,11 @@
 		},
 		"197": {
 			"songLowestNote": "D2",
-			"songHighestNote": "D#3",
+			"songHighestNote": "E3",
 			"centered1": {
 				"offset": -2,
 				"lowestNote": "C2",
-				"highestNote": "C#3",
+				"highestNote": "D3",
 				"score": 16,
 				"capo": 5,
 				"chords": "Am,E7,C,Dm,G,F"
@@ -1132,7 +1132,7 @@
 			"centered2": {
 				"offset": -2,
 				"lowestNote": "C2",
-				"highestNote": "C#3",
+				"highestNote": "D3",
 				"score": 23,
 				"capo": 3,
 				"chords": "Bm,F#7,D,Em,A,G"
