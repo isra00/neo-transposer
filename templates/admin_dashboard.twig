@@ -65,7 +65,7 @@
 		</h4>
 	</div>
 
-	<h4>Availability</h4>
+	<h4>Song availability</h4>
 	<div class="circles-container">
 	{% for book in song_availability %}
 		<h4 class="data-circle small-circle">
@@ -76,7 +76,7 @@
 	</div>
 
 	<h4>People voice range</h4>
-	<div class="circles-container people-data">
+	<div class="circles-container">
 	{% for book in song_availability %}
 		<h4 class="data-circle small-circle">
 			<span>{{ app.books[book.id_book].lang_name }}</span> 

@@ -1059,7 +1059,6 @@ h2.step-1 {
 		max-width: 90px;
 		height: 90px;
 		max-height: 90px;
-		background-color: #911146;
 	}
 		.admin-dashboard .data-circle.small-circle span {
 			font-size: .8em;
@@ -1070,14 +1069,17 @@ h2.step-1 {
 			.admin-dashboard .data-circle.small-circle b small {
 				font-size: .6em;
 			}
-	.admin-dashboard .circles-container.people-data .data-circle {
+
+	.admin-dashboard .small-circle {
 		background-color: #009393;
 	}
-	.admin-dashboard .circles-container.people-data .data-circle:first-child {
+	.admin-dashboard .small-circle:first-child {
 		background-color: #d32f2f;
-		/*color: #5d5a22;*/
 	}
-
+	.admin-dashboard .small-circle:last-child {
+		background-color: #911146;
+	}
+	
 .feedback-graph {
 	width: 102px;
 	margin: 0;
