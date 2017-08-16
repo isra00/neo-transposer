@@ -25,7 +25,7 @@ return array(
 	'Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!'
 	=> 'Transportar los cantos del Camino automáticamente con Neo-Transposer. ¡Los acordes exactos para tu propia voz!',
 
-	'<span>It\'s not hard to transpose the song. What is hard is</span><span>to know to which key should I transpose it <strong>for my voice</strong>.</span>'
+	'<span>It\'s not hard to transpose a song. What is hard is</span> <span>to know to which key should I transpose it <strong>for my voice</strong>.</span>'
 	=> '<span>Lo difícil no es transportar el canto. Lo difícil es</span> <span>saber a qué tono debes transportarlo <strong>para tu voz</strong>.</span>',
 
 	'Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!'

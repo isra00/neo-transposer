@@ -59,6 +59,33 @@ hr {
 		clear: both;
 	}
 
+.lang-switch-top {
+	text-align: center;
+	line-height: 2em;
+	background: #333;
+}
+	.lang-switch-top a {
+		display: inline-block;
+		color: white;
+		padding: 0 .7em 0 30px;
+		background-position: .5em center;
+		background-repeat: no-repeat;
+	}
+	
+	.lang-switch-top a.active {
+		background-color: #D32F2F;
+	}
+
+.flag-es {
+	background-image: url(img/flag-es.gif);
+}
+.flag-en {
+	background-image: url(img/flag-gb.gif);
+}
+.flag-sw {
+	background-image: url(img/flag-tz.gif);
+}
+
 /*
  * HEADER
  */
@@ -69,7 +96,6 @@ hr {
 	color: white;
 	text-align: right;
 	padding: .4rem .5rem;
-	box-shadow: 0 1px 5px silver;
 }
 	.header .inside {
 		width: 40rem;
@@ -393,7 +419,7 @@ a.link-all-report {
 	}
 	.page-login .login-form {
 		display: inline-block;
-		width: 18em;
+		width: 17.95em;
 		vertical-align: top;
 		margin-top: 1em;
 		margin-bottom: 2em;
@@ -409,16 +435,10 @@ a.link-all-report {
 	width: 20em;
 	margin: 0 auto;
 }
-.lang-switch {
-	text-align: center;
-	font-size: .9em;
-	margin-bottom: .5em;
-	border-top: 1px solid silver;
-	padding-top: .9em;
-}
 
 .landing-info {
-	border-top: 1px solid silver;
+	background: url(img/bottom-shadow.svg) center top no-repeat;
+	background-size: 100% auto;
 	margin-top: 1em;
 	padding-top: 1em;
 }

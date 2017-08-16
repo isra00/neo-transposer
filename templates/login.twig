@@ -2,13 +2,21 @@
 
 {% block page_class %}page-login{% endblock %}
 
+{% block languageSwitchTop %}
+	<nav class="lang-switch-top">
+	{% for locale, lang in languages %}
+		<a class="flag-{{ locale }} {% if locale == app.locale %}active{% endif %}" href="{{ path(current_route, {'_locale': locale}) }}">{{ lang.name }}</a>
+	{% endfor %}
+	</nav>
+{% endblock %}
+
 {% block content %}
 
 	<a name="up"></a>
 	<div class="mkt">
 		<h2>
 			<span class="inside">
-				{% trans %}<span>It's not hard to transpose the song. What is hard is</span><span>to know to which key should I transpose it <strong>for my voice</strong>.</span>{% endtrans %}
+				{% trans %}<span>It's not hard to transpose a song. What is hard is</span> <span>to know to which key should I transpose it <strong>for my voice</strong>.</span>{% endtrans %}
 			</span>
 		</h2>
 	</div>
@@ -31,17 +39,6 @@
 		{% endmacro %}
 		{% import _self as self %}
 		{{ self.login_form(error_msg) }}
-
-		<div class="lang-switch">
-		{% for locale, lang in languages %}
-			{% if not loop.first %} · {% endif %}
-			{% if locale == app.locale %}
-				{{ lang.name }}
-			{% else %}
-				<a href="{{ path(current_route, {'_locale': locale}) }}">{{ lang.name }}</a>
-			{% endif %}
-		{% endfor %}
-		</div>
 
 		<section class="landing-info">
 
@@ -75,9 +72,7 @@
 				<a href="#up" id="cta" class="btn-neutral bigbutton">Entrar en Neo-Transposer</a>
 			</p> #}
 
-			<div class="disclaimer">
-				<p>{% trans %}This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.{% endtrans %}</p>
-			</div>
+			<p class="disclaimer">{% trans %}This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.{% endtrans %}</p>
 
 		</section>
 	</div>

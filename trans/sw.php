@@ -25,7 +25,7 @@ return array(
 	'Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!'
 	=> 'Badilisha ufunguo wa nyimbo za Njia ya Neokatekumenato na Neo-Transposer. Kordi kamili kwa sauti yako!',
 
-	'<span>It\'s not hard to transpose the song. What is hard is</span><span>to know to which key should I transpose it <strong>for my voice</strong>.</span>'
+	'<span>It\'s not hard to transpose a song. What is hard is</span> <span>to know to which key should I transpose it <strong>for my voice</strong>.</span>'
 	=> '<span>Sio shida kubadilisha funguo za nyimbo. Shida ni kujua ufunguo gani ni bora kwa <strong>sauti yangu</strong>?</span>',
 
 	'Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!'
