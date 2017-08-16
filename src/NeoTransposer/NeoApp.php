@@ -103,10 +103,9 @@ class NeoApp extends Application
 		$localesByCountry = [
 			'sw' => ['TZ', 'KE'],
 			'es' => [
-				'AR', 'BO', 'CL', 'CO', 'CR', 'DO', 'EC', 'SV', 'GT', 'HN', 'MX', 'NI', 'PA', 'PY', 'PE', 'PR', 'ES', 'UY', 'VE',
+				'AR', 'BO', 'CL', 'CO', 'CR', 'DO', 'EC', 'SV', 'GT', 'HN', 'MX', 'NI', 'PA', 'PY', 'PE', 'PR', 'ES', 'UY', 'VE', 'CU', 'GQ',
 				'PT', 'BR', 'IT' //Spanish as fallback
-			],
-			'en' => ['US', 'UK', 'IN', 'AU'] //Is this redundant? EN is default
+			]
 		];
 
 		try
