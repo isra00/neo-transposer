@@ -5,7 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $config = require __DIR__ . '/../config-dist.php';
 
 $config['db']['host'] 		= '127.0.0.1';
-$config['db']['user'] 		= 'travis';
+$config['db']['user'] 		= 'root';
 $config['db']['password'] 	= '';
 $config['db']['database'] 	= 'transposer';
 
