@@ -16,12 +16,6 @@ class NeoApp extends Application
 	use \Silex\Application\TranslationTrait;
 	use \Silex\Application\UrlGeneratorTrait;
 
-	/**
-	 * Swahili-speaking countries, for language detection based on IP.
-	 * @var array
-	 */
-	protected $swahiliCountries = array('TZ', 'KE');
-
 	protected $notifications = array('error'=>array(), 'success'=>array());
 
 	/**
@@ -73,7 +67,19 @@ class NeoApp extends Application
 	}
 
 	/**
-	 * Sets the Locale for the application based on browser lang (except Swahili).
+	 * Sets the Locale based on country (geoIP) and, as a fallback, on the
+	 * request header Accept-Language. Though Accept-Language works reasonably
+	 * well, the NCW is organized by country, and where a country speaks a
+	 * language, the catechumens sing in that language (with a few exceptions,
+	 * like USA). This is why geoip language detection works better.
+	 * 
+	 * The way getPreferredLanguage() works is by 'extending' the array with the 
+	 * 'only language' values, e.g. [es_ES, en_US] => [es_ES, es, en_US, en],
+	 * but if the 'only language' values are already present, leave them where
+	 * they are. This way, in a request like [es_ES, en_GB, en, es] 'en' will be
+	 * selected, because es_ES is not found in $app['neoconfig']['languages']
+	 * (because in NeoApp locales are defined only by languages). Such a tricky
+	 * case though, has only occurred in my Chrome/LineageOS for reasons unknown.
 	 * 
 	 * @param Request $request  The HTTP request.
 	 */
@@ -83,31 +89,41 @@ class NeoApp extends Application
 			array_keys($this['neoconfig']['languages'])
 		);
 
-		$this->setLocaleForWaswahili($request->getClientIp());
+		$this->setLocaleByCountry($request->getClientIp());
 	}
 
 	/**
-	 * Language detection from browser is not fitting for Swahili-speaking
-	 * countries, where most of devices are in english. Here we perform Geo-IP
-	 * through MaxMind's GeoIp2 library.
+	 * Set app locale based on geo-IP-detected country (MaxMind's GeoIp2 lib) 
+	 * using a language-country table.
 	 * 
 	 * @param string $ip 		Client IP.
 	 */
-	protected function setLocaleForWaswahili($ip)
+	protected function setLocaleByCountry($ip)
 	{
-		$reader = $this['geoIp2Reader'];
+		$localesByCountry = [
+			'sw' => ['TZ', 'KE'],
+			'es' => [
+				'AR', 'BO', 'CL', 'CO', 'CR', 'DO', 'EC', 'SV', 'GT', 'HN', 'MX', 'NI', 'PA', 'PY', 'PE', 'PR', 'ES', 'UY', 'VE',
+				'PT', 'BR', 'IT' //Spanish as fallback
+			],
+			'en' => ['US', 'UK', 'IN', 'AU'] //Is this redundant? EN is default
+		];
+
 		try
 		{
-			$record = $reader->country($ip);
+			$record = $this['geoIp2Reader']->country($ip);
 		}
 		catch (\GeoIp2\Exception\AddressNotFoundException $e)
 		{
 			return;
 		}
 
-		if (false !== array_search($record->country->isoCode, $this->swahiliCountries))
+		foreach ($localesByCountry as $locale=>$countries)
 		{
-			$this['locale'] = 'sw';
+			if (false !== array_search($record->country->isoCode, $countries))
+			{
+				$this['locale'] = $locale;
+			}
 		}
 	}
 
