@@ -180,7 +180,7 @@ return array(
 	=> 'Onyesha kielelezo cha nota za sauti',
 
 	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
-	=> 'Neo-Transposer inakusaidia kwa kubadilisha ufunguo ya kordi za <strong>%song%</strong> ili zifae sauti yako. ¡Andika barua pepe yako, fuata maelekezo na utapata mara moja kordi za nyimbo zote za Njia ya Neokatekumenato!',
+	=> 'Neo-Transposer inakusaidia kwa kubadilisha ufunguo ya kordi za <strong>%song%</strong> ili zifae sauti yako. Andika barua pepe yako, fuata maelekezo na utapata mara moja kordi za nyimbo zote za Njia ya Neokatekumenato!',
 
 	'Yes'
 	=> 'Ndiyo',
@@ -198,10 +198,10 @@ return array(
 	=> 'Nafurahi kwa hayo :-)',
 
 	'It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.'
-	=> 'Inaonekana hujapima vizuri sauti yako. Tafadhali, <a href="%url%">piga hapa na fuata maelekezo</a>.',
+	=> 'Inaonekana hujapima vizuri sauti yako. Tafadhali, <a href="%url%">bonyeza hapa na fuata maelekezo</a>.',
 
 	'Maybe you didn\'t measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.'
-	=> 'Labda hujapima vizuri sauti yako. <a href="%url%">Piga hapa kwa kuipima tena</a>.',
+	=> 'Labda hujapima vizuri sauti yako. <a href="%url%">Bonyeza hapa kwa kuipima tena</a>.',
 
 	'Maybe you are not singing the song the same way it was analysed for the application'
 	=> 'Labda hujaimba kama vile wimbo ulivyochunguliwa kwa programu hii.',
@@ -235,6 +235,9 @@ return array(
 
 	'assembly'
 	=> 'kusanyiko',
+
+	'Your session has expired. Please log-in and submit the feedback again.'
+	=> 'Kipindi chako kimeisha. Tafadhali ingia na kutoa feedback yako tena.',
 
 	//Wizard first step
 	'Voice measure wizard'

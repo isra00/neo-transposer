@@ -104,11 +104,11 @@
 	<input type="hidden" name="pc_status" value="{{ song.peopleCompatibleStatusMsg|default('') }}">
 
 	<p class="answers" {% if non_js_fb %}style="display: none"{% endif %}>
-		<button type="submit" name="worked" value="1" class="yes {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes" {% if feedback == 'yes' %}title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}"{% endif %}>
+		<button type="submit" name="worked" value="1" class="yes {% if feedback == 'yes' %}highlighted{% endif %}" id="feedback-yes" {% if feedback == 'yes' %}title="{% trans %}You have reported the proposed transposition as valid{% endtrans %}"{% endif %} data-worked="1">
 			{% trans %}Yes{% endtrans %} {% if feedback == 'yes' %}&#10004;{% endif %}
 			<small>{% trans %}It has worked{% endtrans %}</small>
 		</button>
-		<button type="submit" name="worked" value="0" class="no {% if feedback == 'no' %}highlighted{% endif %} {% if feedback == 'yes' %}lowlighted{% endif %}" id="feedback-no">
+		<button type="submit" name="worked" value="0" class="no {% if feedback == 'no' %}highlighted{% endif %} {% if feedback == 'yes' %}lowlighted{% endif %}" id="feedback-no" data-worked="0">
 			{% trans %}No{% endtrans %}
 			<small>{% trans %}It hasn't worked{% endtrans %}</small>
 		</button>
@@ -217,40 +217,65 @@ NT = {
 		ga('send', 'event', 'Actions', 'ShowVoiceChart', '{{ song.song.title }}');
 	},
 
-	sendFeedback: function(iAnswer)
+	sendFeedbackAjax: function(postJsonData, callbackSuccess)
 	{
-		$.post(
-			'{{ path('transposition_feedback') }}',
+		$.ajax({
+			url: "{{ path('transposition_feedback') }}",
+			type: "POST",
+			dataType: "json",
+			data: postJsonData,
+			success: callbackSuccess,
+			error: function(XHR)
 			{
-				id_song: {{ song.song.idSong }},
-				worked: iAnswer,
-				referer: '{{ global.request.server.get('HTTP_REFERER') }}',
-				centered_score_rate: '{{ song.transpositions[1].score / song.transpositions[0].score }}',
-				deviation: '{{ song.not_equivalent.deviationFromCentered ?: song.peopleCompatible.deviationFromCentered ?: null }}',
-				pc_status: '{{ song.peopleCompatibleStatusMsg|default('') }}',
+				if (408 == XHR.status)
+				{
+					document.getElementById("feedback-thanks").style.display = 'none';
+					alert("{% trans %}Your session has expired. Please log-in and submit the feedback again.{% endtrans %}");
+					window.location.reload();
+				}
 			}
-		);
+		});
+	},
+
+	sendBasicFeedback: function(iAnswer)
+	{
+		NT.sendFeedbackAjax({
+			id_song: {{ song.song.idSong }},
+			worked: iAnswer,
+			referer: '{{ global.request.server.get('HTTP_REFERER') }}',
+			centered_score_rate: '{{ song.transpositions[1].score / song.transpositions[0].score }}',
+			deviation: '{{ song.not_equivalent.deviationFromCentered ?: song.peopleCompatible.deviationFromCentered ?: null }}',
+			pc_status: '{{ song.peopleCompatibleStatusMsg|default('') }}',
+		}, function()
+		{
+			ga('send', 'event', 'FeedbackTransposition', (iAnswer ? 'Worked' : 'NotWorked'), '{{ song.song.title }}');
+
+{% if app.neoconfig.detailed_feedback %}
+			if (1 == iAnswer)
+			{
+				NT.showDetailedFeedbackDialog();
+			}
+{% endif %}
+		});
 	},
 
 	sendDetailedFeedback: function(transposition, deviation)
 	{
-		$.post(
-			'{{ path('transposition_feedback') }}',
-			{
-				'id_song': {{ song.song.idSong }},
-				'worked': 1,
-				'referer': '{{ global.request.server.get('HTTP_REFERER') }}',
-				'transposition': transposition,
-				'pc_status': '{{ song.peopleCompatibleStatusMsg }}',
-				'deviation': deviation,
-				'centered_score_rate': {{ song.transpositions[1].score / song.transpositions[0].score }}
-			}
-		);
+		NT.sendFeedbackAjax({
+			'id_song': {{ song.song.idSong }},
+			'worked': 1,
+			'referer': '{{ global.request.server.get('HTTP_REFERER') }}',
+			'transposition': transposition,
+			'pc_status': '{{ song.peopleCompatibleStatusMsg }}',
+			'deviation': deviation,
+			'centered_score_rate': {{ song.transpositions[1].score / song.transpositions[0].score }}
+		});
 	},
 
 	showDetailedFeedbackDialog: function()
 	{
-		$("#dark-bg").add("#detailed-feedback-container").show();
+		document.getElementById("dark-bg").style.display = 'block';
+		document.getElementById("detailed-feedback-container").style.display = 'block';
 
 		$(".detailed-fb-choice").click(function (e)
 		{
@@ -259,9 +284,10 @@ NT = {
 				e.currentTarget.dataset.deviation
 			);
 
-			$("#dark-bg").add("#detailed-feedback-container").hide();
+			document.getElementById("dark-bg").style.display = 'none';
+			document.getElementById("detailed-feedback-container").style.display = 'none';
 			$(".answers").hide();
-			$("#feedback-thanks").show();
+			document.getElementById("feedback-thanks").style.display = 'block';
 		});
 	},
 
@@ -360,25 +386,12 @@ $(function() {
 
 	NT.initializeChordChartDialog();
 
-	$("#feedback-yes").click(function(e) {
+	$("#feedback-yes").add("#feedback-no").click(function(e) {
 		e.preventDefault();
 		$(".answers").hide();
-		$("#feedback-thanks").show();
-		NT.sendFeedback(1);
-		ga('send', 'event', 'FeedbackTransposition', 'Worked', '{{ song.song.title }}');
-
-{% if app.neoconfig.detailed_feedback %}
-		NT.showDetailedFeedbackDialog();
-{% endif %}
-
-	});
-
-	$("#feedback-no").click(function(e) {
-		e.preventDefault();
-		$(".question").add(".answers").hide();
-		$("#reasons-no").show();
-		NT.sendFeedback(0);
-		ga('send', 'event', 'FeedbackTransposition', 'NotWorked', '{{ song.song.title }}');
+		var iAnswer = parseInt(this.dataset.worked);
+		NT.sendBasicFeedback(iAnswer);
+		document.getElementById((iAnswer) ? "feedback-thanks" : "reasons-no").style.display = 'block';
 	});
 });
 </script>
