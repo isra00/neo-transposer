@@ -70,6 +70,7 @@ hr {
 		padding: 0 .7em 0 30px;
 		background-position: .5em center;
 		background-repeat: no-repeat;
+		text-shadow: 1px 1px 0 black;
 	}
 	
 	.lang-switch-top a.active {
@@ -104,11 +105,12 @@ hr {
 
 	.header h1,
 	.header h2 {
+		float: left;
+		text-align: left;
 		font-size: 1.3em;
 		font-weight: normal;
 		margin: 0;
-		text-align: left;
-		float: left;
+		text-shadow: 1px 1px 0 #333;
 	}
 	.header a {
 		color: white;
@@ -603,9 +605,9 @@ a.link-all-report {
 	text-align: center;
 	margin: 1em 0 1.5em;
 	clear: both;
-	overflow: hidden;
+	overflow: visible;
 	line-height: 2em;
-	padding-bottom: 5px;
+	padding: 5px 0;
 }
 
 .transposition-feedback {

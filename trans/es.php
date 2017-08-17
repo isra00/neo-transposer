@@ -236,6 +236,9 @@ return array(
 	'assembly'
 	=> 'asamblea',
 
+	'Your session has expired. Please log-in and submit the feedback again.'
+	=> 'Tu sesión ha expirado. Por favor, inicia sesión y envía el feedback de nuevo.',
+
 	//Wizard first step
 	'Voice measure wizard'
 	=> 'Asistente para medir tu voz',
