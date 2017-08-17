@@ -19,7 +19,7 @@
 			"type": "image/png"
 		},
 		{
-			"src": "static/img/icon/logo-red.svg",
+			"src": "static/img/icon/source/logo-red.svg",
 			"sizes": "512x512",
 			"type": "image/svg+xml"
 		}
