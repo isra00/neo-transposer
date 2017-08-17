@@ -230,6 +230,8 @@ NT = {
 				if (408 == XHR.status)
 				{
 					document.getElementById("feedback-thanks").style.display = 'none';
+					ga('send', 'event', 'FeedbackTransposition', 'FeedbackSentAfterSessionExpired', '{{ song.song.title }}');
+
 					alert("{% trans %}Your session has expired. Please log-in and submit the feedback again.{% endtrans %}");
 					window.location.reload();
 				}
