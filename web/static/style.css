@@ -725,31 +725,31 @@ a.link-all-report {
 	}
 	.voicechart .singer td {
 		background: white;
-		color: blue;
+		color: #00585F;
 	}
 	.voicechart .singer td.note {
-		background: blue;
+		background: #00585F;
 	}
 	.voicechart .original-song td {
-		color: #d40000;
+		color: #D32F2F;
 		background: white;
 	}
 	.voicechart .original-song td.note {
-		background: #d40000;
+		background: #D32F2F;
 	}
 	.voicechart .transposed-song td {
-		color: green;
+		color: #009393;
 		background: white;
 	}
 	.voicechart .transposed-song td.note {
-		background: green;
+		background: #009393;
 	}
 	.voicechart .people-compatible td {
-		color: olive;
+		color: #D32F2F;
 		background: white;
 	}
 	.voicechart .people-compatible td.note {
-		background: olive;
+		background: #D32F2F;
 	}
 
 .transpose-song #detailed-feedback-container {
