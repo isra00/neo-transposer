@@ -136,11 +136,11 @@ SQL;
 		$nc = new \NeoTransposer\Model\NotesCalculator;
 
 		$sql = <<<SQL
-SELECT song.id_song, title, song.slug, song.lowest_note, song.highest_note
+SELECT song.id_song, title, song.lowest_note, song.highest_note, count(*) fbs
 FROM transposition_feedback
 JOIN song ON transposition_feedback.id_song = song.id_song 
 GROUP BY id_song
-ORDER BY song.id_book, song.title
+ORDER BY song.id_book, fbs DESC
 SQL;
 
 		$fbsongs = $this->app['db']->fetchAll($sql);
@@ -150,7 +150,7 @@ SQL;
 		foreach ($fbsongs as $song)
 		{
 			$yes = (int) $this->app['db']->fetchColumn('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=1', array($song['id_song']));
-			$no = (int) $this->app['db']->fetchColumn('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=0', array($song['id_song']));
+			$no  = (int) $this->app['db']->fetchColumn('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=0', array($song['id_song']));
 
 			$feedback[$song['id_song']] = array(
 				'yes'			=> $yes,
