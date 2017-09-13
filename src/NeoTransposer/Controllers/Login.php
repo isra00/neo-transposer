@@ -24,8 +24,15 @@ class Login
 	public function get(Request $req, \NeoTransposer\NeoApp $app, $tpl_vars=array())
 	{
 		// Log-out always
+		$app['session']->clear();
 		$app['session']->set('user', new User);
 
+		if (!empty($req->get('callbackSetUserToken')))
+		{
+			$app['session']->set('callbackSetUserToken', $req->get('callbackSetUserToken'));
+		}
+
+		$tpl_vars['external'] 				= !empty($req->get('external'));
 		$tpl_vars['languages']				= $app['neoconfig']['languages'];
 		$tpl_vars['page_title']				= $app->trans('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
 		$tpl_vars['meta_description']		= $app->trans('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
@@ -62,7 +69,7 @@ REG;
 
 		if (empty($user->range->lowest))
 		{
-			return $app->redirect($app['url_generator']->generate(
+			return $app->redirect($app->path(
 				'user_voice', 
 				array('_locale' => $app['locale'], 'firstTime' => '1')
 			));
@@ -73,9 +80,19 @@ REG;
 
 			$target = $req->get('redirect')
 				? $req->get('redirect')
-				: $app['url_generator']->generate("book_$id_book");
+				: $app->path("book_$id_book");
+
+			if (!empty($app['session']->get('callbackSetUserToken')))
+			{
+				$target = $app->path('external_login_finish');
+			}
 
 			return $app->redirect($target);
 		}
+	}
+
+	public function externalLoginFinish(\NeoTransposer\NeoApp $app)
+	{
+		return $app->render('external_login_finish.twig');
 	}
 }

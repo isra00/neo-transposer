@@ -83,6 +83,7 @@ class User
 			return 'login';
 		}
 
+		/** @todo Replace this for $this->hasVoiceMeasured() and use it in Login::post() too */
 		if (empty($this->range->lowest))
 		{
 			$exempt = array(

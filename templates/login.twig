@@ -3,11 +3,13 @@
 {% block page_class %}page-login{% endblock %}
 
 {% block languageSwitchTop %}
+{% if not external %}
 	<nav class="lang-switch-top">
 	{% for locale, lang in languages %}
 		<a class="flag-{{ locale }} {% if locale == app.locale %}active{% endif %}" href="{{ path(current_route, {'_locale': locale}) }}">{{ lang.name }}</a>
 	{% endfor %}
 	</nav>
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -76,5 +78,9 @@
 
 		</section>
 	</div>
+
+{% if external %}
+<script>ga('set', 'dimension4', '{{ global.request.get('external') }}');</script>
+{% endif %}
 
 {% endblock %}
