@@ -3,6 +3,7 @@
 namespace NeoTransposer\Controllers;
 
 use \NeoTransposer\Model\{TransposedSong, NotesRange, TranspositionChart, NotesCalculator, PeopleCompatibleCalculation};
+use \NeoTransposer\Persistence\UserPersistence;
 use \Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\NeoApp;
 
@@ -33,7 +34,7 @@ class TransposeSong
 		}
 
 		$transposedSong = TransposedSong::create($id_song, $app);
-		
+
 		$app['locale'] = $transposedSong->song->bookLocale;
 		$app['translator']->setLocale($app['locale']);
 
@@ -98,6 +99,12 @@ class TransposeSong
 			}
 
 			$tplVars['peopleCompatibleMsg'] = $peopleCompatibleMsg;
+		}
+
+		if (0 === strpos($req->headers->get('Accept'), 'application/json'))
+		{
+			$transposeSongApi = new TransposeSongApi($app);
+			return $transposeSongApi->handleApiRequest($req, $id_song);
 		}
 
 		return $app->render('transpose_song.twig', array_merge($tplVars, [

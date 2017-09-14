@@ -31,9 +31,19 @@ class UserPersistence
 	 */
 	public function fetchUserFromEmail($email)
 	{
-		$sql = 'SELECT * FROM user WHERE email LIKE ?';
+		return $this->fetchUserFromField('email', $email);
+	}
+
+	public function fetchUserFromField($field, $fieldValue)
+	{
+		if (false === array_search($field, ['email', 'id_user']))
+		{
+			throw new \InvalidArgumentException('Only email and id_user are accepted');
+		}
+
+		$sql = "SELECT * FROM user WHERE $field LIKE ?";
 		
-		if ($userdata = $this->db->fetchAssoc($sql, array($email)))
+		if ($userdata = $this->db->fetchAssoc($sql, array($fieldValue)))
 		{
 			return new User(
 				$userdata['email'],

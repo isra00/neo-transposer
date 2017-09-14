@@ -1,0 +1,22 @@
+{% extends "base.twig" %}
+
+{% block header %}{% endblock %}
+
+{% block page_class %}external-login-return{% endblock %}
+
+{% block content %}
+
+<div class="spinner"></div>
+
+<p>{% trans %}Login succesful - returning to the app.{% endtrans %}</p>
+
+<script>
+window.onload = function() {
+	ga('send', 'event', 'Actions', 'ExternalLoginFinished');
+	{{ global.session.get('callbackSetUserToken') }}('{{ app.neouser.id_user }}');
+};
+</script>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -422,4 +422,8 @@ return array(
 
 	'The administrator has been notified and will try to solve this as soon as possible.'
 	=> 'El administrador ya está sobre aviso e intentará arreglarlo cuanto antes.',
+
+	//External login finish
+	'Login succesful - returning to the app.'
+	=> 'Sesión iniciada correctamente. Volviendo a la aplicación.'
 );

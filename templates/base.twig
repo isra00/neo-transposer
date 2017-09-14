@@ -57,6 +57,7 @@
 
 		{% block languageSwitchTop %}{% endblock %}
 
+		{% block header %}
 		<nav class="header">
 			<div class="inside">
 
@@ -80,6 +81,7 @@
 
 			</div>
 		</nav>
+		{% endblock %}
 
 		<section class="main">
 
@@ -104,7 +106,7 @@
 	<footer>
 		<p>
 			{% trans with { '%url%': 'http://github.com/isra00/neo-transposer' } %}Developed as <a href="%url%">free software</a> in Tanzania.{% endtrans %}
-			<a href="javascript:void(0)" onclick="go()">{%trans %}Contact{% endtrans %}</a>.
+			<a href="mailto:neo-transposer@mail.com">{%trans %}Contact{% endtrans %}</a>.
 		</p>
 	</footer>
 	{% endblock %}
@@ -112,13 +114,6 @@
 	{% macro loadJsFramework() -%}
 	<script src="{{ global.request.basepath }}/static/zepto.min.js"></script>
 	{%- endmacro %}
-
-	<script>
-	//Un sencillo y comprensible método anti correo basura
-	function go() {
-		alert('neo-transposer@mail.com');
-	}
-	</script>
 
 </body>
 </html>

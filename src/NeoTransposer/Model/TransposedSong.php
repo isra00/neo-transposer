@@ -133,7 +133,7 @@ class TransposedSong
 	{
 		$printer = $this->app['chord_printers.get']($this->song->bookChordPrinter);
 
-		$this->song->originalChords = $printer->printChordset($this->song->originalChords);
+		$this->song->originalChordsForPrint = $printer->printChordset($this->song->originalChords);
 
 		$transpositionsToPrint = array_merge(
 			$this->transpositions, 

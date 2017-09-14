@@ -16,6 +16,7 @@ class Song
 	public $bookChordPrinter;
 	public $bookLocale;
 	public $originalChords = array();
+	public $originalChordsForPrint = array();
 
 	public function __construct($dbColumns, $originalChords)
 	{

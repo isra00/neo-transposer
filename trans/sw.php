@@ -422,4 +422,8 @@ return array(
 
 	'The administrator has been notified and will try to solve this as soon as possible.'
 	=> 'Mtawala ameisha taarifiwa, na atajaribu kurekebisha kosa hili mapema iwezekanavyo.',
+
+	//External login finish
+	'Login succesful - returning to the app.'
+	=> 'Umeingia vizuri. Sasa unarudi kwenye app',
 );

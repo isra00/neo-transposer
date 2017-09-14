@@ -177,9 +177,13 @@ class WizardEmpiric
 		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
 		$unhappy->changedVoiceRangeFromWizard($app['neouser']);
 
+		$buttonUrl = empty($app['session']->get('callbackSetUserToken'))
+			? 'book_' . $go_to_book
+			: 'external_login_finish';
+
 		return $app->render('wizard_finish.twig', array(
 			'your_voice'	=> $your_voice,
-			'go_to_book'	=> $app->path('book_' . $go_to_book)
+			'button_url'	=> $app->path($buttonUrl)
 		));
 	}
 }
