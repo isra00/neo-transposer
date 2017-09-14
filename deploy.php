@@ -185,6 +185,11 @@ if (isset($_POST['sent']))
 $lastCommit = getLastCommit($deployDir);
 $laterCommits = getLaterCommits(new DateTime($lastCommit['date']));
 
+$lastCommit = current($laterCommits);
+$willDeployBroken = isset($lastCommit['build'])
+	? ($lastCommit['build']['state'] == 'failed')
+	: false;
+
 $whoami = runCommand("whoami")['output'][0];
 
 $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache'] . ".css")
@@ -307,7 +312,9 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 		</span>
 
 		<span class="submit">
-			<input type="submit" name="sent" value="Deploy now" class="big" />
+			<button type="submit" name="sent" class="big">
+			<?php echo ($willDeployBroken) ? 'Deploy BROKEN build now' : 'Deploy now' ?>
+			</button>
 		</span>
 	</form> 
 </body>
