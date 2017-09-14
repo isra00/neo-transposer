@@ -59,7 +59,7 @@ REG;
 
 		$userPersistence = new UserPersistence($app['db']);
 
-		if (!$user = $userPersistence->fetchUserFromEmail($req_email, $app['db']))
+		if (!$user = $userPersistence->fetchUserFromEmail($req_email))
 		{
 			$user = new User($req_email, null, null);
 			$user->persist($app['db'], $req->getClientIp());

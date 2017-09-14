@@ -3,6 +3,7 @@
 namespace NeoTransposer\Controllers;
 
 use \NeoTransposer\Model\{TransposedSong, NotesRange, TranspositionChart, NotesCalculator, PeopleCompatibleCalculation};
+use \NeoTransposer\Persistence\UserPersistence;
 use \Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\NeoApp;
 
@@ -33,7 +34,7 @@ class TransposeSong
 		}
 
 		$transposedSong = TransposedSong::create($id_song, $app);
-		
+
 		$app['locale'] = $transposedSong->song->bookLocale;
 		$app['translator']->setLocale($app['locale']);
 
@@ -100,6 +101,11 @@ class TransposeSong
 			$tplVars['peopleCompatibleMsg'] = $peopleCompatibleMsg;
 		}
 
+		if (0 === strpos($req->headers->get('Accept'), 'application/json'))
+		{
+			return $this->handleApiRequest($app, $req, $id_song);
+		}
+
 		return $app->render('transpose_song.twig', array_merge($tplVars, [
 			'song'				=> $transposedSong,
 			'your_voice'		=> $your_voice,
@@ -160,5 +166,53 @@ class TransposeSong
 			array($id_user, $id_song)
 		);
 		return str_replace(array('1', '0'), array('yes', 'no'), $worked);
+	}
+
+	public function handleApiRequest(NeoApp $app, Request $req, $id_song)
+	{
+		if (empty($req->get('userToken')))
+		{
+			throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+		}
+
+		$userPersistence = new UserPersistence($app['db']);
+
+		if (!$user = $userPersistence->fetchUserFromField('id_user', $req->get('userToken')))
+		{
+			throw new \Symfony\Component\HttpKernel\Exception\ForbiddenHttpException;
+		}
+
+		$app['neouser'] = $user;
+
+		if (empty($user->range->lowest))
+		{
+			throw new \Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+		}
+
+		$song = TransposedSong::create($id_song, $app);
+		
+		$app['locale'] = $song->song->bookLocale;
+		$app['translator']->setLocale($app['locale']);
+
+		$song->transpose();
+
+		$songArray = json_decode(json_encode($song), true);
+		$transpositions = [];
+		foreach ($song->transpositions as $transposition)
+		{
+			$transpositions[] = [
+				'capo' => $transposition->getCapo(),
+				'score' => $transposition->score,
+				'chords' => $transposition->chords,
+			];
+		}
+
+		$responseData = [
+			'idSong' 			=> $song->song->idSong,
+			'originalChords'	=> $song->song->originalChords,
+			'transpositions'	=> $transpositions
+		];
+
+		return $app->json($responseData, 200);
 	}
 }

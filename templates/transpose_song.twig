@@ -59,7 +59,7 @@
 
 <div class="transpositions-list">
 {% for transposition in song.transpositions %}
-	{{ self.printTransposition(transposition, song.song.originalChords) }}
+	{{ self.printTransposition(transposition, song.song.originalChordsForPrint) }}
 {% endfor %}
 </div>
 
@@ -67,7 +67,7 @@
 {% set difference = (song.not_equivalent.deviationFromCentered > 0) ? 'higher'|trans : 'lower'|trans %}
 <p class="explanation">{% trans with {'%difference%': difference } %}This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:{% endtrans %}</p>
 <div class="transpositions-list">
-	{{ self.printTransposition(song.not_equivalent, song.song.originalChords) }}
+	{{ self.printTransposition(song.not_equivalent, song.song.originalChordsForPrint) }}
 </div>
 {% endif %}
 
@@ -77,7 +77,7 @@
 	<small><a href="{{ url('people-compatible-info', {'_locale': app.locale}) }}">{% trans %}Learn more{% endtrans %}</a></small>
 </p>
 <div class="transpositions-list">
-	{{ self.printTransposition(song.peopleCompatible, song.song.originalChords) }}
+	{{ self.printTransposition(song.peopleCompatible, song.song.originalChordsForPrint) }}
 </div>
 {% endif %}
 

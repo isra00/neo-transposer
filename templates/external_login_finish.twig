@@ -11,11 +11,6 @@
 <p>{% trans %}Login succesful - returning to the app.{% endtrans %}</p>
 
 <script>
-function setUserToken(token)
-{
-	alert("Hey! It's android receiving " + token);
-}
-
 window.onload = function() {
 	ga('send', 'event', 'Actions', 'ExternalLoginFinished');
 	{{ global.session.get('callbackSetUserToken') }}('{{ app.neouser.id_user }}');
