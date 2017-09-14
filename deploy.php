@@ -1,9 +1,13 @@
 <?php
 
-$deployDir		= '/var/www/neo-transposer.com'; // No trailing slash
+$deployDir		= '/var/www/html/transposer'; // No trailing slash
 $composerHome 	= '/tmp/composer-www-data';
 $composerPhar	= '/var/www/html/composer.phar';
-$githubBase		= 'https://github.com/isra00/neo-transposer';
+$repo			= 'isra00/neo-transposer';
+$deployBranch	= 'master';
+
+$githubBase		= 'https://github.com/' . $repo;
+$githubApiBase	= 'https://api.github.com';
 
 define('TIME_START', microtime(true));
 ini_set("display_errors", true);
@@ -73,6 +77,31 @@ function getLastCommit($deployDir)
 	return $gitLog;
 }
 
+function githubApiRequest($url)
+{
+	global $githubApiBase;
+
+	$options = [
+		'http' => [
+			'header' => ['User-Agent: PHP']
+		]
+	];
+
+	return json_decode(
+		file_get_contents($githubApiBase . $url, false, stream_context_create($options)), 
+		true
+	);
+}
+
+function getLaterCommits(DateTime $since)
+{
+	global $repo, $githubApiBase;
+
+	$since->setTimezone(new DateTimeZone('UTC'));
+	$apiUrl = '/repos/' . $repo . '/commits?sha=master&since=' . $since->format('Y-m-d\TH:i:s\Z');
+	return githubApiRequest($apiUrl);
+}
+
 if (isset($_POST['sent']))
 {
 	$nothingToDeploy = false;
@@ -136,6 +165,7 @@ if (isset($_POST['sent']))
 }
 
 $lastCommit = getLastCommit($deployDir);
+$laterCommits = getLaterCommits(new DateTime($lastCommit['date']));
 
 $whoami = runCommand("whoami")['output'][0];
 
@@ -159,13 +189,15 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 	.failed .prompt { color: red; }
 	.big { font-size: 1.5em; }
 
-	.last-commit { border: 1px solid #eee; border-radius: 6px; width: auto; margin: 1em 0; font-size: .9em; }
-	.last-commit h3 { color: #555; margin: 0; padding: .3em .5em; border-bottom: 1px solid #eee; font-size: 1em; background: #ddd; border-radius: 5px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
-	.last-commit p { padding: .5em; margin: 0; }
-	.last-commit a { color: #444; text-decoration: none; }
-	.last-commit date { display: block; text-transform: uppercase; font-size: .85em; color: #555; }
-	.last-commit code { padding-left: 1em; }
-	.last-commit span { font-weight: bold; }
+	.last-commits { border: 1px solid #eee; border-radius: 6px; width: auto; margin: 1em 0; font-size: .9em; }
+	.last-commits h3 { color: #555; margin: 0; padding: .3em .5em; border-bottom: 1px solid #eee; font-size: 1em; background: #ddd; border-radius: 5px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+	.last-commits p { padding: .5em; margin: 0; }
+	.last-commits a { color: #444; text-decoration: none; }
+	.last-commits date { display: block; text-transform: uppercase; font-size: .85em; color: #555; }
+	.last-commits code { padding-left: 1em; margin-right: 1em; }
+	.last-commits span { font-weight: bold; }
+	.last-commits b { display: inline-block; background: #009393; color: white; padding: .2em .3em; border-radius: .2em; font-size: .9em; }
+
 
 	.submit { display: block; margin: .5em 0; }
 
@@ -200,15 +232,27 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 
 	<?php endif ?>
 
- 	<section class="last-commit">
-		<h3>Last commit here</h3>
-		<p>
+ 	<section class="last-commits">
+		<h3>Commits to be deployed</h3>
+		<!--<p>
 			<a href="<?php echo $githubBase ?>/commit/<?php echo $lastCommit['hash'] ?>" target="_blank">
 				<date><?php echo $lastCommit['date'] ?></date>
 				<span><?php echo $lastCommit['message'] ?></span>
 				<code><?php echo $lastCommit['hash'] ?></code>
 			</a>
+		</p>-->
+<?php foreach ($laterCommits as $index=>$commit) : ?>
+		<p>
+			<a href="<?php echo $githubBase ?>/commit/<?php echo $commit['sha'] ?>" target="_blank">
+				<date><?php echo $commit['commit']['author']['date'] ?></date>
+				<span><?php echo $commit['commit']['message'] ?></span>
+				<code><?php echo substr($commit['sha'], 0, 6) ?></code>
+				<?php if (0 ==$index) : ?><b>&larr; HEAD</b><?php endif ?>
+				<?php if (count($laterCommits) == $index + 1) : ?><b>&larr; Deployed</b><?php endif ?>
+			</a>
 		</p>
+<?php endforeach ?>
+
  	</section>
 	
 	<form method="post">
