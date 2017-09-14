@@ -41,10 +41,7 @@ class SongPersistence
 			array($songDetails['id_song'])
 		);
 
-		// In PHP 5.5 this can be implemented by array_column()
-		array_walk($originalChords, function(&$item) {
-			$item = $item['chord'];
-		});
+		$originalChords = array_column($originalChords, 'chord');
 
 		return new Song($songDetails, $originalChords);
 	}
