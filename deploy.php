@@ -267,12 +267,12 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 				<?php echo $commit['commit']['author']['date'] ?>
 				<a href="https://travis-ci.org/<?php echo $repo ?>/builds/<?php echo $commit['build']['id'] ?>" class="status <?php echo $commit['build']['state'] ?>"></a>
 			</date>
-			<a href="<?php echo $githubBase ?>/commit/<?php echo $commit['sha'] ?>" target="_blank">
+			<a target="_blank" href="<?php echo $githubBase ?>/commit/<?php echo $commit['sha'] ?>" target="_blank">
 				<span><?php echo $commit['commit']['message'] ?></span>
 			</a>
 			<code><?php echo substr($commit['sha'], 0, 6) ?></code>
-			<?php if (0 ==$index) : ?><b>&larr; HEAD</b><?php endif ?>
-			<?php if (count($laterCommits) == $index + 1) : ?><b>&larr; Deployed</b><?php endif ?>
+			<?php if (array_keys($laterCommits)[0] == $index) : ?><b>&larr; HEAD</b><?php endif ?>
+			<?php if (array_keys($laterCommits)[count($laterCommits) - 1] == $index) : ?><b>&larr; Deployed</b><?php endif ?>
 		</p>
 <?php endforeach ?>
 
