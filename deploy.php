@@ -99,7 +99,25 @@ function getLaterCommits(DateTime $since)
 
 	$since->setTimezone(new DateTimeZone('UTC'));
 	$apiUrl = '/repos/' . $repo . '/commits?sha=master&since=' . $since->format('Y-m-d\TH:i:s\Z');
-	return githubApiRequest($apiUrl);
+	$commits = githubApiRequest($apiUrl);
+
+	$commitsBySha = [];
+
+	foreach ($commits as $commit)
+	{
+		$commitsBySha[$commit['sha']] = $commit;
+	}
+
+	$builds = json_decode(file_get_contents('https://api.travis-ci.org/repos/' . $repo . '/builds'), true);
+	foreach ($builds as $build)	
+	{
+		if (isset($commitsBySha[$build['commit']]))
+		{
+			$commitsBySha[$build['commit']]['build'] = $build;
+		}
+	}
+
+	return $commitsBySha;
 }
 
 if (isset($_POST['sent']))
@@ -193,9 +211,18 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 	.last-commits h3 { color: #555; margin: 0; padding: .3em .5em; border-bottom: 1px solid #eee; font-size: 1em; background: #ddd; border-radius: 5px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 	.last-commits p { padding: .5em; margin: 0; }
 	.last-commits a { color: #444; text-decoration: none; }
+
 	.last-commits date { display: block; text-transform: uppercase; font-size: .85em; color: #555; }
+	.last-commits date .status { font-size: 1.5em; }
+	.last-commits date .status.created { color: #dbab09; }
+	.last-commits date .status.created::after { content: "●"; }
+	.last-commits date .status.finished { color: green; }
+	.last-commits date .status.finished::after { content: "✔"; }
+	.last-commits date .status.failed { color: red; }
+	.last-commits date .status.failed::after { content: "✖"; }
+
 	.last-commits code { padding-left: 1em; margin-right: 1em; }
-	.last-commits span { font-weight: bold; }
+	.last-commits a span { font-weight: bold; }
 	.last-commits b { display: inline-block; background: #009393; color: white; padding: .2em .3em; border-radius: .2em; font-size: .9em; }
 
 
@@ -234,22 +261,18 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 
  	<section class="last-commits">
 		<h3>Last commits in <?php echo $deployBranch ?></h3>
-		<!--<p>
-			<a href="<?php echo $githubBase ?>/commit/<?php echo $lastCommit['hash'] ?>" target="_blank">
-				<date><?php echo $lastCommit['date'] ?></date>
-				<span><?php echo $lastCommit['message'] ?></span>
-				<code><?php echo $lastCommit['hash'] ?></code>
-			</a>
-		</p>-->
 <?php foreach ($laterCommits as $index=>$commit) : ?>
 		<p>
+			<date>
+				<?php echo $commit['commit']['author']['date'] ?>
+				<a href="https://travis-ci.org/<?php echo $repo ?>/builds/<?php echo $commit['build']['id'] ?>" class="status <?php echo $commit['build']['state'] ?>"></a>
+			</date>
 			<a href="<?php echo $githubBase ?>/commit/<?php echo $commit['sha'] ?>" target="_blank">
-				<date><?php echo $commit['commit']['author']['date'] ?></date>
 				<span><?php echo $commit['commit']['message'] ?></span>
-				<code><?php echo substr($commit['sha'], 0, 6) ?></code>
-				<?php if (0 ==$index) : ?><b>&larr; HEAD</b><?php endif ?>
-				<?php if (count($laterCommits) == $index + 1) : ?><b>&larr; Deployed</b><?php endif ?>
 			</a>
+			<code><?php echo substr($commit['sha'], 0, 6) ?></code>
+			<?php if (0 ==$index) : ?><b>&larr; HEAD</b><?php endif ?>
+			<?php if (count($laterCommits) == $index + 1) : ?><b>&larr; Deployed</b><?php endif ?>
 		</p>
 <?php endforeach ?>
 
