@@ -444,10 +444,34 @@ a.link-all-report {
 	margin-top: 1em;
 	padding-top: 1em;
 }
+	.landing-info h3 {
+		text-align: center;
+		text-transform: uppercase;
+		letter-spacing: .01em;
+		font-weight: bold;
+		color: #555;
+		margin-top: 1em;
+	}
+	.landing-info i {
+		font-style: normal;
+		background: #00585f;
+		border-radius: 1em;
+		display: inline-block;
+		float: left;
+		margin: .2em .5em 0 0;
+		padding: .1em .4em .1em .38em;
+		line-height: 110%;
+		text-align: center;
+		color: white;
+		font-weight: bold;
+		font-size: 1.4em;
+	}
+
 .disclaimer {
 	font-style: italic;
 	font-size: .85em;
 	color: #444;
+	margin: 2.5em 0;
 }
 
 #dark-bg {

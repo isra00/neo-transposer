@@ -40,6 +40,15 @@ return array(
 	'That e-mail doesn\'t look good. Please, re-type it.'
 	=> 'Anwani ya barua pepe uliyoingiza si sahihi.',
 
+	'How does it work?'
+	=> 'Inakuwaje?',
+
+	'First, you measure the limits of your voice by singing the chorus of a sing in different keys. It\'s a bit tiresome, but don\'t worry, you\'ll have to do it just once.'
+	=> 'Kwanza, itabidi upime mipaka ya sauti yako kwa kuimba kiitikio kimoja kwa sauti tofauti tofauti. Kutachosha kidogo lakini usijali, ni mara moja tu.',
+
+	'After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.'
+	=> 'Baada ya kumpima sauti yako, chagua wimbo wo wote na Neo-Transposer itakupa kordi na kapo zinazoifaa sauti yako.',
+
 	/*'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.'
 	=> 'Esta página web es iniciativa personal de un miembro del Camino Neocatecumenal pero NO representa oficialmente ni está afiliada de ningún modo al Camino Neocatecumenal o a sus responsables. El libro de cantos “Resucitó” es &copy; Kiko Argüello 2014.',*/
 

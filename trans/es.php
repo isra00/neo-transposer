@@ -40,6 +40,15 @@ return array(
 	'That e-mail doesn\'t look good. Please, re-type it.'
 	=> 'Ese e-mail no tiene buena pinta. Por favor, revísalo.',
 
+	'How does it work?'
+	=> '¿Cómo funciona?',
+
+	'First, you measure the limits of your voice by singing the chorus of a sing in different keys. It\'s a bit tiresome, but don\'t worry, you\'ll have to do it just once.'
+	=> 'Primero debes medir los límites de tu voz, cantando un estribillo en distintos tonos. Es un poco pesado, pero solo tienes que hacerlo una vez.',
+
+	'After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.'
+	=> 'Después de medir tu voz, elige cualquier canto y Neo-Transposer calculará los acordes y la cejilla que te convienen.',
+
 	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.'
 	=> 'Esta página web es iniciativa personal de un miembro del Camino Neocatecumenal pero NO representa oficialmente ni está afiliada de ningún modo al Camino Neocatecumenal o a sus responsables. El libro de cantos “Resucitó” es &copy; Kiko Argüello 2014.',
 
