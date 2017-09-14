@@ -10,6 +10,8 @@ use \NeoTransposer\Model\UnhappyUser;
  */
 class AdminDashboard
 {
+	const DETAILED_FB_DEPLOYED = '2017-08-11';
+
 	/**
 	 * The App in use, for easier access.
 	 * @var \NeoTransposer\NeoApp
@@ -444,10 +446,11 @@ SQL;
 SELECT transposition, count(*) fbs
 FROM transposition_feedback
 WHERE worked = 1
+AND time > ?
 GROUP BY transposition
 ORDER BY fbs DESC
 SQL;
-		$fbsByTransposition = $this->app['db']->fetchAll($sql);
+		$fbsByTransposition = $this->app['db']->fetchAll($sql, [self::DETAILED_FB_DEPLOYED]);
 
 		$total = array_sum(array_column($fbsByTransposition, 'fbs'));
 		foreach ($fbsByTransposition as &$fbs)

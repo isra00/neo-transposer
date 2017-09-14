@@ -233,7 +233,7 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 	<?php endif ?>
 
  	<section class="last-commits">
-		<h3>Commits to be deployed</h3>
+		<h3>Last commits in <?php echo $deployBranch ?></h3>
 		<!--<p>
 			<a href="<?php echo $githubBase ?>/commit/<?php echo $lastCommit['hash'] ?>" target="_blank">
 				<date><?php echo $lastCommit['date'] ?></date>
