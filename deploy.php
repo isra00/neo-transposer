@@ -230,7 +230,7 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 	.last-commits date .status.failed { color: red; }
 	.last-commits date .status.failed::after { content: "✖"; }
 
-	.last-commits code { padding-left: 1em; margin-right: 1em; }
+	.last-commits code { padding-left: 1em; margin-right: 1em; color: #009393; }
 	.last-commits a span { font-weight: bold; }
 	.last-commits b { display: inline-block; background: #009393; color: white; padding: .2em .3em; border-radius: .2em; font-size: .9em; }
 
@@ -273,9 +273,9 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 <?php foreach ($laterCommits as $index=>$commit) : ?>
 		<p>
 			<date>
-				<?php echo $commit['commit']['author']['date'] ?>
+				<?php echo date('r', strtotime($commit['commit']['author']['date'])) ?>
 				<?php if (!empty($commit['build'])) : ?>
-				<a href="https://travis-ci.org/<?php echo $repo ?>/builds/<?php echo $commit['build']['id'] ?>" class="status <?php echo $commit['build']['state'] ?>"></a>
+				<a href="https://travis-ci.org/<?php echo $repo ?>/builds/<?php echo $commit['build']['id'] ?>" class="status <?php echo $commit['build']['state'] ?>" title="Build <?php echo $commit['build']['state'] ?> at Travis"></a>
 				<?php endif ?>
 			</date>
 			<a target="_blank" href="<?php echo $githubBase ?>/commit/<?php echo $commit['sha'] ?>" target="_blank">
@@ -298,7 +298,7 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 
 		<span>
 			<input type="checkbox" id="rebuild-css" name="rebuild-css" checked>
-			<label for="rebuild-css">Rebuild CSS <br><small>[<?php echo $cssDate ?>]</small></label>
+			<label for="rebuild-css">Recompile CSS <br><small>[<?php echo $cssDate ?>]</small></label>
 		</span>
 		
 		<span>
