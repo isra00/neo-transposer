@@ -50,7 +50,9 @@ REG;
 
 		$req_email = trim($req->get('email'));
 
-		if (!preg_match("/$regexp/i", $req_email) || !$this->validateCaptcha($req))
+		$isCaptchaValid = $app['debug'] ? true : $this->validateCaptcha($req);
+
+		if (!preg_match("/$regexp/i", $req_email) || !$isCaptchaValid)
 		{
 			return $this->get($req, $app, array(
 				'error_msg'  => $app->trans('That e-mail doesn\'t look good. Please, re-type it.'),
@@ -94,7 +96,6 @@ REG;
 
 	protected function validateCaptcha(Request $req)
 	{
-
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

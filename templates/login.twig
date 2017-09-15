@@ -39,7 +39,11 @@
 				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required>
 			</div>
 			<div class="field block full-width">
+			{% if global.debug %}
+		        <button type="submit" name="sent" class="bigbutton">{% trans %}Enter{% endtrans %}</button> 
+		    {% else %}
 				<button class="bigbutton g-recaptcha" data-sitekey="6LfXByMUAAAAAKkFOyhseUPNtuz8ZiilLUB3B5iX" data-callback="login">{% trans %}Enter{% endtrans %}</button>
+			{% endif %}
 			</div>
 		</form>
 
