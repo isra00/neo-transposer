@@ -32,9 +32,11 @@
 	<small>{{ current_book.details }}</small>
 </h1>
 
+{% if app.neouser.isLoggedIn %}
 <div class="quick-search">
 	<input type="text" id="quick-search" placeholder="{% trans %}Quick search a song{% endtrans %}">
 </div>
+{% endif %}
 
 <div class="clearfix"></div>
 
@@ -109,83 +111,85 @@
 </aside>
 {% endif %}
 
-{% import 'base.twig' as self %}
-{{ self.loadJsFramework() }}
+{% if app.neouser.isLoggedIn %}
+	{% import 'base.twig' as self %}
+	{{ self.loadJsFramework() }}
 
-<script>
+	<script>
 
-var NTBook = {
+	var NTBook = {
 
-	initializeQuickSearch: function()
-	{
-		var eQuickSearch = document.getElementById("quick-search"),
-			eSongList = document.getElementsByClassName("song-index")[0],
-			isTouchScreen = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
-			aElementsToHide = $(".link-all-report").add(".tip").add("footer");
+		initializeQuickSearch: function()
+		{
+			var eQuickSearch = document.getElementById("quick-search"),
+				eSongList = document.getElementsByClassName("song-index")[0],
+				isTouchScreen = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
+				aElementsToHide = $(".link-all-report").add(".tip").add("footer");
 
-		eQuickSearch.value = "";
+			eQuickSearch.value = "";
 
-		$(eQuickSearch)
+			$(eQuickSearch)
 
-			.focus(function(event)
-			{
-				aElementsToHide.hide();
-
-				if (isTouchScreen)
-				{
-					window.scrollTo(0, eQuickSearch.getBoundingClientRect().top);
-				}
-			})
-
-			.keyup(function(event)
-			{
-				var sSearchString = event.target.value,
-					eTitle,
-					oRegExp,
-					iResults = 0;
-
-				document.getElementById("no-results").style.display = 'none';
-
-				if (sSearchString.length > 0)
+				.focus(function(event)
 				{
 					aElementsToHide.hide();
 
-					$(".song-index li").each(function()
+					if (isTouchScreen)
 					{
-						this.style.display = 'none';
-						eTitle = this.getElementsByTagName("h4")[0];
-
-						//Remove previous highlights to have clean text
-						eTitle.innerHTML = eTitle.innerHTML.replace(/<\/?mark>/ig, "");
-
-						oRegExp = new RegExp("(" + sSearchString + ")", "ig");
-
-						if (eTitle.innerHTML.search(oRegExp) != -1)
-						{
-							eTitle.innerHTML = eTitle.innerHTML.replace(oRegExp, "<mark>$1</mark>");
-							this.style.display = 'block';
-							iResults++;
-						}
-					});
-
-					if (!iResults)
-					{
-						document.getElementById("no-results").style.display = 'block';
+						window.scrollTo(0, eQuickSearch.getBoundingClientRect().top);
 					}
-				}
-				else
+				})
+
+				.keyup(function(event)
 				{
-					eSongList.innerHTML = eSongList.innerHTML.replace(/<\/?mark>/ig, "");
-					$(".song-index li").css("display", "block");
-				}
-			});
-	}
-};
+					var sSearchString = event.target.value,
+						eTitle,
+						oRegExp,
+						iResults = 0;
 
-$(function() {
-	NTBook.initializeQuickSearch();
-})
+					document.getElementById("no-results").style.display = 'none';
 
-</script>
+					if (sSearchString.length > 0)
+					{
+						aElementsToHide.hide();
+
+						$(".song-index li").each(function()
+						{
+							this.style.display = 'none';
+							eTitle = this.getElementsByTagName("h4")[0];
+
+							//Remove previous highlights to have clean text
+							eTitle.innerHTML = eTitle.innerHTML.replace(/<\/?mark>/ig, "");
+
+							oRegExp = new RegExp("(" + sSearchString + ")", "ig");
+
+							if (eTitle.innerHTML.search(oRegExp) != -1)
+							{
+								eTitle.innerHTML = eTitle.innerHTML.replace(oRegExp, "<mark>$1</mark>");
+								this.style.display = 'block';
+								iResults++;
+							}
+						});
+
+						if (!iResults)
+						{
+							document.getElementById("no-results").style.display = 'block';
+						}
+					}
+					else
+					{
+						eSongList.innerHTML = eSongList.innerHTML.replace(/<\/?mark>/ig, "");
+						$(".song-index li").css("display", "block");
+					}
+				});
+		}
+	};
+
+	$(function() {
+		NTBook.initializeQuickSearch();
+	})
+
+	</script>
+{% endif %}
 
 {% endblock %}
