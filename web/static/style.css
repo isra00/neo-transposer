@@ -271,22 +271,22 @@ footer {
 	font-weight: normal;
 	line-height: 1.3em;
 }
-.page-book h1 {
-	text-transform: uppercase;
-	font-size: .8em;
-	color: grey;
-	margin-bottom: 0;
-	text-align: left;
+
+.page-book .main {
+	margin-top: 1em;
 }
 
-.page-book .main h2 {
+.page-book .main h1 {
 	font-size: 1.5em;
 	margin-top: 0;
 	margin-bottom: 2%;
+	text-align: left;
+	line-height: 120%;
 }
-	.page-book h2 small {
-		font-size: .8em;
-		display: inline-block;
+	.page-book h1 small {
+		font-size: .7em;
+		display: block;
+		color: gray;
 	}
 
 .tip.new.resucilex {
@@ -298,6 +298,28 @@ footer {
 }
 	.tip.new.resucilex a {
 		color: red;
+	}
+
+.quick-search {
+	clear: both;
+	overflow: hidden;
+	margin-bottom: 1%;
+	padding: .1em;
+	box-sizing: border-box;
+}
+
+	.quick-search input {
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		padding: .2em;
+		line-height: 150%;
+		text-indent: 1.9em;
+		background: url(img/search.svg) .4em center/1.2em no-repeat;
+		border-radius: .1em;
+	}
+	.quick-search input:focus {
+		box-shadow: 1px 1px 2px #ccc;
 	}
 
 .link-all-report-wrapper {
@@ -330,7 +352,16 @@ a.link-all-report {
 		border-bottom: 1px solid #eee;
 		line-height: 1.6em;
 	}
-
+	.song-index li h4 {
+		font-weight: normal;
+		font-size: inherit;
+		display: inline;
+		margin: 0;
+	}
+		.song-index li h4 mark {
+			background: #fff772;
+			border-radius: .1em;
+		}
 	.song-index li a {
 		padding: .4em 0;
 		display: block;
@@ -338,6 +369,15 @@ a.link-all-report {
 		.song-index li a .black {
 			color: #222;
 		}
+	.song-index #no-results {
+		display: none;
+		text-align: center;
+		color: silver;
+		font-size: 1em;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: .01em;
+	}
 
 .teaser {
 	position: fixed;
@@ -1320,7 +1360,7 @@ input[type=email] {
 	text-align: center;
 }
 .small-button {
-	padding: .1em .2em;
+	padding: .2em .3em;
 	border: 1px solid #D32F2F;
 	display: inline-block;
 }
@@ -1664,9 +1704,9 @@ footer {
 
 	/* Book */
 	.change-book {
-		float: none;
+		/*float: none;
 		display: block;
-		margin: .5em 0 .7em;
+		margin: .5em 0 .7em;*/
 	}
 
 	.page-book .tip {
