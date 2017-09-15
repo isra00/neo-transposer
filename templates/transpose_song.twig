@@ -1,10 +1,10 @@
 {% extends "base.twig" %}
 
-{% if not app.neouser.isLoggedIn %}
-	{% block header_extra %}
+{% block header_extra %}
+	{% if not app.neouser.isLoggedIn %}
 		<script src='https://www.google.com/recaptcha/api.js'></script>
-	{% endblock %}
-{% endif %}
+	{% endif %}
+{% endblock %}
 
 {% block page_class %}transpose-song{% endblock %}
 
