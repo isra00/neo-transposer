@@ -1,5 +1,9 @@
 {% extends "base.twig" %}
 
+{% block header_extra %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
+
 {% block page_class %}page-login{% endblock %}
 
 {% block languageSwitchTop %}
@@ -27,7 +31,7 @@
 		<p class="mkt-text">{% trans %}Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!{% endtrans %}</p>
 
 		{% macro login_form(error_msg, redirect) %}
-		<form method="post" action="{{ path('login', {'redirect': redirect, '_locale': app.locale}) }}" class="login-form">
+		<form method="post" action="{{ path('login', {'redirect': redirect, '_locale': app.locale}) }}" class="login-form" id="login-form">
 			<div class="error">{{ error_msg }}</div>
 			
 			<div class="field block full-width">
@@ -35,7 +39,8 @@
 				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required>
 			</div>
 			<div class="field block full-width">
-				<button type="submit" name="sent" class="bigbutton">{% trans %}Enter{% endtrans %}</button>
+				{# <button type="submit" name="sent" class="bigbutton">{% trans %}Enter{% endtrans %}</button> #}
+				<button class="bigbutton g-recaptcha" data-sitekey="6LfXByMUAAAAAKkFOyhseUPNtuz8ZiilLUB3B5iX" data-callback="login">{% trans %}Enter{% endtrans %}</button>
 			</div>
 		</form>
 		{% endmacro %}
@@ -83,8 +88,16 @@
 		</section>
 	</div>
 
+<script>
+
+	function login(token)
+	{
+		document.getElementById("login-form").submit();
+	}
+
 {% if external %}
-<script>ga('set', 'dimension4', '{{ global.request.get('external') }}');</script>
+	ga('set', 'dimension4', '{{ global.request.get('external') }}');
 {% endif %}
+</script>
 
 {% endblock %}

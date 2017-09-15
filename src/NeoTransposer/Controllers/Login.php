@@ -5,6 +5,7 @@ namespace NeoTransposer\Controllers;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Model\User;
 use \NeoTransposer\Persistence\UserPersistence;
+use \MaxMind\WebService\Http\CurlRequest;
 
 /**
  * Landing page with Login form.
@@ -49,7 +50,7 @@ REG;
 
 		$req_email = trim($req->get('email'));
 
-		if (!preg_match("/$regexp/i", $req_email))
+		if (!preg_match("/$regexp/i", $req_email) || !$this->validateCaptcha($req))
 		{
 			return $this->get($req, $app, array(
 				'error_msg'  => $app->trans('That e-mail doesn\'t look good. Please, re-type it.'),
@@ -89,6 +90,24 @@ REG;
 
 			return $app->redirect($target);
 		}
+	}
+
+	protected function validateCaptcha(Request $req)
+	{
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query([
+			'secret' => '6LfXByMUAAAAAByHDr2AzwKA0P_26Oqz-RxZvrez',
+			'response' => $req->get('g-recaptcha-response')
+		]));
+
+		$response = curl_exec($curl);
+		curl_close($curl);
+
+		return (true == json_decode($response, true)['success']);
 	}
 
 	public function externalLoginFinish(\NeoTransposer\NeoApp $app)
