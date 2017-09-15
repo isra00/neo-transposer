@@ -685,7 +685,7 @@ INSERT INTO `song` VALUES (671,3,267,'Let him kiss me','C#2','E3','let-him-kiss-
 INSERT INTO `song` VALUES (672,3,269,'Come from Lebanon','D2','B2','come-from-lebanon',1,'D2','B2',NULL);
 INSERT INTO `song` VALUES (673,3,270,'While I was asleep','B1','E3','while-i-was-asleep',1,'E2','A2',NULL);
 INSERT INTO `song` VALUES (674,3,271,'Flee, my beloved','E2','F3','flee-my-beloved',1,'E2','E3',NULL);
-INSERT INTO `song` VALUES (675,3,272,'She-lamb of God','G1','C3','she-lamb-of-god',1,'G2','D2',NULL);
+INSERT INTO `song` VALUES (675,3,272,'She-lamb of God','G1','D3','she-lamb-of-god',1,'G2','D3',NULL);
 INSERT INTO `song` VALUES (676,3,273,'In him there is no beauty','C2','G3','in-him-there-is-no-beauty',1,'C2','D3',NULL);
 INSERT INTO `song` VALUES (677,3,274,'Worthy are you','A1','D3','worthy-are-you',1,'D2','D3',NULL);
 INSERT INTO `song` VALUES (678,3,275,'Who is she?','A1','D3','who-is-she',1,'A1','A2',NULL);
@@ -3742,4 +3742,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-16  0:33:46
+-- Dump completed on 2017-09-15 19:06:47
