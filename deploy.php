@@ -58,25 +58,6 @@ function runCommands($commands, $stopIfStatusNotZero = true)
 	return $actions;
 }
 
-function getLastCommit($deployDir)
-{
-	$gitLog = runCommand("cd $deployDir && git log --pretty=medium");
-
-	preg_match('/^commit ([0-9a-f]{40})$/', $gitLog['output'][0], $matchHash);
-	$hash = $matchHash[1];
-
-	preg_match('/^Date\:\s+(.*)$/i', $gitLog['output'][2], $matchDate);
-	$date = $matchDate[1];
-
-	return [
-		'hash' 		=> substr($hash, 0, 6),
-		'date' 		=> $date,
-		'message' 	=> trim($gitLog['output'][4])
-	];
-
-	return $gitLog;
-}
-
 function githubApiRequest($url)
 {
 	global $githubApiBase;
@@ -182,7 +163,6 @@ if (isset($_POST['sent']))
 	}
 }
 
-$lastCommit = getLastCommit($deployDir);
 $laterCommits = getLaterCommits(new DateTime($lastCommit['date']));
 
 $lastCommit = current($laterCommits);
