@@ -125,59 +125,60 @@ var NTBook = {
 
 		eQuickSearch.value = "";
 
-		$(eQuickSearch).focus(function(event)
-		{
-			aElementsToHide.hide();
+		$(eQuickSearch)
 
-			if (isTouchScreen)
-			{
-				window.scrollTo(0, eQuickSearch.getBoundingClientRect().top);
-			}
-		});
-
-		$(eQuickSearch).keyup(function(event)
-		{
-			var sSearchString = event.target.value,
-				eTitle,
-				oRegExp,
-				iResults = 0;
-
-			document.getElementById("no-results").style.display = 'none';
-
-			if (sSearchString.length > 0)
+			.focus(function(event)
 			{
 				aElementsToHide.hide();
 
-				$(".song-index li").each(function()
+				if (isTouchScreen)
 				{
-					this.style.display = 'none';
-					eTitle = this.getElementsByTagName("h4")[0];
-
-					//Remove previous highlights to have clean text
-					eTitle.innerHTML = eTitle.innerHTML.replace(/<\/?mark>/ig, "");
-
-					oRegExp = new RegExp("(" + sSearchString + ")", "ig");
-
-					if (eTitle.innerHTML.search(oRegExp) != -1)
-					{
-						eTitle.innerHTML = eTitle.innerHTML.replace(oRegExp, "<mark>$1</mark>");
-						this.style.display = 'block';
-						iResults++;
-					}
-				});
-
-				if (!iResults)
-				{
-					document.getElementById("no-results").style.display = 'block';
+					window.scrollTo(0, eQuickSearch.getBoundingClientRect().top);
 				}
-			}
-			else
+			})
+
+			.keyup(function(event)
 			{
-				eSongList.innerHTML = eSongList.innerHTML.replace(/<\/?mark>/ig, "");
-				$(".song-index li").css("display", "block");
-				aElementsToHide.add(".tip").show();
-			}
-		});
+				var sSearchString = event.target.value,
+					eTitle,
+					oRegExp,
+					iResults = 0;
+
+				document.getElementById("no-results").style.display = 'none';
+
+				if (sSearchString.length > 0)
+				{
+					aElementsToHide.hide();
+
+					$(".song-index li").each(function()
+					{
+						this.style.display = 'none';
+						eTitle = this.getElementsByTagName("h4")[0];
+
+						//Remove previous highlights to have clean text
+						eTitle.innerHTML = eTitle.innerHTML.replace(/<\/?mark>/ig, "");
+
+						oRegExp = new RegExp("(" + sSearchString + ")", "ig");
+
+						if (eTitle.innerHTML.search(oRegExp) != -1)
+						{
+							eTitle.innerHTML = eTitle.innerHTML.replace(oRegExp, "<mark>$1</mark>");
+							this.style.display = 'block';
+							iResults++;
+						}
+					});
+
+					if (!iResults)
+					{
+						document.getElementById("no-results").style.display = 'block';
+					}
+				}
+				else
+				{
+					eSongList.innerHTML = eSongList.innerHTML.replace(/<\/?mark>/ig, "");
+					$(".song-index li").css("display", "block");
+				}
+			});
 	}
 };
 
