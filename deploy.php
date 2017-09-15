@@ -58,6 +58,30 @@ function runCommands($commands, $stopIfStatusNotZero = true)
 	return $actions;
 }
 
+function getLastCommitInLocal($deployDir)
+{
+	$gitLog = runCommand("cd $deployDir && git log --pretty=medium");
+
+	preg_match('/^commit ([0-9a-f]{40})$/', $gitLog['output'][0], $matchHash);
+	$hash = $matchHash[1];
+
+	//When last commit is a merge, new lines are printed, so date is line 4
+	$dateLine = ("Merge" == substr($gitLog['output'][1], 0, 5))
+		? 3
+		: 2;
+
+	preg_match('/^Date\:\s+(.*)$/i', $gitLog['output'][$dateLine], $matchDate);
+	$date = $matchDate[1];
+
+	return [
+		'hash' 		=> substr($hash, 0, 6),
+		'date' 		=> $date,
+		'message' 	=> trim($gitLog['output'][4])
+	];
+
+	return $gitLog;
+}
+
 function githubApiRequest($url)
 {
 	global $githubApiBase;
@@ -163,7 +187,8 @@ if (isset($_POST['sent']))
 	}
 }
 
-$laterCommits = getLaterCommits(new DateTime($lastCommit['date']));
+$lastCommitInLocal = getLastCommitInLocal($deployDir);
+$laterCommits = getLaterCommits(new DateTime($lastCommitInLocal['date']));
 
 $lastCommit = current($laterCommits);
 $willDeployBroken = isset($lastCommit['build'])
