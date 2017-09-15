@@ -43,7 +43,16 @@
 				<button class="bigbutton g-recaptcha" data-sitekey="6LfXByMUAAAAAKkFOyhseUPNtuz8ZiilLUB3B5iX" data-callback="login">{% trans %}Enter{% endtrans %}</button>
 			</div>
 		</form>
+
+		<script>
+		function login(token)
+		{
+			document.getElementById("login-form").submit();
+		}
+		</script>
+
 		{% endmacro %}
+
 		{% import _self as self %}
 		{{ self.login_form(error_msg) }}
 
@@ -88,16 +97,10 @@
 		</section>
 	</div>
 
-<script>
-
-	function login(token)
-	{
-		document.getElementById("login-form").submit();
-	}
-
 {% if external %}
-	ga('set', 'dimension4', '{{ global.request.get('external') }}');
+	<script>
+		ga('set', 'dimension4', '{{ global.request.get('external') }}');
+	</script>
 {% endif %}
-</script>
 
 {% endblock %}

@@ -1,5 +1,11 @@
 {% extends "base.twig" %}
 
+{% if not app.neouser.isLoggedIn %}
+	{% block header_extra %}
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	{% endblock %}
+{% endif %}
+
 {% block page_class %}page-book{% endblock %}
 
 {% block content %}
