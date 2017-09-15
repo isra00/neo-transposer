@@ -139,6 +139,12 @@ return array(
 	'<span>My voice is </span>male'
 	=> '<span>Tengo voz de </span>Hombre',
 
+	'Quick search a song'
+	=> 'Búsqueda rápida',
+
+	'Nothing found'
+	=> 'No encontrado',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Camino Neocatecumenal)',

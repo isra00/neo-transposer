@@ -139,6 +139,12 @@ return array(
 	'<span>My voice is </span>male'
 	=> '<span>Sauti yangu ni </span>ya kiume',
 
+	'Quick search a song'
+	=> 'Tafuta wimbo',
+
+	'Nothing found'
+	=> 'Haipatiki',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Njia ya Neokatekumenato)',
