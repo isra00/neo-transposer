@@ -48,7 +48,7 @@
 					{% if transposition.asBook %}
 						{% trans %}(as in the book){% endtrans %}
 					{% else %}
-						{% for i, original_chord in song.song.originalChords -%}
+						{% for i, original_chord in song.song.originalChordsForPrint -%}
 							<span class="chord-pair">{{ original_chord|raw }}
 								&rarr;
 								{{ transposition.chordsForPrint[i]|raw }}
