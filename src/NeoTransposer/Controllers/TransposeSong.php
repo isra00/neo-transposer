@@ -130,7 +130,7 @@ class TransposeSong
 
 	protected function generateTranspositionChart(NotesCalculator $nc, NeoApp $app, TransposedSong $transposedSong) : TranspositionChart
 	{
-		$transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser']);
+		$transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser'], $app['neoconfig']['languages'][$app['locale']]['notation']);
 		$transpositionChart->addTransposition(
 			'Transposed:', 
 			'transposed-song', 
