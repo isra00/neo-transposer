@@ -709,7 +709,7 @@ INSERT INTO `song` VALUES (694,3,293,'Brothers','E2','E3','brothers',1,'E2','E3'
 INSERT INTO `song` VALUES (695,3,295,'You stole my heart','E2','F3','you-stole-my-heart',1,'E2','F3',NULL);
 INSERT INTO `song` VALUES (696,3,296,'Hail, O Mary, incorrupt dove','C#2','E3','hail-o-mary-incorrupt-dove',1,'C#2','C#3',NULL);
 INSERT INTO `song` VALUES (697,4,21,'A cabana dos pastores','C#2','E3','a-cabana-dos-pastores',1,'C#2','E3',NULL);
-INSERT INTO `song` VALUES (698,4,22,'A ceifa das nações','D2','F3','a-ceifa-das-nações',1,'D2','D2',NULL);
+INSERT INTO `song` VALUES (698,4,22,'A ceifa das nações','D2','F3','a-ceifa-das-nações',1,'D2','D3',NULL);
 INSERT INTO `song` VALUES (699,4,23,'A marcha é dura','B1','B2','a-marcha-e-dura',1,'E2','B2',NULL);
 INSERT INTO `song` VALUES (700,4,24,'A ninguém demos ocasião de tropeço','E2','F3','a-ninguem-demos-ocasião-de-tropeço',1,'E2','E3',NULL);
 INSERT INTO `song` VALUES (701,4,25,'A ti levanto os meus olhos','A1','D3','a-ti-levanto-os-meus-olhos',1,'A1','D3',NULL);
@@ -727,7 +727,7 @@ INSERT INTO `song` VALUES (712,4,36,'Aleluia! Louvai o Senhor','A2','D3','alelui
 INSERT INTO `song` VALUES (713,4,37,'Amém, amém, amém','C2','A3','amem-amem-amem',1,'C2','A3',NULL);
 INSERT INTO `song` VALUES (714,4,38,'Amo o Senhor','A1','D3','amo-o-senhor',1,'D2','D3',NULL);
 INSERT INTO `song` VALUES (715,4,39,'Ao despertar','E2','E3','ao-despertar',1,'F#2','D3',NULL);
-INSERT INTO `song` VALUES (716,4,40,'Até quando?','A2','G#2','ate-quando',1,'A2','G#2',NULL);
+INSERT INTO `song` VALUES (716,4,40,'Até quando?','A1','G#2','ate-quando',1,'A1','G#2',NULL);
 INSERT INTO `song` VALUES (717,4,41,'Ave Maria I','D2','E3','ave-maria-i-português',1,'D2','E3',NULL);
 INSERT INTO `song` VALUES (718,4,42,'Ave Maria II','E2','E3','ave-maria-ii',1,'E2','E3',NULL);
 INSERT INTO `song` VALUES (719,4,43,'Babilônia criminal','D#2','F#3','babilônia-criminal-português',1,'D#2','C3',NULL);
@@ -784,7 +784,7 @@ INSERT INTO `song` VALUES (769,4,94,'Iahweh, tu és meu Deus','D2','D3','iahweh-
 INSERT INTO `song` VALUES (770,4,95,'Ide a anunciai a meus irmãos','A1','E3','ide-a-anunciai-a-meus-irmãos',1,'E2','E3',NULL);
 INSERT INTO `song` VALUES (771,4,96,'Impropérios','E2','F#3','improperios-português',1,'E2','F#3',NULL);
 INSERT INTO `song` VALUES (772,4,97,'Já vem o meu Deus','E2','C3','ja-vem-o-meu-deus',1,'E2','C3',NULL);
-INSERT INTO `song` VALUES (773,4,98,'Jerusalém reconstruída','G1','C3','jerusalem-reconstruida',1,'C1','A2',NULL);
+INSERT INTO `song` VALUES (773,4,98,'Jerusalém reconstruída','G1','C3','jerusalem-reconstruida',1,'C2','A2',NULL);
 INSERT INTO `song` VALUES (774,4,99,'Leva-me ao céu','B1','G#3','leva-me-ao-ceu',1,'B1','E3',NULL);
 INSERT INTO `song` VALUES (775,4,100,'Levanto os meus olhos para os montes','E2','E3','levanto-os-meus-olhos-para-os-montes',1,'E2','E3',NULL);
 INSERT INTO `song` VALUES (776,4,101,'Louvai o Senhor','D2','E3','louvai-o-senhor',1,'D2','D3',NULL);
@@ -835,7 +835,7 @@ INSERT INTO `song` VALUES (820,4,145,'Salve rainha','D2','D#3','salve-rainha',1,
 INSERT INTO `song` VALUES (821,4,146,'Salve rainha dos céus','G2','E3','salve-rainha-dos-ceus',1,'G#2','D3',NULL);
 INSERT INTO `song` VALUES (822,4,147,'Se hoje escutardes a sua voz','A1','C3','se-hoje-escutardes-a-sua-voz',1,'C2','C3',NULL);
 INSERT INTO `song` VALUES (823,4,148,'Se me refugiei no Senhor','E2','E3','se-me-refugiei-no-senhor',1,'E2','C3',NULL);
-INSERT INTO `song` VALUES (824,4,149,'Se o Senhor não constrói a casa','C#2','F#3','se-o-senhor-não-constroi-a-casa',1,'F#3','F#3',NULL);
+INSERT INTO `song` VALUES (824,4,149,'Se o Senhor não constrói a casa','C#2','F#3','se-o-senhor-não-constroi-a-casa',1,'F#2','F#3',NULL);
 INSERT INTO `song` VALUES (825,4,150,'Se vós ressuscitastes com Cristo','B1','D3','se-vos-ressuscitastes-com-cristo',1,'B1','D3',NULL);
 /*!40000 ALTER TABLE `song` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -4497,4 +4497,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-30  1:35:08
+-- Dump completed on 2017-10-30  2:17:27
