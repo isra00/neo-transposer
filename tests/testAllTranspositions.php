@@ -21,4 +21,4 @@ $result 	= strpos($output, 'SUCCESSFUL');
 /** @todo Change <strong> and <em> tags for command line colors */
 file_put_contents('php://' . ($result ? 'stdout' : 'stderr'), $output . "\n");
 
-return ($result) ? 0 : 1;
+exit($result ? 0 : 1);
