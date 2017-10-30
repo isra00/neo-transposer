@@ -47,7 +47,7 @@ return array(
 	=> 'Primero você mede os limites de sua voz, cantando um refrão em tons diferentes. É um pouco cansativo, mas não se preocupe, você precisará fazer apenas uma vez.',
 
 	'After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.'
-	=> 'Depois de medir a sua voz, escolha qualquer canto e o Neo-Transposer irá calcular os acordes e a casa que mais lhe convierão.',
+	=> 'Depois de medir a sua voz, escolha qualquer canto e o Neo-Transposer irá calcular os acordes e a braçadeira que mais lhe convierão.',
 
 	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.'
 	=> 'Este site é uma iniciativa pessoal de um membro do Caminho Neocatecumenal, mas não representa oficialmente o Caminho Neocatecumenal nem seus responsáveis.',
@@ -165,10 +165,10 @@ return array(
 	=> 'Tenha em atenção que este é o melhor tom para a sua voz, mas pode não ser o melhor para o canto.',
 
 	'with capo %n%'
-	=> 'com capotraste %n%',
+	=> 'com braçadeira %n%',
 
 	'no capo'
-	=> 'sem capotraste',
+	=> 'sem braçadeira',
 
 	'(same chords as in the book)'
 	=> '(mesmos acordes que no livro)',
@@ -300,7 +300,7 @@ return array(
 	=> 'Passo 2: Hora de cantar',
 
 	'Now I will propose you to sing the chorus of a song in a certain key. Take your guitar and try to sing it in that key.'
-	=> 'Agora vou te pedir para cantar o refrão de um canto em uma determinada casa. Pegue seu violão e tente cantar naquela casa.',
+	=> 'Agora vou te pedir para cantar o refrão de um canto num determinado tom. Pegue seu violão e tente cantar nesse tom.',
 
 	'If it is too low for you, click on “No, it\'s too low”. If you were able to sing it, click on “Yes”. Then, I will transpose the song so it will be a bit lower, and you should try again. We will keep repeating the exercise until you can\'t sing lower'
 	=> 'Se for muito grave para você, clique em "Não, é muito grave". Se você puder cantar, clique em "Sim". Então, transponho o canto para que seja um pouco mais grave, e você deve tentar novamente. Vamos continuar repetindo o exercício até que você não consiga cantar mais grave.',
@@ -386,7 +386,7 @@ return array(
 	=> '(como no livro)',
 
 	'C = capo. If not written, no capo should be used.'
-	=> 'C = capotraste. Se não estiver escrito, não use capotraste.',
+	=> 'C = braçadeira. Se não estiver escrito, não use braçadeira.',
 
 	'Print'
 	=> 'Imprimir',
