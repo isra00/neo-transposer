@@ -55,7 +55,7 @@ return array(
 	//User voice
 	'Your voice'
 	=> 'Tu voz',
-	
+
 	'<span>I don\'t know</span> my voice range'
 	=> '<span>No conozco</span> mi tesitura de voz',
 
@@ -70,13 +70,13 @@ return array(
 
 	'Lowest:'
 	=> 'Más grave:',
-	
+
 	'Highest:'
 	=> 'Más aguda:',
 
 	'{1}octave|]1,Inf]octaves'
 	=> '{1}octava|]1,Inf]octavas',
-	
+
 	'oct'
 	=> 'oct',
 
@@ -154,10 +154,10 @@ return array(
 
 	'Your voice:'
 	=> 'Tu voz:',
-	
+
 	'Change'
 	=> 'Cambiar',
-	
+
 	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
 	=> 'Estas dos transposiciones encajan con tu voz (son equivalentes). La primera tiene acordes más fáciles:',
 
@@ -166,16 +166,16 @@ return array(
 
 	'with capo %n%'
 	=> 'con capo %n%',
-	
+
 	'no capo'
 	=> 'sin capo',
 
 	'(same chords as in the book)'
 	=> '(mismos acordes que en el libro)',
-	
+
 	'This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:'
 	=> 'Esta otra transposición es un poco %difference%, pero tiene acordes más fáciles y puede venir bien a tu voz:',
-	
+
 	'higher'
 	=> 'más aguda',
 
