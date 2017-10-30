@@ -63,7 +63,7 @@ return [
 
 	//Feature flags
 	'hide_second_centered_if_not_equivalent' => false,
-	'people_compatible' => false,
+	'people_compatible' => true,
 
 	'people_compatible_users' => [5],
 
