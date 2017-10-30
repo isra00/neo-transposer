@@ -386,7 +386,7 @@ return array(
 	=> '(como no livro)',
 
 	'C = capo. If not written, no capo should be used.'
-	=> 'C = capo(capotraste). Se não estiver escrito, não use capo(capotraste).',
+	=> 'C = capotraste. Se não estiver escrito, não use capotraste.',
 
 	'Print'
 	=> 'Imprimir',
