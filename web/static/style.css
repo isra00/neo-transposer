@@ -86,6 +86,9 @@ hr {
 .flag-sw {
 	background-image: url(img/flag-tz.gif);
 }
+.flag-pt {
+	background-image: url(img/flag-pt.gif);
+}
 
 /*
  * HEADER
@@ -963,6 +966,10 @@ h2.step-1 {
 	margin-top: 1em;
 	max-width: 16rem;
 }
+html[lang="pt"] .wizard-empiric .answer {
+	margin-left: 2rem;
+	max-width: 18rem;
+}
 	.wizard-empiric .answer h3 {
 		margin-top: 0;
 	}
@@ -1606,7 +1613,8 @@ td.red {
 	.page-login.lang-sw .mkt {
 		background-image: url(img/mkt-sw.jpg);
 	}
-	.page-login.lang-en .mkt {
+	.page-login.lang-en .mkt,
+	.page-login.lang-pt .mkt {
 		background-image: url(img/mkt-small.jpg);
 	}
 }
