@@ -2012,16 +2012,18 @@
 				"capo": 4,
 				"chords": "F#m,F#7,Bm,C#,D"
 			},
-			"notEquivalent": {
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
 				"offset": -5,
 				"lowestNote": "C2",
 				"highestNote": "B2",
 				"score": 12,
 				"capo": 5,
 				"deviationFromCentered": -1,
-				"chords": "Em,E7,Am,B7,C"
-			},
-			"peopleCompatibleStatus": 2
+				"chords": "Em,E7,Am,B7,C",
+				"peopleLowestNote": "C2",
+				"peopleHighestNote": "B2"
+			}
 		},
 		"220": {
 			"songLowestNote": "C#2",
@@ -2575,11 +2577,11 @@
 			}
 		},
 		"239": {
-			"songLowestNote": "F2",
+			"songLowestNote": "E2",
 			"songHighestNote": "F3",
 			"centered1": {
 				"offset": -4,
-				"lowestNote": "C#2",
+				"lowestNote": "C2",
 				"highestNote": "C#3",
 				"score": 39,
 				"capo": 1,
@@ -2587,7 +2589,7 @@
 			},
 			"centered2": {
 				"offset": -4,
-				"lowestNote": "C#2",
+				"lowestNote": "C2",
 				"highestNote": "C#3",
 				"score": 48,
 				"capo": 4,
@@ -2596,13 +2598,13 @@
 			"peopleCompatibleStatus": 56,
 			"peopleCompatible": {
 				"offset": -6,
-				"lowestNote": "B1",
+				"lowestNote": "A#1",
 				"highestNote": "B2",
 				"score": 37,
 				"capo": 4,
 				"deviationFromCentered": -2,
 				"chords": "Em5,Am,B7,Em,D,G,C",
-				"peopleLowestNote": "D#2",
+				"peopleLowestNote": "B1",
 				"peopleHighestNote": "B2"
 			}
 		},
@@ -5022,7 +5024,7 @@
 				"capo": 2,
 				"chords": "F#m,C#7,D,C#,A,E"
 			},
-			"peopleCompatibleStatus": 2
+			"peopleCompatibleStatus": 7
 		},
 		"341": {
 			"songLowestNote": "A1",
