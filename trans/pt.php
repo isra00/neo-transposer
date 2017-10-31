@@ -47,7 +47,7 @@ return array(
 	=> 'Primero você mede os limites de sua voz, cantando um refrão em tons diferentes. É um pouco cansativo, mas não se preocupe, você precisará fazer apenas uma vez.',
 
 	'After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.'
-	=> 'Depois de medir a sua voz, escolha qualquer canto e o Neo-Transposer irá calcular os acordes e a braçadeira que mais lhe convierão.',
+	=> 'Depois de medir a sua voz, escolha qualquer canto e o Neo-Transposer irá calcular os acordes e a braçadeira que mais combina com você.',
 
 	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.'
 	=> 'Este site é uma iniciativa pessoal de um membro do Caminho Neocatecumenal, mas não representa oficialmente o Caminho Neocatecumenal nem seus responsáveis.',
