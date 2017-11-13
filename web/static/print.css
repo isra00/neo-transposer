@@ -3,6 +3,10 @@
 	margin: .5cm;
 }
 
+html, body {
+	height: auto;
+}
+
 body {
 	margin: .5cm 1cm 1cm;
 }
