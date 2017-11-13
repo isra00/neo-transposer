@@ -392,7 +392,7 @@ return array(
 	=> 'Chapa',
 
 	'Download'
-	=> 'Download',
+	=> 'Pakua',
 
 	'Transpositions'
 	=> 'Transpositions',
