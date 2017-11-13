@@ -1052,6 +1052,9 @@ html[lang="pt"] .wizard-empiric .answer {
 		.all-songs-report .songs-list li li {
 			font-size: .9em;
 		}
+		.all-songs-report .chord {
+			font-size: 1.1em;
+		}
 		.all-songs-report .songs-list .chord-pair {
 			display: inline-block;
 		}
@@ -1897,4 +1900,14 @@ footer {
 	.page-login .mkt-text {
 		font-size: 1em;
 	}
+}
+
+/********************************* VERY TINY *********************************/
+
+@media only screen and (max-width: 25rem) {
+
+	.show-voice-chart a span {
+		display: none;
+	}
+
 }
