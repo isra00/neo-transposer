@@ -4009,7 +4009,18 @@
 				"capo": 1,
 				"chords": "Bm,C,D,F#m,G,F#"
 			},
-			"peopleCompatibleStatus": 2
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 21,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Am,A#,C,Em,F,E",
+				"peopleLowestNote": "F#2",
+				"peopleHighestNote": "B2"
+			}
 		},
 		"295": {
 			"songLowestNote": "A1",
@@ -4150,34 +4161,36 @@
 			}
 		},
 		"300": {
-			"songLowestNote": "E2",
+			"songLowestNote": "B1",
 			"songHighestNote": "C3",
 			"centered1": {
-				"offset": -1,
-				"lowestNote": "D#2",
-				"highestNote": "B2",
-				"score": 19,
-				"capo": 4,
-				"chords": "Bm,Em,F#7,G"
+				"offset": 1,
+				"lowestNote": "C2",
+				"highestNote": "C#3",
+				"score": 9,
+				"capo": 1,
+				"chords": "Em,Am,B7,C"
 			},
 			"centered2": {
-				"offset": -1,
-				"lowestNote": "D#2",
-				"highestNote": "B2",
+				"offset": 1,
+				"lowestNote": "C2",
+				"highestNote": "C#3",
 				"score": 22,
-				"capo": 1,
+				"capo": 3,
 				"chords": "Dm,Gm,A7,A#"
 			},
-			"notEquivalent": {
+			"peopleCompatible": {
 				"offset": 0,
 				"lowestNote": "E2",
 				"highestNote": "C3",
 				"score": 9,
 				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,Am,B7,C"
+				"deviationFromCentered": -1,
+				"chords": "Em,Am,B7,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			},
-			"peopleCompatibleStatus": 2
+			"peopleCompatibleStatus": 56
 		},
 		"301": {
 			"songLowestNote": "A1",
@@ -4230,16 +4243,18 @@
 				"capo": 4,
 				"chords": "F#m,C#7,D7"
 			},
-			"notEquivalent": {
-				"offset": -5,
-				"lowestNote": "A1",
-				"highestNote": "D3",
-				"score": 10,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Em,B7,C7"
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 14,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "Am,E7,F7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			},
-			"peopleCompatibleStatus": 2
+			"peopleCompatibleStatus": 56
 		},
 		"303": {
 			"songLowestNote": "G#1",

@@ -790,11 +790,13 @@ a.link-all-report {
 		color: white;
 		font-size: .7em;
 	}
-	.voicechart .singer td {
+	.voicechart .singer td,
+	.voicechart .people-standard td {
 		background: white;
 		color: #00585F;
 	}
-	.voicechart .singer td.note {
+	.voicechart .singer td.note,
+	.voicechart .people-standard td.note {
 		background: #00585F;
 	}
 	.voicechart .original-song td {
