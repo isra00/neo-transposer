@@ -119,10 +119,10 @@ return array(
 	=> 'Faça logon agora para transpor automaticamente os acordes dos cantos do Caminho Neocatecumenal',
 
 	'Download or print <small>All songs report</small>'
-	=> 'Imprima ou faça download de<small>Todos os cantos</small>',
+	=> 'Imprima ou faça download <small>Todos os cantos</small>',
 
 	'<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.'
-	=> '<strong>NEVO</strong>: Agora que você transpôs as músicas, outro aplicativo pode ajudá-lo a escolher os cantos certos para uma celebração. Conheça o <strong><a href="%url%">Léxico do Ressuscitou</a></strong>.',
+	=> '<strong>NOVO</strong>: Agora que você transpôs as músicas, outro aplicativo pode ajudá-lo a escolher os cantos certos para uma celebração. Conheça o <strong><a href="%url%">Léxico do Ressuscitou</a></strong>.',
 
 	'Something is going wrong'
 	=> 'Algo está errado',
@@ -426,7 +426,7 @@ return array(
 	=> 'Você pode ter clicado em um link com problemas, ou talvez você escreveu a URL manualmente e cometeu um erro.',
 
 	'Try to go back to the <a href="%url%">home page</a>.'
-	=> 'Tente votlar ao <a href="%url%">início</a>.',
+	=> 'Tente voltar ao <a href="%url%">início</a>.',
 
 	//error-500
 	'Internal error'
