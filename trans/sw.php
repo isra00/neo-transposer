@@ -16,7 +16,7 @@ return array(
 	=> 'Neo-Transposer inabadilisha yenyewe nyimbo za Njia ya Neokatekumenato kwa ajili yako, ili ziendane na sauti yako kikamilifu.',
 
 	'Transpose chords'
-	=> 'Transportar acordes',
+	=> 'Badilisha kordi',
 
 	//Login
 	'Transpose the songs of the Neocatechumenal Way · Neo-Transposer'
@@ -192,7 +192,7 @@ return array(
 	=> 'Kwa kusanyiko:',
 
 	'Show voice chart'
-	=> 'Onyesha kielelezo cha nota za sauti',
+	=> 'Onyesha <span>kielelezo cha </span>nota za sauti',
 
 	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
 	=> 'Neo-Transposer inakusaidia kwa kubadilisha ufunguo ya kordi za <strong>%song%</strong> ili zifae sauti yako. Andika barua pepe yako, fuata maelekezo na utapata mara moja kordi za nyimbo zote za Njia ya Neokatekumenato!',
@@ -392,7 +392,7 @@ return array(
 	=> 'Chapa',
 
 	'Download'
-	=> 'Download',
+	=> 'Pakua',
 
 	'Transpositions'
 	=> 'Transpositions',
@@ -425,7 +425,7 @@ return array(
 	'You may have clicked on a broken link, or perhaps you wrote the URL manually and made a mistake.'
 	=> 'Labda umebonyeza kiungo kibovu, ama umeiandika mwenyewe anwani na umekosea.',
 
-	'You may try to go back to the <a href="%url%">home page</a>.'
+	'Try to go back to the <a href="%url%">home page</a>.'
 	=> 'Unaweza ukajaribu kurudi kwenye <a href="%url%">mwanzoni</a>.',
 
 	//error-500

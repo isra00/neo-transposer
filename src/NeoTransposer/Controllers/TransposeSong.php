@@ -130,7 +130,7 @@ class TransposeSong
 
 	protected function generateTranspositionChart(NotesCalculator $nc, NeoApp $app, TransposedSong $transposedSong) : TranspositionChart
 	{
-		$transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser']);
+		$transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser'], $app['neoconfig']['languages'][$app['locale']]['notation']);
 		$transpositionChart->addTransposition(
 			'Transposed:', 
 			'transposed-song', 
@@ -143,7 +143,7 @@ class TransposeSong
 			{
 				$transpositionChart->addVoice('Original for people:', 'original-song', $transposedSong->song->peopleRange);
 				$transpositionChart->addVoice('Transposed for people:', 'transposed-song', $nc->transposeRange($transposedSong->song->peopleRange, $transposedSong->transpositions[0]->offset));
-				$transpositionChart->addVoice('People standard:', 'people-compatible', new NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]));
+				$transpositionChart->addVoice('People standard:', 'people-standard', new NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]));
 			}
 			
 			if ($transposedSong->peopleCompatible)

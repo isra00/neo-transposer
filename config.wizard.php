@@ -77,6 +77,31 @@ SONG
 		),
 	),
 
+	'pt'	=> array(
+		'lowest' => array(
+			'id_song'		=> 769,
+			'override_highest_note'	=> 'F2',
+			'song_contents'	=> <<<SONG
+%0                %1
+IAHWEH, TU ÉS MEU DEUS,
+
+           %0
+EU TE LOUVAREI.
+SONG
+		),
+
+		'highest' => array(
+			'id_song'		=> 824,
+			'song_contents'	=> <<<SONG
+%0                  %1     %2
+SE O SENHOR NÃO CONSTRÓI A CASA,
+
+   %3                      %0
+EM VÃO TRABALHAM OS CONSTRUTORES.
+SONG
+		),
+	),
+
 	'standard_voices'	=> array(
 		'male_high'		 => array('C#2', 'F#3'),
 		'male'			 => array('B1',	 'E3'),

@@ -37,33 +37,40 @@ class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 
 		$mockTransposition->range = new NotesRange('C1', 'C2');
 
-		$chart = new TranspositionChart($mockNc, $mockSong, $mockUser);
+		/** @fixme Either make NotesNotation a non-static class or mock it here */
+		$chart = new TranspositionChart($mockNc, $mockSong, $mockUser, 'american');
 		$chart->addTransposition('testCaption', 'testCssClass', $mockTransposition);
 
 		$expected = [
 			[
-				'caption' 	=> 'Your voice:', 
-				'css' 		=> 'singer', 
-				'lowest' 	=> 'C1', 
-				'highest' 	=> 'C2', 
-				'length' 	=> 11, 
-				'offset' 	=> 12
+				'caption' 			=> 'Your voice:', 
+				'css' 				=> 'singer', 
+				'lowest' 			=> 'C1', 
+				'highest' 			=> 'C2', 
+				'lowestForPrint' 	=> 'C1', 
+				'highestForPrint' 	=> 'C2', 
+				'length' 			=> 11, 
+				'offset' 			=> 12
 			],
 			[
-				'caption' 	=> 'Original chords:', 
-				'css' 		=> 'original-song', 
-				'lowest' 	=> 'C1', 
-				'highest' 	=> 'C2', 
-				'length' 	=> 11, 
-				'offset' 	=> 12
+				'caption' 			=> 'Original chords:', 
+				'css' 				=> 'original-song', 
+				'lowest' 			=> 'C1', 
+				'highest' 			=> 'C2', 
+				'lowestForPrint' 	=> 'C1', 
+				'highestForPrint' 	=> 'C2', 
+				'length' 			=> 11, 
+				'offset' 			=> 12
 			],
 			[
-				'caption' 	=> 'testCaption', 
-				'css' 		=> 'testCssClass', 
-				'lowest' 	=> 'C1', 
-				'highest' 	=> 'C2', 
-				'length' 	=> 11, 
-				'offset' 	=> 12
+				'caption' 			=> 'testCaption', 
+				'css' 				=> 'testCssClass', 
+				'lowest' 			=> 'C1', 
+				'highest' 			=> 'C2', 
+				'lowestForPrint' 	=> 'C1', 
+				'highestForPrint' 	=> 'C2', 
+				'length' 			=> 11, 
+				'offset' 			=> 12
 			],
 		];
 

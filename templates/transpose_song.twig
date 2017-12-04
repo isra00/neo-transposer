@@ -149,9 +149,9 @@
 		<tr class="{{ voice.css }}">
 			<th>{{ voice.caption|trans }}</th>
 			{% for i in range(0, voice.offset) %}<th>&nbsp;</th>{% endfor %}
-			<td class="note">{{ voice.lowest }}</td>
+			<td class="note">{{ voice.lowestForPrint }}</td>
 			{% for i in range(0, voice.length - 1) %}<td>██</td>{% endfor %}
-			<td class="note">{{ voice.highest }}</td>
+			<td class="note">{{ voice.highestForPrint }}</td>
 		</tr>
 	{% endfor %}
 	</table>

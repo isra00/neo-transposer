@@ -15,6 +15,7 @@ return [
 		1 => '/nyimbo-njia-neokatekumenato',
 		2 => '/cantos-camino-neocatecumenal',
 		3 => '/songs-neocatechumenal-way',
+		4 => '/cantos-caminho-neocatecumenal',
 	],
 	
 	'languages'	=> [
@@ -31,6 +32,11 @@ return [
 			'name'		=> 'Kiswahili',
 			'notation'	=> 'american',
 			'file'		=> __DIR__ . '/trans/sw.php'
+		],
+		'pt' => [
+			'name'		=> 'Português',
+			'notation'	=> 'latin',
+			'file'		=> __DIR__ . '/trans/pt.php'
 		]
 	],
 
@@ -57,7 +63,7 @@ return [
 
 	//Feature flags
 	'hide_second_centered_if_not_equivalent' => false,
-	'people_compatible' => false,
+	'people_compatible' => true,
 
 	'people_compatible_users' => [5],
 

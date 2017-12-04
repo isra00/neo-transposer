@@ -62,6 +62,7 @@ class NeoApp extends Application
 				. $request->getHttpHost()
 				. $request->getBasePath();
 
+			/** @todo Remove this. It's now rolled out for everyone */
 			$app->rolloutPeopleCompatible();
 		});
 	}

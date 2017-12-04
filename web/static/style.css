@@ -86,6 +86,9 @@ hr {
 .flag-sw {
 	background-image: url(img/flag-tz.gif);
 }
+.flag-pt {
+	background-image: url(img/flag-pt.gif);
+}
 
 /*
  * HEADER
@@ -787,11 +790,13 @@ a.link-all-report {
 		color: white;
 		font-size: .7em;
 	}
-	.voicechart .singer td {
+	.voicechart .singer td,
+	.voicechart .people-standard td {
 		background: white;
 		color: #00585F;
 	}
-	.voicechart .singer td.note {
+	.voicechart .singer td.note,
+	.voicechart .people-standard td.note {
 		background: #00585F;
 	}
 	.voicechart .original-song td {
@@ -963,6 +968,10 @@ h2.step-1 {
 	margin-top: 1em;
 	max-width: 16rem;
 }
+html[lang="pt"] .wizard-empiric .answer {
+	margin-left: 2rem;
+	max-width: 18rem;
+}
 	.wizard-empiric .answer h3 {
 		margin-top: 0;
 	}
@@ -1044,6 +1053,9 @@ h2.step-1 {
 	}
 		.all-songs-report .songs-list li li {
 			font-size: .9em;
+		}
+		.all-songs-report .chord {
+			font-size: 1.1em;
 		}
 		.all-songs-report .songs-list .chord-pair {
 			display: inline-block;
@@ -1606,7 +1618,8 @@ td.red {
 	.page-login.lang-sw .mkt {
 		background-image: url(img/mkt-sw.jpg);
 	}
-	.page-login.lang-en .mkt {
+	.page-login.lang-en .mkt,
+	.page-login.lang-pt .mkt {
 		background-image: url(img/mkt-small.jpg);
 	}
 }
@@ -1889,4 +1902,14 @@ footer {
 	.page-login .mkt-text {
 		font-size: 1em;
 	}
+}
+
+/********************************* VERY TINY *********************************/
+
+@media only screen and (max-width: 25rem) {
+
+	.show-voice-chart a span {
+		display: none;
+	}
+
 }

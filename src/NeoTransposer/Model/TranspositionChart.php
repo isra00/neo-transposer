@@ -1,5 +1,7 @@
 <?php
 
+use \NeoTransposer\Model\NotesCalculator;
+
 namespace NeoTransposer\Model;
 
 class TranspositionChart
@@ -14,9 +16,16 @@ class TranspositionChart
 	 */
 	protected $voiceChart = [];
 
-	public function __construct(\NeoTransposer\Model\NotesCalculator $nc, Song $song, User $singer)
+	/**
+	 * Notation for printing notes
+	 * @var string
+	 */
+	protected $notation = [];
+
+	public function __construct(NotesCalculator $nc, Song $song, User $singer, $notation)
 	{
 		$this->nc = $nc;
+		$this->notation = $notation;
 
 		$this->addVoice('Your voice:', 'singer', $singer->range);
 		$this->addVoice('Original chords:', 'original-song', $song->range);
@@ -28,7 +37,9 @@ class TranspositionChart
 			'caption'	=> $caption,
 			'css'		=> $cssClass,
 			'lowest'	=> $range->lowest,
-			'highest'	=> $range->highest,
+			'highest'	=> $range->highest, 
+			'lowestForPrint'  => NotesNotation::getNotation($range->lowest, $this->notation),
+			'highestForPrint' => NotesNotation::getNotation($range->highest, $this->notation),
 			'length'	=> abs($this->nc->distanceWithOctave($range->lowest, $range->highest)) - 1,
 		];
 	}

@@ -6,6 +6,8 @@ use \Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Support for different nomenclatures for notes (american and latin so far).
+ * 
+ * @fixme Solve duplicity of regexp in getNotation() and getVoiceRangeAsString()
  */
 class NotesNotation
 {
@@ -39,7 +41,15 @@ class NotesNotation
 	 */
 	public static function getNotation($note, $notation)
 	{
-		return ('latin' == $notation) ? self::$latinNotes[$note] : $note;
+		$regexp = '/([ABCDEFG]#?b?)([0-9])?/';
+
+		preg_match($regexp, $note, $match);
+
+		$note 	= $match[1];
+		$number = $match[2] ?? null;
+
+		$noteInNotation = ('latin' == $notation) ? self::$latinNotes[$note] : $note;
+		return $noteInNotation . $number;
 	}
 
 	/**

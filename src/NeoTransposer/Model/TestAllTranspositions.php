@@ -57,7 +57,7 @@ class TestAllTranspositions extends \NeoTransposer\AppAccess
 						{
 							if (is_array($testData['expectedResults'][$idSong][$property]))
 							{
-								$testData['expectedResults'][$idSong][$property] = join('; ', $testData['expectedResults'][$idSong][$property]);
+								$testData['expectedResults'][$idSong][$property] = '[' . join('; ', $testData['expectedResults'][$idSong][$property]) . ']';
 							}
 
 							$output .= "$property: expected <em>" . ((string) $testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
