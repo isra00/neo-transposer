@@ -106,7 +106,8 @@ class NeoApp extends Application
 			'es' => [
 				'AR', 'BO', 'CL', 'CO', 'CR', 'DO', 'EC', 'SV', 'GT', 'HN', 'MX', 'NI', 'PA', 'PY', 'PE', 'PR', 'ES', 'UY', 'VE', 'CU', 'GQ',
 				'PT', 'BR', 'IT' //Spanish as fallback
-			]
+			],
+			'pt' => ['BR', 'PT', 'AO', 'CV', 'GW', 'MZ', 'ST', 'TL']
 		];
 
 		try
