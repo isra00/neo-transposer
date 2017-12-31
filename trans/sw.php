@@ -29,7 +29,7 @@ return array(
 	=> '<span>Sio shida kubadilisha funguo za nyimbo. Shida ni kujua ufunguo gani ni bora kwa <strong>sauti yangu</strong>?</span>',
 
 	'Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!'
-	=> 'Neo-Transposer inahesabu transposition kamili kwa kila wimbo wa Njia kulingana na sauti yako binafsi. Rahisi sana! Pia inakutolea kordi rahisi zaidi. Usi&shy;sumbu&shy;liwe tena na mambo ya kordi na sauti!',
+	=> 'Neo-Transposer inakupa kordi kamili za kila wimbo wa Neo kulingana na sauti yako binafsi, pamoja na kordi zilizo rahisi zaidi. Usi&shy;sumbu&shy;liwe tena na mambo ya kordi na sauti!',
 
 	'Please, type your e-mail:'
 	=> 'Weka anwani yako ya barua pepe:',
