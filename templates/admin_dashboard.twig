@@ -133,7 +133,7 @@
 	{% for country, perf in perf_by_country %}
 			<tr>
 				<td>
-					<img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ perf.country|lower }}.png" width="16" />&nbsp;
+					<img src="{{ global.request.basepath }}/static/img/flags/{{ perf.country|lower }}.png" width="16" />&nbsp;
 					{{ perf.country_name }}
 				</td>
 				<td>{{ self.feedbackGraph(perf.yes, perf.no) }}</td>
