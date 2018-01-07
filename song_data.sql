@@ -67,7 +67,7 @@ CREATE TABLE `song` (
   `artistic_adjustment` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=MyISAM AUTO_INCREMENT=924 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=933 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -704,7 +704,7 @@ INSERT INTO `song` VALUES (689,3,287,'Noli me tangere','E2','F3','noli-me-tanger
 INSERT INTO `song` VALUES (690,3,288,'O Lord, help me, O Lord!','E2','E3','o-lord-help-me-o-lord',1,'F#2','E3',NULL);
 INSERT INTO `song` VALUES (691,3,289,'You have seduced me, Lord','B1','F3','you-have-seduced-me-lord',1,'B1','E3',NULL);
 INSERT INTO `song` VALUES (692,3,290,'The dark night of the soul','B1','D3','the-dark-night-of-the-soul',1,'B1','D3',NULL);
-INSERT INTO `song` VALUES (693,3,291,'The sermon of the mount','D2','D3','the-sermon-of-the-mount',1,'D2','B2',NULL);
+INSERT INTO `song` VALUES (693,3,291,'The sermon of the mount','B1','D3','the-sermon-of-the-mount',1,'D2','B2',NULL);
 INSERT INTO `song` VALUES (694,3,293,'Brothers','E2','E3','brothers',1,'E2','E3',NULL);
 INSERT INTO `song` VALUES (695,3,295,'You stole my heart','E2','F3','you-stole-my-heart',1,'E2','F3',NULL);
 INSERT INTO `song` VALUES (696,3,296,'Hail, O Mary, incorrupt dove','C#2','E3','hail-o-mary-incorrupt-dove',1,'C#2','C#3',NULL);
@@ -880,6 +880,7 @@ INSERT INTO `song` VALUES (865,4,191,'Oração Eucarística II (Prefácio)','A1'
 INSERT INTO `song` VALUES (866,4,192,'Oração Eucarística II (Relato da instituição + Aclamação)','A1','E3','oraçao-eucaristica-ii-relato-da-instituiçao-+-aclamaçao',1,'D2','A#2',NULL);
 INSERT INTO `song` VALUES (867,4,193,'Oração Eucarística II (Memorial, etc. até o final)','D2','E3','oraçao-eucaristica-ii-memorial-etc-ate-o-final',1,'B2','E3',NULL);
 INSERT INTO `song` VALUES (868,4,193,'Oração Eucarística II (Doxologia quando o “Memorial e a oferenda” faz-se recitada)','G1','E3','oraçao-eucaristica-ii-doxologia',1,NULL,NULL,NULL);
+INSERT INTO `song` VALUES (924,1,290,'Hotuba Mlimani','B1','D3','hotuba-mlimani',0,'D2','B2',NULL);
 INSERT INTO `song` VALUES (869,4,194,'Oração Eucarística IV','G1','A2','oraçao-eucaristica-iv',1,NULL,NULL,NULL);
 INSERT INTO `song` VALUES (870,4,198,'Orações Universais','E2','D3','oraçoes-universais',1,'E2','D3',NULL);
 INSERT INTO `song` VALUES (871,4,199,'Pai nosso','D2','D3','pai-nosso',1,'D2','D3',NULL);
@@ -935,6 +936,14 @@ INSERT INTO `song` VALUES (920,4,251,'O Espírito do Senhor está sobre mim','E2
 INSERT INTO `song` VALUES (921,4,252,'Roubaste o meu coração','E2','F3','roubaste-o-meu-coraçao',1,'E2','F3',NULL);
 INSERT INTO `song` VALUES (922,4,253,'Sermão da montanha','B1','D3','sermao-da-montanha',1,'D2','B2',NULL);
 INSERT INTO `song` VALUES (923,4,254,'Tu és a minha esperança, Senhor','A1','F3','tu-es-a-minha-esperança-senhor',1,'A2','F3',NULL);
+INSERT INTO `song` VALUES (925,1,211,'Kama msukumo wa hasira','G1','B2','kama-msukumo-wa-hasira',1,'E2','B2',NULL);
+INSERT INTO `song` VALUES (926,1,261,'Usikasirike na wabaya','A1','C3','usikasirike-na-wabaya',1,'B1','A2',NULL);
+INSERT INTO `song` VALUES (927,1,105,'Nalikujulisha dhambi yangu','E2','D3','nalikujulisha-dhambi-yangu',1,'E2','C3',NULL);
+INSERT INTO `song` VALUES (928,1,121,'Maria wa Jasna Gora','E2','A3','maria-wa-jasna-gora',0,'F#2','F#3',NULL);
+INSERT INTO `song` VALUES (929,1,53,'Tazama, naja upesi','B2','C#3','tazama-naja-upesi',0,'B2','C#3',NULL);
+INSERT INTO `song` VALUES (930,1,276,'Sauti ya mpendwa wangu','F1','C3','sauti-ya-mpendwa-wangu',1,'C2','C3',NULL);
+INSERT INTO `song` VALUES (931,1,79,'Mbona mataifa wafanya ghasia?','B1','E3','mbona-mataifa-wafanya-ghasia-kiswahili',1,'E2','E3',NULL);
+INSERT INTO `song` VALUES (932,1,138,'Mpumbavu awaza, \"Hakuna Mungu\"','D2','E3','mpumbavu-awaza-\"hakuna-mungu\"',1,'D2','D3',NULL);
 /*!40000 ALTER TABLE `song` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5068,6 +5077,55 @@ INSERT INTO `song_chord` VALUES (923,'A#7',1);
 INSERT INTO `song_chord` VALUES (923,'A7',2);
 INSERT INTO `song_chord` VALUES (923,'Dm',3);
 INSERT INTO `song_chord` VALUES (923,'Gm',4);
+INSERT INTO `song_chord` VALUES (58,'A',8);
+INSERT INTO `song_chord` VALUES (924,'D',0);
+INSERT INTO `song_chord` VALUES (924,'A',1);
+INSERT INTO `song_chord` VALUES (924,'G',2);
+INSERT INTO `song_chord` VALUES (924,'Bm',3);
+INSERT INTO `song_chord` VALUES (924,'F#',4);
+INSERT INTO `song_chord` VALUES (924,'E',5);
+INSERT INTO `song_chord` VALUES (924,'B',6);
+INSERT INTO `song_chord` VALUES (924,'C#',7);
+INSERT INTO `song_chord` VALUES (925,'C',0);
+INSERT INTO `song_chord` VALUES (925,'Am',1);
+INSERT INTO `song_chord` VALUES (925,'Dm',2);
+INSERT INTO `song_chord` VALUES (925,'G',3);
+INSERT INTO `song_chord` VALUES (925,'A7',4);
+INSERT INTO `song_chord` VALUES (925,'E',5);
+INSERT INTO `song_chord` VALUES (925,'F',6);
+INSERT INTO `song_chord` VALUES (926,'Am',0);
+INSERT INTO `song_chord` VALUES (926,'F',1);
+INSERT INTO `song_chord` VALUES (926,'E7',2);
+INSERT INTO `song_chord` VALUES (926,'Dm',3);
+INSERT INTO `song_chord` VALUES (927,'Am',0);
+INSERT INTO `song_chord` VALUES (927,'Dm',1);
+INSERT INTO `song_chord` VALUES (927,'G',2);
+INSERT INTO `song_chord` VALUES (928,'B',0);
+INSERT INTO `song_chord` VALUES (928,'Am',1);
+INSERT INTO `song_chord` VALUES (928,'Em',2);
+INSERT INTO `song_chord` VALUES (929,'A',0);
+INSERT INTO `song_chord` VALUES (929,'E',1);
+INSERT INTO `song_chord` VALUES (929,'B7',2);
+INSERT INTO `song_chord` VALUES (929,'C#',3);
+INSERT INTO `song_chord` VALUES (929,'F#m',4);
+INSERT INTO `song_chord` VALUES (930,'C',0);
+INSERT INTO `song_chord` VALUES (930,'Am',1);
+INSERT INTO `song_chord` VALUES (930,'F',2);
+INSERT INTO `song_chord` VALUES (930,'E',3);
+INSERT INTO `song_chord` VALUES (930,'Dm',4);
+INSERT INTO `song_chord` VALUES (930,'Dm9',5);
+INSERT INTO `song_chord` VALUES (930,'G',6);
+INSERT INTO `song_chord` VALUES (931,'Em',0);
+INSERT INTO `song_chord` VALUES (931,'Am',1);
+INSERT INTO `song_chord` VALUES (931,'B7',2);
+INSERT INTO `song_chord` VALUES (932,'Dm',0);
+INSERT INTO `song_chord` VALUES (932,'A7',1);
+INSERT INTO `song_chord` VALUES (932,'Gm',2);
+INSERT INTO `song_chord` VALUES (932,'A#',3);
+INSERT INTO `song_chord` VALUES (932,'F',4);
+INSERT INTO `song_chord` VALUES (932,'Am',5);
+INSERT INTO `song_chord` VALUES (932,'A',6);
+INSERT INTO `song_chord` VALUES (932,'C',7);
 /*!40000 ALTER TABLE `song_chord` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -5080,4 +5138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-16 17:41:44
+-- Dump completed on 2018-01-07  0:23:34
