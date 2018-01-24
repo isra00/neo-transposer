@@ -1177,11 +1177,11 @@ html[lang="pt"] .wizard-empiric .answer {
 		text-align: center;
 		color: white;
 		font-weight: normal;
-		margin: .5em;
+		margin: .4em;
 	}
 		.admin-dashboard .data-circle span {
 			display: block;
-			padding-top: 15%;
+			padding-top: 18%;
 			font-size: .9em;
 		}
 		.admin-dashboard .data-circle b {
@@ -1202,16 +1202,16 @@ html[lang="pt"] .wizard-empiric .answer {
 		}
 
 	.admin-dashboard .data-circle.small-circle {
-		width: 90px;
-		max-width: 90px;
-		height: 90px;
-		max-height: 90px;
+		width: 780px;
+		max-width: 80px;
+		height: 80px;
+		max-height: 80px;
 	}
 		.admin-dashboard .data-circle.small-circle span {
 			font-size: .8em;
 		}
 		.admin-dashboard .data-circle.small-circle b {
-			font-size: 2em;
+			font-size: 1.6em;
 		}
 			.admin-dashboard .data-circle.small-circle b small {
 				font-size: .6em;
