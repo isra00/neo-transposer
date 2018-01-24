@@ -237,7 +237,7 @@ return array(
 	=> 'Kordi hizi za juu zinakufaa wewe, lakini zinakuwa chini sana kwa watu wa kusanyiko. Zinazofuata zimepandishwa kidogo, ingawa kwa wengine bado itakuwa chini sana.',
 
 	'And it has easier chords!'
-	=> ' Halafu kordi hizi ni rahisi zaidi!',
+	=> ' Tena kordi hizi ni rahisi zaidi!',
 
 	'With these chords the assembly too will be able to sing the song comfortably.'
 	=> 'Kwa kordi hizi, hata watu wa kusanyiko wataweza kuimba wimbo huu kwa urahisi!',
