@@ -39,7 +39,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'Kiswahili','Tanzania - Kenya 2003','Swahili','sw',217);
+INSERT INTO `book` VALUES (1,'Kiswahili','Tanzania - Kenya 2003','Swahili','sw',225);
 INSERT INTO `book` VALUES (2,'Español','Madrid 2014','Spanish','es',228);
 INSERT INTO `book` VALUES (3,'English','London 2013','English','en',234);
 INSERT INTO `book` VALUES (4,'Português','Brasilia 2017','Spanish','pt',231);
@@ -67,7 +67,7 @@ CREATE TABLE `song` (
   `artistic_adjustment` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=MyISAM AUTO_INCREMENT=933 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=944 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -944,6 +944,17 @@ INSERT INTO `song` VALUES (929,1,53,'Tazama, naja upesi','B2','C#3','tazama-naja
 INSERT INTO `song` VALUES (930,1,276,'Sauti ya mpendwa wangu','F1','C3','sauti-ya-mpendwa-wangu',1,'C2','C3',NULL);
 INSERT INTO `song` VALUES (931,1,79,'Mbona mataifa wafanya ghasia?','B1','E3','mbona-mataifa-wafanya-ghasia-kiswahili',1,'E2','E3',NULL);
 INSERT INTO `song` VALUES (932,1,138,'Mpumbavu awaza, \"Hakuna Mungu\"','D2','E3','mpumbavu-awaza-\"hakuna-mungu\"',1,'D2','D3',NULL);
+INSERT INTO `song` VALUES (933,1,NULL,'Mwanakondoo wa Mungu','B1','A2','mwanakondoo-wa-mungu',1,'B1','A2',NULL);
+INSERT INTO `song` VALUES (934,1,NULL,'Baba Yetu','D2','D3','baba-yetu',0,'D2','D3',NULL);
+INSERT INTO `song` VALUES (935,1,NULL,'Kanuni ya Imani','C2','F3','kanuni-ya-imani',1,'C2','F3',NULL);
+INSERT INTO `song` VALUES (936,1,NULL,'Nitawatwaa kati ya mataifa','F2','E3','nitawatwaa-kati-ya-mataifa',1,'F2','E3',NULL);
+INSERT INTO `song` VALUES (937,1,NULL,'Katikati ya umati mkubwa','E2','D3','katikati-ya-umati-mkubwa',1,'E2','A2',NULL);
+INSERT INTO `song` VALUES (938,1,NULL,'Salamu Maria, njiwa asiyeoza','C#2','C#3','salamu-maria-njiwa-asiyeoza',0,'C#2','C#3',NULL);
+INSERT INTO `song` VALUES (939,1,NULL,'Kama kondoo aonaye jinsi wapelekavyo kikondoo wake machinjoni','F#2','C3','kama-kondoo-aonaye-jinsi-wapelekavyo-kikondoo-wake-machinjoni',1,'F#2','C3',NULL);
+INSERT INTO `song` VALUES (940,1,NULL,'Peke yako kwa peke yake','E2','F3','peke-yako-kwa-peke-yake',1,'F2','F3',NULL);
+INSERT INTO `song` VALUES (941,1,278,'Kama asali inavyotona','E1','E3','kama-asali-inavyotona',1,'F1','E3',NULL);
+INSERT INTO `song` VALUES (942,1,NULL,'Ikiwa mmefufuka na Kristo','B1','E3','ikiwa-mmefufuka-na-kristo',1,'E2','D3',NULL);
+INSERT INTO `song` VALUES (943,1,0,'Umeniibia moyo','E2','F3','umeniibia-moyo',1,'E3','F3',NULL);
 /*!40000 ALTER TABLE `song` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5126,6 +5137,59 @@ INSERT INTO `song_chord` VALUES (932,'F',4);
 INSERT INTO `song_chord` VALUES (932,'Am',5);
 INSERT INTO `song_chord` VALUES (932,'A',6);
 INSERT INTO `song_chord` VALUES (932,'C',7);
+INSERT INTO `song_chord` VALUES (933,'Am',0);
+INSERT INTO `song_chord` VALUES (933,'G',1);
+INSERT INTO `song_chord` VALUES (933,'F',2);
+INSERT INTO `song_chord` VALUES (933,'E',3);
+INSERT INTO `song_chord` VALUES (934,'Dm',0);
+INSERT INTO `song_chord` VALUES (934,'F',1);
+INSERT INTO `song_chord` VALUES (934,'Am',2);
+INSERT INTO `song_chord` VALUES (934,'Gm',3);
+INSERT INTO `song_chord` VALUES (934,'A#',4);
+INSERT INTO `song_chord` VALUES (934,'A',5);
+INSERT INTO `song_chord` VALUES (935,'Dm',0);
+INSERT INTO `song_chord` VALUES (935,'F',1);
+INSERT INTO `song_chord` VALUES (935,'C',2);
+INSERT INTO `song_chord` VALUES (935,'Am',3);
+INSERT INTO `song_chord` VALUES (935,'A#',4);
+INSERT INTO `song_chord` VALUES (935,'A',5);
+INSERT INTO `song_chord` VALUES (936,'Dm',0);
+INSERT INTO `song_chord` VALUES (936,'D7',1);
+INSERT INTO `song_chord` VALUES (936,'Gm',2);
+INSERT INTO `song_chord` VALUES (936,'A',3);
+INSERT INTO `song_chord` VALUES (936,'A#',4);
+INSERT INTO `song_chord` VALUES (937,'Am',0);
+INSERT INTO `song_chord` VALUES (937,'G',1);
+INSERT INTO `song_chord` VALUES (937,'E',2);
+INSERT INTO `song_chord` VALUES (937,'F',3);
+INSERT INTO `song_chord` VALUES (938,'Em',0);
+INSERT INTO `song_chord` VALUES (938,'F#',1);
+INSERT INTO `song_chord` VALUES (938,'G',2);
+INSERT INTO `song_chord` VALUES (938,'Bm',3);
+INSERT INTO `song_chord` VALUES (939,'Em',0);
+INSERT INTO `song_chord` VALUES (939,'Am',1);
+INSERT INTO `song_chord` VALUES (939,'B7',2);
+INSERT INTO `song_chord` VALUES (939,'C',3);
+INSERT INTO `song_chord` VALUES (940,'Dm9',0);
+INSERT INTO `song_chord` VALUES (940,'Gm',1);
+INSERT INTO `song_chord` VALUES (940,'A',2);
+INSERT INTO `song_chord` VALUES (940,'F',3);
+INSERT INTO `song_chord` VALUES (940,'A#',4);
+INSERT INTO `song_chord` VALUES (941,'Am',0);
+INSERT INTO `song_chord` VALUES (941,'Dm',1);
+INSERT INTO `song_chord` VALUES (941,'E',2);
+INSERT INTO `song_chord` VALUES (941,'F',3);
+INSERT INTO `song_chord` VALUES (942,'Em',0);
+INSERT INTO `song_chord` VALUES (942,'B7',1);
+INSERT INTO `song_chord` VALUES (942,'D',2);
+INSERT INTO `song_chord` VALUES (942,'C',3);
+INSERT INTO `song_chord` VALUES (942,'Am',4);
+INSERT INTO `song_chord` VALUES (943,'Dm',0);
+INSERT INTO `song_chord` VALUES (943,'Gm',1);
+INSERT INTO `song_chord` VALUES (943,'A',2);
+INSERT INTO `song_chord` VALUES (943,'C',3);
+INSERT INTO `song_chord` VALUES (943,'F',4);
+INSERT INTO `song_chord` VALUES (943,'A#',5);
 /*!40000 ALTER TABLE `song_chord` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -5138,4 +5202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-07  0:23:34
+-- Dump completed on 2018-01-24 20:54:18
