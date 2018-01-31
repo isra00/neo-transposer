@@ -1212,18 +1212,23 @@ html[lang="pt"] .wizard-empiric .answer {
 		}
 		.admin-dashboard .data-circle.small-circle b {
 			font-size: 1.6em;
+			margin-top: 3%;
 		}
 			.admin-dashboard .data-circle.small-circle b small {
 				font-size: .6em;
 			}
 
-	.admin-dashboard .small-circle {
+	.admin-dashboard .small-circle:nth-child(1) {
 		background-color: #009393;
 	}
-	.admin-dashboard .small-circle:first-child {
+	.admin-dashboard .small-circle:nth-child(2) {
+		background-color: #ccdb38;
+		color: #444;
+	}
+	.admin-dashboard .small-circle:nth-child(3) {
 		background-color: #d32f2f;
 	}
-	.admin-dashboard .small-circle:last-child {
+	.admin-dashboard .small-circle:nth-child(4) {
 		background-color: #911146;
 	}
 	
