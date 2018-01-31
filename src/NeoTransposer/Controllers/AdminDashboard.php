@@ -52,6 +52,7 @@ class AdminDashboard
 		}
 
 		return $app->render('admin_dashboard.twig', array(
+			'page_title'			=> 'Dashboard · ' . $app['neoconfig']['software_name'],
 			'user_count'			=> $user_count,
 			'good_users'			=> $good_users,
 			'song_availability'		=> $this->getSongAvailability(),
@@ -70,7 +71,7 @@ class AdminDashboard
 			'dfb_pc_status'			=> $this->getDFBPcStatus(),
 			'dfb_centered_scorerate'=> $this->getDFBCenteredScoreRate(),
 			'dfb_deviation'			=> $this->getDFBDeviation()
-		));
+		), false);
 	}
 
 	protected function getGlobalPerformance()

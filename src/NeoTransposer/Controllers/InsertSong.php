@@ -20,7 +20,9 @@ class InsertSong
 	{
 		$app['locale'] = 'es';
 
-		return $app->render('insert_song.twig', $tpl_vars);
+		return $app->render('insert_song.twig', array_merge($tpl_vars, [
+			'page_title' => 'Insert Song · ' . $app['neoconfig']['software_name'],
+		]), false);
 	}
 
 	public function post(Request $request, \NeoTransposer\NeoApp $app)
