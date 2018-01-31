@@ -39,7 +39,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'Kiswahili','Tanzania - Kenya 2003','Swahili','sw',225);
+INSERT INTO `book` VALUES (1,'Kiswahili','Tanzania - Kenya 2003','Swahili','sw',227);
 INSERT INTO `book` VALUES (2,'Español','Madrid 2014','Spanish','es',228);
 INSERT INTO `book` VALUES (3,'English','London 2013','English','en',234);
 INSERT INTO `book` VALUES (4,'Português','Brasilia 2017','Spanish','pt',231);
@@ -67,7 +67,7 @@ CREATE TABLE `song` (
   `artistic_adjustment` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=MyISAM AUTO_INCREMENT=951 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=955 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -393,7 +393,7 @@ INSERT INTO `song` VALUES (358,2,235,'Como destila la miel','E1','E3','como-dest
 INSERT INTO `song` VALUES (359,2,236,'Como lirio entre los cardos','G1','D3','como-lirio-entre-los-cardos',1,'B2','C#3',NULL);
 INSERT INTO `song` VALUES (360,2,242,'Hermosa eres, amiga mía','A1','D3','hermosa-eres-amiga-mia',0,'A1','A2',NULL);
 INSERT INTO `song` VALUES (361,2,246,'La Cordera de Dios','E2','D3','la-cordera-de-dios',0,'G2','D3',NULL);
-INSERT INTO `song` VALUES (362,2,247,'La paloma voló','A1','F#3','la-paloma-volo',0,'A1','C3',NULL);
+INSERT INTO `song` VALUES (362,2,247,'La paloma voló','A1','F#3','la-paloma-volo',1,'A1','C3',NULL);
 INSERT INTO `song` VALUES (364,2,248,'La voz de mi amado','F1','C3','la-voz-de-mi-amado',0,'C2','C3',NULL);
 INSERT INTO `song` VALUES (365,2,256,'Tú eres mi esperanza, Señor','A1','F3','tu-eres-mi-esperanza-señor',0,'A2','F3',NULL);
 INSERT INTO `song` VALUES (366,2,114,'Oh Dios, por tu nombre sálvame','E2','G3','oh-dios-por-tu-nombre-salvame',0,'E2','G3',NULL);
@@ -961,6 +961,10 @@ INSERT INTO `song` VALUES (946,1,266,'Msishindane na uovu','A1','D3','msishindan
 INSERT INTO `song` VALUES (947,1,268,'Mpenzi wangu ni kwangu','G1','D3','mpenzi-wangu-ni-kwangu',1,'B2','C#3',NULL);
 INSERT INTO `song` VALUES (948,1,288,'Ee Bwana, nisaidie kutosita juu yako','E2','E3','ee-bwana-nisaidie-kutosita-juu-yako',1,'E2','E3',NULL);
 INSERT INTO `song` VALUES (949,1,289,'Ee Bwana, umenihadhaa','B1','F3','ee-bwana-umenihadhaa',1,'B1','E3',NULL);
+INSERT INTO `song` VALUES (951,1,203,'Watakuona Wafalme: Wimbo wa 2 wa Mtumishi wa Yahweh','G1','C#3','watakuona-wafalme-wimbo-wa-2-wa-mtumishi-wa-yahweh',0,'B1','C#3',NULL);
+INSERT INTO `song` VALUES (952,1,204,'Yakobo','E2','F3','yakobo',1,'G2','E3',NULL);
+INSERT INTO `song` VALUES (953,1,205,'Debora','C2','D3','debora-kiswahili',0,'E2','D3',NULL);
+INSERT INTO `song` VALUES (954,1,277,'Hua aliruka','A1','F#3','hua-aliruka',1,'A1','C3',NULL);
 /*!40000 ALTER TABLE `song` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5227,6 +5231,29 @@ INSERT INTO `song_chord` VALUES (949,'F',2);
 INSERT INTO `song_chord` VALUES (949,'C',3);
 INSERT INTO `song_chord` VALUES (949,'G',4);
 INSERT INTO `song_chord` VALUES (949,'E7',5);
+INSERT INTO `song_chord` VALUES (951,'Em',6);
+INSERT INTO `song_chord` VALUES (951,'Bm',5);
+INSERT INTO `song_chord` VALUES (951,'F#',4);
+INSERT INTO `song_chord` VALUES (951,'G',3);
+INSERT INTO `song_chord` VALUES (951,'F#m',2);
+INSERT INTO `song_chord` VALUES (951,'D',1);
+INSERT INTO `song_chord` VALUES (951,'A7',0);
+INSERT INTO `song_chord` VALUES (952,'Am',0);
+INSERT INTO `song_chord` VALUES (952,'F',1);
+INSERT INTO `song_chord` VALUES (952,'E7',2);
+INSERT INTO `song_chord` VALUES (952,'G',3);
+INSERT INTO `song_chord` VALUES (952,'E',4);
+INSERT INTO `song_chord` VALUES (952,'C',5);
+INSERT INTO `song_chord` VALUES (952,'D',6);
+INSERT INTO `song_chord` VALUES (953,'D7',0);
+INSERT INTO `song_chord` VALUES (953,'Em',1);
+INSERT INTO `song_chord` VALUES (953,'F',2);
+INSERT INTO `song_chord` VALUES (953,'E',3);
+INSERT INTO `song_chord` VALUES (953,'Am',4);
+INSERT INTO `song_chord` VALUES (954,'Em',0);
+INSERT INTO `song_chord` VALUES (954,'B7',1);
+INSERT INTO `song_chord` VALUES (954,'Am',2);
+INSERT INTO `song_chord` VALUES (954,'C',3);
 /*!40000 ALTER TABLE `song_chord` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -5239,4 +5266,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-26 22:58:46
+-- Dump completed on 2018-01-31 18:16:02
