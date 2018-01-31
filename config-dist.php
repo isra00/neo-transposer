@@ -49,7 +49,7 @@ return [
 	'css_cache'			=> '4723e58f10a4d95037a4aab0bc8744ff',
 
 	'analytics_id'		=> 'UA-57809429-1',
-	'sitemap_lastmod'	=> '2016-03-12T10:00Z',
+	'sitemap_lastmod'	=> '2018-01-31T10:00Z',
 
 	'software_name'		=> 'Neo-Transposer',
 	'seo_title_suffix'	=> 'Transpose chords',
