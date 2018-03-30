@@ -27,4 +27,5 @@ El cantor, especialmente el novato o con pocos conocimientos musicales, se ve in
  6. Set songs for the Voice Wizard in config.wizard.php
  7. Translate the static pages
  8. Create a web/static/img/chords/unknown-[lang code].png image
- 9. Create a web/static/img/mkt-[lang code].jpg image for the home page
+ 9. Create a web/static/img/mkt-[lang code].jpg image for the home page and invoke it from the stylesheet
+ 10. Create a web/static/img/flag-[lang code].jpg image for the home page and invoke it from the stylesheet
