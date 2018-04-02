@@ -188,8 +188,23 @@ return array(
 	'Transposed:'
 	=> 'Transportado:',
 
+	'Transposed for people:'
+	=> 'Transportado (asamblea):',
+
+	'Adjusted for you:'
+	=> 'Ajustado (tú):',
+
 	'Adjusted for people:'
-	=> 'Ajustado para asamblea:',
+	=> 'Ajustado (asamblea):',
+
+	'Original for people:'
+	=> 'Original (asamblea):',
+
+	'People standard:'
+	=> 'Rango de la asamblea',
+
+	'More'
+	=> 'Más',
 
 	'Show voice chart'
 	=> 'Mostrar gráfica',

@@ -3,7 +3,6 @@
 namespace NeoTransposer\Controllers;
 
 use \NeoTransposer\Model\{TransposedSong, NotesRange, TranspositionChart, NotesCalculator, PeopleCompatibleCalculation};
-use \NeoTransposer\Persistence\UserPersistence;
 use \Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\NeoApp;
 
@@ -141,8 +140,8 @@ class TransposeSong
 		{
 			if ($transposedSong->song->peopleRange && $app['debug'])
 			{
-				$transpositionChart->addVoice('Original for people:', 'original-song', $transposedSong->song->peopleRange);
-				$transpositionChart->addVoice('Transposed for people:', 'transposed-song', $nc->transposeRange($transposedSong->song->peopleRange, $transposedSong->transpositions[0]->offset));
+				$transpositionChart->addVoice('Original for people:', 'original-song original-people', $transposedSong->song->peopleRange);
+				$transpositionChart->addVoice('Transposed for people:', 'transposed-song transposed-people', $nc->transposeRange($transposedSong->song->peopleRange, $transposedSong->transpositions[0]->offset));
 				$transpositionChart->addVoice('People standard:', 'people-standard', new NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]));
 			}
 			

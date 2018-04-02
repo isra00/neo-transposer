@@ -140,7 +140,7 @@
 </div>
 
 <p class="show-voice-chart">
-	<a href="javascript:void(0)" class="btn-neutral" onclick="NT.showChart(this.parentNode)">{% trans %}Show voice chart{% endtrans %}</a>
+	<a href="javascript:void(0)" class="btn-neutral" id="show-voice-chart">{% trans %}Show voice chart{% endtrans %}</a>
 </p>
 
 <div id="voicechart-container">
@@ -154,6 +154,7 @@
 			<td class="note">{{ voice.highestForPrint }}</td>
 		</tr>
 	{% endfor %}
+	<tr><th><a href="javascript:void(0)" id="chart-more">{% trans %}More{% endtrans %}</a></th></tr>
 	</table>
 </div>
 
@@ -219,7 +220,7 @@ NT = {
 	showChart: function(oLinkContainer)
 	{
 		document.getElementById("voicechart-container").style.display = 'block';
-		oLinkContainer.style.display = 'none';
+		$(oLinkContainer).remove();
 		ga('send', 'event', 'Actions', 'ShowVoiceChart', '{{ song.song.title }}');
 	},
 
@@ -387,12 +388,29 @@ NT = {
 
 		dialog.addEventListener('click', closeDialog);
 		darkBackground.addEventListener('click', closeDialog);
+	},
+
+	init: function()
+	{
+		NT.initializeChordChartDialog();
+
+		$("#show-voice-chart").click(function(e) {
+			NT.showChart(e.target.parentNode);
+		});
+
+		$("#chart-more").click(function(e) {
+			$(".original-people")
+				.add(".transposed-people")
+				.add(".people-standard")
+				.show();
+			$(e.target.parentNode.parentNode).remove();
+		});
 	}
 };
 
 $(function() {
 
-	NT.initializeChordChartDialog();
+	NT.init();
 
 	$("#feedback-yes").add("#feedback-no").click(function(e) {
 		e.preventDefault();

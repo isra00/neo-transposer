@@ -766,6 +766,10 @@ a.link-all-report {
 	margin-top: 2em;
 	display: none; /* Hidden by default */
 	clear: both;
+	width: auto;
+	max-width: 100%;
+	position: relative;
+	overflow-x: scroll;
 }
 
 .voicechart {
@@ -779,7 +783,7 @@ a.link-all-report {
 	}
 
 	.voicechart tr {
-		border-bottom: 3px solid white;
+		border-bottom: 3px solid transparent;
 	}
 	.voicechart td {
 		width: 1.5em;
@@ -792,7 +796,6 @@ a.link-all-report {
 	}
 	.voicechart .singer td,
 	.voicechart .people-standard td {
-		background: white;
 		color: #00585F;
 	}
 	.voicechart .singer td.note,
@@ -801,24 +804,26 @@ a.link-all-report {
 	}
 	.voicechart .original-song td {
 		color: #D32F2F;
-		background: white;
 	}
 	.voicechart .original-song td.note {
 		background: #D32F2F;
 	}
 	.voicechart .transposed-song td {
 		color: #009393;
-		background: white;
 	}
 	.voicechart .transposed-song td.note {
 		background: #009393;
 	}
 	.voicechart .people-compatible td {
 		color: #D32F2F;
-		background: white;
 	}
 	.voicechart .people-compatible td.note {
 		background: #D32F2F;
+	}
+	.voicechart .original-people,
+	.voicechart .transposed-people,
+	.voicechart .people-standard {
+		display: none;
 	}
 
 .transpose-song #detailed-feedback-container {
@@ -1770,13 +1775,6 @@ footer {
 		margin: 1em auto;
 		float: none;
 		clear: both;
-	}
-
-	#voicechart-container {
-		width: auto;
-		max-width: 100%;
-		position: relative;
-		overflow-x: scroll;
 	}
 
 	.teaser .inside {
