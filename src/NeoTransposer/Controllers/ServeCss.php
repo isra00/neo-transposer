@@ -27,7 +27,7 @@ class ServeCss
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_URL, 'http://cssminifier.com/raw');
+		curl_setopt($curl, CURLOPT_URL, 'https://cssminifier.com/raw');
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $fields_string);
 
