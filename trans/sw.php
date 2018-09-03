@@ -231,7 +231,7 @@ return array(
 	=> 'Kordi hizi, ijapo %difference% kidogo, zinafaa kabisa sauti za watu wa kusanyiko.',
 
 	'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly.'
-	=> 'Kordi hizi za juu zinakufaa wewe, lakini zinakuwa juu sana kwa watu wa kusanyiko. Zinazofuata zimeshushwa kidogo, ingawa kwa wengine bado itakuwa juu.',
+	=> 'Kordi hizi za juu zinakufaa wewe, lakini zinakuwa juu sana kwa watu wa kusanyiko. Zinazofuata zimeshushwa kidogo, ingawa kwa wengine bado zitakuwa juu.',
 
 	'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly.'
 	=> 'Kordi hizi za juu zinakufaa wewe, lakini zinakuwa chini sana kwa watu wa kusanyiko. Zinazofuata zimepandishwa kidogo, ingawa kwa wengine bado itakuwa chini sana.',
