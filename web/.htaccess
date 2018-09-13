@@ -2,6 +2,8 @@
 	Options -MultiViews
 	RewriteEngine On
 
+	RewriteRule ^pt/people-compatible-transpositions$ /en/people-compatible-transpositions [R=302,L]
+
 	RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 	RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 
