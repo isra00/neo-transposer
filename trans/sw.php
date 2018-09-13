@@ -432,8 +432,8 @@ return array(
 	'Internal error'
 	=> 'Kosa la kofundi la ndani',
 
-	'Sorry! Neo-Transposer has just failed internally.'
-	=> 'Samahani! Neo-Transposer imepata kosa la kifundi la ndani.',
+	'Sorry! It\'s not your fault, but Neo-Transposer has just failed internally.'
+	=> 'Samahani! Sio kosa lako, ila Neo-Transposer imepata kosa la kifundi la ndani.',
 
 	'The administrator has been notified and will try to solve this as soon as possible.'
 	=> 'Mtawala ameisha taarifiwa, na atajaribu kurekebisha kosa hili mapema iwezekanavyo.',

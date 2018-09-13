@@ -447,8 +447,8 @@ return array(
 	'Internal error'
 	=> 'Error interno',
 
-	'Sorry! Neo-Transposer has just failed internally.'
-	=> 'Lo siento, Neo-Transposer ha fallado por dentro.',
+	'Sorry! It\'s not your fault, but Neo-Transposer has just failed internally.'
+	=> 'Lo siento. No ha sido culpa tuya, pero Neo-Transposer ha fallado por dentro.',
 
 	'The administrator has been notified and will try to solve this as soon as possible.'
 	=> 'El administrador ya está sobre aviso e intentará arreglarlo cuanto antes.',
