@@ -70,7 +70,9 @@ class AdminDashboard
 			'dfb_transposition'		=> $this->getDFBTransposition(),
 			'dfb_pc_status'			=> $this->getDFBPcStatus(),
 			'dfb_centered_scorerate'=> $this->getDFBCenteredScoreRate(),
-			'dfb_deviation'			=> $this->getDFBDeviation()
+			'dfb_deviation'			=> $this->getDFBDeviation(),
+			'usersByBook'			=> $this->getUsersByBook(intval($user_count)),
+			'performanceByBook'		=> $this->getPerformanceByBook(),
 		), false);
 	}
 
@@ -98,17 +100,24 @@ SQL;
 
 		foreach ($global_performance as &$raw_data)
 		{
-			$feedback_data = array('yes'=>0, 'no'=>0, 'total'=>0);
-			foreach ($raw_data as $row)
-			{
-				$key = is_null($row['worked']) ? 'total' : $answers[$row['worked']];
-				$feedback_data[$key] = $row['n'];
-			}
-
-			$raw_data = $feedback_data;
+			$raw_data = $this->aggregatePerformanceData($raw_data);
 		}
 
 		return $global_performance;
+	}
+
+	protected function aggregatePerformanceData(array $raw_data)
+	{
+		$answers = array('no', 'yes');
+
+		$feedback_data = array('yes'=>0, 'no'=>0, 'total'=>0);
+		foreach ($raw_data as &$row)
+		{
+			$key = is_null($row['worked']) ? 'total' : $answers[$row['worked']];
+			$feedback_data[$key] = $row['n'];
+		}
+
+		return $feedback_data;
 	}
 
 	protected function getSongAvailability()
@@ -505,5 +514,56 @@ ORDER BY deviation_from_center
 SQL;
 
 		return $this->app['db']->fetchAll($sql);
+	}
+
+	protected function getUsersByBook($totalUsers)
+	{
+		$sql = <<<SQL
+SELECT lang_name, id_book, count(id_user) users
+FROM user
+LEFT JOIN book USING (id_book)
+GROUP BY user.id_book 
+ORDER BY users DESC
+SQL;
+
+		$users = $this->app['db']->fetchAll($sql);
+		$usersBookId = [];
+
+		foreach ($users as &$book)
+		{
+			$book['percent'] = (intval($book['users']) / $totalUsers) * 100;
+
+			if (empty($book['lang_name']))
+			{
+				$book['lang_name'] = '(not set)';
+			}
+
+			$usersBookId[$book['id_book']] = $book;
+		}
+
+		return $usersBookId;
+	}
+
+	protected function getPerformanceByBook()
+	{
+		$sql = <<<SQL
+SELECT worked, count(worked) n
+FROM transposition_feedback
+JOIN song USING (id_song)
+WHERE id_book = ?
+GROUP BY worked
+WITH ROLLUP
+SQL;
+
+		$performance = [];
+
+		foreach ($this->app['books'] as $book)
+		{
+			$performance[$book['id_book']] = $this->aggregatePerformanceData(
+				$this->app['db']->fetchAll($sql, [$book['id_book']])
+			);
+		}
+
+		return $performance;
 	}
 }

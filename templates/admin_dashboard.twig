@@ -85,6 +85,24 @@
 	{% endfor %}
 	</div>
 
+	<h4>Users by songbook language</h4>
+	<table class="data-table">
+		<thead>
+			<tr><th>Language</th><th>Users</th><th>%</th><th>Perf</th><th>%</th></tr>
+		</thead>
+		<tbody>
+			{% for book in usersByBook %}
+				<tr>
+					<td>{{ book.lang_name }}</td>
+					<td>{{ book.users }}</td>
+					<td>{{ book.percent|round(1) }}</td>
+					<td>{{ self.feedbackGraph(performanceByBook[book.id_book].yes, performanceByBook[book.id_book].no) }}</td>
+					{% if performanceByBook[book.id_book] %}<td>{{ ((performanceByBook[book.id_book].yes / (performanceByBook[book.id_book].yes + performanceByBook[book.id_book].no)) * 100)|round(1) }}</td>{% endif %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
 </article>
 
 <article>
