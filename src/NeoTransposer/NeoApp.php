@@ -197,8 +197,9 @@ class NeoApp extends Application
 		});
 
 		$this['geoIp2Reader'] = function ($app) {
-			$dbfile = $app['root_dir'] . '/' . $app['neoconfig']['mmdb'];
-			return new \GeoIp2\Database\Reader($dbfile);
+			return new \GeoIp2\Database\Reader(
+				$app['root_dir'] . '/' . $app['neoconfig']['mmdb']
+			);
 		};
 
 		if (!$this['session']->get('user'))
