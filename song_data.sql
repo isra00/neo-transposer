@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
 --
 -- Host: localhost    Database: transposer
 -- ------------------------------------------------------
--- Server version	5.7.20-0ubuntu0.16.04.1
+-- Server version	5.7.25-0ubuntu0.18.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -67,7 +67,7 @@ CREATE TABLE `song` (
   `artistic_adjustment` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=MyISAM AUTO_INCREMENT=966 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=967 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -975,6 +975,7 @@ INSERT INTO `song` VALUES (962,3,144,'Zaccheus','A2','A#3','zaccheus',1,'A2','A3
 INSERT INTO `song` VALUES (963,3,210,'The Spirit of the Lord is upon me','E2','D3','the-spirit-of-the-lord-is-upon-me',1,'E2','D3',NULL);
 INSERT INTO `song` VALUES (964,3,294,'This is my commandment','B1','E3','this-is-my-commandment',1,'B1','E3',NULL);
 INSERT INTO `song` VALUES (965,3,297,'If you are risen with Christ','F#2','D3','if-you-are-risen-with-christ',1,'F#2','C3',NULL);
+INSERT INTO `song` VALUES (966,4,NULL,'É paciente','B1','E3','e-paciente',1,'D2','E3',NULL);
 /*!40000 ALTER TABLE `song` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5316,6 +5317,10 @@ INSERT INTO `song_chord` VALUES (965,'Em',0);
 INSERT INTO `song_chord` VALUES (965,'Am',1);
 INSERT INTO `song_chord` VALUES (965,'B7',2);
 INSERT INTO `song_chord` VALUES (965,'C',3);
+INSERT INTO `song_chord` VALUES (966,'Am',0);
+INSERT INTO `song_chord` VALUES (966,'E',1);
+INSERT INTO `song_chord` VALUES (966,'Dm',2);
+INSERT INTO `song_chord` VALUES (966,'F',3);
 /*!40000 ALTER TABLE `song_chord` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -5328,4 +5333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-26 13:49:23
+-- Dump completed on 2019-04-07 10:53:50
