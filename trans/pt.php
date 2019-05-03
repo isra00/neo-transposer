@@ -107,7 +107,7 @@ return array(
 	=> 'Cantos do Caminho Neocatecumenal',
 
 	'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.'
-	=> 'Cantos e salmos do Caminho Neocatecumenal em% lang%. Com o Neo-Transposer você pode transpor-los automaticamente para que eles se encaixem na sua própria voz.',
+	=> 'Cantos e salmos do Caminho Neocatecumenal em %lang%. Com o Neo-Transposer você pode transpor-los automaticamente para que eles se encaixem na sua própria voz.',
 
 	'Other languages'
 	=> 'Outros idiomas',
