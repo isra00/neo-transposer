@@ -311,6 +311,9 @@ return array(
 	'Understood'
 	=> 'Nimeelewa',
 
+	'Sing it like this:'
+	=> 'Uimbe hivi:',
+
 	//Wizard empiric: lowest note
 	'Step 2: let\'s find your lowest note'
 	=> 'Hatua ya 2: kutafuta nota yako ya chini',
@@ -321,7 +324,7 @@ return array(
 	'Could you sing it?'
 	=> 'Umefanikiwa kukiimba?',
 
-	'No, that\'s too low'
+	'No, it\'s too low'
 	=> 'La, chini sana',
 
 /*	'Well, that is a bit strange'
@@ -350,7 +353,7 @@ return array(
 	'Now try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong> with the following chords. Remember: you must sing it <strong>with high voice</strong>, but without doing falsetto! Make a little effort, we are almost done!'
 	=> 'Sasa jaribu kuimba kiitikio kinachofuata katika <strong class="blink">%song_key% %song_capo%</strong> kutumia kordi hizi. Kumbuka: unapaswa kuimba na <strong>sauti ya juu</strong>, lakini usifanye <i>falsetto</i>. Jitahidi, tunakaribia kumaliza!',
 
-	'No, that\'s too high'
+	'No, it\'s too high'
 	=> 'La, ni juu sana',
 
 /*	'According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.'

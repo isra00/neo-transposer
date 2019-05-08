@@ -15,7 +15,7 @@
 			{% if show_audio %}
 			<a href="javascript:void(0)" class="sound" id="sound">
 				<span id="play-control" class="play-control stopped"><i>&nbsp;</i></span>
-				Así debes cantarlo:
+				{% trans %}Sing it like this:{% endtrans %}
 				<audio src="{{ global.request.basepath }}{{ audio_file }}"></audio>
 			</a>
 			{% endif %}
