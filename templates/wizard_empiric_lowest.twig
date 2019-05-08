@@ -8,7 +8,7 @@
 
 {% block answer_buttons %}
 	<button type="{% if action_yes %}button{% else %}submit{% endif %}" name="can_sing" value="yes" class="big flatbutton green {{ action_yes|default() }}" id="yes">{% trans %}Yes{% endtrans %}</button>
-	<button type="{% if action_no %}button{% else %}submit{% endif %}" name="can_sing" value="no" class="big flatbutton red {{ action_no|default() }}" id="no">{% trans %}No, that's too low{% endtrans %}</button>
+	<button type="{% if action_no %}button{% else %}submit{% endif %}" name="can_sing" value="no" class="big flatbutton red {{ action_no|default() }}" id="no">{% trans %}No, it's too low{% endtrans %}</button>
 {% endblock %}
 
 {% block messages %}

@@ -311,6 +311,9 @@ return array(
 	'Understood'
 	=> 'Entendido',
 
+	'Sing it like this:'
+	=> 'Cante asim:',
+
 	//Wizard empiric: lowest note
 	'Step 2: let\'s find your lowest note'
 	=> 'Passo 2: vamos encontrar sua nota mais grave',
@@ -321,7 +324,7 @@ return array(
 	'Could you sing it?'
 	=> 'Conseguiu cantar?',
 
-	'No, that\'s too low'
+	'No, it\'s too low'
 	=> 'Não, é muito grave',
 
 	'Well, that is a bit strange'
@@ -350,7 +353,7 @@ return array(
 	'Now try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong> with the following chords. Remember: you must sing it <strong>with high voice</strong>, but without doing falsetto! Make a little effort, we are almost done!'
 	=> 'Agora, tente cantar a seguinte estrofe em <strong class="blink">%song_key% %song_capo%</strong> , com os acordes fornecidos. Lembre-se: você deve cantar com voz aguda, mas sem fazer falsete! Faça um  esforço, estamos quase terminando!',
 
-	'No, that\'s too high'
+	'No, it\'s too high'
 	=> 'Não, está muito agudo',
 
 	'According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.'
