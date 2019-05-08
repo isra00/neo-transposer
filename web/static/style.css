@@ -473,7 +473,6 @@ a.link-all-report {
 	}
 
 .login-form {
-	/*border: 1px solid silver;*/
 	background: #eee;
 	padding: .5em 1em 1em;
 	display: block;
@@ -931,7 +930,6 @@ h2.step-1 {
 	padding: 0;
 	display: inline-block;
 	color: #333;
-	font-size: 1.1em;
 	max-width: 100%;
 
 	white-space: nowrap;
@@ -939,12 +937,109 @@ h2.step-1 {
 	overflow-x: scroll;
 	-webkit-overflow-scrolling: touch;
 }
+
+	.pre-song .sound {
+		display: block;
+		overflow: hidden;
+		clear: both;
+		box-shadow: 1px 1px 2px silver;
+		background: #eee;
+		line-height: 2.5rem;
+		font-family: 'Droid Sans', Arial, sans-serif;
+		font-size: 1.1em;
+		font-weight: bold;
+		padding-left: .8em;
+		text-align: right;
+	}
+		.pre-song .sound .play-control {
+			float: right;
+		    padding: 0 1rem;
+			margin-left: 1rem;
+			background: #D32F2F;
+			box-shadow: 0 0 1px gray;
+			font-size: 1.5em;
+			color: white;
+			height: auto;
+		}
+
+		.pre-song .sound .play-control.playing {
+			background: #D32F2F;
+			-webkit-animation: GradientAnimation 1s ease infinite;
+			   -moz-animation: GradientAnimation 1s ease infinite;
+			     -o-animation: GradientAnimation 1s ease infinite;
+			        animation: GradientAnimation 1s ease infinite;
+		}
+
+		@-webkit-keyframes GradientAnimation {
+			0%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 9%,   rgba(211, 47, 47) 12% 100%); }
+			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); } 
+			10%  { background: radial-gradient(circle at center, rgba(218, 86, 86) 0% 46%,  rgba(211, 47, 47) 50% 100%); }
+			15%  { background: radial-gradient(circle at center, rgba(218, 80, 80) 0% 71%,  rgba(211, 47, 47) 75% 100%); }
+			20%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 9%,   rgba(218, 70, 70) 12% 71%, rgba( 211, 47, 47 ) 75% 100%); }
+			25%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 21%,  rgb(218, 70, 70) 25% 100%); }
+			30%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 46%,  rgb(218, 70, 70) 50% 100%); }
+			35%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 71%,  rgb(218, 70, 70) 75% 100%); }
+			40%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 100%, rgb(218, 70, 70) 100% 100%); }
+			100% { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 100%, rgb(218, 70, 70) 100% 100%); }
+		}
+		@-moz-keyframes GradientAnimation {
+			0%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 9%,   rgba(211, 47, 47) 12% 100%); }
+			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); } 
+			10%  { background: radial-gradient(circle at center, rgba(218, 86, 86) 0% 46%,  rgba(211, 47, 47) 50% 100%); }
+			15%  { background: radial-gradient(circle at center, rgba(218, 80, 80) 0% 71%,  rgba(211, 47, 47) 75% 100%); }
+			20%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 9%,   rgba(218, 70, 70) 12% 71%, rgba( 211, 47, 47 ) 75% 100%); }
+			25%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 21%,  rgb(218, 70, 70) 25% 100%); }
+			30%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 46%,  rgb(218, 70, 70) 50% 100%); }
+			35%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 71%,  rgb(218, 70, 70) 75% 100%); }
+			40%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 100%, rgb(218, 70, 70) 100% 100%); }
+			100% { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 100%, rgb(218, 70, 70) 100% 100%); }
+		}
+		@-o-keyframes GradientAnimation {
+			0%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 9%,   rgba(211, 47, 47) 12% 100%); }
+			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); } 
+			10%  { background: radial-gradient(circle at center, rgba(218, 86, 86) 0% 46%,  rgba(211, 47, 47) 50% 100%); }
+			15%  { background: radial-gradient(circle at center, rgba(218, 80, 80) 0% 71%,  rgba(211, 47, 47) 75% 100%); }
+			20%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 9%,   rgba(218, 70, 70) 12% 71%, rgba( 211, 47, 47 ) 75% 100%); }
+			25%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 21%,  rgb(218, 70, 70) 25% 100%); }
+			30%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 46%,  rgb(218, 70, 70) 50% 100%); }
+			35%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 71%,  rgb(218, 70, 70) 75% 100%); }
+			40%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 100%, rgb(218, 70, 70) 100% 100%); }
+			100% { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 100%, rgb(218, 70, 70) 100% 100%); }
+		}
+		@keyframes GradientAnimation {
+			0%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 9%,   rgba(211, 47, 47) 12% 100%); }
+			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); } 
+			10%  { background: radial-gradient(circle at center, rgba(218, 86, 86) 0% 46%,  rgba(211, 47, 47) 50% 100%); }
+			15%  { background: radial-gradient(circle at center, rgba(218, 80, 80) 0% 71%,  rgba(211, 47, 47) 75% 100%); }
+			20%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 9%,   rgba(218, 70, 70) 12% 71%, rgba( 211, 47, 47 ) 75% 100%); }
+			25%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 21%,  rgb(218, 70, 70) 25% 100%); }
+			30%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 46%,  rgb(218, 70, 70) 50% 100%); }
+			35%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 71%,  rgb(218, 70, 70) 75% 100%); }
+			40%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 100%, rgb(218, 70, 70) 100% 100%); }
+			100% { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 100%, rgb(218, 70, 70) 100% 100%); }
+		}
+
+			.pre-song .sound .play-control i {
+				font-style: normal;
+				background: url(img/play-controls.gif) left top no-repeat;
+				width: 20px;
+				display: block;
+				line-height: 20px;
+				margin: .6rem 0;
+			}
+			.pre-song .sound .play-control.stopped i {
+				background-position: 0 top;
+			}
+			.pre-song .sound .play-control.playing i {
+				background-position: -20px top;
+			}
+
 	.pre-song .inside {
 		margin: 1rem;
 		max-width: none;
 		display: inline-block;
+		font-size: 1.1em;
 	}
-
 	.pre-song .capo {
 		color: #e00;
 	}
@@ -954,6 +1049,7 @@ h2.step-1 {
 		text-transform: uppercase;
 		text-align: center;
 		margin-top: 0;
+		font-size: .9em;
 	}
 	.pre-song .chord {
 		font-size: .9em;
@@ -1822,7 +1918,11 @@ footer {
 		.pre-song {
 			text-align: left;
 			clear: both;
+			max-width: 100%;
 		}
+			.pre-song .inside {
+				font-size: 1.2em;
+			}
 		.wizard-empiric .answer {
 			margin-left: 0;
 			margin-top: 2em;
@@ -1874,6 +1974,15 @@ footer {
 		.static-page .main h1 {
 			margin-top: 0;
 		}
+}
+
+/******************************************************************************/
+
+@media only screen and (max-width: 20rem) {
+
+	.pre-song .inside {
+		font-size: 1em;
+	}
 }
 
 /******************************************************************************/

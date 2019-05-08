@@ -150,11 +150,15 @@ class WizardEmpiric
 
 		$songText = new SongTextForWizard($wizard_config_song['song_contents']);
 
+		$audioFile = '/static/audio/' . $wizard_config_song['id_song'] . '_' . $transposedSong->transpositions[0]->offset . '.mp3';
+
 		return array(
 			'song'			=> $songText->getHtmlTextWithChords($transposedChords),
 			'song_title'	=> $transposedSong->song->title,
 			'song_key'		=> $transposedChords[0],
 			'song_capo'		=> $transposedSong->transpositions[0]->getCapoForPrint(),
+			'show_audio'	=> file_exists($app['root_dir'] . '/web' . $audioFile),
+			'audio_file'	=> $audioFile,
 		);
 	}
 
