@@ -282,11 +282,11 @@ return array(
 	'To start, choose one of these options:'
 	=> 'Para empezar, selecciona una de las opciones:',
 
-	'I have male voice'
-	=> 'Tengo voz de hombre',
+	'I have <span>male</span> voice'
+	=> 'Tengo voz de <span>hombre</span>',
 
-	'I have female voice'
-	=> 'Tengo voz de mujer',
+	'I have <span>female</span> voice'
+	=> 'Tengo voz de <span>mujer</span>',
 
 	'My voice is higher than most of men'
 	=> 'Tengo voz más aguda que la mayoría de hombres',
@@ -325,6 +325,9 @@ return array(
 
 	'Understood'
 	=> 'Entendido',
+
+	'seconds'
+	=> 'segundos',
 
 	'Sing it like this:'
 	=> 'Así debes cantarlo:',

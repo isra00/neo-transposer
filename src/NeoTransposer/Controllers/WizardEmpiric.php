@@ -157,7 +157,7 @@ class WizardEmpiric
 			'song_title'	=> $transposedSong->song->title,
 			'song_key'		=> $transposedChords[0],
 			'song_capo'		=> $transposedSong->transpositions[0]->getCapoForPrint(),
-			'show_audio'	=> file_exists($app['root_dir'] . '/web' . $audioFile),
+			'show_audio'	=> $app['neoconfig']['audio'] && file_exists($app['root_dir'] . '/web' . $audioFile),
 			'audio_file'	=> $audioFile,
 		);
 	}

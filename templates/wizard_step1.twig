@@ -12,75 +12,73 @@
 
 	<p>{% trans %}To start, choose one of these options:{% endtrans %}</p>
 
-	<form method="post" action="{{ global.request.getRequestUri }}">
+	<div class="clearfix">
 
-		<ul class="gender-selection">
-			<li>
-				<label for="male"><input type="radio" name="gender" value="male" id="male" onchange="NT.show('male')">
-				{% trans %}I have male voice{% endtrans %}</label>
+		<div class="two-sliding-panels">
 
-				<ul id="sub-male">
+			<section class="two-choices gender-selection" id="gender-selection">
+				<a class="flatbutton red" href="javascript:void(0)" onclick="NT.selectGender(this)" data-show="sub-male">
+					{% trans %}I have <span>male</span> voice{% endtrans %}
+				</a>
+				<a class="flatbutton red" href="javascript:void(0)" onclick="NT.selectGender(this)" data-show="sub-female">
+					{% trans %}I have <span>female</span> voice{% endtrans %}
+				</a>
+			</section>
+
+			<section class="sub-gender-selection">
+
+				<ul id="sub-male" class="sub-gender">
 					<li>
-						<label for="male_normal"><input type="radio" name="gender" value="male" id="male_normal">
-						{% trans %}Neither higher nor lower than most of men / I don't know{% endtrans %}</label>
+						<a class="small-button flatbutton red" href="{{ global.request.getRequestUri }}?gender=male">
+							{% trans %}Neither higher nor lower than most of men / I don't know{% endtrans %}
+						</a>
 					</li>
 					<li>
-						<label for="male_high"><input type="radio" name="gender" value="male_high" id="male_high">
-						{% trans %}My voice is higher than most of men{% endtrans %}</label>
+						<a class="small-button flatbutton red" href="{{ global.request.getRequestUri }}?gender=male_high">
+							{% trans %}My voice is higher than most of men{% endtrans %}
+						</a>
 					</li>
 					<li>
-						<label for="male_low"><input type="radio" name="gender" value="male_low" id="male_low">
-						{% trans %}My voice is lower than most of men{% endtrans %}</label>
+						<a class="small-button flatbutton red" href="{{ global.request.getRequestUri }}?gender=male_low">
+							{% trans %}My voice is lower than most of men{% endtrans %}
+						</a>
 					</li>
 				</ul>
-			</li>
 
-			<li>
-				<label for="female"><input type="radio" name="gender" value="female" id="female" onchange="NT.show('female')">
-				{% trans %}I have female voice{% endtrans %}</label>
-				<ul id="sub-female">
+				<ul id="sub-female" class="sub-gender">
 					<li>
-						<label for="female_normal"><input type="radio" name="gender" value="female" id="female_normal">
-						{% trans %}Neither higher nor lower than most of women / I don't know{% endtrans %}</label>
+						<a class="small-button flatbutton red" href="{{ global.request.getRequestUri }}?gender=female">
+							{% trans %}Neither higher nor lower than most of women / I don't know{% endtrans %}
+						</a>
 					</li>
 					<li>
-						<label for="female_high"><input type="radio" name="gender" value="female_high" id="female_high">
-						{% trans %}My voice is higher than most of women{% endtrans %}</label>
+						<a class="small-button flatbutton red" href="{{ global.request.getRequestUri }}?gender=female_high">
+							{% trans %}My voice is higher than most of women{% endtrans %}
+						</a>
 					</li>
 					<li>
-						<label for="female_low"><input type="radio" name="gender" value="female_low" id="female_low">
-						{% trans %}My voice is lower than most of women{% endtrans %}</label>
+						<a class="small-button flatbutton red" href="{{ global.request.getRequestUri }}?gender=female_low">
+							{% trans %}My voice is lower than most of women{% endtrans %}
+						</a>
 					</li>
 				</ul>
-			</li>
-		</ul>
+			</section>
 
-		<p class="center margintop">
-			<button type="submit" value="sent" class="btn-neutral bigbutton" id="submit">{% trans %}Next step &rarr;{% endtrans %}</button>
-		</p>
-
-	</form>
+		</div><!-- /.two-sliding-panels -->
+	</div><!-- /.clearfix -->
 	
 	{% import 'base.twig' as self %}
 	{{ self.loadJsFramework() }}
 	
 	<script>
 	NT = {
-		show: function(sGender)
+		selectGender: function(oLinkClicked)
 		{
-			document.getElementById('sub-' + sGender).style.display = 'block';
-			sTheOther = (sGender == 'male' ? 'female' : 'male');
-			document.getElementById('sub-' + sTheOther).style.display = 'none';
+			$(oLinkClicked.parentNode).addClass('slided');
+			$('.sub-gender').hide();
+			document.getElementById(oLinkClicked.dataset.show).style.display = 'block';
 		}
 	};
-
-	$(function() {
-	    $("#submit").attr('disabled', 'disabled');
-
-	    $(".gender-selection ul input").change(function() {
-	    	$("#submit").removeAttr('disabled');
-	    });
-	});
 	</script>
 
 {% endblock %}

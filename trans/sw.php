@@ -259,7 +259,7 @@ return array(
 	=> 'Kupima sauti yako',
 
 	'Follow these steps and the application will estimate your highest and lowest note. If you don\'t follow properly these steps you won\'t be able to use Neo-Transposer.'
-	=> 'Fuata hatua hizi na programu itakadiria nota yako ya chini na ya juu. Usipofuata kikamilifu hatua hizi hutaweza kuitumia Neo-Transposer.',
+	=> 'Fuata hatua hizi ili kukadiria nota yako ya chini na ya juu. Usipofuata kikamilifu hatua hizi hutaweza kutumia Neo-Transposer.',
 	
 	'Step 1'
 	=> 'Hatua ya 1',
@@ -267,11 +267,11 @@ return array(
 	'To start, choose one of these options:'
 	=> 'Uanze ukichagua jinsia yako:',
 
-	'I have male voice'
-	=> 'Sauti yangu ni ya kiume',
+	'I have <span>male</span> voice'
+	=> 'Sauti yangu ni ya <span>kiume</span>',
 
-	'I have female voice'
-	=> 'Sauti yangu ni ya kike',
+	'I have <span>female</span> voice'
+	=> 'Sauti yangu ni ya <span>kike</span>',
 
 	'My voice is higher than most of men'
 	=> 'Sauti yangu ni ya juu kuliko wanaume wengi',
@@ -300,16 +300,19 @@ return array(
 	=> 'Hatua ya 2: tuimbe sasa!',
 
 	'Now I will propose you to sing the chorus of a song in a certain key. Take your guitar and try to sing it in that key.'
-	=> 'Sasa unatakiwa kuimba kiitikio cha wimbo kinachofuata katika ufunguo fulani. Uchukue gitaa yako na kukiimba katika ufunguo ule ule.',
+	=> 'Sasa unatakiwa kuimba kiitikio cha wimbo kinachofuata katika ufunguo fulani. <strong>Uchukue gitaa yako</strong> na kukiimba katika ufunguo ule ule.',
 
 	'If it is too low for you, click on “No, it\'s too low”. If you were able to sing it, click on “Yes”. Then, I will transpose the song so it will be a bit lower, and you should try again. We will keep repeating the exercise until you can\'t sing lower'
-	=> 'Ikiwa sauti iko chini sana kwako, piga “La, chini sana”. Ukifanikiwa kukiimba, piga “Ndiyo”. Kisha, nitazishusha korzi za wimbo ili uwe chini kidogo zaidi, na itabidi ujaribu kuimba tena. Tutarudia zoezi hili mpaka ushindwe kuimba chini zaidi.',
+	=> 'Ikiwa sauti iko chini sana kwako, bonyeza “La, chini sana”. Ukifanikiwa kukiimba, bonyeza “Ndiyo”. Kisha, nitazishusha kordi za wimbo ili uwe chini kidogo zaidi, na itabidi ujaribu kuimba tena. Tutarudia zoezi hili mpaka ushindwe kuimba chini zaidi.',
 
 	'Try to do your best to sing with your lowest possible voice, since this test tries to find the limits of your voice.'
 	=> 'Ujitahidi kuimba na sauti yako ya chini kabisa, kwa sababu kipimo hiki kinatafuta vikomo vya sauti yako.',
 
 	'Understood'
 	=> 'Nimeelewa',
+
+	'seconds'
+	=> 'sekunde',
 
 	'Sing it like this:'
 	=> 'Uimbe hivi:',
@@ -376,7 +379,7 @@ return array(
 	=> 'Kufuatana na vipimo, nota zako ni hizi:',
 
 	'Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer.'
-	=> 'Hongera! Sasa unaweza kupata automatic transpsitions katika Neo-Transposer.',
+	=> 'Hongera! Sasa unaweza kupata automatic transpositions katika Neo-Transposer.',
 
 	'Transpose the songs'
 	=> 'Transpose nyimbo',
