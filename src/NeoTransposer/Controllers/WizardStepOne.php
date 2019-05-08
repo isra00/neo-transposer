@@ -15,29 +15,29 @@ class WizardStepOne
 {
 	public function stepOne(Request $req, NeoApp $app)
 	{
-		if ('GET' == $req->getMethod())
+		if (empty($req->get('gender')))
 		{
-			return $this->getStepOne($app);
+			return $this->beforeClick($app);
 		}
 
-		return $this->postStepOne($req, $app);
+		return $this->afterClick($req, $app);
 	}
 
-	public function getStepOne(NeoApp $app)
+	public function beforeClick(NeoApp $app)
 	{
 		return $app->render('wizard_step1.twig', array(
 			'page_title' => $app->trans('Voice measure wizard')
 		));
 	}
 
-	public function postStepOne(Request $req, NeoApp $app)
+	public function afterClick(Request $req, NeoApp $app)
 	{
 		$standard_voices = $app['neoconfig']['voice_wizard']['standard_voices'];
 
-		//Invalid POST data => go back
+		//Invalid voice gender => go back
 		if (false === array_search($req->get('gender'), array_keys($standard_voices)))
 		{
-			return $this->getStepOne($app);
+			return $app->redirect($app->path('wizard_step1'));
 		}
 
 		if (empty($app['neouser']->range))

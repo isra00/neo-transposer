@@ -14,7 +14,35 @@
 	<p>{% trans %}Try to do your best to sing with your lowest possible voice, since this test tries to find the limits of your voice.{% endtrans %}</p>
 
 	<form method="post" action="{{ global.request.getRequestUri }}" class="margintop">
-		<p class="center"><button type="submit" value="sent" class="btn-neutral bigbutton">{% trans %}Understood{% endtrans %}</button></p>
+		<p class="center">
+			<button id="submit" type="submit" value="sent" class="btn-neutral bigbutton">{% trans %}Understood{% endtrans %}</button>
+			<small id="countdown"><span id="seconds">5</span> {% trans %}seconds{% endtrans %}...</small>
+		</p>
 	</form>
+
+	{% import 'base.twig' as self %}
+	{{ self.loadJsFramework() }}
+
+	<script>
+	$(function() {
+
+		var iTimeOut = 5,
+			oCountDown = document.getElementById("seconds");
+
+		$("#submit").attr("disabled", "disabled");
+
+		setInterval(function () {
+			var current = parseInt(oCountDown.innerHTML);
+			current--;
+			oCountDown.innerHTML = current;
+
+			if (current < 1)
+			{
+				$(document.getElementById("submit")).removeAttr("disabled");
+				$(document.getElementById("countdown")).css("visibility", "hidden")
+			}
+		}, 1000);
+	});
+	</script>
 
 {% endblock %}

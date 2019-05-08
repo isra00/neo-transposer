@@ -177,6 +177,9 @@ footer {
 		border: 1px solid #D32F2F;
 		margin: 2%;
 		width: 35%;
+		vertical-align: top;
+		text-align: center;
+		line-height: 150%;
 	}
 		.two-choices a span {
 			display: block;
@@ -901,21 +904,56 @@ a.link-all-report {
 			content: "●"
 		}
 
-/* Wizard */
-.gender-selection {
-	list-style: none;
-	padding-left: 0;
+/* Wizard STEP ONE */
+.two-sliding-panels {
+	overflow: hidden;
+	width: 200%;
 }
-	.gender-selection li {
-		margin-top: .7em;
+	.two-sliding-panels section {
+		display: block;
+		float: left;
+		width: 50%;
+		margin: 0;
+		padding: 0;
+		text-align: left;
+		vertical-align: top;
+		border: 0;
+		box-sizing: border-box;
 	}
-	.gender-selection ul {
-		padding-left: 1em;
-		list-style: none;
+		.two-sliding-panels section:first-child {
+			-webkit-transition: all .5s ease;
+			   -moz-transition: all .5s ease;
+			    -ms-transition: all .5s ease;
+			     -o-transition: all .5s ease;
+			        transition: all .5s ease;
+		}
+	.two-sliding-panels section:first-child.slided {
+			margin-left: -50%;
+		}
+
+.gender-selection a {
+	border-radius: .2em;
+}
+	.gender-selection a span {
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+.sub-gender-selection ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+	.sub-gender-selection a {
+		display: block;
+		margin-bottom: .6em;
+		border-radius: .2em;
+		padding: .5em .5em;
+	}
+	.sub-gender-selection a::after {
+		content: " →";
 	}
 
-#sub-male,
-#sub-female {
+#sub-male {
 	display: none;
 }
 h2.step-1 {
@@ -923,6 +961,15 @@ h2.step-1 {
 	border-top: 3px solid silver;
 	padding-top: 1em;
 }
+
+/* WIZARD INSTRUCTIONS */
+#countdown {
+	display: block;
+	font-style: italic;
+	color: gray;
+}
+
+/* WIZARD EMPIRICAL */
 .pre-song {
 	font-family: monospace;
 	background: rgb(253, 253, 248);
@@ -1553,6 +1600,7 @@ a.btn-icon {
 	}
 		.btn-neutral:disabled:hover {
 			box-shadow: none;
+			background-color: #eee;
 		}
 
 .btn-blue {
@@ -1909,6 +1957,16 @@ footer {
 	}
 
 	/* Wizard */
+	.gender-selection a {
+		display: inline-block;
+		width: 48%;
+		margin: 0;
+		box-sizing: border-box;
+	}
+		.gender-selection a:first-child {
+			margin-right: 2%;
+		}
+
 	.test-area {
 		text-align: center;
 	}

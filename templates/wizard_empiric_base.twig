@@ -38,58 +38,61 @@
 
 	{% block messages %}{% endblock %}
 
-	{% import 'base.twig' as self %}
-	{{ self.loadJsFramework() }}
+	{% if show_audio %}
 
-	<script>
+		{% import 'base.twig' as self %}
+		{{ self.loadJsFramework() }}
 
-	var NTSound = {
+		<script>
 
-		initializeSoundControl: function()
-		{
-			var oAudio = document.getElementsByTagName("audio")[0],
-				oPlayControl = document.getElementById("play-control");
+		var NTSound = {
 
-			document.getElementById("sound").addEventListener('click', function(event) {
+			initializeSoundControl: function()
+			{
+				var oAudio = document.getElementsByTagName("audio")[0],
+					oPlayControl = document.getElementById("play-control");
+
+				document.getElementById("sound").addEventListener('click', function(event) {
+					
+					$(oPlayControl).toggleClass("playing").toggleClass("stopped");
+
+					if (oAudio.paused)
+					{
+						oAudio.play();
+					}
+					else
+					{
+						oAudio.pause();
+						oAudio.currentTime = 0;
+					}
+				});
 				
-				$(oPlayControl).toggleClass("playing").toggleClass("stopped");
-
-				if (oAudio.paused)
+				oAudio.addEventListener('ended', function(event)
 				{
-					oAudio.play();
-				}
-				else
+					$(oPlayControl).removeClass("playing").addClass("stopped");
+				});
+
+				oAudio.addEventListener('error', function(event)
 				{
-					oAudio.pause();
-					oAudio.currentTime = 0;
+					$(document.getElementById("sound")).remove();
+				});
+
+				//Auto-play (it is disabled in most of mobile browsers)
+				oAudio.play();
+
+				if (!oAudio.paused)
+				{
+					$(oPlayControl).removeClass("stopped").addClass("playing");
 				}
-			});
-			
-			oAudio.addEventListener('ended', function(event)
-			{
-				$(oPlayControl).removeClass("playing").addClass("stopped");
-			});
-
-			oAudio.addEventListener('error', function(event)
-			{
-				$(document.getElementById("sound")).remove();
-			});
-
-			//Auto-play (it is disabled in most of mobile browsers)
-			oAudio.play();
-
-			if (!oAudio.paused)
-			{
-				$(oPlayControl).removeClass("stopped").addClass("playing");
 			}
-		}
-	};
+		};
 
-	$(function() {
-		NTSound.initializeSoundControl();
-	});
+		$(function() {
+			NTSound.initializeSoundControl();
+		});
 
-	</script>
+		</script>
+	{% endif %}
 
 	{% block js %}{% endblock %}
 
