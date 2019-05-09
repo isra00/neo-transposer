@@ -17,7 +17,7 @@
 {% endif %}
 
 {% if show_unhappy_warning %}
-<div class="tip no-icon">
+<div class="tip no-icon unhappy-warning">
 	<h2><span class="red">&#128534;</span> {% trans %}Something is going wrong{% endtrans %}</h2>
 	<p>{% trans %}Until now, almost all transpositions have <strong>not</strong> worked for you. Perhaps your voice range you set is not the actual one.{% endtrans %}</p>
 	<p>{% trans  with {'%url%': path('wizard_step1', {'_locale': app.locale}) } %}Try to <strong><a href="%url%">do again the voice test</a></strong>. That may improve your results. If not, just choose whether you have female or male voice and Neo-Transposer will set for you a standard voice range. That will make you get better transpoositions!{% endtrans %}</p>

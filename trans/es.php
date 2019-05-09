@@ -351,17 +351,20 @@ return array(
 	'According to the voice you have chosen in the previous step, that tone should not be too low. Maybe you should go back and choose better which type of voice is yours... or maybe simply repeat the test making sure that you are singing in the same tone as the guitar.'
 	=> 'Según la voz que has definido, ese tono no debería ser demasiado bajo para ti. Quizá debas volver atrás y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba asegurándote de que cantas en el mismo tono que la guitarra.',
 
-	'Change my voice type'
-	=> 'Cambiar mi tipo de voz',
+	'← Change my voice type'
+	=> '← Cambiar mi tipo de voz',
 
 	'Repeat the test'
 	=> 'Repetir la prueba',
 
-	'If you have chosen properly your voice in the previous step and you have sang the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type... or if you are sure that this super-low voice is yours, just go to the next step:'
-	=> 'Si has elegido correctamente tu voz en el paso anterior y has cantado en todas las pruebas en el tono correcto con voz grave, es prácticamente imposible que puedas cantar más grave de eso. Quizá debas volver al paso anterior y elegir mejor qué tipo de voz es la tuya... o si estás seguro de que esa voz de ultratumba es la tuya, pasa al siguiente paso:',
+	'If you have chosen properly your voice in the previous step and you have sung the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type:'
+	=> 'Si has elegido correctamente tu voz en el paso anterior y has cantado en todas las pruebas en el tono correcto con voz grave, es prácticamente imposible que puedas cantar más grave de eso. Quizá debas volver al paso anterior y elegir mejor qué tipo de voz es la tuya:',
 
-	'Go to the next step'
-	=> 'Ir al siguiente paso',
+	'...or if you are sure that this super-low voice is yours, just go to the next step:'
+	=> '...o si estás seguro de que esa voz de ultratumba es la tuya, pasa al siguiente paso:',
+
+	'Go to the next step →'
+	=> 'Ir al siguiente paso →',
 
 	//Wizard empiric: highest note
 
