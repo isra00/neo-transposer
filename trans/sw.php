@@ -330,23 +330,26 @@ return array(
 	'No, it\'s too low'
 	=> 'La, chini sana',
 
-/*	'Well, that is a bit strange'
-	=> 'Eso es un poco extraño',
+	'Well, that is a bit strange'
+	=> 'Hayo siyo kawaida',
 
 	'According to the voice you have chosen in the previous step, that tone should not be too low. Maybe you should go back and choose better which type of voice is yours... or maybe simply repeat the test making sure that you are singing in the same tone as the guitar.'
-	=> 'Según la voz que has definido, ese tono no debería ser demasiado bajo para ti. Quizá debas volver atrás y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba asegurándote de que cantas en el mismo tono que la guitarra.',*/
+	=> 'Kulingana na aina ya sauti uliyochagua, hii isingetakiwa kuwa chini sana kwako. Labda urudie nyuma uchague vizuri zaidi aina yako ya sauti... au kurudia jaribio tu ila ukihakikisha sauti inaendana na kordi unazozipiga kwenye gitaa.',
 
-	'Change my voice type'
-	=> 'Badilisha aina ya sauti yangu',
+	'← Change my voice type'
+	=> '← Badilisha aina ya sauti yangu',
 
 	'Repeat the test'
 	=> 'Rudia tena kipimo',
 
-/*	'If you have chosen properly your voice in the previous step and you have sung the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type... or if you are sure that this super-low voice is yours, just go to the next step:'
-	=> 'Si has elegido correctamente tu voz en el paso anterior y has cantado en todas las pruebas en el tono correcto con voz grave, es prácticamente imposible que puedas cantar más grave de eso. Quizá debas volver al paso anterior y elegir mejor qué tipo de voz es la tuya... o si estás seguro de que esa voz de ultratumba es la tuya, pasa al siguiente paso:',*/
+	'If you have chosen properly your voice in the previous step and you have sung the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type:'
+	=> 'Kama umechagua vizuri sauti yako kwenye hatua iliyopita, na umeimba sahihi kwa sauti ya chini katika majaribio yote, haiwezekani uweze kuimba chini zaidi. Labda urudi nyuma uchague vizuri zaidi aina ya sauti yako:',
 
-	'Go to the next step'
-	=> 'Kwenda hatua inayofuata',
+	'...or if you are sure that this super-low voice is yours, just go to the next step:'
+	=> '...ama kama una hakika hiyo sauti ya chini mno ni sauti yako halisi, unaweza kuendelea:',
+
+	'Go to the next step →'
+	=> 'Kwenda hatua inayofuata →',
 
 	//Wizard empiric: highest note
 
@@ -359,17 +362,17 @@ return array(
 	'No, it\'s too high'
 	=> 'La, ni juu sana',
 
-/*	'According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.'
-	=> 'Según la voz que has definido, este tono no debería ser demasiado alto para ti. Quizá debas volver al primer paso y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba cantando en el mismo tono que la guitarra.',
+	'According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.'
+	=> 'Kulingana na aina ya sauti uliochagua, sauti hii haitakiwi kuwa juu sana kwako. Labda urudi nyuma kwenye hatua ya kwanza uchague vizuri zaidi aina yako ya sauti. Ama urudie majaribio haya tu ila ukihakikisha unaimba kwa sauti inayoendana na gitaa.',
 
 	'That\'s not possible...'
-	=> 'Eso no es posible...',
+	=> 'Haiwezekani...',
 
 	'You have clicked "Yes" many times, but I don\'t think it\'s really possible that you can sing that high. Please verify that you are following properly the steps, or click on "Finish here" if you want to finish the test.'
-	=> 'Has hecho click en "Sí" muchas veces, pero no es probable que puedas cantar tan alto. Por favor, comprueba que has seguido correctamente los pasos, o haz click en "Terminar aquí" si quieres finalizar la prueba.',
+	=> 'Umebonyeza “Ndiyo” mara nyingi, lakini sidhani inawezekani kweli uimbe juu hivyo. Naomba uhakikishe umefuata kikamilifu hatua zilizopita, au ubonyeze “Maliza hapa” kama unataka kumalizia hapa majaribio.',
 
 	'Finish here'
-	=> 'Terminar aquí',*/
+	=> 'Maliza hapa',
 
 	//Wizard: finish
 	'We are done!'

@@ -180,6 +180,7 @@ footer {
 		vertical-align: top;
 		text-align: center;
 		line-height: 150%;
+	    border-radius: .2em;
 	}
 		.two-choices a span {
 			display: block;
@@ -239,7 +240,9 @@ footer {
 .lang-sw .books {
 	margin-bottom: 2em;
 }
-
+	.unhappy-warning h2 {
+		margin-top: 0;
+	}
 	.books li {
 		margin: 0;
 		font-size: 1.4em;
@@ -946,7 +949,6 @@ a.link-all-report {
 	.sub-gender-selection a {
 		display: block;
 		margin-bottom: .6em;
-		border-radius: .2em;
 		padding: .5em .5em;
 	}
 	.sub-gender-selection a::after {
@@ -1528,6 +1530,7 @@ input[type=email] {
 	padding: .2em .3em;
 	border: 1px solid #D32F2F;
 	display: inline-block;
+	border-radius: .2em;
 }
 	.small-button:hover {
 		background-color: #D32F2F;
@@ -1537,6 +1540,7 @@ input[type=email] {
 .flatbutton {
 	background: white;
 	display: inline-block;
+	border-radius: .2em;
 }
 	.flatbutton:hover {
 		box-shadow: 1px 1px 2px silver;

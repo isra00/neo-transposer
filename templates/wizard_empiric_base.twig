@@ -38,10 +38,10 @@
 
 	{% block messages %}{% endblock %}
 
-	{% if show_audio %}
+	{% import 'base.twig' as self %}
+	{{ self.loadJsFramework() }}
 
-		{% import 'base.twig' as self %}
-		{{ self.loadJsFramework() }}
+	{% if show_audio %}
 
 		<script>
 
@@ -84,6 +84,16 @@
 				{
 					$(oPlayControl).removeClass("stopped").addClass("playing");
 				}
+			},
+
+			stopSound: function()
+			{
+				var oAudio = document.getElementsByTagName("audio")[0],
+					oPlayControl = document.getElementById("play-control");
+
+				oAudio.pause();
+				oAudio.currentTime = 0;
+				$(oPlayControl).removeClass("playing").addClass("stopped");
 			}
 		};
 
