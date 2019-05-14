@@ -23,6 +23,7 @@
 	{% import 'base.twig' as self %}
 	{{ self.loadJsFramework() }}
 
+	{% if not global.debug %}
 	<script>
 	$(function() {
 
@@ -44,5 +45,6 @@
 		}, 1000);
 	});
 	</script>
+	{% endif %}
 
 {% endblock %}
