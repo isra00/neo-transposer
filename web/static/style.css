@@ -912,6 +912,31 @@ a.link-all-report {
 			content: "●"
 		}
 
+/* Wizard common */
+.wizard-empiric .main {
+	margin-top: 0;
+}
+.wizard-nav {
+	background: #f1f1f1;
+	padding: 2% 1.5%;
+	margin-bottom: 1.5em;
+	font-size: .9em;
+}
+	.wizard-nav div {
+		display: inline-block;
+		/*width: 31.8%;*/
+		width: 48.3%;
+		margin-left: .4%;
+		vertical-align: top;
+		text-align: center;
+	}
+	.wizard-nav div:first-child {
+		text-align: left;
+	}
+	.wizard-nav div:last-child {
+		text-align: right;
+	}
+
 /* Wizard STEP ONE */
 .two-sliding-panels {
 	overflow: hidden;
