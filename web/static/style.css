@@ -47,6 +47,9 @@ hr {
 	border: 0;
 	border-top: 1px solid silver;
 }
+button {
+	font-family: 'Droid Sans', Arial, sans-serif;
+}
 
 .wrapper {
 	min-height: 100%;
@@ -235,6 +238,7 @@ footer {
 	padding: 0;
 	list-style: none;
 	background: #f3f3f3;
+	border-radius: .3em;
 }
 
 .lang-sw .books {
@@ -254,6 +258,7 @@ footer {
 			.books li:hover {
 				box-shadow: 2px 2px 3px silver;
 				background-color: #eee;
+				border-radius: .3em;
 			}
 
 		.books li a {
