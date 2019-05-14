@@ -231,7 +231,7 @@ return array(
 	=> 'Parece que no has medido bien tu voz. Por favor, <a href="%url%">sigue estas instrucciones</a>.',
 
 	'Maybe you didn\'t measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.'
-	=> 'Quizá no has medido bien tu voz. <a href="%url%">Haz click aquí para ir al asistente</a>.',
+	=> 'Quizá no has medido bien tu voz. <a href="%url%">Haz click aquí para ir a la Prueba de Voz</a>.',
 
 	'Maybe you are not singing the song the same way it was analysed for the application'
 	=> 'Quizá no lo has cantado de la misma forma que ha sido analizado para esta aplicación.',
@@ -269,9 +269,17 @@ return array(
 	'Your session has expired. Please log-in and submit the feedback again.'
 	=> 'Tu sesión ha expirado. Por favor, inicia sesión y envía el feedback de nuevo.',
 
+	//Wizard common
+	'Re-start'
+	=> 'Reiniciar',
+
+	'Exit Voice Test'
+	=> 'Salir de la Prueba de Voz',
+
+
 	//Wizard first step
 	'Voice measure wizard'
-	=> 'Asistente para medir tu voz',
+	=> 'Prueba de voz',
 
 	'Follow these steps and the application will estimate your highest and lowest note. If you don\'t follow properly these steps you won\'t be able to use Neo-Transposer.'
 	=> 'Sigue los pasos a continuación y la aplicación estimará tu nota máxima y mínima. Si no sigues correctamente estos pasos no podrás usar Neo-Transposer.',

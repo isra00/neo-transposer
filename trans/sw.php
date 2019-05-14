@@ -254,6 +254,14 @@ return array(
 	'Your session has expired. Please log-in and submit the feedback again.'
 	=> 'Kipindi chako kimeisha. Tafadhali ingia na kutoa feedback yako tena.',
 
+	//Wizard common
+	'Re-start'
+	=> 'Anza upya',
+	
+	'Exit Voice Test'
+	=> 'Ondoka Kupima Sauti',
+	
+
 	//Wizard first step
 	'Voice measure wizard'
 	=> 'Kupima sauti yako',

@@ -254,6 +254,14 @@ return array(
 	'Your session has expired. Please log-in and submit the feedback again.'
 	=> 'Sua sessão expirou. Faça o login novamente e envie os comentários.',
 
+	//Wizard common
+	'Re-start'
+	=> 'Reiniciar',
+	
+	'Exit Voice Test'
+	=> 'Sair da medição de voz',
+	
+
 	//Wizard first step
 	'Voice measure wizard'
 	=> 'Assistente de medição de voz',

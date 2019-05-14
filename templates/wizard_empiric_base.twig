@@ -5,6 +5,12 @@
 
 {% block content %}
 
+	<nav class="wizard-nav">
+		<div><a href="{{ path('wizard_step1') }}">&larr; {% trans %}Re-start{% endtrans %}</a></div>
+		{# <div><a href="">Help</a></div> #}
+		<div><a href="{{ path('book_' ~ app.neouser.id_book) }}">{% trans %}Exit Voice Test{% endtrans %} ✕</a></div>
+	</nav>
+
 	<h1>{% block title %}{% endblock %}</h1>
 
 	<div class="test-area">
