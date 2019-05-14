@@ -42,7 +42,6 @@
 	{{ self.loadJsFramework() }}
 
 	{% if show_audio %}
-
 		<script>
 
 		var NTSound = {
@@ -59,11 +58,13 @@
 					if (oAudio.paused)
 					{
 						oAudio.play();
+						ga('send', 'event', 'Actions', 'AudioPlay', oAudio.attributes.src.nodeValue);
 					}
 					else
 					{
 						oAudio.pause();
 						oAudio.currentTime = 0;
+						ga('send', 'event', 'Actions', 'AudioStop', oAudio.attributes.src.nodeValue);
 					}
 				});
 				
