@@ -25,6 +25,10 @@ nav.header {
 		float: none;
 		text-align: center;
 		font-size: 1em;
+		text-shadow: none;
+	}
+	nav.header h2 a::after {
+		content: ".com"; /** @debt This demands the text to be "neo-transposer" exactly */
 	}
 	nav.header a {
 		color: #D32F2F;
