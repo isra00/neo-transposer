@@ -65,6 +65,7 @@
 		$(document.getElementById("i-know")).click(function(e) {
 			$(this.parentNode).hide();
 			$(document.getElementById("voice-range")).show();
+			ga('send', 'event', 'Actions', 'IKnowMyVoiceRange', '{{ app.neouser.id_user }}');
 		});
 
 		$(document.getElementById("voice-range")).submit(function(e) {
@@ -84,8 +85,8 @@
 				return false;
 			}
 
-		    var form = this;
-            form.submit();
+			var form = this;
+			form.submit();
 
 		});
 
