@@ -1138,7 +1138,7 @@ INSERT INTO `song_chord` VALUES (49,'Em',5);
 INSERT INTO `song_chord` VALUES (49,'D',6);
 INSERT INTO `song_chord` VALUES (49,'C',7);
 INSERT INTO `song_chord` VALUES (49,'B7',8);
-INSERT INTO `song_chord` VALUES (50,'Em',0);
+INSERT INTO `song_chord` VALUES (50,'Am',0);
 INSERT INTO `song_chord` VALUES (50,'E7',1);
 INSERT INTO `song_chord` VALUES (51,'E',0);
 INSERT INTO `song_chord` VALUES (51,'A',1);
@@ -5333,4 +5333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-07 10:53:50
+-- Dump completed on 2019-05-17 22:13:23
