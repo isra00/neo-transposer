@@ -7,6 +7,7 @@ use \NeoTransposer\NeoApp;
 use \NeoTransposer\Model\SongTextForWizard;
 use \NeoTransposer\Model\AutomaticTransposer;
 use \NeoTransposer\Model\NotesRange;
+use \NeoTransposer\Persistence\UserPersistence;
 
 /**
  * Wizard Empiric: measure the user's voice range through an empirical test.
@@ -165,7 +166,7 @@ class WizardEmpiric
 	public function finish(Request $req, NeoApp $app)
 	{
 		//Only when wizard is finished, voice range is stored in DB
-		$app['neouser']->persist($app['db'], $req->getClientIp());
+		$app['neouser']->persistWithVoiceChange($app['db'], $req->getClientIp(), UserPersistence::METHOD_WIZARD);
 
 		$your_voice = $app['neouser']->getVoiceAsString(
 			$app['translator'],
