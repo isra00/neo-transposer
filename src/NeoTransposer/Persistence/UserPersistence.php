@@ -15,6 +15,9 @@ class UserPersistence
 	 */
 	protected $db;
 
+	const METHOD_WIZARD = 'wizard';
+	const METHOD_MANUAL = 'manual';
+
 	/**
 	 * @param \Doctrine\DBAL\Connection $db A DBAL connection.
 	 */
@@ -52,7 +55,8 @@ class UserPersistence
 				$userdata['id_book'],
 				$userdata['wizard_step1'],
 				$userdata['wizard_lowest_attempts'],
-				$userdata['wizard_highest_attempts']
+				$userdata['wizard_highest_attempts'],
+				intval($this->db->fetchColumn('SELECT COUNT(*) FROM transposition_feedback WHERE id_user = ?', [$userdata['id_user']]))
 			);
 		}
 	}
@@ -90,6 +94,49 @@ class UserPersistence
 
 		return $user->id_user = $this->db->lastInsertId();
 	}
+
+
+	/**
+	 * Update the user logging the voice range change
+	 * 
+	 * @param  NeoTransposer\Model\User 			$user 	The User object to persist.
+	 * @param  string $registerIp 	The IP address with which the user registered.
+	 * @param  string $method 		Either 'wizard' or 'manual'.
+	 * @return boolean True if the voice range has changed, false if user had no voice range
+	 */
+	public function persistWithVoiceChange(User $user, $registerIp = null, $method=self::METHOD_WIZARD)
+	{
+		if (empty($user->id_user))
+		{
+			throw new \Exception('The user must have an ID');
+		}
+
+		if ($method != self::METHOD_WIZARD && $method != self::METHOD_MANUAL)
+		{
+			throw new \Exception("Invalid voice range update method $method");
+		}
+
+		$currentVoiceRange = $this->db->fetchAssoc('SELECT lowest_note, highest_note FROM user WHERE id_user = ?', [$user->id_user]);
+
+		$previouslyHadVoiceRange = false;
+
+		if (!empty($currentVoiceRange['lowest_note']))
+		{
+			$previouslyHadVoiceRange = true;
+
+			$this->db->insert('log_voice_range', array(
+				'id_user'		=> $user->id_user,
+				'method'		=> $method,
+				'lowest_note'	=> $user->range->lowest,
+				'highest_note'	=> $user->range->highest
+			));
+		}
+
+		$this->persist($user, $registerIp);
+
+		return $previouslyHadVoiceRange;
+	}
+
 
 	public function fetchUserPerformance(User $user)
 	{

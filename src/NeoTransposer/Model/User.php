@@ -25,6 +25,7 @@ class User
 	public $wizard_step1;
 	public $wizard_lowest_attempts = 0;
 	public $wizard_highest_attempts = 0;
+	public $feedbacksReported = 0;
 
 	/**
 	 * Simple constructor. Use UserPersistence::fetchUserFromEmail() to create from DB.
@@ -34,10 +35,11 @@ class User
 	 * @param NotesRange 	$highest_note  	User highest note
 	 * @param int 			$id_book       	Book
 	 * @param int 			wizard_step1	Option checked in Wizard First Step
-	 * @param string 		wizard_lowest_attempts No. of attempts in Wizard Lowest note.
-	 * @param string 		wizard_highest_attempts No. of attempts in Wizard Lowest note.
+	 * @param int 			wizard_lowest_attempts No. of attempts in Wizard Lowest note.
+	 * @param int 			wizard_highest_attempts No. of attempts in Wizard Lowest note.
+	 * @param int 			feedbacksReported No. of feedback reports sent by the user
 	 */
-	public function __construct($email=null, $id_user=null, NotesRange $range=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null)
+	public function __construct($email=null, $id_user=null, NotesRange $range=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null, $feedbacksReported=0)
 	{
  		$this->id_user 		= $id_user;
 		$this->email 		= $email;
@@ -46,6 +48,7 @@ class User
 		$this->wizard_step1 = $wizard_step1;
 		$this->wizard_lowest_attempts = $wizard_lowest_attempts;
 		$this->wizard_highest_attempts = $wizard_highest_attempts;
+		$this->feedbacksReported = $feedbacksReported;
 	}
 
 	/**
@@ -59,6 +62,19 @@ class User
 	{
 		$userPersistence = new UserPersistence($db);
 		$userPersistence->persist($this, $registerIp);
+	}
+
+	/**
+	 * Update the user in the database with logging the voice range change.
+	 * 
+	 * @param  \Doctrine\DBAL\Connection $db A DB connection.
+	 * @param  string $registerIp The IP address with which the user registered.
+	 * @return integer The user ID, if it was not set.
+	 */
+	public function persistWithVoiceChange(Connection $db, $registerIp = null, $method)
+	{
+		$userPersistence = new UserPersistence($db);
+		$userPersistence->persistWithVoiceChange($this, $registerIp, $method);
 	}
 
 	/**
