@@ -921,11 +921,11 @@ a.link-all-report {
 	padding: 2% 1.5%;
 	margin-bottom: 1.5em;
 	font-size: .9em;
+	overflow: hidden;
 }
 	.wizard-nav div {
 		display: inline-block;
 		/*width: 31.8%;*/
-		width: 48.3%;
 		margin-left: .4%;
 		vertical-align: top;
 		text-align: center;
@@ -935,6 +935,7 @@ a.link-all-report {
 	}
 	.wizard-nav div:last-child {
 		text-align: right;
+		float: right;
 	}
 
 /* Wizard STEP ONE */
