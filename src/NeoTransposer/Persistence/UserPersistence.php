@@ -15,8 +15,9 @@ class UserPersistence
 	 */
 	protected $db;
 
-	const METHOD_WIZARD = 'wizard';
-	const METHOD_MANUAL = 'manual';
+	const METHOD_WIZARD  = 'wizard';
+	const METHOD_MANUAL  = 'manual';
+	const METHOD_UNHAPPY = 'auto_unhappy';
 
 	/**
 	 * @param \Doctrine\DBAL\Connection $db A DBAL connection.
@@ -108,12 +109,12 @@ class UserPersistence
 	{
 		if (empty($user->id_user))
 		{
-			throw new \Exception('The user must have an ID');
+			throw new \InvalidArgumentException('The user must have an ID');
 		}
 
-		if ($method != self::METHOD_WIZARD && $method != self::METHOD_MANUAL)
+		if (false === array_search($method, [self::METHOD_WIZARD, self::METHOD_MANUAL, self::METHOD_UNHAPPY]))
 		{
-			throw new \Exception("Invalid voice range update method $method");
+			throw new \InvalidArgumentException("Invalid voice range update method '$method'");
 		}
 
 		$currentVoiceRange = $this->db->fetchAssoc('SELECT lowest_note, highest_note FROM user WHERE id_user = ?', [$user->id_user]);
