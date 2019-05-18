@@ -278,6 +278,33 @@ footer {
 /*
  * BOOK
  */
+
+.encourage-feedback-after-wizard {
+	background: #f3f3f3 url(img/encourage-feedback.png) 114% center / 36% no-repeat;
+	padding: 1em 31% .5em 1em;
+	margin-bottom: 1em;
+	box-shadow: 1px 1px 3px silver;
+	border-radius: .3em;
+}
+	.encourage-feedback-after-wizard h2 {
+		margin-top: 0;
+	}
+	.encourage-feedback-after-wizard p {
+		margin-top: 1.5em;
+	}
+
+	.img-left {
+		background-position: -14% center;
+		padding-left: 31%;
+		padding-right: 1em;
+	}
+
+	.achieved-minimum-fb {
+		background: #f3f3f3 url(img/burning-guitar.png) 3% center no-repeat;
+		padding-left: 130px;
+		padding-right: 1em;
+	}
+
 .change-book {
 	float: right;
 	margin: .3rem 0;
@@ -1311,6 +1338,10 @@ html[lang="pt"] .wizard-empiric .answer {
 		.admin-dashboard .admin-tools li {
 			line-height: 180%;
 		}
+		.inline-graph {
+			display: inline-block;
+			vertical-align: top
+		}
 
 	.admin-dashboard article {
 		display: inline-block;
@@ -1457,6 +1488,15 @@ html[lang="pt"] .wizard-empiric .answer {
 	.feedback-graph.big-graph .no {
 		line-height: 160%;
 	}
+	table.table-with-graphs {
+		width: 100%;
+	}
+		.table-with-graphs th {
+			text-align: right;
+		}
+		.table-with-graphs td:last-child {
+			text-align: right;
+		}
 
 .floating_toc {
     position: fixed;
@@ -1556,6 +1596,9 @@ input[type=email] {
 /* Generic */
 .center {
 	text-align: center;
+}
+.right {
+	text-align: right;
 }
 .small-button {
 	padding: .2em .3em;
@@ -1911,6 +1954,25 @@ footer {
 		margin: .5em 0 .7em;*/
 	}
 
+	.encourage-feedback-after-wizard {
+		background-position: 112% center;
+		background-size: 40%;
+		padding: 3% 35% .5em 2%;
+		box-shadow: none;
+	}
+		.img-left {
+			background-position: -12% center;
+			padding-left: 35%;
+			padding-right: 2%;
+		}
+
+		.achieved-minimum-fb {
+			background-position: 2% center;
+			background-size: auto;
+			padding-left: 120px;
+			padding-right: 1em;
+		}
+
 	.page-book .tip {
 		padding-left: 1em;
 		background-image: none;
@@ -2115,5 +2177,27 @@ footer {
 	.show-voice-chart a span {
 		display: none;
 	}
+
+	.encourage-feedback-after-wizard {
+		background: #f3f3f3;
+		padding: 3% 3% .5%;
+	}
+		.encourage-feedback-after-wizard p {
+			background: url(img/encourage-feedback.png) center bottom / 50% no-repeat;
+			padding: 0 0 53%;
+		}
+
+		.achieved-minimum-fb h2 {
+			background: #f3f3f3 url(img/burning-guitar.png) top center / auto no-repeat;
+			padding-top: 100px;
+			padding-bottom: 0;
+			text-align: center;
+			margin-bottom: 0;
+		}
+			.encourage-feedback-after-wizard.achieved-minimum-fb p {
+				background: none;
+				padding: 0;
+				margin: 1em 0 .5em;
+			}
 
 }

@@ -25,7 +25,6 @@ class AdminDashboard
 
 		$user_count 	= $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user');
 		$good_users 	= $app['db']->fetchColumn('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
-		$users_reporting_fb = $app['db']->fetchColumn('select count(distinct id_user) from transposition_feedback');
 
 		$toolOutput 	= '';
 
@@ -57,7 +56,7 @@ class AdminDashboard
 			'good_users'			=> $good_users,
 			'song_availability'		=> $this->getSongAvailability(),
 			'global_performance'	=> $this->getGlobalPerformance(),
-			'users_reporting_fb'	=> $users_reporting_fb,
+			'users_reporting_fb'	=> $this->getUsersReportingFeedback(),
 			'unhappy_users'			=> $this->getUnhappyUsers(),
 			'songs_with_fb'			=> $this->getSongsWithFeedback(),
 			'most_active_users'		=> $req->get('long') ? $this->getMostActiveUsers() : [],
@@ -104,6 +103,27 @@ SQL;
 		}
 
 		return $global_performance;
+	}
+
+	protected function getUsersReportingFeedback()
+	{
+		$sqlUsersReportingFb = <<<SQL
+SELECT COUNT(distinct id_user) AS users_reporting_fb, good_users, not_null_users
+FROM transposition_feedback,
+(
+	SELECT COUNT(DISTINCT id_user) AS good_users
+	FROM user
+	WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1
+) good_users
+,
+(
+	SELECT COUNT(DISTINCT id_user) AS not_null_users
+	FROM user
+	WHERE NOT user.lowest_note IS NULL
+) not_null_users
+SQL;
+		$this->app['db']->executeQuery("SET sql_mode=''");
+		return $this->app['db']->fetchAssoc($sqlUsersReportingFb);
 	}
 
 	protected function aggregatePerformanceData(array $raw_data)
