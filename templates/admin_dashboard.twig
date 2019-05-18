@@ -108,32 +108,76 @@
 <article>
 
 	<h2>Feedback global view</h2>
+	<table class="data-table table-with-graphs">
 	{% for group, gp in global_performance %}
-	<p class="clearfix">
-		{{ group }}: {{ ((gp.yes / gp.total) * 100)|round }}% 
-		<div class="clearfix">
-			{{ self.feedbackGraph(gp.yes, gp.no, 200, 'big-graph') }}
-		</div>
-	</p>
+		<tr>
+			<th>{{ group }}:</th>
+			<td>{{ ((gp.yes / gp.total) * 100)|round }}% </td>
+			<td>
+				<div class="clearfix inline-graph">
+					{{ self.feedbackGraph(gp.yes, gp.no) }}
+				</div>
+			</td>
+		</tr>
 	{% endfor %}
+	</table>
 
-	{% set users_not_reporting_fb = user_count - users_reporting_fb %}
-	<h3>Users reporting feedback: {{ ((users_reporting_fb / user_count) * 100)|round }}%</h3>
+	<h3>Users reporting feedback</h3>
+	<table class="data-table table-with-graphs">
+		<tr>
+			{% set users_not_reporting_fb = user_count - users_reporting_fb.users_reporting_fb %}
+			<th>Total:</th>
+			<td>
+				{{ ((users_reporting_fb.users_reporting_fb / user_count) * 100)|round }}%
+			</td>
+			<td>
+				<div class="clearfix inline-graph">
+					{{ self.feedbackGraph(users_reporting_fb.users_reporting_fb, users_not_reporting_fb) }}
+				</div>
+			</td>
+		</tr>
+		<tr>
+			{% set users_not_reporting_fb = users_reporting_fb.not_null_users - users_reporting_fb.users_reporting_fb %}
+			<th>Not null:</th>
+			<td>
+				{{ ((users_reporting_fb.users_reporting_fb / users_reporting_fb.not_null_users) * 100)|round }}%
+			</td>
+			<td>
+				<div class="clearfix inline-graph">
+					{{ self.feedbackGraph(users_reporting_fb.users_reporting_fb, users_not_reporting_fb) }}
+				</div>
+			</td>
+		</tr>
+		<tr>
+			{% set users_not_reporting_fb = users_reporting_fb.good_users - users_reporting_fb.users_reporting_fb %}
+			<th>Good:</th>
+			<td>
+				{{ ((users_reporting_fb.users_reporting_fb / users_reporting_fb.good_users) * 100)|round }}%
+			</td>
+			<td>
+				<div class="clearfix inline-graph">
+					{{ self.feedbackGraph(users_reporting_fb.users_reporting_fb, users_not_reporting_fb) }}
+				</div>
+			</td>
+		</tr>
+	</table>
 
-	<div class="clearfix">
-		{{ self.feedbackGraph(users_reporting_fb, users_not_reporting_fb) }}
-	</div>
+	<h3>Songs fb'ed by language</h3>
 
-	<h3>Songs by language</h3>
-
+	<table class="data-table table-with-graphs">
 	{% for book in songs_with_fb %}
 		{% set book_fb = book.total - book.nofb %}
-		
-		<p>
-			{{ app.books[book.id_book].lang_name }}: {{ ((book_fb / book.total) * 100)|round }}% received fb
-			<div class="clearfix">{{ self.feedbackGraph(book_fb, book.nofb) }}</div>
-		</p>
+		<tr>
+			<th>{{ app.books[book.id_book].lang_name }}:</th>
+			<td>{{ ((book_fb / book.total) * 100)|round }}%</td>
+			<td>
+				<div class="clearfix">{{ self.feedbackGraph(book_fb, book.nofb) }}</div>
+			</td>
+		</tr>
 	{% endfor %}
+	</table>
+	<p class="advice">(If a language does not appear, it has 100%)</p>
+
 </article>
 
 <article>
