@@ -177,7 +177,7 @@ footer {
 		display: inline-block;
 		font-size: 1.2em;
 		padding: 1em;
-		border: 1px solid #D32F2F;
+		border: 2px solid #D32F2F;
 		margin: 2%;
 		width: 35%;
 		vertical-align: top;
@@ -279,18 +279,23 @@ footer {
  * BOOK
  */
 
-.encourage-feedback-after-wizard {
+.encourage-feedback {
 	background: #f3f3f3 url(img/encourage-feedback.png) 114% center / 36% no-repeat;
 	padding: 1em 31% .5em 1em;
-	margin-bottom: 1em;
+	margin-bottom: 4%;
 	box-shadow: 1px 1px 3px silver;
 	border-radius: .3em;
 }
-	.encourage-feedback-after-wizard h2 {
+	.encourage-feedback h2 {
 		margin-top: 0;
 	}
-	.encourage-feedback-after-wizard p {
+	.encourage-feedback p {
 		margin-top: 1.5em;
+	}
+	.encourage-feedback .advice {
+		text-align: left;
+		color: #444;
+		margin: 0 0 2%;
 	}
 
 	.img-left {
@@ -303,6 +308,10 @@ footer {
 		background: #f3f3f3 url(img/burning-guitar.png) 3% center no-repeat;
 		padding-left: 130px;
 		padding-right: 1em;
+	}
+	.achieved-minimum-fb.all-negative {
+		background-image: none;
+		padding-left: 1em;
 	}
 
 .change-book {
@@ -1371,6 +1380,9 @@ html[lang="pt"] .wizard-empiric .answer {
 		font-weight: bold;
 		color: #555;
 	}
+	.admin-dashboard article h3 {
+		margin: 1.5em 0 .8em;
+	}
 	.circles-container {
 		text-align: center;
 	}
@@ -1488,9 +1500,7 @@ html[lang="pt"] .wizard-empiric .answer {
 	.feedback-graph.big-graph .no {
 		line-height: 160%;
 	}
-	table.table-with-graphs {
-		width: 100%;
-	}
+
 		.table-with-graphs th {
 			text-align: right;
 		}
@@ -1954,7 +1964,7 @@ footer {
 		margin: .5em 0 .7em;*/
 	}
 
-	.encourage-feedback-after-wizard {
+	.encourage-feedback {
 		background-position: 112% center;
 		background-size: 40%;
 		padding: 3% 35% .5em 2%;
@@ -2178,11 +2188,11 @@ footer {
 		display: none;
 	}
 
-	.encourage-feedback-after-wizard {
+	.encourage-feedback {
 		background: #f3f3f3;
 		padding: 3% 3% .5%;
 	}
-		.encourage-feedback-after-wizard p {
+		.encourage-feedback p:last-of-type {
 			background: url(img/encourage-feedback.png) center bottom / 50% no-repeat;
 			padding: 0 0 53%;
 		}
@@ -2194,10 +2204,15 @@ footer {
 			text-align: center;
 			margin-bottom: 0;
 		}
-			.encourage-feedback-after-wizard.achieved-minimum-fb p {
+			.encourage-feedback.achieved-minimum-fb p:last-of-type {
 				background: none;
 				padding: 0;
 				margin: 1em 0 .5em;
 			}
+
+		.achieved-minimum-fb.all-negative h2 {
+			background-image: none;
+			padding-top: 0;
+		}
 
 }
