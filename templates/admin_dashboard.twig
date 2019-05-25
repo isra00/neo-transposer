@@ -171,7 +171,7 @@
 			<th>{{ app.books[book.id_book].lang_name }}:</th>
 			<td>{{ ((book_fb / book.total) * 100)|round }}%</td>
 			<td>
-				<div class="clearfix">{{ self.feedbackGraph(book_fb, book.nofb) }}</div>
+				<div class="clearfix inline-graph">{{ self.feedbackGraph(book_fb, book.nofb) }}</div>
 			</td>
 		</tr>
 	{% endfor %}
