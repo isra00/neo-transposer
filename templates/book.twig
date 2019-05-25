@@ -16,6 +16,8 @@
 </div>#}
 {% endif %}
 
+{% block preContent %}{% endblock %}
+
 {% if show_unhappy_warning %}
 <div class="tip no-icon unhappy-warning">
 	<h2><span class="red">&#128534;</span> {% trans %}Something is going wrong{% endtrans %}</h2>
@@ -60,9 +62,11 @@
 
 {% endif %}
 
+{% if app.neouser.isLoggedIn %}
 <span class="link-all-report-wrapper">
 	<a class="link-all-report btn-neutral btn-icon icon-download" href="{{ path('all_songs_report', {_locale: app.locale}) }}">{% trans %}Download or print <small>All songs report</small>{% endtrans %}</a>
 </span>
+{% endif %}
 
 <ul class="song-index">
 {% for song in songs %}

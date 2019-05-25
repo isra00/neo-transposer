@@ -26,18 +26,19 @@ class User
 	public $wizard_lowest_attempts = 0;
 	public $wizard_highest_attempts = 0;
 	public $feedbacksReported = 0;
+	public $firstTime = false;
 
 	/**
 	 * Simple constructor. Use UserPersistence::fetchUserFromEmail() to create from DB.
 	 * 
-	 * @param string 		$email         	User email
-	 * @param int 			$id_user       	User ID
-	 * @param NotesRange 	$highest_note  	User highest note
-	 * @param int 			$id_book       	Book
-	 * @param int 			wizard_step1	Option checked in Wizard First Step
-	 * @param int 			wizard_lowest_attempts No. of attempts in Wizard Lowest note.
+	 * @param string 		$email         			User email
+	 * @param int 			$id_user       			User ID
+	 * @param NotesRange 	$highest_note  			User highest note
+	 * @param int 			$id_book       			Book
+	 * @param int 			wizard_step1			Option checked in Wizard First Step
+	 * @param int 			wizard_lowest_attempts 	No. of attempts in Wizard Lowest note.
 	 * @param int 			wizard_highest_attempts No. of attempts in Wizard Lowest note.
-	 * @param int 			feedbacksReported No. of feedback reports sent by the user
+	 * @param int 			feedbacksReported 		No. of feedback reports sent by the user
 	 */
 	public function __construct($email=null, $id_user=null, NotesRange $range=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null, $feedbacksReported=0)
 	{
@@ -74,7 +75,7 @@ class User
 	public function persistWithVoiceChange(Connection $db, $registerIp = null, $method)
 	{
 		$userPersistence = new UserPersistence($db);
-		$userPersistence->persistWithVoiceChange($this, $registerIp, $method);
+		return $userPersistence->persistWithVoiceChange($this, $registerIp, $method);
 	}
 
 	/**
@@ -108,8 +109,7 @@ class User
 				'set_user_data', 
 				'wizard_step1', 
 				'wizard_empiric_lowest', 
-				'wizard_empiric_highest', 
-				'wizard_finish'
+				'wizard_empiric_highest'
 			);
 			
 			if (false === array_search($here, $exempt))

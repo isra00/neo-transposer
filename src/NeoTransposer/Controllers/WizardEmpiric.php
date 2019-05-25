@@ -129,7 +129,7 @@ class WizardEmpiric
 		if ('no' == $req->get('can_sing') || $app['neouser']->range->highest == 'C1')
 		{
 			$app['neouser']->range->highest = $this->nc->transposeNote($app['neouser']->range->highest, -1);
-			return $app->redirect($app->path('wizard_finish'));
+			return $this->finish($req, $app);
 		}
 
 		$tpl = $this->prepareSongForTest('highest', $app, AutomaticTransposer::FORCE_HIGHEST);
@@ -166,29 +166,21 @@ class WizardEmpiric
 	public function finish(Request $req, NeoApp $app)
 	{
 		//Only when wizard is finished, voice range is stored in DB
-		$app['neouser']->persistWithVoiceChange($app['db'], $req->getClientIp(), UserPersistence::METHOD_WIZARD);
-
-		$your_voice = $app['neouser']->getVoiceAsString(
-			$app['translator'],
-			$app['neoconfig']['languages'][$app['locale']]['notation']
-		);
-
-		//Link to the book of the current locale, auto-detected.
-		$go_to_book = array_keys($app['books'])[
-			array_search($app['locale'], array_column($app['books'], 'locale'))
-		];
+		$hadPreviousVoice = $app['neouser']->persistWithVoiceChange($app['db'], $req->getClientIp(), UserPersistence::METHOD_WIZARD);
 
 		//If user is unhappy, UnhappyUser will consider this as an action taken.
 		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
 		$unhappy->changedVoiceRangeFromWizard($app['neouser']);
 
-		$buttonUrl = empty($app['session']->get('callbackSetUserToken'))
-			? 'book_' . $go_to_book
-			: 'external_login_finish';
+		$redirectPath = 'external_login_finish';
 
-		return $app->render('wizard_finish.twig', array(
-			'your_voice'	=> $your_voice,
-			'button_url'	=> $app->path($buttonUrl)
-		));
+		if (empty($app['session']->get('callbackSetUserToken')))
+		{
+			$redirectPath = 'book_' . array_keys($app['books'])[
+				array_search($app['locale'], array_column($app['books'], 'locale'))
+			];
+		}
+
+		return $app->redirect($app->path($redirectPath));
 	}
 }
