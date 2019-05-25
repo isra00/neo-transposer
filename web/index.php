@@ -85,11 +85,6 @@ $app->post('/{_locale}/wizard/highest', "$controllers\\WizardEmpiric::highest")
 	->bind('wizard_empiric_highest')
 	->before($needsLogin);
 
-$app->get('/{_locale}/wizard/finish', "$controllers\\WizardEmpiric::finish")
-	->assert('_locale', $validLocales)
-	->bind('wizard_finish')
-	->before($needsLogin);
-
 $app->get('/set-user-data', "$controllers\\SetUserData::get")
 	->bind('set_user_data')
 	->before($needsLogin);
