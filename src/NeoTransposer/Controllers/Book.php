@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{Request, Response};
 
 /**
  * Book page: show list of songs belonging to a given book.
@@ -34,8 +34,10 @@ SQL;
 
 		$template = 'book.twig';
 
+		$showEncourageFeedback = !empty($app['neouser']->range->lowest) && ($app['neouser']->feedbacksReported < 2 || ($app['neouser']->feedbacksReported == 2 && $app['neouser']->firstTime));
+
 		//If first time or user has reported < 2 fb, show encourage fb banners
-		if (!empty($app['neouser']->range->lowest) && ($app['neouser']->feedbacksReported < 2 || ($app['neouser']->feedbacksReported == 2 && $app['neouser']->firstTime)))
+		if ($showEncourageFeedback)
 		{
 			$yourVoice = $app['neouser']->getVoiceAsString(
 				$app['translator'],
@@ -53,7 +55,7 @@ SQL;
 
 		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
 
-		return $app->render($template, array(
+		$response = new Response($app->render($template, array(
 			'page_title'	 		=> $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name'])),
 			'current_book'	 		=> $app['books'][$id_book],
 			'header_link'	 		=> $app->path('book_' . $app['books'][$id_book]['id_book']),
@@ -65,6 +67,18 @@ SQL;
 			),
 			'your_voice'			=> $yourVoice ?? null,
 			'user_performance'		=> $userPerformance ?? null,
-		));
+			'show_encourage_fb'		=> $showEncourageFeedback
+		)), 200);
+
+		if ($showEncourageFeedback)
+		{
+			$response->headers->add([
+				'Cache-Control' => 'private, must-revalidate, max-age=0',
+				'Pragma'		=> 'no-cache',
+				'Expires'		=> 'Sat, 26 Jul 1997 05:00:00 GMT'
+			]);
+		}
+
+		return $response;
 	}
 }

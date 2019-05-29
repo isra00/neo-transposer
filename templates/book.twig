@@ -168,11 +168,39 @@
 						$(".song-index li").css("display", "block");
 					}
 				});
+		},
+
+		/**
+		 * Force page reload when user came back hitting browser "back button",
+		 * necessary for Encourage Feedback messages after having reported
+		 * feedback on a Song page.
+		 *
+		 * @see https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
+		 */
+		preventPageCache: function() {
+			window.addEventListener( "pageshow", function ( event ) {
+				if (event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 ))
+				{
+					window.setTimeout(function() {
+						window.location.hash = 'top';
+						window.scrollTo(0, 0);
+					}, 10);
+
+					window.setTimeout(function() {
+						window.location.reload();
+					}, 15);
+				}
+			});
 		}
 	};
 
 	$(function() {
+
 		NTBook.initializeQuickSearch();
+
+		{% if show_encourage_fb %}
+		NTBook.preventPageCache();
+		{% endif %}
 	})
 
 	</script>
