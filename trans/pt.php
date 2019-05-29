@@ -153,7 +153,7 @@ return array(
 	=> 'Verifique com 2 cantos que medimos sua voz corretamente',
 
 	'Choose <strong>2</strong> songs from the list and try to sing them with the chords suited to your voice. Please, <strong>report whether or not it has worked</strong>, so that the system may improve your performance.'
-	=> 'Escolha <strong>2</strong> cantos da lista e prove a cantá-los com os acordes adaptados para a sua voz, <strong>indique se conseguiu cantá-los</strong> para que o sistema se adapte aos poucos.',
+	=> 'Escolha <strong>2</strong> cantos da lista e prove a cantá-los com os acordes adaptados para a sua voz. Por favor, <strong>indique se conseguiu cantá-los</strong> para que o sistema se adapte aos poucos.',
 
 	'Oops! Ok, let\'s try again'
 	=> 'Opa! Vamos tentar outra vez',
@@ -183,7 +183,7 @@ return array(
 	=> 'Prontinho!',
 
 	'All right! Those chords fit your voice like a charm. You may keep trying other songs and reporting feedback, whether it works or it doesn\'t. You\'re welcome!'
-	=> 'Muito bem! Esses acordes se adaptam perfeitamente a sua voz. Pode provar outros cantos e também enviar um feedback se funcionou ou não para você. Seja Bem-Vindo!',
+	=> 'Muito bem! Esses acordes se adaptam como uma luva a sua voz. Pode provar outros cantos e também enviar um feedback se funcionou ou não para você. Seja Bem-Vindo!',
 
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
