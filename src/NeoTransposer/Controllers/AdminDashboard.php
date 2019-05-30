@@ -38,7 +38,8 @@ class AdminDashboard
 				'getVoiceRangeOfGoodUsers',
 				'detectOrphanChords',
 				'checkChordOrder',
-				'checkUserLowerHigherNotes'
+				'checkUserLowerHigherNotes',
+				'getPerformanceByNumberOfFeedbacks'
 			];
 
 			if (false === array_search($tool, $toolsMethods))
@@ -72,6 +73,7 @@ class AdminDashboard
 			'dfb_deviation'			=> $this->getDFBDeviation(),
 			'usersByBook'			=> $this->getUsersByBook(intval($user_count)),
 			'performanceByBook'		=> $this->getPerformanceByBook(),
+			'performanceByVoice'	=> $this->getPerformanceByVoice(),
 		), false);
 	}
 
@@ -310,6 +312,13 @@ JOIN
 (
 	SELECT id_book, count(id_song) total FROM song GROUP BY id_book
 ) total ON nofb.id_book = total.id_book
+/* trick Spanish book (since it has 100% the JOIN on NULL fails and does not appear) */
+UNION
+SELECT id_book, 0, COUNT(DISTINCT id_song)
+FROM transposition_feedback
+JOIN song USING (id_song)
+GROUP BY id_book
+HAVING id_book=2
 SQL;
 		return $this->app['db']->fetchAll($sql);
 	}
@@ -585,5 +594,16 @@ SQL;
 		}
 
 		return $performance;
+	}
+
+	protected function getPerformanceByVoice()
+	{
+		$sql = <<<SQL
+SELECT user.wizard_step1 AS voiceType, count(*) AS fbs, sum(worked) / count(*) AS performance
+FROM `transposition_feedback`
+JOIN user USING (id_user)
+GROUP BY user.wizard_step1
+SQL;
+		return $this->app['db']->fetchAll($sql);
 	}
 }

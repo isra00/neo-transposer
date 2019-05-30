@@ -238,4 +238,26 @@ SQL;
 			: count($orphanIdSongs) . ' orphan id_song detected! Remove them with'
 				. "\nDELETE FROM song_chord WHERE id_song IN (" . implode(', ', $orphanIdSongs) . ')';
 	}
+
+	public function getPerformanceByNumberOfFeedbacks()
+	{
+		$sql = <<<SQL
+select fbs AS num_of_fbs, count(fbs) AS num_of_users, avg(performance) AS avg_perf
+from (
+ SELECT id_user, count(*) fbs, sum(worked) / count(*) as performance
+ FROM `transposition_feedback`
+ group by id_user
+ order by fbs desc
+) st
+group by fbs desc
+SQL;
+		$data = $this->app['db']->fetchAll($sql);
+		$output = "# of FBs,# of users,AVG performance\n";
+		foreach ($data as $row)
+		{
+			$output .= implode(',', $row) . "\n";
+		}
+
+		return $output;
+	}
 }
