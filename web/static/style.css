@@ -320,7 +320,10 @@ footer {
 		padding-right: 1em;
 	}
 
-	.achieved-minimum-fb {
+	.lang-en .achieved-minimum-fb,
+	.lang-es .achieved-minimum-fb,
+	.lang-pt .achieved-minimum-fb,
+	.lang-sw .achieved-minimum-fb {
 		background: #f3f3f3 url(img/burning-guitar.png) 3% center no-repeat;
 		padding-left: 130px;
 		padding-right: 1em;
@@ -1002,7 +1005,7 @@ a.link-all-report {
 		margin: 0;
 		padding: 0;
 		text-align: left;
-		vertical-align: top;
+		/*vertical-align: top;*/
 		border: 0;
 		box-sizing: border-box;
 	}
@@ -1058,7 +1061,7 @@ h2.step-1 {
 .pre-song {
 	font-family: monospace;
 	background: rgb(253, 253, 248);
-	box-shadow: 0px 2px .5em silver;
+	box-shadow: 0 2px .5em silver;
 	padding: 0;
 	display: inline-block;
 	color: #333;
@@ -1378,14 +1381,14 @@ html[lang="pt"] .wizard-empiric .answer {
 		margin: .5rem;
 		border-radius: .3em;
 	}
-	.admin-dashboard article.half {
-		width: 47%
-	}
-	.admin-dashboard article.row {
-		display: block;
-		clear: both;
-		width: auto;
-	}
+		.admin-dashboard article.half {
+			width: 47%
+		}
+		.admin-dashboard article.row {
+			display: block;
+			clear: both;
+			width: auto;
+		}
 
 	.admin-dashboard article h2 {
 		margin: 0 -0.5rem .5em;
@@ -1974,11 +1977,6 @@ footer {
 	}
 
 	/* Book */
-	.change-book {
-		/*float: none;
-		display: block;
-		margin: .5em 0 .7em;*/
-	}
 
 	.encourage-feedback {
 		background-position: 112% center;
