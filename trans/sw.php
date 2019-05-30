@@ -145,6 +145,46 @@ return array(
 	'Nothing found'
 	=> 'Haipatiki',
 
+	//Encourage feedback
+	'Last step:'
+	=> 'Hatua ya mwisho:',
+
+	'Verify with 2 songs that we have measured your voice accurately'
+	=> 'Thibitisha kwa nyimbo 2 kwamba sauti yako imepimwa sahihi',
+
+	'Choose <strong>2</strong> songs from the list and try to sing them with the chords suited to your voice. Please, <strong>report whether or not it has worked</strong>, so that the system may improve your performance.'
+	=> 'Chagua nyimbo <strong>2</strong> orodhani ujaribu kuziimba kwa kordi ziifaazo sauti yako. Tafadhali, <strong>toa taarifa kama umefanikiwa kuimba</strong>, ili app iweze kuboresha matokeo yako.',
+
+	'Oops! Ok, let\'s try again'
+	=> 'Ka! Tujaribu tena...',
+
+	'Please, try another song, and report whether the chords have worked for you.'
+	=> 'Tafadhali, jaribu wimbo mwingine, na ubonyeze kama umefanikiwa kuimba au la.',
+
+	'Verify 1 more song'
+	=> 'Thibitisha wimbo 1 zaidi',
+
+	'Please, try one more, and <strong>report whether or not it has worked</strong> so that the system may improve your performance.'
+	=> 'Tafadhali, ujaribu wimbo mwingine, na <strong>utoe taarifa kama umefanikiwa kuimba ama la</strong>, ili app iweze kuboresha matokeo yako',
+
+	'Nothing\'s perfect, but let\'s keep trying!'
+	=> 'Hakuna perfect duniani, lakini tuendelee tujaribu!',
+
+	'Well, it seems like one of the songs fits you, the other doesn\'t. You may try others, and I\'m sure they will go better!'
+	=> 'Inaonekana kwa wimbo mmoja tu kordi zimekufaa. Unaweza kujaribu zingine, hakika itaendelea vizuri!',
+
+	'Well, this is a bit embarrassing'
+	=> 'Pole!',
+
+	'It seems like none of the songs you have reported has worked for you. Please try some more songs and if the problem still persists, I will propose you to change your voice range.'
+	=> 'Inaonekana kwa nyimbo zote mbili kordi zilizotolewa hazijakufaa. Naomba ujaribu nyimbo zingine, na kama bado hupati kordi ziifaazo sauti yako nakushauri upime sauti yako tena.',
+
+	'We\'re good to go!'
+	=> 'Tuko vizuri!',
+
+	'All right! Those chords fit your voice like a charm. You may keep trying other songs and reporting feedback, whether it works or it doesn\'t. You\'re welcome!'
+	=> 'Safi! Kordi hizo na sauti yako zinafaana kama chanda na pete. Unaweza kujaribu nyimbo zingine. Kumbuka kubonyeza kama umefanikiwa kuimba au la. Karibu sana!',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Njia ya Neokatekumenato)',
@@ -257,7 +297,7 @@ return array(
 	//Wizard common
 	'Re-start'
 	=> 'Anza upya',
-	
+
 	'Exit Voice Test'
 	=> 'Ondoka Kupima Sauti',
 	
@@ -381,19 +421,6 @@ return array(
 
 	'Finish here'
 	=> 'Maliza hapa',
-
-	//Wizard: finish
-	'We are done!'
-	=> 'Tupo tayari!',
-
-	'According to the tests, your voice range is:'
-	=> 'Kufuatana na vipimo, nota zako ni hizi:',
-
-	'Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer.'
-	=> 'Hongera! Sasa unaweza kupata automatic transpositions katika Neo-Transposer.',
-
-	'Transpose the songs'
-	=> 'Transpose nyimbo',
 
 	//All Songs Report
 	'All transpositions for your voice'

@@ -68,6 +68,7 @@ REG;
 			$user->persist($app['db'], $req->getClientIp());
 		}
 
+		$user->firstTime = empty($user->range->lowest);
 		$app['session']->set('user', $user);
 
 		if (empty($user->range->lowest))

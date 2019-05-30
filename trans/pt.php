@@ -44,7 +44,7 @@ return array(
 	=> 'Como funciona?',
 
 	'First, you measure the limits of your voice by singing the chorus of a sing in different keys. It\'s a bit tiresome, but don\'t worry, you\'ll have to do it just once.'
-	=> 'Primero você mede os limites de sua voz, cantando um refrão em tons diferentes. É um pouco cansativo, mas não se preocupe, você precisará fazer apenas uma vez.',
+	=> 'Primeiro você mede os limites de sua voz, cantando um refrão em tons diferentes. É um pouco cansativo, mas não se preocupe, você precisará fazer apenas uma vez.',
 
 	'After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.'
 	=> 'Depois de medir a sua voz, escolha qualquer canto e o Neo-Transposer irá calcular os acordes e a braçadeira que mais combina com você.',
@@ -63,7 +63,7 @@ return array(
 	=> '<span>Conheço</span> o alcance da minha voz',
 
 	'Welcome to %software%'
-	=> 'Bem vindo à %software%',
+	=> 'Bem-vindo à %software%',
 
 	'This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.'
 	=> 'Este software calcula a transposição perfeita de cada canto para <em>sua</em> voz. Mas primeiro, precisa conhecer seu alcance de voz',
@@ -107,7 +107,7 @@ return array(
 	=> 'Cantos do Caminho Neocatecumenal',
 
 	'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.'
-	=> 'Cantos e salmos do Caminho Neocatecumenal em %lang%. Com o Neo-Transposer você pode transpor-los automaticamente para que eles se encaixem na sua própria voz.',
+	=> 'Cantos e salmos do Caminho Neocatecumenal em %lang%. Com o Neo-Transposer você pode transpô-los automaticamente para que eles se encaixem na sua própria voz.',
 
 	'Other languages'
 	=> 'Outros idiomas',
@@ -144,6 +144,46 @@ return array(
 
 	'Nothing found'
 	=> 'Não encontrado',
+
+	//Encourage feedback
+	'Last step:'
+	=> 'Último passo:',
+
+	'Verify with 2 songs that we have measured your voice accurately'
+	=> 'Verifique com 2 cantos que medimos sua voz corretamente',
+
+	'Choose <strong>2</strong> songs from the list and try to sing them with the chords suited to your voice. Please, <strong>report whether or not it has worked</strong>, so that the system may improve your performance.'
+	=> 'Escolha <strong>2</strong> cantos da lista e prove a cantá-los com os acordes adaptados para a sua voz. Por favor, <strong>indique se conseguiu cantá-los</strong> para que o sistema se adapte aos poucos.',
+
+	'Oops! Ok, let\'s try again'
+	=> 'Opa! Vamos tentar outra vez',
+
+	'Please, try another song, and report whether the chords have worked for you.'
+	=> 'Por favor, tente outro canto, indicando se os acordes propostos caem bem a você.',
+
+	'Verify 1 more song'
+	=> 'Verifique mais 1 canto',
+
+	'Please, try one more, and <strong>report whether or not it has worked</strong> so that the system may improve your performance.'
+	=> 'Por favor, prove mais um e <strong>indique se você conseguiu cantá-lo</strong> para que o sistema melhore os seus resultados.',
+
+	'Nothing\'s perfect, but let\'s keep trying!'
+	=> 'Nada é perfeito, mas continue tentando',
+
+	'Well, it seems like one of the songs fits you, the other doesn\'t. You may try others, and I\'m sure they will go better!'
+	=> 'Bem, parece que para um dos cantos os acordes vão bem para você, mas para outro, não. Por favor, tente outros cantos. Com certeza vai melhorar!',
+
+	'Well, this is a bit embarrassing'
+	=> 'Bem, isto é constrangedor',
+
+	'It seems like none of the songs you have reported has worked for you. Please try some more songs and if the problem still persists, I will propose you to change your voice range.'
+	=> 'Parece que os acordes de todos os cantos que você escolhe não lhe vão bem. Por favor, prove alguns outros, e se ainda não der certo, eu lhe recomendo a medir sua voz de novo.',
+
+	'We\'re good to go!'
+	=> 'Prontinho!',
+
+	'All right! Those chords fit your voice like a charm. You may keep trying other songs and reporting feedback, whether it works or it doesn\'t. You\'re welcome!'
+	=> 'Muito bem! Esses acordes se adaptam como uma luva a sua voz. Pode provar outros cantos e também enviar um feedback se funcionou ou não para você. Seja bem-vindo!',
 
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
@@ -189,13 +229,13 @@ return array(
 	=> 'Transportado:',
 
 	'Adjusted for people:'
-	=> 'Ajustado para assembléia:',
+	=> 'Ajustado para assembleia:',
 
 	'Show voice chart'
 	=> 'Mostrar gráfico da voz',
 
 	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
-	=> 'O Neo-Transposer ajuda você a transpor automaticamente os acordes do canto <strong>%song%</strong> para que eles correspondam à sua voz. Digite seu e-mail, siga as etapas poderá transpor todos os cantos do Caminho Neocatecumenal!',
+	=> 'O Neo-Transposer ajuda você a transpor automaticamente os acordes do canto <strong>%song%</strong> para que eles correspondam à sua voz. Digite seu e-mail, siga as etapas, e poderá transpor todos os cantos do Caminho Neocatecumenal!',
 
 	'Yes'
 	=> 'Sim',
@@ -225,22 +265,22 @@ return array(
 	=> 'Talvez você não esteja cantando no mesmo tom que o violão.',
 
 	'This other transposition, though a bit %difference%, may probably fit better the people of the assembly.'
-	=> 'Essa outra transposição, embora um pouco %difference%, pode ser melhor para as pessoas da assembléia.',
+	=> 'Essa outra transposição, embora um pouco %difference%, pode ser melhor para as pessoas da assembleia.',
 
 	'This other transposition, though a bit %difference%, fits well the people of the assembly.'
-	=> 'Esta outra transposição, embora um pouco %difference%, se encaixa bem nas pessoas da assembléia.',
+	=> 'Esta outra transposição, embora um pouco %difference%, se encaixa bem nas pessoas da assembleia.',
 
 	'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly.'
-	=> 'Os acordes dados acima são bons para a sua voz, mas provavelmente muito altos para a assembléia. A seguinte transposição é %difference%, mas ainda alto para algumas pessoas da assembléia',
+	=> 'Os acordes dados acima são bons para a sua voz, mas provavelmente muito altos para a assembleia. A seguinte transposição é %difference%, mas ainda alto para algumas pessoas da assembleia',
 
 	'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly.'
-	=> 'Os acordes dados acima são bons para a sua voz, mas provavelmente muito baixos para a assembléia. A seguinte transposição é %difference%, mas ainda baixo para algumas pessoas da assembléia',
+	=> 'Os acordes dados acima são bons para a sua voz, mas provavelmente muito baixos para a assembleia. A seguinte transposição é %difference%, mas ainda baixo para algumas pessoas da assembleia',
 
 	'And it has easier chords!'
 	=> 'E com acordes mais fáceis!',
 
 	'With these chords the assembly too will be able to sing the song comfortably.'
-	=> 'Com estes acordes, a assembléia também poderá cantar confortavelmente.',
+	=> 'Com estes acordes, a assembleia também poderá cantar confortavelmente.',
 
 	'Learn more'
 	=> 'Mais informação',
@@ -249,7 +289,7 @@ return array(
 	=> 'Qual funcionou para você?',
 
 	'assembly'
-	=> 'assembléia',
+	=> 'assembleia',
 
 	'Your session has expired. Please log-in and submit the feedback again.'
 	=> 'Sua sessão expirou. Faça o login novamente e envie os comentários.',
@@ -257,7 +297,7 @@ return array(
 	//Wizard common
 	'Re-start'
 	=> 'Reiniciar',
-	
+
 	'Exit Voice Test'
 	=> 'Sair da medição de voz',
 	
@@ -267,7 +307,7 @@ return array(
 	=> 'Assistente de medição de voz',
 
 	'Follow these steps and the application will estimate your highest and lowest note. If you don\'t follow properly these steps you won\'t be able to use Neo-Transposer.'
-	=> 'Siga estas etapas e a aplicação estimará sua nota mais aguda e mais grave. Se você não seguir corretamente estas etapas, você não consseguirá usar o Neo-Transposer.',
+	=> 'Siga estas etapas e a aplicação estimará sua nota mais aguda e mais grave. Se você não seguir corretamente estas etapas, você não conseguirá usar o Neo-Transposer.',
 
 	'Step 1'
 	=> 'Passo 1',
@@ -323,7 +363,7 @@ return array(
 	=> 'segundos',
 
 	'Sing it like this:'
-	=> 'Cante asim:',
+	=> 'Cante assim:',
 
 	//Wizard empiric: lowest note
 	'Step 2: let\'s find your lowest note'
@@ -382,19 +422,6 @@ return array(
 	'Finish here'
 	=> 'Concluir',
 
-	//Wizard: finish
-	'We are done!'
-	=> 'Terminamos!',
-
-	'According to the tests, your voice range is:'
-	=> 'De acordo com os testes, seu alcance de voz é:',
-
-	'Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer.'
-	=> 'Parabéns! Agora você pode começar a aproveitar as transposições automáticas do Neo-Transposer.',
-
-	'Transpose the songs'
-	=> 'Transpor os cantos',
-
 	//All Songs Report
 	'All transpositions for your voice'
 	=> 'Todas as transposições para sua voz',
@@ -416,11 +443,11 @@ return array(
 
 	//Manifesto
 	'Manifesto'
-	=> 'Manifiesto',
+	=> 'Manifesto',
 
 	//People-compatible info
 	'People-compatible transpositions'
-	=> 'transposições compatíveis com a assembléia',
+	=> 'transposições compatíveis com a assembleia',
 
 	//Generic error pages
 	'Request error'

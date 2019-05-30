@@ -145,6 +145,46 @@ return array(
 	'Nothing found'
 	=> 'No encontrado',
 
+	//Encourage feedback
+	'Last step:'
+	=> 'Último paso:',
+
+	'Verify with 2 songs that we have measured your voice accurately'
+	=> 'Verifica con 2 cantos que hemos medido tu voz correctamente',
+
+	'Choose <strong>2</strong> songs from the list and try to sing them with the chords suited to your voice. Please, <strong>report whether or not it has worked</strong>, so that the system may improve your performance.'
+	=> 'Elige <strong>2</strong> cantos de la lista y prueba a cantarlos con los acordes adaptados a tu voz. Por favor, <strong>indica si has podido cantarlos</strong> para que el sistema se vaya adaptando.',
+
+	'Oops! Ok, let\'s try again'
+	=> '¡Ups! Bueno, intentémoslo de nuevo',
+
+	'Please, try another song, and report whether the chords have worked for you.'
+	=> 'Por favor, intenta otro canto, indicando si los acordes propuestos te han ido bien.',
+
+	'Verify 1 more song'
+	=> 'Verifica 1 canto más',
+
+	'Please, try one more, and <strong>report whether or not it has worked</strong> so that the system may improve your performance.'
+	=> 'Por favor, prueba uno más, e <strong>indica si has podido cantarlo</strong> para que el sistema mejore tus resultados.',
+
+	'Nothing\'s perfect, but let\'s keep trying!'
+	=> 'Nada es perfecto, pero sigamos intentándolo',
+
+	'Well, it seems like one of the songs fits you, the other doesn\'t. You may try others, and I\'m sure they will go better!'
+	=> 'Parece que para uno de los cantos los acordes te sirven, y para otro no. Por favor, intenta otros cantos. ¡Seguro que irá mejor!',
+
+	'Well, this is a bit embarrassing'
+	=> '¿Algo no va bien?',
+
+	'It seems like none of the songs you have reported has worked for you. Please try some more songs and if the problem still persists, I will propose you to change your voice range.'
+	=> 'Has reportado que los acordes no te favorecen en ninguno de los dos cantos. Por favor, prueba algunos otros, y si sigue sin funcionar, te propongo que vuelvas a medir tu voz.',
+
+	'We\'re good to go!'
+	=> '¡Todo listo!',
+
+	'All right! Those chords fit your voice like a charm. You may keep trying other songs and reporting feedback, whether it works or it doesn\'t. You\'re welcome!'
+	=> '¡Muy bien! Esos acordes se adaptan a tu voz como anillo al dedo. Puedes seguir probando otros cantos y enviando feedback, tanto si te ha funcionado como si no. ¡Bienvenido!',
+
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Camino Neocatecumenal)',
@@ -396,19 +436,6 @@ return array(
 
 	'Finish here'
 	=> 'Terminar aquí',
-
-	//Wizard: finish
-	'We are done!'
-	=> '¡Hemos terminado!',
-
-	'According to the tests, your voice range is:'
-	=> 'Según las pruebas tu tesitura de voz es la siguiente:',
-
-	'Congratulations! Now you can start to enjoy the automatic transpositions of Neo-Transposer.'
-	=> '¡Enhorabuena! Ya puedes empezar a disfrutar de las transposiciones automáticas de Neo-Transposer.',
-
-	'Transpose the songs'
-	=> '¡Transportar ya los cantos!',
 
 	//All Songs Report
 	'All transpositions for your voice'
