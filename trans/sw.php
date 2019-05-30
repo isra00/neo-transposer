@@ -168,7 +168,7 @@ return array(
 	=> 'Tafadhali, ujaribu wimbo mwingine, na <strong>utoe taarifa kama umefanikiwa kuimba ama la</strong>, ili app iweze kuboresha matokeo yako',
 
 	'Nothing\'s perfect, but let\'s keep trying!'
-	=> 'Hakuna perfect duniani, lakini tuendelee tujaribu!',
+	=> 'Hakuna perfect duniani, lakini tuendelee kujaribu!',
 
 	'Well, it seems like one of the songs fits you, the other doesn\'t. You may try others, and I\'m sure they will go better!'
 	=> 'Inaonekana kwa wimbo mmoja tu kordi zimekufaa. Unaweza kujaribu zingine, hakika itaendelea vizuri!',
