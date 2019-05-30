@@ -44,6 +44,7 @@
 		<ul>
 			<h4>Data research</h4>
 			<li><a href="{{ path(current_route, {'tool': 'getVoiceRangeOfGoodUsers'}) }}">Get voice range of all good users</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'getPerformanceByNumberOfFeedbacks'}) }}">Get Performance and frequency by # of FBs</a></li>
 		</ul>
 
 		<p><a href="{{ url(current_route, { long: 1}) }}" class="btn-neutral">Load long reports ⇲</a></p>
@@ -54,7 +55,7 @@
 </article>
 
 <article class="db-status">
-	<h2>Global performance</h2>
+	<h2>Global status</h2>
 
 	<div class="circles-container">
 		<h4 class="data-circle"><span>Total users</span> <b>{{ user_count }}</b></h4>
@@ -88,16 +89,16 @@
 	<h4>Users by songbook language</h4>
 	<table class="data-table">
 		<thead>
-			<tr><th>Language</th><th>Users</th><th>%</th><th>Perf</th><th>%</th></tr>
+			<tr><th>Language</th><th>Users</th><th>%</th><th colspan="2">Performance</th></tr>
 		</thead>
 		<tbody>
 			{% for book in usersByBook %}
 				<tr>
 					<td>{{ book.lang_name }}</td>
 					<td>{{ book.users }}</td>
-					<td>{{ book.percent|round(1) }}</td>
+					<td>{{ book.percent|round(1) }}<small>%</small></td>
 					<td>{{ self.feedbackGraph(performanceByBook[book.id_book].yes, performanceByBook[book.id_book].no) }}</td>
-					{% if performanceByBook[book.id_book] %}<td>{{ ((performanceByBook[book.id_book].yes / (performanceByBook[book.id_book].yes + performanceByBook[book.id_book].no)) * 100)|round(1) }}</td>{% endif %}
+					{% if performanceByBook[book.id_book] %}<td>{{ ((performanceByBook[book.id_book].yes / (performanceByBook[book.id_book].yes + performanceByBook[book.id_book].no)) * 100)|round(1) }}<small>%</small></td>{% endif %}
 				</tr>
 			{% endfor %}
 		</tbody>
@@ -107,12 +108,12 @@
 
 <article>
 
-	<h2>Feedback global view</h2>
+	<h2>Performance overview</h2>
 	<table class="data-table table-with-graphs">
 	{% for group, gp in global_performance %}
 		<tr>
 			<th>{{ group }}:</th>
-			<td>{{ ((gp.yes / gp.total) * 100)|round }}% </td>
+			<td>{{ ((gp.yes / gp.total) * 100)|round }}<small>%</small> </td>
 			<td>
 				<div class="clearfix inline-graph">
 					{{ self.feedbackGraph(gp.yes, gp.no) }}
@@ -128,7 +129,7 @@
 			{% set users_not_reporting_fb = user_count - users_reporting_fb.users_reporting_fb %}
 			<th>Total:</th>
 			<td>
-				{{ ((users_reporting_fb.users_reporting_fb / user_count) * 100)|round }}%
+				{{ ((users_reporting_fb.users_reporting_fb / user_count) * 100)|round }}<small>%</small>
 			</td>
 			<td>
 				<div class="clearfix inline-graph">
@@ -140,7 +141,7 @@
 			{% set users_not_reporting_fb = users_reporting_fb.not_null_users - users_reporting_fb.users_reporting_fb %}
 			<th>Not null:</th>
 			<td>
-				{{ ((users_reporting_fb.users_reporting_fb / users_reporting_fb.not_null_users) * 100)|round }}%
+				{{ ((users_reporting_fb.users_reporting_fb / users_reporting_fb.not_null_users) * 100)|round }}<small>%</small>
 			</td>
 			<td>
 				<div class="clearfix inline-graph">
@@ -152,7 +153,7 @@
 			{% set users_not_reporting_fb = users_reporting_fb.good_users - users_reporting_fb.users_reporting_fb %}
 			<th>Good:</th>
 			<td>
-				{{ ((users_reporting_fb.users_reporting_fb / users_reporting_fb.good_users) * 100)|round }}%
+				{{ ((users_reporting_fb.users_reporting_fb / users_reporting_fb.good_users) * 100)|round }}<small>%</small>
 			</td>
 			<td>
 				<div class="clearfix inline-graph">
@@ -169,14 +170,26 @@
 		{% set book_fb = book.total - book.nofb %}
 		<tr>
 			<th>{{ app.books[book.id_book].lang_name }}:</th>
-			<td>{{ ((book_fb / book.total) * 100)|round }}%</td>
+			<td>{{ ((book_fb / book.total) * 100)|round }}<small>%</small></td>
 			<td>
 				<div class="clearfix inline-graph">{{ self.feedbackGraph(book_fb, book.nofb) }}</div>
 			</td>
 		</tr>
 	{% endfor %}
 	</table>
-	<p class="advice">(If a language does not appear, it has 100%)</p>
+
+	<h3>Performance by voice type</h3>
+	<table class="data-table table-with-graphs">
+		{% for voice in performanceByVoice %}
+			<tr>
+				<th>{{ voice.voiceType|default('(unspecified)') }}</th>
+				<td>{{ (voice.performance * 100)|round(1) }}<small>%</small></td>
+				<td>
+					<div class="clearfix inline-graph">{{ self.feedbackGraph(voice.fbs, voice.fbs - (voice.fbs * voice.performance)|round(0)) }}</div>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
 
 </article>
 
