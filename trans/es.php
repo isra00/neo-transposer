@@ -49,7 +49,7 @@ return array(
 	'After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.'
 	=> 'Después de medir tu voz, elige cualquier canto y Neo-Transposer calculará los acordes y la cejilla que te convienen.',
 
-	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not represent officially the Neocatechumenal Way neither its responsibles.'
+	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not officially represent neither the Neocatechumenal Way nor its responsibles.'
 	=> 'Esta página web es iniciativa personal de un miembro del Camino Neocatecumenal pero NO representa oficialmente ni está afiliada de ningún modo al Camino Neocatecumenal o a sus responsables. El libro de cantos “Resucitó” es &copy; Kiko Argüello 2014.',
 
 	//User voice
