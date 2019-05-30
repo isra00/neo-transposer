@@ -57,7 +57,7 @@ class UserPersistence
 				$userdata['wizard_step1'],
 				$userdata['wizard_lowest_attempts'],
 				$userdata['wizard_highest_attempts'],
-				intval($this->db->fetchColumn('SELECT COUNT(*) FROM transposition_feedback WHERE id_user = ?', [$userdata['id_user']]))
+				$this->db->fetchColumn('SELECT COUNT(DISTINCT id_song) FROM transposition_feedback WHERE id_user = ?', [$userdata['id_user']])
 			);
 		}
 	}
@@ -156,8 +156,12 @@ SQL;
 			$performanceData[(int) $row['worked']] = $row['count'];
 		}
 
+		$performance = (0 === array_sum($performanceData))
+			? 0
+			: $performanceData[1] / ($performanceData[0] + $performanceData[1]);
+
 		return [
-			'performance' 	=> $performanceData[1] / ($performanceData[0] + $performanceData[1]),
+			'performance' 	=> $performance,
 			'reports'		=> $performanceData[0] + $performanceData[1],
 		];
 	}

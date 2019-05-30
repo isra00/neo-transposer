@@ -280,12 +280,28 @@ footer {
  */
 
 .encourage-feedback {
-	background: #f3f3f3 url(img/encourage-feedback.png) 114% center / 36% no-repeat;
+	background-color: #f3f3f3;
+	background-position: 114% center;
+	background-size: 36%;
+	background-repeat: no-repeat;
 	padding: 1em 31% .5em 1em;
 	margin-bottom: 4%;
 	box-shadow: 1px 1px 3px silver;
 	border-radius: .3em;
 }
+	.lang-es .encourage-feedback {
+		background-image: url(img/encourage-feedback-es.png);
+	}
+	.lang-sw .encourage-feedback {
+		background-image: url(img/encourage-feedback-sw.png);
+	}
+	.lang-en .encourage-feedback {
+		background-image: url(img/encourage-feedback-en.png);
+	}
+	.lang-pt .encourage-feedback {
+		background-image: url(img/encourage-feedback-pt.png);
+	}
+
 	.encourage-feedback h2 {
 		margin-top: 0;
 	}
@@ -2188,14 +2204,31 @@ footer {
 		display: none;
 	}
 
-	.encourage-feedback {
+	.lang-es .encourage-feedback,
+	.lang-en .encourage-feedback,
+	.lang-pt .encourage-feedback,
+	.lang-sw .encourage-feedback {
 		background: #f3f3f3;
 		padding: 3% 3% .5%;
 	}
 		.encourage-feedback p:last-of-type {
-			background: url(img/encourage-feedback.png) center bottom / 50% no-repeat;
+			background-position: center bottom;
+			background-size: 50%;
+			background-repeat: no-repeat;
 			padding: 0 0 53%;
 		}
+			.lang-es .encourage-feedback p:last-of-type {
+				background-image: url(img/encourage-feedback-es.png);
+			}
+			.lang-sw .encourage-feedback p:last-of-type {
+				background-image: url(img/encourage-feedback-sw.png);
+			}
+			.lang-en .encourage-feedback p:last-of-type {
+				background-image: url(img/encourage-feedback-en.png);
+			}
+			.lang-pt .encourage-feedback p:last-of-type {
+				background-image: url(img/encourage-feedback-pt.png);
+			}
 
 		.achieved-minimum-fb h2 {
 			background: #f3f3f3 url(img/burning-guitar.png) top center / auto no-repeat;
