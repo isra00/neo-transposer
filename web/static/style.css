@@ -589,7 +589,7 @@ a.link-all-report {
 	top: 0;
 	left: 0;
 	background-color: rgba(0, 0, 0, .5);
-	z-index: 1;
+	z-index: 2;
 }
 
 /*
@@ -698,7 +698,7 @@ a.link-all-report {
 	width: 180px;
 	height: 150px;
 	padding: 1em 1em .5em;
-	z-index: 2;
+	z-index: 3;
 
 	display: none;
 	border: 0;
@@ -807,6 +807,7 @@ a.link-all-report {
 		border: 1px solid #D32F2F;
 		list-style: none;
 		color: #444;
+		background: white;
 	}
 		#reasons-no li {
 			margin: .5em 0;
@@ -829,12 +830,14 @@ a.link-all-report {
 	border-top: 1px solid silver;
 	padding-top: 1em;
 	margin-top: 2em;
+	margin-bottom: 1em;
 	display: none; /* Hidden by default */
 	clear: both;
 	width: auto;
 	max-width: 100%;
 	position: relative;
 	overflow-x: scroll;
+	background: white;
 }
 
 .voicechart {
@@ -900,7 +903,7 @@ a.link-all-report {
 	height: 50%;
 	margin: 0;
 	padding: 0;
-	z-index: 2;
+	z-index: 3;
 	display: none;
 }
 
@@ -911,7 +914,7 @@ a.link-all-report {
 	max-width: 95%;
 	height: auto;
 	padding: 0;
-	z-index: 2;
+	z-index: 3;
 
 	border: 0;
 	border-radius: 5px;
@@ -2071,6 +2074,24 @@ footer {
 	.transpose-song .tip {
 		font-size: .9em;
 	}
+
+	.transpose-song .main {
+		padding-bottom: 1em;
+	}
+	.transposition-feedback {
+		position: fixed;
+		bottom: 0;
+		margin: 0;
+		width: 100%;
+		box-sizing: border-box;
+		left: 0;
+		padding: 50px .3em .3em;
+		background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(255, 255, 255, .8) 30px);
+		z-index: 1;
+	}
+		.transposition-feedback .answers {
+			margin-bottom: 0;
+		}
 
 	/* User voice */
 	.page-user-voice .wizard-button {
