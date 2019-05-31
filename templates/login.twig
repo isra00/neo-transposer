@@ -1,7 +1,9 @@
 {% extends "base.twig" %}
 
 {% block header_extra %}
-<script src='https://www.google.com/recaptcha/api.js'></script>
+	{% if not global.debug %}
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	{% endif %}
 {% endblock %}
 
 {% block page_class %}page-login{% endblock %}
