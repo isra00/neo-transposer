@@ -7,6 +7,10 @@
 	RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 	RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 
+	# URLs usually requested by user agents
+	RewriteRule ^([a-z]+)\/login\/$ /$1/login [R=301,L]
+	RewriteRule ^(apple\-touch\-icon.*)$ /static/img/$1 [R=301,L]
+
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ index.php [QSA,L]
 </IfModule>
