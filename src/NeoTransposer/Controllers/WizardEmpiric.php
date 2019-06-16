@@ -181,6 +181,6 @@ class WizardEmpiric
 			];
 		}
 
-		return $app->redirect($app->path($redirectPath));
+		return $app->redirect($app->path($redirectPath, ['wizardFinished' => 1]));
 	}
 }
