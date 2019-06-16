@@ -40,6 +40,9 @@ return array(
 	'That e-mail doesn\'t look good. Please, re-type it.'
 	=> 'Anwani ya barua pepe uliyoingiza si sahihi.',
 
+	'The Captcha code is not valid. If you are human, please try again or update your browser to log-in.'
+	=> 'Captcha code sio sahihi. Tafadhali, ukiwa mwanadamu jaribu tena ama update browser yako ili kuingia.',
+
 	'How does it work?'
 	=> 'Inakuwaje?',
 
