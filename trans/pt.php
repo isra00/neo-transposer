@@ -40,6 +40,10 @@ return array(
 	'That e-mail doesn\'t look good. Please, re-type it.'
 	=> 'Esse e-mail não parece certo. Por favor, revise-o.',
 
+	/** @todo Review this translation */
+	'The Captcha code is not valid. If you are human, please try again or update your browser to log-in.'
+	=> 'O código Captcha não é válido. Se você é humano, por favor tente novamente ou atualize seu navegador para logar.',
+
 	'How does it work?'
 	=> 'Como funciona?',
 

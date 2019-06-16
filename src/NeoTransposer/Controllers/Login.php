@@ -54,8 +54,12 @@ REG;
 
 		if (!preg_match("/$regexp/i", $req_email) || !$isCaptchaValid)
 		{
+			$errorMsg = $isCaptchaValid ?
+						'That e-mail doesn\'t look good. Please, re-type it.'
+						: 'The Captcha code is not valid. If you are human, please try again or update your browser to log-in.';
+
 			return $this->get($req, $app, array(
-				'error_msg'  => $app->trans('That e-mail doesn\'t look good. Please, re-type it.'),
+				'error_msg'  => $app->trans($errorMsg),
 				'post'		 => array('email' => $req_email)
 			));
 		}
