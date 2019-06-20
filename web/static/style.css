@@ -1207,10 +1207,6 @@ h2.step-1 {
 	margin-top: 1em;
 	max-width: 16rem;
 }
-html[lang="pt"] .wizard-empiric .answer {
-	margin-left: 2rem;
-	max-width: 18rem;
-}
 	.wizard-empiric .answer h3 {
 		margin-top: 0;
 	}
@@ -1219,10 +1215,10 @@ html[lang="pt"] .wizard-empiric .answer {
 		line-height: 3em;
 	}
 		.wizard-empiric .answer nav button {
-			margin-left: .5em;
+			margin-right: .5em;
 		}
-			.wizard-empiric .answer nav button:first-child {
-				margin-left: 0;
+			.wizard-empiric .answer nav button:last-child {
+				margin-right: 0;
 			}
 		.wizard-empiric .answer nav button.green {
 			padding-left: 1em;
