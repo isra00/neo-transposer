@@ -151,7 +151,7 @@ if (isset($_POST['sent']))
 			if (!empty($_POST['rebuild-css']))
 			{
 				$start = microtime(true);
-				require 'vendor/autoload.php';
+				require $deployDir . '/vendor/autoload.php';
 
 				$app = new NeoTransposer\NeoApp(
 					require __DIR__ . '/config.php',
