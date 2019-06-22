@@ -8,11 +8,11 @@ namespace NeoTransposer\Controllers;
 class ServeCss
 {
 	protected $src_file = '/static/style.css';
-	protected $min_file = '/static/compiled-%s.css';
+	public $min_file = '/static/compiled-%s.css';
 
 	/**
 	 * This mechanism for minimizing CSS takes advantage of the RewriteRule:
-	 * if the file style.min.css does not exist, this controller will be called.
+	 * if the minified CSS file does not exist, this controller will be called.
 	 * After the first request, the static file will be served directly by Apache.
 	 * THE MINIFIED FILE MUST BE MANUALLY REMOVED AFTER EVERY UPDATE (in AdminTools)
 	 * 

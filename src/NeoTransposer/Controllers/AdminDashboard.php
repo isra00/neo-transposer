@@ -34,6 +34,7 @@ class AdminDashboard
 				'populateCountry', 
 				'checkLowerHigherNotes', 
 				'refreshCss',
+				'removeOldCompiledCss',
 				'testAllTranspositions',
 				'getVoiceRangeOfGoodUsers',
 				'detectOrphanChords',
