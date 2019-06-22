@@ -27,7 +27,8 @@
 	<nav class="admin-tools">
 		<ul>
 			<h4>Server Ops</h4>
-			<li><a href="{{ path(current_route, {'tool': 'refreshCss'}) }}">Refresh CSS</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'refreshCss'}) }}">Refresh compiled CSS</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'removeOldCompiledCss'}) }}">Remove old CSS</a></li>
 			<li><a href="{{ path(current_route, {'tool': 'populateCountry'}) }}">Populate Country data</a></li>
 		</ul>
 

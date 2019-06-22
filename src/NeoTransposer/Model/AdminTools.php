@@ -140,24 +140,38 @@ class AdminTools extends \NeoTransposer\AppAccess
 	}
 
 	/**
-	 * Remove the minified CSS file, so that a new one will be generated in the
-	 * next request.
+	 * Re-compile the CSS file. Will not delete old compiled files.
 	 * 
 	 * @return string An unsignificant message for the admin.
 	 */
 	public function refreshCss()
 	{
-		$cache_file = $this->app['root_dir'] . '/web/static/compiled-' . $this->app['neoconfig']['css_cache'] . '.css';
-		
-		if (!file_exists($cache_file))
-		{
-			return 'CSS cache ' . $this->app['neoconfig']['css_cache'] . ' file is not present';
-		}
+		$serveCssController = new \NeoTransposer\Controllers\ServeCss;
+		return 'Generated new file ' . $serveCssController->get($this->app)->getTargetUrl();
+	}
 
-		if (unlink($cache_file))
+	/**
+	 * Delete all compiled-*.css files except the one refered to in config.php
+	 */
+	public function removeOldCompiledCss()
+	{
+		$serveCssController = new \NeoTransposer\Controllers\ServeCss;
+		$fileScheme = $serveCssController->min_file;
+		$cssDir = realpath('.' . dirname($fileScheme));
+		chdir($cssDir);
+		$currentFile = sprintf($fileScheme, $this->app['neoconfig']['css_cache']);
+
+		$allCssFiles = glob(sprintf(basename($fileScheme), '*'));
+		$deletedCounter = 0;
+		foreach ($allCssFiles as $file)
 		{
-			return 'Removed CSS cache file ' . $this->app['neoconfig']['css_cache'];
+			if ($file != basename($currentFile))
+			{
+				unlink($cssDir . '/' . $file);
+				$deletedCounter++;
+			}
 		}
+		return "Deleted $deletedCounter old CSS files";
 	}
 
 	/**

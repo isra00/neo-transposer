@@ -1,6 +1,6 @@
 <?php
 
-$deployDir		= '/var/www/html/transposer'; // No trailing slash
+$deployDir		= '/var/www/html/vhosts/transposer.local'; // No trailing slash
 $composerHome 	= '/tmp/composer-www-data';
 $composerPhar	= '/var/www/html/composer.phar';
 $repo			= 'isra00/neo-transposer';
@@ -150,7 +150,22 @@ if (isset($_POST['sent']))
 
 			if (!empty($_POST['rebuild-css']))
 			{
-				$actions[] = runCommand("rm -f $deployDir/web/static/compiled-" . $neoConfig['css_cache'] . ".css");
+				$start = microtime(true);
+				require 'vendor/autoload.php';
+
+				$app = new NeoTransposer\NeoApp(
+					require __DIR__ . '/config.php',
+					realpath(__DIR__)
+				);
+
+				$serveCssController = new \NeoTransposer\Controllers\ServeCss;
+
+				$actions[] = array(
+					'command' => 'Re-compile CSS',
+					'output'  => ['Generated new file ' . $serveCssController->get($app)->getTargetUrl()],
+					'status'  => '(n/a)',
+					'time'    => microtime(true) - $start
+				);
 			}
 
 			if (!empty($_POST['composer-install']))
