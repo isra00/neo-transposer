@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Linux (x86_64)
 --
 -- Host: localhost    Database: transposer
 -- ------------------------------------------------------
--- Server version	5.7.25-0ubuntu0.18.04.2
+-- Server version	8.0.20-0ubuntu0.20.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,14 +21,14 @@
 
 DROP TABLE IF EXISTS `book`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `book` (
-  `id_book` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_book` int unsigned NOT NULL AUTO_INCREMENT,
   `lang_name` varchar(50) NOT NULL,
   `details` varchar(100) NOT NULL,
   `chord_printer` varchar(50) NOT NULL,
   `locale` char(2) NOT NULL,
-  `song_count` smallint(6) unsigned NOT NULL COMMENT 'Total # of songs that should be present. For management purposes only.',
+  `song_count` smallint unsigned NOT NULL COMMENT 'Total # of songs that should be present. For management purposes only.',
   PRIMARY KEY (`id_book`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -52,11 +52,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `song`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `song` (
-  `id_song` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_book` int(10) unsigned NOT NULL,
-  `page` int(3) unsigned DEFAULT NULL,
+  `id_song` int unsigned NOT NULL AUTO_INCREMENT,
+  `id_book` int unsigned NOT NULL,
+  `page` int unsigned DEFAULT NULL,
   `title` varchar(100) NOT NULL,
   `lowest_note` char(3) NOT NULL,
   `highest_note` char(3) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `song` (
   `first_chord_is_tone` tinyint(1) DEFAULT '0',
   `people_lowest_note` char(3) DEFAULT NULL,
   `people_highest_note` char(3) DEFAULT NULL,
-  `artistic_adjustment` tinyint(4) DEFAULT NULL,
+  `artistic_adjustment` tinyint DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=MyISAM AUTO_INCREMENT=967 DEFAULT CHARSET=utf8;
@@ -985,11 +985,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `song_chord`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `song_chord` (
-  `id_song` int(10) unsigned NOT NULL,
+  `id_song` int unsigned NOT NULL,
   `chord` char(6) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-  `position` int(10) unsigned NOT NULL,
+  `position` int unsigned NOT NULL,
   UNIQUE KEY `id_song_chord` (`id_song`,`chord`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5334,4 +5334,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-20  9:31:33
+-- Dump completed on 2020-05-23 15:04:43
