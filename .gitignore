@@ -9,3 +9,4 @@ web/resucito-imgs/
 cache/profiler
 web/static/compiled-*.css
 tests/phpmd/phpmd.html
+.phpunit.result.cache
