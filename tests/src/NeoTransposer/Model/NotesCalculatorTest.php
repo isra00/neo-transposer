@@ -10,7 +10,7 @@ class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
 	 */
 	protected $nc;
 
-	public function setUp()
+	public function setUp() : void
 	{
 		$this->nc = new NotesCalculator;
 	}
@@ -61,11 +61,9 @@ class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('B1', $this->nc->lowestNote(array('B3', 'C2', 'B1')));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testLowestNoteInvalidNote()
     {
+        $this->expectException(InvalidArgumentException::class);
     	$this->nc->lowestNote(array('H1', 'C2'));
     }
 

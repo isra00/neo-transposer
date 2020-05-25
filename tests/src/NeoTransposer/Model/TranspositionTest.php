@@ -21,7 +21,7 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
 
 	protected $app;
 
-	public function setUp()
+	public function setUp() : void
 	{
         //root dir should be in includePath from phpunit.xml
         $this->chordsScoreConfig = include './config.scores.php';

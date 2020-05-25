@@ -9,7 +9,7 @@ class NotesNotationTest extends \PHPUnit\Framework\TestCase
 	 */
 	protected $nn;
 
-	public function setUp()
+	public function setUp() : void
 	{
 		$this->nn = new NotesNotation;
 	}
