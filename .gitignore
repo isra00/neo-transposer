@@ -10,3 +10,4 @@ cache/profiler
 web/static/compiled-*.css
 tests/phpmd/phpmd.html
 .phpunit.result.cache
+GeoLite2-Country.mmdb
