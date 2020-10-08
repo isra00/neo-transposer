@@ -8,7 +8,7 @@
         "twig/twig": "~2.0",
         "symfony/twig-bridge": "~3.1",
         "symfony/translation": "~3.1",
-        "symfony/security": "~3.1",
+        "symfony/security": "~3.4",
         "doctrine/dbal": "2.5.*",
         "geoip2/geoip2": "~2.5",
         "silex/web-profiler": "^2.0"
