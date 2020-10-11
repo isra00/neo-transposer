@@ -31,6 +31,13 @@ class Sitemap
 				'changefreq' => 'daily',
 				'lastmod' => $time
 			);
+
+			$urls[] = array(
+				'loc' => $app->url('people-compatible-info', array('_locale' => $lang)),
+				'priority' => 1,
+				'changefreq' => 'weekly',
+				'lastmod' => $time
+			);
 		}
 
 		$books = $app['books'];
