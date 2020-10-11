@@ -545,6 +545,16 @@ a.link-all-report {
 	width: 20em;
 	margin: 0 auto;
 }
+	#mailcheck {
+		color: #555;
+		font-size: .9em;
+		margin-top: .2em;
+		font-style: italic;
+	}
+		#mailcheck a {
+			text-decoration: underline;
+			font-weight: bold;
+		}
 
 .landing-info {
 	background: url(img/bottom-shadow.svg) center top no-repeat;

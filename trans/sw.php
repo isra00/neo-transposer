@@ -34,6 +34,9 @@ return array(
 	'Please, type your e-mail:'
 	=> 'Weka anwani yako ya barua pepe:',
 
+	'You mean'
+	=> 'Unamaanisha',
+
 	'Enter'
 	=> 'Ingia',
 
