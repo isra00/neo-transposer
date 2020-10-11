@@ -38,7 +38,8 @@
 			
 			<div class="field block full-width">
 				<label for="email">{% trans %}Please, type your e-mail:{% endtrans %}</label>
-				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required>
+				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required onblur="mailcheck(this)">
+				<div id="mailcheck"></div>
 			</div>
 			<div class="field block full-width">
 			{% if global.debug %}
@@ -53,6 +54,21 @@
 		function login(token)
 		{
 			document.getElementById("login-form").submit();
+		}
+		</script>
+
+		<script src="{{ global.request.basepath }}/static/mailcheck-1.1.2.min.js"></script>
+
+		<script>
+		function mailcheck(inputElement)
+		{
+			Mailcheck.run({
+				email: inputElement.value,
+				suggested: function(suggestion) {
+					document.getElementById("mailcheck").style.display = "block";
+					document.getElementById("mailcheck").innerHTML = "{% trans %}You mean{% endtrans %} <a href='javascript:void(0)' onclick=\"document.getElementById('email').value='" + suggestion.full + "'; this.parentNode.style.display='none';\">" + suggestion.full + "</a>?";
+				}
+			});
 		}
 		</script>
 

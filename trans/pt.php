@@ -34,6 +34,9 @@ return array(
 	'Please, type your e-mail:'
 	=> 'Por favor, preencha seu e-mail:',
 
+	'You mean'
+	=> 'Quis dizer',
+
 	'Enter'
 	=> 'Entrar',
 
