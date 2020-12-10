@@ -1779,26 +1779,26 @@
 				"offset": -3,
 				"lowestNote": "B1",
 				"highestNote": "D#3",
-				"score": 32,
+				"score": 34,
 				"capo": 4,
-				"chords": "G,Bm,C,Am6,D7,B7"
+				"chords": "G,Bm,C,Am6,D7,B7,D"
 			},
 			"centered2": {
 				"offset": -3,
 				"lowestNote": "B1",
 				"highestNote": "D#3",
-				"score": 53,
+				"score": 55,
 				"capo": 2,
-				"chords": "A,C#m,D,Bm6,E7,C#"
+				"chords": "A,C#m,D,Bm6,E7,C#,E"
 			},
 			"notEquivalent": {
 				"offset": -2,
 				"lowestNote": "C2",
 				"highestNote": "E3",
-				"score": 28,
+				"score": 30,
 				"capo": 0,
 				"deviationFromCentered": 1,
-				"chords": "C,Em,F,Dm6,G7,E"
+				"chords": "C,Em,F,Dm6,G7,E,G"
 			},
 			"peopleCompatibleStatus": 2
 		},
