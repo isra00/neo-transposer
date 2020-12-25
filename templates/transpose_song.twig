@@ -149,9 +149,9 @@
 		<tr class="{{ voice.css }}">
 			<th>{{ voice.caption|trans }}</th>
 			{% for i in range(0, voice.offset) %}<th>&nbsp;</th>{% endfor %}
-			<td class="note">{{ voice.lowestForPrint }}</td>
-			{% for i in range(0, voice.length - 1) %}<td>██</td>{% endfor %}
-			<td class="note">{{ voice.highestForPrint }}</td>
+			<td class="note"><div class="inside"><div class="note-in-chart">{{ voice.lowestForPrint }}</div></div></td>
+			{% for i in range(0, voice.length - 1) %}<td><div class="colored">&nbsp;</div></td>{% endfor %}
+			<td class="note"><div class="inside"><div class="note-in-chart">{{ voice.highestForPrint }}</div></div></td>
 		</tr>
 	{% endfor %}
 	<tr><th><a href="javascript:void(0)" id="chart-more">{% trans %}More{% endtrans %}</a></th></tr>

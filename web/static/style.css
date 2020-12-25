@@ -867,41 +867,66 @@ a.link-all-report {
 		width: 1.5em;
 		font-size: .8em;
 		text-align: center;
+		border: 1px solid white;
+		/*border-top: .5em solid white;
+		border-bottom: .5em solid white;*/
+		color: transparent
 	}
 	.voicechart tr td.note {
 		color: white;
 		font-size: .7em;
+		position: relative;
+		border: none;
 	}
-	.voicechart .singer td,
-	.voicechart .people-standard td {
-		color: #00585F;
+		.voicechart tr td.note .inside {
+			height: 2em;
+			max-height: 2em;
+			border-radius: .4em;
+			padding: 0 .1em;
+		}
+
+	.voicechart tr td .colored {
+		display: block;
+		height: 1.3em;
+		max-height: 1.3em;
 	}
-	.voicechart .singer td.note,
-	.voicechart .people-standard td.note {
+	.voicechart .singer td .colored,
+	.voicechart .people-standard td .colored {
 		background: #00585F;
 	}
-	.voicechart .original-song td {
-		color: #D32F2F;
+	.voicechart .singer td.note .inside,
+	.voicechart .people-standard td.note .inside {
+		background: #00585F;
 	}
-	.voicechart .original-song td.note {
+	.voicechart .original-song td .colored {
 		background: #D32F2F;
 	}
-	.voicechart .transposed-song td {
-		color: #009393;
+	.voicechart .original-song td.note .inside {
+		background: #D32F2F;
 	}
-	.voicechart .transposed-song td.note {
+	.voicechart .transposed-song td .colored {
 		background: #009393;
 	}
-	.voicechart .people-compatible td {
-		color: #D32F2F;
+	.voicechart .transposed-song td.note .inside {
+		background: #009393;
 	}
-	.voicechart .people-compatible td.note {
+	.voicechart .people-compatible td .colored {
+		background: #D32F2F;
+	}
+	.voicechart .people-compatible td.note .inside {
 		background: #D32F2F;
 	}
 	.voicechart .original-people,
 	.voicechart .transposed-people,
 	.voicechart .people-standard {
 		display: none;
+	}
+
+	.voicechart .note-in-chart {
+		position: absolute;
+		top: 0.5em;
+		left: 0;
+		text-shadow: 1px 1px 1px black;
 	}
 
 .transpose-song #detailed-feedback-container {
