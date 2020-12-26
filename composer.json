@@ -20,6 +20,12 @@
         }
     },
 
+    "autoload-dev": {
+        "psr-4": {
+            "NeoTransposer\\Tests\\": "tests/src/NeoTransposer"
+        }
+    }
+
     "require-dev": {
         "phpunit/phpunit": "^8"
     }

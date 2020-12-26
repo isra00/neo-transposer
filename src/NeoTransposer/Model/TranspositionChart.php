@@ -1,8 +1,8 @@
 <?php
 
-use \NeoTransposer\Model\NotesCalculator;
-
 namespace NeoTransposer\Model;
+
+use \NeoTransposer\Model\NotesCalculator;
 
 class TranspositionChart
 {

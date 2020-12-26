@@ -1,5 +1,7 @@
 <?php
 
+namespace NeoTransposer\Tests\Model;
+
 use \NeoTransposer\Model\{
 	AutomaticTransposer, 
 	Transposition, 

@@ -1,5 +1,7 @@
 <?php
 
+namespace NeoTransposer\Tests\Model;
+
 use \NeoTransposer\Model\NotesCalculator;
 
 class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
@@ -63,7 +65,7 @@ class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
 
     public function testLowestNoteInvalidNote()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
     	$this->nc->lowestNote(array('H1', 'C2'));
     }
 
