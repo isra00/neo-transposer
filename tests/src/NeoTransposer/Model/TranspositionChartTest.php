@@ -1,5 +1,7 @@
 <?php
 
+namespace NeoTransposer\Tests\Model;
+
 use \NeoTransposer\Model\{TranspositionChart, AutomaticTransposer, Song, User, Transposition, NotesRange};
 
 class TranspositionChartTest extends \PHPUnit\Framework\TestCase

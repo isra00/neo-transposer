@@ -1,7 +1,8 @@
 <?php
 
-use \NeoTransposer\Model\Transposition;
-use \NeoTransposer\Model\NotesCalculator;
+namespace NeoTransposer\Tests\Model;
+
+use \NeoTransposer\Model\{Transposition, NotesCalculator};
 
 class TranspositionTest extends \PHPUnit\Framework\TestCase
 {
