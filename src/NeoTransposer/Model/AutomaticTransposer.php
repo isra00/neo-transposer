@@ -6,9 +6,14 @@ namespace NeoTransposer\Model;
  * Core algorithm for transposing songs. It implementing four types of transpositions: 
  *
  * 1) centered: the song voice range is transposed to the center of singer's voice range.
- * 2) equivalentsWithCapo: transpositions equivalent to the centered using capo 1 to 5, searching one whose chords are easier than the centered.
- * 3) notEquivalent: transpose the centered ±1 and get its equivalents with capo, searching one whose chords are easier than the centered and the equivalentsWithCapo.
- * 4) peopleCompatible: transposition that is within the singer's voice range but also within the people's voice range in the parts of the song that are sung by the people. Additional data is required (people_lowest_note, people_highest_note) for each song.
+ * 2) equivalentsWithCapo: transpositions equivalent to the centered using capo 1 to 5, 
+ *    searching one whose chords are easier than the centered.
+ * 3) notEquivalent: transpose the centered ±1 and get its equivalents with capo, 
+ *    searching one whose chords are easier than the centered and the equivalentsWithCapo.
+ * 4) peopleCompatible: transposition that is within the singer's voice range but 
+ *    also within the people's voice range in the parts of the song that are sung 
+ *    by the people. Additional data is required (people_lowest_note, 
+ *    people_highest_note) for each song.
  * 
  * Additionally, after transposing the chords, some chords that are difficult to
  * beginners are replaced by others somehow equivalent, like B7 instead of B. This
