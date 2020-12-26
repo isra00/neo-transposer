@@ -1,7 +1,7 @@
 {
     "name": "isra00/neo-transposer",
     "description": " Automatically transpose the chords of the songs of the Neocatechumenal Way so they fit the singer's voice",
-    "license": "GPL-3.0+",
+    "license": "GPL-3.0-or-later",
 
     "require": {
         "silex/silex": "~2.0",
@@ -11,7 +11,9 @@
         "symfony/security": "~3.4",
         "doctrine/dbal": "2.5.*",
         "geoip2/geoip2": "~2.5",
-        "silex/web-profiler": "^2.0"
+        "silex/web-profiler": "^2.0",
+        "php": "^7",
+        "lib-curl": "*"
     },
 
     "autoload": {
