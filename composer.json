@@ -12,7 +12,7 @@
         "doctrine/dbal": "2.5.*",
         "geoip2/geoip2": "~2.5",
         "silex/web-profiler": "^2.0",
-        "php": "^7",
+        "php": "^7.3",
         "lib-curl": "*"
     },
 
