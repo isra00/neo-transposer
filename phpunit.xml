@@ -8,21 +8,21 @@
         </testsuite>
     </testsuites>
 
-	<filter>
-		<whitelist processUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">src</directory>
-			<exclude>
-				<directory suffix=".php">vendor</directory>
-			</exclude>
-		</whitelist>
-	</filter>
-
-	<logging>
-		<log type="coverage-html" target="tests/reports" charset="UTF-8"/>
-	</logging>
-
 	<php>
 		<includePath>.</includePath>
 	</php>
+
+	<coverage includeUncoveredFiles="true">
+		<include>
+			<directory suffix=".php">src</directory>
+		</include>
+		<exclude>
+			<directory suffix=".php">vendor</directory>
+		</exclude>
+
+		<report>
+			<html outputDirectory="tests/reports" />
+		</report>
+	</coverage>
 
 </phpunit>
