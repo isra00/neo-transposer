@@ -313,6 +313,7 @@ NT = {
 		chordName = chordName.replace(/5$/, '9');
 
 		chordChartImg.addEventListener('error', function(event) {
+			ga('send', 'event', 'Actions', 'RequestMissingChordChart', chordName);
 			event.target.src = '{{ global.request.basepath }}/static/img/chords/unknown-{{ app.locale }}.png';
 		});
 
