@@ -4,7 +4,7 @@ namespace NeoTransposer\Model;
 
 /**
  * A functional test for detecting changes in the transposition algorithm.
- * It generates an AllSongsReport and compares it with a pre-stored result set.
+ * It generates an AllSongsReport for book #2 and compares it with a pre-stored result set.
  * 
  */
 class TestAllTranspositions extends \NeoTransposer\AppAccess
@@ -37,7 +37,7 @@ class TestAllTranspositions extends \NeoTransposer\AppAccess
 
 		foreach ($testResult as $idSong=>$result)
 		{
-			if ($difference = $this->diffTestResults($result, $testData['expectedResults'][$idSong]))
+			if (isset($testData['expectedResults'][$idSong]) && $difference = $this->diffTestResults($result, $testData['expectedResults'][$idSong]))
 			{
 				$output .= "\n<strong>Song #$idSong</strong>\n";
 				foreach ($difference as $property=>$resultValue)
@@ -173,7 +173,7 @@ SQL;
 			$arrayProperties[]  = 'peopleCompatible';
 		}
 
-		$diff = array_diff(
+		$diff = @array_diff(
 			array_intersect_key($actual,   array_flip($scalarProperties)),
 			array_intersect_key($expected, array_flip($scalarProperties))
 		);
@@ -196,10 +196,14 @@ SQL;
 
 		if ($transpositionsDiff)
 		{
-			$diff = array_merge($diff, $transpositionsDiff);
+			$diff = $diff
+				? array_merge($diff, $transpositionsDiff)
+				: null;
 		}
 
-		$missingProperties = array_diff(array_keys($expected), array_keys($actual));
+		$missingProperties = $expected 
+			? array_diff(array_keys($expected), array_keys($actual))
+			: false;
 
 		if ($missingProperties)
 		{
