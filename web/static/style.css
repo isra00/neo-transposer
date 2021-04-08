@@ -231,6 +231,24 @@ footer {
 		min-height: 32px;
 		line-height: 130%;
 	}
+.tip.manifesto {
+	background: #f2e2be url(img/manifesto-banner.jpg) 0 0 no-repeat;
+	background-size: auto 100px;
+	padding: .9em 1.2em .9em 200px;
+	font-size: 1.1em;
+	text-shadow: 1px 1px 0 white;
+	color: #D32F2F;
+	min-height: 100px;
+	max-height: 100px;
+	height: 100px;
+	box-sizing: border-box;
+}
+	.tip.manifesto .boss {
+		text-transform: uppercase;
+		letter-spacing: .05em;
+		font-weight: bold;
+		font-size: 2em;
+	}
 
 /* USER BOOK */
 .books {
@@ -2045,6 +2063,12 @@ footer {
 		font-size: .9em;
 	}
 
+	.tip.manifesto {
+		font-size: 1.1em;
+		padding: .9em 1.2em .9em .5em;
+		background-image: url(img/manifesto-banner-r.jpg);
+		background-position: right top;
+	}
 	.song-index {
 		margin-top: 1em;
 	}

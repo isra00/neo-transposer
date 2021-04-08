@@ -128,12 +128,13 @@ $app->get('/get-lucky', "$controllers\\TransposeSong::get")
 $app->get('/sura-yako', "$controllers\\TransposeSong::get")
 	->value('id_song', 319);
 
-$app->get('/{_locale}/manifiesto', function() use ($app)
+$app->get('/{_locale}/manifesto', function() use ($app)
 {
 	return $app->render('pages/manifesto.' . $app['locale'] . '.twig', array(
 		'page_title' => $app->trans('Manifesto'),
 	));
-})->assert('_locale', 'es');
+})->assert('_locale', 'es')
+	->bind('manifesto');
 
 $app->get('/{_locale}/people-compatible-transpositions', function() use ($app)
 {
