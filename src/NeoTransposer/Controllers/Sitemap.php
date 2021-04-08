@@ -28,14 +28,21 @@ class Sitemap
 			$urls[] = array(
 				'loc' => $app->url('login', array('_locale' => $lang)),
 				'priority' => 1,
-				'changefreq' => 'daily',
+				'changefreq' => 'weekly',
 				'lastmod' => $time
 			);
 
 			$urls[] = array(
 				'loc' => $app->url('people-compatible-info', array('_locale' => $lang)),
 				'priority' => 1,
-				'changefreq' => 'weekly',
+				'changefreq' => 'monthly',
+				'lastmod' => $time
+			);
+
+			$urls[] = array(
+				'loc' => $app->url('manifesto', array('_locale' => 'es')),
+				'priority' => 1,
+				'changefreq' => 'monthly',
 				'lastmod' => $time
 			);
 		}

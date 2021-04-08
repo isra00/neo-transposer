@@ -18,6 +18,15 @@
 
 {% block preContent %}{% endblock %}
 
+{% if app.neoconfig.show_manifesto and app.locale == 'es' %}
+<a href="{{ path('manifesto', {'_locale': app.locale}) }}">
+	<div class="tip manifesto">
+		<span class="boss">Manifiesto</span>
+		<br>Neo-Transposer de desarrollo web
+	</div>
+</a>
+{% endif %}
+
 {% if show_unhappy_warning %}
 <div class="tip no-icon unhappy-warning">
 	<h2><span class="red">&#128534;</span> {% trans %}Something is going wrong{% endtrans %}</h2>
