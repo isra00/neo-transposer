@@ -7,6 +7,12 @@ body {
 	margin: 0;
 	color: #222;
 	background: #fdfdfd;
+
+	/* Sticky footer thanks to https://github.com/philipwalton/solved-by-flexbox/blob/master/assets/css/components/site.css */
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	height: 100%; /* IE */
 }
 
 a {
@@ -52,10 +58,9 @@ button {
 }
 
 .wrapper {
-	min-height: 100%;
-	height: auto!important;
-	height: 100%;
-	margin: 0 auto -40px;
+	flex: 1 0 auto;
+	padding: var(--space) var(--space) 0;
+	width: 100%;
 }
 	.push {
 		height: 40px;
@@ -152,22 +157,15 @@ button {
 	}
 
 footer {
+	padding: 1em;
 	text-align: center;
+	line-height: 130%;
+	font-size: .9em;
 	background: #eee;
 	color: gray;
-	text-shadow: 1px 1px 0 white;
 	font-style: italic;
-	font-size: .9em;
-	padding: 0;
-	height: 40px;
-	max-height: 40px;
-	/*margin-top: 2em;*/
-	line-height: 14px;
+	text-shadow: 1px 1px 0 white;
 }
-	footer p {
-		margin: 0;
-		line-height: 40px;
-	}
 
 /* USER VOICE */
 .two-choices {
@@ -1963,25 +1961,9 @@ td.red {
 		overflow: hidden;
 	}
 
-.wrapper {
-	min-height: 0;
-	height: auto;
-	margin: 0;
-}
 	.push {
 		height: auto;
 		clear: both;
-	}
-
-footer {
-	height: auto;
-	max-height: none;
-	line-height: inherit;
-}
-	footer p {
-		margin: 0;
-		padding: 1em;
-		line-height: inherit;
 	}
 
 	/* LOGIN */
