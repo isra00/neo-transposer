@@ -106,10 +106,8 @@
 
 	{% block footer %}
 	<footer>
-		<p>
-			{% trans with { '%url%': 'http://github.com/isra00/neo-transposer' } %}Developed as <a href="%url%">free software</a> in Tanzania.{% endtrans %}
-			<a href="mailto:neo-transposer@mail.com">{%trans %}Contact{% endtrans %}</a>.
-		</p>
+		{% trans with { '%url%': 'http://github.com/isra00/neo-transposer' } %}Developed as <a href="%url%">free software</a> in Tanzania.{% endtrans %}
+		<a href="mailto:neo-transposer@mail.com">{%trans %}Contact{% endtrans %}</a>.
 	</footer>
 	{% endblock %}
 
