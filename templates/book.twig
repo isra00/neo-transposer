@@ -18,7 +18,7 @@
 
 {% block preContent %}{% endblock %}
 
-{% if app.neoconfig.show_manifesto and app.locale == 'es' %}
+{% if app.neoconfig.show_manifesto and app.locale == 'es' and not show_unhappy_warning and not show_encourage_fb %}
 <a href="{{ path('manifesto', {'_locale': app.locale}) }}">
 	<div class="tip manifesto">
 		<span class="boss">Manifiesto</span>
