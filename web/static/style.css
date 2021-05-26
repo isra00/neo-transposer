@@ -907,9 +907,6 @@ a.link-all-report {
 		height: 1.3em;
 		max-height: 1.3em;
 	}
-	/*.voicechart tr td.colored::before {
-		content: "&#11035;";
-	}*/
 	.voicechart .singer td .colored,
 	.voicechart .people-standard td .colored {
 		background: #00585F;
