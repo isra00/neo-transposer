@@ -80,7 +80,7 @@
 {% if song.peopleCompatible %}
 <p class="explanation people-compatible-info {{ peopleCompatibleClass|default('') }}">
 	{{ peopleCompatibleMsg }}
-	<small><a href="{{ url('people-compatible-info', {'_locale': app.locale}) }}">{% trans %}Learn more{% endtrans %}</a></small>
+	<small><a class="inline-block" href="{{ url('people-compatible-info', {'_locale': app.locale}) }}">{% trans %}Learn more{% endtrans %}</a></small>
 </p>
 <div class="transpositions-list">
 	{{ self.printTransposition(song.peopleCompatible, song.song.originalChordsForPrint) }}

@@ -247,7 +247,7 @@ return array(
 	=> 'Original (asamblea):',
 
 	'People standard:'
-	=> 'Rango de la asamblea',
+	=> 'Rango de la asamblea:',
 
 	'More'
 	=> 'Más',
