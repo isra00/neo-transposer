@@ -274,4 +274,23 @@ SQL;
 
 		return $output;
 	}
+
+	public function diffTranslations()
+	{
+		$languages = $this->app['neoconfig']['languages'];
+
+		$transSpanish = include $languages['es']['file'];
+
+		$diff = [];
+		foreach ($languages as $lang=>$langDetails)
+		{
+			if (isset($langDetails['file']) && 'es' != $lang)
+			{
+				$trans = include $langDetails['file'];
+				$diff[$lang] = array_diff(array_keys($transSpanish), array_keys($trans));
+			}
+		}
+
+		return "TRANSLATION STRINGS IN SPANISH BUT NOT IN OTHER LANGUAGES:\n\n" . print_r($diff, true);
+	}
 }

@@ -40,7 +40,8 @@ class AdminDashboard
 				'detectOrphanChords',
 				'checkChordOrder',
 				'checkUserLowerHigherNotes',
-				'getPerformanceByNumberOfFeedbacks'
+				'getPerformanceByNumberOfFeedbacks',
+				'diffTranslations'
 			];
 
 			if (false === array_search($tool, $toolsMethods))
