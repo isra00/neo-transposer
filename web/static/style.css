@@ -880,7 +880,7 @@ a.link-all-report {
 		border-bottom: 3px solid transparent;
 	}
 	.voicechart td {
-		width: 1.5em;
+		width: 1.5rem;
 		font-size: .8em;
 		text-align: center;
 		border: 1px solid white;
@@ -899,6 +899,7 @@ a.link-all-report {
 			max-height: 2em;
 			border-radius: .4em;
 			padding: 0 .1em;
+			min-width: 1.1rem;
 		}
 
 	.voicechart tr td .colored {
@@ -906,6 +907,9 @@ a.link-all-report {
 		height: 1.3em;
 		max-height: 1.3em;
 	}
+	/*.voicechart tr td.colored::before {
+		content: "&#11035;";
+	}*/
 	.voicechart .singer td .colored,
 	.voicechart .people-standard td .colored {
 		background: #00585F;
@@ -940,8 +944,8 @@ a.link-all-report {
 
 	.voicechart .note-in-chart {
 		position: absolute;
-		top: 0.5em;
-		left: 0;
+		padding-top: 0.5em;
+		left: 2px;
 		text-shadow: 1px 1px 1px black;
 	}
 
