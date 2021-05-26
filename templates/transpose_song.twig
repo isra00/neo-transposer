@@ -145,16 +145,19 @@
 
 <div id="voicechart-container">
 	<table class="voicechart">
+	<col style="width: 5rem">
+	<tbody>
 	{% for voice in voice_chart %}
 		<tr class="{{ voice.css }}">
 			<th>{{ voice.caption|trans }}</th>
-			{% for i in range(0, voice.offset) %}<th>&nbsp;</th>{% endfor %}
+			{% for i in range(0, voice.offset) %}<td>&nbsp;</td>{% endfor %}
 			<td class="note"><div class="inside"><div class="note-in-chart">{{ voice.lowestForPrint }}</div></div></td>
-			{% for i in range(0, voice.length - 1) %}<td><div class="colored">&nbsp;</div></td>{% endfor %}
+			{% for i in range(0, voice.length - 1) %}<td><div class="colored">&#11035;</div></td>{% endfor %}
 			<td class="note"><div class="inside"><div class="note-in-chart">{{ voice.highestForPrint }}</div></div></td>
 		</tr>
 	{% endfor %}
 	<tr><th><a href="javascript:void(0)" id="chart-more">{% trans %}More{% endtrans %}</a></th></tr>
+	</tbody>
 	</table>
 </div>
 
@@ -396,15 +399,15 @@ NT = {
 	{
 		NT.initializeChordChartDialog();
 
-		$("#show-voice-chart").click(function(e) {
+		$(document.getElementById("show-voice-chart")).click(function(e) {
 			NT.showChart(e.target.parentNode);
 		});
 
-		$("#chart-more").click(function(e) {
+		$(document.getElementById("chart-more")).click(function(e) {
 			$(".original-people")
 				.add(".transposed-people")
 				.add(".people-standard")
-				.show();
+				.css("display", "table-row");
 			$(e.target.parentNode.parentNode).remove();
 		});
 	}
