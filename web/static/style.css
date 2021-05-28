@@ -1616,9 +1616,6 @@ h2.step-1 {
 	background: #eee;
 	color: gray;
 }
-	.error-page .header {
-		box-shadow: 0 1px 4px #444;
-	}
 	.error-page .main h1 {
 		font-size: 3em;
 		text-transform: uppercase;
