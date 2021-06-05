@@ -38,7 +38,7 @@
 			
 			<div class="field block full-width">
 				<label for="email">{% trans %}Please, type your e-mail:{% endtrans %}</label>
-				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required onblur="mcheck(this)">
+				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required onkeyup="mcheck(this)" pattern="[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?">
 				<div id="mcheck"></div>
 			</div>
 			<div class="field block full-width">
@@ -62,13 +62,16 @@
 		<script>
 		function mcheck(inputElement)
 		{
-			Mailcheck.run({
-				email: inputElement.value,
-				suggested: function(suggestion) {
-					document.getElementById("mcheck").style.display = "block";
-					document.getElementById("mcheck").innerHTML = "{% trans %}You mean{% endtrans %} <a href='javascript:void(0)' onclick=\"document.getElementById('email').value='" + suggestion.full + "'; this.parentNode.style.display='none';\">" + suggestion.full + "</a>?";
-				}
-			});
+			if (document.getElementById("email").validity.valid)
+			{
+				Mailcheck.run({
+					email: inputElement.value,
+					suggested: function(suggestion) {
+						document.getElementById("mcheck").style.display = "block";
+						document.getElementById("mcheck").innerHTML = "{% trans %}You mean{% endtrans %} <a href='javascript:void(0)' onclick=\"document.getElementById('email').value='" + suggestion.full + "'; this.parentNode.style.display='none';\">" + suggestion.full + "</a>?";
+					}
+				});
+			}
 		}
 		</script>
 
