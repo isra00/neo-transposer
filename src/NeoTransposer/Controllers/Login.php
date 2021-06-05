@@ -50,7 +50,9 @@ REG;
 
 		$req_email = trim($req->get('password'));
 
-		$isCaptchaValid = $app['debug'] ? true : $this->validateCaptcha($req);
+		$isCaptchaValid = ($app['debug'] || $app['neoconfig']['disable_recaptcha']) 
+			? true 
+			: $this->validateCaptcha($req);
 
 		if (!preg_match("/$regexp/i", $req_email) || !$isCaptchaValid)
 		{
