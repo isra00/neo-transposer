@@ -60,11 +60,16 @@
 	<h2>Global status</h2>
 
 	<div class="circles-container">
-		<h4 class="data-circle"><span>Total users</span> <b>{{ user_count }}</b></h4>
+		<h4 class="data-circle">
+			<span>Not null users</span> 
+			<b>{{ users_reporting_fb.not_null_users }}</b>
+			<small>Total: {{ user_count }}</small>
+		</h4>
 
 		<h4 class="data-circle good-users">
-			<span>Good users <br><small>voice range > 1oct</small></span>
+			<span>Good users<br><small>voice range > 1oct</small></span>
 			<b>{{ ((good_users / user_count) * 100)|round }}%</b>
+			<small>{{ good_users }}</small>
 		</h4>
 	</div>
 
