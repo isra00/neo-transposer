@@ -48,7 +48,7 @@ class Login
 [a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
 REG;
 
-		$req_email = trim($req->get('email'));
+		$req_email = trim($req->get('password'));
 
 		$isCaptchaValid = $app['debug'] ? true : $this->validateCaptcha($req);
 

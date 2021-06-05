@@ -1669,6 +1669,11 @@ input[type=email] {
 	font-size: 1.1em;
 	border-radius: .2em;
 }
+/* Fake E-mail field (spam honeypot). The real email field is called "password" */
+#email {
+	position: absolute;
+	left: -1000px;
+}
 
 /* Generic */
 .center {
