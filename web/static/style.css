@@ -588,7 +588,7 @@ a.link-all-report {
 	}
 	.landing-info i {
 		font-style: normal;
-		background: #00585f;
+		background: gray;
 		border-radius: 1em;
 		display: inline-block;
 		float: left;
