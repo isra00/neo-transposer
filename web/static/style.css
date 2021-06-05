@@ -1483,6 +1483,7 @@ h2.step-1 {
 			margin-top: 12%;
 			font-size: 2.5em;
 			font-weight: normal;
+			padding-bottom: .2em;
 		}
 		.admin-dashboard .data-circle.good-users {
 			background: #ccdb38;
