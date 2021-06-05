@@ -36,12 +36,9 @@
 		<form method="post" action="{{ path('login', {'redirect': redirect, '_locale': app.locale}) }}" class="login-form" id="login-form">
 			<div class="error">{{ error_msg }}</div>
 			
-			<!-- tarro de miel -->
-			<input type="email" name="email" id="email">
-
 			<div class="field block full-width">
-				<label for="phone">{% trans %}Please, type your e-mail:{% endtrans %}</label>
-				<input type="email" name="phone" id="phone" value="{{ post.email }}" autofocus required onblur="mcheck(this)">
+				<label for="email">{% trans %}Please, type your e-mail:{% endtrans %}</label>
+				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required onblur="mcheck(this)">
 				<div id="mcheck"></div>
 			</div>
 			<div class="field block full-width">

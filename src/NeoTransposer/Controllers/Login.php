@@ -48,7 +48,7 @@ class Login
 [a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
 REG;
 
-		$req_email = trim($req->get('phone'));
+		$req_email = trim($req->get('email'));
 
 		$isCaptchaValid = ($app['debug'] || $app['neoconfig']['disable_recaptcha']) 
 			? true 
