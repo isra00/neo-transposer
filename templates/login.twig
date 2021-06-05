@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 
 {% block header_extra %}
-	{% if not global.debug or not app.neoconfig.disable_recaptcha %}
+	{% if not global.debug and not app.neoconfig.disable_recaptcha %}
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 	{% endif %}
 {% endblock %}
