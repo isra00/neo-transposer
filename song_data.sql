@@ -942,7 +942,6 @@ INSERT INTO `song` VALUES (927,1,105,'Nalikujulisha dhambi yangu','E2','D3','nal
 INSERT INTO `song` VALUES (928,1,121,'Maria wa Jasna Gora','E2','A3','maria-wa-jasna-gora',0,'F#2','F#3',NULL);
 INSERT INTO `song` VALUES (929,1,53,'Tazama, naja upesi','B2','C#3','tazama-naja-upesi',0,'B2','C#3',NULL);
 INSERT INTO `song` VALUES (930,1,276,'Sauti ya mpendwa wangu','F1','C3','sauti-ya-mpendwa-wangu',1,'C2','C3',NULL);
-INSERT INTO `song` VALUES (931,1,79,'Mbona mataifa wafanya ghasia?','B1','E3','mbona-mataifa-wafanya-ghasia-kiswahili',1,'E2','E3',NULL);
 INSERT INTO `song` VALUES (932,1,138,'Mpumbavu awaza, \"Hakuna Mungu\"','D2','E3','mpumbavu-awaza-\"hakuna-mungu\"',1,'D2','D3',NULL);
 INSERT INTO `song` VALUES (933,1,NULL,'Mwanakondoo wa Mungu','B1','A2','mwanakondoo-wa-mungu',1,'B1','A2',NULL);
 INSERT INTO `song` VALUES (934,1,NULL,'Baba Yetu','D2','D3','baba-yetu',0,'D2','D3',NULL);
@@ -5149,9 +5148,6 @@ INSERT INTO `song_chord` VALUES (930,'E',3);
 INSERT INTO `song_chord` VALUES (930,'Dm',4);
 INSERT INTO `song_chord` VALUES (930,'Dm9',5);
 INSERT INTO `song_chord` VALUES (930,'G',6);
-INSERT INTO `song_chord` VALUES (931,'Em',0);
-INSERT INTO `song_chord` VALUES (931,'Am',1);
-INSERT INTO `song_chord` VALUES (931,'B7',2);
 INSERT INTO `song_chord` VALUES (932,'Dm',0);
 INSERT INTO `song_chord` VALUES (932,'A7',1);
 INSERT INTO `song_chord` VALUES (932,'Gm',2);
@@ -5346,4 +5342,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-26 21:25:13
+-- Dump completed on 2021-06-11 21:51:41
