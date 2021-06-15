@@ -1613,6 +1613,10 @@ h2.step-1 {
 	width: auto;
 }
 
+.insert-song input:invalid {
+	border: 1px solid red;
+}
+
 .error-page {
 	background: #eee;
 	color: gray;
