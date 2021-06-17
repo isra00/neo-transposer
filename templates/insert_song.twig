@@ -48,7 +48,7 @@
 	<p class="field-chords" id="field-chords">
 		<label>Chords:</label>
 		{% for i in 0..9 %}
-		<input name="chords[{{ i }}]" type="text" size="2" pattern="^([ABCDEFG]#?b?)([mM45679]*|dim)$"> 
+		<input name="chords[{{ i }}]" type="text" size="2" pattern="^([ABCDEFG]#?b?)([mM45679]*|7?dim)$"> 
 		{% endfor %}
 	</p>
 
@@ -157,6 +157,7 @@ $(function()
 		(function (chords) {
 			chordInputs.forEach(input => 
 			{
+				/** @see Probablemente la solución a #130 haya que ponerla aquí */
 				if (!input.value.length) return;
 
 				if (chords.indexOf(input.value) > -1)
