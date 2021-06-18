@@ -6312,7 +6312,7 @@ INSERT INTO `song_chord` VALUES (1122,'Em',1);
 INSERT INTO `song_chord` VALUES (1122,'G',2);
 INSERT INTO `song_chord` VALUES (1122,'Bm',3);
 INSERT INTO `song_chord` VALUES (1122,'A',4);
-INSERT INTO `song_chord` VALUES (1123,'Dm9',0);
+INSERT INTO `song_chord` VALUES (1123,'Dm5',0);
 INSERT INTO `song_chord` VALUES (1123,'Gm',1);
 INSERT INTO `song_chord` VALUES (1123,'A7',2);
 INSERT INTO `song_chord` VALUES (1123,'D',3);
@@ -6721,4 +6721,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-17 23:27:27
+-- Dump completed on 2021-06-18 12:25:33
