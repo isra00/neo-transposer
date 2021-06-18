@@ -43,9 +43,10 @@ class ChordPrinterItalian extends ChordPrinter
 		}
 
 		//Add initial space if attributes are numbers or dim
-		if (preg_match('/^([0-9]|dim)/', $attributes))
+		if (preg_match('/([0-9]|dim)/', $attributes, $match))
 		{
-			$attributes = " $attributes";
+			//$attributes = " " . $match;
+			$attributes = str_replace($match[1], " " . $match[1], $attributes);
 		}
 
 		return $fundamental . $attributes;
