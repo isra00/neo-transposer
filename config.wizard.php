@@ -102,12 +102,37 @@ SONG
 		),
 	),
 
+	'it'	=> array(
+		'lowest' => array(
+			'id_song'		=> 1066,
+			'override_highest_note'	=> 'F2',
+			'song_contents'	=> <<<SONG
+%0                  %1
+JAHVÈ, TU SEI IL MIO DIO
+
+          %0
+IO TI ESALTERÒ.
+SONG
+		),
+
+		'highest' => array(
+			'id_song'		=> 1114,
+			'song_contents'	=> <<<SONG
+%0                     %1     %2
+SE IL SIGNORE NON COSTRUISCE LA CASA,
+
+  %3                    %0
+INVANO LAVORANO I COSTRUTTORI
+SONG
+		),
+	),
+
 	'standard_voices'	=> array(
-		'male_high'		 => array('C#2', 'F#3'),
-		'male'			 => array('B1',	 'E3'),
-		'male_low'		 => array('A1',	 'D3'),
-		'female'		 => array('E1',	 'A2'),
-		'female_high'	 => array('F#1', 'C2'),
-		'female_low'	 => array('D1',	 'G2'),
+		'male_high'		=> array('C#2', 'F#3'),
+		'male'			=> array('B1',	 'E3'),
+		'male_low'		=> array('A1',	 'D3'),
+		'female'			=> array('E1',	 'A2'),
+		'female_high'	=> array('F#1', 'C2'),
+		'female_low'	=> array('D1',	 'G2'),
 	),
 );
