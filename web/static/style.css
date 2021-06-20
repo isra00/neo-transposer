@@ -2236,6 +2236,10 @@ td.red {
 
 @media only screen and (max-width: 20rem) {
 
+	.landing-info p.with-number {
+		display: block;
+	}
+	
 	.pre-song .inside {
 		font-size: 1em;
 	}
@@ -2274,10 +2278,6 @@ td.red {
 /********************************* VERY TINY *********************************/
 
 @media only screen and (max-width: 25rem) {
-
-	.landing-info p.with-number {
-		display: block;
-	}
 
 	.show-voice-chart a span {
 		display: none;
