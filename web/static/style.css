@@ -1983,6 +1983,13 @@ td.red {
 		padding: 0 1em .5em;
 	}
 
+	.lang-switch-top a {
+		text-transform: uppercase;
+	}
+		.lang-switch-top a span {
+			display: none;
+		}
+
 	.page-login .mkt {
 		background: url(img/mkt-small.jpg) right 0 no-repeat;
 		background-size: auto auto;

@@ -12,7 +12,9 @@
 {% if not external %}
 	<nav class="lang-switch-top">
 	{% for locale, lang in languages %}
-		<a class="flag-{{ locale }} {% if locale == app.locale %}active{% endif %}" href="{{ path(current_route, {'_locale': locale}) }}">{{ lang.name }}</a>
+		<a class="flag-{{ locale }} {% if locale == app.locale %}active{% endif %}" hreflang="{{ locale }}" href="{{ path(current_route, {'_locale': locale}) }}">
+		{{ lang.name|slice(0,3) }}<span>{{ lang.name|slice(3) }}</span>
+		</a>
 	{% endfor %}
 	</nav>
 {% endif %}
