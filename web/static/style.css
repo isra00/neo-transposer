@@ -586,6 +586,10 @@ a.link-all-report {
 		color: #555;
 		margin-top: 1em;
 	}
+	.landing-info p.with-number {
+		display: flex;
+		align-items: start;
+	}
 	.landing-info i {
 		font-style: normal;
 		background: gray;
@@ -2270,6 +2274,10 @@ td.red {
 /********************************* VERY TINY *********************************/
 
 @media only screen and (max-width: 25rem) {
+
+	.landing-info p.with-number {
+		display: block;
+	}
 
 	.show-voice-chart a span {
 		display: none;
