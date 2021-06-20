@@ -642,6 +642,10 @@ a.link-all-report {
 		background-position: 1em .8em;
 		padding-left: 4.8em;
 	}
+	.people-compatible-info.tip a {
+		display: inline-block;
+	}
+
 .people-compatible-info.star {
 	background-image: url(img/people-star.svg);
 }
@@ -2048,6 +2052,7 @@ td.red {
 		.page-book .tip h3 {
 			background: url(img/dialog-information.gif) left top no-repeat;
 			background-size: auto 1.2em;
+			padding-left: 1.3em;
 		}
 
 	.tip.new {
