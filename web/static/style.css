@@ -1925,6 +1925,11 @@ td.red {
 	display: inline-block; 
 }
 
+
+/*
+ ***************************   > 40   (ONLY BIG)   ***************************
+ */
+
 /*
  * Most of browsers load the background image even though in the mobile media
  * query they are disabled. We restrict to big screens to avoid this. It's
@@ -1946,7 +1951,10 @@ td.red {
 	}
 }
 
-/******************************************************************************/
+
+/*
+ ***********************   < 40   (GRAL MEDIUM & SMALL) ***********************
+ */
 
 @media only screen and (max-width: 40rem) {
 
@@ -2232,20 +2240,10 @@ td.red {
 		}
 }
 
-/******************************************************************************/
 
-@media only screen and (max-width: 20rem) {
-
-	.landing-info p.with-number {
-		display: block;
-	}
-	
-	.pre-song .inside {
-		font-size: 1em;
-	}
-}
-
-/******************************************************************************/
+/*
+ ***************************   > 33 < 40   (MEDIUM)  **************************
+ */
 
 @media only screen and (min-height: 33rem) and (max-width: 40rem) {
 
@@ -2275,7 +2273,10 @@ td.red {
 	}
 }
 
-/********************************* VERY TINY *********************************/
+
+/*
+ *****************************   < 25   (SMALL)   *****************************
+ */
 
 @media only screen and (max-width: 25rem) {
 
@@ -2327,4 +2328,20 @@ td.red {
 			padding-top: 0;
 		}
 
+}
+
+
+/*
+ ******************************   < 20   (TINY)   *****************************
+ */
+
+@media only screen and (max-width: 20rem) {
+
+	.landing-info p.with-number {
+		display: block;
+	}
+
+	.pre-song .inside {
+		font-size: 1em;
+	}
 }
