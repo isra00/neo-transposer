@@ -12,7 +12,7 @@ El cantor, especialmente el novato o con pocos conocimientos musicales, se ve in
 
  * No interferir en el carisma y costumbres del Camino.
  * No interferir en mi vocación.
- * Acceso universal: la aplicación se puede usar fácilmente desde todo tipo de dispositivos y conexiones, incluidos los precarios medios de África.
+ * Acceso universal: la aplicación se puede usar fácilmente desde todo tipo de dispositivos y conexiones, incluidos los precarios medios de África. Por eso es tecnología web abierta y no app nativa Android/iOS: https://blog.codinghorror.com/app-pocalypse-now/
  * Approach pedagógico: facilidad de uso pero informando de qué se está haciendo. Uso de lenguaje apropiado. Promover uso del Resucitó oficial.
  * Dad gratis lo que gratis habéis recibido: La aplicación será siempre gratuita.
  * Simplicidad.
