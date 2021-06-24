@@ -40,7 +40,8 @@ nav.header {
 	}
 
 footer,
-.all-songs-report .report-actions {
+.all-songs-report .report-actions,
+.all-songs-report .toggle-transpositions {
 	display: none;
 }
 
