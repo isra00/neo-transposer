@@ -1328,6 +1328,15 @@ h2.step-1 {
 	font-size: .9em;
 }
 
+.toggle-transpositions {
+	margin-top: 1em;
+	text-align: center;
+}
+	.toggle-transpositions span {
+		display: block;
+	}
+
+
 .all-songs-report .songs-list,
 .all-songs-report .songs-list ul {
 	padding: 0;
@@ -1346,6 +1355,14 @@ h2.step-1 {
 	.all-songs-report .songs-list li {
 		padding: 0;
 	}
+		.all-songs-report .other {
+			display: none;
+		}
+
+		.all-songs-report .other.block {
+			display: block;
+		}
+
 		.all-songs-report .songs-list li li {
 			font-size: .9em;
 		}

@@ -447,6 +447,15 @@ return array(
 	'Transpositions'
 	=> 'Transpositions',
 
+	'Show alternative transpositions'
+	=> 'Onyesha transpositions badala',
+
+	'You have reported this transposition as fitting your voice'
+	=> 'Umethibitisha kodi hizi zinafaa yako',
+
+	'Assembly'
+	=> 'Kusanyiko',
+
 	//Manifesto
 	'Manifesto'
 	=> 'Tamko',

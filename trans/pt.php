@@ -448,6 +448,15 @@ return array(
 	'Transpositions'
 	=> 'transposições',
 
+	'Show alternative transpositions'
+	=> 'Mostrar transposições alternativas',
+
+	'You have reported this transposition as fitting your voice'
+	=> 'Você indicou a esta transposição como adequada à sua voz',
+
+	'Assembly'
+	=> 'Assembleia',
+
 	//Manifesto
 	'Manifesto'
 	=> 'Manifesto',
