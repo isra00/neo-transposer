@@ -2367,7 +2367,8 @@ td.red {
  ********************************   DARK MODE   ********************************
  */
 
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {*/
+@media DISABLED {
 
 	body {
 		color: #e1e1e1;
@@ -2381,8 +2382,9 @@ td.red {
 		color:  #e1e1e1;
 	}
 	input[type="text"], input[type="email"] {
-	    background-color: transparent;
+	    background-color: #333;
     	color: #e1e1e1;
+    	border-color: #888;
 	}
 	::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 		color: #666;
@@ -2403,9 +2405,12 @@ td.red {
 	}
 	.login-form,
 	.page-login .login-form {
-    	background-color: #222;
-    	box-shadow: 1px 1px 3px black;
-    }
+		background-color: transparent;
+		box-shadow: none;
+		border-left: 1px solid gray;
+		border-radius: 0;
+		padding-left: 1.5em;
+	}
 	.landing-info {
 		background: none;
 		padding-top: 0;
@@ -2432,11 +2437,14 @@ td.red {
 		}
 
 	/* Book */
+	.song-index li {
+		border-bottom-color: #444;
+	}
 	.song-index li a .black {
 		color: white;
 	}
-	.song-index li {
-		border-bottom-color: #444;
+	.song-index li a:active {
+		background: #333;
 	}
 	.link-all-report-wrapper {
 		box-shadow: none;
@@ -2487,7 +2495,8 @@ td.red {
 	}
 		.books li:hover {
 			background-color: #333;
-			box-shadow: 2px 2px 3px black;
+			box-shadow: none;
+			border-radius: 0;
 		}
 	.books li a small {
 		color:  #ccc;
@@ -2513,11 +2522,14 @@ td.red {
 	}
 
 	.teaser {
-		background: rgba(0,0,0,.8);
+		background: rgba(0,0,0,.6);
 	}
 		.teaser .inside .more-inside {
-			background: #222;
-			border-top-color: #444;
+			border-color: transparent;
+			background: linear-gradient(to bottom, rgba(30,30,30) 0%,rgba(10,10,10));
+			box-shadow: 1px 1px 5px black;
+			border-radius: .3em;
+			border: 3px solid #444;
 		}
 
 	/* Generic */
@@ -2538,6 +2550,16 @@ td.red {
 
 		.page-login .mkt h2 {
 			box-shadow: -3px 0 10px #444;
+		}
+		.login-form,
+		.page-login .login-form {
+			padding-left: .5em;
+			border: none;
+		}
+
+		.teaser .inside .more-inside p {
+			padding-left: .5em;
+			padding-right: .5em;
 		}
 
 		.transposition-feedback {
