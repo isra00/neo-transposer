@@ -1354,6 +1354,7 @@ h2.step-1 {
 	}
 	.all-songs-report .songs-list li {
 		padding: 0;
+		page-break-inside: avoid;
 	}
 		.all-songs-report .other {
 			display: none;
