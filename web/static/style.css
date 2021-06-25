@@ -841,7 +841,6 @@ a.link-all-report {
 		border: 1px solid #D32F2F;
 		list-style: none;
 		color: #444;
-		background: white;
 	}
 		#reasons-no li {
 			margin: .5em 0;
@@ -891,7 +890,7 @@ a.link-all-report {
 		width: 1.5rem;
 		font-size: .8em;
 		text-align: center;
-		border: 1px solid white;
+		border: 1px solid transparent;
 		/*border-top: .5em solid white;
 		border-bottom: .5em solid white;*/
 		color: transparent
@@ -2361,4 +2360,189 @@ td.red {
 	.pre-song .inside {
 		font-size: 1em;
 	}
+}
+
+
+/*
+ ********************************   DARK MODE   ********************************
+ */
+
+@media (prefers-color-scheme: dark) {
+
+	body {
+		color: #e1e1e1;
+		background-color: #111;
+	}
+	footer {
+		background-color: #222;
+		text-shadow: 1px 1px 0 black;
+	}
+	input {
+		color:  #e1e1e1;
+	}
+	input[type="text"], input[type="email"] {
+	    background-color: transparent;
+    	color: #e1e1e1;
+	}
+	::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+		color: #666;
+		opacity: 1; /* Firefox */
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		color: #666;
+	}
+	::-ms-input-placeholder { /* Microsoft Edge */
+		color: #666;
+	}
+
+	/* Login */
+	.page-login .mkt h2 {
+		background-color: rgba(0,0,0,.5);
+		color: #ccc;
+		text-shadow: 1px 1px 1px black;
+	}
+	.login-form,
+	.page-login .login-form {
+    	background-color: #222;
+    	box-shadow: 1px 1px 3px black;
+    }
+    .landing-info h3 {
+    	color: #888;
+    }
+    .landing-info i {
+    	color: black;
+    }
+    .disclaimer {
+    	color: #808080;
+    }
+
+    .wizard-nav,
+    .pre-song {
+    	background-color: #333;
+    	color: #e1e1e1;
+    	box-shadow: none;
+    }
+    	.pre-song .sound {
+    		background-color: #444;
+    	}
+
+	/* Book */
+	.song-index li a .black {
+		color: white;
+	}
+	.song-index li {
+		border-bottom-color: #444;
+	}
+	.link-all-report-wrapper {
+		box-shadow: 0 0 10px #777;
+	}
+	.song-index li h4 mark {
+		background-color: rgb(255, 247, 114, .7);
+	}
+	.tip {
+		background-color: #333;
+		color: #e1e1e1;
+	}
+	.encourage-feedback {
+		background-color: #333;
+		box-shadow: 1px 1px 3px black;
+	}
+	.encourage-feedback.achieved-minimum-fb {
+		background-color: #333;
+	}
+		.encourage-feedback .advice {
+			color: gray;
+		}
+
+	/* TransposeSong */
+	.transposition-feedback .answers button {
+		box-shadow: 1px 1px 5px black;
+	}
+	.transpose-song #detailed-feedback-dialog {
+		background-color: #333;
+	}
+		#detailed-feedback-dialog li:hover {
+			background-color: #444;
+		}
+
+	#reasons-no {
+		color: gray;
+	}
+
+	#voicechart-container {
+		background-color: transparent;
+	}
+
+	/* Books */
+	.books {
+		background-color: #222;
+	}
+	.books li {
+		border-top-color: #444;
+	}
+		.books li:hover {
+			background-color: #333;
+			box-shadow: 2px 2px 3px black;
+		}
+	.books li a small {
+		color:  #ccc;
+	}
+
+	/* Pages */
+	.static-page .main {
+		background-color: #1e1e1e;
+		box-shadow: 1px 1px 5px black;
+	}
+		.static-page .main h3 {
+			background-color: #333;
+			box-shadow: none;
+		}
+	.explanation.from-outside {
+		background-color: #333;
+	}
+
+	/* Other pages */
+
+	.page-user-voice .wizard-button {
+		background-color: #333;
+	}
+
+	.teaser {
+		background: rgba(0,0,0,.8);
+	}
+		.teaser .inside .more-inside {
+			background: #222;
+			border-top-color: #444;
+		}
+
+	/* Generic */
+	.btn-neutral {
+		box-shadow: 1px 1px 3px #888;
+	}
+		.btn-neutral:hover, .btn-neutral:active {
+			box-shadow: 2px 2px 3px #777;
+		}
+	.flatbutton {
+		background-color: transparent;
+	}
+	.flatbutton:hover {
+		box-shadow: 1px 1px 2px #444;
+	}
+
+	@media only screen and (max-width: 40rem) {
+
+		.page-login .mkt h2 {
+			box-shadow: -3px 0 10px #444;
+		}
+		.landing-info {
+			background: none;
+			padding-top: 0;
+		}
+
+		.transposition-feedback {
+			background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0, .8) 30px);
+		}
+
+	}
+
 }
