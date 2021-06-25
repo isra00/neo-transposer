@@ -9,7 +9,7 @@
 {% block page_class %}transpose-song{% endblock %}
 
 {% macro printTransposition(transposition, original_chords) -%}
-	<table class="transposition">
+	<table class="transposition {% if transposition.getAsBook %}as-book{% endif %}">
 		<thead>
 			<tr><th {% if not transposition.getAsBook %}colspan="{{ global.debug ? 4:3 }}"{% endif %}>
 				{{ transposition.chordsForPrint[0]|raw }}

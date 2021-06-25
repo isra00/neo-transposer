@@ -715,8 +715,8 @@ a.link-all-report {
 	.transposition .transposed span {
 		cursor: help;
 	}
-	.transposition .as-book {
-		font-size: .85em;
+	.transposition.as-book:first-child {
+		margin-bottom: 2em;
 	}
 
 .transpose-song #dark-bg {
@@ -2119,8 +2119,7 @@ td.red {
 	}
 		
 	/* TransposeSong */
-	.transposition,
-	.transposition:first-child {
+	.transposition {
 		margin: 1em auto;
 		float: none;
 		clear: both;
