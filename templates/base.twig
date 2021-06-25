@@ -31,21 +31,32 @@
 	<script>var ga = function() {}</script>
 	{%- else -%}
 	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+		(function () {
+		window.colorSchemePref = 'No Preference';
+		if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			window.colorSchemePref = 'Dark';
+		} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+			window.colorSchemePref = 'Light';
+			}
+		})();
 
-	  ga('create', '{{ app.neoconfig.analytics_id }}', 'auto');
-	  ga('set','anonymizeIp', true);
-	  {% if app.neouser.isLoggedIn -%}
-	  ga('set', '&uid', '{{ app.neouser.id_user }}');
-	  ga('set', 'dimension2', '{{ app.neouser.range.lowest|default('-') }}');
-	  ga('set', 'dimension3', '{{ app.neouser.range.highest|default('-') }}');
-	  ga('set', 'contentGroup1', '{{ app.locale }}');
-	  {%- endif %}
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-	  ga('send', 'pageview');
+		ga('create', '{{ app.neoconfig.analytics_id }}', 'auto');
+		ga('set','anonymizeIp', true);
+		{% if app.neouser.isLoggedIn -%}
+		ga('set', '&uid', '{{ app.neouser.id_user }}');
+		ga('set', 'dimension2', '{{ app.neouser.range.lowest|default('-') }}');
+		ga('set', 'dimension3', '{{ app.neouser.range.highest|default('-') }}');
+		ga('set', 'dimension5', window.colorSchemePref);
+		ga('set', 'contentGroup1', '{{ app.locale }}');
+		{%- endif %}
+
+		ga('send', 'pageview');
 	</script>
 	{%- endif %}
 
