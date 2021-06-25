@@ -2406,25 +2406,30 @@ td.red {
     	background-color: #222;
     	box-shadow: 1px 1px 3px black;
     }
-    .landing-info h3 {
-    	color: #888;
-    }
-    .landing-info i {
-    	color: black;
-    }
-    .disclaimer {
-    	color: #808080;
-    }
+	.landing-info {
+		background: none;
+		padding-top: 0;
+	}
+		.landing-info h3 {
+			color: #888;
+		}
+		.landing-info i {
+			color: black;
+		}
+	.disclaimer {
+		color: #808080;
+	}
 
-    .wizard-nav,
-    .pre-song {
-    	background-color: #333;
-    	color: #e1e1e1;
-    	box-shadow: none;
-    }
-    	.pre-song .sound {
-    		background-color: #444;
-    	}
+	.wizard-nav,
+	.pre-song {
+		background-color: #333;
+		color: #e1e1e1;
+		box-shadow: none;
+	}
+		.pre-song .sound {
+			background-color: #444;
+			box-shadow: none;
+		}
 
 	/* Book */
 	.song-index li a .black {
@@ -2434,7 +2439,7 @@ td.red {
 		border-bottom-color: #444;
 	}
 	.link-all-report-wrapper {
-		box-shadow: 0 0 10px #777;
+		box-shadow: none;
 	}
 	.song-index li h4 mark {
 		background-color: rgb(255, 247, 114, .7);
@@ -2533,10 +2538,6 @@ td.red {
 
 		.page-login .mkt h2 {
 			box-shadow: -3px 0 10px #444;
-		}
-		.landing-info {
-			background: none;
-			padding-top: 0;
 		}
 
 		.transposition-feedback {
