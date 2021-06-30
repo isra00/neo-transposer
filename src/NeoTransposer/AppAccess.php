@@ -8,11 +8,11 @@ namespace NeoTransposer;
 abstract class AppAccess
 {
 	/**
-	 * @var \Silex\Application
+	 * @var \NeoTransposer\NeoApp
 	 */
 	protected $app;
 
-	public function __construct(\Silex\Application $app)
+	public function __construct(\NeoTransposer\NeoApp $app)
 	{
 		$this->app = $app;
 	}
