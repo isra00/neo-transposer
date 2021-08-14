@@ -16,6 +16,7 @@ return [
 		2 => '/cantos-camino-neocatecumenal',
 		3 => '/songs-neocatechumenal-way',
 		4 => '/cantos-caminho-neocatecumenal',
+		5 => '/canti-cammino-neocatecumenale',
 	],
 	
 	'languages'	=> [
@@ -37,6 +38,11 @@ return [
 			'name'		=> 'Português',
 			'notation'	=> 'latin',
 			'file'		=> __DIR__ . '/trans/pt.php'
+		],
+		'it' => [
+			'name'		=> 'Italiano',
+			'notation'	=> 'latin',
+			'file'		=> __DIR__ . '/trans/it.php'
 		]
 	],
 

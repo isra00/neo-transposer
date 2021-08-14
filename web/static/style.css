@@ -97,6 +97,9 @@ button {
 .flag-pt {
 	background-image: url(img/flag-pt.gif);
 }
+.flag-it {
+	background-image: url(img/flag-it.png);
+}
 
 /*
  * HEADER
@@ -316,6 +319,9 @@ footer {
 	}
 	.lang-pt .encourage-feedback {
 		background-image: url(img/encourage-feedback-pt.png);
+	}
+	.lang-it .encourage-feedback {
+		background-image: url(img/encourage-feedback-it.png);
 	}
 
 	.encourage-feedback h2 {
@@ -1961,6 +1967,9 @@ td.red {
 	}
 	.page-login.lang-sw .mkt {
 		background-image: url(img/mkt-sw.jpg);
+	}
+	.page-login.lang-it .mkt {
+		background-image: url(img/mkt-it.jpg);
 	}
 	.page-login.lang-en .mkt,
 	.page-login.lang-pt .mkt {

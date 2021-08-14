@@ -1,509 +1,488 @@
 <?php
 
-return array(
+return [
 
-	//General
 	'Developed as <a href="%url%">free software</a> in Tanzania.'
-	=> '<a href="%url%">Software libre</a> desarrollado en Tanzania.',
+	=> '<a href="%url%">Software libero</a> sviluppato in Tanzania.', 
 
 	'Contact'
-	=> 'Contacto',
+	=> '', 
 
 	'Log-out'
-	=> 'Salir',
+	=> 'Uscire', 
 
 	'Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'
-	=> 'Neo-Transposer transporta automáticamente los cantos del Camino por ti, para que encajen perfectamente con tu voz.',
+	=> 'Neo-Transposer trasporta automaticamente i canti del Cammino per te, perché la tonalità  possa essere adatta alla tua voce.', 
 
 	'Transpose chords'
-	=> 'Transportar acordes',
+	=> 'Trasportare accordi', 
 
-	//Login
 	'Transpose the songs of the Neocatechumenal Way · Neo-Transposer'
-	=> 'Transportar los cantos del Camino · Neo-Transposer',
+	=> 'Trasporta i canti del Cammino · Neo-Transposer', 
 
 	'Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!'
-	=> 'Transportar los cantos del Camino automáticamente con Neo-Transposer. ¡Los acordes exactos para tu propia voz!',
+	=> 'Trasporta i canti del Cammino automaticamente con Neo-Transposer. Gli accordi esatti per la tua voce!', 
 
 	'<span>It\'s not hard to transpose a song. What is hard is</span> <span>to know to which key should I transpose it <strong>for my voice</strong>.</span>'
-	=> '<span>Lo difícil no es transportar el canto. Lo difícil es</span> <span>saber a qué tono debes transportarlo <strong>para tu voz</strong>.</span>',
+	=> '<span>Non è difficile trasportare un canto. Quello che è difficile è</span> <span>sapere a quale tonalità devono essere trasportati per essere <strong>adatti alla tua voce</strong>.</span>', 
 
 	'Neo-Transposer calculates the perfect transposition for each song of the Way based on your own voice. That simple. It also offers you alternatives to play the song with the easiest chords. No more complications!'
-	=> 'Neo-Transposer calcula, en base a <strong>tu propia voz</strong>, la transposición perfecta para cada canto del Camino. Además, te ofrece alternativas para poder tocar los cantos con los acordes más fáciles. ¡Se acabaron las complicaciones!',
+	=> 'Neo-Transposer calcola, in base alla tua voce, la trasposizione adatta per ogni canto del Cammino. In più ti offre alcune alternative perché tu possa suonare il canto attraverso gli accordi più semplici. Sono finiti tutti i tuoi problemi!', 
 
 	'Please, type your e-mail:'
-	=> 'Por favor, introduce tu e-mail:',
+	=> 'Per favore, introduci la tua e-mail:', 
 
 	'You mean'
-	=> 'Quieres decir',
+	=> 'Vuoi dire', 
 
 	'Enter'
-	=> 'Entrar',
+	=> 'Accedi', 
 
 	'That e-mail doesn\'t look good. Please, re-type it.'
-	=> 'Ese e-mail no tiene buena pinta. Por favor, revísalo.',
+	=> 'Questa e-mail non non è valida. Per favore, ricontrolla.', 
 
 	'The Captcha code is not valid. If you are human, please try again or update your browser to log-in.'
-	=> 'El código Captcha no es válido. Si eres humano, por favor inténtalo de nuevo o actualiza to navegador web.',
-	
+	=> 'Il codice Captcha non è valido. Se sei un umano, per favore riprova di nuovo o aggiorna la tua pagina web.', 
+
 	'How does it work?'
-	=> '¿Cómo funciona?',
+	=> 'Come funziona?', 
 
 	'First, you measure the limits of your voice by singing the chorus of a sing in different keys. It\'s a bit tiresome, but don\'t worry, you\'ll have to do it just once.'
-	=> 'Primero debes medir los límites de tu voz, cantando un estribillo en distintos tonos. Es un poco pesado, pero solo tienes que hacerlo una vez.',
+	=> 'Prima di tutto devi misurare i limiti della tua voce, cantando un ritornello in diversi toni. È un poco pesante ma lo dovrai fare solo una volta.', 
 
 	'After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.'
-	=> 'Después de medir tu voz, elige cualquier canto y Neo-Transposer calculará los acordes y la cejilla que te convienen.',
+	=> 'Dopo aver misurato la voce, scegli qualche canto e Neo-Transposer calcorerà gli accordi e il barré che ti convengono.', 
 
 	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not officially represent neither the Neocatechumenal Way nor its responsibles.'
-	=> 'Esta página web es iniciativa personal de un miembro del Camino Neocatecumenal pero NO representa oficialmente ni está afiliada de ningún modo al Camino Neocatecumenal o a sus responsables. El libro de cantos “Resucitó” es &copy; <a href="https://neocatechumenaleiter.org/historia/kiko-arguello/">Kiko Argüello</a> 2014.',
+	=> '', 
 
-	//User voice
 	'Your voice'
-	=> 'Tu voz',
+	=> 'La tua voce', 
 
 	'<span>I don\'t know</span> my voice range'
-	=> '<span>No conozco</span> mi tesitura de voz',
+	=> '<span>Non conosco</span> l\'estensione della mia voce.', 
 
 	'<span>I do know</span> my voice range'
-	=> '<span>Sí conozco</span> mi tesitura de voz',
+	=> '<span>Conoscono</span> l\'estensione della mia voce.', 
 
 	'Welcome to %software%'
-	=> 'Bienvenido a %software%',
+	=> 'Benvenuto a %software%', 
 
 	'This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.'
-	=> 'Este software calcula la transposición perfecta de cada canto para <em>tu</em> voz. Pero para ello, necesita saber tu tesitura.',
+	=> 'Questo softare calcola la traposizione perfetta di ciascun canto per la tua voce. Per fare questo è necessario sapere l\'estensione della tua voce.', 
 
 	'Lowest:'
-	=> 'Más grave:',
+	=> 'Più bassa:', 
 
 	'Highest:'
-	=> 'Más aguda:',
+	=> 'Pià alta:', 
 
 	'{1}octave|]1,Inf]octaves'
-	=> '{1}octava|]1,Inf]octavas',
+	=> '{1}ottava|]1,Inf]ottave', 
 
 	'oct'
-	=> 'oct',
+	=> 'ott', 
 
 	'If you don\'t know your highest and lowest note, click here'
-	=> 'Si no sabes tu nota mínima y máxima, haz click aquí',
+	=> 'Se non conosci la tua nota minima e massima, fai click qui.', 
 
 	'Continue'
-	=> 'Continuar',
+	=> 'Continuare', 
 
 	'Are you sure that is your real voice range? If you don\'t know, you can use the assistant to measure it.'
-	=> '¿Estás seguro de que esas son tus notas mínima y máxima? Si no sabes, puedes usar el asistente para medir tu voz.',
+	=> 'Sei sicuro che queste siano la tua nota minima e massima? Se non lo sai, puoi usare l\'assistente per misurare la tua voce.', 
 
 	'What is the voice range?'
-	=> '¿Qué es la tesitura de voz?',
+	=> 'Cosa è l\'estensione della voce?', 
 
 	'Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.'
-	=> 'Cada persona tiene una voz diferente: unos cantan más grave, otros más agudo. Conocer tu tesitura de voz es saber exactamente los límites de tu voz: a qué nota eres capaz de llegar por abajo (grave) y por arriba (agudo).',
+	=> 'Ogni persona ha una voce diversa. Alcuni cantano più grave altri più acuto. Conoscere l\'estensione vocale significa sapere esattamente i limiti della tua voce: qual è la nota più bassa (grave) e qual è la più alta (acuta) a cui puoi arrivare cantando con la tua voce.', 
 
-	//User Book
 	'Choose language'
-	=> 'Selecciona idioma',
+	=> 'Scegli la lingua', 
 
-	//Book
 	'Songs of the Neocatechumenal Way in %lang%'
-	=> 'Cantos del Camino Neocatecumenal en %lang%',
+	=> 'Canti del Cammino Neocatecumenale in %lang%', 
 
 	'Songs of the Neocatechumenal Way'
-	=> 'Cantos del Camino Neocatecumenal',
+	=> 'Canti del Cammino Neocatecumenale', 
 
 	'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.'
-	=> 'Cantos y salmos del Camino Neocatecumenal en %lang%. Con Neo-Transposer puedes transportarlos automáticamente para tu propia voz.',
+	=> 'Canti e salmi del Cammino Neocatecumenale in %lang%. Con Neo-Trasposer puoi trasportarli automaticamente per renderli adatti alla tua voce.', 
 
 	'Other languages'
-	=> 'Otros idiomas',
+	=> 'Altre lingue', 
 
 	'You have reported the proposed transposition as valid'
-	=> 'La transposición propuesta te ha funcionado',
+	=> 'La trasposizione proposta mi è servita', 
 
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
-	=> 'Inicia sesión para transportar automáticamente los acordes de los cantos del Camino Neocatecumenal.',
+	=> 'Accedi adesso per trasportare automaticamente gli accordi dei canti del Cammino Neocatecumenale.', 
 
 	'Download or print <small>All songs report</small>'
-	=> 'Descarga o imprime <small>Todos los cantos</small>',
+	=> 'Download o stampa <small>tutti i canti</small>', 
 
 	'<strong>NEW</strong>: Now that you have transposed the songs, another app can help you to choose the right songs for a celebration. Meet the <strong><a href="%url%">Lexicon of the Songbook</a></strong>.'
-	=> '<strong>NUEVO</strong>: ahora que ya tienes las transposiciones, esta otra aplicación te ayudará a elegir los cantos apropiados. Te presento el <strong><a href="%url%">Léxico del Resucitó</a></strong>.',
+	=> '<strong>Nuovo</strong>: ora che già hai le trasposizioni, questa nuova applicazione ti aiuterà a scegliere i canti appropriati. Ti presento il <strong><a href="%url%">Lexicon del Risuscitò</a></strong>.', 
 
 	'Something is going wrong'
-	=> 'Algo va mal',
+	=> 'Qualcosa sta andando storto', 
 
 	'Until now, almost all transpositions have <strong>not</strong> worked for you. Perhaps your voice range you set is not the actual one.'
-	=> 'Hasta ahora, casi todas las transposiciones <strong>no</strong> te han funcionado. Es posible que el rango vocal que has puesto no sea el tuyo realmente.',
+	=> 'Fino ad adesso, quasi tutte le trasposizioni <strong>non</strong> hanno funzionato. È possibile che l\'estensione vocale che hai messo non sia realmente il tuo.', 
 
 	'Try to <strong><a href="%url%">do again the voice test</a></strong>. That may improve your results. If not, just choose whether you have female or male voice and Neo-Transposer will set for you a standard voice range. That will make you get better transpoositions!'
-	=> 'Prueba a <strong><a href="%url%">hacer de nuevo la prueba de voz</a></strong>, y quizá eso mejore tus resultados. Si no, simplemente selecciona si tienes voz de hombre o mujer y Neo-Transposer buscará un rango vocal estándar. Esto te dará transposiciones que te funcionarán mejor!',
+	=> 'Prova a <strong><a href="%url%">rifare la prova di voce</a></strong>, questo potrebbe migliorare i tuoi risultati. Altrimenti, seleziona semplicemente se hai voce da uomo o da donna e Neo-Transposer cercherà per te una tonalità standard. Questo ti darà delle trasposizioni che funzioneranno meglio per te.', 
 
 	'<span>My voice is </span>female'
-	=> '<span>Tengo voz de </span>Mujer',
+	=> '<span>Ho una voce da </span>uomo', 
 
 	'<span>My voice is </span>male'
-	=> '<span>Tengo voz de </span>Hombre',
+	=> '<span>Ho una voce da </span>donna', 
 
 	'Quick search a song'
-	=> 'Búsqueda rápida',
+	=> 'Ricerca rapida', 
 
 	'Nothing found'
-	=> 'No encontrado',
+	=> 'Nessun risultato', 
 
-	//Encourage feedback
 	'Last step:'
-	=> 'Último paso:',
+	=> 'Ultimo passaggio:', 
 
 	'Verify with 2 songs that we have measured your voice accurately'
-	=> 'Verifica con 2 cantos que hemos medido tu voz correctamente',
+	=> 'Verifica con due canti che abbiamo misurato la tua voce correttamente', 
 
 	'Choose <strong>2</strong> songs from the list and try to sing them with the chords suited to your voice. Please, <strong>report whether or not it has worked</strong>, so that the system may improve your performance.'
-	=> 'Elige <strong>2</strong> cantos de la lista y prueba a cantarlos con los acordes adaptados a tu voz. Por favor, <strong>indica si has podido cantarlos</strong> para que el sistema se vaya adaptando.',
+	=> 'Scegli <strong>2 canti</strong> dalla lista e prova a cantarlo con gli accordi adattati alla tua voce. Per favore, <strong>indica se hai potuto cantarlo</strong>, cosicchè il sistema possa regolarsi.', 
 
 	'Oops! Ok, let\'s try again'
-	=> '¡Ups! Bueno, intentémoslo de nuevo',
+	=> 'Ops! Ok, proviamo di nuovo', 
 
 	'Please, try another song, and report whether the chords have worked for you.'
-	=> 'Por favor, intenta otro canto, indicando si los acordes propuestos te han ido bien.',
+	=> 'Per favore, prova con un altro canto, indicando se gli accordi proposti erano adatti per te.', 
 
 	'Verify 1 more song'
-	=> 'Verifica 1 canto más',
+	=> 'Verifica un altro canto', 
 
 	'Please, try one more, and <strong>report whether or not it has worked</strong> so that the system may improve your performance.'
-	=> 'Por favor, prueba uno más, e <strong>indica si has podido cantarlo</strong> para que el sistema mejore tus resultados.',
+	=> 'Per favore, provane un altro, e <strong>indica se hai potuto cantarlo</strong> affinchè il sistema migliori il suo risultato', 
 
 	'Nothing\'s perfect, but let\'s keep trying!'
-	=> 'Nada es perfecto, pero sigamos intentándolo',
+	=> 'Niente è perfetto, ma continuiamo a provare', 
 
 	'Well, it seems like one of the songs fits you, the other doesn\'t. You may try others, and I\'m sure they will go better!'
-	=> 'Parece que para uno de los cantos los acordes te sirven, y para otro no. Por favor, intenta otros cantos. ¡Seguro que irá mejor!',
+	=> 'Sembra che per un canto gli accordi ti aiutino e per un altro no. Per favore, prova con altri canti, sicuramente andrà meglio!', 
 
 	'Well, this is a bit embarrassing'
-	=> '¿Algo no va bien?',
+	=> 'Qualcosa non funziona?', 
 
 	'It seems like none of the songs you have reported has worked for you. Please try some more songs and if the problem still persists, I will propose you to change your voice range.'
-	=> 'Has reportado que los acordes no te favorecen en ninguno de los dos cantos. Por favor, prueba algunos otros, y si sigue sin funcionar, te propongo que vuelvas a medir tu voz.',
+	=> 'Hai indicato che gli accordi non ti aiutano in nessuno dei due canti. Per favore, prova con altri canti e se continua a non funzionare ti consiglio di misurare di nuovo la tua estensione vocale.',
 
 	'We\'re good to go!'
-	=> '¡Todo listo!',
+	=> 'Tutto pronto!', 
 
 	'All right! Those chords fit your voice like a charm. You may keep trying other songs and reporting feedback, whether it works or it doesn\'t. You\'re welcome!'
-	=> '¡Muy bien! Esos acordes se adaptan a tu voz como anillo al dedo. Puedes seguir probando otros cantos y enviando feedback, tanto si te ha funcionado como si no. ¡Bienvenido!',
+	=> 'Molto bene! Questi accordi si adattano alla tua voce, come un anello al dito. Puoi seguire provando altri canti, inviando un feedback, sia positivo che negativo. Benvenuto!', 
 
-	//TransposeSong
 	'%song% (Neocatechumenal Way)'
-	=> '%song% (Camino Neocatecumenal)',
+	=> '%song% (Cammino Neocatecumenale)', 
 
 	'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!'
-	=> '¡Transporta automáticamente los acordes de &quot;%song%&quot; (canto del Camino Neocatecumenal) para que puedas cantar sin estrés!',
+	=> 'Trasporta automaticamente gli accordi di &quot;%song%&quot; (canto del Cammino Neocatecumenale) per cantare senza stress!', 
 
 	'Your voice:'
-	=> 'Tu voz:',
+	=> 'La tua voce:', 
 
 	'Change'
-	=> 'Cambiar',
+	=> 'Cambiare', 
 
 	'These two transpositions match your voice (they are equivalent). The first one has easier chords:'
-	=> 'Estas dos transposiciones encajan con tu voz (son equivalentes). La primera tiene acordes más fáciles:',
+	=> 'Ci sono due possibili trasposizioni che si adattano alla tua voce (sono equivalenti). La prima ha degli accordi più semplici:', 
 
 	'Beware that this is the best key for your voice, but might not be the best one for the assembly.'
-	=> 'Ten en cuenta que este es el tono óptimo para tu voz, pero podría no ser el mejor para la asamblea.',
+	=> 'Tieni in conto che questo è la tonalità perfetta per la tua voce, però potrebbe non essere la migliore tonalità per l\'assemblea.', 
 
 	'with capo %n%'
-	=> 'con capo %n%',
+	=> 'Con barrè %n%', 
 
 	'no capo'
-	=> 'sin capo',
+	=> 'Senza barrè', 
 
 	'(same chords as in the book)'
-	=> '(mismos acordes que en el libro)',
+	=> '(stessi accordi del libro)', 
 
 	'This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:'
-	=> 'Esta otra transposición es un poco %difference%, pero tiene acordes más fáciles y puede venir bien a tu voz:',
+	=> 'Quest\'altra trasposizione è un po\' %difference%, però ha accordi più semplici e può adattarsi alla tua voce.', 
 
 	'higher'
-	=> 'más aguda',
+	=> 'più alta', 
 
 	'lower'
-	=> 'más grave',
+	=> 'più bassa', 
 
 	'Original chords:'
-	=> 'Original:',
+	=> 'Originale:', 
 
 	'Transposed:'
-	=> 'Transportado:',
+	=> 'Trasportato:', 
 
 	'Transposed for people:'
-	=> 'Transportado (asamblea):',
+	=> 'Trasportato (assemblea):', 
 
 	'Adjusted for you:'
-	=> 'Ajustado (tú):',
+	=> 'Aggiustato (tu):', 
 
 	'Adjusted for people:'
-	=> 'Ajustado (asamblea):',
+	=> 'Aggiustato (assemblea):', 
 
 	'Original for people:'
-	=> 'Original (asamblea):',
+	=> 'Originale (aseemblea):', 
 
 	'People standard:'
-	=> 'Rango de la asamblea:',
+	=> 'Estensione dell\'assemblea', 
 
 	'More'
-	=> 'Más',
+	=> 'Più', 
 
 	'Show voice chart'
-	=> 'Mostrar gráfica',
+	=> 'Mostra grafica', 
 
 	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
-	=> 'Neo-Transposer te ayuda a transportar automáticamente los acordes de <strong>%song%</strong> para que encajen con tu voz. ¡Escribe tu e-mail, sigue las instrucciones y tendrás todos los cantos del Camino Neocatecumenal transportados!',
+	=> 'Neo-Transposere ti aiuta a trasportare automaticamente gli accordi di <strong>%song%</strong> perché si adattino alla tua voce. Scrivi la tua e-mail, segui le istruzioni e avrai tutti i canti del Cammino Neocatecumenale trasportati.', 
 
 	'Yes'
-	=> 'Sí',
+	=> 'Si', 
 
 	'It has worked'
-	=> 'Ha funcionado',
+	=> 'Ha funzionato', 
 
 	'No'
-	=> 'No',
+	=> 'No', 
 
 	'It hasn\'t worked'
-	=> 'No ha funcionado',
+	=> 'Non ha funzionato', 
 
 	'Happy to know that! :-)'
-	=> '¡Me alegro! :-)',
+	=> 'Sono felice! :-)', 
 
 	'It seems you have not measured your voice properly. Please, <a href="%url%">follow this instructions</a>.'
-	=> 'Parece que no has medido bien tu voz. Por favor, <a href="%url%">sigue estas instrucciones</a>.',
+	=> 'Sembra che non hai misurato bene la tua voce. Per favore, <a href="%url%">segui queste istruzioni</a>.', 
 
 	'Maybe you didn\'t measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.'
-	=> 'Quizá no has medido bien tu voz. <a href="%url%">Haz click aquí para ir a la Prueba de Voz</a>.',
+	=> 'Forse non ha misurato bene la tua voce. <a href="%url%">Rifare la prova di voce</a>.', 
 
 	'Maybe you are not singing the song the same way it was analysed for the application'
-	=> 'Quizá no lo has cantado de la misma forma que ha sido analizado para esta aplicación.',
+	=> 'Forse non hai cantato il canto nella stessa modalità che questa applicazione prevede.', 
 
 	'Maybe you are not singing in the same tone as the guitar'
-	=> 'Quizá no estás cantando en el mismo tono que la guitarra.',
+	=> 'Forse non stai cantando nella stessa tonalità della chitarra.', 
 
 	'This other transposition, though a bit %difference%, may probably fit better the people of the assembly.'
-	=> 'Esta otra transposición, aunque un poco %difference%, probablemente es mejor para la voz de la asamblea. ',
+	=> 'Quest\'altra trasposizione, anche se un po\' %difference%, probabilmente è migliore per la voce dell\'assemblea.', 
 
 	'This other transposition, though a bit %difference%, fits well the people of the assembly.'
-	=> 'Esta otra transposición, aunque un poco %difference%, encaja con la voz de la asamblea.',
+	=> 'Quest\'altra tasposizione, anche se un po\' %difference%, si adatta meglio alla voce dell\'assemblea.', 
 
 	'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly.'
-	=> 'Los acordes indicados arriba son buenos para tu voz, pero seguramente demasiado agudos para la asamblea. Esta transposición es %difference%, aunque para algunos hermanos seguirá siendo aguda.',
+	=> 'Gli accordi sopra indicati sono buoni per la tua voce, però sicuramente sono troppo alti per l\'assemblea. Questa trasposizione è %difference%, ma per alcuni fratelli sarà ancora alta.', 
 
 	'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly.'
-	=> 'Los acordes indicados arriba son buenos para tu voz, pero seguramente demasiado graves para la asamblea. Esta transposición es %difference%, aunque para algunos hermanos seguirá siendo grave.',
+	=> 'Gli accordi sopra indicati sono buoni per la tua voce, però sicuramente sono troppo bassi per l\'assemblea. Questa trasposizione è %difference%, ma per alcuni fratelli sarà ancora bassa.', 
 
 	'And it has easier chords!'
-	=> '¡Y son acordes más fáciles!',
+	=> 'E sono accordi più facili!', 
 
 	'With these chords the assembly too will be able to sing the song comfortably.'
-	=> 'Con estos acordes, también la asamblea podrá cantar cómodamente el canto.',
+	=> 'Con questi accordi anche l\'assemblea potrà cantare tranquillamente il canto.', 
 
 	'Learn more'
-	=> 'Más información',
+	=> 'Più informazioni', 
 
 	'Which one has worked for you?'
-	=> '¿Cuál te ha funcionado?',
+	=> 'Quale ti ha funzionato?', 
 
 	'assembly'
-	=> 'asamblea',
+	=> 'assemblea', 
 
 	'Your session has expired. Please log-in and submit the feedback again.'
-	=> 'Tu sesión ha expirado. Por favor, inicia sesión y envía el feedback de nuevo.',
+	=> 'La tua sessione è terminata. Per favore, inizia una nuova sessione e invia il feedback di nuovo.', 
 
-	//Wizard common
 	'Re-start'
-	=> 'Reiniciar',
+	=> 'Ricominciare', 
 
 	'Exit Voice Test'
-	=> 'Salir de la Prueba de Voz',
+	=> 'Uscire da Prova di voce.', 
 
-
-	//Wizard first step
 	'Voice measure wizard'
-	=> 'Prueba de voz',
+	=> 'Prova di voce', 
 
 	'Follow these steps and the application will estimate your highest and lowest note. If you don\'t follow properly these steps you won\'t be able to use Neo-Transposer.'
-	=> 'Sigue los pasos a continuación y la aplicación estimará tu nota máxima y mínima. Si no sigues correctamente estos pasos no podrás usar Neo-Transposer.',
+	=> 'Segui i passi che seguono e l\'applicazione stimerà la tua nota massima e minima. Se non segui correttamente questi passi non potrai usare Neo-Transposer.', 
 
 	'Step 1'
-	=> 'Paso 1',
+	=> 'Passo 1', 
 
 	'To start, choose one of these options:'
-	=> 'Para empezar, selecciona una de las opciones:',
+	=> 'Per iniziare, seleziona una delle opzioni:', 
 
 	'I have <span>male</span> voice'
-	=> 'Tengo voz de <span>hombre</span>',
+	=> 'Ho una voce <span>maschile</span>', 
 
 	'I have <span>female</span> voice'
-	=> 'Tengo voz de <span>mujer</span>',
+	=> 'Ho una voce <span>femminile</span>', 
 
 	'My voice is higher than most of men'
-	=> 'Tengo voz más aguda que la mayoría de hombres',
+	=> 'Ho una voce più acuta della maggioranza degli uomini', 
 
 	'My voice is lower than most of men'
-	=> 'Tengo voz más grave que la mayoría de hombres',
+	=> 'Ho una voce più grave della maggioranza degli uomoni', 
 
 	'Neither higher nor lower than most of men / I don\'t know'
-	=> 'Ni más grave ni más aguda que la mayoría de los hombres / no sé',
+	=> 'Non è né più grave né più acuta della maggioranza degli uomini/ non so', 
 
 	'My voice is higher than most of women'
-	=> 'Tengo voz más aguda que la mayoría de mujeres',
+	=> 'Ho una voce più acuta della maggioranza delle donne', 
 
 	'My voice is lower than most of women'
-	=> 'Tengo voz más grave que la mayoría de mujeres',
+	=> 'Ho una voce più grave della maggioranza delle donne', 
 
 	'Neither higher nor lower than most of women / I don\'t know'
-	=> 'Ni más grave ni más aguda que la mayoría de las mujeres / no sé',
+	=> 'Non è né più grave né più acuta della maggioranza delle donne/ non so', 
 
 	'Next step &rarr;'
-	=> 'Siguiente paso &rarr;',
-
-	// Wizard empiric instructions
+	=> 'Prossimo passo &rarr;', 
 
 	'Step 2: time to sing!'
-	=> 'Paso 2: te toca cantar',
+	=> 'Passo 2: ti tocca cantare', 
 
 	'Now I will propose you to sing the chorus of a song in a certain key. Take your guitar and try to sing it in that key.'
-	=> 'Ahora te voy a proponer que cantes el estribillo de un canto en cierto tono. Debes coger la guitarra e intentar cantarlo en ese tono.',
+	=> 'Ora, ti propongo di cantare il ritornello di un canto in una certa tonalità. Devi prendere la chitarra e cercare di cantarlo in questa tonalità.', 
 
 	'If it is too low for you, click on “No, it\'s too low”. If you were able to sing it, click on “Yes”. Then, I will transpose the song so it will be a bit lower, and you should try again. We will keep repeating the exercise until you can\'t sing lower'
-	=> 'Si ves que te viene muy bajo, haz click en “No, es muy bajo”. Si has podido cantarlo, haz click en “Sí”. Transportaré el canto para que sea más bajo, y debes intentarlo de nuevo. Y seguiremos repitiendo el ejercicio hasta que ya no puedas cantar más bajo.',
+	=> 'Se vedi che risulta basso per la tua voce, fai click su "no, è troppo basso". Se hai potuto cantarlo, fai click su "Si". Trasporterò il canto affinchè sia più basso e dovrai riprovarlo. Continueremo a ripetere l\'esercizio fino a quando non potrai cantarlo più in basso.', 
 
 	'Try to do your best to sing with your lowest possible voice, since this test tries to find the limits of your voice.'
-	=> 'Trata de esforzarte para cantar con la voz más grave posible, ya que la prueba consiste en encontrar los límites de tu voz.',
+	=> 'Cerca di sforzarti a cantare con la voce più grave possibile, in quanto la prova consiste nel ricercare il limite della tua voce.', 
 
 	'Understood'
-	=> 'Entendido',
+	=> 'Capito', 
 
 	'seconds'
-	=> 'segundos',
+	=> 'Secondo', 
 
 	'Sing it like this:'
-	=> 'Así debes cantarlo:',
+	=> 'Così devi cantarlo:', 
 
-	//Wizard empiric: lowest note
 	'Step 2: let\'s find your lowest note'
-	=> 'Paso 2: busquemos tu nota más grave',
+	=> 'Passo 2: cerchiamo la nota più bassa alla quale può arrivare la tua voce', 
 
 	'Try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong>, with the given chords. Remember: you must sing it with low voice, but without going too low, or you won\'t be able to sing loud enough in the community!'
-	=> 'Intenta cantar el siguiente estribillo en <strong class="blink">%song_key% %song_capo%</strong> con los acordes siguientes. Recuerda: debes cantarlo por abajo, con voz grave, pero sin bajar demasiado, o no podrás cantar a un volumen aceptable.',
+	=> 'Prova  a cantare il ritornello seguente in <strong class="blink">%song_key% %song_capo%</strong> con questi accordi. Ricorda devi cantarlo con la voce più grave possibile, ma senza abbasare  la tonalità al punto da non poter cantare a un volume accettabile.', 
 
 	'Could you sing it?'
-	=> '¿Has podido cantarlo?',
+	=> 'Hai potuto cantarlo?', 
 
 	'No, it\'s too low'
-	=> 'No, es muy bajo',
+	=> 'No, è troppo basso', 
 
 	'Well, that is a bit strange'
-	=> 'Eso es un poco extraño',
+	=> 'Questo è un po\' strano', 
 
 	'According to the voice you have chosen in the previous step, that tone should not be too low. Maybe you should go back and choose better which type of voice is yours... or maybe simply repeat the test making sure that you are singing in the same tone as the guitar.'
-	=> 'Según la voz que has definido, ese tono no debería ser demasiado bajo para ti. Quizá debas volver atrás y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba asegurándote de que cantas en el mismo tono que la guitarra.',
+	=> 'Secondo la voce che hai definito, questa tonalità non dovrebbe essere troppo bassa per te. Forse devi tornare a misurareil tuo tipo di voce. O forse devi semplicemente ripetere la prova assicurandoti di cantare alla stessa tonalità che stai eseguendo con la chitarra.', 
 
 	'← Change my voice type'
-	=> '← Cambiar mi tipo de voz',
+	=> '← Cambiare il mio tipo di voce', 
 
 	'Repeat the test'
-	=> 'Repetir la prueba',
+	=> 'Ripetere la prova', 
 
 	'If you have chosen properly your voice in the previous step and you have sung the previous attempts in the right tone with low voice, then it is practically impossible that you can sing lower than that. Maybe you should go back to the previous step and choose better your voice type:'
-	=> 'Si has elegido correctamente tu voz en el paso anterior y has cantado en todas las pruebas en el tono correcto con voz grave, es prácticamente imposible que puedas cantar más grave de eso. Quizá debas volver al paso anterior y elegir mejor qué tipo de voz es la tuya:',
+	=> 'Se hai scelto correttamente la tua voce nel passo precedente e hai cantato in tutte le prove nella tonalità corretta con voce grave, è praticamente impossibile che tu possa cantare più in basso di questo. Forse devi tornare al passo precedente e scegliere meglio il tuo tipo di voce:', 
 
 	'...or if you are sure that this super-low voice is yours, just go to the next step:'
-	=> '...o si estás seguro de que esa voz de ultratumba es la tuya, pasa al siguiente paso:',
+	=> '…o se sei sicuro che questa voce dell\'oltretomba è la tua, continua con il seguente passo.', 
 
 	'Go to the next step →'
-	=> 'Ir al siguiente paso →',
-
-	//Wizard empiric: highest note
+	=> 'Vai al seguente passo →', 
 
 	'Step 3: let\'s find your highest note'
-	=> 'Paso 3: busquemos tu nota más aguda',
+	=> 'Passo 3: cerchiamo la nota più acuta alla quale può arrivare la tua voce', 
 
 	'Now try to sing the following chorus in <strong class="blink">%song_key% %song_capo%</strong> with the following chords. Remember: you must sing it <strong>with high voice</strong>, but without doing falsetto! Make a little effort, we are almost done!'
-	=> 'Por último, intenta cantar el siguiente estribillo en <strong class="blink">%song_key% %song_capo%</strong> con los acordes siguientes. Recuerda: debes cantarlo <strong>por arriba, con voz aguda</strong>, ¡pero sin falsete! Esfuérzate, ¡ya casi hemos terminado!',
+	=> 'Infine, prova  a cantare il ritornello seguente in <strong class="blink">%song_key% %song_capo%</strong> con questi accordi. Ricorda devi cantarlo <strong>con la voce più acuta possibile</strong>, ma senza arrivare al falsetto. Forza! Abbiamo quasi finito.', 
 
 	'No, it\'s too high'
-	=> 'No, es muy alto',
+	=> 'No, è troppo alto', 
 
 	'According to the voice you have defined, this tone should not be too high for you. Maybe you should go back to the first step and choose better your voice type... or maybe just repeat the test making sure you are singing in the same tone as the guitar.'
-	=> 'Según la voz que has definido, este tono no debería ser demasiado alto para ti. Quizá debas volver al primer paso y elegir mejor qué tipo de voz es la tuya... o quizá simplemente repetir la prueba cantando en el mismo tono que la guitarra.',
+	=> 'Secondo la voce che hai definito, questa tonalità dovrebbe essere troppo alta per te. Forse devi tornare a misurareil tuo tipo di voce. O forse devi semplicemente ripetere la prova assicurandoti di cantare alla stessa tonalità che stai eseguendo con la chitarra.', 
 
 	'That\'s not possible...'
-	=> 'Eso no es posible...',
+	=> 'Questo non è possibile…', 
 
 	'You have clicked "Yes" many times, but I don\'t think it\'s really possible that you can sing that high. Please verify that you are following properly the steps, or click on "Finish here" if you want to finish the test.'
-	=> 'Has hecho click en "Sí" muchas veces, pero no es probable que puedas cantar tan alto. Por favor, comprueba que has seguido correctamente los pasos, o haz click en "Terminar aquí" si quieres finalizar la prueba.',
+	=> 'Hai fatto click su "Si" molte volte, ma è improbabile que tu possa cantare così alto. Per favore controlla che hai seguito correttamente i passi precedenti o fai click in "Termina qui" se vuoi terminare la prova.', 
 
 	'Finish here'
-	=> 'Terminar aquí',
+	=> 'Termina qui', 
 
-	//All Songs Report
 	'All transpositions for your voice'
-	=> 'Todas las transposiciones para tu voz',
+	=> 'Tutte le trasposizioni per la tua voce.', 
 
 	'(as in the book)'
-	=> '(como en el libro)',
+	=> '(come nel libro)', 
 
 	'C = capo. If not written, no capo should be used.'
-	=> 'C = capo (cejilla). Si no aparece significa que no se debe usar capo (cejilla).',
+	=> 'C=capotasto (barrè). Se non appare significa che non devi usare il capotasto.', 
 
 	'Print'
-	=> 'Imprimir',
+	=> 'Stampare', 
 
 	'Download'
-	=> 'Descargar',
+	=> 'Scaricare', 
 
 	'Transpositions'
-	=> 'Transposiciones',
+	=> 'Trasposizioni', 
 
-	//Manifesto
 	'Manifesto'
-	=> 'Manifiesto',
+	=> 'Manifesto', 
 
-	//People-compatible info
 	'People-compatible transpositions'
-	=> 'Transposiciones compatibles con la asamblea',
+	=> 'Trasposizioni compatibili con l\'assemblea', 
 
-	//Generic error pages
 	'Request error'
-	=> 'Error en la petición',
+	=> 'Errore nella richiesta', 
 
 	'Server error'
-	=> 'Error en el servidor',
+	=> 'Errore nel server', 
 
 	'Error %code%'
-	=> 'Error %code%',
+	=> 'Errore %code%', 
 
-	//error-404
 	'Page not found'
-	=> 'Página no encontrada',
+	=> 'Pagina non trovata', 
 
 	'The address you have requested does not exist, or has been removed.'
-	=> 'La dirección que buscas no existe, o ha sido eliminada.',
+	=> 'L\'inidirizzo che stai cercando non esiste, o è stato eliminato.', 
 
 	'You may have clicked on a broken link, or perhaps you wrote the URL manually and made a mistake.'
-	=> 'Quizá hiciste click en un enlace que tenía un error, o quizá has escrito a mano la dirección y te has confundido.',
+	=> 'Forse hai fatto click in un link che aveva un errore, o forse hai scritto a mano l\'indirizzo e ti sei confuso.', 
 
 	'Try to go back to the <a href="%url%">home page</a>.'
-	=> 'Prueba a volver al <a href="%url%">inicio</a>.',
+	=> 'Prova a tornare all\'<a href="%url%">inizio</a>.', 
 
-	//error-500
 	'Internal error'
-	=> 'Error interno',
+	=> 'Errore interno', 
 
 	'Sorry! It\'s not your fault, but Neo-Transposer has just failed internally.'
-	=> 'Lo siento. No ha sido culpa tuya, pero Neo-Transposer ha fallado por dentro.',
+	=> 'Mi spiace. Non è stata colpa tua, però Neo-Transposer ha avuto un errore interno.', 
 
 	'The administrator has been notified and will try to solve this as soon as possible.'
-	=> 'El administrador ya está sobre aviso e intentará arreglarlo cuanto antes.',
+	=> 'L\'amministratore già è stato avvisato e cercherà di risolvere al più presto.', 
 
-	//External login finish
 	'Login succesful - returning to the app.'
-	=> 'Sesión iniciada correctamente. Volviendo a la aplicación.'
-);
+	=> 'Sessione iniziata correttamente. Ritornando all\'applicazione.',
+
+];
