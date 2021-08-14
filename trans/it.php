@@ -6,7 +6,7 @@ return [
 	=> '<a href="%url%">Software libero</a> sviluppato in Tanzania.', 
 
 	'Contact'
-	=> '', 
+	=> 'Contatto', 
 
 	'Log-out'
 	=> 'Uscire', 
