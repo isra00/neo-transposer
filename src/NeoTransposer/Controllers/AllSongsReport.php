@@ -4,13 +4,23 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
-use \NeoTransposer\Model\TransposedSong;
+use \NeoTransposer\Model\{TransposedSong, PeopleCompatibleCalculation};
 
 /**
  * Transpose Song page: transposes the given song for the singer's voice range.
  */
 class AllSongsReport
 {
+	public $peopleCompatibleMicroMessages = [
+		PeopleCompatibleCalculation::ALREADY_COMPATIBLE 	=> '',
+		PeopleCompatibleCalculation::WIDER_THAN_SINGER 		=> '',
+		PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE 	=> '',
+		PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE 	=> '',
+		PeopleCompatibleCalculation::ADJUSTED_WELL 			=> ' ★',
+		PeopleCompatibleCalculation::ADJUSTED_WIDER 		=> ' ☆',
+		PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER 	=> '',
+	];
+
 	/**
 	 * HTML report. If dl query string arg is present, the page is offered to
 	 * download, included the styles inside the HTML.
@@ -71,16 +81,19 @@ class AllSongsReport
 	{
 
 		$sql = <<<SQL
-SELECT id_song
+SELECT song.id_song, page, title, transposition_feedback.worked, transposition_feedback.transposition
 FROM song 
-JOIN book USING (id_book) 
-WHERE locale = ? 
-AND NOT song.id_song = 118
-AND NOT song.id_song = 319
-ORDER BY page
+JOIN book USING (id_book)
+LEFT JOIN transposition_feedback
+	ON transposition_feedback.id_song = song.id_song
+	AND transposition_feedback.id_user = ?
+WHERE
+	locale = ?
+	AND NOT song.id_song IN (118, 319)
+ORDER BY page, title
 SQL;
 
-		$ids = $app['db']->fetchAll($sql, array($app['locale']));
+		$ids = $app['db']->fetchAll($sql, [$app['neouser']->id_user, $app['locale']]);
 
 		$songs = array();
 
@@ -89,7 +102,18 @@ SQL;
 			$song = TransposedSong::create($id['id_song'], $app);
 			$song->transpose();
 
+			$song->peopleCompatibleStatusMicroMsg = $this->peopleCompatibleMicroMessages[$song->peopleCompatibleStatus];
+			$song->feedbackWorked = $id['worked'];
+			$song->feedbackTransposition = $id['transposition'];
+
+			/** @see https://github.com/isra00/neo-transposer/issues/129#issuecomment-867496701 */
+			if ("peopleCompatible" == $song->feedbackTransposition && empty($song->peopleCompatible))
+			{
+				$song->feedbackTransposition = "centered1";
+			}
+
 			//Remove bracketed text from song title (used for clarifications)
+			/** @todo Remove this: bracketed text differentiates variants! */
 			$song->song->title = preg_replace('/(.)\[.*\]/', '$1', $song->song->title);
 
 			$songs[] = $song;

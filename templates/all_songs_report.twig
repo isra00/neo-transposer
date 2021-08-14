@@ -1,5 +1,40 @@
 {% extends "base.twig" %}
 
+{% macro printTransposition(transposition, song, prefix, typeOfTransposition) %}
+
+	{% if (typeOfTransposition == "centered1") %}
+		{% set other = (song.feedbackTransposition != null and song.feedbackTransposition != "centered1") %}
+	{% else %}
+		{% set other = (not (song.feedbackTransposition == typeOfTransposition)) %}
+	{% endif %}
+
+	<li class="trans-{{ typeOfTransposition }} {% if other %}other{% endif %}">
+
+		{% if (song.feedbackTransposition == typeOfTransposition) %}
+		<span class="feedback green" title="{% trans %}You have reported this transposition as fitting your voice{% endtrans %}">✔</span>
+		{% endif %}
+
+		<span class="prefix">{{ prefix }}</span>
+
+		{% if transposition.capo %}
+			<span class="capo">C{{ transposition.capo }}</span>
+		{% endif %}
+
+		{% if transposition.asBook %}
+			{% trans %}(as in the book){% endtrans %}
+		{% else %}
+			{% for i, original_chord in song.song.originalChordsForPrint -%}
+				<span class="chord-pair">{{ original_chord|raw }}
+					&rarr;
+					{{ transposition.chordsForPrint[i]|raw }}
+				</span>
+				{% if not loop.last %} ; {% endif %}
+			{%- endfor %}
+		{% endif %}
+	</li>
+{% endmacro %}
+{% import _self as self %}
+
 {% block header_extra %}
 
 	{% if print_css_code %}
@@ -26,6 +61,10 @@
 	<a href="{{ path('all_songs_report', {'dl': 1}) }}" class="btn-neutral btn-icon icon-download">{% trans %}Download{% endtrans %}</a>
 </nav>
 
+<nav class="toggle-transpositions">
+	<span><input type="checkbox" id="show-others" onclick="toggle()"><label for="show-others">{% trans %}Show alternative transpositions{% endtrans %}</label></span>
+</nav>
+
 <p class="note">{% trans %}C = capo. If not written, no capo should be used.{% endtrans %}</p>
 
 <div>
@@ -39,25 +78,13 @@
 
 			<ul>
 {% block songTranspositions %}
-			{% for transposition in song.transpositions|slice(0,1) -%}
-				<li>
-					{% if transposition.capo %}
-						<span class="capo">C{{ transposition.capo }}</span>
-					{% endif %}
-
-					{% if transposition.asBook %}
-						{% trans %}(as in the book){% endtrans %}
-					{% else %}
-						{% for i, original_chord in song.song.originalChordsForPrint -%}
-							<span class="chord-pair">{{ original_chord|raw }}
-								&rarr;
-								{{ transposition.chordsForPrint[i]|raw }}
-							</span>
-							{% if not loop.last %} ; {% endif %}
-						{%- endfor %}
-					{% endif %}
-				</li>
+			{% for transposition in song.transpositions|slice(0,2) -%}
+				{{ self.printTransposition(transposition, song, null, "centered" ~ loop.index ) }}
 			{%- endfor %}
+
+			{% if song.peopleCompatible %}
+				{{ self.printTransposition(song.peopleCompatible, song, "[" ~ "Assembly"|trans ~ song.peopleCompatibleStatusMicroMsg ~ "]", "peopleCompatible") }}
+			{%- endif %}
 {% endblock %}
 			</ul>
 		</li>
@@ -69,6 +96,16 @@
 {{ self.loadJsFramework() }}
 
 <script>
+
+function toggle()
+{
+	var aAllElements = document.getElementsByClassName("other");
+	for (e in aAllElements)
+	{
+		if (typeof aAllElements[e].classList != "undefined")
+			aAllElements[e].classList.toggle("block");
+	}
+}
 
 $(function() {
 
@@ -83,6 +120,11 @@ $(function() {
 		location.href = "{{ path('all_songs_report', {'dl': 1}) }}";
 		ga('send', 'event', 'AllSongsReport', 'Download');
 	});
+
+	if (document.getElementById("show-others").checked)
+	{
+		toggle();
+	}
 });
 </script>
 
