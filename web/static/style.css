@@ -320,6 +320,9 @@ footer {
 	.lang-pt .encourage-feedback {
 		background-image: url(img/encourage-feedback-pt.png);
 	}
+	.lang-it .encourage-feedback {
+		background-image: url(img/encourage-feedback-it.png);
+	}
 
 	.encourage-feedback h2 {
 		margin-top: 0;
