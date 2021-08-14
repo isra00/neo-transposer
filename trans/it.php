@@ -210,10 +210,10 @@ return [
 	=> 'Tieni in conto che questo è la tonalità perfetta per la tua voce, però potrebbe non essere la migliore tonalità per l\'assemblea.', 
 
 	'with capo %n%'
-	=> 'Con barrè %n%', 
+	=> 'con barrè %n%', 
 
 	'no capo'
-	=> 'Senza barrè', 
+	=> 'senza barrè', 
 
 	'(same chords as in the book)'
 	=> '(stessi accordi del libro)', 
