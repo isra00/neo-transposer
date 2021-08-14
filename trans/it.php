@@ -17,6 +17,7 @@ return [
 	'Transpose chords'
 	=> 'Trasportare accordi', 
 
+	//Login
 	'Transpose the songs of the Neocatechumenal Way · Neo-Transposer'
 	=> 'Trasporta i canti del Cammino · Neo-Transposer', 
 
@@ -56,6 +57,7 @@ return [
 	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not officially represent neither the Neocatechumenal Way nor its responsibles.'
 	=> '', 
 
+	//User voice
 	'Your voice'
 	=> 'La tua voce', 
 
@@ -98,9 +100,11 @@ return [
 	'Everyone has a different voice: some people sing lower pitch, some higher. To know your voice range is to know exactly the limits of your voice: which lower and higher notes you are able to reach.'
 	=> 'Ogni persona ha una voce diversa. Alcuni cantano più grave altri più acuto. Conoscere l\'estensione vocale significa sapere esattamente i limiti della tua voce: qual è la nota più bassa (grave) e qual è la più alta (acuta) a cui puoi arrivare cantando con la tua voce.', 
 
+	//User Book
 	'Choose language'
 	=> 'Scegli la lingua', 
 
+	//Book
 	'Songs of the Neocatechumenal Way in %lang%'
 	=> 'Canti del Cammino Neocatecumenale in %lang%', 
 
@@ -146,6 +150,7 @@ return [
 	'Nothing found'
 	=> 'Nessun risultato', 
 
+	//Encourage feedback
 	'Last step:'
 	=> 'Ultimo passaggio:', 
 
@@ -185,6 +190,7 @@ return [
 	'All right! Those chords fit your voice like a charm. You may keep trying other songs and reporting feedback, whether it works or it doesn\'t. You\'re welcome!'
 	=> 'Molto bene! Questi accordi si adattano alla tua voce, come un anello al dito. Puoi seguire provando altri canti, inviando un feedback, sia positivo che negativo. Benvenuto!', 
 
+	//TransposeSong
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Cammino Neocatecumenale)', 
 
@@ -308,12 +314,15 @@ return [
 	'Your session has expired. Please log-in and submit the feedback again.'
 	=> 'La tua sessione è terminata. Per favore, inizia una nuova sessione e invia il feedback di nuovo.', 
 
+	//Wizard common
 	'Re-start'
 	=> 'Ricominciare', 
 
 	'Exit Voice Test'
 	=> 'Uscire da Prova di voce.', 
 
+
+	//Wizard first step
 	'Voice measure wizard'
 	=> 'Prova di voce', 
 
@@ -374,6 +383,7 @@ return [
 	'Sing it like this:'
 	=> 'Così devi cantarlo:', 
 
+	//Wizard empiric: lowest note
 	'Step 2: let\'s find your lowest note'
 	=> 'Passo 2: cerchiamo la nota più bassa alla quale può arrivare la tua voce', 
 
@@ -428,6 +438,7 @@ return [
 	'Finish here'
 	=> 'Termina qui', 
 
+	//All Songs Report
 	'All transpositions for your voice'
 	=> 'Tutte le trasposizioni per la tua voce.', 
 
@@ -449,9 +460,11 @@ return [
 	'Manifesto'
 	=> 'Manifesto', 
 
+	//People-compatible info
 	'People-compatible transpositions'
 	=> 'Trasposizioni compatibili con l\'assemblea', 
 
+	//Generic error pages
 	'Request error'
 	=> 'Errore nella richiesta', 
 
@@ -461,6 +474,7 @@ return [
 	'Error %code%'
 	=> 'Errore %code%', 
 
+	//error-404
 	'Page not found'
 	=> 'Pagina non trovata', 
 
@@ -473,6 +487,7 @@ return [
 	'Try to go back to the <a href="%url%">home page</a>.'
 	=> 'Prova a tornare all\'<a href="%url%">inizio</a>.', 
 
+	//error-500
 	'Internal error'
 	=> 'Errore interno', 
 
@@ -482,6 +497,7 @@ return [
 	'The administrator has been notified and will try to solve this as soon as possible.'
 	=> 'L\'amministratore già è stato avvisato e cercherà di risolvere al più presto.', 
 
+	//External login finish
 	'Login succesful - returning to the app.'
 	=> 'Sessione iniziata correttamente. Ritornando all\'applicazione.',
 
