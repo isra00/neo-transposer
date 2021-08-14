@@ -489,7 +489,7 @@ return array(
 
 	//error-500
 	'Internal error'
-	=> 'Kosa la kofundi la ndani',
+	=> 'Kosa la kifundi ya ndani',
 
 	'Sorry! It\'s not your fault, but Neo-Transposer has just failed internally.'
 	=> 'Samahani! Sio kosa lako, ila Neo-Transposer imepata kosa la kifundi la ndani.',
