@@ -451,7 +451,7 @@ return array(
 	=> '(como en el libro)',
 
 	'C = capo. If not written, no capo should be used.'
-	=> 'C = capo (cejilla). Si no aparece significa que no se debe usar capo (cejilla).',
+	=> 'C = capo (cejilla). Si no aparece significa que no se debe usar el capo.',
 
 	'Print'
 	=> 'Imprimir',
@@ -461,6 +461,15 @@ return array(
 
 	'Transpositions'
 	=> 'Transposiciones',
+
+	'Show alternative transpositions'
+	=> 'Mostrar transposiciones alternativas',
+
+	'You have reported this transposition as fitting your voice'
+	=> 'Has marcado esta transposición como apropiada para tu voz',
+
+	'Assembly'
+	=> 'Asamblea',
 
 	//Manifesto
 	'Manifesto'

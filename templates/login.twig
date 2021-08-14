@@ -12,7 +12,9 @@
 {% if not external %}
 	<nav class="lang-switch-top">
 	{% for locale, lang in languages %}
-		<a class="flag-{{ locale }} {% if locale == app.locale %}active{% endif %}" href="{{ path(current_route, {'_locale': locale}) }}">{{ lang.name }}</a>
+		<a class="flag-{{ locale }} {% if locale == app.locale %}active{% endif %}" hreflang="{{ locale }}" href="{{ path(current_route, {'_locale': locale}) }}">
+		{{ lang.name|slice(0,3) }}<span>{{ lang.name|slice(3) }}</span>
+		</a>
 	{% endfor %}
 	</nav>
 {% endif %}
@@ -84,8 +86,8 @@
 
 			<h3>{% trans %}How does it work?{% endtrans %}</h3>
 
-			<p><i>1</i> {% trans %}First, you measure the limits of your voice by singing the chorus of a sing in different keys. It's a bit tiresome, but don't worry, you'll have to do it just once.{% endtrans %}</p>
-			<p><i>2</i> {% trans %}After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.{% endtrans %}</p>
+			<p class="with-number"><span><i>1</i></span> {% trans %}First, you measure the limits of your voice by singing the chorus of a sing in different keys. It's a bit tiresome, but don't worry, you'll have to do it just once.{% endtrans %}</p>
+			<p class="with-number"><span><i>2</i></span> {% trans %}After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.{% endtrans %}</p>
 
 			{#
 			<p>Cada persona tiene un tono de voz, más agudo o más grave. A
