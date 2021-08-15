@@ -13,7 +13,8 @@
         "geoip2/geoip2": "~2.5",
         "silex/web-profiler": "^2.0",
         "php": "^7.3",
-        "lib-curl": "*"
+        "lib-curl": "*",
+        "matthiasmullie/minify": "^1.3"
     },
 
     "autoload": {
