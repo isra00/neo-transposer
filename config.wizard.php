@@ -131,8 +131,8 @@ SONG
 		'male_high'		=> array('C#2', 'F#3'),
 		'male'			=> array('B1',	 'E3'),
 		'male_low'		=> array('A1',	 'D3'),
-		'female'			=> array('E1',	 'A2'),
-		'female_high'	=> array('F#1', 'C2'),
+		'female'		=> array('E1',	 'A2'),
+		'female_high'	=> array('F#1',  'B2'),
 		'female_low'	=> array('D1',	 'G2'),
 	),
 );
