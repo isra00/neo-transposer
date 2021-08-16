@@ -457,6 +457,16 @@ return [
 	'Transpositions'
 	=> 'Trasposizioni', 
 
+	'Show alternative transpositions'
+	=> 'Mostra trasposizioni alternative',
+
+	'You have reported this transposition as fitting your voice'
+	=> 'Hai segnato questa trasposizione como adatta alla tua voce',
+
+	'Assembly'
+	=> 'Assemblea',
+
+	//Manifesto
 	'Manifesto'
 	=> 'Manifesto', 
 
