@@ -55,7 +55,7 @@ return [
 	=> 'Dopo aver misurato la voce, scegli qualche canto e Neo-Transposer calcorerà gli accordi e il barré che ti convengono.', 
 
 	'This website is a personal initiative of a member of the Neocatechumenal Way, but it does not officially represent neither the Neocatechumenal Way nor its responsibles.'
-	=> '', 
+	=> 'Questo sito web è iniziativa personale di un membro del Cammino Neocatecumenale però né rappresenta ufficialmente né è affiliata in nessun modo al Cammino Neocatecumenale o ai suoi responsabili. Il libro dei Canti \"Risuscitò\" è © Kiko Argüello 2020.', 
 
 	//User voice
 	'Your voice'
