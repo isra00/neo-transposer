@@ -65,7 +65,7 @@ return [
 	=> '<span>Non conosco</span> l\'estensione della mia voce.', 
 
 	'<span>I do know</span> my voice range'
-	=> '<span>Conoscono</span> l\'estensione della mia voce.', 
+	=> '<span>Conosco</span> l\'estensione della mia voce.', 
 
 	'Welcome to %software%'
 	=> 'Benvenuto a %software%', 
@@ -276,7 +276,7 @@ return [
 	=> 'Sembra che non hai misurato bene la tua voce. Per favore, <a href="%url%">segui queste istruzioni</a>.', 
 
 	'Maybe you didn\'t measure your voice properly. <a href="%url%">Click here to go to the Wizard</a>.'
-	=> 'Forse non ha misurato bene la tua voce. <a href="%url%">Rifare la prova di voce</a>.', 
+	=> 'Forse non hai misurato bene la tua voce. <a href="%url%">Rifare la prova di voce</a>.', 
 
 	'Maybe you are not singing the song the same way it was analysed for the application'
 	=> 'Forse non hai cantato il canto nella stessa modalità che questa applicazione prevede.', 
@@ -345,7 +345,7 @@ return [
 	=> 'Ho una voce più acuta della maggioranza degli uomini', 
 
 	'My voice is lower than most of men'
-	=> 'Ho una voce più grave della maggioranza degli uomoni', 
+	=> 'Ho una voce più grave della maggioranza degli uomini', 
 
 	'Neither higher nor lower than most of men / I don\'t know'
 	=> 'Non è né più grave né più acuta della maggioranza degli uomini/ non so', 
