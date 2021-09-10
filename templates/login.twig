@@ -36,11 +36,11 @@
 
 		{% macro login_form(error_msg, redirect) %}
 		<form method="post" action="{{ path('login', {'redirect': redirect, '_locale': app.locale}) }}" class="login-form" id="login-form">
-			<div class="error">{{ error_msg }}</div>
 			
 			<div class="field block full-width">
 				<label for="email">{% trans %}Please, type your e-mail:{% endtrans %}</label>
-				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required onkeyup="mcheck(this)" pattern="[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?">
+				<input type="email" name="email" id="email" value="{{ post.email }}" autofocus required onkeyup="mcheck(this)" onchange="validate(this)" pattern="[a-zA-Z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?">
+				<div class="field-error" id="error">{{ error_msg }}</div>
 				<div id="mcheck"></div>
 			</div>
 			<div class="field block full-width">
@@ -62,9 +62,31 @@
 		<script src="{{ global.request.basepath }}/static/mailcheck-1.1.2.min.js"></script>
 
 		<script>
+
+		document.addEventListener('invalid', (function () {
+			return function (e) {
+				e.preventDefault();
+				validate(document.getElementById("email"));
+				document.getElementById("email").focus();
+			};
+		})(), true);
+
+		function validate(inputElement)
+		{
+			if (inputElement.validity.patternMismatch)
+			{
+				document.getElementById("error").innerHTML = "{% trans %}That e-mail doesn't look good. Please, re-type it.{% endtrans %}"
+			}
+			else
+			{
+				document.getElementById("error").innerHTML = "";
+			}
+		}
+
 		function mcheck(inputElement)
 		{
-			if (document.getElementById("email").validity.valid)
+
+			if (inputElement.validity.valid)
 			{
 				Mailcheck.run({
 					email: inputElement.value,
@@ -74,6 +96,7 @@
 					}
 				});
 			}
+			return false;
 		}
 		</script>
 
