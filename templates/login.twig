@@ -90,12 +90,12 @@
 
 		function mcheck(inputElement)
 		{
-
 			if (inputElement.validity.valid)
 			{
 				Mailcheck.run({
 					email: inputElement.value,
 					suggested: function(suggestion) {
+						validate(document.getElementById("email"));
 						document.getElementById("mcheck").style.display = "block";
 						document.getElementById("mcheck").innerHTML = "{% trans %}You mean{% endtrans %} <a href='javascript:void(0)' onclick=\"document.getElementById('email').value='" + suggestion.full + "'; this.parentNode.style.display='none';\">" + suggestion.full + "</a>?";
 					}
