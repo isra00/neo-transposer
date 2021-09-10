@@ -23,26 +23,31 @@
 	{% import 'base.twig' as self %}
 	{{ self.loadJsFramework() }}
 
-	{% if not global.debug %}
+	{% if global.debug %}
 	<script>
 	$(function() {
 
-		var iTimeOut = 5,
-			oCountDown = document.getElementById("seconds");
+		/** @see https://github.com/isra00/neo-transposer/issues/158 */
+		setTimeout(function() {
 
-		$("#submit").attr("disabled", "disabled");
+			var iTimeOut = 5,
+				oCountDown = document.getElementById("seconds");
 
-		setInterval(function () {
-			var current = parseInt(oCountDown.innerHTML);
-			current--;
-			oCountDown.innerHTML = current;
+			$("#submit").attr("disabled", "disabled");
 
-			if (current < 1)
-			{
-				$(document.getElementById("submit")).removeAttr("disabled");
-				$(document.getElementById("countdown")).css("visibility", "hidden")
-			}
-		}, 1000);
+			window.intervalButtonOk = setInterval(function () {
+				var current = parseInt(oCountDown.innerHTML);
+				current--;
+				oCountDown.innerHTML = current;
+
+				if (current < 1)
+				{
+					$(document.getElementById("submit")).removeAttr("disabled");
+					$(document.getElementById("countdown")).css("visibility", "hidden");
+					clearInterval(intervalButtonOk);
+				}
+			}, 1000);
+		}, 500);
 	});
 	</script>
 	{% endif %}
