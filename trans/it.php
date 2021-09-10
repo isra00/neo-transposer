@@ -62,10 +62,10 @@ return [
 	=> 'La tua voce', 
 
 	'<span>I don\'t know</span> my voice range'
-	=> '<span>Non conosco</span> l\'estensione della mia voce.', 
+	=> '<span>Non conosco</span> l\'estensione della mia voce', 
 
 	'<span>I do know</span> my voice range'
-	=> '<span>Conosco</span> l\'estensione della mia voce.', 
+	=> '<span>Conosco</span> l\'estensione della mia voce', 
 
 	'Welcome to %software%'
 	=> 'Benvenuto a %software%', 
@@ -86,7 +86,7 @@ return [
 	=> 'ott', 
 
 	'If you don\'t know your highest and lowest note, click here'
-	=> 'Se non conosci la tua nota minima e massima, fai click qui.', 
+	=> 'Se non conosci la tua nota minima e massima, fai click qui', 
 
 	'Continue'
 	=> 'Continuare', 
@@ -136,7 +136,7 @@ return [
 	=> 'Fino ad adesso, quasi tutte le trasposizioni <strong>non</strong> hanno funzionato. È possibile che l\'estensione vocale che hai messo non sia realmente il tuo.', 
 
 	'Try to <strong><a href="%url%">do again the voice test</a></strong>. That may improve your results. If not, just choose whether you have female or male voice and Neo-Transposer will set for you a standard voice range. That will make you get better transpoositions!'
-	=> 'Prova a <strong><a href="%url%">rifare la prova di voce</a></strong>, questo potrebbe migliorare i tuoi risultati. Altrimenti, seleziona semplicemente se hai voce da uomo o da donna e Neo-Transposer cercherà per te una tonalità standard. Questo ti darà delle trasposizioni che funzioneranno meglio per te.', 
+	=> 'Prova a <strong><a href="%url%">rifare la prova di voce</a></strong>, questo potrebbe migliorare i tuoi risultati. Altrimenti, seleziona semplicemente se hai voce da uomo o da donna e Neo-Transposer cercherà per te una tonalità standard. Questo ti darà delle trasposizioni che funzioneranno meglio per te!', 
 
 	'<span>My voice is </span>female'
 	=> '<span>Ho una voce da </span>uomo', 
@@ -219,7 +219,7 @@ return [
 	=> '(stessi accordi del libro)', 
 
 	'This other transposition is a bit %difference%, but it has easier chords and may also fit your voice:'
-	=> 'Quest\'altra trasposizione è un po\' %difference%, però ha accordi più semplici e può adattarsi alla tua voce.', 
+	=> 'Quest\'altra trasposizione è un po\' %difference%, però ha accordi più semplici e può adattarsi alla tua voce:', 
 
 	'higher'
 	=> 'più alta', 
@@ -255,7 +255,7 @@ return [
 	=> 'Mostra grafica', 
 
 	'Neo-Transposer helps you to automatically transpose the chords of <strong>%song%</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!'
-	=> 'Neo-Transposere ti aiuta a trasportare automaticamente gli accordi di <strong>%song%</strong> perché si adattino alla tua voce. Scrivi la tua e-mail, segui le istruzioni e avrai tutti i canti del Cammino Neocatecumenale trasportati.', 
+	=> 'Neo-Transposere ti aiuta a trasportare automaticamente gli accordi di <strong>%song%</strong> perché si adattino alla tua voce. Scrivi la tua e-mail, segui le istruzioni e avrai tutti i canti del Cammino Neocatecumenale trasportati!', 
 
 	'Yes'
 	=> 'Si', 
@@ -279,10 +279,10 @@ return [
 	=> 'Forse non hai misurato bene la tua voce. <a href="%url%">Rifare la prova di voce</a>.', 
 
 	'Maybe you are not singing the song the same way it was analysed for the application'
-	=> 'Forse non hai cantato il canto nella stessa modalità che questa applicazione prevede.', 
+	=> 'Forse non hai cantato il canto nella stessa modalità che questa applicazione prevede', 
 
 	'Maybe you are not singing in the same tone as the guitar'
-	=> 'Forse non stai cantando nella stessa tonalità della chitarra.', 
+	=> 'Forse non stai cantando nella stessa tonalità della chitarra', 
 
 	'This other transposition, though a bit %difference%, may probably fit better the people of the assembly.'
 	=> 'Quest\'altra trasposizione, anche se un po\' %difference%, probabilmente è migliore per la voce dell\'assemblea.', 
@@ -319,7 +319,7 @@ return [
 	=> 'Ricominciare', 
 
 	'Exit Voice Test'
-	=> 'Uscire da Prova di voce.', 
+	=> 'Uscire da Prova di voce', 
 
 
 	//Wizard first step
@@ -378,7 +378,7 @@ return [
 	=> 'Capito', 
 
 	'seconds'
-	=> 'Secondo', 
+	=> 'secondi', 
 
 	'Sing it like this:'
 	=> 'Così devi cantarlo:', 
@@ -412,7 +412,7 @@ return [
 	=> 'Se hai scelto correttamente la tua voce nel passo precedente e hai cantato in tutte le prove nella tonalità corretta con voce grave, è praticamente impossibile che tu possa cantare più in basso di questo. Forse devi tornare al passo precedente e scegliere meglio il tuo tipo di voce:', 
 
 	'...or if you are sure that this super-low voice is yours, just go to the next step:'
-	=> '…o se sei sicuro che questa voce dell\'oltretomba è la tua, continua con il seguente passo.', 
+	=> '…o se sei sicuro che questa voce dell\'oltretomba è la tua, continua con il seguente passo:', 
 
 	'Go to the next step →'
 	=> 'Vai al seguente passo →', 
@@ -440,7 +440,7 @@ return [
 
 	//All Songs Report
 	'All transpositions for your voice'
-	=> 'Tutte le trasposizioni per la tua voce.', 
+	=> 'Tutte le trasposizioni per la tua voce', 
 
 	'(as in the book)'
 	=> '(come nel libro)', 
