@@ -439,8 +439,8 @@ return array(
 	'C = capo. If not written, no capo should be used.'
 	=> 'C = braçadeira. Se não estiver escrito, não use braçadeira.',
 
-	'Print'
-	=> 'Imprimir',
+	'Print/PDF'
+	=> 'Imprimir/PDF',
 
 	'Download'
 	=> 'Download',

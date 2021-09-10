@@ -57,7 +57,7 @@
 </p>
 
 <nav class="report-actions">
-	<a href="javascript:void(0)" class="btn-neutral btn-icon icon-print">{% trans %}Print{% endtrans %}</a>
+	<a href="javascript:void(0)" class="btn-neutral btn-icon icon-print">{% trans %}Print/PDF{% endtrans %}</a>
 	<a href="{{ path('all_songs_report', {'dl': 1}) }}" class="btn-neutral btn-icon icon-download">{% trans %}Download{% endtrans %}</a>
 </nav>
 
@@ -108,6 +108,11 @@ function toggle()
 }
 
 $(function() {
+
+	if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1 && navigator.platform.toLowerCase().indexOf("android") > -1)
+	{
+		$(".icon-print").hide();
+	}
 
 	$(".icon-print").click(function(e) {
 		ga('send', 'event', 'AllSongsReport', 'Print');

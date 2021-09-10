@@ -438,8 +438,8 @@ return array(
 	'C = capo. If not written, no capo should be used.'
 	=> 'C = capo. Kama haijaandikwa, maana yake haitumiki.',
 
-	'Print'
-	=> 'Chapa',
+	'Print/PDF'
+	=> 'Chapisha/PDF',
 
 	'Download'
 	=> 'Pakua',

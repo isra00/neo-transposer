@@ -448,8 +448,8 @@ return [
 	'C = capo. If not written, no capo should be used.'
 	=> 'C=capotasto (barrè). Se non appare significa che non devi usare il capotasto.', 
 
-	'Print'
-	=> 'Stampare', 
+	'Print/PDF'
+	=> 'Stampare/PDF', 
 
 	'Download'
 	=> 'Scaricare', 

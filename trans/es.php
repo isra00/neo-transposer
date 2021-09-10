@@ -453,8 +453,8 @@ return array(
 	'C = capo. If not written, no capo should be used.'
 	=> 'C = capo (cejilla). Si no aparece significa que no se debe usar el capo.',
 
-	'Print'
-	=> 'Imprimir',
+	'Print/PDF'
+	=> 'Imprimir/PDF',
 
 	'Download'
 	=> 'Descargar',
