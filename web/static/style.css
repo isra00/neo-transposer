@@ -577,6 +577,11 @@ a.link-all-report {
 			text-decoration: underline;
 			font-weight: bold;
 		}
+	.field-error {
+		line-height: 130%;
+		margin-top: .1em;
+		font-style: italic;
+	}
 
 .landing-info {
 	background: url(img/bottom-shadow.svg) center top no-repeat;
@@ -1706,6 +1711,16 @@ input[type=email] {
 	border-radius: .2em;
 }
 
+input[type=text]:invalid,
+input[type=email]:invalid {
+	outline: 2px solid #D32F2F;
+}
+
+input[type=text]:valid,
+input[type=email]:valid {
+	outline: 2px solid #090;
+}
+
 /* Generic */
 .center {
 	text-align: center;
@@ -1829,6 +1844,7 @@ td.green {
 }
 
 .error, 
+.field-error, 
 .red {
 	color: #D32F2F;
 }
