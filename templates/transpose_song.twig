@@ -305,7 +305,8 @@ NT = {
 
 	openChordChartDialog: function(event)
 	{
-		var chordName 			= event.target.parentNode.dataset.chord,
+		var hTarget 			= $(event.target).closest("td.transposed")[0],
+			chordName 			= hTarget.dataset.chord,
 			chordChartImg		= document.getElementById('chord-chart'),
 			dialog 				= document.getElementById('chord-chart-dialog'),
 			chordChartCaption 	= document.getElementById('chord-chart-caption'),
@@ -325,13 +326,13 @@ NT = {
 			chordChartImg.dataset.urlpattern.replace('@', chordName.replace('#', 's'))
 		);
 
-		chordChartImg.setAttribute('alt', event.target.innerHTML);
+		chordChartImg.setAttribute('alt', hTarget.innerHTML);
 		chordChartImg.addEventListener('load', function() {
 			chordChartImg.style.visibility = 'visible';
 			dialog.style.width = chordChartImg.offsetWidth + 'px';
 		});
 
-		chordChartCaption.innerHTML = event.target.innerHTML;
+		chordChartCaption.innerHTML = hTarget.innerHTML;
 
 		if (isTouchScreen)
 		{
@@ -341,8 +342,8 @@ NT = {
 		}
 
 		// Position the dialog next to the chord.
-		var dialogTop  = event.target.parentNode.offsetTop + event.target.parentNode.offsetHeight;
-			dialogLeft = event.target.parentNode.getBoundingClientRect().left + event.target.parentNode.offsetWidth;
+		var dialogTop  = hTarget.getBoundingClientRect().top,
+			dialogLeft = hTarget.getBoundingClientRect().left + hTarget.getBoundingClientRect().width;
 
 		dialog.style.position 	= 'fixed';
 		dialog.style.margin 	= '0';
@@ -368,6 +369,7 @@ NT = {
 
 		event.target.addEventListener('mouseout', function() {
 			dialog.style.display = 'none';
+			chordChartImg.src = ''; //Avoid showing the previous one while loading
 			chordChartImg.style.visibility = 'hidden';
 		});
 	},
