@@ -23,7 +23,7 @@
 	{% import 'base.twig' as self %}
 	{{ self.loadJsFramework() }}
 
-	{% if global.debug %}
+	{% if not global.debug %}
 	<script>
 	$(function() {
 
