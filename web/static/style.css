@@ -1713,12 +1713,14 @@ input[type=email] {
 
 input[type=text]:invalid,
 input[type=email]:invalid {
-	outline: 2px solid #D32F2F;
+	outline: 1px solid #D32F2F;
+	border: 0;
 }
 
 input[type=text]:valid,
 input[type=email]:valid {
-	outline: 2px solid #090;
+	outline: 1px solid #090;
+	border: 0;
 }
 
 /* Generic */
