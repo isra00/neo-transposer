@@ -4,6 +4,11 @@
 	{% if not global.debug and not app.neoconfig.disable_recaptcha %}
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 	{% endif %}
+
+	{% for id, book in app.books%}
+	<link rel="alternate" hreflang="{{ book.locale }}" href="{{ app.absoluteBasePath }}{{ path("login", {'_locale': book.locale}) }}" />
+	{% endfor %}
+
 {% endblock %}
 
 {% block page_class %}page-login{% endblock %}
