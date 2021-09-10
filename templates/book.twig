@@ -228,7 +228,8 @@
 			var eQuickSearch = document.getElementById("quick-search"),
 				eSongList = document.getElementsByClassName("song-index")[0],
 				isTouchScreen = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
-				aElementsToHide = $(".link-all-report").add(".tip").add("footer");
+				aElementsToHide = $(".link-all-report").add(".tip").add("footer"),
+				isItalian = document.getElementsByTagName("html")[0].lang == "it";
 
 			eQuickSearch.value = "";
 
@@ -265,6 +266,16 @@
 					{
 						aElementsToHide.hide();
 
+						var sSearchStringWithDiacritics = applyDiacritics(sSearchString, "regex");
+
+						//Optional apostrophe before every "e"
+						if (isItalian)
+						{
+							sSearchStringWithDiacritics = sSearchStringWithDiacritics.replaceAll("(?:e|", "'?(?:e|");
+						}
+
+						oRegExp = new RegExp("(" + sSearchStringWithDiacritics + ")", "ig");
+
 						$(".song-index li").each(function()
 						{
 							this.style.display = 'none';
@@ -272,8 +283,6 @@
 
 							//Remove previous highlights to have clean text
 							eTitle.innerHTML = eTitle.innerHTML.replace(/<\/?mark>/ig, "");
-
-							oRegExp = new RegExp("(" + applyDiacritics(sSearchString, "regex") + ")", "ig");
 
 							if (eTitle.innerText.search(oRegExp) != -1)
 							{
