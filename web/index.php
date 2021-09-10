@@ -138,7 +138,14 @@ $app->get('/{_locale}/manifesto', function() use ($app)
 
 $app->get('/{_locale}/people-compatible-transpositions', function() use ($app)
 {
-	return $app->render('pages/people-compatible-info.' . $app['locale'] . '.twig', array(
+	$templateFile = 'pages/people-compatible-info.' . $app['locale'] . '.twig';
+
+	if (!file_exists($app['neoconfig']['templates_dir'] . '/' . $templateFile))
+	{
+		$templateFile = 'pages/people-compatible-info.en.twig';
+	}
+
+	return $app->render($templateFile, array(
 		'page_title' 	=> $app->trans('People-compatible transpositions'),
 	));
 })->assert('_locale', $validLocales)
