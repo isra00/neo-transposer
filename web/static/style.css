@@ -881,7 +881,6 @@ a.link-all-report {
 	max-width: 100%;
 	position: relative;
 	overflow-x: scroll;
-	background: white;
 }
 
 .voicechart {
@@ -2505,10 +2504,6 @@ td.red {
 
 	#reasons-no {
 		color: gray;
-	}
-
-	#voicechart-container {
-		background-color: transparent;
 	}
 
 	/* Books */
