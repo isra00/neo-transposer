@@ -19,6 +19,7 @@ class AllSongsReport
 		PeopleCompatibleCalculation::ADJUSTED_WELL 			=> ' ★',
 		PeopleCompatibleCalculation::ADJUSTED_WIDER 		=> ' ☆',
 		PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER 	=> '',
+		PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA 	=> '',
 	];
 
 	/**
