@@ -156,13 +156,14 @@ class NeoApp extends Application
 				'charset'	=> $this['neoconfig']['db']['charset']
 			),
 		));
-		
+
 		//Must be called before session_start()
 		session_set_cookie_params(
 			2592000, 						//Lifetime: 1 month
 			'/',							//Path
 			$_SERVER['HTTP_HOST'],			//Domain
-			!$this['neoconfig']['debug']	//Secure
+			!$this['neoconfig']['debug'],	//Secure
+			true							//httponly
 		);
 
 		$this->register(new \Silex\Provider\SessionServiceProvider());
