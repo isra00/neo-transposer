@@ -16,7 +16,9 @@ class NeoApp extends Application
 	use \Silex\Application\TranslationTrait;
 	use \Silex\Application\UrlGeneratorTrait;
 
-	protected $notifications = array('error'=>array(), 'success'=>array());
+	protected $notifications = ['error'=>[], 'success'=>[]];
+
+	protected $hostname;
 
 	/**
 	 * Load config, register services in Silex and set before() filter.
@@ -24,12 +26,15 @@ class NeoApp extends Application
 	 * @param string $config   Configuration array, loaded from config.php
 	 * @param string $rootDir Local FS path to the app root (where composes.json is)
 	 */
-	public function __construct($config, $rootDir)
+	public function __construct($config, $rootDir, $hostname=null)
 	{
 		parent::__construct();
 
 		$this['neoconfig'] = $config;
 		$this['root_dir'] = $rootDir;
+
+		//Trick for non-web scripts (e.g. testAllTranspositions)
+		$this->hostname = $hostname ? ($hostname) : $_SERVER['HTTP_HOST'];
 
 		$this->registerSilexServices($rootDir);
 		$this->registerCustomServices();
@@ -136,7 +141,7 @@ class NeoApp extends Application
 	{
 		if (!$this['debug'])
 		{
-			$twigOptions = array('cache' => $rootDir . '/cache/twig');
+			$twigOptions = ['cache' => $rootDir . '/cache/twig'];
 		}
 
 		$this->register(new \Silex\Provider\TwigServiceProvider(), array(
@@ -160,8 +165,8 @@ class NeoApp extends Application
 		//Must be called before session_start()
 		session_set_cookie_params(
 			2592000, 						//Lifetime: 1 month
-			'/; samesite=Lax',	//Path + samesite (see <https://www.php.net/manual/es/function.session-set-cookie-params.php#125072>)
-			$_SERVER['HTTP_HOST'],			//Domain
+			'/; samesite=Lax',				//Path + samesite (see <https://www.php.net/manual/es/function.session-set-cookie-params.php#125072>)
+			$this->hostname,				//Domain
 			!$this['neoconfig']['debug'],	//Secure
 			true							//httponly
 		);
