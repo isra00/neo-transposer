@@ -160,7 +160,7 @@ class NeoApp extends Application
 		//Must be called before session_start()
 		session_set_cookie_params(
 			2592000, 						//Lifetime: 1 month
-			'/',							//Path
+			'/; samesite=Lax',	//Path + samesite (see <https://www.php.net/manual/es/function.session-set-cookie-params.php#125072>)
 			$_SERVER['HTTP_HOST'],			//Domain
 			!$this['neoconfig']['debug'],	//Secure
 			true							//httponly
