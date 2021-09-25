@@ -12,6 +12,8 @@
 
 		{% if (song.feedbackTransposition == typeOfTransposition) %}
 		<span class="feedback green" title="{% trans %}You have reported this transposition as fitting your voice{% endtrans %}">✔</span>
+		{% else %}
+		<span class="marker-when-multiple">›</span>
 		{% endif %}
 
 		<span class="prefix">{{ prefix }}</span>
@@ -23,12 +25,13 @@
 		{% if transposition.asBook %}
 			{% trans %}(as in the book){% endtrans %}
 		{% else %}
-			{% for i, original_chord in song.song.originalChordsForPrint -%}
-				<span class="chord-pair">{{ original_chord|raw }}
+			{% for i, original_chord in song.song.originalChordsForPrint %}
+				<span class="chord-pair">
+					{{ original_chord|raw }}
 					&rarr;
 					{{ transposition.chordsForPrint[i]|raw }}
+					{%- if not loop.last -%}; {% endif %}
 				</span>
-				{% if not loop.last %} ; {% endif %}
 			{%- endfor %}
 		{% endif %}
 	</li>
@@ -100,6 +103,7 @@
 function toggle()
 {
 	var aAllElements = document.getElementsByClassName("other");
+	document.querySelector(".songs-list").classList.toggle("showing-others")
 	for (e in aAllElements)
 	{
 		if (typeof aAllElements[e].classList != "undefined")
