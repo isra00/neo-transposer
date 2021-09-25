@@ -1388,6 +1388,12 @@ h2.step-1 {
 	.all-songs-report .chord-british {
 		font-size: 1.1em;
 	}
+	.all-songs-report .songs-list .marker-when-multiple {
+		display: none;
+	}
+		.all-songs-report .songs-list.showing-others .marker-when-multiple {
+			display: inline;
+		}
 
 /* External login return page */
 
