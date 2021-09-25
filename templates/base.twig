@@ -9,13 +9,13 @@
 	<link rel="stylesheet" href="{{ global.request.basepath }}/static/{{ neoapp_css_file }}" type="text/css" />
 	
 	<link rel="icon" type="image/svg+xml" sizes="512x512" href="{{ global.request.basepath }}/static/img/source/logo-red.svg">
-	<link rel="icon" type="image/png" sizes="512x512" href="{{ global.request.basepath }}/static/img/android-chrome-512x512.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="{{ global.request.basepath }}/static/img/android-chrome-192x192.png">
+	<link rel="icon" type="image/png" sizes="512x512" href="{{ global.request.basepath }}/static/img/icon-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="{{ global.request.basepath }}/static/img/icon-192x192.png">
 	<link rel="icon" type="image/png" sizes="180x180" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
 	<link rel="apple-touch-icon"      sizes="180x180" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
 	<link rel="icon" href="{{ global.request.basepath }}/favicon.ico">
 
-	<link rel="manifest" href="{{ global.request.basepath }}/manifest.json">
+	<link rel="manifest" href="{{ path('webmanifest', {_locale: app.locale}) }}">
 
 	<meta property="og:url" content="{{ app.absoluteUriWithoutQuery }}">
 	<meta property="og:title" content="{{ page_title }}">
@@ -24,6 +24,7 @@
 	<meta property="og:type" content="website">
 	<meta property="og:image" content="{{ app.absoluteBasePath }}/static/img/mkt-{{ app.locale}}.200.jpg">
 
+	<meta name="google" content="notranslate" />
 	<meta name="description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}" />
 	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
 

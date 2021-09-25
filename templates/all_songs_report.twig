@@ -123,12 +123,12 @@ $(function() {
 		window.print();
 	});
 
-	$(".icon-download").attr("href", "javascript:void(0)");
-
-	$(".icon-download").click(function(e) {
-		location.href = "{{ path('all_songs_report', {'dl': 1}) }}";
-		ga('send', 'event', 'AllSongsReport', 'Download');
-	});
+	$(".icon-download")
+		.attr("href", "javascript:void(0)") //Progressive enhancement
+		.click(function(e) {
+			location.href = "{{ path('all_songs_report', {'dl': 1}) }}";
+			ga('send', 'event', 'AllSongsReport', 'Download');
+		});
 
 	if (document.getElementById("show-others").checked)
 	{
