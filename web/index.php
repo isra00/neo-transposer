@@ -100,6 +100,10 @@ $app->get('/{_locale}/all-songs-report', "$controllers\\AllSongsReport::get")
 	->bind('all_songs_report')
 	->before($needsLogin);
 
+$app->get('/{_locale}/manifest.json', "$controllers\\WebManifest::get")
+	->assert('_locale', $validLocales)
+	->bind('webmanifest');
+
 $app->get('/{_locale}/external-login-finish', "$controllers\\Login::externalLoginFinish")
 	->assert('_locale', $validLocales)
 	->bind('external_login_finish')
