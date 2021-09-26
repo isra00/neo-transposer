@@ -26,7 +26,9 @@ class Login
 	{
 		// Log-out always
 		$app['session']->clear();
-		$app['session']->set('user', new User);
+		$newUser = new User;
+		$app['session']->set('user', $newUser);
+		$app['neouser'] = $newUser;
 
 		if (!empty($req->get('callbackSetUserToken')))
 		{
