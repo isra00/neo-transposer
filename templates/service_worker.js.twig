@@ -1,0 +1,135 @@
+const PRECACHE = 'neotransposer-v{{ sw_version }}-u{{ app.neouser.id_user }}-l{{ app.neouser.range.lowest }}-h{{ app.neouser.range.highest }}';
+
+const PWA_HOME = '{{ path('pwa', {_locale: app.locale, id_user: app.neouser.id_user})|raw }}';
+
+const PRECACHE_URLS = [
+	PWA_HOME,
+	//This must be exactly the same as in pwa_home.twig's link
+	'{{ path('all_songs_report', {_locale: app.locale, offline: 1, userId: app.neouser.id_user, lowest: app.neouser.range.lowest, highest: app.neouser.range.highest})|raw }}',
+	'{{ path('webmanifest', {_locale: app.locale, loggedIn: 1})|raw }}',
+	'{{ global.request.basepath }}/static/{{ neoapp_css_file }}',
+	'/static/img/no-connection.svg',
+	'/static/img/icons/maskable-192.png',
+	'/static/img/icons/maskable-512.png',
+	'/static/img/icons/maskable-180.png',
+	'/static/img/source/logo-red-maskable.svg',
+	'/favicon.ico',
+];
+
+// Pre-caching the URLs specified above
+self.addEventListener('install', event => {
+	console.log("Installing on " + PRECACHE);
+	event.waitUntil(
+		caches.open(PRECACHE)
+			.then(cache => cache.addAll(PRECACHE_URLS))
+			.then(self.skipWaiting())
+			.catch(er => {
+				console.log(er)
+			})
+	);
+});
+
+// The activate handler takes care of cleaning up old caches.
+self.addEventListener('activate', event => {
+	console.log("Activating");
+	const currentCaches = [PRECACHE];
+	event.waitUntil(
+		caches.keys().then(cacheNames => {
+			return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
+		}).then(cachesToDelete => {
+			return Promise.all(cachesToDelete.map(cacheToDelete => {
+				console.log("Delete old cache " + cacheToDelete);
+				return caches.delete(cacheToDelete);
+			}));
+		}).then(() => self.clients.claim())
+	);
+});
+
+// This handler will only serve pre-cached URLs from cache. Other URLs will be 
+// requested with fetch() as usual, meaning connection will be required, and if 
+// not, standard browser error pages will be shown.
+/*self.addEventListener('fetch', event => {
+
+	let requestedUrl = event.request.url;
+	
+	// Skip cross-origin requests
+	//if (requestedUrl.startsWith(self.location.origin)) {
+	if (PRECACHE_URLS.indexOf(requestedUrl)) {
+
+		event.respondWith(
+			caches.match(requestedUrl).then(cachedResponse => {
+				if (cachedResponse) {
+					console.log("Cache Hit " + requestedUrl);
+					return cachedResponse;
+				}
+
+				console.log("Cache Miss! => requesting and not caching " + requestedUrl);
+
+				return fetch(event.request).then(response => {
+					return response;
+				}).catch(er => {
+					//If offline, return the PWA home
+					caches.match("{{ path('pwa', {_locale: app.locale, id_user: app.neouser.id_user})|raw }}")
+						.then(resp => {
+							return resp;
+						})
+				});
+			})
+		);
+	}
+	return false;
+});*/
+
+self.addEventListener('fetch', (event) => {
+  // We only want to call event.respondWith() if this is a navigation request
+  // for an HTML page.
+  //if (event.request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        // First, try to use the navigation preload response if it's supported.
+        const preloadResponse = await event.preloadResponse;
+        if (preloadResponse) {
+          //return preloadResponse;
+        }
+
+        let requestedUrl = event.request.url;
+
+				//If in the pre-cache, serve it from the pre-cache
+				if (PRECACHE_URLS.indexOf(requestedUrl.substr("https://dev.neo-transposer.com".length)) !== -1) {
+					console.log("Searching " + requestedUrl + "in precache");
+					event.respondWith(
+						caches.match(requestedUrl).then(cachedResponse => {
+							if (cachedResponse) {
+								console.log("Cache Hit " + requestedUrl);
+								console.log(cachedResponse);
+								return cachedResponse;
+							}
+						})
+					);
+				}
+
+				//If not in the pre-cache, request it
+				console.log("Fetching from network " + event.request.url)
+				const networkResponse = await fetch(event.request);
+				return networkResponse;
+
+      } catch (error) {
+        // catch is only triggered if an exception is thrown, which is likely
+        // due to a network error.
+        // If fetch() returns a valid HTTP response with a response code in
+        // the 4xx or 5xx range, the catch() will NOT be called.
+        console.log('Fetch failed; returning offline page instead.', error);
+
+        const cache = await caches.open(PRECACHE);
+        const cachedResponse = await cache.match(PWA_HOME);
+        return cachedResponse;
+      }
+    })());
+  //}
+
+  // If our if() condition is false, then this fetch handler won't intercept the
+  // request. If there are any other fetch handlers registered, they will get a
+  // chance to call event.respondWith(). If no fetch handlers call
+  // event.respondWith(), the request will be handled by the browser as if there
+  // were no service worker involvement.
+});

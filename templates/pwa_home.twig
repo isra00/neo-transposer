@@ -1,0 +1,25 @@
+{% extends "base.twig" %}
+
+{% block page_class %}pwa-home{% endblock %}
+
+{% block content %}
+
+<h1>
+	{% trans %}You have no Internet connection{% endtrans %}
+</h1>
+<h4>{% trans %}But you can still check your downloaded transpositions:{% endtrans %}</h4>
+
+<nav>
+	<p>
+		<a class="flatbutton big red" href="{{ path('all_songs_report', {_locale: app.locale, offline: 1, userId: app.neouser.id_user, lowest: app.neouser.range.lowest, highest: app.neouser.range.highest }) }}">
+			<strong>All your transpositions</strong>
+			<small>{{ app.neouser.email }}</small>
+			<small>{{ app.neouser.range.lowest }} &rarr; {{ app.neouser.range.highest }}</small>
+		</a>
+	</p>
+	<p>
+		<a class="flatbutton red" href="{{ app.absoluteBasePath }}">Go to Neo-Transposer.com home</a>
+	</p>
+</nav>
+
+{% endblock %}

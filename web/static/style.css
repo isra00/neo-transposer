@@ -1433,6 +1433,30 @@ h2.step-1 {
   }
 }
 
+/* PWA Home (offline) */
+.pwa-home .main {
+	text-align: center;
+}
+.pwa-home .main h1 {
+	background: url(img/no-connection.svg) center top no-repeat;
+	background-size: 2em 2em;
+	padding-top: 2em;
+	text-transform: none;
+	font-size: 1.5em;
+	color: #555;
+	line-height: 130%;
+}
+	.pwa-home nav a {
+		line-height: 135%;
+		padding: .5em .8em;
+	}
+
+	.pwa-home nav a small {
+		display: block;
+		font-size: .75em;
+		line-height: 130%;
+	}
+
 /* Admin Dashboard */
 .admin-dashboard {
 	background: #efefef;

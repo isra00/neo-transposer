@@ -304,7 +304,7 @@ class NeoApp extends Application
 			$this->setPageTitle($parameters);
 		}
 
-		$parameters['neoapp_css_file'] = $this['debug']
+		$parameters['neoapp_css_file'] = $this['debug'] && false
 			? 'style.css?nocache=' . mktime()
 			: 'compiled-' . $this['neoconfig']['css_cache'] . '.css';
 

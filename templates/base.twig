@@ -9,20 +9,20 @@
 	<link rel="stylesheet" href="{{ global.request.basepath }}/static/{{ neoapp_css_file }}" type="text/css" />
 	
 	<link rel="icon" type="image/svg+xml" sizes="512x512" href="{{ global.request.basepath }}/static/img/source/logo-red.svg">
-	<link rel="icon" type="image/png" sizes="512x512" href="{{ global.request.basepath }}/static/img/icon-512x512.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="{{ global.request.basepath }}/static/img/icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="180x180" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
-	<link rel="apple-touch-icon"      sizes="180x180" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="512x512" href="{{ global.request.basepath }}/static/img/icons/icon-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="{{ global.request.basepath }}/static/img/icons/icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="180x180" href="{{ global.request.basepath }}/static/img/icons/apple-touch-icon.png">
+	<link rel="apple-touch-icon"      sizes="180x180" href="{{ global.request.basepath }}/static/img/icons/apple-touch-icon.png">
 	<link rel="icon" href="{{ global.request.basepath }}/favicon.ico">
 
-	<link rel="manifest" href="{{ path('webmanifest', {_locale: app.locale}) }}">
+	<link rel="manifest" crossorigin="use-credentials" href="{{ path('webmanifest', {_locale: app.locale, loggedIn: app.neouser.isLoggedIn }) }}">
 
 	<meta property="og:url" content="{{ app.absoluteUriWithoutQuery }}">
 	<meta property="og:title" content="{{ page_title }}">
 	<meta property="og:description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}">
 	<meta property="og:site_name" content="{{ app.neoconfig.software_name }}">
 	<meta property="og:type" content="website">
-	<meta property="og:image" content="{{ app.absoluteBasePath }}/static/img/mkt-{{ app.locale}}.200.jpg">
+	<meta property="og:image" content="{{ app.absoluteBasePath }}/static/img/mkt-{{ app.locale }}.200.jpg">
 
 	<meta name="google" content="notranslate" />
 	<meta name="description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}" />
@@ -126,5 +126,21 @@
 	<script src="{{ global.request.basepath }}/static/zepto.min.js"></script>
 	{%- endmacro %}
 
+	{% if app.neouser.isLoggedIn -%}
+	<script>
+	document.addEventListener("DOMContentLoaded", function() 
+	{
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function() {
+				navigator.serviceWorker.register('{{ path('service_worker', {_locale: app.locale}) }}').then(function(registration) {
+					console.log('ServiceWorker ✔ ', registration.scope);
+				}, function(err) {
+					console.log('ServiceWorker ✖ ', err);
+				});
+			});
+		}
+	});
+	</script>
+	{% endif %}
 </body>
 </html>

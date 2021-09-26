@@ -100,9 +100,18 @@ $app->get('/{_locale}/all-songs-report', "$controllers\\AllSongsReport::get")
 	->bind('all_songs_report')
 	->before($needsLogin);
 
-$app->get('/{_locale}/manifest.json', "$controllers\\WebManifest::get")
+$app->get('/manifest-{_locale}.json', "$controllers\\WebManifest::get")
 	->assert('_locale', $validLocales)
 	->bind('webmanifest');
+
+$app->get('/{_locale}/pwa/{id_user}', "$controllers\\PWAHome::get")
+	->assert('_locale', $validLocales)
+	->bind('pwa');
+
+$app->get('/service-worker-{_locale}.js', "$controllers\\ServiceWorker::get")
+	->assert('locale', $validLocales)
+	->bind('service_worker')
+	->before($needsLogin);
 
 $app->get('/{_locale}/external-login-finish', "$controllers\\Login::externalLoginFinish")
 	->assert('_locale', $validLocales)
