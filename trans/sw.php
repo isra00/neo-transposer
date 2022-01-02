@@ -119,7 +119,7 @@ return array(
 	=> 'Lugha nyingine',
 
 	'You have reported the proposed transposition as valid'
-	=> 'Umethibitisha kodi zilizopendekezwa kwamba zinafaa sauti yako.',
+	=> 'Umethibitisha kodi za kwenye Neo-Transposer zinafaa sauti yako',
 
 	'Log-in now to transpose automatically the chords of the songs of the Neocatechumenal Way.'
 	=> 'Ingia hapa ili uweze kubadilisha funguo za nyimbo za Neo.',
