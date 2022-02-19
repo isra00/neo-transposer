@@ -26,4 +26,6 @@ jobs:
           mysql-version: 5.7
 
       - name: Load MySQL data
-        run: mysql -uroot -h127.0.0.1 -e 'SELECT version()'
+      - run: mysql -uroot -h127.0.0.1 -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
+      - run: mysql transposer < song_data.sql
+      - run: php tests/testAllTranspositions.php
