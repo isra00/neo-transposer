@@ -20,8 +20,10 @@ jobs:
       - name: Run PHPUnit
         run: phpunit
 
-      - name: Prepare MySQL
+      - name: Prepare MySQL server
         uses: shogo82148/actions-setup-mysql@v1
         with:
           mysql-version: 5.7
+
+      - name: Load MySQL data
         run: mysql -uroot -h127.0.0.1 -e 'SELECT version()'
