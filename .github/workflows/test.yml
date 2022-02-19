@@ -20,19 +20,14 @@ jobs:
       - name: Run PHPUnit
         run: phpunit
 
-#      - name: Shutdown Ubuntu MySQL (SUDO)
-#        run: sudo service mysql stop
-
-      - name: Prepare MySQL server
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          mysql version: 5.7
-          mysql user: test
-          mysql password: test
+      - name: Turn on Ubuntu MySQL (SUDO)
+        run: |
+          sudo systemctl enable mysql.service
+          sudo systemctl start mysql.service
 
       - name: Load MySQL data
         run: |
-          sudo /etc/init.d/mysql start
-          mysql -utest -ptest -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
-          mysql -utest -ptest transposer < song_data.sql
+          mysql -uroot -proot -e 'SHOW VARIABLES LIKE "version";'
+          mysql -uroot -proot -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
+          mysql -uroot -proot transposer < song_data.sql
           php tests/testAllTranspositions.php
