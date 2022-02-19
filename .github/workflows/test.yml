@@ -12,7 +12,10 @@ jobs:
         with:
           php-version: 7.4
           extensions: curl
-          tools: phpunit
+          tools: composer, phpunit
+
+      - name: Install dependencies
+        run: composer install
 
       - name: Run PHPUnit
         run: phpunit
