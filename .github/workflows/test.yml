@@ -27,6 +27,7 @@ jobs:
 
       - name: Load MySQL data
         run: |
+          sudo systemctl enable mysql.service
           mysql -uroot -h127.0.0.1 -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
           mysql transposer < song_data.sql
           php tests/testAllTranspositions.php
