@@ -24,10 +24,11 @@ jobs:
         uses: mirromutth/mysql-action@v1.1
         with:
           mysql version: 5.7
-          mysql root password:
+          mysql user: test
+          mysql password: test
 
       - name: Load MySQL data
         run: |
-          mysql -uroot -h127.0.0.1 -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
+          mysql -h127.0.0.1 -utest -ptest -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
           mysql transposer < song_data.sql
           php tests/testAllTranspositions.php
