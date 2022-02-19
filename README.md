@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/isra00/neo-transposer.svg?branch=master)](https://travis-ci.org/isra00/neo-transposer)
+![example workflow](https://github.com/isra00/neo-transposer/actions/workflows/test.yml/badge.svg)
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md) 
 
