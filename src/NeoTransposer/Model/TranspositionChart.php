@@ -31,7 +31,7 @@ class TranspositionChart
 		$this->addVoice('Original chords:', 'original-song', $song->range);
 	}
 
-	public function addVoice($caption, $cssClass, NotesRange $range)
+	public function addVoice(string $caption, string $cssClass, NotesRange $range): void
 	{
 		$this->voiceChart[] = [
 			'caption'	=> $caption,
@@ -44,12 +44,12 @@ class TranspositionChart
 		];
 	}
 
-	public function addTransposition($caption, $cssClass, Transposition $transposition)
+	public function addTransposition(string $caption, string $cssClass, Transposition $transposition): void
 	{
 		$this->addVoice($caption, $cssClass, $transposition->range);
 	}
 	
-	public function getChart()
+	public function getChart(): array
 	{
 		$min = $this->nc->lowestNote(array_column($this->voiceChart, 'lowest'));
 
