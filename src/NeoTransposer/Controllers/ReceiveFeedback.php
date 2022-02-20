@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReceiveFeedback
 {
+	/**
+	 * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+	 */
 	public function post(Request $req, \NeoTransposer\NeoApp $app)
 	{
 		//This usually happens when the sessions times out (=> HTTP status 408).
