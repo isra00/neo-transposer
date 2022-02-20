@@ -15,10 +15,10 @@ class ServeCss
 	 * if the minified CSS file does not exist, this controller will be called.
 	 * After the first request, the static file will be served directly by Apache.
 	 * THE MINIFIED FILE MUST BE MANUALLY REMOVED AFTER EVERY UPDATE (in AdminTools)
-	 * 
-	 * @param  \NeoTransposer\NeoApp $app The Silex app.
+	 *
+	 * @param \NeoTransposer\NeoApp $app The Silex app.
 	 */
-	public function get(\NeoTransposer\NeoApp $app)
+	public function get(\NeoTransposer\NeoApp $app): \Symfony\Component\HttpFoundation\RedirectResponse
 	{
 		$minified_css = $this->minify_css(file_get_contents($app['root_dir'] . '/web' . $this->src_file));
 		$minified_hash 	= md5($minified_css);
@@ -41,7 +41,11 @@ class ServeCss
 		return $app->redirect(sprintf($this->min_file, $minified_hash));
 	}
 
-	/** @url https://gist.github.com/Rodrigo54/93169db48194d470188f */
+	/**
+	 * @url https://gist.github.com/Rodrigo54/93169db48194d470188f
+	 *
+	 * @param string $input
+	 */
 	function minify_css($input) {
 		if(trim($input) === "") return $input;
 		return preg_replace(
