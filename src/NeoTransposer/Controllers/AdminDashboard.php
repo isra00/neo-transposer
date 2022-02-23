@@ -23,7 +23,7 @@ class AdminDashboard
      */
     protected $countryNames;
 
-	public function get(Request $req, \NeoTransposer\NeoApp $app)
+	public function get(Request $req, \NeoTransposer\NeoApp $app): string
 	{
 		$app['locale'] 	= 'es';
 		$this->app 		= $app;
@@ -84,7 +84,7 @@ class AdminDashboard
 		), false);
 	}
 
-	protected function getGlobalPerformance()
+	protected function getGlobalPerformance(): array
 	{
 		$sql_gp_all = <<<SQL
 SELECT worked, count(worked) n
@@ -135,7 +135,12 @@ SQL;
 		return $this->app['db']->fetchAssoc($sqlUsersReportingFb);
 	}
 
-	protected function aggregatePerformanceData(array $raw_data)
+	/**
+	 * @return (int|mixed)[]
+	 *
+	 * @psalm-return array{yes: int, no: int, total: int}
+	 */
+	protected function aggregatePerformanceData(array $raw_data): array
 	{
 		$answers = array('no', 'yes');
 
@@ -172,7 +177,12 @@ SQL;
 		return $this->app['db']->fetchAll($sql);
 	}
 
-	protected function getFeedback()
+	/**
+	 * @return (float|int|mixed)[][]
+	 *
+	 * @psalm-return array<array{yes: int, no: int, performance: float, title: mixed, lowest_note: mixed, highest_note: mixed, wideness: int, total?: int}>
+	 */
+	protected function getFeedback(): array
 	{
 		$nc = new \NeoTransposer\Model\NotesCalculator;
 
@@ -379,7 +389,7 @@ SQL;
 	 * Get the names of all countries in user.country by geo-locating any IP for
 	 * each country
 	 */
-	protected function getCountryNamesList()
+	protected function getCountryNamesList(): array
 	{
 		if (!empty($this->countryNames))
 		{
@@ -408,7 +418,10 @@ SQL;
 		return $country_names;
 	}
 
-	protected function getPerformanceByCountry()
+	/**
+	 * @psalm-return list<mixed>
+	 */
+	protected function getPerformanceByCountry(): array
 	{
 		$sql = <<<SQL
 select country, count(user.id_user) n
@@ -554,7 +567,7 @@ SQL;
 		return $this->app['db']->fetchAll($sql);
 	}
 
-	protected function getUsersByBook($totalUsers)
+	protected function getUsersByBook(int $totalUsers): array
 	{
 		$sql = <<<SQL
 SELECT lang_name, id_book, count(id_user) users
@@ -582,7 +595,7 @@ SQL;
 		return $usersBookId;
 	}
 
-	protected function getPerformanceByBook()
+	protected function getPerformanceByBook(): array
 	{
 		$sql = <<<SQL
 SELECT worked, count(worked) n
