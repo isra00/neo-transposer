@@ -24,15 +24,13 @@ jobs:
 #        run: sudo service mysql stop
 
       - name: Prepare MySQL server
-        uses: mirromutth/mysql-action@v1.1
+        uses: shogo82148/actions-setup-mysql@v1
         with:
-          mysql version: 5.7
-          mysql user: test
-          mysql password: test
+          mysql-version: '5.7'
 
       - name: Load MySQL data
         run: |
-          sudo /etc/init.d/mysql start
-          mysql -utest -ptest -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
-          mysql -utest -ptest transposer < song_data.sql
+          mysql -uroot -h127.0.0.1 -e 'SELECT version()'
+          mysql -uroot -h127.0.0.1 -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
+          mysql -uroot -h127.0.0.1 transposer < song_data.sql
           php tests/testAllTranspositions.php
