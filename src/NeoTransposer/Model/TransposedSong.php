@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Model\ChordPrinter\ChordPrinter;
 use \NeoTransposer\NeoApp;
 use \NeoTransposer\Persistence\SongPersistence;
 use \NeoTransposer\Model\Song;
@@ -16,12 +17,12 @@ use \NeoTransposer\Model\Song;
 class TransposedSong
 {
 	/**
-	 * @var NeoTransposer\Song
+	 * @var \NeoTransposer\Song
 	 */
 	public $song;
 
 	/**
-	 * @var Array
+	 * @var array
 	 * @todo Rename to centered
 	 */
 	public $transpositions;
@@ -59,7 +60,7 @@ class TransposedSong
 	public $isAlreadyPeopleCompatible;
 
 	/**
-	 * @var NeoTransposer\NeoApp;
+	 * @var NeoApp;
 	 */
 	protected $app;
 
@@ -71,9 +72,9 @@ class TransposedSong
 
 	/**
 	 * Factory
-	 * 
-	 * @param  string|int            $id_song Song ID or slug.
-	 * @param  \NeoTransposer\NeoApp $app     NeoApp instance.
+	 *
+	 * @param  string|int            $idSong Song ID or slug.
+	 * @param NeoApp $app     NeoApp instance.
 	 * @return TransposedSong                 The created object.
 	 */
 	public static function create($idSong, NeoApp $app)
@@ -131,6 +132,9 @@ class TransposedSong
 	 */
 	public function prepareForPrint()
 	{
+        /**
+         * @var ChordPrinter
+         */
 		$printer = $this->app['chord_printers.get']($this->song->bookChordPrinter);
 
 		$this->song->originalChordsForPrint = $printer->printChordset($this->song->originalChords);
@@ -167,11 +171,11 @@ class TransposedSong
 		}
 
 		//If Centered is already compatible but notEquivalent is not, then
-		//remove notEquivalent. Otherwise the information we give to the user
+		//remove notEquivalent. Otherwise, the information we give to the user
 		//"this transposition is already compatible" would be partially false.
 		if ($this->isAlreadyPeopleCompatible && $this->not_equivalent)
 		{
-			if (!$this->isCompatibleWithPeople($this->not_equivalent, $pcCalculation))
+			if (!$this->isCompatibleWithPeople($this->not_equivalent))
 			{
 				$this->not_equivalent = null;
 				return;

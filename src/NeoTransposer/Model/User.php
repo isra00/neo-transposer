@@ -30,10 +30,10 @@ class User
 
 	/**
 	 * Simple constructor. Use UserPersistence::fetchUserFromEmail() to create from DB.
-	 * 
+	 *
 	 * @param string 		$email         			User email
 	 * @param int 			$id_user       			User ID
-	 * @param NotesRange 	$highest_note  			User highest note
+	 * @param NotesRange|null 	$range  			    User highest note
 	 * @param int 			$id_book       			Book
 	 * @param int 			wizard_step1			Option checked in Wizard First Step
 	 * @param int 			wizard_lowest_attempts 	No. of attempts in Wizard Lowest note.
@@ -55,11 +55,10 @@ class User
 	/**
 	 * Create or update the user in the database.
 	 * 
-	 * @param  \Doctrine\DBAL\Connection $db A DB connection.
-	 * @param  string $registerIp The IP address with which the user registered.
-	 * @return integer The user ID, if it was not set.
+	 * @param Connection $db A DB connection.
+	 * @param  string|null $registerIp The IP address with which the user registered.
 	 */
-	public function persist(Connection $db, $registerIp = null)
+	public function persist(Connection $db, string $registerIp = null): void
 	{
 		$userPersistence = new UserPersistence($db);
 		$userPersistence->persist($this, $registerIp);
@@ -68,11 +67,11 @@ class User
 	/**
 	 * Update the user in the database with logging the voice range change.
 	 * 
-	 * @param  \Doctrine\DBAL\Connection $db A DB connection.
-	 * @param  string $registerIp The IP address with which the user registered.
-	 * @return integer The user ID, if it was not set.
+	 * @param   Connection $db A DB connection.
+	 * @param   string|null $registerIp The IP address with which the user registered.
+	 * @return  bool Whether the user previously had a voice range.
 	 */
-	public function persistWithVoiceChange(Connection $db, $registerIp = null, $method)
+	public function persistWithVoiceChange(Connection $db, $registerIp = null, $method): bool
 	{
 		$userPersistence = new UserPersistence($db);
 		return $userPersistence->persistWithVoiceChange($this, $registerIp, $method);
@@ -82,8 +81,8 @@ class User
 	 * Redirections depending on the state of the user (not logged in/no 
 	 * voice range defined).
 	 * 
-	 * @param  Request $request The HttpFoundation Request, to know the current route.
-	 * @return string          	Address for redirection, if needed.
+	 * @param  Request      $request    The HttpFoundation Request, to know the current route.
+	 * @return string|null  Address for redirection, if needed.
 	 */
 	public function isRedirectionNeeded(Request $request)
 	{
@@ -132,11 +131,11 @@ class User
 	/**
 	 * Format the voice of the User as lowest_note - highest note +x octaves
 	 * 
-	 * @param  Translator 	$trans 		The Translator service.
-	 * @param  string 		$notation 	The notation (american/latin).
-	 * @return string 					Formatted string.
+	 * @param   TranslatorInterface $trans 		The Translator service.
+	 * @param   string              $notation 	The notation (american/latin).
+	 * @return  string 				Formatted string.
 	 */
-	public function getVoiceAsString(TranslatorInterface $trans, $notation='american')
+	public function getVoiceAsString(TranslatorInterface $trans, string $notation='american') : string
 	{
 		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->range->lowest, $this->range->highest);
 	}

@@ -96,7 +96,7 @@ SQL;
 
 		$ids = $app['db']->fetchAll($sql, [$app['neouser']->id_user, $app['locale']]);
 
-		$songs = array();
+		$songs = [];
 
 		foreach ($ids as $id)
 		{

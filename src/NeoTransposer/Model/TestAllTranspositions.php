@@ -90,7 +90,7 @@ SQL;
 
 		$ids = $this->app['db']->fetchAll($sql, array($this->testAllTranspositionsBook));
 
-		$allSongs = array();
+		$allSongs = [];
 
 		foreach ($ids as $id)
 		{
@@ -100,7 +100,7 @@ SQL;
 			$allSongs[] = $song;
 		}
 
-		$testResult = array();
+		$testResult = [];
 
 		foreach ($allSongs as $transposedSong)
 		{
@@ -178,7 +178,7 @@ SQL;
 			array_intersect_key($expected, array_flip($scalarProperties))
 		);
 
-		$transpositionsDiff = array();
+		$transpositionsDiff = [];
 
 		foreach (array_intersect_key($actual, array_flip($arrayProperties)) as $type=>$transposition)
 		{

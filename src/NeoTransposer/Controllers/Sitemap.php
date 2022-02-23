@@ -17,7 +17,7 @@ class Sitemap
 	 */
 	public function get(\NeoTransposer\NeoApp $app)
 	{
-		$urls = array();
+		$urls = [];
 
 		$time = $app['neoconfig']['sitemap_lastmod'];
 
@@ -51,7 +51,7 @@ class Sitemap
 		foreach ($books as $book)
 		{
 			$urls[] = array(
-				'loc' => $app->url('book_' . $book['id_book'], array()),
+				'loc' => $app->url('book_' . $book['id_book'], []),
 				'priority' => 1,
 				'changefreq' => 'daily',
 				'lastmod' => $time

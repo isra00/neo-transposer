@@ -63,7 +63,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 
 		$nc = new NotesCalculator;
 
-		$output = array();
+		$output = [];
 
 		foreach ($songs as $song)
 		{
@@ -185,7 +185,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 			'SELECT * FROM `song_chord` ORDER BY id_song ASC, position ASC'
 		);
 
-		$output = array();
+		$output = [];
 
 		$current_song = null;
 		$last_position = null;

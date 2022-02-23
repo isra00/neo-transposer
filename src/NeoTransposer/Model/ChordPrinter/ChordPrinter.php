@@ -23,7 +23,7 @@ abstract class ChordPrinter
 		return $transposition;
 	}
 
-	public function printChordset($chordset)
+	public function printChordset(array $chordset): array
 	{
 		foreach ($chordset as &$chord)
 		{

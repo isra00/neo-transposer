@@ -106,10 +106,10 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * between the original song's lowest note and the centered position, and 
 	 * then, transpose each chord using that offset.
 	 * 
-	 * @param  int 				$forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
+	 * @param int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 * @return Transposition 	The transposition matching that voice.
 	 */
-	public function calculateCenteredTransposition($forceVoiceLimit=null)
+	public function calculateCenteredTransposition(?int $forceVoiceLimit=0)
 	{
 		if (!empty($this->centeredTransposition))
 		{
@@ -185,7 +185,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 */
 	public function calculateEquivalentsWithCapo(Transposition $transposition, string $dcFactory='new.Transposition')
 	{
-		$withCapo = array();
+		$withCapo = [];
 
 		for ($i = 1; $i < 6; $i++)
 		{
@@ -231,11 +231,11 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * Main method to be used by the clients of this class. It returns the
 	 * centered and equivalent transpositions for a given song, sorted by ease.
 	 * 
-	 * @param	integer $limitTranspositions Limit of equivalent transpositions to return
-	 * @param	int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
+	 * @param int $limitTranspositions Limit of equivalent transpositions to return
+	 * @param int|null $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 * @return	array 	Array of Transposition objects, sorted by chord ease.
 	 */
-	public function getTranspositions($limitTranspositions=2, $forceVoiceLimit=false)
+	public function getTranspositions(?int $limitTranspositions=2, ?int $forceVoiceLimit=0)
 	{
 		if (empty($this->centeredAndEquivalent))
 		{
@@ -307,7 +307,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	{
 		$centeredTransposition = $this->calculateCenteredTransposition();
 
-		$nearTranspositions = array();
+		$nearTranspositions = [];
 
 		foreach ($range as $dif)
 		{

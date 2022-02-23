@@ -20,7 +20,7 @@ class TranspositionChart
 	 * Notation for printing notes
 	 * @var string
 	 */
-	protected $notation = [];
+	protected $notation = '';
 
 	public function __construct(NotesCalculator $nc, Song $song, User $singer, $notation)
 	{
