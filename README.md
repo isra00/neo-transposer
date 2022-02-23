@@ -4,7 +4,7 @@
 
 ### Mission ###
 
-Help neo-catechumenal cantors with musical technicalitie so that dey develop their charisma more efficiently. 
+Help neo-catechumenal cantors find the right chords for singing songs within their voice range.
 
 ### Vision ###
 
@@ -30,6 +30,16 @@ See [Code of Conduct](CODE_OF_CONDUCT.md)
  * If you write PHP code, it must adhere to PSR-12, except that we use tabs for indentation, not spaces.
  * Free contributions Feel free to  to fork and submit a pull request with changes.
  * Please note this is a non-profit project with no paid staff. No contribution will be rewarded in money or in specie, but it will be duly credited.
+
+### Pre-commit hook ###
+
+You should include this code in `.git/hooks/pre-commit` if you deal with PHP code:
+
+```php
+#!/bin/sh
+exec ~/phpunit.phar
+exec ~/composer validate
+```
 
 ### Getting help ###
 
