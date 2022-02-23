@@ -29,14 +29,9 @@ jobs:
           mysql version: 5.7
           mysql user: test
           mysql password: test
-          host port: 3306 # Optional, default value is 3306. The port of host
-          container port: 3306 # Optional, default value is 3306. The port of container
-          character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
-          collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+          host port: 3333
+          container port: 3333
 
       - name: Load MySQL data
         run: |
-          mysql -utest -ptest -h127.0.0.1 -e 'SELECT version()'
-          mysql -utest -ptest -h127.0.0.1 -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
-          mysql -uroot -h127.0.0.1 transposer < song_data.sql
-          php tests/testAllTranspositions.php
+          mysql -utest -ptest --port=3333 -h127.0.0.1 -e 'SELECT version()'
