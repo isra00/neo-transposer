@@ -3,7 +3,7 @@
 namespace NeoTransposer\Model;
 
 /**
- * Represents a transposition of a song, with transported chords, capo, etc.
+ * Represents a transposition of a song, with transposed chords, capo, etc.
  */
 class PeopleCompatibleTransposition extends Transposition
 {

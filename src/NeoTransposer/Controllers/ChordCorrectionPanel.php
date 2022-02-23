@@ -24,7 +24,7 @@ class ChordCorrectionPanel
             array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
 		);
 
-		$songs = array();
+		$songs = [];
 		$count = 0;
 		foreach ($chords as $chord)
 		{
@@ -35,7 +35,7 @@ class ChordCorrectionPanel
 					'id_book'	=> $chord['id_book'],
 					'page'		=> $chord['page'],
 					'title' 	=> $chord['title'],
-					'chords' 	=> array()
+					'chords' 	=> []
 				);
 			}
 

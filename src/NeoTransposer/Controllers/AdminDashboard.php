@@ -18,6 +18,11 @@ class AdminDashboard
 	 */
 	protected $app;
 
+    /**
+     * @var array
+     */
+    protected $countryNames;
+
 	public function get(Request $req, \NeoTransposer\NeoApp $app)
 	{
 		$app['locale'] 	= 'es';
@@ -181,7 +186,7 @@ SQL;
 
 		$fbsongs = $this->app['db']->fetchAll($sql);
 
-		$feedback = array();
+		$feedback = [];
 
 		foreach ($fbsongs as $song)
 		{
@@ -386,7 +391,7 @@ SQL;
 		//ONLY_FULL_GROUP_BY mode (default in MySQL>5.7) makes the query fail
 		$this->app['db']->query("SET @@sql_mode=''");
 		$ips_for_country = $this->app['db']->fetchAll('SELECT country, register_ip FROM user WHERE NOT country IS NULL GROUP BY country');
-		$country_names = array();
+		$country_names = [];
 
 		foreach ($ips_for_country as $ip)
 		{
@@ -416,7 +421,7 @@ SQL;
 
 		$countries = $this->app['db']->fetchAll($sql);
 
-		$performance = array();
+		$performance = [];
 
 		$country_names = $this->getCountryNamesList();
 
@@ -436,7 +441,7 @@ SQL;
 
 		$goodUsersCountryRaw = $this->app['db']->fetchAll($sql);
 
-		$goodUsersCountry = array();
+		$goodUsersCountry = [];
 		foreach ($goodUsersCountryRaw as $row)
 		{
 			$goodUsersCountry[$row['country']] = $row['good'] / $row['total'];

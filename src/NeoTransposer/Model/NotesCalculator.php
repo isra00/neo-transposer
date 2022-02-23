@@ -20,7 +20,7 @@ class NotesCalculator
 	 * 
 	 * @var array
 	 */
-	public $numbered_scale = array();
+	public $numbered_scale = [];
 
 	public function __construct()
 	{
@@ -71,7 +71,7 @@ class NotesCalculator
 	 * @param  integer 	$index 	Index to read
 	 * @return mixed 			The array element
 	 */
-	public function arrayIndex($array, $index)
+	public function arrayIndex(array $array, int $index)
 	{
 		if (abs($index) > count($array) - 1)
 		{
@@ -165,7 +165,7 @@ class NotesCalculator
 	 */
 	public function transposeChords($chordList, $amount)
 	{
-		$finalList = array();
+		$finalList = [];
 
 		foreach ($chordList as $chord)
 		{

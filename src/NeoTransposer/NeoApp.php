@@ -176,7 +176,7 @@ class NeoApp extends Application
 		
 		$this->register(new \Silex\Provider\LocaleServiceProvider());
 		$this->register(new \Silex\Provider\TranslationServiceProvider());
-		$translations = array();
+		$translations = [];
 		foreach ($this['neoconfig']['languages'] as $locale=>$details)
 		{
 			if (isset($details['file']))
@@ -194,7 +194,7 @@ class NeoApp extends Application
 	{
 		$this['books'] = function($app) {
 			$books = $app['db']->fetchAll('SELECT * FROM book ORDER BY id_book DESC');
-			$booksNice = array();
+			$booksNice = [];
 			foreach ($books as $book)
 			{
 				$booksNice[$book['id_book']] = $book;
@@ -297,7 +297,7 @@ class NeoApp extends Application
 	 * @param  array  $parameters Array variables.
 	 * @return string             The rendered template.
 	 */
-	public function render($view, array $parameters = array(), $modifyTitle=true)
+	public function render($view, array $parameters = [], $modifyTitle=true)
 	{
 		if ($modifyTitle)
 		{

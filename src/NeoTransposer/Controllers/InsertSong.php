@@ -16,7 +16,7 @@ class InsertSong
 	 */
 	protected $db;
 
-	public function get(\NeoTransposer\NeoApp $app, $tpl_vars=array())
+	public function get(\NeoTransposer\NeoApp $app, $tpl_vars=[])
 	{
 		$app['locale'] = 'es';
 

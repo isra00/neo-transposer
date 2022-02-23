@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Model;
 
+use Symfony\Component\Translation\Translator;
 use \Symfony\Component\Translation\TranslatorInterface;
 
 /**

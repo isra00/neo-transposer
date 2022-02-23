@@ -2,6 +2,9 @@
 
 namespace NeoTransposer\Model;
 
+/**
+ * A song, with its voice ranges as NotesRange and its associated chords.
+ */
 class Song
 {
 	public $idSong;
@@ -11,12 +14,20 @@ class Song
 	public $range;
 	public $slug;
 	public $firstChordIsTone;
+
+    /**
+     * @var NotesRange|null
+     */
 	public $peopleRange;
 
 	public $bookChordPrinter;
 	public $bookLocale;
-	public $originalChords = array();
-	public $originalChordsForPrint = array();
+    
+    /**
+     * @var array
+     */
+	public $originalChords = [];
+	public $originalChordsForPrint = [];
 
 	public function __construct($dbColumns, $originalChords)
 	{

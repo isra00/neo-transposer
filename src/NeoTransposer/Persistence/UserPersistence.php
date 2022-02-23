@@ -65,8 +65,8 @@ class UserPersistence
 	/**
 	 * Create or update the user in the database.
 	 * 
-	 * @param  NeoTransposer\Model\User 			$user 	The User object to persist.
-	 * @param  string $registerIp The IP address with which the user registered.
+	 * @param  User     $user 	The User object to persist.
+	 * @param  string   $registerIp The IP address with which the user registered.
 	 * @return integer The user ID, if it was not set.
 	 */
 	public function persist(User $user, $registerIp = null)
@@ -93,19 +93,19 @@ class UserPersistence
 			'register_ip'	=> $registerIp
 		));
 
-		return $user->id_user = $this->db->lastInsertId();
+		return $user->id_user = intval($this->db->lastInsertId());
 	}
 
 
 	/**
 	 * Update the user logging the voice range change
 	 * 
-	 * @param  NeoTransposer\Model\User 			$user 	The User object to persist.
+	 * @param  User $user 	The User object to persist.
 	 * @param  string $registerIp 	The IP address with which the user registered.
 	 * @param  string $method 		Either 'wizard' or 'manual'.
 	 * @return boolean True if the voice range has changed, false if user had no voice range
 	 */
-	public function persistWithVoiceChange(User $user, $registerIp = null, $method=self::METHOD_WIZARD)
+	public function persistWithVoiceChange(User $user, $registerIp = null, $method=self::METHOD_WIZARD): bool
 	{
 		if (empty($user->id_user))
 		{

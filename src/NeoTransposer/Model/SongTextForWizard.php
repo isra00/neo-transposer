@@ -29,7 +29,7 @@ class SongTextForWizard
 	 */
 	public function getHtmlTextWithChords($chords)
 	{
-		$placeholders = array();
+		$placeholders = [];
 		$nChords = count($chords);
 		for ($i = 0; $i < $nChords; $i++)
 		{

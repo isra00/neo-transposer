@@ -22,7 +22,7 @@ class Login
 		return $this->get($req, $app);
 	}
 
-	public function get(Request $req, \NeoTransposer\NeoApp $app, $tpl_vars=array())
+	public function get(Request $req, \NeoTransposer\NeoApp $app, $tpl_vars=[])
 	{
 		// Log-out always
 		$app['session']->clear();

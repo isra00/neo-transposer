@@ -13,13 +13,13 @@ class Transposition extends \NeoTransposer\AppAccess
 	 * Transposed chords
 	 * @var array
 	 */
-	public $chords = array();
+	public $chords = [];
 
 	/**
 	 * Transposed chords, after being processed by a ChordPrinter
 	 * @var array
 	 */
-	public $chordsForPrint = array();
+	public $chordsForPrint = [];
 	
 	/**
 	 * Difficulty score
@@ -67,9 +67,9 @@ class Transposition extends \NeoTransposer\AppAccess
 	 * Used only for debug
 	 * @var array
 	 */
-	public $scoreMap = array();
+	public $scoreMap = [];
 
-	public function setTranspositionData($chords=array(), $capo=0, $asBook=false, $offset=0, NotesRange $range=null, $deviationFromCentered=0)
+	public function setTranspositionData($chords=[], $capo=0, $asBook=false, $offset=0, NotesRange $range=null, $deviationFromCentered=0)
 	{
 		$this->chords		= $chords;
 		$this->capo			= $capo;
@@ -170,7 +170,7 @@ class Transposition extends \NeoTransposer\AppAccess
 		//relatives, it is, the key will be its third minor.
 		if ($first_chord['attributes'] == 'm')
 		{
-			$position = array_search($first_chord['fundamental'], $nc->accoustic_scale);
+			$position = intval(array_search($first_chord['fundamental'], $nc->accoustic_scale));
 			$first_chord['fundamental'] = $nc->arrayIndex($nc->accoustic_scale, $position + 3);
 			$first_chord['attributes'] = null; 
 		}
