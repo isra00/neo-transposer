@@ -22,7 +22,6 @@ jobs:
 
       - name: Load MySQL data
         run: |
-          mysql -uroot -proot -e 'SHOW VARIABLES LIKE "%version%";'
-#          CREATE DATABASE transposer COLLATE utf8_general_ci'
-#          mysql -utest -ptest --port=3800 transposer < song_data.sql
+          mysql -uroot -proot -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
+          mysql -uroot -proot transposer < song_data.sql
 #          php tests/testAllTranspositions.php
