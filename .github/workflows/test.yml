@@ -7,6 +7,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          extensions: curl
+          tools: composer, phpunit
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run PHPUnit
+        run: phpunit
+
       - name: Turn on Ubuntu MySQL (SUDO)
         run: |
           sudo systemctl enable mysql.service
@@ -24,4 +37,4 @@ jobs:
         run: |
           mysql -uroot -proot -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
           mysql -uroot -proot transposer < song_data.sql
-#          php tests/testAllTranspositions.php
+          php tests/testAllTranspositions.php
