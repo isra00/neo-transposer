@@ -20,18 +20,15 @@ jobs:
       - name: Run PHPUnit
         run: phpunit
 
-#      - name: Shutdown Ubuntu MySQL (SUDO)
-#        run: sudo service mysql stop
-
-      - name: Prepare MySQL server
-        uses: mirromutth/mysql-action@v1.1
+      - uses: mirromutth/mysql-action@v1.1
         with:
           mysql version: 5.7
           mysql user: test
           mysql password: test
-          host port: 3333
-          container port: 3333
 
       - name: Load MySQL data
         run: |
-          mysql -utest -ptest --port=3333 -h127.0.0.1 -e 'SELECT version()'
+          sudo /etc/init.d/mysql start
+          mysql -utest -ptest -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
+          mysql -utest -ptest transposer < song_data.sql
+          php tests/testAllTranspositions.php
