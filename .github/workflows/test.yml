@@ -2,23 +2,10 @@ name: Test Neo-Transposer
 on: [push]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          extensions: curl
-          tools: composer, phpunit
-
-      - name: Install dependencies
-        run: composer install
-
-      - name: Run PHPUnit
-        run: phpunit
 
       - name: Turn on Ubuntu MySQL (SUDO)
         run: |
