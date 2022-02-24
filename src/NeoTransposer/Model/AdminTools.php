@@ -109,7 +109,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 		return implode("\n", $output);
 	}
 
-	public function checkUserLowerHigherNotes()
+	public function checkUserLowerHigherNotes(): string
 	{
 		$users = $this->app['db']->fetchAll('SELECT id_user, email, lowest_note, highest_note FROM user');
 
@@ -153,7 +153,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 	/**
 	 * Delete all compiled-*.css files except the one refered to in config.php
 	 */
-	public function removeOldCompiledCss()
+	public function removeOldCompiledCss(): string
 	{
 		$serveCssController = new \NeoTransposer\Controllers\ServeCss;
 		$fileScheme = $serveCssController->min_file;
@@ -214,13 +214,13 @@ class AdminTools extends \NeoTransposer\AppAccess
 			: 'Songs with problems: ' . implode(', ', $output);
 	}
 
-	public function testAllTranspositions()
+	public function testAllTranspositions(): string
 	{
 		$test = new TestAllTranspositions($this->app);
 		return $test->testAllTranspositions();
 	}
 
-	public function getVoiceRangeOfGoodUsers()
+	public function getVoiceRangeOfGoodUsers(): string
 	{
 		$goodUsers = $this->app['db']->fetchAll('SELECT id_user, wizard_step1, lowest_note, highest_note FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
 		$output = '';
@@ -238,7 +238,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 		return $output;
 	}
 
-	public function detectOrphanChords()
+	public function detectOrphanChords(): string
 	{
 		$sql = <<<SQL
 SELECT song_chord.id_song id_song FROM song_chord
@@ -253,7 +253,7 @@ SQL;
 				. "\nDELETE FROM song_chord WHERE id_song IN (" . implode(', ', $orphanIdSongs) . ')';
 	}
 
-	public function getPerformanceByNumberOfFeedbacks()
+	public function getPerformanceByNumberOfFeedbacks(): string
 	{
 		$sql = <<<SQL
 select fbs AS num_of_fbs, count(fbs) AS num_of_users, avg(performance) AS avg_perf
@@ -275,7 +275,7 @@ SQL;
 		return $output;
 	}
 
-	public function diffTranslations()
+	public function diffTranslations(): string
 	{
 		$languages = $this->app['neoconfig']['languages'];
 
