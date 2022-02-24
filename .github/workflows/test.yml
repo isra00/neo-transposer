@@ -19,6 +19,11 @@ jobs:
 
       - name: Run PHPUnit
         run: phpunit
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          name: PHPUnit-coverage-report
+          path: tests/reports
 
       - name: Turn on Ubuntu MySQL (SUDO)
         run: |
