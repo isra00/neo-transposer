@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
-use \Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\HttpFoundation\{Request, RedirectResponse};
 use \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use \NeoTransposer\Model\NotesRange;
 use \NeoTransposer\Persistence\UserPersistence;
@@ -12,7 +12,7 @@ use \NeoTransposer\Persistence\UserPersistence;
  */
 class SetUserData
 {
-	public function get(Request $request, \NeoTransposer\NeoApp $app)
+	public function get(Request $request, \NeoTransposer\NeoApp $app): RedirectResponse
 	{
 		if ($request->get('book'))
 		{
