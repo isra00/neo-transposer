@@ -10,7 +10,7 @@ use \NeoTransposer\Model\NotesNotation;
  */
 class UserVoice
 {
-	public function get(Request $request, \NeoTransposer\NeoApp $app)
+	public function get(Request $request, \NeoTransposer\NeoApp $app): string
 	{
 		if ($request->get('bad_voice_range'))
 		{
