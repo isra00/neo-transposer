@@ -1,8 +1,8 @@
 <?php
 
-$deployDir		= '/var/www/html/vhosts/transposer.local'; // No trailing slash
+$deployDir		= '/var/www/neo-transposer.com'; // No trailing slash
 $composerHome 	= '/tmp/composer-www-data';
-$composerPhar	= '/var/www/html/composer.phar';
+$composerPhar	= '/var/www/composer.phar';
 $repo			= 'isra00/neo-transposer';
 $deployBranch	= 'master';
 
@@ -247,8 +247,8 @@ $cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache
 
         .last-commits date { display: block; text-transform: uppercase; font-size: .85em; color: #555; }
         .last-commits date .status { font-size: 1.5em; }
-        .last-commits date .status.created { color: #dbab09; }
-        .last-commits date .status.created::after { content: "●"; }
+        .last-commits date .status.in_progress { color: #dbab09; }
+        .last-commits date .status.in_progress::after { content: "●"; }
         .last-commits date .status.success { color: green; }
         .last-commits date .status.success::after { content: "✔"; }
         .last-commits date .status.failure { color: red; }
