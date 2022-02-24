@@ -7,7 +7,7 @@ namespace NeoTransposer\Controllers;
  */
 class UserBook
 {
-	public function get(\NeoTransposer\NeoApp $app)
+	public function get(\NeoTransposer\NeoApp $app): string
 	{
 		/** @todo Sort the languages alphabetically */
 		return $app->render('user_book.twig', array(
