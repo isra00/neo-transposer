@@ -95,10 +95,10 @@ class TransposedSong
 	/**
 	 * Main method to be used by the clients of this class. It returns the
 	 * centered and equivalent transpositions for a given song, sorted by ease.
-	 * 
-	 * @param  int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
+	 *
+	 * @param int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
 	 */
-	public function transpose($forceVoiceLimit=null)
+	public function transpose($forceVoiceLimit=null): void
 	{
 		$transposer = $this->app['new.AutomaticTransposer'];
 		
@@ -130,7 +130,7 @@ class TransposedSong
 	/**
 	 * Prepare transpositions for print (chords and capo sentence).
 	 */
-	public function prepareForPrint()
+	public function prepareForPrint(): void
 	{
         /**
          * @var ChordPrinter
@@ -156,6 +156,8 @@ class TransposedSong
 	/**
 	 * Get the peopleCompatible transposition and decide whether the 
 	 * notEquivalent (if any) should be shown.
+	 *
+	 * @return void
 	 */
 	public function peopleCompatibleStuff(AutomaticTransposer $transposer)
 	{
