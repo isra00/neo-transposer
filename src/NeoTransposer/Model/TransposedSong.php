@@ -17,7 +17,7 @@ use \NeoTransposer\Model\Song;
 class TransposedSong
 {
 	/**
-	 * @var \NeoTransposer\Song
+	 * @var \NeoTransposer\Model\Song
 	 */
 	public $song;
 

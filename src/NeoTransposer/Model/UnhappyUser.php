@@ -9,7 +9,7 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 	/**
 	 * The performance below which a user is considered unhappy.
 	 * 
-	 * @type float
+	 * @var float
 	 */
 	const UNHAPPY_THRESHOLD_PERF = .5;
 
@@ -17,7 +17,7 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 	 * The minimum number of feedback reports for considering a user unhappy if 
 	 * their performance < UNHAPPY_THRESHOLD_PERF
 	 * 
-	 * @type int
+	 * @var int
 	 */
 	const UNHAPPY_THRESHOLD_REPORTS = 5;
 
