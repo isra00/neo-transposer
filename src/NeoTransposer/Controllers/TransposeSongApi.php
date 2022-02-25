@@ -19,7 +19,7 @@ class TransposeSongApi extends \NeoTransposer\AppAccess
 
 		if (!$user = $userPersistence->fetchUserFromField('id_user', $req->get('userToken')))
 		{
-			throw new \Symfony\Component\HttpKernel\Exception\ForbiddenHttpException;
+			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 		}
 
 		$this->app['neouser'] = $user;

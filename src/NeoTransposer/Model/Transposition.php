@@ -154,28 +154,28 @@ class Transposition extends \NeoTransposer\AppAccess
 	 * @param  \NeoTransposer\Model\NotesCalculator $nc An instance of NotesCalculator
 	 * @return string The key, expressed as major chord in american notation.
 	 */
-	public function getKey(NotesCalculator $nc)
+	public function getKey(NotesCalculator $ncalc)
 	{
-		$first_chord = $nc->readChord($this->chords[0]);
+		$firstChord = $ncalc->readChord($this->chords[0]);
 
 		/*
 		 * Flatten the chord, it is, remove all attributes different from minor.
 		 * This is needed because some songs, like Sola a Solo, start with a
 		 * 4-note chord (Dm5), or Song of Moses (C7).
 		 */
-		$first_chord['attributes'] = (false !== strpos($first_chord['attributes'], 'm'))
+		$firstChord['attributes'] = (false !== strpos($firstChord['attributes'], 'm'))
 			? 'm' : '';
 
 		//The key is always expressed in major form, so we resolve the minor
 		//relatives, it is, the key will be its third minor.
-		if ($first_chord['attributes'] == 'm')
+		if ($firstChord['attributes'] == 'm')
 		{
-			$position = intval(array_search($first_chord['fundamental'], $nc->accoustic_scale));
-			$first_chord['fundamental'] = $nc->arrayIndex($nc->accoustic_scale, $position + 3);
-			$first_chord['attributes'] = null; 
+			$position = intval(array_search($firstChord['fundamental'], $ncalc->accoustic_scale));
+			$firstChord['fundamental'] = $ncalc->arrayIndex($ncalc->accoustic_scale, $position + 3);
+			$firstChord['attributes'] = null; 
 		}
 
-		return $first_chord['fundamental'] . $first_chord['attributes'];
+		return $firstChord['fundamental'] . $firstChord['attributes'];
 	}
 
 	public function setAlternativeChords(NotesCalculator $nc)
