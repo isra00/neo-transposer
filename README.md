@@ -28,8 +28,8 @@ See [Code of Conduct](CODE_OF_CONDUCT.md)
  * Working on accepted issues: you may start by the most highly prioritized tasks in the [Main Backlog](https://github.com/isra00/neo-transposer/projects/2) or the [Technical Backlog](https://github.com/isra00/neo-transposer/projects/1). You can submit your code via fork and pull request.
  * If you write JavaScript code, it may use jQuery's API, though we actually use zepto.js for better performance.
  * If you write PHP code, it must adhere to PSR-12, except that we use tabs for indentation, not spaces.
- * Free contributions Feel free to  to fork and submit a pull request with changes.
- * Please note this is a non-profit project with no paid staff. No contribution will be rewarded in money or in specie, but it will be duly credited.
+ * Free contributions: Feel free to  to fork and submit a pull request with changes.
+ * Please note this is a non-profit project with no paid staff. No contribution will be rewarded in money or in specie, but it will be duly credited. Likewise, your contributions will NOT be used for any commercial purpose.
 
 ### Pre-commit hook ###
 
