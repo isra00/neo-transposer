@@ -2,9 +2,9 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Model\NotesNotation;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Persistence\UserPersistence;
-use \NeoTransposer\Model\NotesNotation;
 use \Symfony\Component\Translation\TranslatorInterface;
 use \Doctrine\DBAL\Connection;
 
@@ -137,6 +137,7 @@ class User
 	 */
 	public function getVoiceAsString(TranslatorInterface $trans, string $notation='american') : string
 	{
-		return NotesNotation::getVoiceRangeAsString($trans, $notation, $this->range->lowest, $this->range->highest);
+        $notesNotation = new NotesNotation;
+		return $notesNotation->getVoiceRangeAsString($trans, $notation, $this->range->lowest, $this->range->highest);
 	}
 }

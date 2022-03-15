@@ -16,7 +16,7 @@ class NotesNotation
 	 * 
 	 * @var array
 	 */
-	protected static $latinNotes = array(
+	protected const LATIN_NOTES = [
 		'A'		=> 'La',
 		'A#'	=> 'Sib',
 		'B' 	=> 'Si',
@@ -29,7 +29,7 @@ class NotesNotation
 		'F#'	=> 'Fa#',
 		'G'		=> 'Sol',
 		'G#'	=> 'Sol#'
-	);
+    ];
 
     protected const REGEXP_NOTE = '/([ABCDEFG]#?b?)([0-9])?/';
 
@@ -39,14 +39,14 @@ class NotesNotation
 	 * @param string $notation 'american' or 'latin'
 	 * @return string           The note
 	 */
-	public static function getNotation(string $note, string $notation): string
+	public function getNotation(string $note, string $notation): string
 	{
 		preg_match(self::REGEXP_NOTE, $note, $match);
 
 		$note 	= $match[1];
 		$number = $match[2] ?? null;
 
-		$noteInNotation = ('latin' == $notation) ? self::$latinNotes[$note] : $note;
+		$noteInNotation = ('latin' == $notation) ? self::LATIN_NOTES[$note] : $note;
 		return $noteInNotation . $number;
 	}
 
@@ -59,7 +59,7 @@ class NotesNotation
 	 * @param string      $highestNote Highest note of the voice range.
 	 * @return string                  Something like "lowestNote - highestNote +x octaves"
 	 */
-	public static function getVoiceRangeAsString(TranslatorInterface $trans, string $notation='american', string $lowestNote, string $highestNote): string
+	public function getVoiceRangeAsString(TranslatorInterface $trans, string $notation='american', string $lowestNote, string $highestNote): string
 	{
 		preg_match(self::REGEXP_NOTE, $lowestNote, $match);
 		$lowestNote = $match[1];

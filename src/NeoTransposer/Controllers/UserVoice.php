@@ -36,9 +36,10 @@ class UserVoice
 		}
 
 		$accousticScaleNice = [];
+        $notesNotation = new NotesNotation;
 		foreach ($nc->accoustic_scale as $note)
 		{
-			$accousticScaleNice[] = NotesNotation::getNotation(
+			$accousticScaleNice[] = $notesNotation->getNotation(
 				$note, 
 				$app['neoconfig']['languages'][$app['locale']]['notation']
 			);

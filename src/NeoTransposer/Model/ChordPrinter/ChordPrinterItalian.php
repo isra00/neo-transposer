@@ -16,10 +16,10 @@ class ChordPrinterItalian extends ChordPrinter
 	 * @param  string $attributes  Chord's type or attributes.
 	 * @return string              The final notation (HTML).
 	 */
-	public function printChordInNotation($fundamental, $attributes)
-	{
-		$fundamental = \NeoTransposer\Model\NotesNotation::getNotation($fundamental, 'latin');
-
+	public function printChordInNotation($fundamental, $attributes): string
+    {
+        $notesNotation = new NotesNotation;
+		$fundamental = $notesNotation->getNotation($fundamental, 'latin');
 
 		if ($fundamental == 'Sib')
 		{
