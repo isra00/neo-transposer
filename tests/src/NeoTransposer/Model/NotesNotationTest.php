@@ -23,19 +23,36 @@ class NotesNotationTest extends \PHPUnit\Framework\TestCase
 
     public function testGetVoiceRangeAsString()
     {
-    	$transMock = $this->getMockBuilder(\Symfony\Component\Translation\Translator::class)
-						  ->disableOriginalConstructor()
-						  ->setMethods(['trans'])
-						  ->getMock();
+        $transMock = $this->getMockBuilder(\Symfony\Component\Translation\Translator::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['trans'])
+            ->getMock();
 
-		$transMock->expects($this->once())
-				  ->method('trans')
-				  ->with($this->equalTo('oct'))
-				  ->will($this->returnValue('octave'));
+        $transMock->expects($this->once())
+            ->method('trans')
+            ->with($this->equalTo('oct'))
+            ->will($this->returnValue('octave'));
 
-		$this->assertEquals(
-			'A &rarr; A +1 octave',
-			$this->nn->getVoiceRangeAsString($transMock, 'american', 'A1', 'A2')
-		);
+        $this->assertEquals(
+            'A &rarr; A +1 octave',
+            $this->nn->getVoiceRangeAsString($transMock, 'american', 'A1', 'A2')
+        );
+    }
+    public function testGetVoiceRangeAsStringLatinNotation()
+    {
+        $transMock = $this->getMockBuilder(\Symfony\Component\Translation\Translator::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['trans'])
+            ->getMock();
+
+        $transMock->expects($this->once())
+            ->method('trans')
+            ->with($this->equalTo('oct'))
+            ->will($this->returnValue('octave'));
+
+        $this->assertEquals(
+            'La &rarr; La +1 octave',
+            $this->nn->getVoiceRangeAsString($transMock, 'latin', 'A1', 'A2')
+        );
     }
 }
