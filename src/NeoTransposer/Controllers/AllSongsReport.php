@@ -4,7 +4,7 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
-use \NeoTransposer\Model\{TransposedSong, PeopleCompatibleCalculation};
+use NeoTransposer\Model\{TransposedSong, PeopleCompatibleCalculation, TransposedSongFactory};
 
 /**
  * Transpose Song page: transposes the given song for the singer's voice range.
@@ -98,9 +98,12 @@ SQL;
 
 		$songs = [];
 
+        $transposedSongFactory = new TransposedSongFactory($app);
+
 		foreach ($ids as $id)
 		{
-			$song = TransposedSong::create($id['id_song'], $app);
+            $song = $transposedSongFactory->createTransposedSongFromSongId($id['id_song']);
+
 			$song->transpose();
 
 			$song->peopleCompatibleStatusMicroMsg = $this->peopleCompatibleMicroMessages[$song->peopleCompatibleStatus];

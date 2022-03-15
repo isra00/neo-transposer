@@ -2,7 +2,12 @@
 
 namespace NeoTransposer\Controllers;
 
-use \NeoTransposer\Model\{TransposedSong, NotesRange, TranspositionChart, NotesCalculator, PeopleCompatibleCalculation};
+use NeoTransposer\Model\{TransposedSong,
+    NotesRange,
+    TransposedSongFactory,
+    TranspositionChart,
+    NotesCalculator,
+    PeopleCompatibleCalculation};
 use \Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\NeoApp;
 
@@ -32,7 +37,8 @@ class TransposeSong
 			}
 		}
 
-		$transposedSong = TransposedSong::create($id_song, $app);
+        $transposedSongFactory = new TransposedSongFactory($app);
+        $transposedSong = $transposedSongFactory->createTransposedSongFromSongId($id_song);
 
 		$app['locale'] = $transposedSong->song->bookLocale;
 		$app['translator']->setLocale($app['locale']);

@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Model\TransposedSongFactory;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\NeoApp;
 use \NeoTransposer\Model\SongTextForWizard;
@@ -144,7 +145,9 @@ class WizardEmpiric
 	{
 		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
-		$transposedSong = \NeoTransposer\Model\TransposedSong::create($wizard_config_song['id_song'], $app);
+        $transposedSongFactory = new TransposedSongFactory($app);
+        $transposedSong = $transposedSongFactory->createTransposedSongFromSongId($wizard_config_song['id_song']);
+
 		$transposedSong->transpose($forceVoiceLimit);
 
 		$transposedChords = $transposedSong->transpositions[0]->chordsForPrint;

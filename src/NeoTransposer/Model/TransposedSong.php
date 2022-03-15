@@ -64,33 +64,11 @@ class TransposedSong
 	 */
 	protected $app;
 
-	protected function __construct(Song $song, NeoApp $app)
+	public function __construct(Song $song, NeoApp $app)
 	{
 		$this->song = $song;
 		$this->app 	= $app;
 	}
-
-	/**
-	 * Factory
-	 *
-	 * @param  string|int            $idSong Song ID or slug.
-	 * @param NeoApp $app     NeoApp instance.
-	 * @return TransposedSong                 The created object.
-	 */
-	public static function create($idSong, NeoApp $app)
-	{
-		try
-		{
-			$song = SongPersistence::fetchSongById($idSong, $app['db']);
-		}
-		catch (\Exception $e)
-		{
-			$app->abort(404, $e->getMessage());
-		}
-
-		return new TransposedSong($song, $app);
-	}
-
 
 	/**
 	 * Main method to be used by the clients of this class. It returns the

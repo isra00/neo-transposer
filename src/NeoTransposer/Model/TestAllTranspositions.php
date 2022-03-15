@@ -92,9 +92,12 @@ SQL;
 
 		$allSongs = [];
 
+        $transposedSongFactory = new TransposedSongFactory($this->app);
+
 		foreach ($ids as $id)
 		{
-			$song = TransposedSong::create($id['id_song'], $this->app);
+            $song = $transposedSongFactory->createTransposedSongFromSongId($id['id_song']);
+
 			$song->transpose();
 
 			$allSongs[] = $song;

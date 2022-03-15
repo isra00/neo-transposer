@@ -14,3 +14,4 @@ GeoLite2-Country.mmdb
 **/Thumbs.db*
 .code-workspace.code-workspace
 .idea
+.vscode
