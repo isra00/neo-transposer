@@ -2,20 +2,17 @@
 
 namespace NeoTransposer\Model;
 
-use Symfony\Component\Translation\Translator;
-use \Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Support for different nomenclatures for notes (american and latin so far).
- * 
- * @fixme Solve duplicity of regexp in getNotation() and getVoiceRangeAsString()
+ * Convert different nomenclatures for notes (american and latin so far).
  */
 class NotesNotation
 {
 	/**
-	 * Correspondence between American and Latin notation. The softwares uses
-	 * always american notation (with no flats, only sharps) internally. Beware
-	 * that, according to the Neocatechumenal songbook, A# is always Bb.
+	 * Correspondence between American and Latin notation. This software always uses
+     * American notation (with no flats, only sharps) internally. Beware that,
+     * according to the Neocatechumenal songbook, A# is always Bb.
 	 * 
 	 * @var array
 	 */
@@ -34,17 +31,17 @@ class NotesNotation
 		'G#'	=> 'Sol#'
 	);
 
+    protected const REGEXP_NOTE = '/([ABCDEFG]#?b?)([0-9])?/';
+
 	/**
 	 * Returns a given note in the given notation (american or latin).
-	 * @param  string $note     Note, in american notation (no flats, only sharps).
-	 * @param  string $notation 'american' or 'latin'
+	 * @param string $note     Note, in american notation (no flats, only sharps).
+	 * @param string $notation 'american' or 'latin'
 	 * @return string           The note
 	 */
-	public static function getNotation($note, $notation)
+	public static function getNotation(string $note, string $notation): string
 	{
-		$regexp = '/([ABCDEFG]#?b?)([0-9])?/';
-
-		preg_match($regexp, $note, $match);
+		preg_match(self::REGEXP_NOTE, $note, $match);
 
 		$note 	= $match[1];
 		$number = $match[2] ?? null;
@@ -56,26 +53,24 @@ class NotesNotation
 	/**
 	 * Returns a user-friendly string with the voice range:
 	 * 
-	 * @param  Translator $trans       The Silex Translator object.
+	 * @param  TranslatorInterface $trans       The Silex Translator object.
 	 * @param  string     $notation    Notation for notes (american|latin)
-	 * @param  string     $lowestNote  Lowest note of the voice range.
-	 * @param  string     $highestNote Highest note of the voice range.
+	 * @param string      $lowestNote  Lowest note of the voice range.
+	 * @param string      $highestNote Highest note of the voice range.
 	 * @return string                  Something like "lowestNote - highestNote +x octaves"
 	 */
-	public static function getVoiceRangeAsString(TranslatorInterface $trans, $notation='american', $lowestNote, $highestNote)
+	public static function getVoiceRangeAsString(TranslatorInterface $trans, string $notation='american', string $lowestNote, string $highestNote): string
 	{
-		$regexp = '/([ABCDEFG]#?b?)([0-9])/';
-		
-		preg_match($regexp, $lowestNote, $match);
+		preg_match(self::REGEXP_NOTE, $lowestNote, $match);
 		$lowestNote = $match[1];
 
-		preg_match($regexp, $highestNote, $match);
+		preg_match(self::REGEXP_NOTE, $highestNote, $match);
 		$highestNote = $match[1];
 
 		if ('latin' == $notation)
 		{
-			$lowestNote = NotesNotation::getNotation($lowestNote, 'latin');
-			$highestNote = NotesNotation::getNotation($highestNote, 'latin');
+			$lowestNote = self::getNotation($lowestNote, 'latin');
+			$highestNote = self::getNotation($highestNote, 'latin');
 		}
 
 		$octave = intval($match[2]);
