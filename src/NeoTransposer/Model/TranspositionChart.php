@@ -33,13 +33,14 @@ class TranspositionChart
 
 	public function addVoice(string $caption, string $cssClass, NotesRange $range): void
 	{
+        $notesNotation = new NotesNotation;
 		$this->voiceChart[] = [
 			'caption'	=> $caption,
 			'css'		=> $cssClass,
 			'lowest'	=> $range->lowest,
 			'highest'	=> $range->highest, 
-			'lowestForPrint'  => NotesNotation::getNotation($range->lowest, $this->notation),
-			'highestForPrint' => NotesNotation::getNotation($range->highest, $this->notation),
+			'lowestForPrint'  => $notesNotation->getNotation($range->lowest, $this->notation),
+			'highestForPrint' => $notesNotation->getNotation($range->highest, $this->notation),
 			'length'	=> abs($this->nc->distanceWithOctave($range->lowest, $range->highest)) - 1,
 		];
 	}
