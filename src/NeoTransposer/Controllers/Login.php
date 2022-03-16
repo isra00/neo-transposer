@@ -5,25 +5,25 @@ namespace NeoTransposer\Controllers;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Model\User;
 use \NeoTransposer\Persistence\UserPersistence;
-use \MaxMind\WebService\Http\CurlRequest;
+use \NeoTransposer\NeoApp;
 
 /**
  * Landing page with Login form.
  */
 class Login
 {
-	public function run(Request $req, \NeoTransposer\NeoApp $app)
-	{
-		if ('POST' == $req->getMethod())
-		{
-			return $this->post($req, $app);
-		}
+	protected const REGEXP_VALID_EMAIL = "[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
-		return $this->get($req, $app);
-	}
-
-	public function get(Request $req, \NeoTransposer\NeoApp $app, $tpl_vars=[])
-	{
+    /**
+     * Display login page (=landing page).
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $req
+     * @param \NeoTransposer\NeoApp $app
+     * @param $tpl_vars Additional vars for Twig, i.e. validation errors.
+     * @return string
+     */
+	public function get(Request $req, NeoApp $app, $tpl_vars=[]): string
+    {
 		// Log-out always
 		$app['session']->clear();
 		$app['session']->set('user', new User);
@@ -38,32 +38,34 @@ class Login
 		$tpl_vars['page_title']				= $app->trans('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
 		$tpl_vars['meta_description']		= $app->trans('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
 		$tpl_vars['meta_canonical']			= $app['absoluteUriWithoutQuery'];
+
 		return $app->render('login.twig', $tpl_vars, true);
 	}
 
-	public function post(Request $req, \NeoTransposer\NeoApp $app)
+    /**
+     * Receive the login data and reload login if failed to log in, or redirect to voice wizard if user has
+     * no voice range, or redirect to book.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $req
+     * @param \NeoTransposer\NeoApp $app
+     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+	public function post(Request $req, NeoApp $app)
 	{
-
-		$regexp = <<<REG
-[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
-REG;
-
 		$req_email = trim($req->get('email'));
 
-		$isCaptchaValid = ($app['debug'] || $app['neoconfig']['disable_recaptcha']) 
-			? true 
-			: $this->validateCaptcha($req);
+		$isCaptchaValid = $app['debug'] || $app['neoconfig']['disable_recaptcha'] || $this->validateCaptcha($req);
 
-		if (!preg_match("/$regexp/i", $req_email) || !$isCaptchaValid)
+		if (!preg_match('/' . self::REGEXP_VALID_EMAIL . '/i', $req_email) || !$isCaptchaValid)
 		{
 			$errorMsg = $isCaptchaValid ?
 						'That e-mail doesn\'t look good. Please, re-type it.'
 						: 'The Captcha code is not valid. If you are human, please try again or update your browser to log-in.';
 
-			return $this->get($req, $app, array(
+			return $this->get($req, $app, [
 				'error_msg'  => $app->trans($errorMsg),
-				'post'		 => array('email' => $req_email)
-			));
+				'post'		 => ['email' => $req_email]
+            ]);
 		}
 
 		$userPersistence = new UserPersistence($app['db']);
@@ -74,31 +76,28 @@ REG;
 			$user->persist($app['db'], $req->getClientIp());
 		}
 
-		$user->firstTime = empty($user->range->lowest);
+		$user->firstTime = !$user->hasRange();
 		$app['session']->set('user', $user);
 
-		if (empty($user->range->lowest))
+		if ($user->firstTime)
 		{
 			return $app->redirect($app->path(
-				'user_voice', 
+				'user_voice',
 				array('_locale' => $app['locale'], 'firstTime' => '1')
 			));
 		}
-		else
-		{
-			$id_book = !empty($user->id_book) ? $user->id_book : 1;
 
-			$target = $req->get('redirect')
-				? $req->get('redirect')
-				: $app->path("book_$id_book");
+        $idBook = $user->id_book ?? 1;
 
-			if (!empty($app['session']->get('callbackSetUserToken')))
-			{
-				$target = $app->path('external_login_finish');
-			}
+        $target = $req->get('redirect')
+            ?? $app->path("book_$idBook");
 
-			return $app->redirect($target);
-		}
+        if (!empty($app['session']->get('callbackSetUserToken')))
+        {
+            $target = $app->path('external_login_finish');
+        }
+
+        return $app->redirect($target);
 	}
 
 	protected function validateCaptcha(Request $req)
