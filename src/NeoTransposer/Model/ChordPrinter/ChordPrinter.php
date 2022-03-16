@@ -3,7 +3,8 @@
 namespace NeoTransposer\Model\ChordPrinter;
 
 /**
- * Chord printers implement the different chord notations.
+ * Chord printers implement the different chord notations. This follows the
+ * Template Method pattern.
  *
  * Internally, chords are notated with the following format:
  * -Note with american notation, like NotesCalculator::$accoustic_scale.
@@ -36,7 +37,7 @@ abstract class ChordPrinter
 	public function printChord($chordName)
 	{
 		//If internal notation is not valid, it will throw an exception
-		$nc = new \NeoTransposer\Model\NotesCalculator;
+		$nc = new \NeoTransposer\Model\NotesCalculator();
 		$parts = $nc->readChord($chordName);
 		return $this->printChordInNotation($parts['fundamental'], $parts['attributes']);
 	}
