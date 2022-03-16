@@ -52,10 +52,14 @@ $controllers = 'NeoTransposer\\Controllers';
 $app->get('/', "$controllers\\Index::get");
 $app->get('/sitemap.xml', "$controllers\\Sitemap::get");
 
-$app->get('/{_locale}/login', "$controllers\\Login::run")
-	->method('GET|POST')
+$app->get('/{_locale}/login', "$controllers\\Login::get")
+	->method('GET')
 	->assert('_locale', $validLocales)
 	->bind('login');
+
+$app->get('/{_locale}/login', "$controllers\\Login::post")
+	->method('POST')
+	->assert('_locale', $validLocales);
 
 $app->get('/{_locale}/user/voice', "$controllers\\UserVoice::get")
 	->assert('_locale', $validLocales)

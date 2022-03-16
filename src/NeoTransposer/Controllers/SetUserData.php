@@ -36,6 +36,7 @@ class SetUserData
 
 		if ($request->get('highest_note'))
 		{
+            /** @todo En PHP 8, str_contains() */
 			if (strpos($request->get('highest_note'), '1'))
 			{
 				return $app->redirect($app->path(
