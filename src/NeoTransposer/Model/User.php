@@ -83,6 +83,11 @@ class User
 	 * 
 	 * @param  Request      $request    The HttpFoundation Request, to know the current route.
 	 * @return string|null  Address for redirection, if needed.
+     *
+     * @todo Refactor: el nombre hace esperar un return type boolean.
+     *       Esto rompe Single Responsibility, puesto que trabaja con la request.
+     *       Más bien, otra clase (LoginFlow o algo así) debería preguntar a esta
+     *       si isLoggedIn() y si hasRange() y decidir la ruta de redirección en base a eso.
 	 */
 	public function isRedirectionNeeded(Request $request)
 	{
@@ -134,6 +139,8 @@ class User
 	 * @param   TranslatorInterface $trans 		The Translator service.
 	 * @param   string              $notation 	The notation (american/latin).
 	 * @return  string 				Formatted string.
+     *
+     * @todo Inversión de dependencia: no tiene sentido recibir TranslatorInterface pero instanciar NotesNotation.
 	 */
 	public function getVoiceAsString(TranslatorInterface $trans, string $notation='american') : string
 	{
