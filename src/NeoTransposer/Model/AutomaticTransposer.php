@@ -3,7 +3,7 @@
 namespace NeoTransposer\Model;
 
 /**
- * Core algorithm for transposing songs. It implementing four types of transpositions: 
+ * Core algorithm for transposing songs. It implements four types of transpositions:
  *
  * 1) centered: the song voice range is transposed to the center of singer's voice range.
  * 2) equivalentsWithCapo: transpositions equivalent to the centered using capo 1 to 5, 
@@ -21,6 +21,8 @@ namespace NeoTransposer\Model;
  * 
  * The flag forceVoiceLimit is not used in real life transpositions, but only in
  * the Empiric Wizard to force the singer to use the lowest or highest voice.
+ *
+ * @todo Refactor this class to make it more Single-Responsibility. Lo de "Automatic" sobra.
  */
 class AutomaticTransposer extends \NeoTransposer\AppAccess
 {

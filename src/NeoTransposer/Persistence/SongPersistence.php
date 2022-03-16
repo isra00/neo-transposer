@@ -29,6 +29,8 @@ class SongPersistence
      * @param string $idSong Song ID or slug.
      * @return Song The requested Song object.
      * @throws \Exception If song does not exist or has an invalid id_book associated.
+     *
+     * @todo Refactor esto. Id or Slug es doble responsabilidad. Solo el controller debería aceptar ambos.
      */
 	public function fetchSongByIdOrSlug(string $idSong): Song
 	{

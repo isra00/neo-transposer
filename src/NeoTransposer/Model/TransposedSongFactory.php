@@ -8,6 +8,9 @@ use \NeoTransposer\NeoApp;
 use \NeoTransposer\Persistence\SongPersistence;
 use \NeoTransposer\Model\Song;
 
+/**
+ * Esto podría ser, en vez de una clase con un sólo método, un servicio Silex.
+ */
 class TransposedSongFactory extends AppAccess
 {
     /**
