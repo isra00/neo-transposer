@@ -14,7 +14,7 @@ Many cantors, especially women, cannot sing many songs which do not fit their vo
 
  * Be a help, not an obstacle, to the charisma and the customs of the Way.
  * Universal access: the app can be easily used with every device and connection, even in Africa. That's why this is open web technology and not a [native Android/iOS app](https://blog.codinghorror.com/app-pocalypse-now/)
- * Pedagogical approach: it must be easy to use and understand, but it must tell the user what's going on. Using the right musical terminology. Promote the use of the official songbook.
+ * Pedagogical approach: it must be easy to use and understand, but it must tell the user what's going on. Use the right musical terminology. Promote the use of the official songbook.
  * You received free, give free (Mt 10:8): the app will always be free to use and open source.
  * Simplicity in everything.
 
