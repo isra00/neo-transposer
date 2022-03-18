@@ -8,7 +8,7 @@ namespace NeoTransposer\Model;
 class SongTextForWizard
 {
 	/**
-	 * Lyrics and chord placeholders, as fetched from config file.
+	 * Lyrics and chord placeholders (%0, %1...), as fetched from config file.
 	 * 
 	 * @var string
 	 */
@@ -27,8 +27,8 @@ class SongTextForWizard
 	 * 
 	 * @see    config.wizard.php
 	 */
-	public function getHtmlTextWithChords($chords)
-	{
+	public function getHtmlTextWithChords(array $chords): string
+    {
 		$placeholders = [];
 		$nChords = count($chords);
 		for ($i = 0; $i < $nChords; $i++)
