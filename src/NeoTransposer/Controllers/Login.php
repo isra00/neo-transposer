@@ -4,9 +4,9 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\Model\User;
-use \NeoTransposer\Persistence\UserPersistence;
-use \NeoTransposer\NeoApp;
+use NeoTransposer\Model\User;
+use NeoTransposer\Persistence\UserPersistence;
+use NeoTransposer\NeoApp;
 
 /**
  * Landing page with Login form.
@@ -24,11 +24,11 @@ class Login
      *
      * @return string
      */
-    public function get(Request $req, NeoApp $app, array $tpl_vars=[]): string
+    public function get(Request $req, NeoApp $app, array $tpl_vars = []): string
     {
         // Log-out always
         $app['session']->clear();
-        $app['session']->set('user', new User);
+        $app['session']->set('user', new User());
 
         if (!empty($req->get('callbackSetUserToken'))) {
             $app['session']->set('callbackSetUserToken', $req->get('callbackSetUserToken'));
@@ -64,9 +64,11 @@ class Login
             : 'The Captcha code is not valid. If you are human, please try again or update your browser to log-in.';
 
             return $this->get(
-                $req, $app, [
-                'error_msg'  => $app->trans($errorMsg),
-                'post'         => ['email' => $req_email]
+                $req,
+                $app,
+                [
+                    'error_msg'  => $app->trans($errorMsg),
+                    'post'         => ['email' => $req_email]
                 ]
             );
         }
@@ -109,12 +111,12 @@ class Login
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt(
-            $curl, CURLOPT_POSTFIELDS, http_build_query(
-                [
+            $curl,
+            CURLOPT_POSTFIELDS,
+            http_build_query([
                 'secret' => '6LfXByMUAAAAAByHDr2AzwKA0P_26Oqz-RxZvrez',
                 'response' => $req->get('g-recaptcha-response')
-                ]
-            )
+            ])
         );
 
         $response = curl_exec($curl);
