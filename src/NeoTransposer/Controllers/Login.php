@@ -56,7 +56,7 @@ class Login
     {
         $req_email = trim($req->get('email'));
 
-        $isCaptchaValid = $app['debug'] || $app['neoconfig']['disable_recaptcha'] || $this->validateCaptcha($req);
+        $isCaptchaValid = $app['debug'] || $app['neoconfig']['disable_recaptcha'] || $this->validateCaptcha($req, $app['neoconfig']['recaptcha_secret']);
 
         if (!preg_match('/' . self::REGEXP_VALID_EMAIL . '/i', $req_email) || !$isCaptchaValid) {
             $errorMsg = $isCaptchaValid ?
@@ -104,7 +104,7 @@ class Login
         return $app->redirect($target);
     }
 
-    protected function validateCaptcha(Request $req)
+    protected function validateCaptcha(Request $req, string $secret)
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
@@ -114,7 +114,7 @@ class Login
             $curl,
             CURLOPT_POSTFIELDS,
             http_build_query([
-                'secret' => '6LfXByMUAAAAAByHDr2AzwKA0P_26Oqz-RxZvrez',
+                'secret' => $secret,
                 'response' => $req->get('g-recaptcha-response')
             ])
         );
