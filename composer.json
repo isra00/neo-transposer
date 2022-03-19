@@ -1,6 +1,6 @@
 {
     "name": "isra00/neo-transposer",
-    "description": " Automatically transpose the chords of the songs of the Neocatechumenal Way so they fit the singer's voice",
+    "description": "Automatically transpose the chords of the songs of the Neocatechumenal Way so they fit the singer's voice",
     "license": "GPL-3.0-or-later",
 
     "require": {
@@ -16,6 +16,8 @@
         "lib-curl": "*"
     },
 
+    "minimum-stability": "stable",
+
     "autoload": {
         "psr-4" : {
             "NeoTransposer\\": "src/NeoTransposer"
@@ -29,6 +31,8 @@
     },
 
     "require-dev": {
-        "phpunit/phpunit": "^9"
+        "phpunit/phpunit": "^9",
+        "squizlabs/php_codesniffer": "3.*",
+        "vimeo/psalm": "^4.22"
     }
 }
