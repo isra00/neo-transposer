@@ -26,8 +26,8 @@ namespace NeoTransposer\Model;
  */
 class AutomaticTransposer extends \NeoTransposer\AppAccess
 {
-	const FORCE_LOWEST  = 1;
-	const FORCE_HIGHEST = 2;
+    public const FORCE_LOWEST  = 1;
+    public const FORCE_HIGHEST = 2;
 
 	/**
 	 * @var NotesCalculator
@@ -50,7 +50,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	protected $originalChords;
 
 	/**
-	 * @type boolean
+	 * @type bool
 	 */
 	protected $firstChordIsKey;
 
@@ -77,7 +77,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * 
 	 * @var array
 	 */
-	const OFFSETS_NOT_EQUIVALENT = [-1, 1];
+    public const OFFSETS_NOT_EQUIVALENT = [-1, 1];
 
 	/**
 	 * Set all data needed to calculate the transpositions.
@@ -88,21 +88,21 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param	boolean		$firstChordIsKey	Song original chords
 	 * @param	NotesRange	$songPeopleRange	Song's voice range for people
 	 */
-	public function setTransposerData(NotesRange $singerRange, NotesRange $songRange, $originalChords, $firstChordIsKey, NotesRange $songPeopleRange=null)
+	public function setTransposerData(NotesRange $singerRange, NotesRange $songRange, array $originalChords, $firstChordIsKey, NotesRange $songPeopleRange=null)
 	{
-		$this->singerRange	 	= $singerRange;
-		$this->songRange	 	= $songRange;
-		$this->originalChords	= $originalChords;
-		$this->firstChordIsKey	= $firstChordIsKey;
-		$this->songPeopleRange	= $songPeopleRange;
+		$this->singerRange     = $singerRange;
+		$this->songRange       = $songRange;
+		$this->originalChords  = $originalChords;
+		$this->firstChordIsKey = $firstChordIsKey;
+		$this->songPeopleRange = $songPeopleRange;
 
-		$this->notesCalculator				= new NotesCalculator;
+		$this->notesCalculator = new NotesCalculator();
 	}
 
 	/**
 	 * This is the core algorithm for Automatic transposition.
 	 *
-	 * Given the the lowest and highest note of the singer and of the song, the 
+	 * Given the lowest and highest note of the singer and of the song, the
 	 * algorithm transposes the song locating its range in the middle of the
 	 * singer's voice range through simple arithmetics: calculate the offset 
 	 * between the original song's lowest note and the centered position, and 
@@ -215,7 +215,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param  array $transpositions Array of Transpositions, with the score already set.
 	 * @return array The sorted array
 	 */
-	public function sortTranspositionsByEase(array $transpositions)
+	public function sortTranspositionsByEase(array $transpositions) : array
 	{
 		usort($transpositions, function(Transposition $one, Transposition $two) {
 
@@ -225,7 +225,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 				return ($two->getAsBook()) ? 1 : 0;
 			}
 
-			return ($one->score < $two->score) ? -1 : 1;
+			return $one->score <=> $two->score;
 		});
 
 		return $transpositions;
@@ -348,12 +348,10 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 				}
 
 				//If it's too low or too high, discard it
-				if ($this->notesCalculator->distanceWithOctave($notEquivalent->range->lowest, $this->singerRange->lowest) < 0)
-				{
-					continue;
-				}
-
-				if ($this->notesCalculator->distanceWithOctave($notEquivalent->range->highest, $this->singerRange->highest) > 0)
+				if (
+                    $this->notesCalculator->distanceWithOctave($notEquivalent->range->lowest, $this->singerRange->lowest) < 0
+                    || $this->notesCalculator->distanceWithOctave($notEquivalent->range->highest, $this->singerRange->highest) > 0
+                )
 				{
 					continue;
 				}

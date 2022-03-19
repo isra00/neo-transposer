@@ -23,13 +23,13 @@ class Transposition extends \NeoTransposer\AppAccess
 	
 	/**
 	 * Difficulty score
-	 * @var integer
+	 * @var int
 	 */
 	public $score = 0;
 	
 	/**
 	 * Capo number for the transposition
-	 * @var integer
+	 * @var int
 	 */
 	protected $capo = 0;
 
@@ -41,13 +41,13 @@ class Transposition extends \NeoTransposer\AppAccess
 
 	/**
 	 * Whether the transposition is the same as the original one.
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $asBook = false;
 
 	/**
 	 * Offset used for transport from the original.
-	 * @var integer
+	 * @var int
 	 */
 	public $offset = 0;
 
@@ -60,6 +60,8 @@ class Transposition extends \NeoTransposer\AppAccess
 	/**
 	 * Deviation from the centered transposition (in semitones).
 	 * @var integer
+     * @todo Refactor: esto podría ser un atributo de NotCenteredTransposition, que heredara de Transposition
+     *       y a su vez, PeopleCompatibleTransposition heredara de esa.
 	 */
 	public $deviationFromCentered = 0;
 
@@ -68,6 +70,20 @@ class Transposition extends \NeoTransposer\AppAccess
 	 * @var array
 	 */
 	public $scoreMap = [];
+
+    /**
+     * Array keys = musical keys (tonality) in which the replace will be done
+     * Array values = array of chords original => replacement
+     * @var array
+     */
+    public const ALTERNATIVE_CHORDS = [
+        'G' => [
+            'B' => 'B7'
+        ],
+        'E' => [
+            'B' => 'B7'
+        ],
+    ];
 
 	public function setTranspositionData($chords=[], $capo=0, $asBook=false, $offset=0, NotesRange $range=null, $deviationFromCentered=0)
 	{
@@ -97,15 +113,15 @@ class Transposition extends \NeoTransposer\AppAccess
 		{
 			$scoreForThisChord = 0;
 
-			if (isset($scoresConfig['chords'][$chord]))
+			if (isset($scoresConfig['chords'][strval($chord)]))
 			{
-				$scoreForThisChord = $scoresConfig['chords'][$chord];
+				$scoreForThisChord = $scoresConfig['chords'][strval($chord)];
 			}
 			else
 			{
 				foreach ($scoresConfig['patterns'] as $pattern=>$score)
 				{
-					if (preg_match("/$pattern/", $chord))
+					if (preg_match("/$pattern/", strval($chord)))
 					{
 						$scoreForThisChord = $score;
 					}
@@ -113,11 +129,11 @@ class Transposition extends \NeoTransposer\AppAccess
 
 				if (0 == $scoreForThisChord)
 				{
-					throw new SongDataException("Unknown chord: $chord");
+					throw new SongDataException("Unknown chord: " . strval($chord));
 				}
 			}
 
-			$this->scoreMap[$chord] = $scoreForThisChord;
+			$this->scoreMap[strval($chord)] = $scoreForThisChord;
 			$this->score += $scoreForThisChord;
 		}
 	}
@@ -127,8 +143,8 @@ class Transposition extends \NeoTransposer\AppAccess
 		$this->asBook = $asBook;
 	}
 
-	public function getAsBook()
-	{
+	public function getAsBook(): bool
+    {
 		return $this->asBook;
 	}
 
@@ -153,63 +169,49 @@ class Transposition extends \NeoTransposer\AppAccess
 	 *
 	 * @param  \NeoTransposer\Model\NotesCalculator $nc An instance of NotesCalculator
 	 * @return string The key, expressed as major chord in american notation.
+     *
+     *
 	 */
 	public function getKey(NotesCalculator $ncalc)
 	{
-		$firstChord = $ncalc->readChord($this->chords[0]);
+		$firstChord = Chord::fromString($this->chords[0]);
 
 		/*
-		 * Flatten the chord, it is, remove all attributes different from minor.
+		 * Flatten the chord, that is, remove all attributes different from minor.
 		 * This is needed because some songs, like Sola a Solo, start with a
 		 * 4-note chord (Dm5), or Song of Moses (C7).
 		 */
-		$firstChord['attributes'] = (false !== strpos($firstChord['attributes'], 'm'))
+		$firstChord->attributes = (false !== strpos($firstChord->attributes, 'm'))
 			? 'm' : '';
 
 		//The key is always expressed in major form, so we resolve the minor
 		//relatives, it is, the key will be its third minor.
-		if ($firstChord['attributes'] == 'm')
+		if ($firstChord->attributes == 'm')
 		{
-			$position = intval(array_search($firstChord['fundamental'], $ncalc->accoustic_scale));
-			$firstChord['fundamental'] = $ncalc->arrayIndex($ncalc->accoustic_scale, $position + 3);
-			$firstChord['attributes'] = null; 
+			$position = intval(array_search($firstChord->fundamental, NotesCalculator::ACOUSTIC_SCALE));
+			$firstChord->fundamental = $ncalc->arrayIndex(NotesCalculator::ACOUSTIC_SCALE, $position + 3);
+			$firstChord->attributes = null; 
 		}
 
-		return $firstChord['fundamental'] . $firstChord['attributes'];
+		return $firstChord->fundamental . $firstChord->attributes;
 	}
 
 	public function setAlternativeChords(NotesCalculator $nc)
 	{
 		if (!$this->asBook)
 		{
-			/**
-			 * Array keys = musical keys (tonality) in which the replace will be done
-			 * Array values = array of chords original => replacement
-			 * @var array
-			 */
-			$alternativeChords = array(
-				'G' => array(
-					'B' => 'B7'
-				),
-				'E' => array(
-					'B' => 'B7'
-				),
-			);
-
 			$key = $this->getKey($nc);
 
-			foreach ($this->chords as &$chord)
+            /** @todo Refactor with array_walk */
+            foreach ($this->chords as &$chord)
 			{
-				if (isset($alternativeChords[$key][$chord]))
-				{
-					$chord = $alternativeChords[$key][$chord];
-				}
+                $chord = Chord::fromString(self::ALTERNATIVE_CHORDS[$key][strval($chord)] ?? $chord);
 			}
 			$this->setScore();
 		}
 	}
 
-	public function getCapo()
+	public function getCapo(): int
 	{
 		return $this->capo;
 	}

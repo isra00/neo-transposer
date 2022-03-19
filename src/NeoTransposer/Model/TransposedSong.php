@@ -13,6 +13,8 @@ use \NeoTransposer\Model\Song;
  *
  * This class is in an upper level than AutomaticTransposer and is intended to
  * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
+ *
+ * @todo Name is very misleading. It seemed like this is
  */
 class TransposedSong
 {
@@ -110,23 +112,21 @@ class TransposedSong
 	 */
 	public function prepareForPrint(): void
 	{
-        /**
-         * @var ChordPrinter
-         */
+        /** @var ChordPrinter */
 		$printer = $this->app['chord_printers.get']($this->song->bookChordPrinter);
 
 		$this->song->originalChordsForPrint = $printer->printChordset($this->song->originalChords);
 
 		$transpositionsToPrint = array_merge(
-			$this->transpositions, 
+			$this->transpositions,
 			[$this->not_equivalent, $this->peopleCompatible]
 		);
 
-		foreach ($transpositionsToPrint as &$transposition)
+		foreach ($transpositionsToPrint as $transposition)
 		{
 			if (!empty($transposition))
 			{
-				$transposition = $printer->printTransposition($transposition);
+				$transposition->chordsForPrint = $printer->printChordSet($transposition->chords);
 			}
 		}
 	}
@@ -139,7 +139,10 @@ class TransposedSong
 	 */
 	public function peopleCompatibleStuff(AutomaticTransposer $transposer)
 	{
+        /** @todo Esto en el futuro será PeopleCompatibleTransposition */
 		$pcCalculation 					 = $transposer->calculatePeopleCompatible();
+
+        //Estas 4 líneas son redundantes! Para qué queremos duplicar estos campos??!?!?!?!
 		$this->peopleCompatibleStatus 	 = $pcCalculation->status;
 		$this->peopleCompatibleStatusMsg = $pcCalculation->getStatusMsg();
 		$this->peopleCompatible 		 = $pcCalculation->peopleCompatibleTransposition;
@@ -153,6 +156,7 @@ class TransposedSong
 		//If Centered is already compatible but notEquivalent is not, then
 		//remove notEquivalent. Otherwise, the information we give to the user
 		//"this transposition is already compatible" would be partially false.
+        /** @todo Si isAlreadyPeopleCompatible solo se usa aquí, eliminarlo */
 		if ($this->isAlreadyPeopleCompatible && $this->not_equivalent)
 		{
 			if (!$this->isCompatibleWithPeople($this->not_equivalent))
@@ -172,6 +176,10 @@ class TransposedSong
 
 	/**
 	 * Check whether the given transposition is within people's range for the current song.
+     *
+     * @todo Refactor: las entradas y salidas de este método no están claras. Tiene más
+     *       sentido que sea método de Transposition, una vez que Transposition tenga
+     *       peopleRange siempre.
 	 */
 	public function isCompatibleWithPeople(Transposition $transposition)
 	{

@@ -49,7 +49,8 @@ class TranspositionChart
 	{
 		$this->addVoice($caption, $cssClass, $transposition->range);
 	}
-	
+
+    /** @todo Rename to getChartHtml() */
 	public function getChart(): array
 	{
 		$min = $this->nc->lowestNote(array_column($this->voiceChart, 'lowest'));

@@ -104,7 +104,7 @@ class User
 			return 'login';
 		}
 
-		if ($this->hasRange())
+		if (!$this->hasRange())
 		{
 			$exempt = array(
 				'user_settings', 
@@ -115,7 +115,7 @@ class User
 				'wizard_empiric_highest'
 			);
 			
-			if (false === array_search($here, $exempt))
+			if (!in_array($here, $exempt))
 			{
 				return 'user_voice';
 			}

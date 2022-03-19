@@ -2,10 +2,12 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
+use NeoTransposer\Model\NotesNotation;
+
 /**
  * Notation for chords as in the 2020+ Italian songbook.
  */
-class ChordPrinterItalian extends ChordPrinter
+final class ChordPrinterItalian extends ChordPrinter
 {
 	protected $cssClass = 'chord-sans';
 
@@ -18,7 +20,7 @@ class ChordPrinterItalian extends ChordPrinter
 	 */
 	public function printChordInNotation($fundamental, $attributes): string
     {
-        $notesNotation = new NotesNotation;
+        $notesNotation = new NotesNotation();
 		$fundamental = $notesNotation->getNotation($fundamental, 'latin');
 
 		if ($fundamental == 'Sib')
