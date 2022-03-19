@@ -25,7 +25,7 @@ class PeopleCompatibleCalculation
 	 */
 	public $status;
 
-	public function __construct($status, PeopleCompatibleTransposition $pct=null)
+	public function __construct($status, PeopleCompatibleTransposition $pct = null)
 	{
 		$this->peopleCompatibleTransposition = $pct;
 		$this->status = $status;
