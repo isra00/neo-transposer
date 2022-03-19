@@ -2,13 +2,12 @@
 
 namespace NeoTransposer\Tests\Model;
 
-use \NeoTransposer\Model\{
-	AutomaticTransposer, 
-	Transposition, 
-	NotesRange, 
-	PeopleCompatibleTransposition, 
-	PeopleCompatibleCalculation
-};
+use NeoTransposer\Model\{AutomaticTransposer,
+    Chord,
+    Transposition,
+    NotesRange,
+    PeopleCompatibleTransposition,
+    PeopleCompatibleCalculation};
 
 /**
  * @todo Add some corner cases to transposition algorithms
@@ -28,13 +27,13 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function setUp() : void
 	{
 		//includePath must be defined in phpunit.xml
-		$this->chordsScoreConfig = include './config.scores.php';
+		$this->chordsScoreConfig = include __DIR__ . '/../../../../config.scores.php';
 
 		$this->transposer = new AutomaticTransposer($this->getSilexApp());
 		$this->transposer->setTransposerData(
 			new NotesRange('G1', 'G3'), 
 			new NotesRange('B1', 'B2'), 
-			['Am', 'Dm', 'F', 'C'], 
+			[Chord::fromString('Am'), Chord::fromString('Dm'),Chord::fromString( 'F'),Chord::fromString( 'C')],
 			false, 
 			new NotesRange('B1', 'B2')
 		);
@@ -71,7 +70,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	{
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
-			['Bm', 'Em', 'G', 'D'],
+			[new Chord('B', 'm'), new Chord('E', 'm'), new Chord( 'G'), new Chord( 'D')],
 			0,
 			false,
 			2,
@@ -88,12 +87,21 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testFindCenteredTranspositionAsBook()
 	{
 		$this->transposer->setTransposerData(
-			new NotesRange('F1', 'F3'), new NotesRange('B1', 'B2'), ['Bm', 'Em', 'G', 'D'], false, new NotesRange('B1', 'B2')
+			new NotesRange('F1', 'F3'),
+            new NotesRange('B1', 'B2'),
+            [new Chord('B', 'm'), new Chord('E', 'm'), new Chord( 'G'), new Chord( 'D')],
+            false,
+            new NotesRange('B1', 'B2')
 		);
 
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
-			['Bm', 'Em', 'G', 'D'], 0, true, 0, new NotesRange('B1', 'B2'), 0, 'B1', 'B2'
+			[new Chord('B', 'm'), new Chord('E', 'm'), new Chord( 'G'), new Chord( 'D')],
+            0,
+            true,
+            0,
+            new NotesRange('B1', 'B2'),
+            0, 'B1', 'B2'
 		);
 
 		$this->assertEquals($expected, $this->transposer->calculateCenteredTransposition());
@@ -102,7 +110,14 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testCalculateEquivalentsWithCapo()
 	{
 		$testTransposition = $this->getNewTransposition();
-		$testTransposition->setTranspositionData(['Bm', 'Em', 'G', 'D'], 0, false, null, null, null, null, 'B1', 'B2');
+		$testTransposition->setTranspositionData(
+            [new Chord('B', 'm'), new Chord('E', 'm'), new Chord( 'G'), new Chord( 'D')],
+            0,
+            false,
+            null,
+            null,
+            null
+        );
 		
 		$expected = [
 			1=> $this->getNewTransposition()->setTranspositionData(['A#m', 'D#m', 'F#', 'C#'], 1, false),
@@ -158,14 +173,18 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testCalculateAlternativeNotEquivalent()
 	{
 		$this->transposer->setTransposerData(
-			new NotesRange('A1', 'D3'), new NotesRange('C#2', 'E3'), ['D', 'F#', 'Bm', 'A', 'G'], false, new NotesRange('B1', 'B2')
+			new NotesRange('A1', 'D3'),
+            new NotesRange('C#2', 'E3'),
+            [Chord::fromString('D'), Chord::fromString('F#'), Chord::fromString('Bm'), Chord::fromString('A'), Chord::fromString('G')],
+            false,
+            new NotesRange('B1', 'B2')
 		);
 
 		$actual = $this->transposer->calculateAlternativeNotEquivalent();
 
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
-			['C', 'E', 'Am', 'G', 'F'], 0, false, -2, new NotesRange('B1', 'D3'), 1
+			[Chord::fromString('C'), Chord::fromString('E'), Chord::fromString('Am'), Chord::fromString('G'), Chord::fromString('F')], 0, false, -2, new NotesRange('B1', 'D3'), 1
 		);
 
 		$this->assertEquals(
@@ -177,12 +196,20 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testForceHighestVoice()
 	{
 		$this->transposer->setTransposerData(
-			new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], false, new NotesRange('B1', 'B2')
+			new NotesRange('A1', 'E3'),
+            new NotesRange('E2', 'A2'),
+            [Chord::fromString('Am'), Chord::fromString('G')],
+            false,
+            new NotesRange('B1', 'B2')
 		);
 
 		$expected = $this->getNewTransposition();
 		$expected->setTranspositionData(
-			['Em', 'D'], 0, false, 7, new NotesRange('B2', 'E3'), 0
+			[Chord::fromString('Em'), Chord::fromString('D')],
+            0,
+            false,
+            7,
+            new NotesRange('B2', 'E3'), 0
 		);
 
 		$this->assertEquals(
@@ -194,11 +221,21 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testForceLowestVoice()
 	{
 		$this->transposer->setTransposerData(
-			new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], false, new NotesRange('B1', 'B2')
+			new NotesRange('A1', 'E3'),
+            new NotesRange('E2', 'A2'),
+            [Chord::fromString('Am'),Chord::fromString( 'G')],
+            false,
+            new NotesRange('B1', 'B2')
 		);
 
 		$expected = $this->getNewTransposition();
-		$expected->setTranspositionData(['Dm', 'C'], 0, false, -7, new NotesRange('A1', 'D2'));
+		$expected->setTranspositionData(
+            [Chord::fromString('Dm'), Chord::fromString('C')],
+            0,
+            false,
+            -7,
+            new NotesRange('A1', 'D2')
+        );
 
 		$this->assertEquals(
 			$expected,
@@ -226,7 +263,11 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testPeopleCompatibleAlreadyCompatible()
 	{
 		$this->transposer->setTransposerData(
-			new NotesRange('A1', 'E3'), new NotesRange('A2', 'F3'), ['Am', 'E'], true, new NotesRange('A2', 'D3')
+			new NotesRange('A1', 'E3'),
+            new NotesRange('A2', 'F3'),
+            [Chord::fromString('Am'), Chord::fromString('E')],
+            true,
+            new NotesRange('A2', 'D3')
 		);
 
 		$expected = new PeopleCompatibleCalculation(
@@ -243,7 +284,11 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testPeopleCompatibleWiderThanSinger()
 	{
 		$this->transposer->setTransposerData(
-			new NotesRange('A1', 'E3'), new NotesRange('A1', 'F3'), ['Am', 'E'], true, new NotesRange('A2', 'D3')
+			new NotesRange('A1', 'E3'),
+            new NotesRange('A1', 'F3'),
+            [Chord::fromString('Am'), Chord::fromString('E')],
+            true,
+            new NotesRange('A2', 'D3')
 		);
 
 		$expected = new PeopleCompatibleCalculation(
@@ -260,7 +305,11 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testPeopleCompatibleWiderNotAdjusted()
 	{
 		$this->transposer->setTransposerData(
-			new NotesRange('A1', 'E3'), new NotesRange('D2', 'F#3'), ['Em', 'D'], true, new NotesRange('D2', 'E3')
+			new NotesRange('A1', 'E3'),
+            new NotesRange('D2', 'F#3'),
+            [Chord::fromString('Em'), Chord::fromString('D')],
+            true,
+            new NotesRange('D2', 'E3')
 		);
 
 		$expected = new PeopleCompatibleCalculation(
@@ -277,7 +326,11 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 	public function testPeopleCompatibleWiderAdjusted()
 	{
 		$this->transposer->setTransposerData(
-			new NotesRange('A1', 'E3'), new NotesRange('A1', 'D3'), ['Am', 'E'], true, new NotesRange('A1', 'D3')
+			new NotesRange('A1', 'E3'),
+            new NotesRange('A1', 'D3'),
+            [Chord::fromString('Am'), Chord::fromString('E')],
+            true,
+            new NotesRange('A1', 'D3')
 		);
 
 		$ppc = new \NeoTransposer\Model\PeopleCompatibleTransposition($this->app);
@@ -300,13 +353,19 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 		$this->transposer->setTransposerData(
 			new NotesRange('A1', 'E3'), 
 			new NotesRange('A1', 'D3'), 
-			['Am', 'Dm'], 
+			[Chord::fromString('Am'), Chord::fromString('Dm')],
 			true, 
 			new NotesRange('G#2', 'D3')
 		);
 
 		$ppc = new \NeoTransposer\Model\PeopleCompatibleTransposition($this->app);
-		$ppc->setTranspositionData(['Em', 'Am'], 5, false, 0, new NotesRange('A1', 'D3'), -1);
+		$ppc->setTranspositionData(
+            [Chord::fromString('Em'), Chord::fromString('Am')],
+            5,
+            false,
+            0,
+            new NotesRange('A1', 'D3'),
+            -1);
 		$ppc->peopleRange = new NotesRange('G#2', 'D3');
 
 		$expected = new PeopleCompatibleCalculation(
@@ -325,7 +384,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 		$this->transposer->setTransposerData(
 			new NotesRange('A1', 'E3'), 
 			new NotesRange('B1', 'B2'), 
-			['D', 'Em'], 
+			[Chord::fromString('D'), Chord::fromString('Em')],
 			false, 
 			new NotesRange('B1', 'B2')
 		);
@@ -350,7 +409,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 		$this->transposer->setTransposerData(
 			new NotesRange('A1', 'E3'), 
 			new NotesRange('B1', 'E3'), 
-			['Am', 'Dm', 'E'], 
+			[Chord::fromString('Am'), Chord::fromString('Dm'), Chord::fromString('E')],
 			true, 
 			new NotesRange('B1', 'F2')
 		);

@@ -8,11 +8,11 @@ namespace NeoTransposer\Model;
 class NotesCalculator
 {
 	/**
-	 * All the accoustic notes of the scale, including # but not bemol.
+	 * All the acoustic notes of the scale, including # but not flats.
 	 * 
 	 * @var array
 	 */
-	public $accoustic_scale = array('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
+	public const ACOUSTIC_SCALE = array('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
 
 	/**
 	 * All the accoustic notes (including # but not bemol) of 4 octaves, like in
@@ -27,7 +27,7 @@ class NotesCalculator
 		// Fill the numbered_scale.
 		for ($i = 1; $i < 5; $i++)
 		{
-			foreach ($this->accoustic_scale as $note)
+			foreach (self::ACOUSTIC_SCALE as $note)
 			{
 				$this->numbered_scale[] = $note . $i;
 			}
@@ -66,7 +66,7 @@ class NotesCalculator
 
 	/**
 	 * Reads an element of an array, supporting negative indexes and cyclic index.
-	 * 
+	 *
 	 * @param  array 	$array 	Any indexed array.
 	 * @param  integer 	$index 	Index to read
 	 * @return mixed 			The array element
@@ -95,83 +95,62 @@ class NotesCalculator
 		return $this->arrayIndex($this->numbered_scale, array_search($note, $this->numbered_scale) + $offset);
 	}
 
-	public function transposeRange(NotesRange $range, $offset)
-	{
-		return new NotesRange($this->transposeNote($range->lowest, $offset), $this->transposeNote($range->highest, $offset));
-	}
-	
-	/**
-	 * Calculates the absolute distance (in semitones) between two notes, with octave specified.
-	 * 
-	 * @param  string|NotesRange 	$note1 	Note, specified as [note name][octave number], e.g. E3. If NotesRange, no need of $note2.
-	 * @param  string 				$note2 	Another note, following the same pattern as $note1.
-	 * @return integer 			Distance in semitones.
-	 */
-	public function distanceWithOctave(string $note1, string $note2=null)
-	{
-		return array_search($note1, $this->numbered_scale) - array_search($note2, $this->numbered_scale);
+    /** @todo Refactor: podría ser violación de Tell, Don't Ask => mover a NotesRange */
+	public function transposeRange(NotesRange $range, $offset): NotesRange
+    {
+		return new NotesRange(
+            $this->transposeNote($range->lowest, $offset),
+            $this->transposeNote($range->highest, $offset)
+        );
 	}
 
-	public function rangeWideness(NotesRange $range)
+	/**
+	 * Calculates the absolute distance (in semitones) between two notes, with octave specified.
+	 *
+	 * @param  string 	$note1 	Note, specified as [note name][octave number], e.g. E3. If NotesRange, no need of $note2.
+	 * @param  string 				$note2 	Another note, following the same pattern as $note1.
+	 * @return int            Distance in semitones.
+	 */
+	public function distanceWithOctave(string $note1, string $note2): int
 	{
+		return intval(array_search($note1, $this->numbered_scale)) - intval(array_search($note2, $this->numbered_scale));
+	}
+
+	public function rangeWideness(NotesRange $range): int
+    {
 		return $this->distanceWithOctave($range->highest, $range->lowest);
 	}
 
-	/**
-	 * Separates the parts of a chord: fundamental note and attributes.
-	 * 
-	 * @param  string 	$chordName 	Chord name, in standard notation.
-	 * @return array 				Associative array with 'fundamental' and 'attributes' key
-	 */
-	public function readChord($chordName)
-	{
-		$regexp = '/^([ABCDEFG]#?b?)([mM45679]*|dim)$/';
-		preg_match($regexp, $chordName, $match);
-
-		if (!isset($match[2]))
-		{
-			throw new \Exception("Chord $chordName not recognized");
-		}
-
-		return array('fundamental' => $match[1], 'attributes' => $match[2]);
-	}
-
-	/**
-	 * Transpose a chord adding or substracting semitones.
-	 * 
-	 * @param  string 	$chordName 	Chord name, according to the syntax admitted by read_chord().
-	 * @param  integer 	$amount 	Number of semitones to add or substract.
-	 * @return string 				Final chord.
-	 */
-	public function transposeChord($chordName, $amount)
-	{
-		$chord = $this->readChord($chordName);
-		$chord['fundamental'];
-
+    /**
+     * Transpose a chord adding or subtracting semitones.
+     *
+     * @param Chord  $chord
+     * @param int    $amount Number of semitones to add or substract.
+     *
+     * @return Chord Final chord.
+     */
+	public function transposeChord(Chord $chord, $amount): Chord
+    {
 		$transposedFundamental = $this->arrayIndex(
-			$this->accoustic_scale, 
-			array_search($chord['fundamental'], $this->accoustic_scale) + $amount
+			self::ACOUSTIC_SCALE,
+			intval(array_search($chord->fundamental, self::ACOUSTIC_SCALE)) + $amount
 		);
 
-		return $transposedFundamental .  $chord['attributes'];
+		return new Chord($transposedFundamental, $chord->attributes);
 	}
 
 	/*
-	 * Transpose a set of chords adding or substracting semitones.
+	 * Transpose a set of chords adding or subtracting semitones.
 	 * 
 	 * @param  array 	$chordList 	An array of chords.
-	 * @param  integer 	$amount 	Number of semitones to add or substract.
+	 * @param  integer 	$amount 	Number of semitones to add or subtract.
 	 * @return array 				Final set of chords.
 	 */
-	public function transposeChords($chordList, $amount)
-	{
-		$finalList = [];
-
-		foreach ($chordList as $chord)
-		{
-			$finalList[] = $this->transposeChord($chord, $amount);
-		}
-
-		return $finalList;
+	public function transposeChords($chordList, $amount): array
+    {
+        return array_map(function($originalChord) use ($amount)
+        {
+            return $this->transposeChord($originalChord, $amount);
+        }, $chordList);
 	}
 }

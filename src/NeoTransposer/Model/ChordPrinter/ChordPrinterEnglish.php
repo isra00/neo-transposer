@@ -2,10 +2,12 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
+use NeoTransposer\Model\Chord;
+
 /**
  * Notation for chords as in the British songbook.
  */
-class ChordPrinterEnglish extends ChordPrinter
+final class ChordPrinterEnglish extends ChordPrinter
 {
 	protected $cssClass = 'chord chord-british';
 
@@ -23,12 +25,10 @@ class ChordPrinterEnglish extends ChordPrinter
 			$fundamental = 'B<em>b</em>';
 		}
 
-		$print_attributes = str_replace(
+		return $fundamental . str_replace(
 			array('4', '6', '7'),
 			array('<sup>4</sup>', '<sup>6</sup>', '<sup>7</sup>'),
 			$attributes
 		);
-
-		return $fundamental . $print_attributes;
 	}
 }

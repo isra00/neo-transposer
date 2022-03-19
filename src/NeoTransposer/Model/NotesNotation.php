@@ -17,18 +17,18 @@ class NotesNotation
      * @var array
      */
     protected const LATIN_NOTES = [
-    'A'        => 'La',
-    'A#'    => 'Sib',
-    'B'     => 'Si',
-    'C'        => 'Do',
-    'C#'    => 'Do#',
-    'D'        => 'Re',
-    'D#'    => 'Re#',
-    'E'        => 'Mi',
-    'F'        => 'Fa',
-    'F#'    => 'Fa#',
-    'G'        => 'Sol',
-    'G#'    => 'Sol#'
+        'A'  => 'La',
+        'A#' => 'Sib',
+        'B'  => 'Si',
+        'C'  => 'Do',
+        'C#' => 'Do#',
+        'D'  => 'Re',
+        'D#' => 'Re#',
+        'E'  => 'Mi',
+        'F'  => 'Fa',
+        'F#' => 'Fa#',
+        'G'  => 'Sol',
+        'G#' => 'Sol#'
     ];
 
     protected const REGEXP_NOTE = '/([ABCDEFG]#?b?)([0-9])?/';

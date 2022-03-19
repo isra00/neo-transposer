@@ -23,18 +23,15 @@ class TransposeSong
 		{
 			$app['neouser']->range = new NotesRange('B1', 'F#3');
 		}
-		else
-		{
-			//If null user, redirect to User Settings
-			if (empty($app['neouser']->range->lowest))
-			{
-				$app->setLocaleAutodetect($req);
-				
-				return $app->redirect($app->path(
-					'user_voice', 
-					array('_locale' => $app['locale'])
-				));
-			}
+        //If null user, redirect to User Settings
+		elseif (empty($app['neouser']->range->lowest))
+        {
+            $app->setLocaleAutodetect($req);
+
+            return $app->redirect($app->path(
+                'user_voice',
+                array('_locale' => $app['locale'])
+            ));
 		}
 
         $transposedSongFactory = new TransposedSongFactory($app);
@@ -50,7 +47,7 @@ class TransposeSong
 			$app['neoconfig']['languages'][$app['locale']]['notation']
 		);
 
-		$nc = new NotesCalculator;
+		$nc = new NotesCalculator();
 
 		$lessThanOneOctave = $nc->rangeWideness($app['neouser']->range) < 12;
 
@@ -66,6 +63,7 @@ class TransposeSong
 			
 			if (PeopleCompatibleCalculation::ADJUSTED_WIDER == $transposedSong->peopleCompatibleStatus)
 			{
+                /** @todo En vez de hacer esta var nueva, manipular directamente $tplVars['peopleCompatibleMsg'] */
 				$peopleCompatibleMsg = $app->trans(
 					'This other transposition, though a bit %difference%, may probably fit better the people of the assembly.', 
 					['%difference%' => $difference]
@@ -133,6 +131,7 @@ class TransposeSong
 		]));
 	}
 
+    /** @todo Refactor: quizá toda esta lógica puede ir en TranspositionChart y recibir solo el objeto TransposedSong */
 	protected function generateTranspositionChart(NotesCalculator $nc, NeoApp $app, TransposedSong $transposedSong) : TranspositionChart
 	{
 		$transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser'], $app['neoconfig']['languages'][$app['locale']]['notation']);
@@ -147,6 +146,7 @@ class TransposeSong
 			if ($transposedSong->song->peopleRange)
 			{
 				$transpositionChart->addVoice('Original for people:', 'original-song original-people', $transposedSong->song->peopleRange);
+                /** @todo Este $nc->transposeRange no se debería estar haciendo aquí, sino que la Transposition ya debería tenerlo guardado */
 				$transpositionChart->addVoice('Transposed for people:', 'transposed-song transposed-people', $nc->transposeRange($transposedSong->song->peopleRange, $transposedSong->transpositions[0]->offset));
 				$transpositionChart->addVoice('People standard:', 'people-standard', new NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]));
 			}
