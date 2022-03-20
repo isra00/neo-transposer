@@ -90,6 +90,7 @@ class TransposedSong
 			$this->song->peopleRange
 		);
 
+        //@todo Refactor: esto rompe Tell Don't Ask
 		$this->transpositions = $transposer->getTranspositions(2, $forceVoiceLimit);
 		$this->not_equivalent = $transposer->calculateAlternativeNotEquivalent();
 
@@ -114,6 +115,9 @@ class TransposedSong
 	{
         /** @var ChordPrinter */
 		$printer = $this->app['chord_printers.get']($this->song->bookChordPrinter);
+
+        //@todo Refactor: all this breaks Tell Don't Ask
+        //Si Transposition ya tiene getCapoForPrint, por qué no getChordsForPrint??
 
 		$this->song->originalChordsForPrint = $printer->printChordset($this->song->originalChords);
 
@@ -143,6 +147,8 @@ class TransposedSong
 		$pcCalculation 					 = $transposer->calculatePeopleCompatible();
 
         //Estas 4 líneas son redundantes! Para qué queremos duplicar estos campos??!?!?!?!
+        //Respuesta: porque el objeto PeopleCompatibleCalculation no se guarda.
+        //Solución: guardar el objeto pero después de haberlo convertido en PeopleCompatibleTransposition
 		$this->peopleCompatibleStatus 	 = $pcCalculation->status;
 		$this->peopleCompatibleStatusMsg = $pcCalculation->getStatusMsg();
 		$this->peopleCompatible 		 = $pcCalculation->peopleCompatibleTransposition;

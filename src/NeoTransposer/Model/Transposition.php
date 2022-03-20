@@ -163,15 +163,14 @@ class Transposition extends \NeoTransposer\AppAccess
 		return $this->capoForPrint;
 	}
 
-	/**
-	 * In most of songs, the key is equal to the first chord. If not, no
-	 * alternative chords are calculated. Yes, that's simple.
-	 *
-	 * @param  \NeoTransposer\Model\NotesCalculator $nc An instance of NotesCalculator
-	 * @return string The key, expressed as major chord in american notation.
+    /**
+     * In most of the songs, the key is equal to the first chord. If not, no
+     * alternative chords are calculated. Yes, that's simple.
      *
+     * @param \NeoTransposer\Model\NotesCalculator $nc An instance of NotesCalculator
      *
-	 */
+     * @return string The key, expressed as major chord in american notation.
+     */
 	public function getKey(NotesCalculator $ncalc)
 	{
 		$firstChord = Chord::fromString($this->chords[0]);
