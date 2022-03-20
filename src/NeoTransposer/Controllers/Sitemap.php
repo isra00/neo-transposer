@@ -27,20 +27,14 @@ class Sitemap
 		{
 			$urls[] = [
 				'loc' => $app->url('login', ['_locale' => $lang]),
-				'priority' => 1,
-				'changefreq' => 'weekly',
             ];
 
 			$urls[] = [
 				'loc' => $app->url('people-compatible-info', ['_locale' => $lang]),
-				'priority' => 1,
-				'changefreq' => 'monthly',
             ];
 
 			$urls[] = [
 				'loc' => $app->url('manifesto', ['_locale' => 'es']),
-				'priority' => 1,
-				'changefreq' => 'monthly',
             ];
 		}
 
@@ -49,8 +43,6 @@ class Sitemap
 		{
 			$urls[] = [
 				'loc' => $app->url('book_' . $book['id_book'], []),
-				'priority' => 1,
-				'changefreq' => 'daily',
             ];
 		}
 
@@ -65,8 +57,6 @@ class Sitemap
 					'transpose_song',
 					['id_song' => $song['slug']]
 				),
-				'priority' => '0.8',
-				'changefreq' => 'weekly',
             ];
 		}
 
