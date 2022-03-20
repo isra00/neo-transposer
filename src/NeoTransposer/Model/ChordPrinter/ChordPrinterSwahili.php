@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
-class ChordPrinterSwahili extends ChordPrinter
+final class ChordPrinterSwahili extends ChordPrinter
 {
 	/**
 	 * Return a chord with Swahili notation.

@@ -17,6 +17,9 @@ class PeopleCompatibleTransposition extends Transposition
 	 * 		 peopleRange no depende del algoritmo usado sino de que la canción 
 	 * 		 tenga people data o no. Si ese es el caso, la existencia de toda
 	 * 		 esta clase ya no tiene sentido.
+     *       Y de hecho la clase PeopleCompatibleCalculation debería llamarse
+     *       PeopleCompatibleTransposition, ya que como entidad de negocio una
+     *       PCTransp tiene un atributo adicional, el status.
 	 */
 	public $peopleRange;
 

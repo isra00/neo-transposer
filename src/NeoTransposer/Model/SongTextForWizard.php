@@ -8,7 +8,7 @@ namespace NeoTransposer\Model;
 class SongTextForWizard
 {
 	/**
-	 * Lyrics and chord placeholders, as fetched from config file.
+	 * Lyrics and chord placeholders (%0, %1...), as fetched from config file.
 	 * 
 	 * @var string
 	 */
@@ -26,20 +26,19 @@ class SongTextForWizard
 	 * @return string         	HTML song text with chords.
 	 * 
 	 * @see    config.wizard.php
+     *
+     * @todo Refactor. Este bucle generando placeholders es absurdo, se puede ir sustituyendo por la marcha.
 	 */
-	public function getHtmlTextWithChords($chords)
-	{
-		$placeholders = [];
-		$nChords = count($chords);
-		for ($i = 0; $i < $nChords; $i++)
-		{
-			$placeholders[] = "%$i";
-		}
+	public function getHtmlTextWithChords(array $chords): string
+    {
+		$finalText = str_replace(' ', '&nbsp;', $this->rawText);
+        foreach ($chords as $i=>$chord)
+        {
+            $finalText = str_replace("%$i", strval($chord), $finalText);
+        }
 
-		$song = str_replace(' ', '&nbsp;', $this->rawText);
-		$song = str_replace($placeholders, $chords, $song);
-		$song = nl2br($song);
+		$finalText = nl2br($finalText);
 
-		return $song;
+		return $finalText;
 	}
 }

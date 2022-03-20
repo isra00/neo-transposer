@@ -2,12 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$config = require __DIR__ . '/../config-dist.php';
-
-$config['db']['host'] 		= '127.0.0.1';
-$config['db']['user'] 		= 'root';
-$config['db']['password'] 	= 'root';
-$config['db']['database'] 	= 'transposer';
+$config = require __DIR__ . '/../config.php';
 
 $app = new \NeoTransposer\NeoApp(
 	$config,

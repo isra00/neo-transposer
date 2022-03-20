@@ -3,6 +3,7 @@
 namespace NeoTransposer\Persistence;
 
 use Doctrine\DBAL\Connection;
+use NeoTransposer\Model\Chord;
 use \NeoTransposer\Model\Song;
 
 /**
@@ -56,7 +57,10 @@ class SongPersistence
 			array($songDetails['id_song'])
 		);
 
-		$originalChords = array_column($originalChords, 'chord');
+		$originalChords = array_map(function($row)
+        {
+            return Chord::fromString($row['chord']);
+        }, $originalChords);
 
 		return new Song($songDetails, $originalChords);
 	}

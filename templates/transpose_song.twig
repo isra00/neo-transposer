@@ -26,7 +26,7 @@
 				<td class="arrow center">&rarr;</td>
 				{% if global.debug -%}
 				<td class="chord-score">
-					{{ transposition.scoreMap[transposition.chords[loop.index0]] }}
+					{{ transposition.scoreMap[transposition.chords[loop.index0].__toString] }}
 				</td>
 				{%- endif %}
 				<td class="transposed" data-chord="{{ transposition.chords[loop.index0] }}">

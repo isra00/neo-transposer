@@ -22,17 +22,17 @@ namespace NeoTransposer\Model;
  * The flag forceVoiceLimit is not used in real life transpositions, but only in
  * the Empiric Wizard to force the singer to use the lowest or highest voice.
  *
- * @todo Refactor this class to make it more Single-Responsibility. Lo de "Automatic" sobra.
+ * @todo Refactor this class to make it more Single-Responsibility. Lo de "Automatic" sobra: TransposerAlgorithm o mejor Transposer
  */
 class AutomaticTransposer extends \NeoTransposer\AppAccess
 {
-	const FORCE_LOWEST  = 1;
-	const FORCE_HIGHEST = 2;
+    public const FORCE_LOWEST  = 1;
+    public const FORCE_HIGHEST = 2;
 
 	/**
 	 * @var NotesCalculator
 	 */
-	protected $nc;
+	protected $notesCalculator;
 
 	/**
 	 * @type NotesRange
@@ -50,7 +50,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	protected $originalChords;
 
 	/**
-	 * @type boolean
+	 * @type bool
 	 */
 	protected $firstChordIsKey;
 
@@ -77,7 +77,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * 
 	 * @var array
 	 */
-	const OFFSETS_NOT_EQUIVALENT = [-1, 1];
+    public const OFFSETS_NOT_EQUIVALENT = [-1, 1];
 
 	/**
 	 * Set all data needed to calculate the transpositions.
@@ -88,21 +88,21 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param	boolean		$firstChordIsKey	Song original chords
 	 * @param	NotesRange	$songPeopleRange	Song's voice range for people
 	 */
-	public function setTransposerData(NotesRange $singerRange, NotesRange $songRange, $originalChords, $firstChordIsKey, NotesRange $songPeopleRange=null)
+	public function setTransposerData(NotesRange $singerRange, NotesRange $songRange, array $originalChords, $firstChordIsKey, NotesRange $songPeopleRange=null)
 	{
-		$this->singerRange	 	= $singerRange;
-		$this->songRange	 	= $songRange;
-		$this->originalChords	= $originalChords;
-		$this->firstChordIsKey	= $firstChordIsKey;
-		$this->songPeopleRange	= $songPeopleRange;
+		$this->singerRange     = $singerRange;
+		$this->songRange       = $songRange;
+		$this->originalChords  = $originalChords;
+		$this->firstChordIsKey = $firstChordIsKey;
+		$this->songPeopleRange = $songPeopleRange;
 
-		$this->nc				= new NotesCalculator;
+		$this->notesCalculator = new NotesCalculator();
 	}
 
 	/**
 	 * This is the core algorithm for Automatic transposition.
 	 *
-	 * Given the the lowest and highest note of the singer and of the song, the 
+	 * Given the lowest and highest note of the singer and of the song, the
 	 * algorithm transposes the song locating its range in the middle of the
 	 * singer's voice range through simple arithmetics: calculate the offset 
 	 * between the original song's lowest note and the centered position, and 
@@ -118,8 +118,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 			return $this->centeredTransposition;
 		}
 
-		$songWideness 	= $this->nc->rangeWideness($this->songRange);
-		$singerWideness	= $this->nc->rangeWideness($this->singerRange);
+		$songWideness 	= $this->notesCalculator->rangeWideness($this->songRange);
+		$singerWideness	= $this->notesCalculator->rangeWideness($this->singerRange);
 
 		/*
 		 * The song is located in the center of singer's range, but if middle is
@@ -142,18 +142,18 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		}
 
 		$centeredOffset = intval(
-			(-1) * $this->nc->distanceWithOctave($this->songRange->lowest, $this->singerRange->lowest)
+			(-1) * $this->notesCalculator->distanceWithOctave($this->songRange->lowest, $this->singerRange->lowest)
 			+ $offsetFromSingerLowest
 		);
 
 		$centeredTransposition = $this->app['new.Transposition']->setTranspositionData(
-			$this->nc->transposeChords($this->originalChords, $centeredOffset),
+			$this->notesCalculator->transposeChords($this->originalChords, $centeredOffset),
 			0,
 			false,
 			$centeredOffset,
 			new NotesRange(
-				$this->nc->transposeNote($this->songRange->lowest, $centeredOffset),
-				$this->nc->transposeNote($this->songRange->highest, $centeredOffset)
+				$this->notesCalculator->transposeNote($this->songRange->lowest, $centeredOffset),
+				$this->notesCalculator->transposeNote($this->songRange->highest, $centeredOffset)
 			),
 			null
 		);
@@ -184,6 +184,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param 	Transposition	$transposition	A given transposition without capo.
 	 * @param	string			$dcFactory		Dependency Container factory for constructing Transposition objects
 	 * @return	array			Array of <Transposition> with capo from 1 to 5.
+     *
+     * @todo Refactor dcFactory makes no sense. Either $app or the factory itself (Callable)
 	 */
 	public function calculateEquivalentsWithCapo(Transposition $transposition, string $dcFactory='new.Transposition')
 	{
@@ -191,7 +193,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 
 		for ($i = 1; $i < 6; $i++)
 		{
-			$transposedChords = $this->nc->transposeChords($transposition->chords, $i * (-1));
+			$transposedChords = $this->notesCalculator->transposeChords($transposition->chords, $i * (-1));
 
 			$withCapo[$i] = $this->app[$dcFactory]->setTranspositionData(
 				$transposedChords,
@@ -213,7 +215,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 	 * @param  array $transpositions Array of Transpositions, with the score already set.
 	 * @return array The sorted array
 	 */
-	public function sortTranspositionsByEase(array $transpositions)
+	public function sortTranspositionsByEase(array $transpositions) : array
 	{
 		usort($transpositions, function(Transposition $one, Transposition $two) {
 
@@ -223,7 +225,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 				return ($two->getAsBook()) ? 1 : 0;
 			}
 
-			return ($one->score < $two->score) ? -1 : 1;
+			return $one->score <=> $two->score;
 		});
 
 		return $transpositions;
@@ -255,7 +257,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		{
 			if ($this->firstChordIsKey)
 			{
-				$transposition->setAlternativeChords($this->nc);
+				$transposition->setAlternativeChords($this->notesCalculator);
 			}
 		}
 
@@ -314,13 +316,13 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		foreach ($range as $dif)
 		{
 			$near = $this->app['new.Transposition']->setTranspositionData(
-				$this->nc->transposeChords($centeredTransposition->chords, $dif),
+				$this->notesCalculator->transposeChords($centeredTransposition->chords, $dif),
 				0,
 				false,
 				$centeredTransposition->offset + $dif,
 				new NotesRange(
-					$this->nc->transposeNote($centeredTransposition->range->lowest, $dif),
-					$this->nc->transposeNote($centeredTransposition->range->highest, $dif)
+					$this->notesCalculator->transposeNote($centeredTransposition->range->lowest, $dif),
+					$this->notesCalculator->transposeNote($centeredTransposition->range->highest, $dif)
 				),
 				$dif
 			);
@@ -342,16 +344,14 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 
 				if ($this->firstChordIsKey)
 				{
-					$notEquivalent->setAlternativeChords($this->nc);
+					$notEquivalent->setAlternativeChords($this->notesCalculator);
 				}
 
 				//If it's too low or too high, discard it
-				if ($this->nc->distanceWithOctave($notEquivalent->range->lowest, $this->singerRange->lowest) < 0)
-				{
-					continue;
-				}
-
-				if ($this->nc->distanceWithOctave($notEquivalent->range->highest, $this->singerRange->highest) > 0)
+				if (
+                    $this->notesCalculator->distanceWithOctave($notEquivalent->range->lowest, $this->singerRange->lowest) < 0
+                    || $this->notesCalculator->distanceWithOctave($notEquivalent->range->highest, $this->singerRange->highest) > 0
+                )
 				{
 					continue;
 				}
@@ -406,39 +406,39 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		$status					= null;
 
 		$peopleRangeInCentered	= new NotesRange(
-			$this->nc->transposeNote($this->songPeopleRange->lowest, $centeredTransposition->offset),
-			$this->nc->transposeNote($this->songPeopleRange->highest, $centeredTransposition->offset)
+			$this->notesCalculator->transposeNote($this->songPeopleRange->lowest, $centeredTransposition->offset),
+			$this->notesCalculator->transposeNote($this->songPeopleRange->highest, $centeredTransposition->offset)
 		);
 	
 		// 2) The centeredTransposition already falls within people's range.
-		if ($peopleRangeInCentered->isWithinRange($peopleRange, $this->nc))
+		if ($peopleRangeInCentered->isWithinRange($peopleRange, $this->notesCalculator))
 		{
 			return new PeopleCompatibleCalculation(PeopleCompatibleCalculation::ALREADY_COMPATIBLE);
 		}
 
 		// 3) The song's range is wider than singer's range: do nothing.
-		if ($this->nc->rangeWideness($this->songRange) >= $this->nc->rangeWideness($this->singerRange))
+		if ($this->notesCalculator->rangeWideness($this->songRange) >= $this->notesCalculator->rangeWideness($this->singerRange))
 		{
 			return new PeopleCompatibleCalculation(PeopleCompatibleCalculation::WIDER_THAN_SINGER);
 		}
 
-		$fromPeopleLowestInCenteredToPeopleLowest = $this->nc->distanceWithOctave(
+		$fromPeopleLowestInCenteredToPeopleLowest = $this->notesCalculator->distanceWithOctave(
 			$peopleRange->lowest,
 			$peopleRangeInCentered->lowest
 		);
 		
-		$fromSingerLowestCenteredToSingerLowest   = $this->nc->distanceWithOctave(
+		$fromSingerLowestCenteredToSingerLowest   = $this->notesCalculator->distanceWithOctave(
 			$this->singerRange->lowest,
 			$this->centeredTransposition->range->lowest
 		);
 
-		$fromSingerHighestCenteredToSingerHighest = $this->nc->distanceWithOctave(
+		$fromSingerHighestCenteredToSingerHighest = $this->notesCalculator->distanceWithOctave(
 			$this->singerRange->highest,
 			$this->centeredTransposition->range->highest
 		);
 
 		// 4) peopleSong range is wider than people's range.
-		if ($this->nc->rangeWideness($this->songPeopleRange) > $this->nc->rangeWideness($peopleRange))
+		if ($this->notesCalculator->rangeWideness($this->songPeopleRange) > $this->notesCalculator->rangeWideness($peopleRange))
 		{
 			//If lowering, limit with singer's lowest. If raising, with highest.
 			$singerLimit = ($fromPeopleLowestInCenteredToPeopleLowest < 0)
@@ -487,7 +487,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 			);
 		}
 
-		$fromPeopleHighestInCenteredToPeopleHighest = $this->nc->distanceWithOctave(
+		$fromPeopleHighestInCenteredToPeopleHighest = $this->notesCalculator->distanceWithOctave(
 			$peopleRange->highest,
 			$peopleRangeInCentered->highest
 		);
@@ -529,17 +529,17 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		$offsetFromOriginal = $this->centeredTransposition->offset + $offsetFromCentered;
 
 		$peopleCompatibleTransposition = $this->app['new.PeopleCompatibleTransposition']->setTranspositionData(
-			$this->nc->transposeChords($this->originalChords, $offsetFromOriginal),
+			$this->notesCalculator->transposeChords($this->originalChords, $offsetFromOriginal),
 			0,
 			($offsetFromOriginal == 0),
 			$offsetFromOriginal,
-			$this->nc->transposeRange($this->songRange, $offsetFromOriginal),
+			$this->notesCalculator->transposeRange($this->songRange, $offsetFromOriginal),
 			$offsetFromCentered
 		);
 
 		$peopleCompatibleTransposition = $this->chooseEasiestEquivalentWithCapo($peopleCompatibleTransposition, 'new.PeopleCompatibleTransposition');
 
-		$peopleCompatibleTransposition->peopleRange	= $this->nc->transposeRange($peopleRangeInCentered, $offsetFromCentered);
+		$peopleCompatibleTransposition->peopleRange	= $this->notesCalculator->transposeRange($peopleRangeInCentered, $offsetFromCentered);
 
 		return new PeopleCompatibleCalculation($status, $peopleCompatibleTransposition);
 	}
@@ -562,7 +562,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 		{
 			if ($this->firstChordIsKey)
 			{
-				$trans->setAlternativeChords($this->nc);
+				$trans->setAlternativeChords($this->notesCalculator);
 			}
 		}
 		

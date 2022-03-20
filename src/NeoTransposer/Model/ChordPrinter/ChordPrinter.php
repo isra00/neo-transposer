@@ -2,8 +2,12 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
+use NeoTransposer\Model\Chord;
+use NeoTransposer\Model\Transposition;
+
 /**
- * Chord printers implement the different chord notations.
+ * Chord printers implement the different chord notations. This follows the
+ * Template Method pattern.
  *
  * Internally, chords are notated with the following format:
  * -Note with american notation, like NotesCalculator::$accoustic_scale.
@@ -17,7 +21,8 @@ abstract class ChordPrinter
 {
 	protected $cssClass = 'chord';
 
-	public function printTransposition(\NeoTransposer\Model\Transposition $transposition)
+    /** @deprecated Cuesta lo mismo llamar directamente a printChordset y así no se rompe el Tell Don't Ask */
+	public function printTransposition(Transposition $transposition)
 	{
 		$transposition->chordsForPrint = $this->printChordset($transposition->chords);
 		return $transposition;
@@ -25,25 +30,20 @@ abstract class ChordPrinter
 
 	public function printChordset(array $chordset): array
 	{
-		foreach ($chordset as &$chord)
-		{
-			$chord = $this->printChordHtml($chord);
-		}
-
-		return $chordset;
+        return array_map(function($chord)
+        {
+            return $this->printChordHtml($chord);
+        }, $chordset);
 	}
 
-	public function printChord($chordName)
+	public function printChord(Chord $chord)
 	{
-		//If internal notation is not valid, it will throw an exception
-		$nc = new \NeoTransposer\Model\NotesCalculator;
-		$parts = $nc->readChord($chordName);
-		return $this->printChordInNotation($parts['fundamental'], $parts['attributes']);
+		return $this->printChordInNotation($chord->fundamental, $chord->attributes);
 	}
 
-	public function printChordHtml($chordName)
-	{
-		return '<span class="' . $this->cssClass . '">' . $this->printChord($chordName) . '</span>';
+	public function printChordHtml($chord): string
+    {
+		return '<span class="' . $this->cssClass . '">' . $this->printChord($chord) . '</span>';
 	}
 
 	abstract public function printChordInNotation($fundamental, $attributes);
