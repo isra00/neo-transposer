@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Model;
 
-final class Chord implements
+final class Chord
 {
     public $fundamental;
     public $attributes;
