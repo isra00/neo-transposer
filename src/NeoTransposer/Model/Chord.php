@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Model;
 
-final class Chord implements \Stringable
+final class Chord implements
 {
     public $fundamental;
     public $attributes;
