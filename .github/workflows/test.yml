@@ -50,4 +50,6 @@ jobs:
           mysql -uroot -proot -e 'SHOW VARIABLES LIKE "version";'
           mysql -uroot -proot -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
           mysql -uroot -proot transposer < song_data.sql
-          php tests/testAllTranspositions.php
+          
+      - name: Functional test All Transpositions
+        run: php tests/testAllTranspositions.php
