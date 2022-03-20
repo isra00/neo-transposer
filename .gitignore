@@ -2,7 +2,6 @@ tests/reports
 dump.sh
 vendor
 TODO
-config.php
 web/resucito-imgs/
 .sublime-project
 .sublime-project.sublime-workspace
