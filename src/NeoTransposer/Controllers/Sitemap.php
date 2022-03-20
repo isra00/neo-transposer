@@ -2,60 +2,56 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Implements a XML Sitemap with login, book and song pages.
+ * Implements an XML Sitemap with login, book and song pages.
  */
 class Sitemap
 {
-	/**
-	 * Generates the Sitemap.
-	 * 
-	 * @param  \NeoTransposer\NeoApp $app The Silex app
-	 * @return string                     The rendered view
-	 */
-	public function get(\NeoTransposer\NeoApp $app)
-	{
+    /**
+     * Generates the Sitemap.
+     *
+     * @param NeoApp $app The Silex app
+     *
+     * @return Response The rendered view
+     */
+	public function get(NeoApp $app): Response
+    {
 		$urls = [];
-
-		$time = $app['neoconfig']['sitemap_lastmod'];
 
 		$languages = array_keys($app['neoconfig']['languages']);
 
 		foreach ($languages as $lang)
 		{
-			$urls[] = array(
-				'loc' => $app->url('login', array('_locale' => $lang)),
+			$urls[] = [
+				'loc' => $app->url('login', ['_locale' => $lang]),
 				'priority' => 1,
 				'changefreq' => 'weekly',
-				'lastmod' => $time
-			);
+            ];
 
-			$urls[] = array(
-				'loc' => $app->url('people-compatible-info', array('_locale' => $lang)),
+			$urls[] = [
+				'loc' => $app->url('people-compatible-info', ['_locale' => $lang]),
 				'priority' => 1,
 				'changefreq' => 'monthly',
-				'lastmod' => $time
-			);
+            ];
 
-			$urls[] = array(
-				'loc' => $app->url('manifesto', array('_locale' => 'es')),
+			$urls[] = [
+				'loc' => $app->url('manifesto', ['_locale' => 'es']),
 				'priority' => 1,
 				'changefreq' => 'monthly',
-				'lastmod' => $time
-			);
+            ];
 		}
 
 		$books = $app['books'];
 		foreach ($books as $book)
 		{
-			$urls[] = array(
+			$urls[] = [
 				'loc' => $app->url('book_' . $book['id_book'], []),
 				'priority' => 1,
 				'changefreq' => 'daily',
-				'lastmod' => $time
-			);
+            ];
 		}
 
 		$songs = $app['db']->fetchAll(
@@ -64,19 +60,18 @@ class Sitemap
 
 		foreach ($songs as $song)
 		{
-			$urls[] = array(
+			$urls[] = [
 				'loc' => $app->url(
-					'transpose_song', 
-					array('id_song' => $song['slug'])
+					'transpose_song',
+					['id_song' => $song['slug']]
 				),
 				'priority' => '0.8',
 				'changefreq' => 'weekly',
-				'lastmod' => $time
-			);
+            ];
 		}
 
 		return new Response(
-            $app['twig']->render('sitemap.twig', array('urls' => $urls)),
+            $app['twig']->render('sitemap.twig', ['urls' => $urls]),
             200,
             ['Content-Type' => 'application/xml']
         );
