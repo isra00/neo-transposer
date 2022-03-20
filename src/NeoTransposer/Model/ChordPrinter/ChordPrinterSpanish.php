@@ -2,12 +2,13 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
+use NeoTransposer\Model\Chord;
 use NeoTransposer\Model\NotesNotation;
 
 /**
  * Notation for chords as in the Spanish songbook.
  */
-class ChordPrinterSpanish extends ChordPrinter
+final class ChordPrinterSpanish extends ChordPrinter
 {
 	protected $cssClass = 'chord-sans';
 
@@ -29,7 +30,7 @@ class ChordPrinterSpanish extends ChordPrinter
 			);
 		}
 
-        $notesNotation = new NotesNotation;
+        $notesNotation = new NotesNotation();
 		return $notesNotation->getNotation($fundamental, 'latin') . $attributes;
 	}
 }

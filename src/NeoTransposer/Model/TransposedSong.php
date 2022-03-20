@@ -13,6 +13,8 @@ use \NeoTransposer\Model\Song;
  *
  * This class is in an upper level than AutomaticTransposer and is intended to
  * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
+ *
+ * @todo Name is very misleading. It seemed like this is
  */
 class TransposedSong
 {
@@ -88,6 +90,7 @@ class TransposedSong
 			$this->song->peopleRange
 		);
 
+        //@todo Refactor: esto rompe Tell Don't Ask
 		$this->transpositions = $transposer->getTranspositions(2, $forceVoiceLimit);
 		$this->not_equivalent = $transposer->calculateAlternativeNotEquivalent();
 
@@ -110,23 +113,24 @@ class TransposedSong
 	 */
 	public function prepareForPrint(): void
 	{
-        /**
-         * @var ChordPrinter
-         */
+        /** @var ChordPrinter */
 		$printer = $this->app['chord_printers.get']($this->song->bookChordPrinter);
+
+        //@todo Refactor: all this breaks Tell Don't Ask
+        //Si Transposition ya tiene getCapoForPrint, por qué no getChordsForPrint??
 
 		$this->song->originalChordsForPrint = $printer->printChordset($this->song->originalChords);
 
 		$transpositionsToPrint = array_merge(
-			$this->transpositions, 
+			$this->transpositions,
 			[$this->not_equivalent, $this->peopleCompatible]
 		);
 
-		foreach ($transpositionsToPrint as &$transposition)
+		foreach ($transpositionsToPrint as $transposition)
 		{
 			if (!empty($transposition))
 			{
-				$transposition = $printer->printTransposition($transposition);
+				$transposition->chordsForPrint = $printer->printChordSet($transposition->chords);
 			}
 		}
 	}
@@ -139,7 +143,12 @@ class TransposedSong
 	 */
 	public function peopleCompatibleStuff(AutomaticTransposer $transposer)
 	{
+        /** @todo Esto en el futuro será PeopleCompatibleTransposition */
 		$pcCalculation 					 = $transposer->calculatePeopleCompatible();
+
+        //Estas 4 líneas son redundantes! Para qué queremos duplicar estos campos??!?!?!?!
+        //Respuesta: porque el objeto PeopleCompatibleCalculation no se guarda.
+        //Solución: guardar el objeto pero después de haberlo convertido en PeopleCompatibleTransposition
 		$this->peopleCompatibleStatus 	 = $pcCalculation->status;
 		$this->peopleCompatibleStatusMsg = $pcCalculation->getStatusMsg();
 		$this->peopleCompatible 		 = $pcCalculation->peopleCompatibleTransposition;
@@ -153,6 +162,7 @@ class TransposedSong
 		//If Centered is already compatible but notEquivalent is not, then
 		//remove notEquivalent. Otherwise, the information we give to the user
 		//"this transposition is already compatible" would be partially false.
+        /** @todo Si isAlreadyPeopleCompatible solo se usa aquí, eliminarlo */
 		if ($this->isAlreadyPeopleCompatible && $this->not_equivalent)
 		{
 			if (!$this->isCompatibleWithPeople($this->not_equivalent))
@@ -172,6 +182,10 @@ class TransposedSong
 
 	/**
 	 * Check whether the given transposition is within people's range for the current song.
+     *
+     * @todo Refactor: las entradas y salidas de este método no están claras. Tiene más
+     *       sentido que sea método de Transposition, una vez que Transposition tenga
+     *       peopleRange siempre.
 	 */
 	public function isCompatibleWithPeople(Transposition $transposition)
 	{

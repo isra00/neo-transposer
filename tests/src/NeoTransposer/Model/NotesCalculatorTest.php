@@ -2,7 +2,9 @@
 
 namespace NeoTransposer\Tests\Model;
 
+use NeoTransposer\Model\Chord;
 use \NeoTransposer\Model\NotesCalculator;
+use NeoTransposer\Model\NotesRange;
 
 class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
 {
@@ -28,33 +30,19 @@ class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(10, $this->nc->distanceWithOctave('C2', 'D1'));
     }
 
-    public function testReadChord()
-    {
-        $this->assertEquals(
-            array('fundamental' => 'F#', 'attributes' => 'm79'),
-            $this->nc->readChord('F#m79')
-        );
-    }
-
-    public function testReadChordNotRecognized()
-    {
-        $this->expectException('Exception');
-        $this->nc->readChord('Cmaj7');
-    }
-
     public function testTransposeChord()
     {
         $this->assertEquals(
-            'D#m7',
-            $this->nc->transposeChord('C#m7', 2)
+            Chord::fromString('D#m7'),
+            $this->nc->transposeChord(Chord::fromString('C#m7'), 2)
         );
     }
 
     public function testTransposeChords()
     {
         $this->assertEquals(
-            array('Em', 'F#m', 'B79'),
-            $this->nc->transposeChords(array('Am', 'Bm', 'E79'), 7)
+            array(Chord::fromString('Em'), Chord::fromString('F#m'), Chord::fromString('B79')),
+            $this->nc->transposeChords(array(Chord::fromString('Am'), Chord::fromString('Bm'), Chord::fromString('E79')), 7)
         );
     }
 
@@ -77,5 +65,21 @@ class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('a', $this->nc->arrayIndex($arr, 8));
         $this->assertEquals('d', $this->nc->arrayIndex($arr, -1));
         $this->assertEquals('d', $this->nc->arrayIndex($arr, -5));
+    }
+
+    public function testTransposeRange()
+    {
+        $this->assertEquals(
+            new NotesRange('B1', 'E1'),
+            $this->nc->transposeRange(new NotesRange('A1', 'D1'), 2)
+        );
+    }
+
+    public function testRangeWideness()
+    {
+        $this->assertEquals(
+            14,
+            $this->nc->rangeWideness(new NotesRange('A1', 'B2'))
+        );
     }
 }

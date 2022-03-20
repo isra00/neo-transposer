@@ -85,6 +85,7 @@ class UserPersistence
 			);
 		}
 
+        /** @todo Refactor this. registerIp should be just one more field, no special treatment. */
 		$this->db->insert('user', array(
 			'email'			=> $user->email,
 			'lowest_note'	=> $user->range->lowest ?? null,

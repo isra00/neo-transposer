@@ -104,8 +104,7 @@ class User
 			return 'login';
 		}
 
-		/** @todo Replace this for $this->hasVoiceMeasured() and use it in Login::post() too */
-		if (empty($this->range->lowest))
+		if (!$this->hasRange())
 		{
 			$exempt = array(
 				'user_settings', 
@@ -116,20 +115,29 @@ class User
 				'wizard_empiric_highest'
 			);
 			
-			if (false === array_search($here, $exempt))
+			if (!in_array($here, $exempt))
 			{
 				return 'user_voice';
 			}
 		}
 	}
 
+    /**
+     * Whether the user has a defined voice range.
+     * @return bool
+     */
+    public function hasRange(): bool
+    {
+        return !empty($this->range->lowest);
+    }
+
 	/**
 	 * Check if user is logged in or an anonymous user
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
-	public function isLoggedIn()
-	{
+	public function isLoggedIn(): bool
+    {
 		return !empty($this->id_user);
 	}
 

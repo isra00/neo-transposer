@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Model\NotesCalculator;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Model\NotesNotation;
 
@@ -37,7 +38,7 @@ class UserVoice
 
 		$accousticScaleNice = [];
         $notesNotation = new NotesNotation;
-		foreach ($nc->accoustic_scale as $note)
+		foreach (NotesCalculator::ACOUSTIC_SCALE as $note)
 		{
 			$accousticScaleNice[] = $notesNotation->getNotation(
 				$note, 
@@ -48,7 +49,7 @@ class UserVoice
 		return $app->render('user_voice.twig', array(
 			'page_title'			=> $app->trans('Your voice'),
 			'scale'					=> $nc->numbered_scale,
-			'accoustic_scale'		=> $nc->accoustic_scale,
+			'accoustic_scale'		=> NotesCalculator::ACOUSTIC_SCALE,
 			'accoustic_scale_nice'	=> $accousticScaleNice,
 			'redirect'				=> $redirect
 		));
