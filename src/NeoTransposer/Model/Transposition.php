@@ -58,10 +58,8 @@ class Transposition extends \NeoTransposer\AppAccess
 	public $range;
 
 	/**
-	 * Deviation from the centered transposition (in semitones).
+	 * Deviation from the centered transposition (in semitones), used by NotEquivalent and PeopleCompatible.
 	 * @var integer
-     * @todo Refactor: esto podría ser un atributo de NotCenteredTransposition, que heredara de Transposition
-     *       y a su vez, PeopleCompatibleTransposition heredara de esa.
 	 */
 	public $deviationFromCentered = 0;
 

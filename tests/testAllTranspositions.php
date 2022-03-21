@@ -2,10 +2,8 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$config = require __DIR__ . '/../config.php';
-
 $app = new \NeoTransposer\NeoApp(
-	$config,
+	require __DIR__ . '/../config.php',
 	realpath(__DIR__ . '/..'),
 	'dummy'
 );
