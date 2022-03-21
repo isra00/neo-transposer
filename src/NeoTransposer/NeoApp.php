@@ -288,7 +288,7 @@ class NeoApp extends Application
         }
 
         $parameters['neoapp_css_file'] = $this['debug']
-            ? 'style.css?nocache=' . mktime()
+            ? 'style.css?nocache=' . time()
             : 'compiled-' . $this['neoconfig']['css_cache'] . '.css';
 
         $this['twig']->addGlobal('notifications', $this->notifications);

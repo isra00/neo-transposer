@@ -2,16 +2,22 @@
 
 namespace NeoTransposer\Model;
 
+/**
+ * This class' sense is that if NO_PEOPLE_RANGE_DATA or ALREADY_COMPATIBLE
+ * or NOT_ADJUSTED_WIDER, then $peopleCompatibleTransposition is null, but still
+ * the status info is relevant.
+ */
 class PeopleCompatibleCalculation
 {
-	const NO_PEOPLE_RANGE_DATA 	= 1;
-	const ALREADY_COMPATIBLE 	= 2;
-	const WIDER_THAN_SINGER 	= 3;
-	const ADJUSTED_WIDER 		= 4;
-	const TOO_LOW_FOR_PEOPLE 	= 5;
-	const TOO_HIGH_FOR_PEOPLE 	= 6;
-	const ADJUSTED_WELL 		= 56; /** @todo Rename. "Within the limits" is more objective than "well" */
-	const NOT_ADJUSTED_WIDER 	= 7;
+    /** @todo Usar los valores string de $statusMsg aquí y cargarnos getMsg() ?  */
+    public const NO_PEOPLE_RANGE_DATA = 1;
+    public const ALREADY_COMPATIBLE = 2;
+    public const WIDER_THAN_SINGER = 3;
+    public const ADJUSTED_WIDER = 4;
+    public const TOO_LOW_FOR_PEOPLE = 5;
+    public const TOO_HIGH_FOR_PEOPLE = 6;
+    public const ADJUSTED_WELL = 56;
+    public const NOT_ADJUSTED_WIDER = 7;
 
 	/**
 	 * @var PeopleCompatibleTransposition

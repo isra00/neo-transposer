@@ -49,8 +49,6 @@ class TransposeSong
 
 		$nc = new NotesCalculator();
 
-		$lessThanOneOctave = $nc->rangeWideness($app['neouser']->range) < 12;
-
 		$transpositionChart = $this->generateTranspositionChart($nc, $app, $transposedSong);
 
 		$tplVars = [];
@@ -123,7 +121,7 @@ class TransposeSong
 			),
 			'feedback'			=> $this->getFeedbackForUser($app['db'], $app['neouser']->id_user, $transposedSong->song->idSong),
 
-			'user_less_than_one_octave' => $lessThanOneOctave,
+			'user_less_than_one_octave' => $nc->rangeWideness($app['neouser']->range) < 12,
 			'url_wizard' 		=> $app->path('wizard_step1', ['_locale' => $app['locale']]),
 
 			//Non-JS browsers show message after clicking on feedback

@@ -282,21 +282,22 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 			$this->getTranspositions()[0]->score
 		);
 
-		if (!empty($nearTranspositions))
-		{
-			$notEquivalentSorted = $this->sortTranspositionsByEase($nearTranspositions);
+		if (empty($nearTranspositions)) {
+            return;
+        }
 
-			//For algorithm conservatism, no-capo takes always precedence.
-			foreach ($notEquivalentSorted as $transposition)
-			{
-				if (0 == $transposition->getCapo())
-				{
-					$notEquivalentSorted[0] = $transposition;
-				}
-			}
+        $notEquivalentSorted = $this->sortTranspositionsByEase($nearTranspositions);
 
-			return $notEquivalentSorted[0];
-		}
+        //For algorithm conservatism, no-capo takes always precedence.
+        foreach ($notEquivalentSorted as $transposition)
+        {
+            if (0 == $transposition->getCapo())
+            {
+                $notEquivalentSorted[0] = $transposition;
+            }
+        }
+
+        return $notEquivalentSorted[0];
 	}
 
 	/**
