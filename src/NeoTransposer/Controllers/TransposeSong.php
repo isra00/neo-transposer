@@ -4,7 +4,6 @@ namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Model\{TransposedSong,
     NotesRange,
-    TransposedSongFactory,
     TranspositionChart,
     NotesCalculator,
     PeopleCompatibleCalculation};
@@ -34,8 +33,11 @@ class TransposeSong
             );
         }
 
-        $transposedSongFactory = new TransposedSongFactory($app);
-        $transposedSong = $transposedSongFactory->createTransposedSongFromSongId($id_song);
+        try {
+            $transposedSong = TransposedSong::fromDb($id_song, $app);
+        } catch (\Exception $e) {
+            $app->abort(404, "Song $id_song does not exist.");
+        }
 
         $app['locale'] = $transposedSong->song->bookLocale;
         $app['translator']->setLocale($app['locale']);

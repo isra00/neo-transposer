@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
-use NeoTransposer\Model\TransposedSongFactory;
+use NeoTransposer\Model\TransposedSong;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\NeoApp;
 use \NeoTransposer\Model\SongTextForWizard;
@@ -141,14 +141,17 @@ class WizardEmpiric
 		)));
 	}
 
-	public function prepareSongForTest($wizard_config_song, NeoApp $app, $forceVoiceLimit=null)
+	public function prepareSongForTest($wizard_config_song, NeoApp $app, $forceVoiceLimit=null): array
 	{
 		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
-        $transposedSongFactory = new TransposedSongFactory($app);
-        $transposedSong = $transposedSongFactory->createTransposedSongFromSongId($wizard_config_song['id_song']);
+        try {
+            $transposedSong = TransposedSong::fromDb($wizard_config_song['id_song'], $app);
+        } catch (\Exception $e) {
+            $app->abort(500, 'The song for the Wizard ' . $wizard_config_song['id_song'] . ' must exist in DB!');
+        }
 
-		$transposedSong->transpose($forceVoiceLimit);
+        $transposedSong->transpose($forceVoiceLimit);
 
 		$transposedChords = $transposedSong->transpositions[0]->chordsForPrint;
 
