@@ -9,7 +9,10 @@ namespace NeoTransposer\Model;
  */
 class PeopleCompatibleCalculation
 {
-    /** @todo Usar los valores string de $statusMsg aquí y cargarnos getMsg() ?  */
+    /*
+     * These numerical values are used as numbers in testAllTranspositions.expected.PeopleCompatible.json.
+     * A refactor for using the strings of $statusMsg would have to adapt that JSON as well.
+     */
     public const NO_PEOPLE_RANGE_DATA = 1;
     public const ALREADY_COMPATIBLE = 2;
     public const WIDER_THAN_SINGER = 3;
@@ -19,40 +22,40 @@ class PeopleCompatibleCalculation
     public const ADJUSTED_WELL = 56;
     public const NOT_ADJUSTED_WIDER = 7;
 
-	/**
-	 * @var PeopleCompatibleTransposition
-	 */
-	public $peopleCompatibleTransposition;
+    protected $statusMsg = [
+        self::NO_PEOPLE_RANGE_DATA     => 'no_people_range_data',
+        self::ALREADY_COMPATIBLE     => 'already_compatible',
+        self::WIDER_THAN_SINGER     => 'wider_than_singer',
+        self::TOO_LOW_FOR_PEOPLE     => 'too_low_for_people',
+        self::TOO_HIGH_FOR_PEOPLE     => 'too_high_for_people',
+        self::ADJUSTED_WELL         => 'adjusted_well',
+        self::ADJUSTED_WIDER         => 'adjusted_wider',
+        self::NOT_ADJUSTED_WIDER     => 'not_adjusted_wider',
+    ];
 
-	/**
-	 * One of the constants defined above.
-	 * 
-	 * @var int
-	 */
-	public $status;
+    /**
+     * @var PeopleCompatibleTransposition
+     */
+    public $peopleCompatibleTransposition;
 
-	public function __construct($status, PeopleCompatibleTransposition $pct = null)
-	{
-		$this->peopleCompatibleTransposition = $pct;
-		$this->status = $status;
-	}
+    /**
+     * One of the constants defined above.
+     * 
+     * @var int
+     */
+    public $status;
 
-	/**
-	 * Get a developer-friendly message for the status. Only for debugging.
-	 */
-	public function getStatusMsg()
-	{
-		$statusMsg = [
-			self::NO_PEOPLE_RANGE_DATA 	=> 'no_people_range_data',
-			self::ALREADY_COMPATIBLE 	=> 'already_compatible',
-			self::WIDER_THAN_SINGER 	=> 'wider_than_singer',
-			self::TOO_LOW_FOR_PEOPLE 	=> 'too_low_for_people',
-			self::TOO_HIGH_FOR_PEOPLE 	=> 'too_high_for_people',
-			self::ADJUSTED_WELL 		=> 'adjusted_well',
-			self::ADJUSTED_WIDER 		=> 'adjusted_wider',
-			self::NOT_ADJUSTED_WIDER 	=> 'not_adjusted_wider',
-		];
+    public function __construct($status, PeopleCompatibleTransposition $pct = null)
+    {
+        $this->peopleCompatibleTransposition = $pct;
+        $this->status = $status;
+    }
 
-		return $this->status ? $statusMsg[$this->status] : '(not set)';
-	}
+    /**
+     * Get a developer-friendly message for the status. Only for debugging.
+     */
+    public function getStatusMsg() : string
+    {
+        return $this->status ? $this->statusMsg[$this->status] : '(not set)';
+    }
 }
