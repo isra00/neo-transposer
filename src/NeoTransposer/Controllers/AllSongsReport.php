@@ -4,7 +4,7 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
-use NeoTransposer\Model\{TransposedSong, PeopleCompatibleCalculation, TransposedSongFactory};
+use NeoTransposer\Model\{TransposedSong, PeopleCompatibleCalculation};
 
 /**
  * Transpose Song page: transposes the given song for the singer's voice range.
@@ -12,14 +12,14 @@ use NeoTransposer\Model\{TransposedSong, PeopleCompatibleCalculation, Transposed
 class AllSongsReport
 {
     public $peopleCompatibleMicroMessages = [
-    PeopleCompatibleCalculation::ALREADY_COMPATIBLE     => '',
-    PeopleCompatibleCalculation::WIDER_THAN_SINGER         => '',
-    PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE     => '',
-    PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE     => '',
-    PeopleCompatibleCalculation::ADJUSTED_WELL             => ' ★',
-    PeopleCompatibleCalculation::ADJUSTED_WIDER         => ' ☆',
-    PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER     => '',
-    PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA     => '',
+        PeopleCompatibleCalculation::ALREADY_COMPATIBLE   => '',
+        PeopleCompatibleCalculation::WIDER_THAN_SINGER    => '',
+        PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE   => '',
+        PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE  => '',
+        PeopleCompatibleCalculation::ADJUSTED_WELL        => ' ★',
+        PeopleCompatibleCalculation::ADJUSTED_WIDER       => ' ☆',
+        PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER   => '',
+        PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA => '',
     ];
 
     /**
@@ -98,8 +98,6 @@ SQL;
 
         $songs = [];
 
-        $transposedSongFactory = new TransposedSongFactory($app);
-
         foreach ($ids as $id)
         {
             /**
@@ -108,7 +106,7 @@ SQL;
              *           TransposedSong con el constructor, no con el
              *           createTransposedSongFromSongId().
              */
-            $song = $transposedSongFactory->createTransposedSongFromSongId($id['id_song']);
+            $song = TransposedSong::fromDb($id['id_song'], $app);
 
             $song->transpose();
 

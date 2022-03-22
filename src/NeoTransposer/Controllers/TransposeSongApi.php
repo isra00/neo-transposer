@@ -3,7 +3,6 @@
 namespace NeoTransposer\Controllers;
 
 use \NeoTransposer\Model\TransposedSong;
-use NeoTransposer\Model\TransposedSongFactory;
 use \NeoTransposer\Persistence\UserPersistence;
 use \Symfony\Component\HttpFoundation\Request;
 
@@ -27,11 +26,10 @@ class TransposeSongApi extends \NeoTransposer\AppAccess
 
 		if (empty($user->range->lowest))
 		{
-			throw new \Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+			throw new \Symfony\Component\HttpKernel\Exception\ConflictHttpException();
 		}
 
-        $transposedSongFactory = new TransposedSongFactory($this->app);
-        $song = $transposedSongFactory->createTransposedSongFromSongId($id_song);
+        $song = TransposedSong::fromDb($id_song, $this->app);
 
 		$this->app['locale'] = $song->song->bookLocale;
 		$this->app['translator']->setLocale($this->app['locale']);

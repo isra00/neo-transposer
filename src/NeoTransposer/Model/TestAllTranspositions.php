@@ -87,11 +87,9 @@ SQL;
 
         $allSongs = [];
 
-        $transposedSongFactory = new TransposedSongFactory($this->app);
-
         foreach ($ids as $id)
         {
-            $song = $transposedSongFactory->createTransposedSongFromSongId($id['id_song']);
+            $song = TransposedSong::fromDb($id['id_song'], $this->app);
 
             $song->transpose();
 
