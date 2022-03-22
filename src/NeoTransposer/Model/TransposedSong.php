@@ -2,10 +2,11 @@
 
 namespace NeoTransposer\Model;
 
+use Exception;
 use NeoTransposer\Model\ChordPrinter\ChordPrinter;
-use \NeoTransposer\NeoApp;
-use \NeoTransposer\Persistence\SongPersistence;
-use \NeoTransposer\Model\Song;
+use NeoTransposer\NeoApp;
+use NeoTransposer\Persistence\SongPersistence;
+use Silex\Application;
 
 /**
  * Read a song from DB, calculate its transpositions, sort them according to
@@ -13,196 +14,189 @@ use \NeoTransposer\Model\Song;
  *
  * This class is in an upper level than AutomaticTransposer and is intended to
  * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
- *
- * @todo Name is very misleading. It seemed like this is
  */
 class TransposedSong
 {
-	/**
-	 * @var \NeoTransposer\Model\Song
-	 */
-	public $song;
+    /**
+     * @var Song
+     */
+    public $song;
 
-	/**
-	 * @var array
-	 * @todo Rename to centered
-	 */
-	public $transpositions;
+    /**
+     * @var  array
+     * @todo Rename to transpositionsCentered
+     */
+    public $transpositions;
 
-	/**
-	 * @var Transposition
-	 */
-	public $not_equivalent;
+    /**
+     * @var  Transposition
+     * @todo Rename to transpositionNotEquivalent o transpositionEasierNotEquivalent
+     */
+    public $not_equivalent;
 
-	/**
-	 * @var PeopleCompatibleTransposition
-	 */
-	public $peopleCompatible;
+    /**
+     * @var PeopleCompatibleCalculation
+     */
+    protected $pcCalculation;
 
-	/**
-	 * One of PeopleCompatibleCalculation's constants.
-	 * 
-	 * @var int
-	 */
-	public $peopleCompatibleStatus;
+    /**
+     * @var Application;
+     */
+    protected $app;
 
-	/**
-	 * Only for debugging.
-	 * 
-	 * @var int
-	 */
-	public $peopleCompatibleStatusMsg;
+    public function __construct(Song $song, Application $app)
+    {
+        $this->song = $song;
+        $this->app  = $app;
+    }
 
-	/**
-	 * Whether the centered (and optionally not_equivalent) are compatible with 
-	 * people range.
-	 * 
-	 * @var boolean
-	 */
-	public $isAlreadyPeopleCompatible;
+    /**
+     * @throws Exception
+     */
+    public static function fromDb($idSong, NeoApp $app): TransposedSong
+    {
+        $songPersistence = new SongPersistence($app['db']);
+        return new static($songPersistence->fetchSongByIdOrSlug($idSong), $app);
+    }
 
-	/**
-	 * @var NeoApp;
-	 */
-	protected $app;
-
-	public function __construct(Song $song, NeoApp $app)
-	{
-		$this->song = $song;
-		$this->app 	= $app;
-	}
-
-	/**
-	 * Main method to be used by the clients of this class. It returns the
-	 * centered and equivalent transpositions for a given song, sorted by ease.
-	 *
-	 * @param int $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
-	 */
-	public function transpose($forceVoiceLimit=null): void
-	{
-		$transposer = $this->app['new.AutomaticTransposer'];
-		
-		$transposer->setTransposerData(
-			$this->app['neouser']->range,
-			$this->song->range,
-			$this->song->originalChords,
-			$this->song->firstChordIsTone,
-			$this->song->peopleRange
-		);
-
-        //@todo Refactor: esto rompe Tell Don't Ask
-		$this->transpositions = $transposer->getTranspositions(2, $forceVoiceLimit);
-		$this->not_equivalent = $transposer->calculateAlternativeNotEquivalent();
-
-		if ($this->app['neoconfig']['people_compatible'])
-		{
-			$this->peopleCompatibleStuff($transposer);
-		}
-
-		//If there is notEquivalent, show only one centered.
-		if ($this->not_equivalent && $this->app['neoconfig']['hide_second_centered_if_not_equivalent'])
-		{
-			unset($this->transpositions[1]);
-		}
-
-		$this->prepareForPrint();
-	}
-
-	/**
-	 * Prepare transpositions for print (chords and capo sentence).
-	 */
-	public function prepareForPrint(): void
-	{
-        /** @var ChordPrinter */
-		$printer = $this->app['chord_printers.get']($this->song->bookChordPrinter);
-
-        //@todo Refactor: all this breaks Tell Don't Ask
-        //Si Transposition ya tiene getCapoForPrint, por qué no getChordsForPrint??
-
-		$this->song->originalChordsForPrint = $printer->printChordset($this->song->originalChords);
-
-		$transpositionsToPrint = array_merge(
-			$this->transpositions,
-			[$this->not_equivalent, $this->peopleCompatible]
-		);
-
-		foreach ($transpositionsToPrint as $transposition)
-		{
-			if (!empty($transposition))
-			{
-				$transposition->chordsForPrint = $printer->printChordSet($transposition->chords);
-			}
-		}
-	}
-
-	/**
-	 * Get the peopleCompatible transposition and decide whether the 
-	 * notEquivalent (if any) should be shown.
-	 *
-	 * @return void
-	 */
-	public function peopleCompatibleStuff(AutomaticTransposer $transposer)
-	{
-        /** @todo Esto en el futuro será PeopleCompatibleTransposition */
-		$pcCalculation 					 = $transposer->calculatePeopleCompatible();
-
-        //Estas 4 líneas son redundantes! Para qué queremos duplicar estos campos??!?!?!?!
-        //Respuesta: porque el objeto PeopleCompatibleCalculation no se guarda.
-        //Solución: guardar el objeto pero después de haberlo convertido en PeopleCompatibleTransposition
-		$this->peopleCompatibleStatus 	 = $pcCalculation->status;
-		$this->peopleCompatibleStatusMsg = $pcCalculation->getStatusMsg();
-		$this->peopleCompatible 		 = $pcCalculation->peopleCompatibleTransposition;
-		$this->isAlreadyPeopleCompatible = (PeopleCompatibleCalculation::ALREADY_COMPATIBLE == $pcCalculation->status);
-
-		if (!$this->not_equivalent || !$this->peopleCompatible)
-		{
-			return;
-		}
-
-		//If Centered is already compatible but notEquivalent is not, then
-		//remove notEquivalent. Otherwise, the information we give to the user
-		//"this transposition is already compatible" would be partially false.
-        /** @todo Si isAlreadyPeopleCompatible solo se usa aquí, eliminarlo */
-		if ($this->isAlreadyPeopleCompatible && $this->not_equivalent)
-		{
-			if (!$this->isCompatibleWithPeople($this->not_equivalent))
-			{
-				$this->not_equivalent = null;
-				return;
-			}
-		}
-
-		//If there is notEquivalent and peopleCompatible, discard notEquivalent.
-		if ($this->not_equivalent && $this->peopleCompatible)
-		{
-			$this->not_equivalent = null;
-			return;
-		}
-	}
-
-	/**
-	 * Check whether the given transposition is within people's range for the current song.
+    /**
+     * Main method to be used by the clients of this class. It calculates all
+     * transpositions.
      *
-     * @todo Refactor: las entradas y salidas de este método no están claras. Tiene más
-     *       sentido que sea método de Transposition, una vez que Transposition tenga
-     *       peopleRange siempre.
-	 */
-	public function isCompatibleWithPeople(Transposition $transposition)
-	{
-		//No people data, no compatible.
-		if (empty($this->song->peopleRange))
-		{
-			return;
-		}
+     * @param int|null $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
+     *                                  AutomaticTransposer::FORCE_LOWEST or AutomaticTransposer::FORCE_HIGHEST.
+     *
+     * @throws Exception
+     */
+    public function transpose(int $forceVoiceLimit = null): void
+    {
+        /**
+ * @var AutomaticTransposer 
+*/
+        $transposer = $this->app['new.AutomaticTransposer'];
 
-		$nc 			= new NotesCalculator;
-		$peopleRange 	= new NotesRange($this->app['neoconfig']['people_range'][0], $this->app['neoconfig']['people_range'][1]);
-		
-		$peopleRangeInNotEquivalent = $nc->transposeRange(
-			$this->song->peopleRange,
-			$transposition->offset
-		);
-		
-		return $peopleRangeInNotEquivalent->isWithinRange($peopleRange, $nc);
-	}
+        $transposer->setTransposerData(
+            $this->app['neouser']->range,
+            $this->song->range,
+            $this->song->originalChords,
+            $this->song->firstChordIsTone,
+            $this->song->peopleRange
+        );
+
+        $this->transpositions = $transposer->getTranspositionsCentered(2, $forceVoiceLimit);
+        $this->not_equivalent = $transposer->getEasierNotEquivalent();
+
+        if ($this->app['neoconfig']['people_compatible']) {
+            $this->pcCalculation = $transposer->calculatePeopleCompatible();
+
+            if ($this->not_equivalent) {
+                $this->removeEasierNotEquivalentIfConflictWithPeopleCompatible();
+            }
+        }
+
+        //If there is notEquivalent, show only one centered.
+        if ($this->not_equivalent && $this->app['neoconfig']['hide_second_centered_if_not_equivalent']) {
+            unset($this->transpositions[1]);
+        }
+
+        $this->prepareForPrint();
+    }
+
+    /**
+     * Prepare transpositions for print (chords and capo sentence).
+     */
+    protected function prepareForPrint(): void
+    {
+        /**
+ * @var ChordPrinter 
+*/
+        $chordPrinter = $this->app['chord_printers.get']($this->song->bookChordPrinter);
+
+        $this->song->setOriginalChordsForPrint($chordPrinter);
+
+        array_map(
+            function ($transposition) use ($chordPrinter) {
+                if (!empty($transposition)) {
+                    $transposition->setChordsForPrint($chordPrinter);
+                }
+            },
+            array_merge(
+                $this->transpositions,
+                [$this->not_equivalent, $this->getPeopleCompatible()]
+            )
+        );
+    }
+
+    public function getPeopleCompatible(): ?PeopleCompatibleTransposition
+    {
+        return $this->pcCalculation->peopleCompatibleTransposition;
+    }
+
+    public function getPeopleCompatibleStatus(): ?int
+    {
+        return $this->pcCalculation->status;
+    }
+
+    /**
+     * This IS actually used by transpose_song.twig's "peopleCompatibleStatusMsg"
+     *
+     * @return string|null
+     */
+    public function getPeopleCompatibleStatusMsg(): ?string
+    {
+        return $this->pcCalculation->getStatusMsg();
+    }
+
+    /**
+     * User in removeEasierNotEquivalentIfConflictWithPeopleCompatible() and in transpose_song.twig
+     *
+     * @return bool
+     */
+    public function isAlreadyPeopleCompatible(): bool
+    {
+        return PeopleCompatibleCalculation::ALREADY_COMPATIBLE == $this->pcCalculation->status;
+    }
+
+    /**
+     * If Centered is already compatible but notEquivalent is not, then remove
+     * notEquivalent, because other saying "this transposition is already
+     * compatible" would be partially false.
+     *
+     * @return void
+     * @throws Exception
+     */
+    public function removeEasierNotEquivalentIfConflictWithPeopleCompatible(): void
+    {
+        if ($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->not_equivalent)
+            || $this->pcCalculation->peopleCompatibleTransposition
+        ) {
+            $this->not_equivalent = null;
+        }
+    }
+
+    /**
+     * Check whether the given transposition is within people's range for the current song.
+     *
+     * @param Transposition $transposition
+     *
+     * @return bool
+     * @throws Exception
+     */
+    protected function isCompatibleWithPeople(Transposition $transposition): bool
+    {
+        if (empty($this->song->peopleRange)) {
+            throw new Exception("Can't call isCompatibleWithPeople for this song because this song has no peopleRange");
+        }
+
+        $nc          = new NotesCalculator();
+        $peopleRange = new NotesRange(
+            $this->app['neoconfig']['people_range'][0],
+            $this->app['neoconfig']['people_range'][1]
+        );
+
+        return $nc->transposeRange(
+            $this->song->peopleRange,
+            $transposition->offset
+        )->isWithinRange($peopleRange, $nc);
+    }
 }

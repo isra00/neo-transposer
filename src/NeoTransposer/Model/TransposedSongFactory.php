@@ -9,14 +9,14 @@ use NeoTransposer\Persistence\SongPersistence;
 use NeoTransposer\Model\Song;
 
 /**
- * Esto podría ser, en vez de una clase con un sólo método, un servicio Silex.
+ * @deprecated
  */
 class TransposedSongFactory extends AppAccess
 {
     /**
      * Factory
      *
-     * @param string|int $idSong Song ID or slug.
+     * @param  string|int $idSong Song ID or slug.
      * @return TransposedSong                 The created object.
      *
      * @refactor Esto es claramente overdesign. TransposedSong::fromId($db, $id) es mejor.
