@@ -2395,15 +2395,6 @@
 				"capo": 4,
 				"chords": "Bm,Em,F#"
 			},
-			"notEquivalent": {
-				"offset": 7,
-				"lowestNote": "E2",
-				"highestNote": "C3",
-				"score": 7,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,Am,B7"
-			},
 			"peopleCompatibleStatus": 2
 		},
 		"233": {
@@ -2753,15 +2744,6 @@
 				"capo": 4,
 				"chords": "Bm,F#7,Em"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "E2",
-				"highestNote": "C3",
-				"score": 7,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,B7,Am"
-			},
 			"peopleCompatibleStatus": 2
 		},
 		"247": {
@@ -2824,15 +2806,6 @@
 				"score": 10,
 				"capo": 1,
 				"chords": "Dm,Gm"
-			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "E2",
-				"highestNote": "C3",
-				"score": 3,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,Am"
 			},
 			"peopleCompatibleStatus": 2
 		},
