@@ -34,7 +34,7 @@ class PeopleCompatibleCalculation
     ];
 
     /**
-     * @var PeopleCompatibleTransposition
+     * @var Transposition
      */
     public $peopleCompatibleTransposition;
 
@@ -45,7 +45,7 @@ class PeopleCompatibleCalculation
      */
     public $status;
 
-    public function __construct($status, PeopleCompatibleTransposition $pct = null)
+    public function __construct($status, Transposition $pct = null)
     {
         $this->peopleCompatibleTransposition = $pct;
         $this->status = $status;

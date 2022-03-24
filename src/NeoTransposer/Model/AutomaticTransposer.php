@@ -113,6 +113,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      * @param int|null $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
      *
      * @return Transposition     The transposition matching that voice.
+     *
+     * @todo Renombrar o reestructurar: si $forceVoiceLimit, entonces ya no es la "centeredTransposition"
      */
     public function calculateCenteredTransposition(?int $forceVoiceLimit=0)
     {
@@ -120,8 +122,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
             return $this->centeredTransposition;
         }
 
-        $songWideness     = $this->notesCalculator->rangeWideness($this->songRange);
-        $singerWideness    = $this->notesCalculator->rangeWideness($this->singerRange);
+        $songWideness   = $this->notesCalculator->rangeWideness($this->songRange);
+        $singerWideness = $this->notesCalculator->rangeWideness($this->singerRange);
 
         /*
         * The song is located in the center of singer's range, but if middle is
@@ -132,14 +134,14 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
         * as when forceVoiceLimit is FORCE_LOWEST.
         */
         $offsetFromSingerLowest = ($songWideness >= $singerWideness)
-        ? 0
-        : round(($singerWideness - $songWideness) / 2);
+            ? 0
+            : round(($singerWideness - $songWideness) / 2);
 
         //This will transpose the song in the lowest or highest limit of the singer's range
         if ($forceVoiceLimit) {
             $offsetFromSingerLowest = ($forceVoiceLimit == self::FORCE_HIGHEST) 
-            ? ($singerWideness - $songWideness) 
-            : 0;
+                ? ($singerWideness - $songWideness)
+                : 0;
         }
 
         $centeredOffset = intval(
@@ -158,6 +160,12 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
             ),
             null
         );
+
+        //When forcing the voice (wizard), peopleCompatible is irrelevant
+        if ($this->songPeopleRange && !$forceVoiceLimit)
+        {
+            $centeredTransposition->calculatePeopleRange($this->songPeopleRange, $centeredTransposition->offset, $this->notesCalculator);
+        }
 
         // If the centered key is the same as in the book, return 0.
         // We do % 12 because octaves are not considered.
@@ -182,12 +190,9 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      * Transposition::setScore().
      * 
      * @param  Transposition $transposition A given transposition without capo.
-     * @param  string        $dcFactory     Dependency Container factory for constructing Transposition objects
      * @return array            Array of <Transposition> with capo from 1 to 5.
-     *
-     * @todo Refactor dcFactory makes no sense. Either $app or the factory itself (Callable)
      */
-    public function calculateEquivalentsWithCapo(Transposition $transposition, string $dcFactory='new.Transposition')
+    public function calculateEquivalentsWithCapo(Transposition $transposition)
     {
         $withCapo = [];
 
@@ -195,13 +200,14 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
         {
             $transposedChords = $this->notesCalculator->transposeChords($transposition->chords, $i * (-1));
 
-            $withCapo[$i] = $this->app[$dcFactory]->setTranspositionData(
+            $withCapo[$i] = $this->app['new.Transposition']->setTranspositionData(
                 $transposedChords,
                 $i,
                 ($transposedChords == $this->originalChords),
                 $transposition->offset,
                 $transposition->range,
-                $transposition->deviationFromCentered
+                $transposition->deviationFromCentered,
+                $transposition->peopleRange
             );
         }
 
@@ -214,6 +220,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      * 
      * @param  array $transpositions Array of Transpositions, with the score already set.
      * @return array The sorted array
+     * @todo Refactor sacar de esta clase, quizá un método estático de Transposition
      */
     public function sortTranspositionsByEase(array $transpositions) : array
     {
@@ -314,17 +321,23 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 
         foreach ($range as $dif)
         {
+            $offset = $centeredTransposition->offset + $dif;
+
             $near = $this->app['new.Transposition']->setTranspositionData(
                 $this->notesCalculator->transposeChords($centeredTransposition->chords, $dif),
                 0,
                 false,
-                $centeredTransposition->offset + $dif,
+                $offset,
                 new NotesRange(
                     $this->notesCalculator->transposeNote($centeredTransposition->range->lowest, $dif),
                     $this->notesCalculator->transposeNote($centeredTransposition->range->highest, $dif)
                 ),
                 $dif
             );
+
+            if ($this->songPeopleRange) {
+                $near->calculatePeopleRange($this->songPeopleRange, $offset, $this->notesCalculator);
+            }
 
             $nearAndItsEquivalentsWithCapo = $this->sortTranspositionsByEase(
                 array_merge(
@@ -394,11 +407,11 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
             return new PeopleCompatibleCalculation(PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA);
         }
 
-        $peopleRange             = new NotesRange($this->app['neoconfig']['people_range'][0], $this->app['neoconfig']['people_range'][1]);
-        $centeredTransposition    = $this->calculateCenteredTransposition();
-        $status                    = null;
+        $peopleRange           = new NotesRange($this->app['neoconfig']['people_range'][0], $this->app['neoconfig']['people_range'][1]);
+        $centeredTransposition = $this->calculateCenteredTransposition();
+        $status                = null;
 
-        $peopleRangeInCentered    = new NotesRange(
+        $peopleRangeInCentered = new NotesRange(
             $this->notesCalculator->transposeNote($this->songPeopleRange->lowest, $centeredTransposition->offset),
             $this->notesCalculator->transposeNote($this->songPeopleRange->highest, $centeredTransposition->offset)
         );
@@ -514,7 +527,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
     {
         $offsetFromOriginal = $this->centeredTransposition->offset + $offsetFromCentered;
 
-        $peopleCompatibleTransposition = $this->app['new.PeopleCompatibleTransposition']->setTranspositionData(
+        $peopleCompatibleTransposition = $this->app['new.Transposition']->setTranspositionData(
             $this->notesCalculator->transposeChords($this->originalChords, $offsetFromOriginal),
             0,
             ($offsetFromOriginal == 0),
@@ -523,9 +536,9 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
             $offsetFromCentered
         );
 
-        $peopleCompatibleTransposition = $this->chooseEasiestEquivalentWithCapo($peopleCompatibleTransposition, 'new.PeopleCompatibleTransposition');
+        $peopleCompatibleTransposition = $this->chooseEasiestEquivalentWithCapo($peopleCompatibleTransposition, 'new.Transposition');
 
-        $peopleCompatibleTransposition->peopleRange = $this->notesCalculator->transposeRange($peopleRangeInCentered, $offsetFromCentered);
+        $peopleCompatibleTransposition->calculatePeopleRange($peopleRangeInCentered, $offsetFromCentered, $this->notesCalculator);
 
         return new PeopleCompatibleCalculation($status, $peopleCompatibleTransposition);
     }
@@ -535,13 +548,12 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      * easiest one.
      * 
      * @param Transposition $transposition The given transposition, with capo 0.
-     * @param string        $dcFactory     Dependency Container factory for constructing Transposition objects
      */
-    protected function chooseEasiestEquivalentWithCapo(Transposition $transposition, string $dcFactory='new.Transposition') : Transposition
+    protected function chooseEasiestEquivalentWithCapo(Transposition $transposition) : Transposition
     {
         $equivalentsWithCapo = array_merge(
             array($transposition),
-            $this->calculateEquivalentsWithCapo($transposition, $dcFactory)
+            $this->calculateEquivalentsWithCapo($transposition)
         );
 
         foreach ($equivalentsWithCapo as &$trans)
