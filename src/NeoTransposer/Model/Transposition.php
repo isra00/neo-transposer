@@ -67,6 +67,11 @@ class Transposition extends \NeoTransposer\AppAccess
     public $range;
 
     /**
+	 * @var NotesRange
+     */
+	public $peopleRange;
+
+    /**
      * Deviation from the centered transposition (in semitones), used by NotEquivalent and PeopleCompatible.
      *
      * @var integer
@@ -95,19 +100,31 @@ class Transposition extends \NeoTransposer\AppAccess
         ],
     ];
 
-    public function setTranspositionData($chords=[], $capo=0, $asBook=false, $offset=0, NotesRange $range=null, $deviationFromCentered=0)
+    /**
+     * @param                 $chords
+     * @param                 $capo
+     * @param                 $asBook
+     * @param                 $offset
+     * @param NotesRange|null $range
+     * @param                 $deviationFromCentered
+     * @param NotesRange|null $peopleRange
+     *
+     * @return $this
+     * @throws SongDataException
+     */
+    public function setTranspositionData($chords=[], $capo=0, $asBook=false, $offset=0, ?NotesRange $range = null, $deviationFromCentered=0, ?NotesRange $peopleRange = null): Transposition
     {
-        $this->chords        = $chords;
-        $this->capo            = $capo;
-        $this->asBook         = $asBook;
-        $this->offset         = $offset;
-
-        $this->range         = $range;
+        $this->chords = $chords;
+        $this->capo   = $capo;
+        $this->asBook = $asBook;
+        $this->offset = $offset;
+        $this->range  = $range;
+        $this->peopleRange  = $peopleRange;
         $this->deviationFromCentered = $deviationFromCentered;
 
         $this->setScore();
 
-        return $this;
+        return $this; //For fluent constructions
     }
 
     /**
@@ -222,5 +239,10 @@ class Transposition extends \NeoTransposer\AppAccess
     public function getCapo(): int
     {
         return $this->capo;
+    }
+
+    public function calculatePeopleRange(NotesRange $originalPeopleRange, int $offset, NotesCalculator $notesCalculator): void
+    {
+        $this->peopleRange = $notesCalculator->transposeRange($originalPeopleRange, $offset);
     }
 }

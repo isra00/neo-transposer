@@ -23,7 +23,7 @@ class NeoApp extends Application
     /**
      * Load config, register services in Silex and set before() filter.
      *
-     * @param string $config   Configuration array, loaded from config.php
+     * @param array $config   Configuration array, loaded from config.php
      * @param string $rootDir Local FS path to the app root (where composes.json is)
      */
     public function __construct($config, $rootDir, $hostname = null)
@@ -214,10 +214,6 @@ class NeoApp extends Application
 
         $this['new.Transposition'] = $this->factory(function ($app) {
             return new \NeoTransposer\Model\Transposition($app);
-        });
-
-        $this['new.PeopleCompatibleTransposition'] = $this->factory(function ($app) {
-            return new \NeoTransposer\Model\PeopleCompatibleTransposition($app);
         });
     }
 

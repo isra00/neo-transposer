@@ -127,7 +127,7 @@ class TransposedSong
         );
     }
 
-    public function getPeopleCompatible(): ?PeopleCompatibleTransposition
+    public function getPeopleCompatible(): ?Transposition
     {
         return $this->pcCalculation->peopleCompatibleTransposition;
     }
