@@ -14,3 +14,4 @@ GeoLite2-Country.mmdb
 .code-workspace.code-workspace
 .idea
 .vscode
+.env
