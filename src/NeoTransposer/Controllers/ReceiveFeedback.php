@@ -3,20 +3,19 @@
 namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * AJAX Controller to receive/record user feedback. This URL has NO CONTENT.
  */
 class ReceiveFeedback
 {
-	/**
-	 * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-	 */
-	public function post(Request $req, \NeoTransposer\NeoApp $app)
+	public function post(Request $req, \NeoTransposer\NeoApp $app): Response
 	{
 		//This usually happens when the sessions times out (=> HTTP status 408).
 		if (!$app['neouser']->isLoggedIn())
 		{
+            //The JSON body is superfluous since JS reads the status code only.
 			return ($req->isXmlHttpRequest())
 				? $app->json(['error' => 'notLoggedIn'], 408)
 				: $app->redirect($req->server->get('HTTP_REFERER'));

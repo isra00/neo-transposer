@@ -264,8 +264,8 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
         $this->centeredAndEquivalent = $this->sortTranspositionsByEase($this->centeredAndEquivalent);
 
         return ($limitTranspositions)
-        ? array_slice($this->centeredAndEquivalent, 0, $limitTranspositions)
-        : $this->centeredAndEquivalent;
+            ? array_slice($this->centeredAndEquivalent, 0, $limitTranspositions)
+            : $this->centeredAndEquivalent;
     }
 
     /**
@@ -525,7 +525,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 
         $peopleCompatibleTransposition = $this->chooseEasiestEquivalentWithCapo($peopleCompatibleTransposition, 'new.PeopleCompatibleTransposition');
 
-        $peopleCompatibleTransposition->peopleRange    = $this->notesCalculator->transposeRange($peopleRangeInCentered, $offsetFromCentered);
+        $peopleCompatibleTransposition->peopleRange = $this->notesCalculator->transposeRange($peopleRangeInCentered, $offsetFromCentered);
 
         return new PeopleCompatibleCalculation($status, $peopleCompatibleTransposition);
     }
