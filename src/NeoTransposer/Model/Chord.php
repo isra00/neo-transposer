@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Model;
 
+/** @todo PHP8: implements Stringable */
 final class Chord
 {
     public $fundamental;

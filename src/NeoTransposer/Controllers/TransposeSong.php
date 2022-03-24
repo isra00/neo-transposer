@@ -100,6 +100,7 @@ class TransposeSong
             $tplVars['peopleCompatibleMsg'] = $peopleCompatibleMsg;
         }
 
+        /** @todo usar str_starts_with() de PHP8 */
         if (0 === strpos($req->headers->get('Accept'), 'application/json')) {
             $transposeSongApi = new TransposeSongApi($app);
             return $transposeSongApi->handleApiRequest($req, $id_song);
@@ -108,23 +109,23 @@ class TransposeSong
         return $app->render(
             'transpose_song.twig', array_merge(
                 $tplVars, [
-                'song'                => $transposedSong,
-                'your_voice'        => $your_voice,
-                'voice_chart'        => $transpositionChart->getChart(),
-                'page_title'        => $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $transposedSong->song->title)),
-                'header_link'        => $app->path('book_' . $transposedSong->song->idBook),
-                'meta_canonical'    => $app->url('transpose_song', ['id_song' => $transposedSong->song->slug]),
-                'meta_description'    => $app->trans(
-                    'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
-                    ['%song%' => $transposedSong->song->title]
-                ),
-                'feedback'            => $this->getFeedbackForUser($app['db'], $app['neouser']->id_user, $transposedSong->song->idSong),
+                    'song'             => $transposedSong,
+                    'your_voice'       => $your_voice,
+                    'voice_chart'      => $transpositionChart->getChart(),
+                    'page_title'       => $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $transposedSong->song->title)),
+                    'header_link'      => $app->path('book_' . $transposedSong->song->idBook),
+                    'meta_canonical'   => $app->url('transpose_song', ['id_song' => $transposedSong->song->slug]),
+                    'meta_description' => $app->trans(
+                        'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
+                        ['%song%' => $transposedSong->song->title]
+                    ),
+                    'feedback'         => $this->getFeedbackForUser($app['db'], $app['neouser']->id_user, $transposedSong->song->idSong),
 
-                'user_less_than_one_octave' => $nc->rangeWideness($app['neouser']->range) < 12,
-                'url_wizard'         => $app->path('wizard_step1', ['_locale' => $app['locale']]),
-
-                //Non-JS browsers show message after clicking on feedback
-                'non_js_fb'            =>  $req->get('fb')
+                    'user_less_than_one_octave' => $nc->rangeWideness($app['neouser']->range) < 12,
+                    'url_wizard'       => $app->path('wizard_step1', ['_locale' => $app['locale']]),
+    
+                    //Non-JS browsers show message after clicking on feedback
+                    'non_js_fb'        =>  $req->get('fb')
                 ]
             )
         );

@@ -9,6 +9,8 @@ use \NeoTransposer\Persistence\UserPersistence;
 
 /**
  * Sets the user data and redirect. There is no response body.
+ *
+ * @todo Rename to UpdateUser
  */
 class SetUserData
 {
@@ -16,7 +18,7 @@ class SetUserData
 	{
 		if ($request->get('book'))
 		{
-			if (false === array_search($request->get('book'), array_keys($app['books'])))
+			if (!in_array($request->get('book'), array_keys($app['books'])))
 			{
 				throw new BadRequestHttpException('Invalid request: the specified book does not exist');
 			}

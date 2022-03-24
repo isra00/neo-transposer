@@ -37,31 +37,29 @@ class SongPersistence
 	{
 		$fieldId = 'slug';
 
-		if (preg_match('/^\d+$/', $idSong))
+		if (strval(intval($idSong)) === $idSong)
 		{
 			$fieldId = 'id_song';
 			$idSong = (int) $idSong;
 		}
 
-		$songDetails = $this->db->fetchAssoc(
+		$songRow = $this->db->fetchAssoc(
 			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $fieldId = ?",
-			array($idSong)
+			[$idSong]
 		);
 
-		if (!$songDetails) {
+		if (!$songRow) {
 			throw new \Exception("The specified song does not exist or it's not bound to a valid book");
 		}
 
 		$originalChords = $this->db->fetchAll(
 			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
-			array($songDetails['id_song'])
+			[$songRow['id_song']]
 		);
 
-		$originalChords = array_map(function($row)
+		return new Song($songRow, array_map(function($row)
         {
             return Chord::fromString($row['chord']);
-        }, $originalChords);
-
-		return new Song($songDetails, $originalChords);
+        }, $originalChords));
 	}
 }
