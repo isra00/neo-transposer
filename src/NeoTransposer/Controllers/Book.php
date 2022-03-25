@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Application\ListSongsWithUserFeedback;
 use Symfony\Component\HttpFoundation\{Request, Response};
 
 /**
@@ -16,21 +17,8 @@ class Book
 			$app->abort(404, "Book $id_book does not exist.");
 		}
 
-		$sql = <<<SQL
-SELECT song.id_song, slug, page, title, transposition_feedback.worked
-FROM song
-LEFT JOIN transposition_feedback
-	ON transposition_feedback.id_song = song.id_song
-	AND transposition_feedback.id_user = ?
-WHERE id_book = ?
-AND NOT song.id_song IN (118, 319)
-ORDER BY page, title
-SQL;
-
-		$songs = $app['db']->fetchAll(
-			$sql,
-			array($app['neouser']->id_user, (int) $id_book)
-		);
+        $useCaseListSongsWithUserFeedback = $app[ListSongsWithUserFeedback::class];
+        $songs = $useCaseListSongsWithUserFeedback->ListSongsWithUserFeedbackAsArray((int) $id_book, $app['neouser']->id_user);
 
 		$template = 'book.twig';
 
