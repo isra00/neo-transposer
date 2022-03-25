@@ -57,6 +57,7 @@ class User
 	 * 
 	 * @param Connection $db A DB connection.
 	 * @param  string|null $registerIp The IP address with which the user registered.
+     * @todo Refactor: Sacar esto de aquí, pues estaríamos haciendo ActiveRecord y queremos data mapper.
 	 */
 	public function persist(Connection $db, string $registerIp = null): void
 	{
@@ -70,6 +71,7 @@ class User
 	 * @param   Connection $db A DB connection.
 	 * @param   string|null $registerIp The IP address with which the user registered.
 	 * @return  bool Whether the user previously had a voice range.
+     * @todo Refactor: sacar esto de aquí por la misma razón que persist()
 	 */
 	public function persistWithVoiceChange(Connection $db, $registerIp = null, $method): bool
 	{

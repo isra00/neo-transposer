@@ -2,6 +2,7 @@
 
 namespace NeoTransposer;
 
+use NeoTransposer\Infrastructure\SongRepositoryMysql;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Silex\Application;
@@ -214,6 +215,41 @@ class NeoApp extends Application
 
         $this['new.Transposition'] = $this->factory(function ($app) {
             return new \NeoTransposer\Model\Transposition($app);
+        });
+
+        $this->registerHexagonalServices();
+    }
+
+    protected function registerHexagonalServices()
+    {
+        //Port
+        $this[Domain\SongRepository::class] = $this->factory(function ($app)
+        {
+            //Adapter
+            return new Infrastructure\SongRepositoryMysql($app['db']);
+        });
+
+        $this[Domain\UserRepository::class] = $this->factory(function ($app)
+        {
+            return new Infrastructure\UserRepositoryMysql($app['db']);
+        });
+
+        //A domain service depending on other domain services
+        $this[Domain\SongsLister::class] = $this->factory(function ($app)
+        {
+            return new Domain\SongsLister(
+                $app[Domain\SongRepository::class],
+                $app[Domain\UserRepository::class],
+                $app['books']
+            );
+        });
+
+        //An application service (use case) depending on a domain service
+        $this[\NeoTransposer\Application\ListSongsWithUserFeedback::class] = $this->factory(function ($app)
+        {
+            return new \NeoTransposer\Application\ListSongsWithUserFeedback(
+                $app[Domain\SongsLister::class]
+            );
         });
     }
 
