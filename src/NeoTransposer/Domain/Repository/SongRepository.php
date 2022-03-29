@@ -1,6 +1,9 @@
 <?php
 
-namespace NeoTransposer\Domain;
+namespace NeoTransposer\Domain\Repository;
+
+use NeoTransposer\Domain\SongsCollection;
+use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
 
 interface SongRepository
 {

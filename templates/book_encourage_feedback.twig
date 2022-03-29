@@ -14,7 +14,7 @@
 	{% elseif app.neouser.feedbacksReported == 1 %}
 
 		<div class="encourage-feedback img-left">
-		{% if user_performance < 1 %}
+		{% if user_performance.performance < 1 %}
 			<h2>{% trans %}Oops! Ok, let's try again{% endtrans %}</h2>
 			<p>{% trans %}Please, try another song, and report whether the chords have worked for you.{% endtrans %}</p>
 		{% else %}
@@ -25,12 +25,12 @@
 
 	{% elseif app.neouser.feedbacksReported == 2 and app.neouser.firstTime %}
 
-		{% if user_performance == 0 %}
+		{% if user_performance.performance == 0 %}
 			<div class="encourage-feedback achieved-minimum-fb all-negative">
 				<h2>{% trans %}Well, this is a bit embarrassing{% endtrans %}</h2>
 				<p>{% trans %}It seems like none of the songs you have reported has worked for you. Please try some more songs and if the problem still persists, I will propose you to change your voice range.{% endtrans %}</p>
 			</div>
-		{% elseif user_performance > 0 and user_performance < 1 %}
+		{% elseif user_performance.performance > 0 and user_performance.performance < 1 %}
 			<div class="encourage-feedback achieved-minimum-fb">
 				<h2>{% trans %}Nothing's perfect, but let's keep trying!{% endtrans %}</h2>
 				<p>{% trans %}Well, it seems like one of the songs fits you, the other doesn't. You may try others, and I'm sure they will go better!{% endtrans %}</p>

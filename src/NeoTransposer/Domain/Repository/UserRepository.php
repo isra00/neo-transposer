@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Domain;
+namespace NeoTransposer\Domain\Repository;
 
 use NeoTransposer\Model\User;
 

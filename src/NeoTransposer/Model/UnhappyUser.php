@@ -26,24 +26,20 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 		$userPersistence = new UserPersistence($this->app['db']);
 
 		$performance = $userPersistence->fetchUserPerformance($user);
+        $performance = $user->performance;
 
-		if ($performance['performance'] < self::UNHAPPY_THRESHOLD_PERF && $performance['reports'] >= self::UNHAPPY_THRESHOLD_REPORTS)
+		if ($performance->score() < self::UNHAPPY_THRESHOLD_PERF && $performance->reports() >= self::UNHAPPY_THRESHOLD_REPORTS)
 		{
 			//If user was already unhappy, UNIQUE will make query fail, nothing done.
 			try {
 				$this->app['db']->insert('unhappy_user', ['id_user' => $user->id_user]);
 			} 
 			catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {}
-		}
-		else
-		{
-			//If user was unhappy with no action but their performance is good, delete unhappy.
-			if ($this->isUnhappyNoAction($user))
-			{
-				$this->app['db']->delete('unhappy_user', ['id_user'=>$user->id_user]);
-			}
-		}
-	}
+		} elseif ($this->isUnhappyNoAction($user)) {
+            //If user was unhappy with no action but their performance is good, delete unhappy.
+            $this->app['db']->delete('unhappy_user', ['id_user' => $user->id_user]);
+        }
+    }
 
 	public function isUnhappy(User $user)
 	{

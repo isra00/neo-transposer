@@ -14,6 +14,9 @@ final class Chord
         $this->attributes = $attributes;
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function fromString(string $name): Chord
     {
         $regexp = '/^([ABCDEFG]#?b?)([mM45679]*|dim)$/';

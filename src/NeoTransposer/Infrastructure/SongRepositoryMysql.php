@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Infrastructure;
 
-use NeoTransposer\Domain\SongRepository;
+use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
 
