@@ -2,8 +2,7 @@
 
 namespace NeoTransposer\Infrastructure;
 
-use NeoTransposer\Domain\SongRepository;
-use NeoTransposer\Domain\UserRepository;
+use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Model\User;
 
 class UserRepositoryMysql extends MysqlRepository implements UserRepository

@@ -2,11 +2,11 @@
 
 namespace NeoTransposer\Model;
 
-use NeoTransposer\Model\NotesNotation;
+use Doctrine\DBAL\Connection;
+use NeoTransposer\Domain\ValueObject\UserPerformance;
+use NeoTransposer\Persistence\UserPersistence;
 use Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\Persistence\UserPersistence;
-use \Symfony\Component\Translation\TranslatorInterface;
-use \Doctrine\DBAL\Connection;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Represents a user
@@ -25,7 +25,13 @@ class User
 	public $wizard_step1;
 	public $wizard_lowest_attempts = 0;
 	public $wizard_highest_attempts = 0;
+
+    /** @deprecated */
 	public $feedbacksReported = 0;
+
+    /** @var UserPerformance */
+    public $performance;
+
 	public $firstTime = false;
 
 	/**
@@ -40,16 +46,16 @@ class User
 	 * @param int 			wizard_highest_attempts No. of attempts in Wizard Lowest note.
 	 * @param int 			feedbacksReported 		No. of feedback reports sent by the user
 	 */
-	public function __construct($email=null, $id_user=null, NotesRange $range=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null, $feedbacksReported=0)
+	public function __construct($email=null, $id_user=null, NotesRange $range=null, $id_book=null, $wizard_step1=null, $wizard_lowest_attempts=null, $wizard_highest_attempts=null, $performance=null)
 	{
- 		$this->id_user 		= $id_user;
-		$this->email 		= $email;
-		$this->range 		= $range;
-		$this->id_book 		= $id_book;
-		$this->wizard_step1 = $wizard_step1;
-		$this->wizard_lowest_attempts = $wizard_lowest_attempts;
+ 		$this->id_user 		           = $id_user;
+		$this->email 		           = $email;
+		$this->range 		           = $range;
+		$this->id_book 		           = $id_book;
+		$this->wizard_step1            = $wizard_step1;
+		$this->wizard_lowest_attempts  = $wizard_lowest_attempts;
 		$this->wizard_highest_attempts = $wizard_highest_attempts;
-		$this->feedbacksReported = $feedbacksReported;
+		$this->performance             = $performance;
 	}
 
 	/**
@@ -157,4 +163,12 @@ class User
         $notesNotation = new NotesNotation;
 		return $notesNotation->getVoiceRangeAsString($trans, $notation, $this->range->lowest, $this->range->highest);
 	}
+
+    public function shouldEncourageFeedback(): bool
+    {
+        return (
+            !empty($this->range->lowest)
+            && ($this->performance->reports() < 2 || ($this->performance->reports() == 2 && $this->firstTime))
+        );
+    }
 }

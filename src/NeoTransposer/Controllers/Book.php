@@ -3,6 +3,8 @@
 namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Application\ListSongsWithUserFeedback;
+use NeoTransposer\Domain\BookNotExistException;
+use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\{Request, Response};
 
 /**
@@ -10,32 +12,44 @@ use Symfony\Component\HttpFoundation\{Request, Response};
  */
 class Book
 {
-	public function get(Request $req, \NeoTransposer\NeoApp $app, $id_book)
+    /**
+     * @var NeoApp
+     */
+    protected $app;
+
+	public function get(Request $req, NeoApp $app, $id_book)
 	{
+        $this->app = $app;
+
 		if (empty($app['books'][$id_book]))
 		{
-			$app->abort(404, "Book $id_book does not exist.");
+			$this->abortBookNotExist($id_book);
 		}
 
-        $useCaseListSongsWithUserFeedback = $app[ListSongsWithUserFeedback::class];
-        $songs = $useCaseListSongsWithUserFeedback->ListSongsWithUserFeedbackAsArray((int) $id_book, $app['neouser']->id_user);
+        try {
+            $useCaseListSongsWithUserFeedback = $app[ListSongsWithUserFeedback::class];
+            $songs = $useCaseListSongsWithUserFeedback->ListSongsWithUserFeedbackAsArray(
+                (int)$id_book,
+                $app['neouser']->id_user
+            );
+        } catch (BookNotExistException $unused)
+        {
+            $this->abortBookNotExist($id_book);
+        }
 
-		$template = 'book.twig';
+        $template = 'book.twig';
 
-		$showEncourageFeedback = !empty($app['neouser']->range->lowest) && ($app['neouser']->feedbacksReported < 2 || ($app['neouser']->feedbacksReported == 2 && $app['neouser']->firstTime));
+        $shouldEncourageFeedback = $app['neouser']->shouldEncourageFeedback();
 
 		//If first time or user has reported < 2 fb, show encourage fb banners
-		if ($showEncourageFeedback)
+		if ($shouldEncourageFeedback)
 		{
-			$yourVoice = $app['neouser']->getVoiceAsString(
-				$app['translator'],
-				$app['neoconfig']['languages'][$app['locale']]['notation']
+			$yourVoice = $this->app['neouser']->getVoiceAsString(
+				$this->app['translator'],
+				$this->app['neoconfig']['languages'][$this->app['locale']]['notation']
 			);
 
-			$userPersistence = new \NeoTransposer\Persistence\UserPersistence($app['db']);
-			$userPerformance = $userPersistence->fetchUserPerformance($app['neouser'])['performance'];
-
-			$template = 'book_encourage_feedback.twig';
+            $template = 'book_encourage_feedback.twig';
 		}
 
 		$app['locale'] = $app['books'][$id_book]['locale'];
@@ -54,11 +68,12 @@ class Book
 				array('%lang%' => $app['books'][$id_book]['lang_name'])
 			),
 			'your_voice'			=> $yourVoice ?? null,
-			'user_performance'		=> $userPerformance ?? null,
-			'show_encourage_fb'		=> $showEncourageFeedback
+			'user_performance'		=> $app['neouser']->performance->score(),
+			'show_encourage_fb'		=> $shouldEncourageFeedback
 		)), 200);
 
-		if ($showEncourageFeedback)
+        //Force no cache
+		if ($shouldEncourageFeedback)
 		{
 			$response->headers->add([
 				'Cache-Control' => 'private, must-revalidate, max-age=0',
@@ -69,4 +84,9 @@ class Book
 
 		return $response;
 	}
+
+    public function abortBookNotExist(int $idBook)
+    {
+        $this->app->abort(404, "Book $idBook does not exist.");
+    }
 }

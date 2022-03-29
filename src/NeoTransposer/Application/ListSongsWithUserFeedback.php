@@ -2,7 +2,9 @@
 
 namespace NeoTransposer\Application;
 
+use NeoTransposer\Domain\BookNotExistException;
 use NeoTransposer\Domain\SongsLister;
+use NeoTransposer\Domain\UserNotExistException;
 
 class ListSongsWithUserFeedback
 {
@@ -14,7 +16,8 @@ class ListSongsWithUserFeedback
     }
 
     /**
-     * @throws \NeoTransposer\Domain\UserNotExistException
+     * @throws UserNotExistException
+     * @throws BookNotExistException
      */
     public function ListSongsWithUserFeedbackAsArray(int $idBook, ?int $idUser): array
     {

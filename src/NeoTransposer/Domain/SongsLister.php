@@ -2,7 +2,8 @@
 
 namespace NeoTransposer\Domain;
 
-use NeoTransposer\NeoApp;
+use NeoTransposer\Domain\Repository\SongRepository;
+use NeoTransposer\Domain\Repository\UserRepository;
 
 class SongsLister
 {

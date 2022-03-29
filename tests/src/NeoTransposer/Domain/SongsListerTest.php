@@ -3,10 +3,11 @@
 namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\BookNotExistException;
-use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
+use NeoTransposer\Domain\Repository\SongRepository;
+use NeoTransposer\Domain\Repository\UserRepository;
+use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsLister;
-use NeoTransposer\Domain\SongRepository;
-use NeoTransposer\Domain\UserRepository;
+use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
 use NeoTransposer\Domain\UserNotExistException;
 use NeoTransposer\Model\User;
 use PHPUnit\Framework\TestCase;
@@ -84,5 +85,53 @@ class SongsListerTest extends TestCase
 
         $this->sut = new SongsLister($mockedSongRepository, $mockedUserRepository, []);
         $this->sut->readBookSongsWithUserFeedback(0, 0);
+    }
+
+    public function testReadSongsValidBook()
+    {
+        $expected = [[
+            'id_song' => 1,
+            'slug'    => 'test-song',
+            'page'    => 1,
+            'title'   => 'Test Song'
+        ]];
+
+        $mockedSongRepository = $this->createMock(SongRepository::class);
+        $mockedSongRepository->method('readBookSongs')
+            ->with(8, 1)
+            ->willReturn(new SongsCollection($expected));
+
+        $mockedSongRepository = $this->createStub(SongRepository::class);
+        $mockedSongRepository->method('readBookSongs')
+            ->willReturn(new SongsCollection($expected));
+
+        $mockedUserRepository = $this->createStub(UserRepository::class);
+        $mockedUserRepository->method('readFromId');
+
+        $this->sut = new SongsLister($mockedSongRepository, $mockedUserRepository, [14=>'some book']);
+        $actualCollection = $this->sut->readBookSongs(14);
+
+        $this->assertEquals(
+            new SongsCollection($expected),
+            $actualCollection
+        );
+
+        $this->assertEquals($expected, $actualCollection->asArray());
+    }
+
+    public function testReadSongsInvalidBook()
+    {
+        $mockedSongRepository = $this->createStub(SongRepository::class);
+        $mockedSongRepository->method('readBookSongs')
+            ->willReturn(new SongsCollection(['doesn`t matter']));
+
+        $mockedUserRepository = $this->createStub(UserRepository::class);
+        $mockedUserRepository->method('readFromId');
+
+        $this->expectException(BookNotExistException::class);
+        $this->expectExceptionMessage('The book #14 has not been found');
+
+        $this->sut = new SongsLister($mockedSongRepository, $mockedUserRepository, []);
+        $this->sut->readBookSongs(14);
     }
 }

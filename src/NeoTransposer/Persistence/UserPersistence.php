@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Persistence;
 
+use NeoTransposer\Infrastructure\UserPerformanceRepositoryMysql;
 use \NeoTransposer\Model\User;
 use \NeoTransposer\Model\NotesRange;
 
@@ -49,6 +50,10 @@ class UserPersistence
 		
 		if ($userdata = $this->db->fetchAssoc($sql, array($fieldValue)))
 		{
+            /** @todo Should use DC here, but as this class is, it doesn't have $app */
+            $userFeedbackRepositoryMysql = new UserPerformanceRepositoryMysql($this->db);
+            $userPerformance = $userFeedbackRepositoryMysql->readUserPerformance($userdata['id_user']);
+
 			return new User(
 				$userdata['email'],
 				$userdata['id_user'],
@@ -57,7 +62,7 @@ class UserPersistence
 				$userdata['wizard_step1'],
 				$userdata['wizard_lowest_attempts'],
 				$userdata['wizard_highest_attempts'],
-				$this->db->fetchColumn('SELECT COUNT(DISTINCT id_song) FROM transposition_feedback WHERE id_user = ?', [$userdata['id_user']])
+				$userPerformance
 			);
 		}
 	}
@@ -140,6 +145,9 @@ class UserPersistence
 	}
 
 
+    /**
+     * @deprecated Use UserPerformanceRepository::readUserPerformance() instead.
+     */
 	public function fetchUserPerformance(User $user)
 	{
 		$sql = <<<SQL
