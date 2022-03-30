@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\AutomaticTransposer;
 use NeoTransposer\Model\SongTextForWizard;
@@ -172,7 +173,8 @@ class WizardEmpiric
 	public function finish(Request $req, NeoApp $app)
 	{
 		//Only when wizard is finished, voice range is stored in DB
-		$app['neouser']->persistWithVoiceChange($app['db'], User::METHOD_WIZARD);
+        $userRepo = $app[UserRepository::class];
+        $userRepo->saveWithVoiceChange($app['neouser'], User::METHOD_WIZARD);
 
 		//If user is unhappy, UnhappyUser will consider this as an action taken.
 		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
