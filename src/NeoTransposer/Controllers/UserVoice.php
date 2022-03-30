@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Model\NotesCalculator;
 use Symfony\Component\HttpFoundation\Request;
 use \NeoTransposer\Model\NotesNotation;
@@ -32,7 +33,9 @@ class UserVoice
 				{
 					$redirect = $app->path('book_' . $book['id_book']);
 					$app['neouser']->id_book = $book['id_book'];
-					$app['neouser']->persist($app['db'], $request->getClientIp());
+
+                    $userRepo = $app[UserRepository::class];
+                    $userRepo->save($app['neouser'], $request->getClientIp());
 				}
 			}
 		}
