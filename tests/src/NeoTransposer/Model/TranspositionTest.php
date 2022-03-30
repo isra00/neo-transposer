@@ -2,8 +2,9 @@
 
 namespace NeoTransposer\Tests\Model;
 
+use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposer\Model\{NotesCalculator, Transposition};
 use Silex\Application;
-use NeoTransposer\Model\{NotesRange, Transposition, NotesCalculator};
 
 class TranspositionTest extends \PHPUnit\Framework\TestCase
 {

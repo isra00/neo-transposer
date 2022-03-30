@@ -3,6 +3,7 @@
 namespace NeoTransposer\Model;
 
 use Exception;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\ChordPrinter\ChordPrinter;
 use NeoTransposer\NeoApp;
 use Silex\Application;
@@ -70,8 +71,8 @@ class TransposedSong
     public function transpose(int $forceVoiceLimit = null): void
     {
         /**
- * @var AutomaticTransposer 
-*/
+         * @var AutomaticTransposer
+         */
         $transposer = $this->app['new.AutomaticTransposer'];
 
         $transposer->setTransposerData(
@@ -107,8 +108,8 @@ class TransposedSong
     protected function prepareForPrint(): void
     {
         /**
- * @var ChordPrinter 
-*/
+         * @var ChordPrinter
+         */
         $chordPrinter = $this->app['chord_printers.get']($this->song->bookChordPrinter);
 
         $this->song->setOriginalChordsForPrint($chordPrinter);

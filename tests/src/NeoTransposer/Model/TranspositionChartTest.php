@@ -2,7 +2,8 @@
 
 namespace NeoTransposer\Tests\Model;
 
-use \NeoTransposer\Model\{TranspositionChart, AutomaticTransposer, Song, User, Transposition, NotesRange};
+use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposer\Model\{TranspositionChart};
 
 class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 {
@@ -76,6 +77,6 @@ class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 			],
 		];
 
-		$this->assertEquals($expected, $chart->getChart());
+		$this->assertEquals($expected, $chart->getChartHtml());
 	}
 }

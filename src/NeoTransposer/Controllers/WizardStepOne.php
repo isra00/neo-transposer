@@ -2,9 +2,9 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\NeoApp;
-use \NeoTransposer\Model\NotesRange;
 
 /**
  * First step of the Wizard: choose a pre-defined voice range. In the next step

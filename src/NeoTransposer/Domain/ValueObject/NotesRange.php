@@ -1,7 +1,12 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain\ValueObject;
 
+use NeoTransposer\Model\NotesCalculator;
+
+/**
+ * @refactor Para que esto sea realmente un value object los atributos deben ser inmutables.
+ */
 class NotesRange
 {
 	public $lowest;

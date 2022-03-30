@@ -3,8 +3,8 @@
 namespace NeoTransposer\Tests\Model;
 
 use NeoTransposer\Domain\ValueObject\Chord;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\NotesCalculator;
-use NeoTransposer\Model\NotesRange;
 
 class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
 {
