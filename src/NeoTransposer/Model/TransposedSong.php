@@ -68,7 +68,7 @@ class TransposedSong
      *
      * @throws Exception
      */
-    public function transpose(int $forceVoiceLimit = null): void
+    public function transpose(NotesRange $userRange, int $forceVoiceLimit = null): void
     {
         /**
          * @var AutomaticTransposer
@@ -76,7 +76,7 @@ class TransposedSong
         $transposer = $this->app['new.AutomaticTransposer'];
 
         $transposer->setTransposerData(
-            $this->app['neouser']->range,
+            $userRange,
             $this->song->range,
             $this->song->originalChords,
             $this->song->firstChordIsTone,

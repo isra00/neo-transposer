@@ -73,11 +73,6 @@ class TestAllTranspositions extends \NeoTransposer\AppAccess
 
     protected function generateActualTestResult(array $testData)
     {
-        $this->app['neouser']->range = new NotesRange(
-            $testData['singerLowestVoice'], 
-            $testData['singerHighestVoice']
-        );
-
         $sql = <<<SQL
 SELECT id_song
 FROM song 
@@ -93,7 +88,10 @@ SQL;
         {
             $song = TransposedSong::fromDb($id['id_song'], $this->app);
 
-            $song->transpose();
+            $song->transpose(new NotesRange(
+                $testData['singerLowestVoice'],
+                $testData['singerHighestVoice']
+            ));
 
             $allSongs[] = $song;
         }

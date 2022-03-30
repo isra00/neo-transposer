@@ -152,7 +152,7 @@ class WizardEmpiric
             $app->abort(500, 'The song for the Wizard ' . $wizard_config_song['id_song'] . ' must exist in DB!');
         }
 
-        $transposedSong->transpose($forceVoiceLimit);
+        $transposedSong->transpose($app['neouser']->range, $forceVoiceLimit);
 
 		$transposedChords = $transposedSong->transpositions[0]->chordsForPrint;
 
