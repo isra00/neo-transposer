@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
@@ -12,7 +13,7 @@ class InsertSong
 {
 	/**
 	 * A DB connection
-	 * @var \Doctrine\DBAL\Connection
+	 * @var Connection
 	 */
 	protected $db;
 

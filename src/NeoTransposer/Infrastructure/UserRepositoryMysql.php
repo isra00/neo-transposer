@@ -65,7 +65,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 	 * @param  User       $user       The User object to persist.
 	 * @param string|null $registerIp The IP address with which the user registered.
 	 *
-	 * @return integer The user ID, if it was not set.
+	 * @return int The user ID, if it was not set.
 	 */
 	public function save(User $user, string $registerIp = null): ?int
 	{
@@ -114,7 +114,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 		}
 
         //If user had NULL voice, don't record the change
-		$currentVoiceRange = $this->dbConnection->fetchAssoc('SELECT lowest_note, highest_note FROM user WHERE id_user = ?', [$user->id_user]);
+		$currentVoiceRange = $this->dbConnection->fetchAssoc('SELECT lowest_note FROM user WHERE id_user = ?', [$user->id_user]);
 
 		if (!empty($currentVoiceRange['lowest_note']))
 		{
