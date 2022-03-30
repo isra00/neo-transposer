@@ -5,7 +5,7 @@ namespace NeoTransposer\Infrastructure;
 use Doctrine\DBAL\Connection;
 use NeoTransposer\Domain\Repository\UserPerformanceRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
-use NeoTransposer\Model\NotesRange;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\User;
 
 class UserRepositoryMysql extends MysqlRepository implements UserRepository

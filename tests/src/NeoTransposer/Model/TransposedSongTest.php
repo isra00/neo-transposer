@@ -2,9 +2,8 @@
 
 namespace NeoTransposer\Tests\Model;
 
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\AutomaticTransposer;
-use NeoTransposer\Model\ChordPrinter\ChordPrinter;
-use NeoTransposer\Model\NotesRange;
 use NeoTransposer\Model\Song;
 use NeoTransposer\Model\TransposedSong;
 use NeoTransposer\Model\Transposition;
@@ -100,11 +99,6 @@ final class TransposedSongTest extends TestCase
         });
 
 		return $app;
-	}
-
-	public function setUp() : void
-	{
-
 	}
 
     public function testTransposeNoForceNoNotEquivalentNotPeopleCompatible(): void

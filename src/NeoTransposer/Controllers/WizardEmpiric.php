@@ -2,8 +2,8 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\AutomaticTransposer;
-use NeoTransposer\Model\NotesRange;
 use NeoTransposer\Model\SongTextForWizard;
 use NeoTransposer\Model\TransposedSong;
 use NeoTransposer\Model\User;

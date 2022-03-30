@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\ChordPrinter\ChordPrinter;
 
 /**
@@ -24,7 +25,7 @@ class Song
 
     public $bookChordPrinter;
     public $bookLocale;
-    
+
     /**
      * @var array
      */

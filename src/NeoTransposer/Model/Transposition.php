@@ -3,6 +3,7 @@
 namespace NeoTransposer\Model;
 
 use NeoTransposer\Domain\ValueObject\Chord;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\ChordPrinter\ChordPrinter;
 
 /**
@@ -130,7 +131,7 @@ class Transposition extends \NeoTransposer\AppAccess
     /**
      * Calculates the ease of the transposition, based on each chord's ease.
      */
-    public function setScore()
+    public function setScore(): void
     {
         $this->score = 0;
 
@@ -162,7 +163,7 @@ class Transposition extends \NeoTransposer\AppAccess
         }
     }
 
-    public function setAsBook($asBook)
+    public function setAsBook($asBook): void
     {
         $this->asBook = $asBook;
     }
@@ -199,7 +200,7 @@ class Transposition extends \NeoTransposer\AppAccess
      *
      * @return string The key, expressed as major chord in american notation.
      */
-    public function getKey(NotesCalculator $ncalc)
+    public function getKey(NotesCalculator $ncalc): string
     {
         $firstChord = Chord::fromString($this->chords[0]);
 
@@ -222,7 +223,7 @@ class Transposition extends \NeoTransposer\AppAccess
         return $firstChord->fundamental . $firstChord->attributes;
     }
 
-    public function setAlternativeChords(NotesCalculator $nc)
+    public function setAlternativeChords(NotesCalculator $nc): void
     {
         if (!$this->asBook) {
             $key = $this->getKey($nc);

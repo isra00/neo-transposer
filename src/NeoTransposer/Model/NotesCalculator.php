@@ -3,6 +3,7 @@
 namespace NeoTransposer\Model;
 
 use NeoTransposer\Domain\ValueObject\Chord;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 
 /**
  * Calculations on notes and chords.

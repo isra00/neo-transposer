@@ -3,8 +3,8 @@
 namespace NeoTransposer\Tests\Model;
 
 use NeoTransposer\Domain\ValueObject\Chord;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\{AutomaticTransposer,
-    NotesRange,
     PeopleCompatibleCalculation,
     Transposition};
 
@@ -31,8 +31,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 
         $this->transposer = new AutomaticTransposer($this->getSilexApp());
         $this->transposer->setTransposerData(
-            new NotesRange('G1', 'G3'), 
-            new NotesRange('B1', 'B2'), 
+            new NotesRange('G1', 'G3'),
+            new NotesRange('B1', 'B2'),
             [Chord::fromString('Am'), Chord::fromString('Dm'), Chord::fromString('F'), Chord::fromString('C')],
             false, 
             new NotesRange('B1', 'B2')
@@ -363,8 +363,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
     public function testPeopleCompatibleAdjustedButStillTooHigh()
     {
         $this->transposer->setTransposerData(
-            new NotesRange('A1', 'E3'), 
-            new NotesRange('A1', 'D3'), 
+            new NotesRange('A1', 'E3'),
+            new NotesRange('A1', 'D3'),
             [Chord::fromString('Am'), Chord::fromString('Dm')],
             true, 
             new NotesRange('G#2', 'D3')
@@ -395,8 +395,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
     public function testPeopleCompatibleAdjustedWellHigh()
     {
         $this->transposer->setTransposerData(
-            new NotesRange('A1', 'E3'), 
-            new NotesRange('B1', 'B2'), 
+            new NotesRange('A1', 'E3'),
+            new NotesRange('B1', 'B2'),
             [Chord::fromString('D'), Chord::fromString('Em')],
             false, 
             new NotesRange('B1', 'B2')
@@ -420,8 +420,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
     public function testPeopleCompatibleAdjustedWellLow()
     {
         $this->transposer->setTransposerData(
-            new NotesRange('A1', 'E3'), 
-            new NotesRange('B1', 'E3'), 
+            new NotesRange('A1', 'E3'),
+            new NotesRange('B1', 'E3'),
             [Chord::fromString('Am'), Chord::fromString('Dm'), Chord::fromString('E')],
             true, 
             new NotesRange('B1', 'F2')

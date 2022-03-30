@@ -3,8 +3,7 @@
 namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Domain\Repository\UserRepository;
-use NeoTransposer\Infrastructure\UserRepositoryMysql;
-use NeoTransposer\Model\NotesRange;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\User;
 use Symfony\Component\HttpFoundation\{RedirectResponse, Request};
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -30,7 +29,7 @@ class SetUserData
 
 		if (empty($app['neouser']->range) && ($request->get('lowest_note') || $request->get('highest_note')))
 		{
-			$app['neouser']->range = new NotesRange;
+			$app['neouser']->range = new NotesRange();
 		}
 
 		if ($request->get('lowest_note'))

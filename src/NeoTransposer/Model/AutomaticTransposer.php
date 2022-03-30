@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\ValueObject\NotesRange;
+
 /**
  * Core algorithm for transposing songs. It implements four types of transpositions:
  *

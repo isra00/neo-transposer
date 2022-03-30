@@ -2,13 +2,10 @@
 
 namespace NeoTransposer\Controllers;
 
-use NeoTransposer\Model\{TransposedSong,
-    NotesRange,
-    TranspositionChart,
-    NotesCalculator,
-    PeopleCompatibleCalculation};
-use \Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\NeoApp;
+use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposer\Model\{NotesCalculator, PeopleCompatibleCalculation, TransposedSong, TranspositionChart};
+use NeoTransposer\NeoApp;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Transpose Song page: transpose the given song for the singer's voice range.
@@ -111,7 +108,7 @@ class TransposeSong
                 $tplVars, [
                     'song'             => $transposedSong,
                     'your_voice'       => $your_voice,
-                    'voice_chart'      => $transpositionChart->getChart(),
+                    'voice_chart'      => $transpositionChart->getChartHtml(),
                     'page_title'       => $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $transposedSong->song->title)),
                     'header_link'      => $app->path('book_' . $transposedSong->song->idBook),
                     'meta_canonical'   => $app->url('transpose_song', ['id_song' => $transposedSong->song->slug]),

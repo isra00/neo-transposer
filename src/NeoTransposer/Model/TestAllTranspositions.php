@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\ValueObject\NotesRange;
+
 /**
  * A functional test for detecting changes in the transposition algorithm.
  * It generates an AllSongsReport for book and compares it with a pre-stored result set.
