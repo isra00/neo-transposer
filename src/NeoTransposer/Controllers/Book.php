@@ -36,7 +36,7 @@ class Book
         {
             $this->abortBookNotExist($id_book);
         }
-var_dump($app['neouser']);
+
         $template = 'book.twig';
 
         $shouldEncourageFeedback = $app['neouser']->shouldEncourageFeedback();
