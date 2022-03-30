@@ -13,8 +13,8 @@ class AdminTools extends \NeoTransposer\AppAccess
 	 * 
 	 * @return string Just a confirmation message.
 	 */
-	public function populateCountry()
-	{
+	public function populateCountry(): string
+    {
 		$ips 	= $this->app['db']->fetchAll('SELECT register_ip FROM user WHERE country IS NULL');
 		$reader = $this->app['geoIp2Reader'];
 
@@ -103,7 +103,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 
 		if (empty($output))
 		{
-			$output[] = 'NO inconsistences found :-)';
+			$output[] = 'NO inconsistencies found :-)';
 		}
 
 		return implode("\n", $output);
