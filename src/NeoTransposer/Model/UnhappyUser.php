@@ -2,7 +2,8 @@
 
 namespace NeoTransposer\Model;
 
-use \NeoTransposer\Persistence\UserPersistence;
+use NeoTransposer\Domain\Repository\UserPerformanceRepository;
+use NeoTransposer\Domain\ValueObject\UserPerformance;
 
 class UnhappyUser extends \NeoTransposer\AppAccess
 {
@@ -23,12 +24,7 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 
 	public function setUnhappy(User $user)
 	{
-		$userPersistence = new UserPersistence($this->app['db']);
-
-		$performance = $userPersistence->fetchUserPerformance($user);
-        $performance = $user->performance;
-
-		if ($performance->score() < self::UNHAPPY_THRESHOLD_PERF && $performance->reports() >= self::UNHAPPY_THRESHOLD_REPORTS)
+		if ($user->performance->score() < self::UNHAPPY_THRESHOLD_PERF && $user->performance->reports() >= self::UNHAPPY_THRESHOLD_REPORTS)
 		{
 			//If user was already unhappy, UNIQUE will make query fail, nothing done.
 			try {
@@ -70,7 +66,7 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 	{
 		$standardVoices = array_keys($this->app['neoconfig']['voice_wizard']['standard_voices']);
 
-		if (false === array_search($standard, $standardVoices))
+		if (!in_array($standard, $standardVoices))
 		{
 			throw new \UnexpectedValueException("Invalid standard voice $standard");
 		}
@@ -80,14 +76,12 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 
 	public function takeAction(User $user, string $action)
 	{
-		$userPersistence = new UserPersistence($this->app['db']);
-
 		$this->app['db']->update(
 			'unhappy_user',
 			[
 				'took_action'			=> date('Y-m-d H:i:s'),
 				'action'				=> $action,
-				'perf_before_action'	=> $userPersistence->fetchUserPerformance($user)['performance'],
+				'perf_before_action'	=> $this->app[UserPerformanceRepository::class]->readUserPerformance($user->id_user)->score(),
 			], ['id_user' => (int) $user->id_user]
 		);
 	}

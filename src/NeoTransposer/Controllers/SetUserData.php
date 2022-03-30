@@ -2,10 +2,11 @@
 
 namespace NeoTransposer\Controllers;
 
-use \Symfony\Component\HttpFoundation\{Request, RedirectResponse};
-use \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use \NeoTransposer\Model\NotesRange;
-use \NeoTransposer\Persistence\UserPersistence;
+use NeoTransposer\Infrastructure\UserRepositoryMysql;
+use NeoTransposer\Model\NotesRange;
+use NeoTransposer\Model\User;
+use Symfony\Component\HttpFoundation\{RedirectResponse, Request};
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Sets the user data and redirect. There is no response body.
@@ -52,8 +53,7 @@ class SetUserData
 
 		$app['neouser']->persistWithVoiceChange(
 			$app['db'], 
-			$request->getClientIp(), 
-			empty($request->get('unhappy_choose_std')) ? UserPersistence::METHOD_MANUAL : UserPersistence::METHOD_UNHAPPY
+			empty($request->get('unhappy_choose_std')) ? User::METHOD_MANUAL : User::METHOD_UNHAPPY
 		);
 
 		if ($request->get('unhappy_choose_std'))

@@ -6,7 +6,8 @@ use NeoTransposer\Model\User;
 
 interface UserRepository
 {
+    public function readFromId(int $idUser): ?User;
     public function readFromEmail(string $email): ?User;
-    public function readFromId(int $id): ?User;
-    public function readFromField(string $field, $value): ?User;
+    public function save(User $user, string $registerIp = null): ?int;
+    public function saveWithVoiceChange(User $user, string $method): void;
 }

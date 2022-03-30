@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Repository\UserPerformanceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -75,11 +76,12 @@ SQL;
 			$req->get('centered_score_rate'),
 		));
 
+        $app['neouser']->setPerformance(
+            $app[UserPerformanceRepository::class]->readUserPerformance($app['neouser']->id_user)
+        );
+
 		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
 		$unhappy->setUnhappy($app['neouser']);
-
-		$userPersistence = new \NeoTransposer\Persistence\UserPersistence($app['db']);
-		$app['neouser']->feedbacksReported = $userPersistence->fetchUserPerformance($app['neouser'])['reports'];
 
 		//Progressive enhancement: support form submission without AJAX, then refresh the page.
 		if (!$req->isXmlHttpRequest())

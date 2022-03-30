@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Tests\Model;
 
-use NeoTransposer\Model\Chord;
+use NeoTransposer\Domain\ValueObject\Chord;
 use PHPUnit\Framework\TestCase;
 
 class ChordTest extends TestCase

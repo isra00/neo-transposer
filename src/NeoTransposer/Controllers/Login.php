@@ -2,11 +2,12 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Repository\UserRepository;
+use NeoTransposer\Domain\ValueObject\UserPerformance;
+use NeoTransposer\Model\User;
+use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use NeoTransposer\Model\User;
-use NeoTransposer\Persistence\UserPersistence;
-use NeoTransposer\NeoApp;
 
 /**
  * Landing page with Login form.
@@ -73,11 +74,13 @@ class Login
             );
         }
 
-        $userPersistence = new UserPersistence($app['db']);
+        $userRepository = $app[UserRepository::class];
 
-        if (!$user = $userPersistence->fetchUserFromEmail($req_email)) {
-            $user = new User($req_email, null, null);
-            $user->persist($app['db'], $req->getClientIp());
+        if (!$user = $userRepository->readFromEmail($req_email)) {
+            $user = new User($req_email, null, null, null, null, null, null, new UserPerformance(0, 0));
+
+            //When it gets persisted, the User object is also assigned its ID
+            $userRepository->save($user, $req->getClientIp());
         }
 
         $user->firstTime = !$user->hasRange();

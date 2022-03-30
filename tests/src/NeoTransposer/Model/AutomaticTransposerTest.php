@@ -2,11 +2,11 @@
 
 namespace NeoTransposer\Tests\Model;
 
+use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Model\{AutomaticTransposer,
-    Chord,
-    Transposition,
     NotesRange,
-    PeopleCompatibleCalculation};
+    PeopleCompatibleCalculation,
+    Transposition};
 
 /**
  * @todo Add some corner cases to transposition algorithms
@@ -33,7 +33,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
         $this->transposer->setTransposerData(
             new NotesRange('G1', 'G3'), 
             new NotesRange('B1', 'B2'), 
-            [Chord::fromString('Am'), Chord::fromString('Dm'),Chord::fromString('F'),Chord::fromString('C')],
+            [Chord::fromString('Am'), Chord::fromString('Dm'), Chord::fromString('F'), Chord::fromString('C')],
             false, 
             new NotesRange('B1', 'B2')
         );
@@ -227,7 +227,9 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
         $this->transposer->setTransposerData(
             new NotesRange('A1', 'E3'),
             new NotesRange('E2', 'A2'),
-            [Chord::fromString('Am'),Chord::fromString('G')],
+            [
+                Chord::fromString('Am'),
+                Chord::fromString('G')],
             false,
             new NotesRange('B1', 'B2')
         );

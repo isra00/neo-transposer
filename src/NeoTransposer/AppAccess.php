@@ -8,7 +8,7 @@ namespace NeoTransposer;
 abstract class AppAccess
 {
 	/**
-	 * @var \NeoTransposer\NeoApp
+	 * @var NeoApp
 	 */
 	protected $app;
 

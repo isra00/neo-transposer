@@ -2,7 +2,6 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
-use NeoTransposer\Model\Chord;
 use NeoTransposer\Model\NotesNotation;
 
 /**

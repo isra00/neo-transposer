@@ -2,8 +2,6 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
-use NeoTransposer\Model\Chord;
-
 /**
  * Notation for chords as in the British songbook.
  */
