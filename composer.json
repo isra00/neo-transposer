@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.2",
 
-        "lib-curl": "*",
+        "ext-curl": "*",
         "ext-mysqli": "*",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",

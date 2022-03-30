@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\NeoApp;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -14,11 +16,11 @@ class Index
 	 * redirect to login in the language of the browser (Accept-Language header).
 	 * 
 	 * @param  Request               $req The HTTP request.
-	 * @param  \NeoTransposer\NeoApp $app The NeoApp.
+	 * @param  NeoApp $app The NeoApp.
 	 * @return RedirectResponse      A redirection to the proper page.
 	 */
-	public function get(Request $req, \NeoTransposer\NeoApp $app)
-	{
+	public function get(Request $req, NeoApp $app): RedirectResponse
+    {
 		$app->setLocaleAutodetect($req);
 
 		if ($app['neouser']->id_book)
