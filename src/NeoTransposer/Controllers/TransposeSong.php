@@ -39,7 +39,7 @@ class TransposeSong
         $app['locale'] = $transposedSong->song->bookLocale;
         $app['translator']->setLocale($app['locale']);
 
-        $transposedSong->transpose();
+        $transposedSong->transpose($app['neouser']->range);
 
         $your_voice = $app['neouser']->getVoiceAsString(
             $app['translator'],

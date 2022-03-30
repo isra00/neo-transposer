@@ -81,8 +81,6 @@ final class TransposedSongTest extends TestCase
             'people_range' => ['B1', 'B2'],
         ];
 
-        $app['neouser'] = new User('testEmail', 'testIdUser', new NotesRange('A1', 'E3'));
-
         $app['new.AutomaticTransposer'] = $mockAutomaticTransposer;
 
         $printedChordSet = $this->printedChordSet;
@@ -116,7 +114,7 @@ final class TransposedSongTest extends TestCase
             ->willReturn(null);
 
         $this->sut = new TransposedSong($this->getTestInstanceSong(), $app);
-        $this->sut->transpose();
+        $this->sut->transpose(new NotesRange('A1', 'E3'));
         $this->assertEquals([$this->getTestInstanceTransposition($app)], $this->sut->transpositions);
         $this->assertEquals(null, $this->sut->not_equivalent);
 
