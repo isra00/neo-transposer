@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Domain\ValueObject;
+namespace NeoTransposer\Domain\Entity;
 
 class UserPerformance
 {
