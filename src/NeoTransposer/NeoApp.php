@@ -229,7 +229,10 @@ class NeoApp extends Application
 
         $this[Domain\Repository\UserRepository::class] = $this->factory(function ($app)
         {
-            return new Infrastructure\UserRepositoryMysql($app['db']);
+            return new Infrastructure\UserRepositoryMysql(
+                $app['db'],
+                $app[Domain\Repository\UserPerformanceRepository::class]
+            );
         });
 
         $this[Domain\Repository\UserPerformanceRepository::class] = $this->factory(function ($app)
