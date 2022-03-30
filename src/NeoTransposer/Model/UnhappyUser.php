@@ -3,7 +3,6 @@
 namespace NeoTransposer\Model;
 
 use NeoTransposer\Domain\Repository\UserPerformanceRepository;
-use NeoTransposer\Domain\ValueObject\UserPerformance;
 
 class UnhappyUser extends \NeoTransposer\AppAccess
 {

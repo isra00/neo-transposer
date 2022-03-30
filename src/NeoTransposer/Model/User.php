@@ -2,10 +2,7 @@
 
 namespace NeoTransposer\Model;
 
-use Doctrine\DBAL\Connection;
-use NeoTransposer\Domain\ValueObject\UserPerformance;
-use NeoTransposer\Infrastructure\UserPerformanceRepositoryMysql;
-use NeoTransposer\Infrastructure\UserRepositoryMysql;
+use NeoTransposer\Domain\Entity\UserPerformance;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
 

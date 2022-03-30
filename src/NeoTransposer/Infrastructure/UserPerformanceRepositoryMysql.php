@@ -2,8 +2,8 @@
 
 namespace NeoTransposer\Infrastructure;
 
+use NeoTransposer\Domain\Entity\UserPerformance;
 use NeoTransposer\Domain\Repository\UserPerformanceRepository;
-use NeoTransposer\Domain\ValueObject\UserPerformance;
 
 class UserPerformanceRepositoryMysql extends MysqlRepository implements UserPerformanceRepository
 {
