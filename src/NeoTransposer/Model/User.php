@@ -68,34 +68,6 @@ class User
     }
 
 	/**
-	 * Create or update the user in the database.
-	 * 
-	 * @param Connection $db A DB connection.
-	 * @param  string|null $registerIp The IP address with which the user registered.
-     * @deprecated Sacar esto de aquí, pues estaríamos haciendo ActiveRecord y queremos data mapper.
-	 */
-	public function persist(Connection $db, string $registerIp = null): ?int
-	{
-		$userPersistence = new UserRepositoryMysql($db, new UserPerformanceRepositoryMysql($db));
-		return $userPersistence->save($this, $registerIp);
-	}
-
-    /**
-     * Update the user in the database with logging the voice range change.
-     *
-     * @param Connection $db A DB connection.
-     * @param            $method
-     *
-     * @return void Whether the user previously had a voice range.
-     * @deprecated sacar esto de aquí por la misma razón que persist()
-     */
-	public function persistWithVoiceChange(Connection $db, string $method): void
-	{
-		$userPersistence = new UserRepositoryMysql($db, new UserPerformanceRepositoryMysql($db));
-		$userPersistence->saveWithVoiceChange($this, $method);
-	}
-
-	/**
 	 * Redirections depending on the state of the user (not logged in/no 
 	 * voice range defined).
 	 * 

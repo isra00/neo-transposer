@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Infrastructure\UserRepositoryMysql;
 use NeoTransposer\Model\NotesRange;
 use NeoTransposer\Model\User;
@@ -51,8 +52,9 @@ class SetUserData
 			$app['neouser']->range->highest = $request->get('highest_note');
 		}
 
-		$app['neouser']->persistWithVoiceChange(
-			$app['db'], 
+        $userRepo = $app[UserRepository::class];
+        $userRepo->saveWithVoiceChange(
+            $app['neouser'],
 			empty($request->get('unhappy_choose_std')) ? User::METHOD_MANUAL : User::METHOD_UNHAPPY
 		);
 
@@ -62,7 +64,7 @@ class SetUserData
 
 			try {
 				$unhappy->chooseStandard($app['neouser'], $request->get('unhappy_choose_std'));
-			} 
+			}
 			catch (\UnexpectedValueException $e)
 			{
 				$app->abort(400, 'Bad value for URL parameter unhappy_choose_std');
