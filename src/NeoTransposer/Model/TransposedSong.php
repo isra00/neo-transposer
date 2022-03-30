@@ -5,7 +5,6 @@ namespace NeoTransposer\Model;
 use Exception;
 use NeoTransposer\Model\ChordPrinter\ChordPrinter;
 use NeoTransposer\NeoApp;
-use NeoTransposer\Persistence\SongPersistence;
 use Silex\Application;
 
 /**
@@ -55,8 +54,8 @@ class TransposedSong
      */
     public static function fromDb($idSong, NeoApp $app): TransposedSong
     {
-        $songPersistence = new SongPersistence($app['db']);
-        return new static($songPersistence->fetchSongByIdOrSlug($idSong), $app);
+        $songRepository = $app[\NeoTransposer\Domain\Repository\SongRepository::class];
+        return new static($songRepository->fetchSongByIdOrSlug($idSong), $app);
     }
 
     /**

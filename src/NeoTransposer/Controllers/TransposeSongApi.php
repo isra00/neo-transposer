@@ -2,9 +2,10 @@
 
 namespace NeoTransposer\Controllers;
 
-use \NeoTransposer\Model\TransposedSong;
-use \NeoTransposer\Persistence\UserPersistence;
-use \Symfony\Component\HttpFoundation\Request;
+use NeoTransposer\Domain\Repository\UserRepository;
+use NeoTransposer\Infrastructure\UserRepositoryMysql;
+use NeoTransposer\Model\TransposedSong;
+use Symfony\Component\HttpFoundation\Request;
 
 class TransposeSongApi extends \NeoTransposer\AppAccess
 {
@@ -15,11 +16,11 @@ class TransposeSongApi extends \NeoTransposer\AppAccess
 			throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 		}
 
-		$userPersistence = new UserPersistence($this->app['db']);
+		$userRepository = $this->app[UserRepository::class];
 
-		if (!$user = $userPersistence->fetchUserFromField('id_user', $req->get('userToken')))
+		if (!$user = $userRepository->readFromId(intval($req->get('userToken'))))
 		{
-			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
 		}
 
 		$this->app['neouser'] = $user;

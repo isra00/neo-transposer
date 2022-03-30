@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\ValueObject\Chord;
+
 /**
  * Calculations on notes and chords.
  */

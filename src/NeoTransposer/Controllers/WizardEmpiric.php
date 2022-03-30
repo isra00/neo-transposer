@@ -2,13 +2,13 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Model\AutomaticTransposer;
+use NeoTransposer\Model\NotesRange;
+use NeoTransposer\Model\SongTextForWizard;
 use NeoTransposer\Model\TransposedSong;
+use NeoTransposer\Model\User;
+use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\NeoApp;
-use \NeoTransposer\Model\SongTextForWizard;
-use \NeoTransposer\Model\AutomaticTransposer;
-use \NeoTransposer\Model\NotesRange;
-use \NeoTransposer\Persistence\UserPersistence;
 
 /**
  * Wizard Empiric: measure the user's voice range through an empirical test.
@@ -172,7 +172,7 @@ class WizardEmpiric
 	public function finish(Request $req, NeoApp $app)
 	{
 		//Only when wizard is finished, voice range is stored in DB
-		$hadPreviousVoice = $app['neouser']->persistWithVoiceChange($app['db'], $req->getClientIp(), UserPersistence::METHOD_WIZARD);
+		$app['neouser']->persistWithVoiceChange($app['db'], User::METHOD_WIZARD);
 
 		//If user is unhappy, UnhappyUser will consider this as an action taken.
 		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);

@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain\ValueObject;
 
 /** @todo PHP8: implements Stringable */
 final class Chord

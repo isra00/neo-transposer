@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Model\ChordPrinter;
 
-use NeoTransposer\Model\Chord;
+use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Model\Transposition;
 
 /**

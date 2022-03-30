@@ -22,7 +22,8 @@ class UserVoice
 
 		$redirect = $request->get('redirect');
 
-		//First usage: user is redirected to the book in their language
+		//First usage: if user manually selects range, they will be redirected to the book in their language
+        //@todo Esto se puede solucionar más fácil: un campo hidden id_book y ya set-user-data lo persistirá.
 		if (!$redirect)
 		{
 			foreach ($app['books'] as $book)

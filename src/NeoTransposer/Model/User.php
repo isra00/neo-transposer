@@ -4,7 +4,8 @@ namespace NeoTransposer\Model;
 
 use Doctrine\DBAL\Connection;
 use NeoTransposer\Domain\ValueObject\UserPerformance;
-use NeoTransposer\Persistence\UserPersistence;
+use NeoTransposer\Infrastructure\UserPerformanceRepositoryMysql;
+use NeoTransposer\Infrastructure\UserRepositoryMysql;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -13,6 +14,11 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class User
 {
+    //These are stored in MySQL as log_voice_range.method
+	public const METHOD_WIZARD  = 'wizard';
+	public const METHOD_MANUAL  = 'manual';
+	public const METHOD_UNHAPPY = 'auto_unhappy';
+
 	public $id_user;
 	public $email;
 
@@ -35,8 +41,6 @@ class User
 	public $firstTime = false;
 
 	/**
-	 * Simple constructor. Use UserPersistence::fetchUserFromEmail() to create from DB.
-	 *
 	 * @param string 		$email         			User email
 	 * @param int 			$id_user       			User ID
 	 * @param NotesRange|null 	$range  			    User highest note
@@ -58,31 +62,37 @@ class User
 		$this->performance             = $performance;
 	}
 
+    public function setPerformance(UserPerformance $performance): void
+    {
+        $this->performance = $performance;
+    }
+
 	/**
 	 * Create or update the user in the database.
 	 * 
 	 * @param Connection $db A DB connection.
 	 * @param  string|null $registerIp The IP address with which the user registered.
-     * @todo Refactor: Sacar esto de aquí, pues estaríamos haciendo ActiveRecord y queremos data mapper.
+     * @deprecated Sacar esto de aquí, pues estaríamos haciendo ActiveRecord y queremos data mapper.
 	 */
-	public function persist(Connection $db, string $registerIp = null): void
+	public function persist(Connection $db, string $registerIp = null): ?int
 	{
-		$userPersistence = new UserPersistence($db);
-		$userPersistence->persist($this, $registerIp);
+		$userPersistence = new UserRepositoryMysql($db, new UserPerformanceRepositoryMysql($db));
+		return $userPersistence->save($this, $registerIp);
 	}
 
-	/**
-	 * Update the user in the database with logging the voice range change.
-	 * 
-	 * @param   Connection $db A DB connection.
-	 * @param   string|null $registerIp The IP address with which the user registered.
-	 * @return  bool Whether the user previously had a voice range.
-     * @todo Refactor: sacar esto de aquí por la misma razón que persist()
-	 */
-	public function persistWithVoiceChange(Connection $db, $registerIp = null, $method): bool
+    /**
+     * Update the user in the database with logging the voice range change.
+     *
+     * @param Connection $db A DB connection.
+     * @param            $method
+     *
+     * @return void Whether the user previously had a voice range.
+     * @deprecated sacar esto de aquí por la misma razón que persist()
+     */
+	public function persistWithVoiceChange(Connection $db, string $method): void
 	{
-		$userPersistence = new UserPersistence($db);
-		return $userPersistence->persistWithVoiceChange($this, $registerIp, $method);
+		$userPersistence = new UserRepositoryMysql($db, new UserPerformanceRepositoryMysql($db));
+		$userPersistence->saveWithVoiceChange($this, $method);
 	}
 
 	/**

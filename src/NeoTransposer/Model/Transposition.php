@@ -2,8 +2,8 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Model\ChordPrinter\ChordPrinter;
-use \NeoTransposer\Model\NotesCalculator;
 
 /**
  * Represents a transposition of a song, with transported chords, capo, etc.
@@ -195,7 +195,7 @@ class Transposition extends \NeoTransposer\AppAccess
      * In most of the songs, the key is equal to the first chord. If not, no
      * alternative chords are calculated. Yes, that's simple.
      *
-     * @param \NeoTransposer\Model\NotesCalculator $nc An instance of NotesCalculator
+     * @param NotesCalculator $ncalc An instance of NotesCalculator
      *
      * @return string The key, expressed as major chord in american notation.
      */

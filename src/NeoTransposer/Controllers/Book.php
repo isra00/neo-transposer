@@ -36,7 +36,7 @@ class Book
         {
             $this->abortBookNotExist($id_book);
         }
-
+var_dump($app['neouser']);
         $template = 'book.twig';
 
         $shouldEncourageFeedback = $app['neouser']->shouldEncourageFeedback();
@@ -57,20 +57,22 @@ class Book
 
 		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
 
-		$response = new Response($app->render($template, array(
-			'page_title'	 		=> $app->trans('Songs of the Neocatechumenal Way in %lang%', array('%lang%' => $app['books'][$id_book]['lang_name'])),
+        $userPerformance = $app['neouser']->isLoggedIn() ? $app['neouser']->performance : null;
+
+		$response = new Response($app->render($template, [
+			'page_title'	 		=> $app->trans('Songs of the Neocatechumenal Way in %lang%', ['%lang%' => $app['books'][$id_book]['lang_name']]),
 			'current_book'	 		=> $app['books'][$id_book],
 			'header_link'	 		=> $app->path('book_' . $app['books'][$id_book]['id_book']),
 			'songs'			 		=> $songs,
 			'show_unhappy_warning'	=> $unhappy->isUnhappyNoAction($app['neouser']),
 			'meta_description'		=> $app->trans(
 				'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.',
-				array('%lang%' => $app['books'][$id_book]['lang_name'])
+				['%lang%' => $app['books'][$id_book]['lang_name']]
 			),
 			'your_voice'			=> $yourVoice ?? null,
-			'user_performance'		=> $app['neouser']->performance->score(),
+			'user_performance'		=> $userPerformance,
 			'show_encourage_fb'		=> $shouldEncourageFeedback
-		)), 200);
+        ]), 200);
 
         //Force no cache
 		if ($shouldEncourageFeedback)
