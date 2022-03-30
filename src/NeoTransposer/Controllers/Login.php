@@ -35,11 +35,11 @@ class Login
             $app['session']->set('callbackSetUserToken', $req->get('callbackSetUserToken'));
         }
 
-        $tpl_vars['external']                 = !empty($req->get('external'));
-        $tpl_vars['languages']                = $app['neoconfig']['languages'];
-        $tpl_vars['page_title']                = $app->trans('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
-        $tpl_vars['meta_description']        = $app->trans('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
-        $tpl_vars['meta_canonical']            = $app['absoluteUriWithoutQuery'];
+        $tpl_vars['external']         = !empty($req->get('external'));
+        $tpl_vars['languages']        = $app['neoconfig']['languages'];
+        $tpl_vars['page_title']       = $app->trans('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
+        $tpl_vars['meta_description'] = $app->trans('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
+        $tpl_vars['meta_canonical']   = $app['absoluteUriWithoutQuery'];
 
         return $app->render('login.twig', $tpl_vars, true);
     }
@@ -107,7 +107,7 @@ class Login
         return $app->redirect($target);
     }
 
-    protected function validateCaptcha(Request $req, string $secret)
+    protected function validateCaptcha(Request $req, string $secret): bool
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
@@ -128,7 +128,7 @@ class Login
         return (true == json_decode($response, true)['success']);
     }
 
-    public function externalLoginFinish(NeoApp $app)
+    public function externalLoginFinish(NeoApp $app): string
     {
         return $app->render('external_login_finish.twig');
     }
