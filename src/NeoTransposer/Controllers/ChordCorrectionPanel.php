@@ -13,7 +13,7 @@ class ChordCorrectionPanel
 		$adminTools = new \NeoTransposer\Model\AdminTools($app);
 		$problematic = $adminTools->checkChordOrder();
 
-		if ('NO inconsistences found :-)' == $problematic)
+		if (!$problematic)
 		{
 			return 'No inconsistent chord positions found :-)';
 		}
