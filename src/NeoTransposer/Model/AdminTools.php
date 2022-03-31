@@ -176,18 +176,18 @@ class AdminTools extends \NeoTransposer\AppAccess
 		return "Deleted $deletedCounter old CSS files";
 	}
 
-	/**
-	 * Check that all songs have chords in correlative order starting by zero.
-	 * 
-	 * @return string Check results (to be displayed).
-	 */
-	public function checkChordOrder()
+    /**
+     * Check that all songs have chords in correlative order starting by zero.
+     *
+     * @return array|null Check results (to be displayed).
+     */
+	public function checkChordOrder(): ?array
 	{
 		$chords = $this->app['db']->fetchAll(
 			'SELECT * FROM `song_chord` ORDER BY id_song ASC, position ASC'
 		);
 
-		$output = [];
+		$incorrect = [];
 
 		$current_song = null;
 		$last_position = null;
@@ -199,22 +199,29 @@ class AdminTools extends \NeoTransposer\AppAccess
 
 				if ($chord['position'] != 0)
 				{
-					$output[$chord['id_song']] = true;
+					$incorrect[$chord['id_song']] = true;
 				}
 			}
 
 			if ($chord['position'] != 0 && $chord['position'] != $last_position + 1)
 			{
-				$output[$chord['id_song']] = true;
+				$incorrect[$chord['id_song']] = true;
 			}
 
 			$last_position = $chord['position'];
 		}
 
-		return empty($output)
-			? 'NO inconsistences found :-)'
-			: 'Songs with problems: ' . implode(', ', $output);
+        return $incorrect;
 	}
+
+    public function checkChordOrderHumanFriendly(): string
+    {
+        $incorrect = $this->checkChordOrder();
+
+		return empty($incorrect)
+			? 'NO inconsistencies found :-)'
+			: 'Songs with problems: ' . implode(', ', $incorrect);
+    }
 
 	public function testAllTranspositions(): string
 	{
@@ -227,7 +234,7 @@ class AdminTools extends \NeoTransposer\AppAccess
 		$goodUsers = $this->app['db']->fetchAll('SELECT id_user, wizard_step1, lowest_note, highest_note FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
 		$output = '';
 		
-		$nc = new NotesCalculator;
+		$nc = new NotesCalculator();
 
 		foreach ($goodUsers as $user)
 		{

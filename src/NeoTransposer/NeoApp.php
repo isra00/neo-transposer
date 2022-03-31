@@ -73,7 +73,7 @@ class NeoApp extends Application
      * language, the catechumens sing in that language (with a few exceptions,
      * like USA). This is why geoip language detection works better.
      *
-     * The way getPreferredLanguage() works is by 'extending' the array with the
+     * The way getPreferredLanguage() works is by 'expanding' the array with the
      * 'only language' values, e.g. [es_ES, en_US] => [es_ES, es, en_US, en],
      * but if the 'only language' values are already present, leave them where
      * they are. This way, in a request like [es_ES, en_GB, en, es] 'en' will be
@@ -259,6 +259,22 @@ class NeoApp extends Application
         {
             return new \NeoTransposer\Infrastructure\GeoIpResolverGeoIp2(
                 new \GeoIp2\Database\Reader($app['root_dir'] . '/' . $app['neoconfig']['mmdb'])
+            );
+        };
+
+        $this[Domain\Repository\AdminMetricsRepository::class] = function($app)
+        {
+            return new \NeoTransposer\Infrastructure\AdminMetricsRepositoryMysql($app['db']);
+        };
+
+        $this[\NeoTransposer\Application\ReadAdminMetrics::class] = function($app)
+        {
+            return new \NeoTransposer\Application\ReadAdminMetrics(
+                new \NeoTransposer\Domain\AdminMetricsReader(
+                    $app[\NeoTransposer\Domain\Repository\AdminMetricsRepository::class],
+                    $app['books'],
+                    $app[\NeoTransposer\Domain\GeoIp\GeoIpResolver::class]
+                )
             );
         };
     }
