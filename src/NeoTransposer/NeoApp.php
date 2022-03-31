@@ -96,9 +96,9 @@ class NeoApp extends Application
      * Set app locale based on geo-IP-detected country (MaxMind's GeoIp2 lib)
      * using a language-country table.
      *
-     * @param string $ip        Client IP.
+     * @param string $ip Client IP.
      */
-    protected function setLocaleByCountry($ip)
+    protected function setLocaleByCountry(string $ip)
     {
         $localesByCountry = [
             'sw' => ['TZ', 'KE'],
@@ -109,14 +109,16 @@ class NeoApp extends Application
             'it' => ['IT']
         ];
 
+        $geoIpResolver = $this[\NeoTransposer\Domain\GeoIp\GeoIpResolver::class];
+
         try {
-            $record = $this['geoIp2Reader']->country($ip);
-        } catch (\GeoIp2\Exception\AddressNotFoundException $e) {
+            $record = $geoIpResolver->resolve($ip);
+        } catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException $e) {
             return;
         }
 
         foreach ($localesByCountry as $locale => $countries) {
-            if (false !== array_search($record->country->isoCode, $countries)) {
+            if (in_array($record->country()->isoCode(), $countries)) {
                 $this['locale'] = $locale;
             }
         }
@@ -195,12 +197,6 @@ class NeoApp extends Application
             return new $printer();
         });
 
-        $this['geoIp2Reader'] = function ($app) {
-            return new \GeoIp2\Database\Reader(
-                $app['root_dir'] . '/' . $app['neoconfig']['mmdb']
-            );
-        };
-
         if (!$this['session']->get('user')) {
             $this['session']->set('user', new User());
         }
@@ -257,6 +253,14 @@ class NeoApp extends Application
                 $app[Domain\SongsLister::class]
             );
         });
+
+        //Why factory? One single instance is enough for us
+        $this[Domain\GeoIp\GeoIpResolver::class] = function($app)
+        {
+            return new \NeoTransposer\Infrastructure\GeoIpResolverGeoIp2(
+                new \GeoIp2\Database\Reader($app['root_dir'] . '/' . $app['neoconfig']['mmdb'])
+            );
+        };
     }
 
     protected function registerErrorHandler()

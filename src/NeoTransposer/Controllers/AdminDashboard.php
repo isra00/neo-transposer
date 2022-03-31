@@ -2,8 +2,8 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Model\UnhappyUser;
 use Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\Model\UnhappyUser;
 
 /**
  * Administrator's dashboard.
@@ -387,7 +387,10 @@ SQL;
 
 	/**
 	 * Get the names of all countries in user.country by geo-locating any IP for
-	 * each country
+	 * each country.
+     *
+     * @todo This is inherently wrong. Getting country long name from some IP instead of from its short name already
+     *       stored in DB is unreliable, because the IP might now belong to a different country.
 	 */
 	protected function getCountryNamesList(): array
 	{
@@ -396,19 +399,19 @@ SQL;
 			return $this->countryNames;
 		}
 
-		$reader = $this->app['geoIp2Reader'];
-
 		//ONLY_FULL_GROUP_BY mode (default in MySQL>5.7) makes the query fail
 		$this->app['db']->query("SET @@sql_mode=''");
 		$ips_for_country = $this->app['db']->fetchAll('SELECT country, register_ip FROM user WHERE NOT country IS NULL GROUP BY country');
 		$country_names = [];
 
+        $geoIpResolver = $this->app[\NeoTransposer\Domain\GeoIp\GeoIpResolver::class];
+
 		foreach ($ips_for_country as $ip)
 		{
 			try {
-				$country_names[$ip['country']] = $reader->country($ip['register_ip'])->country->names['en'];
+                $country_names[$ip['country']] = $geoIpResolver->resolve($ip['register_ip'])->country()->names()['en'];
 			}
-			catch (\GeoIp2\Exception\AddressNotFoundException $e)
+			catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException $e)
 			{
 				$country_names[$ip['country']] = $ip['country'];
 			}
