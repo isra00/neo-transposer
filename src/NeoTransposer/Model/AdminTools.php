@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Model;
 
+use GeoIp2\Exception\AddressNotFoundException;
+
 /**
  * Administrator's tools.
  */
@@ -15,8 +17,8 @@ class AdminTools extends \NeoTransposer\AppAccess
 	 */
 	public function populateCountry(): string
     {
-		$ips 	= $this->app['db']->fetchAll('SELECT register_ip FROM user WHERE country IS NULL');
-		$reader = $this->app['geoIp2Reader'];
+		$ips 	       = $this->app['db']->fetchAll('SELECT register_ip FROM user WHERE country IS NULL');
+        $geoIpResolver = $this->app[\NeoTransposer\Domain\GeoIp\GeoIpResolver::class];
 
 		foreach ($ips as $ip)
 		{
@@ -29,16 +31,16 @@ class AdminTools extends \NeoTransposer\AppAccess
 
 			try
 			{
-				$record = $reader->country($ip);
+                $location = $geoIpResolver->resolve($ip);
 			}
-			catch (\GeoIp2\Exception\AddressNotFoundException $e)
+			catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException $e)
 			{
 				continue;
 			}
 
 			$this->app['db']->update(
 				'user',
-				array('country' => $record->country->isoCode),
+				array('country' => $location->country()->isoCode()),
 				array('register_ip' => $ip)
 			);
 		}
