@@ -25,7 +25,7 @@ class AllSongsReport
     /**
      * HTML report. If dl query string arg is present, the page is offered to
      * download, included the styles inside the HTML.
-     * 
+     *
      * @param  \NeoTransposer\NeoApp $app The NeoApp
      * @return string The rendered view (HTML).
      */
@@ -58,7 +58,7 @@ class AllSongsReport
         if (!$req->get('dl')) {
             return $responseBody;
         }
-        
+
         $filename = $app->trans('Transpositions')
         . '-' . str_replace('#', 'd', $app['neouser']->range->lowest . '-' . $app['neouser']->range->highest)
         . '.html';
@@ -75,7 +75,7 @@ class AllSongsReport
 
     /**
      * Fetches all the songs from the current book and transposes them.
-     * 
+     *
      * @return array Array of TransposedSong objects.
      */
     public function getAllTranspositions(\NeoTransposer\NeoApp $app)
@@ -101,9 +101,8 @@ SQL;
         foreach ($ids as $id)
         {
             /**
-             * @refactor Hacer una sola query para todos los cantos (si acaso
-             *           una adicional para los acordes), e instanciar
-             *           TransposedSong con el constructor, no con el
+             * @refactor Performance: Hacer una sola query para todos los cantos (si acaso una adicional para los
+             *           acordes), e instanciar TransposedSong con el constructor, no con el
              *           createTransposedSongFromSongId().
              */
             $song = TransposedSong::fromDb($id['id_song'], $app);
@@ -118,9 +117,13 @@ SQL;
             $song->feedbackWorked = $id['worked'];
             $song->feedbackTransposition = $id['transposition'];
 
-            /** @see https://github.com/isra00/neo-transposer/issues/129#issuecomment-867496701 */
-            if ("peopleCompatible" == $song->feedbackTransposition && empty($song->peopleCompatible)) {
-                $song->feedbackTransposition = "centered1";
+            /** @see https://github.com/isra00/neo-transposer/issues/129#issuecomment-1086611165 */
+            if (
+                ("peopleCompatible" == $song->feedbackTransposition && empty($song->getPeopleCompatible()))
+                || ("notEquivalent" == $song->feedbackTransposition && empty($song->not_equivalent))
+            ) {
+                $song->feedbackWorked = false;
+                $song->feedbackTransposition = null;
             }
 
             //Remove bracketed text from song title (used for clarifications)
