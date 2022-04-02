@@ -20,12 +20,12 @@ class AdminDashboard
 
 		$toolOutput = '';
 
-		if ($tool = $req->get('tool'))
+		if ($task = $req->get('tool'))
 		{
-            $adminToolRunner = new RunAdminTool($app);
+            $runAdminTaskUseCase = new RunAdminTool($app);
 
             try {
-                $toolOutput = $adminToolRunner->runAdminTask($tool);
+                $toolOutput = $runAdminTaskUseCase->runAdminTask($task);
             } catch (AdminTaskNotExistException $e)
             {
                 $app->abort(404, $e->getMessage());

@@ -65,10 +65,10 @@ class AllSongsReport
 
         return new Response(
             $responseBody, 200, array(
-            'Cache-Control'         => 'private',
-            'Content-Type'             => 'application/stream',
-            'Content-Length'         => strlen($responseBody),
-            'Content-Disposition'     => 'attachment; filename=' . $filename,
+                'Cache-Control'       => 'private',
+                'Content-Type'        => 'application/stream',
+                'Content-Length'      => strlen($responseBody),
+                'Content-Disposition' => 'attachment; filename=' . $filename,
             )
         );
     }
@@ -108,7 +108,7 @@ SQL;
              */
             $song = TransposedSong::fromDb($id['id_song'], $app);
 
-            $song->transpose();
+            $song->transpose($app['neouser']->range);
 
             /**
              * @refactor Insertar atributos públicos en runtime no es muy SOLID...
