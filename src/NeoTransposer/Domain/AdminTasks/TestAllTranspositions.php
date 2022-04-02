@@ -1,14 +1,15 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain\AdminTasks;
 
 use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposer\Model\TransposedSong;
 
 /**
  * A functional test for detecting changes in the transposition algorithm.
  * It generates an AllSongsReport for book and compares it with a pre-stored result set.
  */
-class TestAllTranspositions extends \NeoTransposer\AppAccess
+class TestAllTranspositions extends \NeoTransposer\AppAccess implements AdminTask
 {
     protected $testAllTranspositionsBook = 2;
 
@@ -17,7 +18,7 @@ class TestAllTranspositions extends \NeoTransposer\AppAccess
      * 
      * @return string Test results (to be displayed).
      */
-    public function testAllTranspositions()
+    public function run(): string
     {
         $testData = json_decode(
             file_get_contents($this->app['neoconfig']['test_all_transpositions_expected' . (($this->app['neoconfig']['people_compatible']) ? '_pc' : '')]),

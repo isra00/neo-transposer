@@ -129,4 +129,22 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 		$this->save($user);
 	}
 
+    public function readIpFromUsersWithNullCountry(): array
+    {
+        return $this->dbConnection->fetchAll('SELECT register_ip FROM user WHERE country IS NULL');
+    }
+
+    public function saveUserCountryByIp(string $countryIsoCode, string $ip): void
+    {
+        $this->dbConnection->update(
+            'user',
+            ['country' => $countryIsoCode],
+            ['register_ip' => $ip]
+        );
+    }
+
+    public function readVoiceRangeFromAllUsers(): array
+    {
+        return $this->dbConnection->fetchAll('SELECT id_user, email, lowest_note, highest_note FROM user');
+    }
 }

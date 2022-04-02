@@ -6,6 +6,7 @@ class SongsCollection
 {
     /**
      * assoc array of id_song, slug, page, title
+     * @todo Refactor this should be an array of Song objects
      * @var array
      */
     protected $songs;

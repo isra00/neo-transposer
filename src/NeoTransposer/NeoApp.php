@@ -277,6 +277,66 @@ class NeoApp extends Application
                 )
             );
         };
+
+        $this[Domain\AdminTasks\PopulateUsersCountry::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\PopulateUsersCountry($app[\NeoTransposer\Domain\Repository\UserRepository::class], $app[\NeoTransposer\Domain\GeoIp\GeoIpResolver::class]);
+        };
+
+        $this[Domain\AdminTasks\CheckSongsRangeConsistency::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\CheckSongsRangeConsistency($app[\NeoTransposer\Domain\Repository\SongRepository::class]);
+        };
+
+        $this[Domain\AdminTasks\CheckUsersRangeConsistency::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\CheckUsersRangeConsistency($app[\NeoTransposer\Domain\Repository\UserRepository::class]);
+        };
+
+        $this[Domain\AdminTasks\RefreshCompiledCss::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\RefreshCompiledCss($app);
+        };
+
+        $this[Domain\AdminTasks\RemoveOldCompiledCss::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\RemoveOldCompiledCss($app);
+        };
+
+        $this[Domain\AdminTasks\CheckChordsOrder::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\CheckChordsOrder($app[Domain\Repository\SongChordRepository::class]);
+        };
+
+        $this[Domain\AdminTasks\TestAllTranspositions::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\TestAllTranspositions($app);
+        };
+
+        $this[Domain\AdminTasks\GetVoiceRangeOfGoodUsers::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\GetVoiceRangeOfGoodUsers($app['db']);
+        };
+
+        $this[Domain\AdminTasks\CheckOrphanChords::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\CheckOrphanChords($app[Domain\Repository\SongChordRepository::class]);
+        };
+
+        $this[Domain\AdminTasks\GetPerformanceByNumberOfFeedbacks::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\GetPerformanceByNumberOfFeedbacks($app['db']);
+        };
+
+        $this[Domain\AdminTasks\CheckMissingTranslations::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AdminTasks\CheckMissingTranslations($app['neoconfig']['languages']);
+        };
+
+        $this[Domain\Repository\SongChordRepository::class] = function($app)
+        {
+            return new \NeoTransposer\Infrastructure\SongChordRepositoryMysql($app['db']);
+        };
     }
 
     protected function registerErrorHandler()

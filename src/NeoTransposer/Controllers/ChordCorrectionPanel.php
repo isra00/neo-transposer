@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\AdminTasks\CheckChordsOrder;
 use Symfony\Component\HttpFoundation\Request;
 
 class ChordCorrectionPanel
@@ -10,8 +11,8 @@ class ChordCorrectionPanel
 	{
 		$app['locale'] = 'es';
 
-		$adminTools = new \NeoTransposer\Model\AdminTools($app);
-		$problematic = $adminTools->checkChordOrder();
+        $checkChordsOrderTask = $app[CheckChordsOrder::class];
+		$problematic = $checkChordsOrderTask->checkChordOrderArray();
 
 		if (!$problematic)
 		{

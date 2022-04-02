@@ -12,4 +12,5 @@ interface SongRepository
     public function readBookSongs(int $idBook): SongsCollection;
     public function fetchSongByIdOrSlug(string $idSong): ?Song;
     public function readSongByField(string $field, $value): ?Song;
+    public function readAllSongs(): array;
 }
