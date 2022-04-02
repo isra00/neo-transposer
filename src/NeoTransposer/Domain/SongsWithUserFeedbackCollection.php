@@ -6,7 +6,7 @@ namespace NeoTransposer\Domain;
 class SongsWithUserFeedbackCollection
 {
     /**
-     * assoc array of id_song, slug, page, title, worked
+     * assoc array of song.*, transposition_feedback.worked, transposition_feedback.transposition transposition_which_worked, book.chord_printer, book.locale, id_book
      * @var array
      */
     protected $songsWithUserFeedback;
