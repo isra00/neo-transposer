@@ -33,7 +33,7 @@ class NeoApp extends Application
         $this['root_dir'] = $rootDir;
 
         //Trick for non-web scripts (e.g. testAllTranspositions)
-        $this->hostname = $hostname ? ($hostname) : $_SERVER['HTTP_HOST'];
+        $this->hostname = $hostname ?: $_SERVER['HTTP_HOST'];
 
         $this->registerSilexServices($rootDir);
         $this->registerCustomServices();
@@ -336,6 +336,15 @@ class NeoApp extends Application
         $this[Domain\Repository\SongChordRepository::class] = function($app)
         {
             return new \NeoTransposer\Infrastructure\SongChordRepositoryMysql($app['db']);
+        };
+
+        $this[Domain\AllSongsReport::class] = function($app)
+        {
+            return new \NeoTransposer\Domain\AllSongsReport(
+                $app[\NeoTransposer\Domain\Repository\SongRepository::class],
+                $app[\NeoTransposer\Domain\Repository\SongChordRepository::class],
+                $app
+            );
         };
     }
 
