@@ -8,6 +8,8 @@ use NeoTransposer\Model\UnhappyUser;
 
 class AdminMetricsRepositoryMysql extends MysqlRepository implements AdminMetricsRepository
 {
+    protected $countryNames;
+
     public function readUserCountTotal(): int
     {
         return intval($this->dbConnection->fetchColumn('SELECT COUNT(id_user) FROM user'));

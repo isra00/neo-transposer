@@ -52,6 +52,7 @@ class TransposedSong
 
     /**
      * @throws Exception
+     * @refactor Convertir en fromRepository(UserRepository)
      */
     public static function fromDb($idSong, NeoApp $app): TransposedSong
     {

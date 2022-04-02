@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Application\AdminTaskNotExistException;
+use NeoTransposer\Application\RunAdminTool;
 use NeoTransposer\Domain\AdminMetricsReader;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
 use NeoTransposer\Model\UnhappyUser;
@@ -12,48 +14,22 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AdminDashboard
 {
-
-	/**
-	 * The App in use, for easier access.
-	 * @var \NeoTransposer\NeoApp
-	 */
-	protected $app;
-
-    /**
-     * @var array
-     */
-    protected $countryNames;
-
 	public function get(Request $req, \NeoTransposer\NeoApp $app): string
 	{
-		$app['locale'] 	= 'es';
-		$this->app 		= $app;
+		$app['locale'] = 'es';
 
-		$toolOutput 	= '';
+		$toolOutput = '';
 
 		if ($tool = $req->get('tool'))
 		{
-			$toolsMethods = [
-				'populateCountry', 
-				'checkLowerHigherNotes', 
-				'refreshCss',
-				'removeOldCompiledCss',
-				'testAllTranspositions',
-				'getVoiceRangeOfGoodUsers',
-				'detectOrphanChords',
-				'checkChordOrderHumanFriendly',
-				'checkUserLowerHigherNotes',
-				'getPerformanceByNumberOfFeedbacks',
-				'diffTranslations'
-			];
+            $adminToolRunner = new RunAdminTool($app);
 
-			if (!in_array($tool, $toolsMethods))
-			{
-				$app->abort(404);
-			}
-
-			$tools 		= new \NeoTransposer\Model\AdminTools($app);
-			$toolOutput = $tools->{$tool}();
+            try {
+                $toolOutput = $adminToolRunner->runAdminTask($tool);
+            } catch (AdminTaskNotExistException $e)
+            {
+                $app->abort(404, $e->getMessage());
+            }
 		}
 
         $readMetricsUseCase = $app[\NeoTransposer\Application\ReadAdminMetrics::class];
@@ -64,5 +40,4 @@ class AdminDashboard
 			'tool_output'			=> $toolOutput,
         ], false);
 	}
-
 }

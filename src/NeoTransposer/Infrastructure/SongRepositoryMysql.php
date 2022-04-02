@@ -89,4 +89,9 @@ SQL;
             }, $originalChords)
         );
 	}
+
+    public function readAllSongs(): array
+    {
+        return $this->dbConnection->fetchAll('SELECT * FROM song');
+    }
 }
