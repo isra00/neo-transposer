@@ -31,29 +31,19 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
     public const FORCE_LOWEST  = 1;
     public const FORCE_HIGHEST = 2;
 
-    /**
-     * @type NotesRange
-     */
+    /** @var NotesRange */
     protected $singerRange;
 
-    /**
-     * @type NotesRange
-     */
+    /** @var NotesRange */
     protected $songRange;
 
-    /**
-     * @type array
-     */
+    /** @var array */
     protected $originalChords;
 
-    /**
-     * @type bool
-     */
+    /** @var bool */
     protected $firstChordIsKey;
 
-    /**
-     * @type NotesRange
-     */
+    /** @var NotesRange */
     protected $songPeopleRange;
 
     /**
@@ -107,7 +97,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      * This is the core algorithm for Automatic transposition.
      *
      * Given the lowest and highest note of the singer and of the song, the
-     * algorithm transposes the song locating its range in the middle of the
+     * algorithm transposes the song moving it to the center of the
      * singer's voice range through simple arithmetics: calculate the offset
      * between the original song's lowest note and the centered position, and
      * then, transpose each chord using that offset.
@@ -317,6 +307,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      */
     protected function calculateSurroundingTranspositions($range, $maxScore, $reduceSingerLimits=false)
     {
+        /** @todo Pasar esto como parámetro para no marear con el estado */
         $centeredTransposition = $this->calculateCenteredTransposition();
 
         $nearTranspositions = [];
@@ -337,6 +328,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
                 $dif
             );
 
+            /** @todo Pasar esto como parámetro para no marear con el estado */
             if ($this->songPeopleRange) {
                 $near->calculatePeopleRange($this->songPeopleRange, $offset, $this->notesCalculator);
             }
@@ -348,6 +340,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
                 )
             );
 
+            /** @todo Change notEquivalent: it is a misleading name */
             foreach ($nearAndItsEquivalentsWithCapo as $notEquivalent)
             {
 
@@ -359,7 +352,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
                     $notEquivalent->setAlternativeChords($this->notesCalculator);
                 }
 
-                      //If it's too low or too high, discard it
+                //If it's too low or too high, discard it
                 if ($this->notesCalculator->distanceWithOctave($notEquivalent->range->lowest, $this->singerRange->lowest) < 0
                     || $this->notesCalculator->distanceWithOctave($notEquivalent->range->highest, $this->singerRange->highest) > 0
                 ) {

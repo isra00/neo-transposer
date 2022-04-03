@@ -21,8 +21,8 @@ class ChordCorrectionPanel
 
 		$chords = $app['db']->fetchAll(
 			'SELECT * FROM song_chord JOIN song USING (id_song) WHERE id_song IN (?) ORDER BY id_song, position',
-			array(array_keys($problematic)),
-            array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+			[array_keys($problematic)],
+            [\Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
 		);
 
 		$songs = [];
@@ -31,19 +31,19 @@ class ChordCorrectionPanel
 		{
 			if (!isset($songs[$chord['id_song']]))
 			{
-				$songs[$chord['id_song']] = array(
+				$songs[$chord['id_song']] = [
 					'id_song'	=> $chord['id_song'],
 					'id_book'	=> $chord['id_book'],
 					'page'		=> $chord['page'],
 					'title' 	=> $chord['title'],
 					'chords' 	=> []
-				);
+                ];
 			}
 
-			$songs[$chord['id_song']]['chords'][] = array(
+			$songs[$chord['id_song']]['chords'][] = [
 				'chord' => $chord['chord'],
 				'position' => $chord['position'],
-			);
+            ];
 
 			$songs[$chord['id_song']]['image'] = ($chord['id_book'] == 1)
 				? "/resucito-imgs/sw/{$chord['page']}.jpg"
@@ -57,9 +57,9 @@ class ChordCorrectionPanel
 			$count++;
 		}
 
-		return $app->render('chord_correction_panel.twig', array(
+		return $app->render('chord_correction_panel.twig', [
 			'songs' => $songs
-		));
+        ]);
 	}
 
 	public function post(Request $req, \NeoTransposer\NeoApp $app)
