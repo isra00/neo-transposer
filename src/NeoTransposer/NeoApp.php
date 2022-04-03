@@ -346,6 +346,11 @@ class NeoApp extends Application
                 $app
             );
         };
+
+        $this[Domain\Repository\BookRepository::class] = function($app)
+        {
+            return new \NeoTransposer\Infrastructure\BookRepositoryMysql($app['db']);
+        };
     }
 
     protected function registerErrorHandler()
