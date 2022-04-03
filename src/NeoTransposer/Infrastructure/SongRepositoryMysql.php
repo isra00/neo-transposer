@@ -98,4 +98,52 @@ SQL;
     {
         return $this->dbConnection->fetchAll('SELECT * FROM song');
     }
+
+    public function createSong(
+        int $idBook,
+        int $page,
+        string $title,
+        string $lowestNote,
+        string $highestNote,
+        string $peopleLowestNote,
+        string $peopleHighestNote,
+        bool $firstChordIsNote,
+        string $slug,
+        array $chords
+    ): void {
+
+        $this->dbConnection->insert('song', [
+			'id_book' 				=> $idBook,
+			'page' 					=> $page,
+			'title' 				=> $title,
+			'lowest_note' 			=> $lowestNote,
+			'highest_note' 			=> $highestNote,
+			'people_lowest_note' 	=> $peopleLowestNote,
+			'people_highest_note' 	=> $peopleHighestNote,
+			'first_chord_is_tone' 	=> $firstChordIsNote,
+			'slug'	 				=> $slug
+		]);
+
+		$idSong = $this->dbConnection->lastInsertId();
+
+		foreach ($chords as $position=>$chord)
+		{
+			if (strlen($chord))
+			{
+				$this->dbConnection->insert('song_chord', array(
+                    'id_song'  => $idSong,
+                    'chord'    => $chord,
+                    'position' => $position
+				));
+			}
+		}
+    }
+
+    public function slugAlreadyExists(string $slug): bool
+    {
+        return !empty($this->dbConnection->fetchAssoc(
+			'SELECT id_song, slug FROM song WHERE slug = ?',
+			[$slug]
+		));
+    }
 }
