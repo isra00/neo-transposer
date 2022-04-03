@@ -2,8 +2,8 @@
 
 namespace NeoTransposer\Model;
 
-use NeoTransposer\Domain\Entity\UserPerformance;
 use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposer\Domain\ValueObject\UserPerformance;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
 

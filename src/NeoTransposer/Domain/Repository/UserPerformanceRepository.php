@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\Repository;
 
-use NeoTransposer\Domain\Entity\UserPerformance;
+use NeoTransposer\Domain\ValueObject\UserPerformance;
 
 interface UserPerformanceRepository
 {

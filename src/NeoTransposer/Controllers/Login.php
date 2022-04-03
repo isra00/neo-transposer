@@ -2,8 +2,8 @@
 
 namespace NeoTransposer\Controllers;
 
-use NeoTransposer\Domain\Entity\UserPerformance;
 use NeoTransposer\Domain\Repository\UserRepository;
+use NeoTransposer\Domain\ValueObject\UserPerformance;
 use NeoTransposer\Model\User;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\RedirectResponse;
