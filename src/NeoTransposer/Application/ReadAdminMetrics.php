@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Application;
 
-use NeoTransposer\Domain\AdminMetricsReader;
+use NeoTransposer\Domain\Service\AdminMetricsReader;
 
 class ReadAdminMetrics
 {

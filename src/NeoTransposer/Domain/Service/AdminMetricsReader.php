@@ -1,6 +1,8 @@
 <?php
 
-namespace NeoTransposer\Domain;
+namespace NeoTransposer\Domain\Service;
+
+use NeoTransposer\Domain\Repository;
 
 class AdminMetricsReader
 {
