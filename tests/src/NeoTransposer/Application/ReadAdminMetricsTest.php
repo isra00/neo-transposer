@@ -3,11 +3,11 @@
 namespace NeoTransposer\Tests\Application;
 
 use NeoTransposer\Application\ReadAdminMetrics;
-use NeoTransposer\Domain\AdminMetricsReader;
 use NeoTransposer\Domain\GeoIp\Country;
 use NeoTransposer\Domain\GeoIp\GeoIpLocation;
 use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
+use NeoTransposer\Domain\Service\AdminMetricsReader;
 use PHPUnit\Framework\TestCase;
 
 class ReadAdminMetricsTest extends TestCase

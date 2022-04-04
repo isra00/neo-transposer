@@ -237,9 +237,9 @@ class NeoApp extends Application
         });
 
         //A domain service depending on other domain services
-        $this[Domain\SongsLister::class] = $this->factory(function ($app)
+        $this[Domain\Service\SongsLister::class] = $this->factory(function ($app)
         {
-            return new Domain\SongsLister(
+            return new Domain\Service\SongsLister(
                 $app[Domain\Repository\SongRepository::class],
                 $app[Domain\Repository\UserRepository::class],
                 $app['books']
@@ -250,7 +250,7 @@ class NeoApp extends Application
         $this[\NeoTransposer\Application\ListSongsWithUserFeedback::class] = $this->factory(function ($app)
         {
             return new \NeoTransposer\Application\ListSongsWithUserFeedback(
-                $app[Domain\SongsLister::class]
+                $app[Domain\Service\SongsLister::class]
             );
         });
 
@@ -270,7 +270,7 @@ class NeoApp extends Application
         $this[\NeoTransposer\Application\ReadAdminMetrics::class] = function($app)
         {
             return new \NeoTransposer\Application\ReadAdminMetrics(
-                new \NeoTransposer\Domain\AdminMetricsReader(
+                new Domain\Service\AdminMetricsReader(
                     $app[\NeoTransposer\Domain\Repository\AdminMetricsRepository::class],
                     $app['books'],
                     $app[\NeoTransposer\Domain\GeoIp\GeoIpResolver::class]

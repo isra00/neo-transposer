@@ -4,9 +4,6 @@ namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Application\AdminTaskNotExistException;
 use NeoTransposer\Application\RunAdminTool;
-use NeoTransposer\Domain\AdminMetricsReader;
-use NeoTransposer\Domain\Repository\AdminMetricsRepository;
-use NeoTransposer\Model\UnhappyUser;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

@@ -4,7 +4,7 @@ namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
-use NeoTransposer\Domain\SongCreator;
+use NeoTransposer\Domain\Service\SongCreator;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 
