@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Model;
 
-use NeoTransposer\Domain\Repository\UserPerformanceRepository;
+use NeoTransposer\Domain\Repository\FeedbackRepository;
 
 class UnhappyUser extends \NeoTransposer\AppAccess
 {
@@ -28,7 +28,7 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 			//If user was already unhappy, UNIQUE will make query fail, nothing done.
 			try {
 				$this->app['db']->insert('unhappy_user', ['id_user' => $user->id_user]);
-			} 
+			}
 			catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {}
 		} elseif ($this->isUnhappyNoAction($user)) {
             //If user was unhappy with no action but their performance is good, delete unhappy.
@@ -52,6 +52,7 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 
 	/**
 	 * Wizard finished debe llamar a este método.
+     * @todo Esto es lógica de negocio, debería estar en el domain service que gestiona el wizard
 	 */
 	public function changedVoiceRangeFromWizard(User $user)
 	{
@@ -80,7 +81,7 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 			[
 				'took_action'			=> date('Y-m-d H:i:s'),
 				'action'				=> $action,
-				'perf_before_action'	=> $this->app[UserPerformanceRepository::class]->readUserPerformance($user->id_user)->score(),
+				'perf_before_action'	=> $this->app[FeedbackRepository::class]->readUserPerformance($user->id_user)->score(),
 			], ['id_user' => (int) $user->id_user]
 		);
 	}
