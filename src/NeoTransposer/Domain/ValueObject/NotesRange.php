@@ -23,4 +23,14 @@ class NotesRange
 		return ($nc->distanceWithOctave($this->highest, $otherRange->highest) <= 0)
 			&& ($nc->distanceWithOctave($otherRange->lowest, $this->lowest) <= 0);
 	}
+
+    public function lowest(): ?string
+    {
+        return $this->lowest;
+    }
+
+    public function highest(): ?string
+    {
+        return $this->highest;
+    }
 }

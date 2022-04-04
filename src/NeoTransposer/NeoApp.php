@@ -227,13 +227,13 @@ class NeoApp extends Application
         {
             return new Infrastructure\UserRepositoryMysql(
                 $app['db'],
-                $app[Domain\Repository\UserPerformanceRepository::class]
+                $app[Domain\Repository\FeedbackRepository::class]
             );
         });
 
-        $this[Domain\Repository\UserPerformanceRepository::class] = $this->factory(function ($app)
+        $this[Domain\Repository\FeedbackRepository::class] = $this->factory(function ($app)
         {
-            return new Infrastructure\UserPerformanceRepositoryMysql($app['db']);
+            return new Infrastructure\FeedbackRepositoryMysql($app['db']);
         });
 
         //A domain service depending on other domain services
@@ -350,6 +350,20 @@ class NeoApp extends Application
         $this[Domain\Repository\BookRepository::class] = function($app)
         {
             return new \NeoTransposer\Infrastructure\BookRepositoryMysql($app['db']);
+        };
+
+        $this[Domain\Service\FeedbackRecorder::class] = function($app)
+        {
+            return new Domain\Service\FeedbackRecorder(
+                $app[Domain\Repository\FeedbackRepository::class],
+                $app[Model\UnhappyUser::class]
+            );
+        };
+
+        //Transitional while UnhappyUser is not hexagonalized
+        $this[Model\UnhappyUser::class] = function($app)
+        {
+            return new Model\UnhappyUser($app);
         };
     }
 

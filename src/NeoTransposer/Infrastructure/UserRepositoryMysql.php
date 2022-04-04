@@ -3,7 +3,7 @@
 namespace NeoTransposer\Infrastructure;
 
 use Doctrine\DBAL\Connection;
-use NeoTransposer\Domain\Repository\UserPerformanceRepository;
+use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\User;
@@ -12,7 +12,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 {
     protected $userPerformanceRepository;
 
-    public function __construct(Connection $dbConnection, UserPerformanceRepository $userPerformanceRepository)
+    public function __construct(Connection $dbConnection, FeedbackRepository $userPerformanceRepository)
     {
         $this->userPerformanceRepository = $userPerformanceRepository;
         parent::__construct($dbConnection);

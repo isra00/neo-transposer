@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
-use NeoTransposer\Domain\Repository\UserPerformanceRepository;
+use NeoTransposer\Domain\Service\FeedbackRecorder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +18,7 @@ class ReceiveFeedback
 		{
             //The JSON body is superfluous since JS reads the status code only.
 			return ($req->isXmlHttpRequest())
-				? $app->json(['error' => 'notLoggedIn'], 408)
+				? $app->json([], 408)
 				: $app->redirect($req->server->get('HTTP_REFERER'));
 		}
 
@@ -27,61 +27,17 @@ class ReceiveFeedback
 			return $app->json(['error' => 'Parameters id_song and worked are mandatory'], 400);
 		}
 
-		$sql = <<<SQL
-INSERT INTO transposition_feedback (
-	id_song,
-	id_user,
-	worked,
-	user_lowest_note,
-	user_highest_note,
-	time,
-	transposition,
-	pc_status,
-	deviation_from_center,
-	centered_score_rate
-) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)
-ON DUPLICATE KEY UPDATE
-	id_song = ?,
-	id_user = ?,
-	worked = ?,
-	user_lowest_note = ?,
-	user_highest_note = ?,
-	time = NOW(),
-	transposition = ?,
-	pc_status = ?,
-	deviation_from_center = ?,
-	centered_score_rate = ?
-SQL;
-		$worked = (int) $req->get('worked');
-
-		$app['db']->executeUpdate($sql, array(
-			$req->get('id_song'),
-			$app['neouser']->id_user,
-			$worked,
-			$app['neouser']->range->lowest,
-			$app['neouser']->range->highest,
-			$req->get('transposition'),
+        $feedbackRecorder = $app[FeedbackRecorder::class];
+        $feedbackRecorder->recordFeedback(
+			$app['neouser'],
+            (int) $req->get('id_song'),
+			$req->get('worked'),
+			$app['neouser']->range,
 			$req->get('pc_status'),
-			$req->get('deviation') ? intval($req->get('deviation')) : null,
-			$req->get('centered_score_rate'),
-
-			$req->get('id_song'),
-			$app['neouser']->id_user,
-			$worked,
-			$app['neouser']->range->lowest,
-			$app['neouser']->range->highest,
-			$req->get('transposition'),
-			$req->get('pc_status') ?: null,
-			$req->get('deviation') ? intval($req->get('deviation')) : null,
-			$req->get('centered_score_rate'),
-		));
-
-        $app['neouser']->setPerformance(
-            $app[UserPerformanceRepository::class]->readUserPerformance($app['neouser']->id_user)
+            (float) $req->get('centered_score_rate'),
+            (int) $req->get('deviation') ? intval($req->get('deviation')) : null,
+			$req->get('transposition')
         );
-
-		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
-		$unhappy->setUnhappy($app['neouser']);
 
 		//Progressive enhancement: support form submission without AJAX, then refresh the page.
 		if (!$req->isXmlHttpRequest())
@@ -89,7 +45,7 @@ SQL;
 			return $app->redirect($app->path(
 				'transpose_song',
 				array('id_song' => $req->get('id_song'))
-			) . '?fb=' . str_replace(array('1', '0'), array('yes', 'no'), $worked) . '#feedback');
+			) . '?fb=' . str_replace(array('1', '0'), array('yes', 'no'), (int) $req->get('worked')) . '#feedback');
 		}
 
 		return $app->json(['feedback' => 'received'], 200);
