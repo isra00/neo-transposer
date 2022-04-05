@@ -2,8 +2,8 @@
 
 namespace NeoTransposer\Domain\AdminTasks;
 
+use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\UserRepository;
-use NeoTransposer\Model\NotesCalculator;
 
 class CheckUsersRangeConsistency implements AdminTask
 {

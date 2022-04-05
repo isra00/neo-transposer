@@ -2,12 +2,12 @@
 
 namespace NeoTransposer\Infrastructure;
 
+use NeoTransposer\Domain\Exception\SongNotExistException;
 use NeoTransposer\Domain\Repository\SongRepository;
-use NeoTransposer\Domain\SongNotExistException;
-use NeoTransposer\Domain\ValueObject\Chord;
-use NeoTransposer\Model\Song;
 use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
+use NeoTransposer\Domain\ValueObject\Chord;
+use NeoTransposer\Model\Song;
 
 class SongRepositoryMysql extends MysqlRepository implements SongRepository
 {

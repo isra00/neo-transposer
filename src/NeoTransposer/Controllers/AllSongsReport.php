@@ -2,10 +2,10 @@
 
 namespace NeoTransposer\Controllers;
 
-use NeoTransposer\Model\NotesNotation;
+use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Transpose Song page: transposes the given song for the singer's voice range.
@@ -21,7 +21,7 @@ class AllSongsReport
      */
     public function get(NeoApp $app, Request $req)
     {
-        $idBook = $app['neouser']->id_book;
+        $idBook = $app[\NeoTransposer\Domain\Repository\BookRepository::class]->readIdBookFromLocale($app['locale']);
 
         $allSongsReport = $app[\NeoTransposer\Domain\AllSongsReport::class];
 

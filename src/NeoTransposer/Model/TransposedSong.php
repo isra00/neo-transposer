@@ -3,8 +3,11 @@
 namespace NeoTransposer\Model;
 
 use Exception;
+use NeoTransposer\Domain\AutomaticTransposer;
+use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\PeopleCompatibleCalculation;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\ChordPrinter\ChordPrinter;
 use NeoTransposer\NeoApp;
 use Silex\Application;
 

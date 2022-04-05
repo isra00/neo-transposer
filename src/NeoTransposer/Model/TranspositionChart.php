@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class TranspositionChart

@@ -2,12 +2,9 @@
 
 namespace NeoTransposer\Controllers;
 
-use NeoTransposer\Domain\Repository\UserRepository;
-use NeoTransposer\Model\NotesCalculator;
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\NotesNotation;
 use Symfony\Component\HttpFoundation\Request;
-use \NeoTransposer\Model\NotesNotation;
-
-use function PHPUnit\Framework\assertEquals;
 
 /**
  * Page for the user to set his/her voice range, or to go to the Wizard.

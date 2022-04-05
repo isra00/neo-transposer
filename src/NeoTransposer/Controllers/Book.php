@@ -3,8 +3,8 @@
 namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Application\ListSongsWithUserFeedback;
-use NeoTransposer\Domain\BookNotExistException;
-use NeoTransposer\Model\NotesNotation;
+use NeoTransposer\Domain\Exception\BookNotExistException;
+use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\{Request, Response};
 

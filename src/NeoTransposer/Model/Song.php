@@ -2,8 +2,8 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\ChordPrinter\ChordPrinter;
 
 /**
  * A song, with its voice ranges as NotesRange and its associated chords.

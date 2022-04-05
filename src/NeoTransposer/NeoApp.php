@@ -193,7 +193,7 @@ class NeoApp extends Application
         };
 
         $this['chord_printers.get'] = $this->protect(function ($printer) {
-            $printer = "\NeoTransposer\Model\ChordPrinter\ChordPrinter$printer";
+            $printer = "\NeoTransposer\Domain\ChordPrinter\ChordPrinter$printer";
             return new $printer();
         });
 
@@ -204,7 +204,7 @@ class NeoApp extends Application
         $this['neouser'] = $this['session']->get('user');
 
         $this['new.AutomaticTransposer'] = $this->factory(function ($app) {
-            return new \NeoTransposer\Model\AutomaticTransposer($app);
+            return new Domain\AutomaticTransposer($app);
         });
 
         $this['new.Transposition'] = $this->factory(function ($app) {

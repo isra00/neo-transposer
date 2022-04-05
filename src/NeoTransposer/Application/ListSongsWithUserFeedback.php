@@ -2,9 +2,9 @@
 
 namespace NeoTransposer\Application;
 
-use NeoTransposer\Domain\BookNotExistException;
+use NeoTransposer\Domain\Exception\BookNotExistException;
+use NeoTransposer\Domain\Exception\UserNotExistException;
 use NeoTransposer\Domain\Service\SongsLister;
-use NeoTransposer\Domain\UserNotExistException;
 
 class ListSongsWithUserFeedback
 {

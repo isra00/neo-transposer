@@ -2,9 +2,9 @@
 
 namespace NeoTransposer\Controllers;
 
-use NeoTransposer\Domain\BookNotExistException;
-use NeoTransposer\Domain\InvalidStandardRangeException;
-use NeoTransposer\Domain\BadUserRangeException;
+use NeoTransposer\Domain\Exception\BadUserRangeException;
+use NeoTransposer\Domain\Exception\BookNotExistException;
+use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
 use NeoTransposer\Domain\Service\UserWriter;
 use Symfony\Component\HttpFoundation\{RedirectResponse, Request};
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

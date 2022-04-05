@@ -1,9 +1,8 @@
 <?php
 
-namespace NeoTransposer\Model\ChordPrinter;
+namespace NeoTransposer\Domain\ChordPrinter;
 
 use NeoTransposer\Domain\ValueObject\Chord;
-use NeoTransposer\Model\Transposition;
 
 /**
  * Chord printers implement the different chord notations. This follows the
@@ -20,13 +19,6 @@ use NeoTransposer\Model\Transposition;
 abstract class ChordPrinter
 {
 	protected $cssClass = 'chord';
-
-    /** @deprecated Cuesta lo mismo llamar directamente a printChordset y así no se rompe el Tell Don't Ask */
-	public function printTransposition(Transposition $transposition)
-	{
-		$transposition->chordsForPrint = $this->printChordset($transposition->chords);
-		return $transposition;
-	}
 
 	public function printChordset(array $chordset): array
 	{

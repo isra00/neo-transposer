@@ -2,9 +2,10 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
+use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\ChordPrinter\ChordPrinter;
 
 /**
  * Represents a transposition of a song, with transported chords, capo, etc.

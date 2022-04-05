@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Model;
 
-use NeoTransposer\Domain\InvalidStandardRangeException;
+use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 
 class UnhappyUser extends \NeoTransposer\AppAccess
