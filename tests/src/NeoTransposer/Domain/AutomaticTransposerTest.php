@@ -4,9 +4,8 @@ namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\{NeoTransposer\Domain\AutomaticTransposer,
-    NeoTransposer\Domain\PeopleCompatibleCalculation,
-    Transposition};
+use NeoTransposer\Domain\AutomaticTransposer;
+use NeoTransposer\Model\Transposition;
 
 /**
  * @todo Add some corner cases to transposition algorithms
