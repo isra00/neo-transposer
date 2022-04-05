@@ -1,8 +1,8 @@
 <?php
 
-namespace NeoTransposer\Tests\Model;
+namespace NeoTransposer\Tests\Domain;
 
-use NeoTransposer\Model\NotesNotation;
+use NeoTransposer\Domain\NotesNotation;
 
 class NotesNotationTest extends \PHPUnit\Framework\TestCase
 {
