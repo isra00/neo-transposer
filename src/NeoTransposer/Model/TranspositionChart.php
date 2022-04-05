@@ -7,7 +7,7 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 class TranspositionChart
 {
 	/**
-	 * @var \NeoTransposer\Model\NotesCalculator
+	 * @var NotesCalculator
 	 */
 	protected $nc;
 
@@ -33,17 +33,17 @@ class TranspositionChart
 
 	public function addVoice(string $caption, string $cssClass, NotesRange $range): void
 	{
-        $notesNotation = new NotesNotation;
-		$this->voiceChart[] = [
-			'caption'	=> $caption,
-			'css'		=> $cssClass,
-			'lowest'	=> $range->lowest,
-			'highest'	=> $range->highest, 
-			'lowestForPrint'  => $notesNotation->getNotation($range->lowest, $this->notation),
-			'highestForPrint' => $notesNotation->getNotation($range->highest, $this->notation),
-			'length'	=> abs($this->nc->distanceWithOctave($range->lowest, $range->highest)) - 1,
-		];
-	}
+        $notesNotation = new NotesNotation();
+        $this->voiceChart[] = [
+            'caption'         => $caption,
+            'css'             => $cssClass,
+            'lowest'          => $range->lowest,
+            'highest'         => $range->highest,
+            'lowestForPrint'  => $notesNotation->getNotation($range->lowest, $this->notation),
+            'highestForPrint' => $notesNotation->getNotation($range->highest, $this->notation),
+            'length'          => abs($this->nc->distanceWithOctave($range->lowest, $range->highest)) - 1,
+        ];
+    }
 
 	public function addTransposition(string $caption, string $cssClass, Transposition $transposition): void
 	{

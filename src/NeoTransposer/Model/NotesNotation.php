@@ -44,11 +44,11 @@ class NotesNotation
     {
         preg_match(self::REGEXP_NOTE, $note, $match);
 
-        $note     = $match[1];
-        $number = $match[2] ?? null;
+        $note   = $match[1];
+        $octave = $match[2] ?? null;
 
         $noteInNotation = ('latin' == $notation) ? self::LATIN_NOTES[$note] : $note;
-        return $noteInNotation . $number;
+        return $noteInNotation . $octave;
     }
 
     /**
