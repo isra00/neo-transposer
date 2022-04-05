@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\UserPerformance;
 use NeoTransposer\Model\User;
@@ -77,7 +78,10 @@ class Login
         $userRepository = $app[UserRepository::class];
 
         if (!$user = $userRepository->readFromEmail($req_email)) {
-            $user = new User($req_email, null, null, null, null, null, null, new UserPerformance(0, 0));
+
+            $bookRepository = $app[BookRepository::class];
+            $idBook = $bookRepository->readIdBookFromLocale($app['locale']);
+            $user = new User($req_email, null, null, $idBook, null, null, null, new UserPerformance(0, 0));
 
             //When it gets persisted, the User object is also assigned its ID
             $userRepository->save($user, $req->getClientIp());
