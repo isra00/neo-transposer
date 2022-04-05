@@ -4,6 +4,7 @@ namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Application\ListSongsWithUserFeedback;
 use NeoTransposer\Domain\BookNotExistException;
+use NeoTransposer\Model\NotesNotation;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\{Request, Response};
 
@@ -37,18 +38,19 @@ class Book
             $this->abortBookNotExist($id_book);
         }
 
-        $template = 'book.twig';
-
-        $shouldEncourageFeedback = $app['neouser']->shouldEncourageFeedback();
-
 		$app['locale'] = $app['books'][$id_book]['locale'];
 		$app['translator']->setLocale($app['locale']);
+
+        $template = 'book.twig';
+
+        $shouldEncourageFeedback = $app['neouser']->isLoggedIn() && $app['neouser']->shouldEncourageFeedback();
 
 		//If first time or user has reported < 2 fb, show encourage fb banners
 		if ($shouldEncourageFeedback)
 		{
 			$yourVoice = $this->app['neouser']->getVoiceAsString(
 				$this->app['translator'],
+                new NotesNotation(),
 				$this->app['neoconfig']['languages'][$this->app['locale']]['notation']
 			);
 
