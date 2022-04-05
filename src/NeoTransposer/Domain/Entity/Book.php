@@ -20,4 +20,36 @@ class Book
         $this->locale       = $locale;
         $this->songCount    = $songCount;
     }
+
+    public function idBook(): int
+    {
+        return $this->idBook;
+    }
+
+    public function langName(): string
+    {
+        return $this->langName;
+    }
+
+    public function details(): string
+    {
+        return $this->details;
+    }
+
+    public function chordPrinter(): string
+    {
+        return $this->chordPrinter;
+    }
+
+    public function locale(): string
+    {
+        return $this->locale;
+    }
+
+    public function songCount(): int
+    {
+        return $this->songCount;
+    }
+
+
 }

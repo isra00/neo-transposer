@@ -51,6 +51,15 @@ class NotesNotation
         return $noteInNotation . $octave;
     }
 
+    public function getNotationArray(array $notes, string $notation): array
+    {
+        $thisObject = $this;
+        return array_map(function($note) use ($notation, $thisObject)
+        {
+            return $thisObject->getNotation($note, $notation);
+        }, $notes);
+    }
+
     /**
      * Returns a user-friendly string with the voice range:
      *
