@@ -38,5 +38,12 @@
         "phpunit/phpunit": "^9",
         "ext-xdebug": "*",
         "vimeo/psalm": "*"
+    },
+
+    "scripts": {
+        "test": [
+            "phpunit",
+            "php tests/testAllTranspositions.php"
+        ]
     }
 }
