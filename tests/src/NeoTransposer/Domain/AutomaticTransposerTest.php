@@ -1,11 +1,11 @@
 <?php
 
-namespace NeoTransposer\Tests\Model;
+namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\{AutomaticTransposer,
-    PeopleCompatibleCalculation,
+use NeoTransposer\Model\{NeoTransposer\Domain\AutomaticTransposer,
+    NeoTransposer\Domain\PeopleCompatibleCalculation,
     Transposition};
 
 /**
@@ -16,7 +16,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
     /**
      * An instance of the class under test
      *
-     * @var AutomaticTransposer
+     * @var \NeoTransposer\Domain\AutomaticTransposer
      */
     protected $transposer;
 
@@ -29,7 +29,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
         //includePath must be defined in phpunit.xml
         $this->chordsScoreConfig = include __DIR__ . '/../../../../config.scores.php';
 
-        $this->transposer = new AutomaticTransposer($this->getSilexApp());
+        $this->transposer = new \NeoTransposer\Domain\AutomaticTransposer($this->getSilexApp());
         $this->transposer->setTransposerData(
             new NotesRange('G1', 'G3'),
             new NotesRange('B1', 'B2'),
@@ -218,7 +218,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(
             $expected,
-            $this->transposer->calculateCenteredTransposition(AutomaticTransposer::FORCE_HIGHEST)
+            $this->transposer->calculateCenteredTransposition(\NeoTransposer\Domain\AutomaticTransposer::FORCE_HIGHEST)
         );
     }
 
@@ -245,7 +245,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(
             $expected,
-            $this->transposer->calculateCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
+            $this->transposer->calculateCenteredTransposition(\NeoTransposer\Domain\AutomaticTransposer::FORCE_LOWEST)
         );
     }
 
@@ -255,8 +255,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
             new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], true
         );
 
-        $expected = new PeopleCompatibleCalculation(
-            PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA, 
+        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
+            \NeoTransposer\Domain\PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA,
             null
         );
 
@@ -276,8 +276,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
             new NotesRange('A2', 'D3')
         );
 
-        $expected = new PeopleCompatibleCalculation(
-            PeopleCompatibleCalculation::ALREADY_COMPATIBLE, 
+        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
+            \NeoTransposer\Domain\PeopleCompatibleCalculation::ALREADY_COMPATIBLE,
             null
         );
 
@@ -297,8 +297,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
             new NotesRange('A2', 'D3')
         );
 
-        $expected = new PeopleCompatibleCalculation(
-            PeopleCompatibleCalculation::WIDER_THAN_SINGER, 
+        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
+            \NeoTransposer\Domain\PeopleCompatibleCalculation::WIDER_THAN_SINGER,
             null
         );
 
@@ -318,8 +318,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
             new NotesRange('D2', 'E3')
         );
 
-        $expected = new PeopleCompatibleCalculation(
-            PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER, 
+        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
+            \NeoTransposer\Domain\PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER,
             null
         );
 
@@ -349,8 +349,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
         );
         $ppc->peopleRange = new NotesRange('B1', 'E3');
 
-        $expected = new PeopleCompatibleCalculation(
-            PeopleCompatibleCalculation::ADJUSTED_WIDER, 
+        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
+            \NeoTransposer\Domain\PeopleCompatibleCalculation::ADJUSTED_WIDER,
             $ppc
         );
 
@@ -381,8 +381,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
         );
         $ppc->peopleRange = new NotesRange('G#2', 'D3');
 
-        $expected = new PeopleCompatibleCalculation(
-            PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE, 
+        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
+            \NeoTransposer\Domain\PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE,
             $ppc
         );
 
@@ -406,8 +406,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
         $ppc->setTranspositionData(['D', 'Em'], 0, true, 0, new NotesRange('B1', 'B2'), -2);
         $ppc->peopleRange = new NotesRange('B1', 'B2');
 
-        $expected = new PeopleCompatibleCalculation(
-            PeopleCompatibleCalculation::ADJUSTED_WELL, 
+        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
+            \NeoTransposer\Domain\PeopleCompatibleCalculation::ADJUSTED_WELL,
             $ppc
         );
 
@@ -431,8 +431,8 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
         $ppc->setTranspositionData(['Am', 'Dm', 'E'], 0, true, 0, new NotesRange('B1', 'E3'), 1);
         $ppc->peopleRange = new NotesRange('B1', 'F2');
 
-        $expected = new PeopleCompatibleCalculation(
-            PeopleCompatibleCalculation::ADJUSTED_WELL, 
+        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
+            \NeoTransposer\Domain\PeopleCompatibleCalculation::ADJUSTED_WELL,
             $ppc
         );
 
