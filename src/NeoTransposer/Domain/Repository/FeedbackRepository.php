@@ -19,4 +19,6 @@ interface FeedbackRepository
         ?int $deviationFromCentered = null,
         ?string $transposition = null
     ): void;
+
+    public function readSongFeedbackForUser(int $idUser, int $idSong): ?bool;
 }

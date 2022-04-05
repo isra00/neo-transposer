@@ -3,6 +3,7 @@
 namespace NeoTransposer\Infrastructure;
 
 use NeoTransposer\Domain\Repository\SongRepository;
+use NeoTransposer\Domain\SongNotExistException;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Model\Song;
 use NeoTransposer\Domain\SongsCollection;
@@ -48,7 +49,7 @@ SQL;
      *
      * @param string $idSong Song ID or slug.
      * @return Song The requested Song object.
-     * @throws \Exception If song does not exist or has an invalid id_book associated.
+     * @throws SongNotExistException If song does not exist or has an invalid id_book associated.
      *
      * @todo Refactor esto. Id or Slug es doble responsabilidad. Solo el controller debería aceptar ambos.
      */
@@ -65,7 +66,7 @@ SQL;
     }
 
     /**
-     * @throws \Exception
+     * @throws SongNotExistException
      */
     public function readSongByField(string $field, $value): ?Song
     {
@@ -76,7 +77,7 @@ SQL;
 		);
 
 		if (!$songRow) {
-			throw new \Exception("The specified song does not exist or it's not bound to a valid book");
+			throw new SongNotExistException("The specified song does not exist or it's not bound to a valid book");
 		}
 
         /** @refactor Replace by SongChordRepository::readSongChords() */

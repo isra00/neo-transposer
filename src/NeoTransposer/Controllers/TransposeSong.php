@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Repository\FeedbackRepository;
+use NeoTransposer\Domain\SongNotExistException;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\{NotesCalculator, PeopleCompatibleCalculation, TransposedSong, TranspositionChart};
 use NeoTransposer\NeoApp;
@@ -32,14 +34,14 @@ class TransposeSong
 
         try {
             $transposedSong = TransposedSong::fromDb($id_song, $app);
-        } catch (\Exception $e) {
+        } catch (SongNotExistException $e) {
             $app->abort(404, "Song $id_song does not exist.");
         }
 
+        $transposedSong->transpose($app['neouser']->range);
+
         $app['locale'] = $transposedSong->song->bookLocale;
         $app['translator']->setLocale($app['locale']);
-
-        $transposedSong->transpose($app['neouser']->range);
 
         $your_voice = $app['neouser']->getVoiceAsString(
             $app['translator'],
@@ -53,49 +55,43 @@ class TransposeSong
         $tplVars = [];
 
         if ($transposedSong->getPeopleCompatible()) {
-            $difference = ($transposedSong->getPeopleCompatible()->deviationFromCentered > 0)
-            ? $app->trans('higher') 
-            : $app->trans('lower');
 
-            $peopleCompatibleMsg = '';
-
-            if (PeopleCompatibleCalculation::ADJUSTED_WIDER == $transposedSong->getPeopleCompatibleStatus()) {
-                /** @todo En vez de hacer esta var nueva, manipular directamente $tplVars['peopleCompatibleMsg'] */
-                $peopleCompatibleMsg = $app->trans(
-                    'This other transposition, though a bit %difference%, may probably fit better the people of the assembly.', 
-                    ['%difference%' => $difference]
-                );
-            }
-            
-            if (PeopleCompatibleCalculation::ADJUSTED_WELL == $transposedSong->getPeopleCompatibleStatus()) {
-                $peopleCompatibleMsg = $app->trans(
-                    'This other transposition, though a bit %difference%, fits well the people of the assembly.', 
-                    ['%difference%' => $difference]
-                );
-
-                $tplVars['peopleCompatibleClass'] = 'star';
+            $peopleCompatibleMsgUntranslated = '';
+            switch ($transposedSong->getPeopleCompatibleStatus())
+            {
+                case PeopleCompatibleCalculation::ADJUSTED_WELL:
+                    $peopleCompatibleMsgUntranslated = 'This other transposition, though a bit %difference%, fits well the people of the assembly.';
+                    $tplVars['peopleCompatibleClass'] = 'star';
+                    break;
+                case PeopleCompatibleCalculation::ADJUSTED_WIDER:
+                    $peopleCompatibleMsgUntranslated = 'This other transposition, though a bit %difference%, may probably fit better the people of the assembly.';
+                    break;
+                case PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE:
+                    $peopleCompatibleMsgUntranslated = 'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly.';
+                    break;
+                case PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE:
+                    $peopleCompatibleMsgUntranslated = 'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly.';
+                    break;
             }
 
-            if (PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE == $transposedSong->getPeopleCompatibleStatus()) {
-                $peopleCompatibleMsg = $app->trans(
-                    'The chords given above are good for your voice, but probably too high for the assembly. The following transposition is %difference%, though still high for some people of the assembly.', 
-                    ['%difference%' => $difference]
-                );
-            }
-
-            if (PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE == $transposedSong->getPeopleCompatibleStatus()) {
-                $peopleCompatibleMsg = $app->trans(
-                    'The chords given above are good for your voice, but probably too low for the assembly. The following transposition is %difference%, though still low for some people of the assembly.', 
-                    ['%difference%' => $difference]
-                );
-            }
+            $tplVars['peopleCompatibleMsg'] = $app->trans(
+                $peopleCompatibleMsgUntranslated,
+                [
+                    '%difference%' => ($transposedSong->getPeopleCompatible()->deviationFromCentered > 0)
+                        ? $app->trans('higher')
+                        : $app->trans('lower')
+                ]
+            );
 
             if ($transposedSong->getPeopleCompatible()->score < $transposedSong->transpositions[0]->score) {
-                $peopleCompatibleMsg .= ' ' . $app->trans('And it has easier chords!');
+                $tplVars['peopleCompatibleMsg'] .= ' ' . $app->trans('And it has easier chords!');
             }
-
-            $tplVars['peopleCompatibleMsg'] = $peopleCompatibleMsg;
         }
+
+        $feedback = $app[FeedbackRepository::class]->readSongFeedbackForUser(
+            $app['neouser']->id_user,
+            $transposedSong->song->idSong
+        );
 
         /** @todo usar str_starts_with() de PHP8 */
         if (0 === strpos($req->headers->get('Accept'), 'application/json')) {
@@ -104,70 +100,50 @@ class TransposeSong
         }
 
         return $app->render(
-            'transpose_song.twig', array_merge(
+            'transpose_song.twig',
+            array_merge(
                 $tplVars, [
                     'song'             => $transposedSong,
                     'your_voice'       => $your_voice,
                     'voice_chart'      => $transpositionChart->getChartHtml(),
-                    'page_title'       => $app->trans('%song% (Neocatechumenal Way)', array('%song%' => $transposedSong->song->title)),
+                    'page_title'       => $app->trans(
+                        '%song% (Neocatechumenal Way)',
+                        array('%song%' => $transposedSong->song->title)
+                    ),
                     'header_link'      => $app->path('book_' . $transposedSong->song->idBook),
                     'meta_canonical'   => $app->url('transpose_song', ['id_song' => $transposedSong->song->slug]),
                     'meta_description' => $app->trans(
                         'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
                         ['%song%' => $transposedSong->song->title]
                     ),
-                    'feedback'         => $this->getFeedbackForUser($app['db'], $app['neouser']->id_user, $transposedSong->song->idSong),
+                    'feedback'         => $feedback,
 
                     'user_less_than_one_octave' => $nc->rangeWideness($app['neouser']->range) < 12,
-                    'url_wizard'       => $app->path('wizard_step1', ['_locale' => $app['locale']]),
-    
+                    'url_wizard'                => $app->path('wizard_step1', ['_locale' => $app['locale']]),
+
                     //Non-JS browsers show message after clicking on feedback
-                    'non_js_fb'        =>  $req->get('fb')
+                    'non_js_fb'                 => $req->get('fb')
                 ]
             )
         );
     }
 
-    /**
-     * @todo Refactor: quizá toda esta lógica puede ir en TranspositionChart y recibir solo el objeto TransposedSong 
-     */
     protected function generateTranspositionChart(NotesCalculator $nc, NeoApp $app, TransposedSong $transposedSong) : TranspositionChart
     {
         $transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser'], $app['neoconfig']['languages'][$app['locale']]['notation']);
-        $transpositionChart->addTransposition(
-            'Transposed:', 
-            'transposed-song', 
-            $transposedSong->transpositions[0]
-        );
+        $transpositionChart->addTransposition('Transposed:', 'transposed-song', $transposedSong->transpositions[0]);
 
-        /**
-         * @refactor Este if es absurdo. Si la feature está desabilitada, el siguiente if tampoco se cumplirá
-        */
-        if ($app['neoconfig']['people_compatible']) {
-            if ($transposedSong->song->peopleRange) {
-                $transpositionChart->addVoice('Original for people:', 'original-song original-people', $transposedSong->song->peopleRange);
-                /**
-                 * @todo Este $nc->transposeRange no se debería estar haciendo aquí, sino que la Transposition ya debería tenerlo guardado
-                */
-                $transpositionChart->addVoice('Transposed for people:', 'transposed-song transposed-people', $nc->transposeRange($transposedSong->song->peopleRange, $transposedSong->transpositions[0]->offset));
-                $transpositionChart->addVoice('People standard:', 'people-standard', new NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]));
-            }
-            
-            if ($transposedSong->getPeopleCompatible()) {
-                $transpositionChart->addTransposition('Adjusted for you:', 'transposed-song', $transposedSong->getPeopleCompatible());
-                $transpositionChart->addVoice('Adjusted for people:', 'people-compatible', $transposedSong->getPeopleCompatible()->peopleRange);
-            }
+        if ($transposedSong->song->peopleRange) {
+            $transpositionChart->addVoice('Original for people:', 'original-song original-people', $transposedSong->song->peopleRange);
+            $transpositionChart->addVoice('Transposed for people:', 'transposed-song transposed-people', $transposedSong->transpositions[0]->peopleRange);
+            $transpositionChart->addVoice('People standard:', 'people-standard', new NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]));
+        }
+
+        if ($transposedSong->getPeopleCompatible()) {
+            $transpositionChart->addTransposition('Adjusted for you:', 'transposed-song', $transposedSong->getPeopleCompatible());
+            $transpositionChart->addVoice('Adjusted for people:', 'people-compatible', $transposedSong->getPeopleCompatible()->peopleRange);
         }
 
         return $transpositionChart;
-    }
-
-    protected function getFeedbackForUser(\Doctrine\DBAL\Connection $db, $id_user, $id_song)
-    {
-        $worked = $db->fetchColumn(
-            'SELECT worked FROM transposition_feedback WHERE id_user = ? AND id_song = ?',
-            array($id_user, $id_song)
-        );
-        return str_replace(array('1', '0'), array('yes', 'no'), $worked);
     }
 }

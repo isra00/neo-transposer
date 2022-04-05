@@ -93,4 +93,14 @@ SQL;
 			$deviationFromCentered
 		));
     }
+
+    public function readSongFeedbackForUser(int $idUser, int $idSong): ?bool
+    {
+        $result = $this->dbConnection->fetchColumn(
+            'SELECT worked FROM transposition_feedback WHERE id_user = ? AND id_song = ?',
+            [$idUser, $idSong]
+        );
+
+        return strlen($result) ? (bool) $result : null;
+    }
 }
