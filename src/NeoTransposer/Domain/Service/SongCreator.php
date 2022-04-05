@@ -2,9 +2,9 @@
 
 namespace NeoTransposer\Domain\Service;
 
+use NeoTransposer\Domain\Exception\SlugAlreadyExistsException;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
-use NeoTransposer\Domain\SlugAlreadyExistsException;
 
 class SongCreator
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Domain;
+namespace NeoTransposer\Domain\Exception;
 
 class SongNotExistException extends \Exception
 {

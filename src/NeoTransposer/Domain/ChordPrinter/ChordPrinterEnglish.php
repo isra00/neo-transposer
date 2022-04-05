@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Model\ChordPrinter;
+namespace NeoTransposer\Domain\ChordPrinter;
 
 /**
  * Notation for chords as in the British songbook.

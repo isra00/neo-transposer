@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain;
 
 use Symfony\Component\Translation\TranslatorInterface;
 

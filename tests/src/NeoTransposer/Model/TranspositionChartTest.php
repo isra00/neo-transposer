@@ -9,7 +9,7 @@ class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 {
 	public function testGetChart()
 	{
-		$mockNc = $this->getMockBuilder(\NeoTransposer\Model\NotesCalculator::class)
+		$mockNc = $this->getMockBuilder(\NeoTransposer\Domain\NotesCalculator::class)
 						->disableOriginalConstructor()
 						->setMethods(['distanceWithOctave', 'lowestNote'])
 						->getMock();

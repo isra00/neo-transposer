@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\ValueObject;
 
-use NeoTransposer\Model\NotesCalculator;
+use NeoTransposer\Domain\NotesCalculator;
 
 /**
  * @refactor Para que esto sea realmente un value object los atributos deben ser inmutables.

@@ -2,12 +2,11 @@
 
 namespace NeoTransposer\Tests\Model;
 
+use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\AutomaticTransposer;
 use NeoTransposer\Model\Song;
 use NeoTransposer\Model\TransposedSong;
 use NeoTransposer\Model\Transposition;
-use NeoTransposer\Model\User;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
 
@@ -86,7 +85,7 @@ final class TransposedSongTest extends TestCase
         $printedChordSet = $this->printedChordSet;
 
         $app['chord_printers.get'] = $app->protect(function ($printer) use ($printedChordSet) {
-            $mockPrinter = $this->createMock(\NeoTransposer\Model\ChordPrinter\ChordPrinter::class);
+            $mockPrinter = $this->createMock(\NeoTransposer\Domain\ChordPrinter\ChordPrinter::class);
             $mockPrinter
                 //->expects($this->once())
                 ->method('printChordset')

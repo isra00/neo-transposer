@@ -2,10 +2,9 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\AutomaticTransposer;
+use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\UserRepository;
-use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\AutomaticTransposer;
-use NeoTransposer\Model\NotesCalculator;
 use NeoTransposer\Model\SongTextForWizard;
 use NeoTransposer\Model\TransposedSong;
 use NeoTransposer\Model\UnhappyUser;

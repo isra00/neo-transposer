@@ -23,6 +23,7 @@ class WizardSelectStandard
 
     /**
      * This is a GET request
+     * @todo This should not be a GET request, for security (CSRF!) and RESTfulness.
      */
     public function selectStandardAndShowInstructionsPage(Request $req, NeoApp $app): string
     {

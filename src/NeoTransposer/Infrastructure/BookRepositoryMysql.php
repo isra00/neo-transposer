@@ -15,6 +15,11 @@ class BookRepositoryMysql extends MysqlRepository implements BookRepository
         );
     }
 
+    public function readIdBookFromLocale(string $locale): int
+    {
+        return (int) $this->dbConnection->fetchColumn('SELECT id_book FROM book WHERE locale = ?', [$locale]);
+    }
+
     public function readAllBooks(): array
     {
         $rows = $this->dbConnection->fetchAll('SELECT * FROM book ORDER BY lang_name');
@@ -30,10 +35,5 @@ class BookRepositoryMysql extends MysqlRepository implements BookRepository
                 $row['song_count']
             );
         }, $rows);
-    }
-
-    public function readIdBookFromLocale(string $locale): int
-    {
-        return (int) $this->dbConnection->fetchColumn('SELECT id_book FROM book WHERE locale = ?', [$locale]);
     }
 }

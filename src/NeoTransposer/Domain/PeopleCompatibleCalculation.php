@@ -1,6 +1,8 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain;
+
+use NeoTransposer\Model\Transposition;
 
 /**
  * This class' sense is that if NO_PEOPLE_RANGE_DATA or ALREADY_COMPATIBLE

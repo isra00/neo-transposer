@@ -3,7 +3,7 @@
 namespace NeoTransposer\Domain\AdminTasks;
 
 use Doctrine\DBAL\Connection;
-use NeoTransposer\Model\NotesCalculator;
+use NeoTransposer\Domain\NotesCalculator;
 
 class GetVoiceRangeOfGoodUsers implements AdminTask
 {

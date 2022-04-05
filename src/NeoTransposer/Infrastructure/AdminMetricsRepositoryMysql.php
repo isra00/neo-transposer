@@ -2,7 +2,6 @@
 
 namespace NeoTransposer\Infrastructure;
 
-use NeoTransposer\Controllers\AdminDashboard;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
 use NeoTransposer\Model\UnhappyUser;
 
@@ -120,7 +119,7 @@ SQL;
 	 */
 	public function readFeedback(): array
 	{
-		$nc = new \NeoTransposer\Model\NotesCalculator;
+		$nc = new \NeoTransposer\Domain\NotesCalculator;
 
 		$sql = <<<SQL
 SELECT song.id_song, title, song.lowest_note, song.highest_note, count(*) fbs

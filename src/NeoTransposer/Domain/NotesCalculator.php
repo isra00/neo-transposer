@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain;
 
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;

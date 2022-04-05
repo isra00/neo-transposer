@@ -2,9 +2,8 @@
 
 namespace NeoTransposer\Domain\AdminTasks;
 
-use Doctrine\DBAL\Connection;
+use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\SongRepository;
-use NeoTransposer\Model\NotesCalculator;
 
 /**
  * Check songs that have one of the following conditions:

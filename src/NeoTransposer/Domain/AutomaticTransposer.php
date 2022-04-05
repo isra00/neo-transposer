@@ -1,8 +1,9 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain;
 
 use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposer\Model\Transposition;
 
 /**
  * Core algorithm for transposing songs. It implements four types of transpositions:
@@ -60,9 +61,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      */
     protected $centeredAndEquivalent;
 
-    /**
-     * @var NotesCalculator
-     */
+    /**  @var NotesCalculator */
     protected $notesCalculator;
 
     /**
@@ -118,12 +117,12 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
         $singerWideness = $this->notesCalculator->rangeWideness($this->singerRange);
 
         /*
-        * The song is located in the center of singer's range, but if middle is
-        * not an integer (odd number), it will be rounded up. If the song's 
-        * range is wider than the singer's, it will be located in the bottom, 
-        * so that notes exceeding notes will be high. We do this because when 
-        * it happens, the singer can sing those notes one octave down; as well 
-        * as when forceVoiceLimit is FORCE_LOWEST.
+         * The song is transposed into the center of singer's range, but if middle
+         * is not an integer (odd wideness), it will be rounded up. If the song's
+         * range is wider than the singer's, it will be located in its bottom,
+         * so that notes exceeding notes will be high. We do this because when
+         * it happens, the singer can sing those notes one octave down; as well
+         * as when forceVoiceLimit is FORCE_LOWEST.
         */
         $offsetFromSingerLowest = ($songWideness >= $singerWideness)
             ? 0
@@ -234,9 +233,10 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
     /**
      * Main method to be used by the clients of this class. It returns the
      * centered and equivalent transpositions for a given song, sorted by ease.
-     * 
-     * @param  int      $limitTranspositions Limit of equivalent transpositions to return
-     * @param  int|null $forceVoiceLimit     Force user's lowest or highest note (only used in Wizard).
+     *
+     * @param int|null $limitTranspositions Limit of equivalent transpositions to return
+     * @param int|null $forceVoiceLimit     Force user's lowest or highest note (only used in Wizard).
+     *
      * @return array     Array of Transposition objects, sorted by chord ease.
      */
     public function getTranspositionsCentered(?int $limitTranspositions=2, ?int $forceVoiceLimit=0) : array
@@ -245,7 +245,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
             $centeredTransposition = $this->calculateCenteredTransposition($forceVoiceLimit);
             $equivalents = $this->calculateEquivalentsWithCapo($centeredTransposition);
 
-            $centeredAndEquivalent = array_merge(array($centeredTransposition), $equivalents);
+            $centeredAndEquivalent = array_merge([$centeredTransposition], $equivalents);
             $centeredAndEquivalent = $this->sortTranspositionsByEase($centeredAndEquivalent);
 
             $this->centeredAndEquivalent = $centeredAndEquivalent;
@@ -273,15 +273,16 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      * 
      * @return Transposition|null A non-equivalent transposition (yes, only one).
      */
-    public function getEasierNotEquivalent()
+    public function getEasierNotEquivalent(): ?Transposition
     {
         $nearTranspositions = $this->calculateSurroundingTranspositions(
+            $this->calculateCenteredTransposition(),
             self::OFFSETS_NOT_EQUIVALENT,
             $this->getTranspositionsCentered()[0]->score
         );
 
         if (empty($nearTranspositions)) {
-            return;
+            return null;
         }
 
         $notEquivalentSorted = $this->sortTranspositionsByEase($nearTranspositions);
@@ -298,21 +299,18 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
     }
 
     /**
-     * Get transpositions higher and lower than the centered.
+     * Get transpositions higher or lower than the centered.
      * 
-     * @param  array   $range              The range in semitones, e.g. [-2, -1]
-     * @param  integer $maxScore           Return only transpositions with score lower than this.
-     * @param  integer $reduceSingerLimits Singer's voice range will be reduced in the top and bottom by this number of semitones.
+     * @param  array   $deviations The deviations in semitones, e.g. [-2, -1]
+     * @param  integer $maxScore   Return only transpositions with score lower than this.
+     *
      * @return array    An array of Transposition objects.
      */
-    protected function calculateSurroundingTranspositions($range, $maxScore, $reduceSingerLimits=false)
+    protected function calculateSurroundingTranspositions(Transposition $centeredTransposition, array $deviations, int $maxScore): array
     {
-        /** @todo Pasar esto como parámetro para no marear con el estado */
-        $centeredTransposition = $this->calculateCenteredTransposition();
-
         $nearTranspositions = [];
 
-        foreach ($range as $dif)
+        foreach ($deviations as $dif)
         {
             $offset = $centeredTransposition->offset + $dif;
 
@@ -335,7 +333,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
 
             $nearAndItsEquivalentsWithCapo = $this->sortTranspositionsByEase(
                 array_merge(
-                    array($near),
+                    [$near],
                     $this->calculateEquivalentsWithCapo($near)
                 )
             );
@@ -390,7 +388,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      *    singer's range. This case and the former one presuppose that 
      *    peopleSong range is NOT wider than people's range.
      * 
-     * The case that occured is reported in the returned PeopleCompatibleCalculation::$status
+     * The case that occurred is reported in the returned PeopleCompatibleCalculation::$status.
      * Calculations (offsets) are done based on the centeredTransposition.
      * This algorithm does not deal with the relation of this transposition
      * with others (i.e. hiding notEquivalent when there is peopleCompatible, etc.)
@@ -518,7 +516,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
      * 
      * @return PeopleCompatibleCalculation    The PeopleCompatibleCalculation object.
      */
-    protected function createPeopleCompatibleCalculation($status, $offsetFromCentered, NotesRange $peopleRangeInCentered) : PeopleCompatibleCalculation
+    protected function createPeopleCompatibleCalculation(int $status, int $offsetFromCentered, NotesRange $peopleRangeInCentered) : PeopleCompatibleCalculation
     {
         $offsetFromOriginal = $this->centeredTransposition->offset + $offsetFromCentered;
 
@@ -531,7 +529,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
             $offsetFromCentered
         );
 
-        $peopleCompatibleTransposition = $this->chooseEasiestEquivalentWithCapo($peopleCompatibleTransposition, 'new.Transposition');
+        $peopleCompatibleTransposition = $this->chooseEasiestEquivalentWithCapo($peopleCompatibleTransposition);
 
         $peopleCompatibleTransposition->calculatePeopleRange($peopleRangeInCentered, $offsetFromCentered, $this->notesCalculator);
 
@@ -547,7 +545,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
     protected function chooseEasiestEquivalentWithCapo(Transposition $transposition) : Transposition
     {
         $equivalentsWithCapo = array_merge(
-            array($transposition),
+            [$transposition],
             $this->calculateEquivalentsWithCapo($transposition)
         );
 

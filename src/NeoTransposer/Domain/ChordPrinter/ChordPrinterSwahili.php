@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Model\ChordPrinter;
+namespace NeoTransposer\Domain\ChordPrinter;
 
 final class ChordPrinterSwahili extends ChordPrinter
 {
@@ -20,8 +20,6 @@ final class ChordPrinterSwahili extends ChordPrinter
 
 		$fundamental = str_replace('#', '<em>d</em>', $fundamental);
 
-		$print_attributes = str_replace('m', '-', $attributes);
-
-		return $fundamental . $print_attributes;
+        return $fundamental . str_replace('m', '-', $attributes);
 	}
 }

@@ -2,9 +2,9 @@
 
 namespace NeoTransposer\Domain\Service;
 
-use NeoTransposer\Domain\BookNotExistException;
-use NeoTransposer\Domain\InvalidStandardRangeException;
-use NeoTransposer\Domain\BadUserRangeException;
+use NeoTransposer\Domain\Exception\BadUserRangeException;
+use NeoTransposer\Domain\Exception\BookNotExistException;
+use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\UnhappyUser;

@@ -1,8 +1,8 @@
 <?php
 
-namespace NeoTransposer\Model\ChordPrinter;
+namespace NeoTransposer\Domain\ChordPrinter;
 
-use NeoTransposer\Model\NotesNotation;
+use NeoTransposer\Domain\NotesNotation;
 
 /**
  * Notation for chords as in the Spanish songbook.
