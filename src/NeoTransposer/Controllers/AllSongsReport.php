@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Model\NotesNotation;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
@@ -31,6 +32,7 @@ class AllSongsReport
 
         $your_voice = $app['neouser']->getVoiceAsString(
             $app['translator'],
+            new NotesNotation(),
             $app['neoconfig']['languages'][$app['locale']]['notation']
         );
 

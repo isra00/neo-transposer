@@ -5,7 +5,11 @@ namespace NeoTransposer\Controllers;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\SongNotExistException;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\{NotesCalculator, PeopleCompatibleCalculation, TransposedSong, TranspositionChart};
+use NeoTransposer\Model\{NotesCalculator,
+    NotesNotation,
+    PeopleCompatibleCalculation,
+    TransposedSong,
+    TranspositionChart};
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,6 +49,7 @@ class TransposeSong
 
         $your_voice = $app['neouser']->getVoiceAsString(
             $app['translator'],
+            new NotesNotation(),
             $app['neoconfig']['languages'][$app['locale']]['notation']
         );
 
@@ -88,10 +93,12 @@ class TransposeSong
             }
         }
 
-        $feedback = $app[FeedbackRepository::class]->readSongFeedbackForUser(
-            $app['neouser']->id_user,
-            $transposedSong->song->idSong
-        );
+        if ($app['neouser']->isLoggedIn()) {
+            $feedback = $app[FeedbackRepository::class]->readSongFeedbackForUser(
+                $app['neouser']->id_user ?? null,
+                $transposedSong->song->idSong
+            );
+        }
 
         /** @todo usar str_starts_with() de PHP8 */
         if (0 === strpos($req->headers->get('Accept'), 'application/json')) {
@@ -116,7 +123,7 @@ class TransposeSong
                         'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
                         ['%song%' => $transposedSong->song->title]
                     ),
-                    'feedback'         => $feedback,
+                    'feedback'         => $feedback ?? null,
 
                     'user_less_than_one_octave' => $nc->rangeWideness($app['neouser']->range) < 12,
                     'url_wizard'                => $app->path('wizard_step1', ['_locale' => $app['locale']]),
