@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\InvalidStandardRangeException;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 
 class UnhappyUser extends \NeoTransposer\AppAccess
@@ -68,7 +69,7 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 
 		if (!in_array($standard, $standardVoices))
 		{
-			throw new \UnexpectedValueException("Invalid standard voice $standard");
+			throw new InvalidStandardRangeException("Invalid standard voice $standard");
 		}
 
 		$this->takeAction($user, 'std_' . $standard);
@@ -76,6 +77,7 @@ class UnhappyUser extends \NeoTransposer\AppAccess
 
 	public function takeAction(User $user, string $action)
 	{
+        /** @refactor Use Service\UserWriter */
 		$this->app['db']->update(
 			'unhappy_user',
 			[
