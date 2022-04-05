@@ -22,14 +22,9 @@ class WizardSelectStandard
     }
 
     /**
-     * This is also a GET request
-     *
-     * @param Request $req
-     * @param NeoApp  $app
-     *
-     * @return RedirectResponse
+     * This is a GET request
      */
-    public function selectStandard(Request $req, NeoApp $app): RedirectResponse
+    public function selectStandardAndShowInstructionsPage(Request $req, NeoApp $app): string
     {
         $standard_voices = $app['neoconfig']['voice_wizard']['standard_voices'];
 
@@ -45,6 +40,12 @@ class WizardSelectStandard
 
         $app['neouser']->wizard_step1 = $req->get('gender');
 
-        return $app->redirect($app->path('wizard_empiric_lowest') . '#instructions');
+        $app['neouser']->wizard_lowest_attempts = 0;
+        $app['neouser']->wizard_highest_attempts = 0;
+
+        return $app->render(
+            'wizard_empiric_instructions.twig',
+            ['form_action' => $app->path('wizard_empiric_lowest')]
+        );
     }
 }

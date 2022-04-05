@@ -99,7 +99,8 @@ class User
 				'user_voice', 
 				'set_user_data', 
 				'wizard_step1', 
-				'wizard_empiric_lowest', 
+				'wizard_select_standard',
+				'wizard_empiric_lowest',
 				'wizard_empiric_highest'
 			);
 			
