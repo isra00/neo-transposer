@@ -41,6 +41,9 @@ class Book
 
         $shouldEncourageFeedback = $app['neouser']->shouldEncourageFeedback();
 
+		$app['locale'] = $app['books'][$id_book]['locale'];
+		$app['translator']->setLocale($app['locale']);
+
 		//If first time or user has reported < 2 fb, show encourage fb banners
 		if ($shouldEncourageFeedback)
 		{
@@ -51,9 +54,6 @@ class Book
 
             $template = 'book_encourage_feedback.twig';
 		}
-
-		$app['locale'] = $app['books'][$id_book]['locale'];
-		$app['translator']->setLocale($app['locale']);
 
 		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
 
