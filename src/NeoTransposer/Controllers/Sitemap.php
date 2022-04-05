@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,9 +47,8 @@ class Sitemap
             ];
 		}
 
-		$songs = $app['db']->fetchAll(
-			'SELECT slug FROM song WHERE NOT id_song = 118 AND NOT id_song = 319'
-		);
+        $songRepository = $app[SongRepository::class];
+        $songs = $songRepository->readAllSongs();
 
 		foreach ($songs as $song)
 		{

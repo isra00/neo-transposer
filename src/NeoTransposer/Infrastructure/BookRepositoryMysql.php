@@ -6,7 +6,6 @@ use NeoTransposer\Domain\Repository\BookRepository;
 
 class BookRepositoryMysql extends MysqlRepository implements BookRepository
 {
-
     public function readBookLangFromId(int $idBook): string
     {
         return $this->dbConnection->fetchColumn(
