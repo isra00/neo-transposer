@@ -7,7 +7,7 @@
 <h1>{% trans %}Choose language{% endtrans %}</h1>
 
 <ul class="books">
-{% for id, book in app.books %}
+{% for id, book in books %}
 	<li><a href="{{ path('set_user_data', {book: id}) }}">
 		{{ book.lang_name }}
 		<small>{{ book.details}}</small>
