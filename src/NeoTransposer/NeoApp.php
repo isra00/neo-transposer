@@ -365,6 +365,16 @@ class NeoApp extends Application
         {
             return new Model\UnhappyUser($app);
         };
+
+        //Transitional while UnhappyUser is not hexagonalized
+        $this[Domain\Service\UserWriter::class] = function($app)
+        {
+            return new Domain\Service\UserWriter(
+                $app[Domain\Repository\UserRepository::class],
+                $app['books'],
+                $app[Model\UnhappyUser::class]
+            );
+        };
     }
 
     protected function registerErrorHandler()
