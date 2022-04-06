@@ -2,10 +2,10 @@
 
 namespace NeoTransposer\Domain\Service;
 
+use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\UnhappyUser;
-use NeoTransposer\Model\User;
 
 class FeedbackRecorder
 {

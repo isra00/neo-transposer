@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Tests\Domain\Service;
 
+use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Exception\BookNotExistException;
 use NeoTransposer\Domain\Exception\UserNotExistException;
 use NeoTransposer\Domain\Repository\SongRepository;
@@ -9,7 +10,6 @@ use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\Service\SongsLister;
 use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
-use NeoTransposer\Model\User;
 use PHPUnit\Framework\TestCase;
 
 class SongsListerTest extends TestCase

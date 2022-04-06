@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 
