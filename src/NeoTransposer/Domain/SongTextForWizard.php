@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain;
 
 /**
  * Song text (with chords) that is shown in Wizard Empiric.
