@@ -34,7 +34,7 @@ class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 
 		$mockUser->range = new NotesRange('C1', 'C2');
 
-		$mockTransposition = $this->getMockBuilder(\NeoTransposer\Model\Transposition::class)
+		$mockTransposition = $this->getMockBuilder(\NeoTransposer\Domain\Transposition::class)
 						->disableOriginalConstructor()
 						->getMock();
 

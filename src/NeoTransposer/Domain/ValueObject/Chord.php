@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Domain\ValueObject;
 
+use NeoTransposer\Domain\Exception\SongDataException;
+
 /** @todo PHP8: implements Stringable */
 final class Chord
 {
@@ -15,7 +17,7 @@ final class Chord
     }
 
     /**
-     * @throws \Exception
+     * @throws SongDataException
      */
     public static function fromString(string $name): Chord
     {
@@ -24,7 +26,7 @@ final class Chord
 
 		if (!isset($match[2]))
 		{
-			throw new \Exception("Chord $name not recognized");
+			throw new SongDataException("Chord $name not recognized");
 		}
 
         return new Chord($match[1], $match[2]);

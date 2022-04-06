@@ -208,7 +208,7 @@ class NeoApp extends Application
         });
 
         $this['new.Transposition'] = $this->factory(function ($app) {
-            return new \NeoTransposer\Model\Transposition($app);
+            return new Domain\Transposition($app);
         });
 
         $this->registerHexagonalServices();
