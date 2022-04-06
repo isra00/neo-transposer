@@ -2,10 +2,10 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\UserPerformance;
-use NeoTransposer\Model\User;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

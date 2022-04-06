@@ -3,10 +3,10 @@
 namespace NeoTransposer\Infrastructure;
 
 use Doctrine\DBAL\Connection;
+use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\User;
 
 class UserRepositoryMysql extends MysqlRepository implements UserRepository
 {

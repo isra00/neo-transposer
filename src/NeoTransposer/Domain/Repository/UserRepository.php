@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\Repository;
 
-use NeoTransposer\Model\User;
+use NeoTransposer\Domain\Entity\User;
 
 interface UserRepository
 {

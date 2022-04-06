@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain\Entity;
 
 use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\ValueObject\NotesRange;

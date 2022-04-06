@@ -2,8 +2,7 @@
 
 namespace NeoTransposer\Infrastructure;
 
-use NeoTransposer\Model\User;
-use Symfony\Component\HttpFoundation\Request;
+use NeoTransposer\Domain\Entity\User;
 
 class LoginFlow
 {

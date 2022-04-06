@@ -3,12 +3,12 @@
 namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Domain\AutomaticTransposer;
+use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Model\SongTextForWizard;
 use NeoTransposer\Model\TransposedSong;
 use NeoTransposer\Model\UnhappyUser;
-use NeoTransposer\Model\User;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 

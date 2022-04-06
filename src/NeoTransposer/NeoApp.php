@@ -2,7 +2,7 @@
 
 namespace NeoTransposer;
 
-use NeoTransposer\Model\User;
+use NeoTransposer\Domain\Entity\User;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 

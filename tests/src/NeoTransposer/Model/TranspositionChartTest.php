@@ -29,7 +29,7 @@ class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 
 		$mockSong->range = new NotesRange('C1', 'C2');
 
-		$mockUser = $this->getMockBuilder(\NeoTransposer\Model\User::class)
+		$mockUser = $this->getMockBuilder(\NeoTransposer\Domain\Entity\User::class)
 						->getMock();
 
 		$mockUser->range = new NotesRange('C1', 'C2');

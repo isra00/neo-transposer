@@ -2,13 +2,13 @@
 
 namespace NeoTransposer\Domain\Service;
 
+use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Exception\BadUserRangeException;
 use NeoTransposer\Domain\Exception\BookNotExistException;
 use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\UnhappyUser;
-use NeoTransposer\Model\User;
 
 class UserWriter
 {
