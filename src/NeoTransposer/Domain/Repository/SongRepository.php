@@ -2,9 +2,9 @@
 
 namespace NeoTransposer\Domain\Repository;
 
+use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
-use NeoTransposer\Model\Song;
 
 interface SongRepository
 {

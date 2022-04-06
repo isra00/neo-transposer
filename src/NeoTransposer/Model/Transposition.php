@@ -3,6 +3,7 @@
 namespace NeoTransposer\Model;
 
 use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
+use NeoTransposer\Domain\Exception\SongDataException;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
@@ -131,6 +132,7 @@ class Transposition extends \NeoTransposer\AppAccess
 
     /**
      * Calculates the ease of the transposition, based on each chord's ease.
+     * @throws SongDataException
      */
     public function setScore(): void
     {

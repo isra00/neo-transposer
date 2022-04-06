@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain\Entity;
 
 use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\ValueObject\NotesRange;
@@ -10,6 +10,7 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  */
 class Song
 {
+    /** @todo Make all these protected and create getters */
     public $idSong;
     public $idBook;
     public $page;

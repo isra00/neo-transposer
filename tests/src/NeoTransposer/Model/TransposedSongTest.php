@@ -3,8 +3,8 @@
 namespace NeoTransposer\Tests\Model;
 
 use NeoTransposer\Domain\AutomaticTransposer;
+use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\Song;
 use NeoTransposer\Model\TransposedSong;
 use NeoTransposer\Model\Transposition;
 use PHPUnit\Framework\TestCase;
