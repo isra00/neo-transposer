@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Model;
 
+use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\ValueObject\NotesRange;

@@ -2,9 +2,9 @@
 
 namespace NeoTransposer\Domain;
 
+use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\Repository\SongChordRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
-use NeoTransposer\Model\Song;
 use NeoTransposer\Model\TransposedSong;
 use NeoTransposer\Model\User;
 use NeoTransposer\NeoApp;

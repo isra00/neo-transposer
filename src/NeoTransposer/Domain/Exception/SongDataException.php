@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain\Exception;
 
 /**
  * Exceptions produced by problems, incongruences, etc. in the songs data, like

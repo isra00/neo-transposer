@@ -5,6 +5,7 @@ namespace NeoTransposer\Model;
 use Exception;
 use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
+use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\PeopleCompatibleCalculation;
 use NeoTransposer\Domain\ValueObject\NotesRange;

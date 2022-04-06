@@ -23,7 +23,7 @@ class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 				  ->method('lowestNote')
 				  ->will($this->returnValue('C1'));
 
-		$mockSong = $this->getMockBuilder(\NeoTransposer\Model\Song::class)
+		$mockSong = $this->getMockBuilder(\NeoTransposer\Domain\Entity\Song::class)
 						->disableOriginalConstructor()
 						->getMock();
 
