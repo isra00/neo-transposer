@@ -4,9 +4,9 @@ namespace NeoTransposer\Tests\Model;
 
 use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\Entity\Song;
+use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\TransposedSong;
-use NeoTransposer\Model\Transposition;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
 

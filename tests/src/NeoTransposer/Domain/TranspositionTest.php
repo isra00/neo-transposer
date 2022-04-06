@@ -1,10 +1,10 @@
 <?php
 
-namespace NeoTransposer\Tests\Model;
+namespace NeoTransposer\Tests\Domain;
 
-use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Domain\NotesCalculator;
-use NeoTransposer\Model\Transposition;
+use NeoTransposer\Domain\Transposition;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use Silex\Application;
 
 class TranspositionTest extends \PHPUnit\Framework\TestCase
@@ -44,7 +44,7 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
 		if (empty($this->dependencyContainer))
 		{
 			$this->dependencyContainer = new Application();
-			$this->dependencyContainer['neoconfig'] = ['chord_scores' => include './config.scores.php'];
+			$this->dependencyContainer['neoconfig'] = ['chord_scores' => include __DIR__ . '/../../../../config.scores.php'];
 		}
 
 		return $this->dependencyContainer;

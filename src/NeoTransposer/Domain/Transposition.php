@@ -1,10 +1,9 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain;
 
 use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\Exception\SongDataException;
-use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
@@ -26,14 +25,14 @@ class Transposition extends \NeoTransposer\AppAccess
      * @var array
      */
     public $chordsForPrint = [];
-    
+
     /**
      * Difficulty score
      *
      * @var int
      */
     public $score = 0;
-    
+
     /**
      * Capo number for the transposition
      *
@@ -70,9 +69,9 @@ class Transposition extends \NeoTransposer\AppAccess
     public $range;
 
     /**
-	 * @var NotesRange
+     * @var NotesRange
      */
-	public $peopleRange;
+    public $peopleRange;
 
     /**
      * Deviation from the centered transposition (in semitones), used by NotEquivalent and PeopleCompatible.
@@ -104,25 +103,32 @@ class Transposition extends \NeoTransposer\AppAccess
     ];
 
     /**
-     * @param                 $chords
-     * @param                 $capo
-     * @param                 $asBook
-     * @param                 $offset
+     * @param array           $chords
+     * @param int|null        $capo
+     * @param bool            $asBook
+     * @param int|null        $offset
      * @param NotesRange|null $range
-     * @param                 $deviationFromCentered
+     * @param int|null        $deviationFromCentered
      * @param NotesRange|null $peopleRange
      *
      * @return $this
      * @throws SongDataException
      */
-    public function setTranspositionData($chords=[], $capo=0, $asBook=false, $offset=0, ?NotesRange $range = null, $deviationFromCentered=0, ?NotesRange $peopleRange = null): Transposition
-    {
+    public function setTranspositionData(
+        array $chords = [],
+        ?int $capo = 0,
+        ?bool $asBook = false,
+        ?int $offset = 0,
+        ?NotesRange $range = null,
+        ?int $deviationFromCentered = 0,
+        ?NotesRange $peopleRange = null
+    ): Transposition {
         $this->chords = $chords;
-        $this->capo   = $capo;
+        $this->capo = $capo;
         $this->asBook = $asBook;
         $this->offset = $offset;
-        $this->range  = $range;
-        $this->peopleRange  = $peopleRange;
+        $this->range = $range;
+        $this->peopleRange = $peopleRange;
         $this->deviationFromCentered = $deviationFromCentered;
 
         $this->setScore();
@@ -140,17 +146,13 @@ class Transposition extends \NeoTransposer\AppAccess
 
         $scoresConfig = $this->app['neoconfig']['chord_scores'];
 
-        foreach ($this->chords as $chord)
-        {
+        foreach ($this->chords as $chord) {
             $scoreForThisChord = 0;
 
             if (isset($scoresConfig['chords'][strval($chord)])) {
                 $scoreForThisChord = $scoresConfig['chords'][strval($chord)];
-            }
-            else
-            {
-                foreach ($scoresConfig['patterns'] as $pattern=>$score)
-                {
+            } else {
+                foreach ($scoresConfig['patterns'] as $pattern => $score) {
                     if (preg_match("/$pattern/", strval($chord))) {
                         $scoreForThisChord = $score;
                     }
@@ -166,7 +168,7 @@ class Transposition extends \NeoTransposer\AppAccess
         }
     }
 
-    public function setAsBook($asBook): void
+    public function setAsBook(bool $asBook): void
     {
         $this->asBook = $asBook;
     }
@@ -183,8 +185,8 @@ class Transposition extends \NeoTransposer\AppAccess
     {
         if (empty($this->capoForPrint)) {
             $this->capoForPrint = ($this->capo)
-            ? $this->app->trans('with capo %n%', array('%n%' => $this->capo))
-            : $this->app->trans('no capo');
+                ? $this->app->trans('with capo %n%', array('%n%' => $this->capo))
+                : $this->app->trans('no capo');
         }
 
         return $this->capoForPrint;
@@ -202,6 +204,7 @@ class Transposition extends \NeoTransposer\AppAccess
      * @param NotesCalculator $ncalc An instance of NotesCalculator
      *
      * @return string The key, expressed as major chord in american notation.
+     * @throws SongDataException
      */
     public function getKey(NotesCalculator $ncalc): string
     {
@@ -213,14 +216,14 @@ class Transposition extends \NeoTransposer\AppAccess
 		 * 4-note chord (Dm5), or Song of Moses (C7).
 		 */
         $firstChord->attributes = (false !== strpos($firstChord->attributes, 'm'))
-        ? 'm' : '';
+            ? 'm' : '';
 
         //The key is always expressed in major form, so we resolve the minor
         //relatives, it is, the key will be its third minor.
         if ($firstChord->attributes == 'm') {
             $position = intval(array_search($firstChord->fundamental, NotesCalculator::ACOUSTIC_SCALE));
             $firstChord->fundamental = $ncalc->arrayIndex(NotesCalculator::ACOUSTIC_SCALE, $position + 3);
-            $firstChord->attributes = null; 
+            $firstChord->attributes = null;
         }
 
         return $firstChord->fundamental . $firstChord->attributes;
@@ -232,8 +235,7 @@ class Transposition extends \NeoTransposer\AppAccess
             $key = $this->getKey($nc);
 
             /** @todo Refactor with array_walk */
-            foreach ($this->chords as &$chord)
-            {
+            foreach ($this->chords as &$chord) {
                 $chord = Chord::fromString(self::ALTERNATIVE_CHORDS[$key][strval($chord)] ?? $chord);
             }
             $this->setScore();
@@ -245,8 +247,11 @@ class Transposition extends \NeoTransposer\AppAccess
         return $this->capo;
     }
 
-    public function calculatePeopleRange(NotesRange $originalPeopleRange, int $offset, NotesCalculator $notesCalculator): void
-    {
+    public function calculatePeopleRange(
+        NotesRange $originalPeopleRange,
+        int $offset,
+        NotesCalculator $notesCalculator
+    ): void {
         $this->peopleRange = $notesCalculator->transposeRange($originalPeopleRange, $offset);
     }
 }

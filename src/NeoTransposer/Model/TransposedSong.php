@@ -8,6 +8,7 @@ use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\PeopleCompatibleCalculation;
+use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\NeoApp;
 use Silex\Application;

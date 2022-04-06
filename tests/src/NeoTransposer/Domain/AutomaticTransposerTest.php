@@ -2,10 +2,10 @@
 
 namespace NeoTransposer\Tests\Domain;
 
+use NeoTransposer\Domain\AutomaticTransposer;
+use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Domain\AutomaticTransposer;
-use NeoTransposer\Model\Transposition;
 
 /**
  * @todo Add some corner cases to transposition algorithms
