@@ -2,8 +2,6 @@
 
 namespace NeoTransposer\Domain;
 
-use NeoTransposer\Model\TransposedSong;
-
 class TransposedSongWithFeedback
 {
     protected $transposedSong;

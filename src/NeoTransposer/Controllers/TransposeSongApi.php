@@ -3,8 +3,7 @@
 namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Domain\Repository\UserRepository;
-use NeoTransposer\Infrastructure\UserRepositoryMysql;
-use NeoTransposer\Model\TransposedSong;
+use NeoTransposer\Domain\TransposedSong;
 use Symfony\Component\HttpFoundation\Request;
 
 class TransposeSongApi extends \NeoTransposer\AppAccess
@@ -35,7 +34,7 @@ class TransposeSongApi extends \NeoTransposer\AppAccess
 		$this->app['locale'] = $song->song->bookLocale;
 		$this->app['translator']->setLocale($this->app['locale']);
 
-		$song->transpose();
+		$song->transpose($user->range);
 
 		$songArray = json_decode(json_encode($song), true);
 		$transpositions = [];

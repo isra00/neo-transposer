@@ -7,8 +7,9 @@ use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\PeopleCompatibleCalculation;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
+use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\{TransposedSong, TranspositionChart};
+use NeoTransposer\Model\TranspositionChart;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 

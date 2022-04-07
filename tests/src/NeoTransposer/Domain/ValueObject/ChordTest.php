@@ -1,13 +1,14 @@
 <?php
 
-namespace NeoTransposer\Tests\Model;
+namespace NeoTransposer\Tests\Domain\ValueObject;
 
 use NeoTransposer\Domain\ValueObject\Chord;
 use PHPUnit\Framework\TestCase;
 
 class ChordTest extends TestCase
 {
-    private $sut; /** @todo Specify type (PHP 7.4+) */
+    /** @todo Specify type (PHP 7.4+) */
+    private $sut;
 
     public function testConstructFromStringValid()
     {
