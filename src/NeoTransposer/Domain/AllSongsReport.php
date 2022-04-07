@@ -6,7 +6,6 @@ use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\SongChordRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
-use NeoTransposer\Model\TransposedSong;
 use NeoTransposer\NeoApp;
 
 class AllSongsReport

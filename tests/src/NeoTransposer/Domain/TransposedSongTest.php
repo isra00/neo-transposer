@@ -1,12 +1,12 @@
 <?php
 
-namespace NeoTransposer\Tests\Model;
+namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\Entity\Song;
+use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\TransposedSong;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
 

@@ -2,8 +2,8 @@
 
 namespace NeoTransposer\Domain\AdminTasks;
 
+use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\TransposedSong;
 
 /**
  * A functional test for detecting changes in the transposition algorithm.
