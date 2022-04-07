@@ -3,6 +3,8 @@
 namespace NeoTransposer;
 
 use NeoTransposer\Domain\Entity\User;
+use NeoTransposer\Domain\GeoIp\GeoIpResolver;
+use NeoTransposer\Domain\GeoIp\IpToLocaleResolver;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -36,7 +38,8 @@ class NeoApp extends Application
         $this->hostname = $hostname ?: $_SERVER['HTTP_HOST'];
 
         $this->registerSilexServices($rootDir);
-        $this->registerCustomServices();
+        $this->initializeSession();
+        $this->registerInstantiationServices();
         $this->registerErrorHandler();
 
         if (!empty($config['debug'])) {
@@ -89,39 +92,8 @@ class NeoApp extends Application
             array_keys($this['neoconfig']['languages'])
         );
 
-        $this->setLocaleByCountry($request->getClientIp());
-    }
-
-    /**
-     * Set app locale based on geo-IP-detected country (MaxMind's GeoIp2 lib)
-     * using a language-country table.
-     *
-     * @param string $ip Client IP.
-     */
-    protected function setLocaleByCountry(string $ip)
-    {
-        $localesByCountry = [
-            'sw' => ['TZ', 'KE'],
-            'pt' => ['BR', 'PT', 'AO', 'CV', 'GW', 'MZ', 'ST', 'TL'],
-            'es' => [
-                'AR', 'BO', 'CL', 'CO', 'CR', 'DO', 'EC', 'SV', 'GT', 'HN', 'MX', 'NI', 'PA', 'PY', 'PE', 'PR', 'ES', 'UY', 'VE', 'CU', 'GQ'
-            ],
-            'it' => ['IT']
-        ];
-
-        $geoIpResolver = $this[\NeoTransposer\Domain\GeoIp\GeoIpResolver::class];
-
-        try {
-            $record = $geoIpResolver->resolve($ip);
-        } catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException $e) {
-            return;
-        }
-
-        foreach ($localesByCountry as $locale => $countries) {
-            if (in_array($record->country()->isoCode(), $countries)) {
-                $this['locale'] = $locale;
-            }
-        }
+        $ipToLocaleResolver = $this[IpToLocaleResolver::class];
+        $this['locale'] = $ipToLocaleResolver->resolveIpToLocale($request->getClientIp()) ?? $this['locale'];
     }
 
     /**
@@ -181,40 +153,16 @@ class NeoApp extends Application
     /**
      * Services available for every controller.
      */
-    protected function registerCustomServices()
+    protected function initializeSession()
     {
-        $this['books'] = function ($app) {
-            $books = $app['db']->fetchAll('SELECT * FROM book ORDER BY id_book DESC');
-            $booksNice = [];
-            foreach ($books as $book) {
-                $booksNice[$book['id_book']] = $book;
-            }
-            return $booksNice;
-        };
-
-        $this['chord_printers.get'] = $this->protect(function ($printer) {
-            $printer = "\NeoTransposer\Domain\ChordPrinter\ChordPrinter$printer";
-            return new $printer();
-        });
-
         if (!$this['session']->get('user')) {
             $this['session']->set('user', new User());
         }
 
         $this['neouser'] = $this['session']->get('user');
-
-        $this['new.AutomaticTransposer'] = $this->factory(function ($app) {
-            return new Domain\AutomaticTransposer($app);
-        });
-
-        $this['new.Transposition'] = $this->factory(function ($app) {
-            return new Domain\Transposition($app);
-        });
-
-        $this->registerHexagonalServices();
     }
 
-    protected function registerHexagonalServices()
+    protected function registerInstantiationServices()
     {
         //Port
         $this[Domain\Repository\SongRepository::class] = $this->factory(function ($app)
@@ -242,7 +190,7 @@ class NeoApp extends Application
             return new Domain\Service\SongsLister(
                 $app[Domain\Repository\SongRepository::class],
                 $app[Domain\Repository\UserRepository::class],
-                $app['books']
+                $app[Domain\Repository\BookRepository::class]
             );
         });
 
@@ -272,15 +220,15 @@ class NeoApp extends Application
             return new \NeoTransposer\Application\ReadAdminMetrics(
                 new Domain\Service\AdminMetricsReader(
                     $app[\NeoTransposer\Domain\Repository\AdminMetricsRepository::class],
-                    $app['books'],
-                    $app[\NeoTransposer\Domain\GeoIp\GeoIpResolver::class]
+                    $app[\NeoTransposer\Domain\Repository\BookRepository::class],
+                    $app[GeoIpResolver::class]
                 )
             );
         };
 
         $this[Domain\AdminTasks\PopulateUsersCountry::class] = function($app)
         {
-            return new \NeoTransposer\Domain\AdminTasks\PopulateUsersCountry($app[\NeoTransposer\Domain\Repository\UserRepository::class], $app[\NeoTransposer\Domain\GeoIp\GeoIpResolver::class]);
+            return new \NeoTransposer\Domain\AdminTasks\PopulateUsersCountry($app[\NeoTransposer\Domain\Repository\UserRepository::class], $app[GeoIpResolver::class]);
         };
 
         $this[Domain\AdminTasks\CheckSongsRangeConsistency::class] = function($app)
@@ -366,14 +314,31 @@ class NeoApp extends Application
             return new Model\UnhappyUser($app);
         };
 
-        //Transitional while UnhappyUser is not hexagonalized
         $this[Domain\Service\UserWriter::class] = function($app)
         {
             return new Domain\Service\UserWriter(
                 $app[Domain\Repository\UserRepository::class],
-                $app['books'],
+                $app[Domain\Repository\BookRepository::class],
                 $app[Model\UnhappyUser::class]
             );
+        };
+
+        $this[Domain\AutomaticTransposer::class] = $this->factory(function ($app) {
+            return new Domain\AutomaticTransposer($app);
+        });
+
+        $this[Domain\Transposition::class] = $this->factory(function ($app) {
+            return new Domain\Transposition($app);
+        });
+
+        $this['factory.ChordPrinter'] = $this->protect(function ($printer) {
+            $printer = \NeoTransposer\Domain\ChordPrinter\ChordPrinter::class . $printer;
+            return new $printer();
+        });
+
+
+        $this[IpToLocaleResolver::class] = function($app) {
+            return new IpToLocaleResolver($this[GeoIpResolver::class]);
         };
     }
 
@@ -424,7 +389,7 @@ class NeoApp extends Application
      */
     public function addNotification($type, $text)
     {
-        if (false === array_search($type, array_keys($this->notifications))) {
+        if (!in_array($type, array_keys($this->notifications))) {
             throw new \OutOfRangeException("Notification type $type not valid");
         }
         $this->notifications[$type][] = $text;

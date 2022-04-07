@@ -5,6 +5,8 @@ namespace NeoTransposer\Controllers;
 use NeoTransposer\Application\ListSongsWithUserFeedback;
 use NeoTransposer\Domain\Exception\BookNotExistException;
 use NeoTransposer\Domain\NotesNotation;
+use NeoTransposer\Domain\Repository\BookRepository;
+use NeoTransposer\Model\UnhappyUser;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\{Request, Response};
 
@@ -33,7 +35,9 @@ class Book
             $this->abortBookNotExist($id_book);
         }
 
-		$app['locale'] = $app['books'][$id_book]['locale'];
+        $currentBook = $app[BookRepository::class]->readBook((int) $id_book);
+
+		$app['locale'] = $currentBook->locale();
 		$app['translator']->setLocale($app['locale']);
 
         $template = 'book.twig';
@@ -52,19 +56,19 @@ class Book
             $template = 'book_encourage_feedback.twig';
 		}
 
-		$unhappy = new \NeoTransposer\Model\UnhappyUser($app);
+		$unhappy = new UnhappyUser($app);
 
         $userPerformance = $app['neouser']->isLoggedIn() ? $app['neouser']->performance : null;
 
 		$response = new Response($app->render($template, [
-			'page_title'	 		=> $app->trans('Songs of the Neocatechumenal Way in %lang%', ['%lang%' => $app['books'][$id_book]['lang_name']]),
-			'current_book'	 		=> $app['books'][$id_book],
-			'header_link'	 		=> $app->path('book_' . $app['books'][$id_book]['id_book']),
+			'page_title'	 		=> $app->trans('Songs of the Neocatechumenal Way in %lang%', ['%lang%' => $currentBook->langName()]),
+			'current_book'	 		=> $currentBook,
+			'header_link'	 		=> $app->path('book_' . $currentBook->idBook()),
 			'songs'			 		=> $songs,
 			'show_unhappy_warning'	=> $unhappy->isUnhappyNoAction($app['neouser']),
 			'meta_description'		=> $app->trans(
 				'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.',
-				['%lang%' => $app['books'][$id_book]['lang_name']]
+				['%lang%' => $currentBook->langName()]
 			),
 			'your_voice'			=> $yourVoice ?? null,
 			'user_performance'		=> $userPerformance,

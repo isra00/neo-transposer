@@ -17,16 +17,15 @@ class BookRepositoryMysql extends MysqlRepository implements BookRepository
 
     public function readIdBookFromLocale(string $locale): int
     {
-        return (int) $this->dbConnection->fetchColumn('SELECT id_book FROM book WHERE locale = ?', [$locale]);
+        return (int)$this->dbConnection->fetchColumn('SELECT id_book FROM book WHERE locale = ?', [$locale]);
     }
 
     public function readAllBooks(): array
     {
         $rows = $this->dbConnection->fetchAll('SELECT * FROM book ORDER BY lang_name');
-
-        return array_map(function ($row)
-        {
-            return new Book(
+        $booksNice = [];
+        foreach ($rows as $row) {
+            $booksNice[$row['id_book']] = new Book(
                 $row['id_book'],
                 $row['lang_name'],
                 $row['details'],
@@ -34,6 +33,20 @@ class BookRepositoryMysql extends MysqlRepository implements BookRepository
                 $row['locale'],
                 $row['song_count']
             );
-        }, $rows);
+        }
+        return $booksNice;
+    }
+
+    public function readBook(int $idBook): ?Book
+    {
+        $row = $this->dbConnection->fetchAll('SELECT * FROM book WHERE id_book = ?', [$idBook])[0];
+        return new Book(
+            $row['id_book'],
+            $row['lang_name'],
+            $row['details'],
+            $row['chord_printer'],
+            $row['locale'],
+            $row['song_count']
+        );
     }
 }

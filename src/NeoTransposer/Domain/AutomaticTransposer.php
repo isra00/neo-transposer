@@ -139,7 +139,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
             + $offsetFromSingerLowest
         );
 
-        $centeredTransposition = $this->app['new.Transposition']->setTranspositionData(
+        $centeredTransposition = $this->app[Transposition::class]->setTranspositionData(
             $this->notesCalculator->transposeChords($this->originalChords, $centeredOffset),
             0,
             false,
@@ -190,7 +190,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
         {
             $transposedChords = $this->notesCalculator->transposeChords($transposition->chords, $i * (-1));
 
-            $withCapo[$i] = $this->app['new.Transposition']->setTranspositionData(
+            $withCapo[$i] = $this->app[Transposition::class]->setTranspositionData(
                 $transposedChords,
                 $i,
                 ($transposedChords == $this->originalChords),
@@ -313,7 +313,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
         {
             $offset = $centeredTransposition->offset + $dif;
 
-            $near = $this->app['new.Transposition']->setTranspositionData(
+            $near = $this->app[Transposition::class]->setTranspositionData(
                 $this->notesCalculator->transposeChords($centeredTransposition->chords, $dif),
                 0,
                 false,
@@ -519,7 +519,7 @@ class AutomaticTransposer extends \NeoTransposer\AppAccess
     {
         $offsetFromOriginal = $this->centeredTransposition->offset + $offsetFromCentered;
 
-        $peopleCompatibleTransposition = $this->app['new.Transposition']->setTranspositionData(
+        $peopleCompatibleTransposition = $this->app[Transposition::class]->setTranspositionData(
             $this->notesCalculator->transposeChords($this->originalChords, $offsetFromOriginal),
             0,
             ($offsetFromOriginal == 0),

@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,11 +40,11 @@ class Sitemap
             ];
 		}
 
-		$books = $app['books'];
+		$books = $app[BookRepository::class]->readAllBooks();
 		foreach ($books as $book)
 		{
 			$urls[] = [
-				'loc' => $app->url('book_' . $book['id_book'], []),
+				'loc' => $app->url('book_' . $book->idBook(), []),
             ];
 		}
 

@@ -6,6 +6,7 @@ use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Exception\BadUserRangeException;
 use NeoTransposer\Domain\Exception\BookNotExistException;
 use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
+use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Model\UnhappyUser;
@@ -13,14 +14,14 @@ use NeoTransposer\Model\UnhappyUser;
 class UserWriter
 {
     protected $userRepository;
-    protected $allBooks;
     protected $unhappyUser;
+    protected $bookRepository;
 
-    public function __construct(UserRepository $userRepository, array $allBooks, UnhappyUser $unhappyUser)
+    public function __construct(UserRepository $userRepository, BookRepository $bookRepository, UnhappyUser $unhappyUser)
     {
         $this->userRepository = $userRepository;
-        $this->allBooks = $allBooks;
         $this->unhappyUser = $unhappyUser;
+        $this->bookRepository = $bookRepository;
     }
 
     /**
@@ -32,7 +33,7 @@ class UserWriter
     {
         if ($idBook)
         {
-            if (!in_array($idBook, array_keys($this->allBooks)))
+            if (!in_array($idBook, array_keys($this->bookRepository->readAllBooks())))
 			{
 				throw new BookNotExistException($idBook);
 			}

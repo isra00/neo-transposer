@@ -7,6 +7,7 @@ use NeoTransposer\Domain\GeoIp\Country;
 use NeoTransposer\Domain\GeoIp\GeoIpLocation;
 use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
+use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Service\AdminMetricsReader;
 use PHPUnit\Framework\TestCase;
 
@@ -51,23 +52,25 @@ class ReadAdminMetricsTest extends TestCase
         $mockAdminMetricsRepository->method('readPerformanceByVoice')
             ->willReturn(['theReadPerformanceByVoice']);
 
-        $mockAllBooks = [
-            1 => [
-                'id_book'       => '1',
-                'lang_name'     => 'Kiswahili',
-                'details'       => 'Tanzania - Kenya 2003',
-                'chord_printer' => 'Swahili',
-                'locale'        => 'sw',
-                'song_count'    => '227',
-            ]
-        ];
+        $mockBookRepo = $this->createMock(BookRepository::class);
+        $mockBookRepo->method('readAllBooks')
+            ->willReturn([
+                1 => [
+                    'id_book'       => '1',
+                    'lang_name'     => 'Kiswahili',
+                    'details'       => 'Tanzania - Kenya 2003',
+                    'chord_printer' => 'Swahili',
+                    'locale'        => 'sw',
+                    'song_count'    => '227',
+                ]
+            ]);
 
         $mockGeoIpResolver = $this->createMock(GeoIpResolver::class);
         $mockGeoIpResolver->method('resolve')
             ->with('1.1.1.1')
             ->willReturn(new GeoIpLocation(new Country('TK', ['en' => 'Turkey'])));
 
-        $realDomainService  = new AdminMetricsReader($mockAdminMetricsRepository, $mockAllBooks, $mockGeoIpResolver);
+        $realDomainService  = new AdminMetricsReader($mockAdminMetricsRepository, $mockBookRepo, $mockGeoIpResolver);
         $sut = new ReadAdminMetrics($realDomainService);
 
         $expected = [

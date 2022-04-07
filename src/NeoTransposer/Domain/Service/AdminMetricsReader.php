@@ -9,14 +9,14 @@ class AdminMetricsReader
     public const DETAILED_FB_DEPLOYED = '2017-08-11';
 
     protected $adminMetricsRepository;
-    protected $allBooks;
     protected $geoIpResolver;
+    private $bookRepository;
 
-    public function __construct(Repository\AdminMetricsRepository $adminMetricsRepository, array $allBooks, \NeoTransposer\Domain\GeoIp\GeoIpResolver $geoIpResolver)
+    public function __construct(Repository\AdminMetricsRepository $adminMetricsRepository, Repository\BookRepository $bookRepository, \NeoTransposer\Domain\GeoIp\GeoIpResolver $geoIpResolver)
     {
         $this->adminMetricsRepository = $adminMetricsRepository;
-        $this->allBooks = $allBooks;
         $this->geoIpResolver = $geoIpResolver;
+        $this->bookRepository = $bookRepository;
     }
 
     public function readAdminMetrics(bool $longReports): array
@@ -42,7 +42,7 @@ class AdminMetricsReader
 			'dfb_centered_scorerate'=> $this->adminMetricsRepository->readDetailedFeedbackCenteredScoreRate(),
 			'dfb_deviation'			=> $this->adminMetricsRepository->readDetailedFeedbackDeviation(),
 			'usersByBook'			=> $this->adminMetricsRepository->readUsersByBook($userCountTotal),
-			'performanceByBook'		=> $this->adminMetricsRepository->readPerformanceByBook($this->allBooks),
+			'performanceByBook'		=> $this->adminMetricsRepository->readPerformanceByBook($this->bookRepository->readAllBooks()),
 			'performanceByVoice'	=> $this->adminMetricsRepository->readPerformanceByVoice()
         ];
     }

@@ -15,7 +15,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
     /**
      * An instance of the class under test
      *
-     * @var \NeoTransposer\Domain\AutomaticTransposer
+     * @var AutomaticTransposer
      */
     protected $transposer;
 
@@ -28,7 +28,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
         //includePath must be defined in phpunit.xml
         $this->chordsScoreConfig = include __DIR__ . '/../../../../config.scores.php';
 
-        $this->transposer = new \NeoTransposer\Domain\AutomaticTransposer($this->getSilexApp());
+        $this->transposer = new AutomaticTransposer($this->getSilexApp());
         $this->transposer->setTransposerData(
             new NotesRange('G1', 'G3'),
             new NotesRange('B1', 'B2'),
@@ -47,7 +47,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
             'people_range' => ['B1', 'B2'],
             ];
 
-            $this->app['new.Transposition'] = $this->app->factory(
+            $this->app[Transposition::class] = $this->app->factory(
                 function ($app) {
                     return new Transposition($app);
                 }
@@ -217,7 +217,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(
             $expected,
-            $this->transposer->calculateCenteredTransposition(\NeoTransposer\Domain\AutomaticTransposer::FORCE_HIGHEST)
+            $this->transposer->calculateCenteredTransposition(AutomaticTransposer::FORCE_HIGHEST)
         );
     }
 
@@ -244,7 +244,7 @@ class AutomaticTransposerTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(
             $expected,
-            $this->transposer->calculateCenteredTransposition(\NeoTransposer\Domain\AutomaticTransposer::FORCE_LOWEST)
+            $this->transposer->calculateCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
         );
     }
 
