@@ -22,11 +22,6 @@ class Book
 	{
         $this->app = $app;
 
-		if (empty($app['books'][$id_book]))
-		{
-			$this->abortBookNotExist($id_book);
-		}
-
         try {
             $useCaseListSongsWithUserFeedback = $app[ListSongsWithUserFeedback::class];
             $songs = $useCaseListSongsWithUserFeedback->ListSongsWithUserFeedbackAsArray(
