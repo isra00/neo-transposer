@@ -547,8 +547,8 @@ SQL;
 
 		foreach ($allBooks as $book)
 		{
-			$performance[$book['id_book']] = $this->aggregatePerformanceData(
-				$this->dbConnection->fetchAll($sql, [$book['id_book']])
+			$performance[$book->idBook()] = $this->aggregatePerformanceData(
+				$this->dbConnection->fetchAll($sql, [$book->idBook()])
 			);
 		}
 

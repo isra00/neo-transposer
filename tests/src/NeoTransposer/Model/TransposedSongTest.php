@@ -80,11 +80,11 @@ final class TransposedSongTest extends TestCase
             'people_range' => ['B1', 'B2'],
         ];
 
-        $app['new.AutomaticTransposer'] = $mockAutomaticTransposer;
+        $app[AutomaticTransposer::class] = $mockAutomaticTransposer;
 
         $printedChordSet = $this->printedChordSet;
 
-        $app['chord_printers.get'] = $app->protect(function ($printer) use ($printedChordSet) {
+        $app['factory.ChordPrinter'] = $app->protect(function ($printer) use ($printedChordSet) {
             $mockPrinter = $this->createMock(\NeoTransposer\Domain\ChordPrinter\ChordPrinter::class);
             $mockPrinter
                 //->expects($this->once())

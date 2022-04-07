@@ -5,11 +5,13 @@ namespace NeoTransposer\Controllers;
 use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\SongTextForWizard;
 use NeoTransposer\Model\TransposedSong;
 use NeoTransposer\Model\UnhappyUser;
 use NeoTransposer\NeoApp;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -151,8 +153,9 @@ class WizardEmpiric
         ];
 	}
 
-	public function finish(Request $req, NeoApp $app)
-	{
+    //This could be extracted into a Use Case (application service)
+	public function finish(Request $req, NeoApp $app): RedirectResponse
+    {
 		//Only when wizard is finished, voice range is stored in DB
         $userRepo = $app[UserRepository::class];
         $userRepo->saveWithVoiceChange($app['neouser'], User::METHOD_WIZARD);
@@ -165,9 +168,7 @@ class WizardEmpiric
 
 		if (empty($app['session']->get('callbackSetUserToken')))
 		{
-			$redirectPath = 'book_' . array_keys($app['books'])[
-				array_search($app['locale'], array_column($app['books'], 'locale'))
-			];
+			$redirectPath = 'book_' . $app[BookRepository::class]->readIdBookFromLocale($app['locale']);
 		}
 
 		return $app->redirect($app->path($redirectPath, ['wizardFinished' => 1]));

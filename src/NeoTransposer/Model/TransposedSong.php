@@ -8,6 +8,7 @@ use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\PeopleCompatibleCalculation;
+use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\NeoApp;
@@ -57,12 +58,11 @@ class TransposedSong
 
     /**
      * @throws Exception
-     * @refactor Convertir en fromRepository(UserRepository)
      */
-    public static function fromDb($idSong, NeoApp $app): TransposedSong
+    public static function fromDb($idSong, NeoApp $dc): TransposedSong
     {
-        $songRepository = $app[\NeoTransposer\Domain\Repository\SongRepository::class];
-        return new static($songRepository->fetchSongByIdOrSlug($idSong), $app);
+        $songRepository = $dc[SongRepository::class];
+        return new static($songRepository->fetchSongByIdOrSlug($idSong), $dc);
     }
 
     /**
@@ -79,7 +79,7 @@ class TransposedSong
         /**
          * @var AutomaticTransposer
          */
-        $transposer = $this->app['new.AutomaticTransposer'];
+        $transposer = $this->app[AutomaticTransposer::class];
 
         $transposer->setTransposerData(
             $userRange,
@@ -116,7 +116,7 @@ class TransposedSong
         /**
          * @var ChordPrinter
          */
-        $chordPrinter = $this->app['chord_printers.get']($this->song->bookChordPrinter);
+        $chordPrinter = $this->app['factory.ChordPrinter']($this->song->bookChordPrinter);
 
         $this->song->setOriginalChordsForPrint($chordPrinter);
 

@@ -21,6 +21,10 @@ class GeoIpResolverGeoIp2 implements GeoIpResolver
         $this->reader = $reader;
     }
 
+    /**
+     * @throws GeoIpNotFoundException
+     * @throws GeoIpException
+     */
     public function resolve(string $ip): GeoIpLocation
     {
         try {
