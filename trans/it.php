@@ -139,10 +139,10 @@ return [
 	=> 'Prova a <strong><a href="%url%">rifare la prova di voce</a></strong>, questo potrebbe migliorare i tuoi risultati. Altrimenti, seleziona semplicemente se hai voce da uomo o da donna e Neo-Transposer cercherà per te una tonalità standard. Questo ti darà delle trasposizioni che funzioneranno meglio per te!', 
 
 	'<span>My voice is </span>female'
-	=> '<span>Ho una voce da </span>uomo', 
+	=> '<span>Ho una voce da </span>donna', 
 
 	'<span>My voice is </span>male'
-	=> '<span>Ho una voce da </span>donna', 
+	=> '<span>Ho una voce da </span>uomo', 
 
 	'Quick search a song'
 	=> 'Ricerca rapida', 
