@@ -9,7 +9,6 @@ use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\UnhappyUser;
 
 class UserWriter
 {

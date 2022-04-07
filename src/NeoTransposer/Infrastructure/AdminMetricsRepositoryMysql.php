@@ -3,7 +3,7 @@
 namespace NeoTransposer\Infrastructure;
 
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
-use NeoTransposer\Model\UnhappyUser;
+use NeoTransposer\Domain\Service\UnhappyUser;
 
 class AdminMetricsRepositoryMysql extends MysqlRepository implements AdminMetricsRepository
 {
