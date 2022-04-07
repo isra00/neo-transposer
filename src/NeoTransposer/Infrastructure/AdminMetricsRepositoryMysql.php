@@ -3,7 +3,7 @@
 namespace NeoTransposer\Infrastructure;
 
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
-use NeoTransposer\Domain\Service\UnhappyUser;
+use NeoTransposer\Domain\Service\UnhappinessManager;
 
 class AdminMetricsRepositoryMysql extends MysqlRepository implements AdminMetricsRepository
 {
@@ -188,8 +188,8 @@ ORDER BY took_action, time_unhappy, total DESC
 SQL;
 
 		return $this->dbConnection->fetchAll($sql,[
-			UnhappyUser::UNHAPPY_THRESHOLD_PERF, 
-			UnhappyUser::UNHAPPY_THRESHOLD_REPORTS
+			UnhappinessManager::UNHAPPY_THRESHOLD_PERF,
+			UnhappinessManager::UNHAPPY_THRESHOLD_REPORTS
 		]);
 	}
 

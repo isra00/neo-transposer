@@ -6,7 +6,7 @@ use NeoTransposer\Application\ListSongsWithUserFeedback;
 use NeoTransposer\Domain\Exception\BookNotExistException;
 use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\Repository\BookRepository;
-use NeoTransposer\Domain\Service\UnhappyUser;
+use NeoTransposer\Domain\Service\UnhappinessManager;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\{Request, Response};
 
@@ -56,7 +56,7 @@ class Book
             $template = 'book_encourage_feedback.twig';
 		}
 
-		$unhappy = $app[UnhappyUser::class];
+		$unhappy = $app[UnhappinessManager::class];
 
         $userPerformance = $app['neouser']->isLoggedIn() ? $app['neouser']->performance : null;
 

@@ -16,7 +16,7 @@ class UserWriter
     protected $unhappyUser;
     protected $bookRepository;
 
-    public function __construct(UserRepository $userRepository, BookRepository $bookRepository, UnhappyUser $unhappyUser)
+    public function __construct(UserRepository $userRepository, BookRepository $bookRepository, UnhappinessManager $unhappyUser)
     {
         $this->userRepository = $userRepository;
         $this->unhappyUser = $unhappyUser;

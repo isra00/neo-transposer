@@ -1,12 +1,9 @@
 <?php
 
-namespace NeoTransposer\Model;
+namespace NeoTransposer\Domain;
 
 use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\Entity\User;
-use NeoTransposer\Domain\NotesCalculator;
-use NeoTransposer\Domain\NotesNotation;
-use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class TranspositionChart
@@ -55,7 +52,6 @@ class TranspositionChart
 		$this->addVoice($caption, $cssClass, $transposition->range);
 	}
 
-    /** @todo Rename to getChartHtml() */
 	public function getChartHtml(): array
 	{
 		$min = $this->nc->lowestNote(array_column($this->voiceChart, 'lowest'));

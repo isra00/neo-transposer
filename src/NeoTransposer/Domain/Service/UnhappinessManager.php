@@ -7,7 +7,7 @@ use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UnhappyUserRepository;
 
-class UnhappyUser
+class UnhappinessManager
 {
     /**
      * The performance below which a user is considered unhappy.
