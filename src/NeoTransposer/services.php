@@ -129,13 +129,13 @@ $this[Domain\Repository\UnhappyUserRepository::class] = function ($app) {
 $this[Domain\Service\FeedbackRecorder::class] = function ($app) {
     return new Domain\Service\FeedbackRecorder(
         $app[Domain\Repository\FeedbackRepository::class],
-        $app[Domain\Service\UnhappyUser::class]
+        $app[Domain\Service\UnhappinessManager::class]
     );
 };
 
 //Transitional while UnhappyUser is not hexagonalized
-$this[Domain\Service\UnhappyUser::class] = function ($app) {
-    return new Domain\Service\UnhappyUser(
+$this[Domain\Service\UnhappinessManager::class] = function ($app) {
+    return new Domain\Service\UnhappinessManager(
         $app[Domain\Repository\UnhappyUserRepository::class],
         $app['neoconfig'],
         $app[Domain\Repository\FeedbackRepository::class]
@@ -146,7 +146,7 @@ $this[Domain\Service\UserWriter::class] = function ($app) {
     return new Domain\Service\UserWriter(
         $app[Domain\Repository\UserRepository::class],
         $app[Domain\Repository\BookRepository::class],
-        $app[Domain\Service\UnhappyUser::class]
+        $app[Domain\Service\UnhappinessManager::class]
     );
 };
 

@@ -11,7 +11,7 @@ class FeedbackRecorder
     protected $feedbackRepository;
     protected $unhappyUser;
 
-    public function __construct(FeedbackRepository $feedbackRepository, UnhappyUser $unhappyUser)
+    public function __construct(FeedbackRepository $feedbackRepository, UnhappinessManager $unhappyUser)
     {
         $this->feedbackRepository = $feedbackRepository;
         $this->unhappyUser = $unhappyUser;

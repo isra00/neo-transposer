@@ -7,7 +7,7 @@ use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
-use NeoTransposer\Domain\Service\UnhappyUser;
+use NeoTransposer\Domain\Service\UnhappinessManager;
 use NeoTransposer\Domain\SongTextForWizard;
 use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\NeoApp;
@@ -161,7 +161,7 @@ class WizardEmpiric
         $userRepo->saveWithVoiceChange($app['neouser'], User::METHOD_WIZARD);
 
 		//If user is unhappy, UnhappyUser will consider this as an action taken.
-		$app[UnhappyUser::class]->changedVoiceRangeFromWizard($app['neouser']);
+		$app[UnhappinessManager::class]->changedVoiceRangeFromWizard($app['neouser']);
 
 		$redirectPath = 'external_login_finish';
 

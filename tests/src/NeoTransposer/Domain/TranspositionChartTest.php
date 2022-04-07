@@ -1,15 +1,20 @@
 <?php
 
-namespace NeoTransposer\Tests\Model;
+namespace NeoTransposer\Tests\Domain;
 
+use NeoTransposer\Domain\Entity\Song;
+use NeoTransposer\Domain\Entity\User;
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\Model\{TranspositionChart};
+use NeoTransposer\Domain\TranspositionChart;
+use PHPUnit\Framework\TestCase;
 
-class TranspositionChartTest extends \PHPUnit\Framework\TestCase
+class TranspositionChartTest extends TestCase
 {
 	public function testGetChart()
 	{
-		$mockNc = $this->getMockBuilder(\NeoTransposer\Domain\NotesCalculator::class)
+		$mockNc = $this->getMockBuilder(NotesCalculator::class)
 						->disableOriginalConstructor()
 						->setMethods(['distanceWithOctave', 'lowestNote'])
 						->getMock();
@@ -23,18 +28,18 @@ class TranspositionChartTest extends \PHPUnit\Framework\TestCase
 				  ->method('lowestNote')
 				  ->will($this->returnValue('C1'));
 
-		$mockSong = $this->getMockBuilder(\NeoTransposer\Domain\Entity\Song::class)
+		$mockSong = $this->getMockBuilder(Song::class)
 						->disableOriginalConstructor()
 						->getMock();
 
 		$mockSong->range = new NotesRange('C1', 'C2');
 
-		$mockUser = $this->getMockBuilder(\NeoTransposer\Domain\Entity\User::class)
+		$mockUser = $this->getMockBuilder(User::class)
 						->getMock();
 
 		$mockUser->range = new NotesRange('C1', 'C2');
 
-		$mockTransposition = $this->getMockBuilder(\NeoTransposer\Domain\Transposition::class)
+		$mockTransposition = $this->getMockBuilder(Transposition::class)
 						->disableOriginalConstructor()
 						->getMock();
 
