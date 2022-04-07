@@ -21,6 +21,9 @@ class NeoApp extends Application
 
     protected $hostname;
 
+    /** Defined by SEO rules */
+    protected const PAGE_TITLE_MAX_LENGTH = 55;
+
     /**
      * Load config, register services in Silex and set before() filter.
      *
@@ -39,8 +42,9 @@ class NeoApp extends Application
 
         $this->registerSilexServices($rootDir);
         $this->initializeSession();
-        $this->registerInstantiationServices();
         $this->registerErrorHandler();
+
+        include __DIR__ . '/services.php';
 
         if (!empty($config['debug'])) {
             $this['debug'] = $config['debug'];
@@ -86,7 +90,7 @@ class NeoApp extends Application
      *
      * @param Request $request  The HTTP request.
      */
-    public function setLocaleAutodetect(Request $request)
+    public function setLocaleAutodetect(Request $request): void
     {
         $this['locale'] = $request->getPreferredLanguage(
             array_keys($this['neoconfig']['languages'])
@@ -103,7 +107,7 @@ class NeoApp extends Application
      *
      * @see composer.json, since some of these services require ext dependencies.
      */
-    protected function registerSilexServices($rootDir)
+    protected function registerSilexServices($rootDir): void
     {
         if (!$this['debug']) {
             $twigOptions = ['cache' => $rootDir . '/cache/twig'];
@@ -153,7 +157,7 @@ class NeoApp extends Application
     /**
      * Services available for every controller.
      */
-    protected function initializeSession()
+    protected function initializeSession(): void
     {
         if (!$this['session']->get('user')) {
             $this['session']->set('user', new User());
@@ -162,187 +166,7 @@ class NeoApp extends Application
         $this['neouser'] = $this['session']->get('user');
     }
 
-    protected function registerInstantiationServices()
-    {
-        //Port
-        $this[Domain\Repository\SongRepository::class] = $this->factory(function ($app)
-        {
-            //Adapter
-            return new Infrastructure\SongRepositoryMysql($app['db']);
-        });
-
-        $this[Domain\Repository\UserRepository::class] = $this->factory(function ($app)
-        {
-            return new Infrastructure\UserRepositoryMysql(
-                $app['db'],
-                $app[Domain\Repository\FeedbackRepository::class]
-            );
-        });
-
-        $this[Domain\Repository\FeedbackRepository::class] = $this->factory(function ($app)
-        {
-            return new Infrastructure\FeedbackRepositoryMysql($app['db']);
-        });
-
-        //A domain service depending on other domain services
-        $this[Domain\Service\SongsLister::class] = $this->factory(function ($app)
-        {
-            return new Domain\Service\SongsLister(
-                $app[Domain\Repository\SongRepository::class],
-                $app[Domain\Repository\UserRepository::class],
-                $app[Domain\Repository\BookRepository::class]
-            );
-        });
-
-        //An application service (use case) depending on a domain service
-        $this[\NeoTransposer\Application\ListSongsWithUserFeedback::class] = $this->factory(function ($app)
-        {
-            return new \NeoTransposer\Application\ListSongsWithUserFeedback(
-                $app[Domain\Service\SongsLister::class]
-            );
-        });
-
-        //Why factory? One single instance is enough for us
-        $this[Domain\GeoIp\GeoIpResolver::class] = function($app)
-        {
-            return new \NeoTransposer\Infrastructure\GeoIpResolverGeoIp2(
-                new \GeoIp2\Database\Reader($app['root_dir'] . '/' . $app['neoconfig']['mmdb'])
-            );
-        };
-
-        $this[Domain\Repository\AdminMetricsRepository::class] = function($app)
-        {
-            return new \NeoTransposer\Infrastructure\AdminMetricsRepositoryMysql($app['db']);
-        };
-
-        $this[\NeoTransposer\Application\ReadAdminMetrics::class] = function($app)
-        {
-            return new \NeoTransposer\Application\ReadAdminMetrics(
-                new Domain\Service\AdminMetricsReader(
-                    $app[\NeoTransposer\Domain\Repository\AdminMetricsRepository::class],
-                    $app[\NeoTransposer\Domain\Repository\BookRepository::class],
-                    $app[GeoIpResolver::class]
-                )
-            );
-        };
-
-        $this[Domain\AdminTasks\PopulateUsersCountry::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\PopulateUsersCountry($app[\NeoTransposer\Domain\Repository\UserRepository::class], $app[GeoIpResolver::class]);
-        };
-
-        $this[Domain\AdminTasks\CheckSongsRangeConsistency::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\CheckSongsRangeConsistency($app[\NeoTransposer\Domain\Repository\SongRepository::class]);
-        };
-
-        $this[Domain\AdminTasks\CheckUsersRangeConsistency::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\CheckUsersRangeConsistency($app[\NeoTransposer\Domain\Repository\UserRepository::class]);
-        };
-
-        $this[Domain\AdminTasks\RefreshCompiledCss::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\RefreshCompiledCss($app);
-        };
-
-        $this[Domain\AdminTasks\RemoveOldCompiledCss::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\RemoveOldCompiledCss($app);
-        };
-
-        $this[Domain\AdminTasks\CheckChordsOrder::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\CheckChordsOrder($app[Domain\Repository\SongChordRepository::class]);
-        };
-
-        $this[Domain\AdminTasks\TestAllTranspositions::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\TestAllTranspositions($app);
-        };
-
-        $this[Domain\AdminTasks\GetVoiceRangeOfGoodUsers::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\GetVoiceRangeOfGoodUsers($app['db']);
-        };
-
-        $this[Domain\AdminTasks\CheckOrphanChords::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\CheckOrphanChords($app[Domain\Repository\SongChordRepository::class]);
-        };
-
-        $this[Domain\AdminTasks\GetPerformanceByNumberOfFeedbacks::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\GetPerformanceByNumberOfFeedbacks($app['db']);
-        };
-
-        $this[Domain\AdminTasks\CheckMissingTranslations::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AdminTasks\CheckMissingTranslations($app['neoconfig']['languages']);
-        };
-
-        $this[Domain\Repository\SongChordRepository::class] = function($app)
-        {
-            return new \NeoTransposer\Infrastructure\SongChordRepositoryMysql($app['db']);
-        };
-
-        $this[Domain\AllSongsReport::class] = function($app)
-        {
-            return new \NeoTransposer\Domain\AllSongsReport(
-                $app[\NeoTransposer\Domain\Repository\SongRepository::class],
-                $app[\NeoTransposer\Domain\Repository\SongChordRepository::class],
-                $app
-            );
-        };
-
-        $this[Domain\Repository\BookRepository::class] = function($app)
-        {
-            return new \NeoTransposer\Infrastructure\BookRepositoryMysql($app['db']);
-        };
-
-        $this[Domain\Service\FeedbackRecorder::class] = function($app)
-        {
-            return new Domain\Service\FeedbackRecorder(
-                $app[Domain\Repository\FeedbackRepository::class],
-                $app[Model\UnhappyUser::class]
-            );
-        };
-
-        //Transitional while UnhappyUser is not hexagonalized
-        $this[Model\UnhappyUser::class] = function($app)
-        {
-            return new Model\UnhappyUser($app);
-        };
-
-        $this[Domain\Service\UserWriter::class] = function($app)
-        {
-            return new Domain\Service\UserWriter(
-                $app[Domain\Repository\UserRepository::class],
-                $app[Domain\Repository\BookRepository::class],
-                $app[Model\UnhappyUser::class]
-            );
-        };
-
-        $this[Domain\AutomaticTransposer::class] = $this->factory(function ($app) {
-            return new Domain\AutomaticTransposer($app);
-        });
-
-        $this[Domain\Transposition::class] = $this->factory(function ($app) {
-            return new Domain\Transposition($app);
-        });
-
-        $this['factory.ChordPrinter'] = $this->protect(function ($printer) {
-            $printer = \NeoTransposer\Domain\ChordPrinter\ChordPrinter::class . $printer;
-            return new $printer();
-        });
-
-
-        $this[IpToLocaleResolver::class] = function($app) {
-            return new IpToLocaleResolver($this[GeoIpResolver::class]);
-        };
-    }
-
-    protected function registerErrorHandler()
+    protected function registerErrorHandler(): void
     {
         //Silex default error pages are better for debugging.
         if ($this['neoconfig']['debug']) {
@@ -356,7 +180,7 @@ class NeoApp extends Application
             //For unknown reasons, translator falls back to English. This needed.
             $this['translator']->setLocale($this['locale']);
 
-            if (false !== array_search($code, [404, 500])) {
+            if (in_array($code, [404, 500])) {
                 return $this->render("error-$code.twig", array(
                     'error_code' => $code,
                 ));
@@ -387,7 +211,7 @@ class NeoApp extends Application
      * @param string $type 'error' or 'success'.
      * @param string $text Text of the notification.
      */
-    public function addNotification($type, $text)
+    public function addNotification($type, $text): void
     {
         if (!in_array($type, array_keys($this->notifications))) {
             throw new \OutOfRangeException("Notification type $type not valid");
@@ -402,7 +226,7 @@ class NeoApp extends Application
      * @param  array  $parameters Array variables.
      * @return string             The rendered template.
      */
-    public function render($view, array $parameters = [], $modifyTitle = true)
+    public function render($view, array $parameters = [], $modifyTitle = true): string
     {
         if ($modifyTitle) {
             $this->setPageTitle($parameters);
@@ -419,22 +243,19 @@ class NeoApp extends Application
     /**
      * Set final page title adding a certain suffix if the title specified in
      * the controller is not too long.
+     *
      * @param array &$parameters Template variables (should contain page_title)
      */
-    protected function setPageTitle(&$parameters)
+    protected function setPageTitle(array &$parameters): void
     {
-        //Defined by SEO rules
-        $maxTitleLength = 55;
-
-        $software = $this['neoconfig']['software_name'];
         $suffix = $this->trans($this['neoconfig']['seo_title_suffix']);
 
         if (isset($parameters['page_title'])) {
-            if (strlen($parameters['page_title']) < $maxTitleLength - strlen($suffix)) {
+            if (strlen($parameters['page_title']) < self::PAGE_TITLE_MAX_LENGTH - strlen($suffix)) {
                 $parameters['page_title'] = $parameters['page_title'] . " · $suffix";
             }
         } else {
-            $parameters['page_title'] = $software;
+            $parameters['page_title'] = $this['neoconfig']['software_name'];
         }
     }
 }
