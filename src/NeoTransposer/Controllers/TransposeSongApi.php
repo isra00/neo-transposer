@@ -4,10 +4,18 @@ namespace NeoTransposer\Controllers;
 
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\TransposedSong;
+use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 
-class TransposeSongApi extends \NeoTransposer\AppAccess
+class TransposeSongApi
 {
+	protected $app;
+
+	public function __construct(NeoApp $app)
+	{
+		$this->app = $app;
+	}
+
 	public function handleApiRequest(Request $req, $id_song)
 	{
 		if (empty($req->get('userToken')))
