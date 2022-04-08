@@ -4,14 +4,22 @@ namespace NeoTransposer\Domain\AdminTasks;
 
 use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposer\NeoApp;
 
 /**
  * A functional test for detecting changes in the transposition algorithm.
  * It generates an AllSongsReport for book and compares it with a pre-stored result set.
  */
-class TestAllTranspositions extends \NeoTransposer\AppAccess implements AdminTask
+class TestAllTranspositions implements AdminTask
 {
     public const TEST_ALL_TRANSPOSITIONS_BOOK = 2;
+
+	protected $app;
+
+	public function __construct(NeoApp $app)
+	{
+		$this->app = $app;
+	}
 
     /**
      * Perform the test.
