@@ -6,12 +6,15 @@ use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\Exception\SongDataException;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
+use Silex\Application;
 
 /**
  * Represents a transposition of a song, with transported chords, capo, etc.
  */
-class Transposition extends \NeoTransposer\AppAccess
+class Transposition
 {
+    protected $app;
+
     /**
      * Transposed chords
      *
@@ -103,18 +106,19 @@ class Transposition extends \NeoTransposer\AppAccess
     ];
 
     /**
+     * @param Application     $app
      * @param array           $chords
      * @param int|null        $capo
-     * @param bool            $asBook
+     * @param bool|null       $asBook
      * @param int|null        $offset
      * @param NotesRange|null $range
      * @param int|null        $deviationFromCentered
      * @param NotesRange|null $peopleRange
      *
-     * @return $this
      * @throws SongDataException
      */
-    public function setTranspositionData(
+    public function __construct(
+        Application $app,
         array $chords = [],
         ?int $capo = 0,
         ?bool $asBook = false,
@@ -122,7 +126,8 @@ class Transposition extends \NeoTransposer\AppAccess
         ?NotesRange $range = null,
         ?int $deviationFromCentered = 0,
         ?NotesRange $peopleRange = null
-    ): Transposition {
+    ) {
+        $this->app = $app;
         $this->chords = $chords;
         $this->capo = $capo;
         $this->asBook = $asBook;

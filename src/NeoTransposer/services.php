@@ -151,11 +151,15 @@ $this[Domain\Service\UserWriter::class] = function ($app) {
 };
 
 $this[Domain\AutomaticTransposer::class] = $this->factory(function ($app) {
-    return new Domain\AutomaticTransposer($app);
+    return new Domain\AutomaticTransposer(
+        $app[Domain\TranspositionFactory::class],
+        new Domain\ValueObject\NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1])
+    );
 });
 
-$this[Domain\Transposition::class] = $this->factory(function ($app) {
-    return new Domain\Transposition($app);
+//Lawrence Krubner was right, this is equal to currying in FP!
+$this[Domain\TranspositionFactory::class] = $this->factory(function ($app) {
+    return new Domain\TranspositionFactory($app);
 });
 
 $this['factory.ChordPrinter'] = $this->protect(function ($printer) {
