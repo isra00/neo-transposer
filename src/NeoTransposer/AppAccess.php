@@ -3,7 +3,7 @@
 namespace NeoTransposer;
 
 /**
- * An abstract class for classes accessing the dependency container from within.
+ * A shortcut for declaring a dependency on the Silex App
  */
 abstract class AppAccess
 {

@@ -63,9 +63,7 @@ final class TransposedSongTest extends TestCase
 
     protected function getTestInstanceTransposition(Application $app): Transposition
     {
-        $transposition = new Transposition($app);
-        //$transposition->setTranspositionData(["Em", "Am"], 0, false, 7, new NotesRange("E3", "B3"), 0);
-        $transposition->setTranspositionData(["Em", "Am"]);
+        $transposition = new Transposition($app, ["Em", "Am"]);
         $transposition->chordsForPrint = $this->printedChordSet;
         return $transposition;
     }
