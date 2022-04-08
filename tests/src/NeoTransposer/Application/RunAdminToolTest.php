@@ -5,6 +5,7 @@ namespace NeoTransposer\Tests\Application;
 use NeoTransposer\Application\AdminTaskNotExistException;
 use NeoTransposer\Application\RunAdminTool;
 use NeoTransposer\Domain\AdminTasks\AdminTask;
+use NeoTransposer\Domain\AdminTasks\PopulateUsersCountry;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
 
@@ -25,7 +26,7 @@ class RunAdminToolTest extends TestCase
 
     public function testShouldThrowExceptionWhenDCDoesNotHaveTask()
     {
-        $sut = new RunAdminTool($this->getDC());
+        $sut = new RunAdminTool($this->getDC()); //Empty dependency container
         $this->expectException(AdminTaskNotExistException::class);
         $this->expectExceptionMessage("Dependency container didn't find valid task name PopulateUsersCountry");
         $sut->runAdminTask("PopulateUsersCountry");
@@ -38,7 +39,7 @@ class RunAdminToolTest extends TestCase
             ->method('run')
             ->willReturn('I ran');
 
-        $dcMock = $this->getDC(["NeoTransposer\\Domain\\AdminTasks\\PopulateUsersCountry" => $mockTask]);
+        $dcMock = $this->getDC([PopulateUsersCountry::class => $mockTask]);
         $sut = new RunAdminTool($dcMock);
 
         $this->assertEquals('I ran', $sut->runAdminTask("PopulateUsersCountry"));
