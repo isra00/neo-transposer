@@ -72,12 +72,10 @@ class TransposedSong
      */
     public function transpose(NotesRange $userRange, int $forceVoiceLimit = null): void
     {
-        /**
-         * @var AutomaticTransposer
-         */
-        $transposer = $this->app[AutomaticTransposer::class];
+        /** @var AutomaticTransposer */
+        $transposerFactory = $this->app[AutomaticTransposerFactory::class];
 
-        $transposer->setTransposerData(
+        $transposer = $transposerFactory->createAutomaticTransposer(
             $userRange,
             $this->song->range,
             $this->song->originalChords,

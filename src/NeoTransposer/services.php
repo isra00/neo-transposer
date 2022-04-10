@@ -150,23 +150,28 @@ $this[Domain\Service\UserWriter::class] = function ($app) {
     );
 };
 
-$this[Domain\AutomaticTransposer::class] = $this->factory(function ($app) {
-    return new Domain\AutomaticTransposer(
+$this[Domain\AutomaticTransposerFactory::class] = function ($app) {
+    return new Domain\AutomaticTransposerFactory(
         $app[Domain\TranspositionFactory::class],
-        new Domain\ValueObject\NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1])
+        new Domain\ValueObject\NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]),
+        $app[Domain\NotesCalculator::class]
     );
-});
+};
 
-//Lawrence Krubner was right, this is equal to currying in FP!
-$this[Domain\TranspositionFactory::class] = $this->factory(function ($app) {
+//Since this class has no state (all instances are exactly equal), we can cache it in the DC.
+$this[Domain\NotesCalculator::class] = function ($app) {
+    return new Domain\NotesCalculator();
+};
+
+//Lawrence Krubner was right, the factory pattern is like currying in FP!
+$this[Domain\TranspositionFactory::class] = function ($app) {
     return new Domain\TranspositionFactory($app);
-});
+};
 
 $this['factory.ChordPrinter'] = $this->protect(function ($printer) {
     $printer = Domain\ChordPrinter\ChordPrinter::class . $printer;
     return new $printer();
 });
-
 
 $this[IpToLocaleResolver::class] = function ($app) {
     return new IpToLocaleResolver($this[GeoIpResolver::class]);

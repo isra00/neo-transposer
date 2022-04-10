@@ -74,11 +74,6 @@ class AutomaticTransposer
     /**  @var NotesCalculator */
     protected $notesCalculator;
 
-    public function __construct(TranspositionFactory $transpositionFactory, NotesRange $standardPeopleRange)
-    {
-        $this->transpositionFactory = $transpositionFactory;
-        $this->standardPeopleRange = $standardPeopleRange;
-    }
 
     /**
      * Set all data needed to calculate the transpositions.
@@ -89,15 +84,17 @@ class AutomaticTransposer
      * @param bool            $firstChordIsKey Song original chords
      * @param NotesRange|null $songPeopleRange Song's voice range for people
      */
-    public function setTransposerData(NotesRange $singerRange, NotesRange $songRange, array $originalChords, $firstChordIsKey, NotesRange $songPeopleRange=null)
+    public function __construct(NotesCalculator $notesCalculator, TranspositionFactory $transpositionFactory, NotesRange $standardPeopleRange, NotesRange $singerRange, NotesRange $songRange, array $originalChords, $firstChordIsKey, NotesRange $songPeopleRange=null)
     {
-        $this->singerRange     = $singerRange;
-        $this->songRange       = $songRange;
-        $this->originalChords  = $originalChords;
-        $this->firstChordIsKey = $firstChordIsKey;
-        $this->songPeopleRange = $songPeopleRange;
+        $this->transpositionFactory = $transpositionFactory;
+        $this->standardPeopleRange  = $standardPeopleRange;
+        $this->singerRange          = $singerRange;
+        $this->songRange            = $songRange;
+        $this->originalChords       = $originalChords;
+        $this->firstChordIsKey      = $firstChordIsKey;
+        $this->songPeopleRange      = $songPeopleRange;
 
-        $this->notesCalculator = new NotesCalculator();
+        $this->notesCalculator      = $notesCalculator;
     }
 
     /**
