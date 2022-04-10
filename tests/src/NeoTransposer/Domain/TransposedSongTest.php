@@ -3,6 +3,7 @@
 namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\AutomaticTransposer;
+use NeoTransposer\Domain\AutomaticTransposerFactory;
 use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\Transposition;
@@ -78,7 +79,11 @@ final class TransposedSongTest extends TestCase
             'people_range' => ['B1', 'B2'],
         ];
 
-        $app[AutomaticTransposer::class] = $mockAutomaticTransposer;
+        $mockAutomaticTransposerFactory = $this->createMock(AutomaticTransposerFactory::class);
+        $mockAutomaticTransposerFactory->method('createAutomaticTransposer')
+            ->willReturn($mockAutomaticTransposer);
+
+        $app[AutomaticTransposerFactory::class] = $mockAutomaticTransposerFactory;
 
         $printedChordSet = $this->printedChordSet;
 
@@ -101,8 +106,6 @@ final class TransposedSongTest extends TestCase
         $mockAutomaticTransposer = $this->createMock(AutomaticTransposer::class);
         $app = $this->getTestInstanceApp($mockAutomaticTransposer);
 
-        $mockAutomaticTransposer->expects($this->once())
-            ->method('setTransposerData');
         $mockAutomaticTransposer->expects($this->once())
             ->method('getTranspositionsCentered')
             ->willReturn([$this->getTestInstanceTransposition($app)]);
