@@ -21,7 +21,7 @@
 		</exclude>
 
 		<report>
-			<html outputDirectory="tests/reports" />
+			<html outputDirectory="tests/reports/phpunit-coverage" />
 		</report>
 	</coverage>
 
