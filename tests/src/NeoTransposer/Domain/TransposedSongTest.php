@@ -37,7 +37,7 @@ final class TransposedSongTest extends TestCase
 
     protected $printedChordSet = ['E<em>m</em>', 'A<em>m</em>'];
 
-    protected function getTestInstanceSong(): Song
+    protected function buildSong(): Song
     {
         $song = new Song(
             [
@@ -62,14 +62,14 @@ final class TransposedSongTest extends TestCase
         return $song;
     }
 
-    protected function getTestInstanceTransposition(Application $app): Transposition
+    protected function buildTransposition(Application $app): Transposition
     {
         $transposition = new Transposition($app, ["Em", "Am"]);
         $transposition->chordsForPrint = $this->printedChordSet;
         return $transposition;
     }
 
-    protected function getTestInstanceApp(AutomaticTransposer $mockAutomaticTransposer): Application
+    protected function buildApp(AutomaticTransposer $mockAutomaticTransposer): Application
     {
         $app = new Application();
         $app['neoconfig'] = [
@@ -104,18 +104,18 @@ final class TransposedSongTest extends TestCase
     public function testTransposeNoForceNoNotEquivalentNotPeopleCompatible(): void
     {
         $mockAutomaticTransposer = $this->createMock(AutomaticTransposer::class);
-        $app = $this->getTestInstanceApp($mockAutomaticTransposer);
+        $app = $this->buildApp($mockAutomaticTransposer);
 
         $mockAutomaticTransposer->expects($this->once())
             ->method('getTranspositionsCentered')
-            ->willReturn([$this->getTestInstanceTransposition($app)]);
+            ->willReturn([$this->buildTransposition($app)]);
         $mockAutomaticTransposer->expects($this->once())
             ->method('getEasierNotEquivalent')
             ->willReturn(null);
 
-        $this->sut = new TransposedSong($this->getTestInstanceSong(), $app);
+        $this->sut = new TransposedSong($this->buildSong(), $app);
         $this->sut->transpose(new NotesRange('A1', 'E3'));
-        $this->assertEquals([$this->getTestInstanceTransposition($app)], $this->sut->transpositions);
+        $this->assertEquals([$this->buildTransposition($app)], $this->sut->transpositions);
         $this->assertEquals(null, $this->sut->not_equivalent);
 
         //Testing prepareForPrint()

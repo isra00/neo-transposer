@@ -4,6 +4,7 @@ namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\PeopleCompatibleCalculation;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
@@ -246,9 +247,7 @@ class AutomaticTransposerTest extends TestCase
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('E2', 'A2'),
-            [
-                Chord::fromString('Am'),
-                Chord::fromString('G')],
+            [Chord::fromString('Am'), Chord::fromString('G')],
             false,
             new NotesRange('B1', 'B2')
         );
@@ -274,8 +273,8 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], true
         );
 
-        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
-            \NeoTransposer\Domain\PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA,
+        $expected = new PeopleCompatibleCalculation(
+            PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA,
             null
         );
 
@@ -295,8 +294,8 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A2', 'D3')
         );
 
-        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
-            \NeoTransposer\Domain\PeopleCompatibleCalculation::ALREADY_COMPATIBLE,
+        $expected = new PeopleCompatibleCalculation(
+            PeopleCompatibleCalculation::ALREADY_COMPATIBLE,
             null
         );
 
@@ -316,8 +315,8 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A2', 'D3')
         );
 
-        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
-            \NeoTransposer\Domain\PeopleCompatibleCalculation::WIDER_THAN_SINGER,
+        $expected = new PeopleCompatibleCalculation(
+            PeopleCompatibleCalculation::WIDER_THAN_SINGER,
             null
         );
 
@@ -337,8 +336,8 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('D2', 'E3')
         );
 
-        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
-            \NeoTransposer\Domain\PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER,
+        $expected = new PeopleCompatibleCalculation(
+            PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER,
             null
         );
 
@@ -368,8 +367,8 @@ class AutomaticTransposerTest extends TestCase
         );
         $ppc->peopleRange = new NotesRange('B1', 'E3');
 
-        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
-            \NeoTransposer\Domain\PeopleCompatibleCalculation::ADJUSTED_WIDER,
+        $expected = new PeopleCompatibleCalculation(
+            PeopleCompatibleCalculation::ADJUSTED_WIDER,
             $ppc
         );
 
@@ -389,20 +388,18 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('G#2', 'D3')
         );
 
-        $ppc = new Transposition(
-            $this->buildApp(),
-            [Chord::fromString('Em'), Chord::fromString('Am')],
-            5,
-            false,
-            0,
-            new NotesRange('A1', 'D3'),
-            -1
-        );
-        $ppc->peopleRange = new NotesRange('G#2', 'D3');
-
-        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
-            \NeoTransposer\Domain\PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE,
-            $ppc
+        $expected = new PeopleCompatibleCalculation(
+            PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE,
+            new Transposition(
+                $this->buildApp(),
+                [Chord::fromString('Em'), Chord::fromString('Am')],
+                5,
+                false,
+                0,
+                new NotesRange('A1', 'D3'),
+                -1,
+                new NotesRange('G#2', 'D3')
+            )
         );
 
         $this->assertEquals(
@@ -421,13 +418,18 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('B1', 'B2')
         );
 
-        $ppc = new Transposition(
-            $this->buildApp(), ['D', 'Em'], 0, true, 0, new NotesRange('B1', 'B2'), -2, new NotesRange('B1', 'B2')
-        );
-
-        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
-            \NeoTransposer\Domain\PeopleCompatibleCalculation::ADJUSTED_WELL,
-            $ppc
+        $expected = new PeopleCompatibleCalculation(
+            PeopleCompatibleCalculation::ADJUSTED_WELL,
+            new Transposition(
+                $this->buildApp(),
+                ['D', 'Em'],
+                0,
+                true,
+                0,
+                new NotesRange('B1', 'B2'),
+                -2,
+                new NotesRange('B1', 'B2')
+            )
         );
 
         $this->assertEquals(
@@ -446,11 +448,18 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('B1', 'F2')
         );
 
-        $ppc = new Transposition($this->app, ['Am', 'Dm', 'E'], 0, true, 0, new NotesRange('B1', 'E3'), 1, new NotesRange('B1', 'F2'));
-
-        $expected = new \NeoTransposer\Domain\PeopleCompatibleCalculation(
-            \NeoTransposer\Domain\PeopleCompatibleCalculation::ADJUSTED_WELL,
-            $ppc
+        $expected = new PeopleCompatibleCalculation(
+            PeopleCompatibleCalculation::ADJUSTED_WELL,
+            new Transposition(
+                $this->app,
+                ['Am', 'Dm', 'E'],
+                0,
+                true,
+                0,
+                new NotesRange('B1', 'E3'),
+                1,
+                new NotesRange('B1', 'F2')
+            )
         );
 
         $this->assertEquals(

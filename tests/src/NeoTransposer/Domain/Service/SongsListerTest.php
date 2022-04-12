@@ -70,7 +70,7 @@ class SongsListerTest extends TestCase
         $mockedUserRepository->method('readFromId')
             ->willReturn(new User('test@test.com', 1));
 
-        $mockedBookRepo = $this->createMock(BookRepository::class);
+        $mockedBookRepo = $this->createStub(BookRepository::class);
         $mockedBookRepo->method('readBook')
             ->willReturn(null);
 

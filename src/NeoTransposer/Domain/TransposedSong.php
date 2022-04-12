@@ -72,7 +72,7 @@ class TransposedSong
      */
     public function transpose(NotesRange $userRange, int $forceVoiceLimit = null): void
     {
-        /** @var AutomaticTransposer */
+        /** @var AutomaticTransposerFactory */
         $transposerFactory = $this->app[AutomaticTransposerFactory::class];
 
         $transposer = $transposerFactory->createAutomaticTransposer(
@@ -83,7 +83,10 @@ class TransposedSong
             $this->song->peopleRange
         );
 
-        $this->transpositions = $transposer->getTranspositionsCentered(2, $forceVoiceLimit);
+        $this->transpositions = $transposer->getTranspositionsCentered(
+            AutomaticTransposer::AMOUNT_CENTERED_TRANSPOSITIONS,
+            $forceVoiceLimit
+        );
         $this->not_equivalent = $transposer->getEasierNotEquivalent();
 
         if ($this->app['neoconfig']['people_compatible']) {
