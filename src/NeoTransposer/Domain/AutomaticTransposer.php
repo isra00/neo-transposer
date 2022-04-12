@@ -39,6 +39,8 @@ class AutomaticTransposer
      */
     public const OFFSETS_NOT_EQUIVALENT = [-1, 1];
 
+    public const AMOUNT_CENTERED_TRANSPOSITIONS = 2;
+
     protected $transpositionFactory;
     protected $standardPeopleRange;
 
@@ -244,7 +246,7 @@ class AutomaticTransposer
      *
      * @return array     Array of Transposition objects, sorted by chord ease.
      */
-    public function getTranspositionsCentered(?int $limitTranspositions=2, ?int $forceVoiceLimit=0) : array
+    public function getTranspositionsCentered(?int $limitTranspositions=self::AMOUNT_CENTERED_TRANSPOSITIONS, ?int $forceVoiceLimit=0) : array
     {
         if (empty($this->centeredAndEquivalent)) {
             $centeredTransposition = $this->calculateCenteredTransposition($forceVoiceLimit);

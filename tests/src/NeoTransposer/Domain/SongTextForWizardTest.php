@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class SongTextForWizardTest extends TestCase
 {
     /**
-     * @dataProvider providerText
+     * @dataProvider providerGetHtmlTextWithChords
      */
     public function testGetHtmlTextWithChords($text, $chords, $expectedOutput)
     {
@@ -16,7 +16,7 @@ class SongTextForWizardTest extends TestCase
         $this->assertEquals($expectedOutput, $sut->getHtmlTextWithChords($chords));
     }
 
-    public function providerText(): array
+    public function providerGetHtmlTextWithChords(): array
     {
         return [
             [

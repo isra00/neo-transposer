@@ -2,31 +2,27 @@
 
 namespace NeoTransposer\Tests\Domain\ValueObject;
 
+use NeoTransposer\Domain\Exception\SongDataException;
 use NeoTransposer\Domain\ValueObject\Chord;
 use PHPUnit\Framework\TestCase;
 
 class ChordTest extends TestCase
 {
-    /** @todo Specify type (PHP 7.4+) */
-    private $sut;
-
-    public function testConstructFromStringValid()
+    public function testFromParts()
     {
-        $this->sut = Chord::fromString("Am");
-        $this->assertEquals("A", $this->sut->fundamental);
-        $this->assertEquals("m", $this->sut->attributes);
+        $sut = new Chord("A", "m");
+        $this->assertEquals("Am", $sut->__toString());
     }
 
-    public function testConstructFromStringInvalid()
+    public function testFromString()
     {
-        $this->expectException(\Exception::class);
-        $this->sut = Chord::fromString("hey mama!");
+        $string = "Am";
+        $this->assertEquals($string, Chord::fromString($string)->__toString());
     }
 
-    public function testConstructFromParts()
+    public function testFromInvalidString()
     {
-        $this->sut = new Chord("A", "m");
-        $this->assertEquals("A", $this->sut->fundamental);
-        $this->assertEquals("m", $this->sut->attributes);
+        $this->expectException(SongDataException::class);
+        Chord::fromString("test");
     }
 }
