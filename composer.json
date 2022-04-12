@@ -37,13 +37,16 @@
     "require-dev": {
         "phpunit/phpunit": "^9",
         "ext-xdebug": "*",
-        "vimeo/psalm": "*"
+        "vimeo/psalm": "*",
+        "fakerphp/faker": "^1.19",
+        "phpmd/phpmd" : "@stable"
     },
 
     "scripts": {
         "test": [
             "vendor/bin/phpunit",
             "php tests/testAllTranspositions.php"
-        ]
+        ],
+        "quality": "vendor/bin/phpmd src/ html cleancode,codesize,design,naming,unusedcode --reportfile tests/reports/phpmd.html"
     }
 }
