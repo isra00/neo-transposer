@@ -4,6 +4,7 @@ namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Transposition;
+use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use Silex\Application;
 
@@ -27,7 +28,7 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
     {
         $this->sut = new Transposition(
             $this->getDependencyContainer(),
-            ['Em', 'Am', 'B'],
+            [Chord::fromString('Em'), Chord::fromString('Am'), Chord::fromString('B')],
             null,
             null,
             null,
@@ -75,22 +76,6 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
         $expected = new Transposition(array('Em', 'Am', 'B7'));
         $this->assertEquals($expected, $this->transp->getWithAlternativeChords());
     }*/
-
-    /**
-     * @todo Implement with a data provider
-     */
-    public function testGetKey()
-    {
-        $this->assertEquals('G', $this->sut->getKey($this->nc));
-        $this->assertEquals(
-            'G',
-            ($this->createTransposition(['G7'], null, null, null, null, null, null))->getKey($this->nc)
-        );
-        $this->assertEquals(
-            'F',
-            ($this->createTransposition(['Dm5'], null, null, null, null, null, null))->getKey($this->nc)
-        );
-    }
 
     public function testGetWithAlternativeChords()
     {
