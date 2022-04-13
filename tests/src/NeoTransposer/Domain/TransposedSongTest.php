@@ -7,9 +7,11 @@ use NeoTransposer\Domain\AutomaticTransposerFactory;
 use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\Transposition;
+use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
+use Symfony\Component\Translation\Translator;
 
 final class TransposedSongTest extends TestCase
 {
@@ -64,7 +66,7 @@ final class TransposedSongTest extends TestCase
 
     protected function buildTransposition(Application $app): Transposition
     {
-        $transposition = new Transposition($app, ["Em", "Am"]);
+        $transposition = (new TranspositionFactory($app))->createTransposition(["Em", "Am"]);
         $transposition->chordsForPrint = $this->printedChordSet;
         return $transposition;
     }
@@ -78,6 +80,8 @@ final class TransposedSongTest extends TestCase
             'hide_second_centered_if_not_equivalent' => true,
             'people_range' => ['B1', 'B2'],
         ];
+
+        $app['translator'] = $this->createStub(Translator::class);
 
         $mockAutomaticTransposerFactory = $this->createMock(AutomaticTransposerFactory::class);
         $mockAutomaticTransposerFactory->method('createAutomaticTransposer')

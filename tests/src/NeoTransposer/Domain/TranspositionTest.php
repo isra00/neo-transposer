@@ -4,9 +4,11 @@ namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Transposition;
+use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use Silex\Application;
+use Symfony\Component\Translation\Translator;
 
 class TranspositionTest extends \PHPUnit\Framework\TestCase
 {
@@ -14,20 +16,19 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
      * Fixture of the SUT.
      * @var Transposition
      */
-    protected $sut;
+    protected $transposition;
 
     /**
      * An instance of NotesCalculator, needed by some methods.
      * @var NotesCalculator;
      */
-    protected $nc;
+    protected $notesCalculator;
 
-    protected $dependencyContainer;
+    protected $app;
 
     public function setUp(): void
     {
-        $this->sut = new Transposition(
-            $this->getDependencyContainer(),
+        $this->transposition = $this->buildTransposition(
             [Chord::fromString('Em'), Chord::fromString('Am'), Chord::fromString('B')],
             null,
             null,
@@ -37,20 +38,22 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
             null
         );
 
-        $this->nc = new NotesCalculator();
+        $this->notesCalculator = new NotesCalculator();
     }
 
-    protected function getDependencyContainer(): Application
+    protected function buildApp(): Application
     {
-        if (empty($this->dependencyContainer)) {
-            $this->dependencyContainer = new Application();
-            $this->dependencyContainer['neoconfig'] = ['chord_scores' => include __DIR__ . '/../../../../config.scores.php'];
+        if (empty($this->app)) {
+            $this->app = new Application([
+                'neoconfig'  => ['chord_scores' => include __DIR__ . '/../../../../config.scores.php'],
+                'translator' => $this->createStub(Translator::class)
+            ]);
         }
 
-        return $this->dependencyContainer;
+        return $this->app;
     }
 
-    protected function createTransposition(
+    protected function buildTransposition(
         array $chords = [],
         ?int $capo = 0,
         ?bool $asBook = false,
@@ -59,8 +62,8 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
         ?int $deviationFromCentered = 0,
         ?NotesRange $peopleRange = null
     ) {
-        return new Transposition(
-            $this->dependencyContainer,
+
+        return (new TranspositionFactory($this->buildApp()))->createTransposition(
             $chords,
             $capo,
             $asBook,
@@ -79,24 +82,24 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
 
     public function testGetWithAlternativeChords()
     {
-        $this->sut->setAlternativeChords($this->nc);
-        $this->assertEquals(array('Em', 'Am', 'B7'), $this->sut->chords);
+        $this->transposition->setAlternativeChords($this->notesCalculator);
+        $this->assertEquals(array('Em', 'Am', 'B7'), $this->transposition->chords);
 
         // If AsBook, alternative chords should not be calculated.
         $chords2 = array('Em', 'Am', 'B');
-        $tr2 = $this->createTransposition($chords2, 0, true, null, null, null, null);
-        $tr2->setAlternativeChords($this->nc);
+        $tr2 = $this->buildTransposition($chords2, 0, true, null, null, null, null);
+        $tr2->setAlternativeChords($this->notesCalculator);
         $this->assertEquals($chords2, $tr2->chords);
     }
 
     public function testCalculatePeopleRange()
     {
-        $this->sut->calculatePeopleRange(
+        $this->transposition->calculatePeopleRange(
             new NotesRange('A1', 'A2'),
             2,
-            $this->nc
+            $this->notesCalculator
         );
 
-        $this->assertEquals(new NotesRange('B1', 'B2'), $this->sut->peopleRange);
+        $this->assertEquals(new NotesRange('B1', 'B2'), $this->transposition->peopleRange);
     }
 }

@@ -7,14 +7,14 @@ use NeoTransposer\Domain\Exception\SongDataException;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use Silex\Application;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Represents a transposition of a song, with transported chords, capo, etc.
  */
 class Transposition
 {
-    protected $app;
-
     /**
      * Transposed chords
      *
@@ -90,6 +90,10 @@ class Transposition
      */
     public $scoreMap = [];
 
+    protected $scoresConfig = [];
+
+    protected $translator;
+
     /**
      * Array keys = musical keys (tonality) in which the replace will be done
      * Array values = array of chords original => replacement
@@ -106,19 +110,21 @@ class Transposition
     ];
 
     /**
-     * @param Application     $app
-     * @param array           $chords
-     * @param int|null        $capo
-     * @param bool|null       $asBook
-     * @param int|null        $offset
-     * @param NotesRange|null $range
-     * @param int|null        $deviationFromCentered
-     * @param NotesRange|null $peopleRange
+     * @param array               $scoresConfig
+     * @param TranslatorInterface $translator
+     * @param array               $chords
+     * @param int|null            $capo
+     * @param bool|null           $asBook
+     * @param int|null            $offset
+     * @param NotesRange|null     $range
+     * @param int|null            $deviationFromCentered
+     * @param NotesRange|null     $peopleRange
      *
      * @throws SongDataException
      */
     public function __construct(
-        Application $app,
+        array $scoresConfig,
+        TranslatorInterface $translator,
         array $chords = [],
         ?int $capo = 0,
         ?bool $asBook = false,
@@ -127,7 +133,8 @@ class Transposition
         ?int $deviationFromCentered = 0,
         ?NotesRange $peopleRange = null
     ) {
-        $this->app = $app;
+        $this->translator = $translator;
+        $this->scoresConfig = $scoresConfig;
         $this->chords = $chords;
         $this->capo = $capo;
         $this->asBook = $asBook;
@@ -149,15 +156,13 @@ class Transposition
     {
         $this->score = 0;
 
-        $scoresConfig = $this->app['neoconfig']['chord_scores'];
-
         foreach ($this->chords as $chord) {
             $scoreForThisChord = 0;
 
-            if (isset($scoresConfig['chords'][strval($chord)])) {
-                $scoreForThisChord = $scoresConfig['chords'][strval($chord)];
+            if (isset($this->scoresConfig['chords'][strval($chord)])) {
+                $scoreForThisChord = $this->scoresConfig['chords'][strval($chord)];
             } else {
-                foreach ($scoresConfig['patterns'] as $pattern => $score) {
+                foreach ($this->scoresConfig['patterns'] as $pattern => $score) {
                     if (preg_match("/$pattern/", strval($chord))) {
                         $scoreForThisChord = $score;
                     }
@@ -190,8 +195,8 @@ class Transposition
     {
         if (empty($this->capoForPrint)) {
             $this->capoForPrint = ($this->capo)
-                ? $this->app->trans('with capo %n%', array('%n%' => $this->capo))
-                : $this->app->trans('no capo');
+                ? $this->translator->trans('with capo %n%', array('%n%' => $this->capo))
+                : $this->translator->trans('no capo');
         }
 
         return $this->capoForPrint;
