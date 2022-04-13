@@ -237,7 +237,7 @@ class Transposition
     public function setAlternativeChords(NotesCalculator $nc): void
     {
         if (!$this->asBook) {
-            $key = $this->getKey($nc);
+            $key = $nc->getKey($this->chords[0]);
 
             /** @todo Refactor with array_walk */
             foreach ($this->chords as &$chord) {

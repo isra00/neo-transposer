@@ -5,6 +5,7 @@ namespace NeoTransposer\Domain\ValueObject;
 use NeoTransposer\Domain\Exception\SongDataException;
 
 /** @todo PHP8: implements Stringable */
+/** @todo Make it immutable */
 final class Chord
 {
     public $fundamental;
