@@ -7,28 +7,29 @@ use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
+use Symfony\Component\Translation\Translator;
 
 class TranspositionFactoryTest extends TestCase
 {
-    public function builderApplication(array $dcContents): Application
+    public function buildApplication($chordsScoreConfig, $translator): Application
     {
-        return new Application($dcContents);
+        return new Application([
+            'neoconfig' => [
+                'chord_scores' => $chordsScoreConfig
+            ],
+            'translator' => $translator
+        ]);
     }
 
-    public function testGetTransposition()
+    public function testCreateTransposition()
     {
-        $mockApp = $this->builderApplication([
-            'neoconfig' => [
-                'chord_scores' => [
-                    'chords' => [
-                        'Em' => 1,
-                    ]
-                ]
-            ]
-        ]);
+        $chordsScoreConfig = ['chords' => ['Em' => 1]];
+        $translator = $this->createStub(Translator::class);
 
         $expected = new Transposition(
-            $mockApp, ['Em'],
+            $chordsScoreConfig,
+            $translator,
+            ['Em'],
             1,
             true,
             2,
@@ -37,7 +38,7 @@ class TranspositionFactoryTest extends TestCase
             new NotesRange('pfrom', 'pto')
         );
 
-        $sut = new TranspositionFactory($mockApp);
+        $sut = new TranspositionFactory($this->buildApplication($chordsScoreConfig, $translator));
 
         $actual = $sut->createTransposition(
             ['Em'],

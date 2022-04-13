@@ -9,16 +9,16 @@ class NotesNotationTest extends \PHPUnit\Framework\TestCase
 	/**
 	 * @var NotesNotation
 	 */
-	protected $nn;
+	protected $notesNotation;
 
 	public function setUp() : void
 	{
-		$this->nn = new NotesNotation;
+		$this->notesNotation = new NotesNotation();
 	}
 
 	public function testGetNotation()
     {
-        $this->assertEquals('Do', $this->nn->getNotation('C', 'latin'));
+        $this->assertEquals('Do', $this->notesNotation->getNotation('C', 'latin'));
     }
 
     public function testGetVoiceRangeAsString()
@@ -35,7 +35,7 @@ class NotesNotationTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(
             'A &rarr; A +1 octave',
-            $this->nn->getVoiceRangeAsString($transMock, 'american', 'A1', 'A2')
+            $this->notesNotation->getVoiceRangeAsString($transMock, 'american', 'A1', 'A2')
         );
     }
     public function testGetVoiceRangeAsStringLatinNotation()
@@ -52,7 +52,7 @@ class NotesNotationTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(
             'La &rarr; La +1 octave',
-            $this->nn->getVoiceRangeAsString($transMock, 'latin', 'A1', 'A2')
+            $this->notesNotation->getVoiceRangeAsString($transMock, 'latin', 'A1', 'A2')
         );
     }
 }

@@ -10,6 +10,7 @@ use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Translation\Translator;
 
 /**
  * @todo Add some corner cases to transposition algorithms
@@ -61,15 +62,17 @@ class AutomaticTransposerTest extends TestCase
     protected function buildApp()
     {
         if (empty($this->app)) {
-            $this->app = new \Silex\Application();
-            $this->app['neoconfig'] = [
-                'chord_scores' => $this->chordsScoreConfig,
-                'people_range' => ['B1', 'B2'],
-            ];
+            $this->app = new \Silex\Application([
+                'neoconfig' => [
+                    'chord_scores' => $this->chordsScoreConfig,
+                    'people_range' => ['B1', 'B2'],
+                ],
+                'translator' => $this->createStub(Translator::class)
+            ]);
 
             $this->app[Transposition::class] = $this->app->factory(
                 function ($app) {
-                    return new Transposition($app);
+                    return $this->buildTransposition($app);
                 }
             );
         }
@@ -77,15 +80,29 @@ class AutomaticTransposerTest extends TestCase
         return $this->app;
     }
 
-    protected function createEmptyTransposition()
-    {
-        return new Transposition($this->app);
+    protected function buildTransposition(
+        array $chords = [],
+        ?int $capo = 0,
+        ?bool $asBook = false,
+        ?int $offset = 0,
+        ?NotesRange $range = null,
+        ?int $deviationFromCentered = 0,
+        ?NotesRange $peopleRange = null
+    ): Transposition {
+        return (new TranspositionFactory($this->buildApp()))->createTransposition(
+            $chords,
+            $capo,
+            $asBook,
+            $offset,
+            $range,
+            $deviationFromCentered,
+            $peopleRange
+        );
     }
 
     public function testCalculateCenteredTransposition()
     {
-        $expected = new Transposition(
-            $this->buildApp(),
+        $expected = $this->buildTransposition(
             [Chord::fromString('Bm'), Chord::fromString('Em'), new Chord('G'), new Chord('D')],
             0,
             false,
@@ -111,8 +128,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('B1', 'B2')
         );
 
-        $expected = new Transposition(
-            $this->buildApp(),
+        $expected = $this->buildTransposition(
             [Chord::fromString('Bm'), Chord::fromString('Em'), new Chord('G'), new Chord('D')],
             0,
             true,
@@ -127,8 +143,7 @@ class AutomaticTransposerTest extends TestCase
 
     public function testCalculateEquivalentsWithCapo()
     {
-        $testTransposition = new Transposition(
-            $this->buildApp(),
+        $testTransposition = $this->buildTransposition(
             [Chord::fromString('Bm'), Chord::fromString('Em'), new Chord('G'), new Chord('D')],
             0,
             false,
@@ -141,11 +156,11 @@ class AutomaticTransposerTest extends TestCase
         $equivalents = $this->buildAutomaticTransposerWithValues()->calculateEquivalentsWithCapo($testTransposition);
 
         $expected = [
-            1=> new Transposition($this->buildApp(), ['A#m', 'D#m', 'F#', 'C#'], 1, false),
-            new Transposition($this->buildApp(), ['Am', 'Dm', 'F', 'C'], 2, true),
-            new Transposition($this->buildApp(), ['G#m', 'C#m', 'E', 'B'], 3, false),
-            new Transposition($this->buildApp(), ['Gm', 'Cm', 'D#', 'A#'], 4, false),
-            new Transposition($this->buildApp(), ['F#m', 'Bm', 'D', 'A'], 5, false)
+            1=> $this->buildTransposition( ['A#m', 'D#m', 'F#', 'C#'], 1, false),
+            $this->buildTransposition( ['Am', 'Dm', 'F', 'C'], 2, true),
+            $this->buildTransposition( ['G#m', 'C#m', 'E', 'B'], 3, false),
+            $this->buildTransposition( ['Gm', 'Cm', 'D#', 'A#'], 4, false),
+            $this->buildTransposition( ['F#m', 'Bm', 'D', 'A'], 5, false)
         ];
 
         $this->assertEquals($expected, $equivalents);
@@ -199,8 +214,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('C#2', 'E3')
         );
 
-        $expected = new Transposition(
-            $this->buildApp(),
+        $expected = $this->buildTransposition(
             [Chord::fromString('C'), Chord::fromString('E'), Chord::fromString('Am'), Chord::fromString('G'), Chord::fromString('F')],
             0,
             false,
@@ -226,14 +240,12 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('B1', 'B2')
         );
 
-        $expected = new Transposition($this->buildApp(),
+        $expected = $this->buildTransposition(
             [Chord::fromString('Em'), Chord::fromString('D')],
             0,
             false,
             7,
-            new NotesRange('B2', 'E3'),
-            0,
-            null
+            new NotesRange('B2', 'E3')
         );
 
         $this->assertEquals(
@@ -252,8 +264,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('B1', 'B2')
         );
 
-        $expected = new Transposition(
-            $this->buildApp(),
+        $expected = $this->buildTransposition(
             [Chord::fromString('Dm'), Chord::fromString('C')],
             0,
             false,
@@ -357,7 +368,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A1', 'D3')
         );
 
-        $ppc = new Transposition($this->buildApp(),
+        $ppc = $this->buildTransposition(
             [Chord::fromString('Am'), Chord::fromString('E')],
             2,
             true,
@@ -390,8 +401,7 @@ class AutomaticTransposerTest extends TestCase
 
         $expected = new PeopleCompatibleCalculation(
             PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE,
-            new Transposition(
-                $this->buildApp(),
+            $this->buildTransposition(
                 [Chord::fromString('Em'), Chord::fromString('Am')],
                 5,
                 false,
@@ -420,8 +430,7 @@ class AutomaticTransposerTest extends TestCase
 
         $expected = new PeopleCompatibleCalculation(
             PeopleCompatibleCalculation::ADJUSTED_WELL,
-            new Transposition(
-                $this->buildApp(),
+            $this->buildTransposition(
                 ['D', 'Em'],
                 0,
                 true,
@@ -450,8 +459,7 @@ class AutomaticTransposerTest extends TestCase
 
         $expected = new PeopleCompatibleCalculation(
             PeopleCompatibleCalculation::ADJUSTED_WELL,
-            new Transposition(
-                $this->app,
+            $this->buildTransposition(
                 ['Am', 'Dm', 'E'],
                 0,
                 true,

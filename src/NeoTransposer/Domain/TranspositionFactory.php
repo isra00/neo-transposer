@@ -25,8 +25,17 @@ class TranspositionFactory
         ?NotesRange $range = null,
         ?int $deviationFromCentered = 0,
         ?NotesRange $peopleRange = null
-    ): Transposition
-    {
-        return new Transposition($this->app, $chords, $capo, $asBook, $offset, $range, $deviationFromCentered, $peopleRange);
+    ): Transposition {
+        return new Transposition(
+            $this->app['neoconfig']['chord_scores'],
+            $this->app['translator'],
+            $chords,
+            $capo,
+            $asBook,
+            $offset,
+            $range,
+            $deviationFromCentered,
+            $peopleRange
+        );
     }
 }

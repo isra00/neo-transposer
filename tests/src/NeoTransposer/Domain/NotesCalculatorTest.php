@@ -16,7 +16,7 @@ class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
 
 	public function setUp() : void
 	{
-		$this->notesCalculator = new NotesCalculator;
+		$this->notesCalculator = new NotesCalculator();
 	}
 
 	public function testTransposeNote()
