@@ -47,7 +47,7 @@
 
     "scripts": {
         "test": [
-            "vendor/bin/codecept run unit",
+            "vendor/bin/codecept run unit --coverage-html",
             "php tests/testAllTranspositions.php"
         ],
         "test-acceptance": [

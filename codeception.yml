@@ -10,3 +10,7 @@ extensions:
 shuffle: true
 params:
     - env # load params from environment vars
+coverage:
+    enabled: true
+    include:
+        - src/*
