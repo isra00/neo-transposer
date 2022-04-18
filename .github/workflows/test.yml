@@ -33,11 +33,6 @@ jobs:
       - name: Install dependencies
         run: composer install
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: PHPUnit-coverage-report
-          path: tests/_output/coverage
-
       - name: Turn on Ubuntu MySQL
         run: |
           sudo systemctl enable mysql.service
@@ -53,3 +48,8 @@ jobs:
 
       - name: Test suites as set up in composer script (UT + functional)
         run: composer test
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: PHPUnit-coverage-report
+          path: tests/_output/coverage
