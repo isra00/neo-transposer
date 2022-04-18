@@ -7,6 +7,7 @@ env:
   NT_DB_USER: root
   NT_DB_PASSWORD: root
   NT_DB_DATABASE: transposer
+  NT_DB_TEST_DATABASE: integration_test
   NT_DEBUG: 1
   NT_PROFILER: 0
 
@@ -32,15 +33,12 @@ jobs:
       - name: Install dependencies
         run: composer install
 
-      - name: Run PHPUnit
-        run: ./vendor/bin/phpunit
-
       - uses: actions/upload-artifact@v2
         with:
           name: PHPUnit-coverage-report
           path: tests/reports
 
-      - name: Turn on Ubuntu MySQL (SUDO)
+      - name: Turn on Ubuntu MySQL
         run: |
           sudo systemctl enable mysql.service
           sudo systemctl start mysql.service
@@ -50,6 +48,11 @@ jobs:
           mysql -uroot -proot -e 'SHOW VARIABLES LIKE "version";'
           mysql -uroot -proot -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
           mysql -uroot -proot transposer < song_data.sql
+          mysql -uroot -proot -e 'CREATE DATABASE integration_test COLLATE utf8_general_ci'
+          mysql -uroot -proot integration_test < create_tables.sql
+
+      - name: Run unit tests with Codeception
+        run: ./vendor/bin/codecept run unit
           
       - name: Functional test All Transpositions
         run: php tests/testAllTranspositions.php
