@@ -38,7 +38,7 @@ class UnhappyUserRepositoryMysqlTest extends MysqlRepositoryTest
     public function testReadUserIsUnhappyAndNoAction()
     {
         $idUser = $this->faker->randomNumber();
-        $this->tester->haveInDatabase('unhappy_user', ['id_user' => $idUser]);
+        $this->tester->haveInDatabase('unhappy_user', ['id_user' => $idUser, 'took_action' => null]);
         $this->assertTrue($this->unhappyUserRepositoryMysql->readUserIsUnhappyAndNoAction($idUser));
     }
 
