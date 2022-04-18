@@ -45,7 +45,7 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
     {
         if (empty($this->app)) {
             $this->app = new Application([
-                'neoconfig'  => ['chord_scores' => include __DIR__ . '/../../../../config.scores.php'],
+                'neoconfig'  => ['chord_scores' => include __DIR__ . '/../../../../../config.scores.php'],
                 'translator' => $this->createStub(Translator::class)
             ]);
         }
