@@ -7,8 +7,7 @@ use Faker\Factory;
 
 class LoginCest
 {
-
-    protected function newUserWithManualRangeInSpanish(AcceptanceTester $I)
+    protected function givenASpanishNewUserWithManualRangeInBookPage(AcceptanceTester $I)
     {
         $faker = Factory::create();
         $I->amOnPage('/es/login');
@@ -20,26 +19,25 @@ class LoginCest
         $I->click('form button');
     }
 
-    public function LoginSuccessfullyWithExistingUserSpanish(AcceptanceTester $I)
+    public function existingUserShouldLoginAndSeeBookPage(AcceptanceTester $I)
     {
         $I->amOnPage('/es/login');
         $I->fillField('email','isra00@gmail.com');
         $I->click('sent');
-        $I->see('Como oveja');
+        $I->seeElement('.page-book');
     }
 
     public function newUserWithManualRangeShouldSeeEncourageFeedbackBanner(AcceptanceTester $I)
     {
-        $this->newUserWithManualRangeInSpanish($I);
+        $this->givenASpanishNewUserWithManualRangeInBookPage($I);
         $I->seeElement('.encourage-feedback');
     }
 
-    /*public function newUserWithManualRangeShouldNotSeeEncourageFeedbackBannerAfterFeedback(AcceptanceTester $I)
+    public function newUserWithManualRangeShouldNotSeeEncourageFeedbackBannerAfterReportingFeedback3Times(AcceptanceTester $I)
     {
-        $this->newUserWithManualRangeInSpanish($I);
-        $I->seeElement('.encourage-feedback');
-        $I->click('.song-index li:nth-child(1) a');
+        $this->givenASpanishNewUserWithManualRangeInBookPage($I);
 
+        $I->click('.song-index li:nth-child(1) a');
         $I->click('#feedback-yes');
 
         $I->amOnPage('/cantos-camino-neocatecumenal');
@@ -47,6 +45,10 @@ class LoginCest
         $I->click('#feedback-yes');
 
         $I->amOnPage('/cantos-camino-neocatecumenal');
-        $I->see('Todo listo');
-    }*/
+        $I->click('.song-index li:nth-child(3) a');
+        $I->click('#feedback-yes');
+
+        $I->amOnPage('/cantos-camino-neocatecumenal');
+        $I->dontSeeElement('.encourage-feedback');
+    }
 }
