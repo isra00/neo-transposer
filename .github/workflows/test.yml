@@ -51,8 +51,5 @@ jobs:
           mysql -uroot -proot -e 'CREATE DATABASE integration_test COLLATE utf8_general_ci'
           mysql -uroot -proot integration_test < create_tables.sql
 
-      - name: Run unit tests with Codeception
-        run: ./vendor/bin/codecept run unit
-          
-      - name: Functional test All Transpositions
-        run: php tests/testAllTranspositions.php
+      - name: Test suites as set up in composer script (UT + functional)
+        run: composer test
