@@ -1,0 +1,21 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+actor: AcceptanceTester
+step_decorators: ~
+modules:
+  enabled:
+    - WebDriver:
+        url: https://neo-transposer.com/
+        window_size: false # disabled in ChromeDriver
+        port: 4444
+        browser: chrome
+        capabilities:
+          chromeOptions:
+            args: [ "--headless", "--disable-gpu" ] # Run Chrome in headless mode
+            prefs:
+              download.default_directory: "..."
+    - \Helper\Acceptance

@@ -26,7 +26,7 @@ class AutomaticTransposerTest extends TestCase
     public function setUp() : void
     {
         //includePath must be defined in phpunit.xml
-        $this->chordsScoreConfig = include __DIR__ . '/../../../../config.scores.php';
+        $this->chordsScoreConfig = include __DIR__ . '/../../../../../config.scores.php';
     }
 
     protected function buildAutomaticTransposer(
