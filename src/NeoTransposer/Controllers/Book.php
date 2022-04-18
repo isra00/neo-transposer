@@ -56,7 +56,13 @@ class Book
             $template = 'book_encourage_feedback.twig';
 		}
 
-		$unhappy = $app[UnhappinessManager::class];
+        $showUnhappyWarning = false;
+
+        if ($app['neouser']->isLoggedin())
+        {
+            $unhappy = $app[UnhappinessManager::class];
+            $showUnhappyWarning = $unhappy->isUnhappyNoAction($app['neouser']);
+        }
 
         $userPerformance = $app['neouser']->isLoggedIn() ? $app['neouser']->performance : null;
 
@@ -65,7 +71,7 @@ class Book
 			'current_book'	 		=> $currentBook,
 			'header_link'	 		=> $app->path('book_' . $currentBook->idBook()),
 			'songs'			 		=> $songs,
-			'show_unhappy_warning'	=> $unhappy->isUnhappyNoAction($app['neouser']),
+			'show_unhappy_warning'	=> $showUnhappyWarning,
 			'meta_description'		=> $app->trans(
 				'Songs and psalms of the Neocatechumenal Way in %lang%. With Neo-Transposer you can transpose them automatically so they will fit your own voice.',
 				['%lang%' => $currentBook->langName()]
