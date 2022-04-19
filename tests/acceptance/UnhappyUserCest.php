@@ -1,5 +1,8 @@
 <?php
 
+namespace NeoTransposerTests\Acceptance;
+
+use AcceptanceTester;
 use Faker\Factory;
 
 class UnhappyUserCest
@@ -16,22 +19,15 @@ class UnhappyUserCest
         $I->click('form button');
     }
 
-    protected function whenIGoToNthSongAndClickButton(AcceptanceTester $I, int $songIndex, string $clickElement): void
-    {
-        $I->amOnPage('/cantos-camino-neocatecumenal');
-        $I->click('.song-index li:nth-child(' . $songIndex . ') a');
-        $I->click($clickElement);
-    }
-
     public function newUserShouldSeeUnhappyWarningAfterReporting5NegativeFeedbacks(AcceptanceTester $I)
     {
         $this->givenASpanishNewUserWithManualRangeInBookPage($I);
 
-        $this->whenIGoToNthSongAndClickButton($I, 1, '#feedback-no');
-        $this->whenIGoToNthSongAndClickButton($I, 2, '#feedback-no');
-        $this->whenIGoToNthSongAndClickButton($I, 3, '#feedback-no');
-        $this->whenIGoToNthSongAndClickButton($I, 4, '#feedback-no');
-        $this->whenIGoToNthSongAndClickButton($I, 5, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 1, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 2, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 3, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 4, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 5, '#feedback-no');
 
         $I->amOnPage('/cantos-camino-neocatecumenal');
         $I->seeElement('.unhappy-warning');
@@ -41,11 +37,11 @@ class UnhappyUserCest
     {
         $this->givenASpanishNewUserWithManualRangeInBookPage($I);
 
-        $this->whenIGoToNthSongAndClickButton($I, 1, '#feedback-no');
-        $this->whenIGoToNthSongAndClickButton($I, 2, '#feedback-no');
-        $this->whenIGoToNthSongAndClickButton($I, 3, '#feedback-no');
-        $this->whenIGoToNthSongAndClickButton($I, 4, '#feedback-no');
-        $this->whenIGoToNthSongAndClickButton($I, 5, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 1, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 2, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 3, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 4, '#feedback-no');
+        Shared::whenIGoToNthSongAndClickButton($I, 5, '#feedback-no');
 
         $I->amOnPage('/cantos-camino-neocatecumenal');
 
