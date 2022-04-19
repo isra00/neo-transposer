@@ -1,6 +1,6 @@
 {
   "id": "74f45bd8-a24f-4c73-9c68-0726ea1693ec",
-  "version": "1",
+  "version": "2.0",
   "name": "Neo-Transposer",
   "url": "http://neo-transposer.com/",
   "tests": [{
@@ -100,7 +100,7 @@
     }]
   }, {
     "id": "fb-check-list.xml",
-    "name": "FB-check-list",
+    "name": "FB-check-list [Cest OK]",
     "commands": [{
       "id": "ed213742-e2be-4d2b-95bf-1bf117c8e272",
       "comment": "",
