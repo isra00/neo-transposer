@@ -9,7 +9,7 @@ step_decorators: ~
 modules:
   enabled:
     - WebDriver:
-        url: https://neo-transposer.com/
+        url: http://transposer.local/
         window_size: false # disabled in ChromeDriver
         port: 4444
         browser: chrome
