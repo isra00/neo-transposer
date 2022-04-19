@@ -19,3 +19,7 @@ modules:
             prefs:
               download.default_directory: "..."
     - \Helper\Acceptance
+extensions:
+    enabled:
+        - Codeception\Extension\Recorder:
+          delete_successful: false
