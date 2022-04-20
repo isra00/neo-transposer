@@ -87,9 +87,9 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
 
         // If AsBook, alternative chords should not be calculated.
         $chords2 = array('Em', 'Am', 'B');
-        $tr2 = $this->buildTransposition($chords2, 0, true, null, null, null, null);
-        $tr2->setAlternativeChords($this->notesCalculator);
-        $this->assertEquals($chords2, $tr2->chords);
+        $transposition = $this->buildTransposition($chords2, 0, true, null, null, null, null);
+        $transposition->setAlternativeChords($this->notesCalculator);
+        $this->assertEquals($chords2, $transposition->chords);
     }
 
     public function testCalculatePeopleRange()

@@ -86,17 +86,24 @@ class AutomaticTransposer
      * @param bool            $firstChordIsKey Song original chords
      * @param NotesRange|null $songPeopleRange Song's voice range for people
      */
-    public function __construct(NotesCalculator $notesCalculator, TranspositionFactory $transpositionFactory, NotesRange $standardPeopleRange, NotesRange $singerRange, NotesRange $songRange, array $originalChords, $firstChordIsKey, NotesRange $songPeopleRange=null)
-    {
+    public function __construct(
+        NotesCalculator $notesCalculator,
+        TranspositionFactory $transpositionFactory,
+        NotesRange $standardPeopleRange,
+        NotesRange $singerRange,
+        NotesRange $songRange,
+        array $originalChords,
+        bool $firstChordIsKey,
+        NotesRange $songPeopleRange = null
+    ) {
+        $this->notesCalculator = $notesCalculator;
         $this->transpositionFactory = $transpositionFactory;
-        $this->standardPeopleRange  = $standardPeopleRange;
-        $this->singerRange          = $singerRange;
-        $this->songRange            = $songRange;
-        $this->originalChords       = $originalChords;
-        $this->firstChordIsKey      = $firstChordIsKey;
-        $this->songPeopleRange      = $songPeopleRange;
-
-        $this->notesCalculator      = $notesCalculator;
+        $this->standardPeopleRange = $standardPeopleRange;
+        $this->singerRange = $singerRange;
+        $this->songRange = $songRange;
+        $this->originalChords = $originalChords;
+        $this->firstChordIsKey = $firstChordIsKey;
+        $this->songPeopleRange = $songPeopleRange;
     }
 
     /**
@@ -113,8 +120,9 @@ class AutomaticTransposer
      * @return Transposition     The transposition matching that voice.
      *
      * @todo Renombrar o reestructurar: si $forceVoiceLimit, entonces ya no es la "centeredTransposition"
+     * @throws Exception\SongDataException
      */
-    public function calculateCenteredTransposition(?int $forceVoiceLimit=0)
+    public function calculateCenteredTransposition(?int $forceVoiceLimit=0): Transposition
     {
         if (!empty($this->centeredTransposition)) {
             return $this->centeredTransposition;
@@ -186,11 +194,13 @@ class AutomaticTransposer
      *
      * The criteria for which chords are easier or harder are implemented in
      * Transposition::setScore().
-     * 
-     * @param  Transposition $transposition A given transposition without capo.
+     *
+     * @param Transposition $transposition A given transposition without capo.
+     *
      * @return array            Array of <Transposition> with capo from 1 to 5.
+     * @throws Exception\SongDataException
      */
-    public function calculateEquivalentsWithCapo(Transposition $transposition)
+    public function calculateEquivalentsWithCapo(Transposition $transposition): array
     {
         $withCapo = [];
 
@@ -245,6 +255,7 @@ class AutomaticTransposer
      * @param int|null $forceVoiceLimit     Force user's lowest or highest note (only used in Wizard).
      *
      * @return array     Array of Transposition objects, sorted by chord ease.
+     * @throws Exception\SongDataException
      */
     public function getTranspositionsCentered(?int $limitTranspositions=self::AMOUNT_CENTERED_TRANSPOSITIONS, ?int $forceVoiceLimit=0) : array
     {
@@ -259,7 +270,7 @@ class AutomaticTransposer
         }
 
         //This shouldn't be done before to avoid conflicts
-        foreach ($this->centeredAndEquivalent as &$transposition)
+        foreach ($this->centeredAndEquivalent as $transposition)
         {
             if ($this->firstChordIsKey) {
                 $transposition->setAlternativeChords($this->notesCalculator);
@@ -277,8 +288,9 @@ class AutomaticTransposer
     /**
      * Find one surrounding (-1 / +1 semitone) transposition with easier chords.
      * If calculates also its equivalents with capo.
-     * 
+     *
      * @return Transposition|null A non-equivalent transposition (yes, only one).
+     * @throws Exception\SongDataException
      */
     public function getEasierNotEquivalent(): ?Transposition
     {
@@ -307,11 +319,12 @@ class AutomaticTransposer
 
     /**
      * Get transpositions higher or lower than the centered.
-     * 
-     * @param  array   $deviations The deviations in semitones, e.g. [-2, -1]
-     * @param  integer $maxScore   Return only transpositions with score lower than this.
+     *
+     * @param array $deviations The deviations in semitones, e.g. [-2, -1]
+     * @param int   $maxScore   Return only transpositions with score lower than this.
      *
      * @return array    An array of Transposition objects.
+     * @throws Exception\SongDataException
      */
     protected function calculateSurroundingTranspositions(Transposition $centeredTransposition, array $deviations, int $maxScore): array
     {
@@ -377,28 +390,31 @@ class AutomaticTransposer
 
     /**
      * Calculate transposition compatible with a standard range of people.
-     * 
+     *
      * In this algorithm six cases may occur:
      * 1) No data in DB for the people range of the song: no adjustment done.
      * 2) The centeredTransposition already falls within people's range: no adjustment done.
      * 3) The song's range is wider than singer's range: no adjustment done.
-     * 4) peopleSong range is wider or equal than people's range: move it (as 
-     *    far as the singer's range allows) to the people range's bottom, so 
-     *    that the excess is put in the highest notes. It is the same design 
-     *    decision as in CenteredTransposition when the song's range > singer's 
+     * 4) peopleSong range is wider or equal than people's range: move it (as
+     *    far as the singer's range allows) to the people range's bottom, so
+     *    that the excess is put in the highest notes. It is the same design
+     *    decision as in CenteredTransposition when the song's range > singer's
      *    range.
      * 5) The centered transposition is too low for the people: it is raised up
      *    until peopleSong.lowest = people.lowest, but limited by the singer's
      *    range (i.e., singer.highest =< song.highest)
      * 6) The centered transposition is too high for the people: it is lowered
      *    down until peopleSong.highest = people.highest, but limited by the
-     *    singer's range. This case and the former one presuppose that 
+     *    singer's range. This case and the former one presuppose that
      *    peopleSong range is NOT wider than people's range.
-     * 
+     *
      * The case that occurred is reported in the returned PeopleCompatibleCalculation::$status.
      * Calculations (offsets) are done based on the centeredTransposition.
      * This algorithm does not deal with the relation of this transposition
      * with others (i.e. hiding notEquivalent when there is peopleCompatible, etc.)
+     *
+     * @throws Exception\SongDataException
+     * @throws \Exception
      */
     public function calculatePeopleCompatible() : PeopleCompatibleCalculation
     {
@@ -408,7 +424,6 @@ class AutomaticTransposer
         }
 
         $centeredTransposition = $this->calculateCenteredTransposition();
-        $status                = null;
 
         $peopleRangeInCentered = new NotesRange(
             $this->notesCalculator->transposeNote($this->songPeopleRange->lowest, $centeredTransposition->offset),
@@ -444,8 +459,8 @@ class AutomaticTransposer
         if ($this->notesCalculator->rangeWideness($this->songPeopleRange) > $this->notesCalculator->rangeWideness($this->standardPeopleRange)) {
             //If lowering, limit with singer's lowest. If raising, with highest.
             $singerLimit = ($fromPeopleLowestInCenteredToPeopleLowest < 0)
-            ? $fromSingerLowestCenteredToSingerLowest
-            : $fromSingerHighestCenteredToSingerHighest;
+                ? $fromSingerLowestCenteredToSingerLowest
+                : $fromSingerHighestCenteredToSingerHighest;
 
             $offsetFromCentered = min(
                 abs($singerLimit),
@@ -476,8 +491,8 @@ class AutomaticTransposer
             );
 
             $status = (abs($offsetFromCentered) < abs($fromPeopleLowestInCenteredToPeopleLowest))
-            ? PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE
-            : PeopleCompatibleCalculation::ADJUSTED_WELL;
+                ? PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE
+                : PeopleCompatibleCalculation::ADJUSTED_WELL;
 
             return $this->createPeopleCompatibleCalculation(
                 $status,
@@ -499,8 +514,8 @@ class AutomaticTransposer
             ) * (-1);
 
             $status = (abs($offsetFromCentered) < abs($fromPeopleHighestInCenteredToPeopleHighest))
-            ? PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE
-            : PeopleCompatibleCalculation::ADJUSTED_WELL;
+                ? PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE
+                : PeopleCompatibleCalculation::ADJUSTED_WELL;
 
             return $this->createPeopleCompatibleCalculation(
                 $status, 
@@ -515,12 +530,13 @@ class AutomaticTransposer
     /**
      * Create a PeopleCompatibleCalculation object given the status and the
      * offset from the centered transposition
-     * 
+     *
      * @param int        $status                One of PeopleCompatibleCalculation's constants.
      * @param int        $offsetFromCentered    Offset of the peopleCompatible from centered.
      * @param NotesRange $peopleRangeInCentered Voice range of the people in centered transposition.
-     * 
+     *
      * @return PeopleCompatibleCalculation    The PeopleCompatibleCalculation object.
+     * @throws Exception\SongDataException
      */
     protected function createPeopleCompatibleCalculation(int $status, int $offsetFromCentered, NotesRange $peopleRangeInCentered) : PeopleCompatibleCalculation
     {
@@ -545,8 +561,10 @@ class AutomaticTransposer
     /**
      * Given a transposition, calculate its equivalents with capo and return the
      * easiest one.
-     * 
+     *
      * @param Transposition $transposition The given transposition, with capo 0.
+     *
+     * @throws Exception\SongDataException
      */
     protected function chooseEasiestEquivalentWithCapo(Transposition $transposition) : Transposition
     {
@@ -555,7 +573,7 @@ class AutomaticTransposer
             $this->calculateEquivalentsWithCapo($transposition)
         );
 
-        foreach ($equivalentsWithCapo as &$trans)
+        foreach ($equivalentsWithCapo as $trans)
         {
             if ($this->firstChordIsKey) {
                 $trans->setAlternativeChords($this->notesCalculator);
