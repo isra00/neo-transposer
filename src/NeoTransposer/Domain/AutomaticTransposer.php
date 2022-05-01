@@ -413,8 +413,8 @@ class AutomaticTransposer
      * This algorithm does not deal with the relation of this transposition
      * with others (i.e. hiding notEquivalent when there is peopleCompatible, etc.)
      *
+     * @return PeopleCompatibleCalculation
      * @throws Exception\SongDataException
-     * @throws \Exception
      */
     public function calculatePeopleCompatible() : PeopleCompatibleCalculation
     {
