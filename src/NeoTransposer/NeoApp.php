@@ -53,7 +53,8 @@ class NeoApp extends Application
                 $app['debug'] = true;
             }
 
-            $request->setTrustedProxies($app['neoconfig']['trusted_proxies'], Request::HEADER_X_FORWARDED_AWS_ELB);
+            $request->setTrustedProxies($app['neoconfig']['trusted_proxies']);
+            //$request->setTrustedProxies($app['neoconfig']['trusted_proxies'], Request::HEADER_X_FORWARDED_AWS_ELB);
 
             $app['twig']->addGlobal('current_route', $request->attributes->get('_route'));
 
