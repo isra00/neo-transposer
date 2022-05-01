@@ -4,7 +4,7 @@
 
 ### Mission ###
 
-Help neo-catechumenal cantors find the right chords for singing songs within their voice range.
+Help neo-catechumenal cantors find the right song chords that fit their unique, personal voice range.
 
 ### Vision ###
 
