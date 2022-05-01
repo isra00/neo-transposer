@@ -10,6 +10,8 @@ return [
 		'charset'	=> 'utf8',
 	],
 
+    'trusted_proxies' => ['172.31.26.20'],
+
 	// URLs for the Book controller. Every book must have an entry here!
 	'book_url' => [
 		1 => '/nyimbo-njia-neokatekumenato',
@@ -64,7 +66,7 @@ return [
 	'admins'			=> [getenv('NT_ADMIN_USERNAME') => ['ROLE_ADMIN', getenv('NT_ADMIN_PASSWORD')]],
 
 	'people_range'		=> ['B1', 'B2'],
-	
+
 	'debug'				=> getenv('NT_DEBUG'),
 	'profiler'			=> getenv('NT_PROFILER'),
 
