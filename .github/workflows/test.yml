@@ -6,10 +6,14 @@ env:
   NT_DB_HOST: 127.0.0.1
   NT_DB_USER: root
   NT_DB_PASSWORD: root
-  NT_DB_DATABASE: transposer
-  NT_DB_TEST_DATABASE: integration_test
+  NT_DB_DATABASE: nt_only_songs
+  NT_DB_TEST_DATABASE: nt_empty_tables
   NT_DEBUG: 1
   NT_PROFILER: 0
+  NT_ADMIN_USERNAME: unused
+  NT_ADMIN_PASSWORD: unused
+  NT_ANALYTICS_ID: UA-xxxxxxxx-1
+  NT_MAXMIND_LICENSE_KEY: ${{ secrets.NT_MAXMIND_LICENSE_KEY }}
 
 jobs:
   test:
@@ -17,39 +21,24 @@ jobs:
     strategy:
       matrix:
         operating-system: ['ubuntu-18.04', 'ubuntu-20.04']
-        php-versions: ['7.3', '7.4']
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: curl
-          tools: composer
+      - name: Build the dev Docker image
+        run: make build-dev
 
-      - name: Install dependencies
-        run: composer install
+      - name: Run fixture containers
+        run: make serve
 
-      - name: Turn on Ubuntu MySQL
-        run: |
-          sudo systemctl enable mysql.service
-          sudo systemctl start mysql.service
+      - name: Unit & integration tests, functional test
+        run: make test
 
-      - name: Load MySQL data
-        run: |
-          mysql -uroot -proot -e 'SHOW VARIABLES LIKE "version";'
-          mysql -uroot -proot -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
-          mysql -uroot -proot transposer < song_data.sql
-          mysql -uroot -proot -e 'CREATE DATABASE integration_test COLLATE utf8_general_ci'
-          mysql -uroot -proot integration_test < create_tables.sql
+      - name: Acceptance tests
+        run: make test-acceptance
 
-      - name: Test suites as set up in composer script (UT + functional)
-        run: composer test
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: PHPUnit-coverage-report
-          path: tests/_output/coverage
+#      - uses: actions/upload-artifact@v2
+#        with:
+#          name: PHPUnit-coverage-report
+#          path: tests/_output/coverage
