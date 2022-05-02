@@ -9,9 +9,10 @@ step_decorators: ~
 modules:
   enabled:
     - WebDriver:
-        url: http://transposer.local/
-        window_size: false # disabled in ChromeDriver
+        host: host.docker.internal
         port: 4444
+        url: http://host.docker.internal/
+        window_size: false # disabled in ChromeDriver
         browser: chrome
         capabilities:
           chromeOptions:

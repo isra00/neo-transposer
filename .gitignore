@@ -1,4 +1,4 @@
-tests/reports
+tests/_output
 dump.sh
 vendor
 TODO
