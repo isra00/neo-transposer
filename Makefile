@@ -1,9 +1,12 @@
 .DEFAULT_GOAL := build-dev
 
-build-dev:
+pre-build:
+	sh update_mmdb.sh
+
+build-dev: pre-build
 	docker build --target dev -t transposer:`git rev-parse --short HEAD`-dev .
 
-build-prod:
+build-prod: pre-build
 	docker build --target prod -t transposer:`git rev-parse --short HEAD`-prod .
 
 #No need to delete it after stopping since it's run with --rm
