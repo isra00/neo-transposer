@@ -3,7 +3,7 @@ name: Test Neo-Transposer
 on: [push]
 
 env:
-  NT_DB_HOST: 127.0.0.1
+  NT_DB_HOST: host.docker.internal
   NT_DB_USER: root
   NT_DB_PASSWORD: root
   NT_DB_DATABASE: nt_only_songs
