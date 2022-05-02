@@ -16,6 +16,13 @@ serve: destroy-server
 serve-local: destroy-server
 	docker run --rm -dit -p 80:80 -e ENV=DEV --env-file ./.env -v ${CURDIR}:/var/www/html --name transposer-dev transposer:`git rev-parse --short HEAD`-dev
 
+run-test-db:
+	docker run -dit -p 3306:3306 --name test-mysql -e MYSQL_ROOT_PASSWORD=root mysql:5.7-debian
+	mysql -h127.0.0.1 -uroot -proot -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
+	mysql -h127.0.0.1 -uroot -proot transposer < song_data.sql
+	mysql -h127.0.0.1 -uroot -proot -e 'CREATE DATABASE integration_test COLLATE utf8_general_ci'
+	mysql -h127.0.0.1 -uroot -proot integration_test < create_tables.sql
+
 test:
 	docker exec -it transposer-dev vendor/bin/codecept run unit --coverage-html
 	docker exec -it transposer-dev php tests/testAllTranspositions.php
