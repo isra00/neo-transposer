@@ -54,12 +54,12 @@ run-test-db:
 	docker exec -i test-mysql mysql -uroot -proot nt_empty_tables < create_tables.sql
 
 test:
-	docker exec -it transposer-dev vendor/bin/codecept run unit --coverage-html
-	docker exec -it transposer-dev php tests/testAllTranspositions.php
+	docker exec -t transposer-dev vendor/bin/codecept run unit --coverage-html
+	docker exec -t transposer-dev php tests/testAllTranspositions.php
 
 test-acceptance:
 	docker start selenium-chrome || docker run -d --name selenium-chrome --add-host=host.docker.internal:172.17.0.1 -p 4444:4444 -p 7900:7900 --shm-size=2g selenium/standalone-chrome
 	sleep 5
-	docker exec -it transposer-dev php /var/www/html/vendor/bin/codecept run acceptance
+	docker exec -t transposer-dev php /var/www/html/vendor/bin/codecept run acceptance
 
 build-and-test: build-dev serve test test-acceptance
