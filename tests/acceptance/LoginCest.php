@@ -8,13 +8,13 @@ use Faker\Factory;
 class LoginCest
 {
 
-    public function existingUserShouldLoginAndSeeBookPage(AcceptanceTester $I)
+    /*public function existingUserShouldLoginAndSeeBookPage(AcceptanceTester $I)
     {
         $I->amOnPage('/es/login');
         $I->fillField('email','isra00@gmail.com');
         $I->click('sent');
         $I->seeElement('.page-book');
-    }
+    }*/
 
     public function newUserShouldSeeUserVoicePage(AcceptanceTester $I)
     {
