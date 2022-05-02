@@ -38,7 +38,7 @@ RUN usermod -u 1000 www-data; \
 COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 COPY --from=composer ${WORKDIR} /var/www/html/
-#COPY --from=composer /usr/bin/composer /usr/bin/composer
+RUN sh update_mmdb.sh
 
 FROM nt-common AS prod
 
