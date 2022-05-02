@@ -24,18 +24,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Build the DEV Docker image
+      - name: 📦 Build the DEV Docker image
         run: make build-dev
 
-      - name: Run fixture containers
+      - name: ⚙ Run fixture containers
         run: |
           make serve
           make run-test-db
 
-      - name: Unit & integration tests, functional test
+      - name: 🧪 Unit & integration tests, functional test
         run: make test
 
-      - name: Acceptance tests
+      - name: 🧪 Acceptance tests
         run: make test-acceptance
 
 #      - uses: actions/upload-artifact@v2
@@ -43,7 +43,7 @@ jobs:
 #          name: PHPUnit-coverage-report
 #          path: tests/_output/coverage
 
-      - name: Build the PROD Docker image
+      - name: 📦 Build the PROD Docker image
         run: make build-prod
 
       - name: Log in to the Container registry
@@ -59,7 +59,7 @@ jobs:
         with:
           images: transposer:for-prod
 
-      - name: Upload to GitHub's container repository
+      - name: 🚀 Upload to GitHub's container repository
         run: |
-          docker tag transposer:for-prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ env.GITHUB_SHA }}-prod
-          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ env.GITHUB_SHA }}-prod
+          docker tag transposer:for-prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
+          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
