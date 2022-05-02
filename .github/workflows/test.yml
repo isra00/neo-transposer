@@ -17,7 +17,7 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  test:
+  test-and-distribute:
     runs-on: ubuntu-latest
 
     steps:
@@ -43,10 +43,6 @@ jobs:
 #          name: PHPUnit-coverage-report
 #          path: tests/_output/coverage
 
-  distribute:
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Build the PROD Docker image
         run: make build-prod
 
