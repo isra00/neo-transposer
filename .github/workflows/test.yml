@@ -30,7 +30,9 @@ jobs:
         run: make build-dev
 
       - name: Run fixture containers
-        run: make serve
+        run: |
+          make serve
+          make run-test-db
 
       - name: Unit & integration tests, functional test
         run: make test
