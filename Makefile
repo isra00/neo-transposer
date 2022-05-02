@@ -8,6 +8,7 @@ build-dev: pre-build
 
 build-prod: pre-build
 	docker build --target prod -t transposer:`git rev-parse --short HEAD`-prod .
+	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:for-prod
 
 #No need to delete it after stopping since it's run with --rm
 destroy-server:
@@ -43,6 +44,7 @@ serve-local: destroy-server
 		--add-host=host.docker.internal:172.17.0.1 -v ${CURDIR}:/var/www/html --name transposer-dev \
 		transposer:`git rev-parse --short HEAD`-dev
 
+#Rename to serve-mysql
 run-test-db:
 	@docker stop test-mysql || true
 	docker run --rm -dit -p 3306:3306 --name test-mysql -e MYSQL_ROOT_PASSWORD=root mysql:5.7-debian --bind-address=0.0.0.0
