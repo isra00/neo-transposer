@@ -15,7 +15,6 @@ env:
   NT_ANALYTICS_ID: UA-xxxxxxxx-1
   NT_MAXMIND_LICENSE_KEY: ${{ secrets.NT_MAXMIND_LICENSE_KEY }}
   REGISTRY: ghcr.io
-  TAG_TO_DISTRIBUTE: ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ env.GITHUB_SHA }}-prod
 
 jobs:
   test:
@@ -66,5 +65,5 @@ jobs:
 
       - name: Upload to GitHub's container repository
         run: |
-          docker tag transposer:for-prod ${{ env.TAG_TO_DISTRIBUTE }}
-          docker push ${{ env.TAG_TO_DISTRIBUTE }}
+          docker tag transposer:for-prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ env.GITHUB_SHA }}-prod
+          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ env.GITHUB_SHA }}-prod
