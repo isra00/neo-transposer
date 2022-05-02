@@ -14,10 +14,34 @@ destroy-server:
 	@docker stop transposer-dev || true
 
 serve: destroy-server
-	docker run --rm -dit -p 80:80 -e ENV=DEV --env-file ./.env --add-host=host.docker.internal:172.17.0.1 --name transposer-dev transposer:`git rev-parse --short HEAD`-dev
+	docker run --rm -dit -p 80:80 \
+		-e NT_DB_HOST \
+		-e NT_DB_USER \
+		-e NT_DB_PASSWORD \
+		-e NT_DB_DATABASE \
+		-e NT_DB_TEST_DATABASE \
+		-e NT_RECAPTCHA_SECRET \
+		-e NT_ADMIN_USERNAME \
+		-e NT_ADMIN_PASSWORD \
+		-e NT_ANALYTICS_ID \
+		-e NT_DEBUG \
+		--add-host=host.docker.internal:172.17.0.1 --name transposer-dev \
+		transposer:`git rev-parse --short HEAD`-dev
 
 serve-local: destroy-server
-	docker run --rm -dit -p 80:80 -e ENV=DEV --env-file ./.env --add-host=host.docker.internal:172.17.0.1 -v ${CURDIR}:/var/www/html --name transposer-dev transposer:`git rev-parse --short HEAD`-dev
+	docker run --rm -dit -p 80:80 \
+		-e NT_DB_HOST \
+		-e NT_DB_USER \
+		-e NT_DB_PASSWORD \
+		-e NT_DB_DATABASE \
+		-e NT_DB_TEST_DATABASE \
+		-e NT_RECAPTCHA_SECRET \
+		-e NT_ADMIN_USERNAME \
+		-e NT_ADMIN_PASSWORD \
+		-e NT_ANALYTICS_ID \
+		-e NT_DEBUG \
+		--add-host=host.docker.internal:172.17.0.1 -v ${CURDIR}:/var/www/html --name transposer-dev \
+		transposer:`git rev-parse --short HEAD`-dev
 
 run-test-db:
 	@docker stop test-mysql || true
