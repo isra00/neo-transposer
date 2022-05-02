@@ -29,16 +29,16 @@ EXPOSE 80
 #Another way of installing extensions, recommended by <https://hub.docker.com/_/php>
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions mysqli pdo_mysql apcu zip \
+    install-php-extensions mysqli pdo_mysql apcu zip; \
     usermod -u 1000 www-data; \
-    chown -R www-data:www-data /var/www/html; \
-    a2enmod rewrite headers deflate expires \
+    a2enmod rewrite headers deflate expires; \
     apt update && apt install wget
 
 COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 COPY --from=composer ${WORKDIR} /var/www/html/
-RUN sh update_mmdb.sh
+RUN chown -R www-data:www-data /var/www/html; \
+    sh update_mmdb.sh
 
 FROM nt-common AS prod
 
