@@ -31,14 +31,12 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions mysqli pdo_mysql apcu zip; \
     usermod -u 1000 www-data; \
-    a2enmod rewrite headers deflate expires; \
-    apt update && apt install wget
+    a2enmod rewrite headers deflate expires
 
 COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 COPY --from=composer ${WORKDIR} /var/www/html/
-RUN chown -R www-data:www-data /var/www/html; \
-    sh update_mmdb.sh
+RUN chown -R www-data:www-data /var/www/html
 
 FROM nt-common AS prod
 
