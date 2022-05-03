@@ -54,10 +54,10 @@ start-db-local:
 
 #No need to delete it after stopping since it's run with --rm
 stop:
-	docker ps -q --filter "name=transposer" | grep -q . && docker stop transposer
+	@docker stop transposer-dev || true
 
 stop-all: stop
-	docker ps -q --filter "name=nt-mysql" | grep -q . && docker stop nt-mysql
+	@docker stop nt-mysql || true
 
 test:
 	docker exec -t transposer-dev vendor/bin/codecept run unit --coverage-html

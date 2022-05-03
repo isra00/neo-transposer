@@ -19,8 +19,8 @@ RUN composer install  \
 COPY . ${WORKDIR}
 RUN composer dump-autoload --optimize --classmap-authoritative
 
-# @todo Descargar última versión de MMDB e ignorar/borrar la actual
 
+# ----------------------------------------------------------------------------------------------------------------------
 FROM php:7.3-apache AS nt-common
 
 ARG WORKDIR="/app"
@@ -38,15 +38,18 @@ COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 COPY --from=composer ${WORKDIR} /var/www/html/
 
-# Is this really necessary? 'cause it can't be cached
-RUN chown -R www-data:www-data /var/www/html
+# Is this really necessary? it can't be cached
+#RUN chown -R www-data:www-data /var/www/html
 
+
+# ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS prod
 
 #PROD should have a different Composer run, without dev stuff!!
 COPY ./build/php-prod.ini /usr/local/etc/php/conf.d/neo-transposer-prod.ini
 
 
+# ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS dev
 
 COPY ./build/php-dev.ini /usr/local/etc/php/conf.d/neo-transposer-dev.ini
