@@ -15,3 +15,4 @@ GeoLite2-Country.mmdb
 .idea
 .vscode
 .env
+_output
