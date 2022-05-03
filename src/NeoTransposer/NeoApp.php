@@ -136,7 +136,7 @@ class NeoApp extends Application
             2592000,                        //Lifetime: 1 month
             '/; samesite=Lax',              //Path + samesite (see <https://www.php.net/manual/es/function.session-set-cookie-params.php#125072>)
             $this->hostname,                //Domain
-            !$this['neoconfig']['debug'],   //Secure
+            !(bool) $this['neoconfig']['debug'],   //Secure
             true                            //httponly
         );
 
