@@ -42,6 +42,7 @@ jobs:
         run: make test-acceptance
 
       - name: 📝 Get tests' outputs
+        if: always()
         run: make get-test-outputs dest=.
 
       - name: Upload tests' outputs as artifacts
