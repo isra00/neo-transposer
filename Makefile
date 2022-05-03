@@ -3,14 +3,12 @@
 
 #Quedarían pendientes targets para composer, pero es un coñazo
 
-pre-build:
-	sh update_mmdb.sh
-
 # This should be run on post-commit, right? Otherwise serve would fail bc commit name has changed.
-build-dev: pre-build
+build-dev:
 	docker build --target dev -t transposer:`git rev-parse --short HEAD`-dev .
 
-build-prod: pre-build
+build-prod:
+	sh update_mmdb.sh
 	docker build --target prod -t transposer:`git rev-parse --short HEAD`-prod .
 	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:for-prod
 
@@ -36,7 +34,7 @@ start start-local: stop
 		$(OPTIONAL_VOLUME) \
 		transposer:`git rev-parse --short HEAD`-dev
 
-start-db:
+start-db-for-test:
 	@docker stop nt-mysql || true
 	docker run --rm -dit -p 3306:3306 --name nt-mysql -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} mysql:5.7-debian --bind-address=0.0.0.0
 	sleep 15
