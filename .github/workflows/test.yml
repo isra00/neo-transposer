@@ -43,7 +43,7 @@ jobs:
         run: make get-test-outputs dest=.
 
       - name: Upload tests' outputs as artifacts
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: Codeception-outputs
           path: _output
