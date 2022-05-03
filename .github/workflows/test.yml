@@ -7,7 +7,7 @@ env:
   NT_DB_USER: root
   NT_DB_PASSWORD: root
   NT_DB_DATABASE: nt_only_songs
-  NT_DB_TEST_DATABASE: nt_empty_tables
+  NT_DB_DATABASE_INTEGRATION: nt_empty_tables
   NT_DEBUG: 1
   NT_PROFILER: 0
   NT_ADMIN_USERNAME: unused
@@ -29,8 +29,9 @@ jobs:
 
       - name: ⚙ Run fixture containers
         run: |
-          make serve
-          make run-test-db
+          make start
+          make start-db
+          make refresh-db
 
       - name: 🧪 Unit & integration tests, functional test
         run: make test
@@ -38,10 +39,14 @@ jobs:
       - name: 🧪 Acceptance tests
         run: make test-acceptance
 
-#      - uses: actions/upload-artifact@v2
-#        with:
-#          name: PHPUnit-coverage-report
-#          path: tests/_output/coverage
+      - name: 📝 Get tests' outputs
+        run: make get-test-outputs dest=.
+
+      - name: Upload tests' outputs as artifacts
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Codeception-outputs
+          path: _output
 
       - name: 📦 Build the PROD Docker image
         run: make build-prod

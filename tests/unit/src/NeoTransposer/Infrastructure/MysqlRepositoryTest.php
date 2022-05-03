@@ -17,10 +17,10 @@ class MysqlRepositoryTest extends \Codeception\Test\Unit
             'host'     => getenv('NT_DB_HOST'),
             'user'     => getenv('NT_DB_USER'),
             'password' => getenv('NT_DB_PASSWORD'),
-            'database' => getenv('NT_DB_TEST_DATABASE'),
+            'database' => getenv('NT_DB_DATABASE_INTEGRATION'),
             'charset'  => 'utf8',
         ]);
-        $this->dbConnection->executeQuery('USE ' . getenv('NT_DB_TEST_DATABASE'));
+        $this->dbConnection->executeQuery('USE ' . getenv('NT_DB_DATABASE_INTEGRATION'));
 
         $this->faker = Factory::create();
 

@@ -1,4 +1,4 @@
-FROM composer as composer
+FROM composer:2.3.5 as composer
 
 ARG WORKDIR="/app"
 
@@ -26,24 +26,31 @@ FROM php:7.3-apache AS nt-common
 ARG WORKDIR="/app"
 EXPOSE 80
 
-#Another way of installing extensions, recommended by <https://hub.docker.com/_/php>
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions mysqli pdo_mysql apcu zip; \
+#Another way of installing extensions, recommended by <https://hub.docker.com/_/php
+#Ojo! Ya que este archivo viene de Internet, no se cachea nunca y hace que se tenga que recompilar todo!!!
+#Intentar instalar las extensiones de la otra forma
+RUN apt update && apt install -y libzip-dev zlib1g-dev; \
+    docker-php-ext-install mysqli pdo_mysql zip; \
     usermod -u 1000 www-data; \
     a2enmod rewrite headers deflate expires
 
 COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 COPY --from=composer ${WORKDIR} /var/www/html/
+
+# Is this really necessary? 'cause it can't be cached
 RUN chown -R www-data:www-data /var/www/html
 
 FROM nt-common AS prod
 
+#PROD should have a different Composer run, without dev stuff!!
 COPY ./build/php-prod.ini /usr/local/etc/php/conf.d/neo-transposer-prod.ini
 
 
 FROM nt-common AS dev
 
 COPY ./build/php-dev.ini /usr/local/etc/php/conf.d/neo-transposer-dev.ini
-RUN install-php-extensions xdebug
+
+#xdebug is not a core extension so it must be installed with PECL. 3.1 is the highest version supporting PHP 7.3
+RUN pecl install xdebug-3.1.4 \
+	&& docker-php-ext-enable xdebug
