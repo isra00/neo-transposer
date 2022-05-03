@@ -26,26 +26,21 @@ FROM php:7.3-apache AS nt-common
 ARG WORKDIR="/app"
 EXPOSE 80
 
-#Another way of installing extensions, recommended by <https://hub.docker.com/_/php
-#Ojo! Ya que este archivo viene de Internet, no se cachea nunca y hace que se tenga que recompilar todo!!!
-#Intentar instalar las extensiones de la otra forma
 RUN apt update && apt install -y libzip-dev zlib1g-dev; \
     docker-php-ext-install mysqli pdo_mysql zip; \
     usermod -u 1000 www-data; \
+    chown -R www-data:www-data /var/www/html; \
     a2enmod rewrite headers deflate expires
 
 COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
-COPY --from=composer ${WORKDIR} /var/www/html/
-
-# Is this really necessary? it can't be cached
-#RUN chown -R www-data:www-data /var/www/html
+COPY --from=composer --chown=www-data ${WORKDIR} /var/www/html/
 
 
 # ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS prod
 
-#PROD should have a different Composer run, without dev stuff!!
+#@todo PROD should have a different Composer run, without dev stuff
 COPY ./build/php-prod.ini /usr/local/etc/php/conf.d/neo-transposer-prod.ini
 
 
