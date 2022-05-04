@@ -2,11 +2,13 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\Entity\User;
+use NeoTransposer\Domain\Repository\BookRepository;
+use NeoTransposer\Domain\Repository\UserRepository;
+use NeoTransposer\Domain\ValueObject\UserPerformance;
+use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use NeoTransposer\Model\User;
-use NeoTransposer\Persistence\UserPersistence;
-use NeoTransposer\NeoApp;
 
 /**
  * Landing page with Login form.
@@ -34,11 +36,11 @@ class Login
             $app['session']->set('callbackSetUserToken', $req->get('callbackSetUserToken'));
         }
 
-        $tpl_vars['external']                 = !empty($req->get('external'));
-        $tpl_vars['languages']                = $app['neoconfig']['languages'];
-        $tpl_vars['page_title']                = $app->trans('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
-        $tpl_vars['meta_description']        = $app->trans('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
-        $tpl_vars['meta_canonical']            = $app['absoluteUriWithoutQuery'];
+        $tpl_vars['external']         = !empty($req->get('external'));
+        $tpl_vars['languages']        = $app['neoconfig']['languages'];
+        $tpl_vars['page_title']       = $app->trans('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
+        $tpl_vars['meta_description'] = $app->trans('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
+        $tpl_vars['meta_canonical']   = $app['absoluteUriWithoutQuery'];
 
         return $app->render('login.twig', $tpl_vars, true);
     }
@@ -73,11 +75,16 @@ class Login
             );
         }
 
-        $userPersistence = new UserPersistence($app['db']);
+        $userRepository = $app[UserRepository::class];
 
-        if (!$user = $userPersistence->fetchUserFromEmail($req_email)) {
-            $user = new User($req_email, null, null);
-            $user->persist($app['db'], $req->getClientIp());
+        if (!$user = $userRepository->readFromEmail($req_email)) {
+
+            $bookRepository = $app[BookRepository::class];
+            $idBook = $bookRepository->readIdBookFromLocale($app['locale']);
+            $user = new User($req_email, null, null, $idBook, null, null, null, new UserPerformance(0, 0));
+
+            //When it gets persisted, the User object is also assigned its ID
+            $userRepository->save($user, $req->getClientIp());
         }
 
         $user->firstTime = !$user->hasRange();
@@ -104,7 +111,7 @@ class Login
         return $app->redirect($target);
     }
 
-    protected function validateCaptcha(Request $req, string $secret)
+    protected function validateCaptcha(Request $req, string $secret): bool
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
@@ -125,7 +132,7 @@ class Login
         return (true == json_decode($response, true)['success']);
     }
 
-    public function externalLoginFinish(NeoApp $app)
+    public function externalLoginFinish(NeoApp $app): string
     {
         return $app->render('external_login_finish.twig');
     }

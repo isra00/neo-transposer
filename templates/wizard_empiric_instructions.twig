@@ -13,7 +13,7 @@
 
 	<p>{% trans %}Try to do your best to sing with your lowest possible voice, since this test tries to find the limits of your voice.{% endtrans %}</p>
 
-	<form method="post" action="{{ global.request.getRequestUri }}" class="margintop">
+	<form method="post" action="{{ form_action }}" class="margintop">
 		<p class="center">
 			<button id="submit" type="submit" value="sent" class="btn-neutral bigbutton">{% trans %}Understood{% endtrans %}</button>
 			<small id="countdown"><span id="seconds">5</span> {% trans %}seconds{% endtrans %}...</small>
@@ -30,15 +30,14 @@
 		/** @see https://github.com/isra00/neo-transposer/issues/158 */
 		setTimeout(function() {
 
-			var iTimeOut = 5,
-				oCountDown = document.getElementById("seconds");
+			var oCountDown = document.getElementById("seconds");
 
 			$("#submit").attr("disabled", "disabled");
 
 			window.intervalButtonOk = setInterval(function () {
 				var current = parseInt(oCountDown.innerHTML);
 				current--;
-				oCountDown.innerHTML = current;
+				oCountDown.innerHTML = current.toString();
 
 				if (current < 1)
 				{

@@ -25,26 +25,26 @@
 	<nav class="admin-tools">
 		<ul>
 			<h4>Server Ops</h4>
-			<li><a href="{{ path(current_route, {'tool': 'refreshCss'}) }}">Refresh compiled CSS</a></li>
-			<li><a href="{{ path(current_route, {'tool': 'removeOldCompiledCss'}) }}">Remove old CSS</a></li>
-			<li><a href="{{ path(current_route, {'tool': 'populateCountry'}) }}">Populate Country data</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'RefreshCompiledCss'}) }}">Refresh compiled CSS</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'RemoveOldCompiledCss'}) }}">Remove old CSS</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'PopulateUsersCountry'}) }}">Populate Country data</a></li>
 		</ul>
 
 		<ul>
 			<h4>DB maintenance</h4>
-			<li><a href="{{ path(current_route, {'tool': 'checkLowerHigherNotes'}) }}">Check lower-highest notes</a></li>
-			<li><a href="{{ path(current_route, {'tool': 'checkUserLowerHigherNotes'}) }}">Check user lower-highest notes</a></li>
-			<li><a href="{{ path(current_route, {'tool': 'checkChordOrder'}) }}">Check chord order</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'CheckSongsRangeConsistency'}) }}">Check lower-highest notes</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'CheckUsersRangeConsistency'}) }}">Check user lower-highest notes</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'CheckChordsOrder'}) }}">Check chord order</a></li>
 			<li><a href="{{ path('chord_correction_panel') }}">Chord correction panel</a></li>
-			<li><a href="{{ path(current_route, {'tool': 'testAllTranspositions'}) }}">Functional test: all transpositions</a></li>
-			<li><a href="{{ path(current_route, {'tool': 'detectOrphanChords'}) }}">Detect orphan chords</a></li>
-			<li><a href="{{ path(current_route, {'tool': 'diffTranslations'}) }}">Missing translations</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'TestAllTranspositions'}) }}">Functional test: all transpositions</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'CheckOrphanChords'}) }}">Detect orphan chords</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'CheckMissingTranslations'}) }}">Missing translations</a></li>
 		</ul>
 
 		<ul>
 			<h4>Data research</h4>
-			<li><a href="{{ path(current_route, {'tool': 'getVoiceRangeOfGoodUsers'}) }}">Get voice range of all good users</a></li>
-			<li><a href="{{ path(current_route, {'tool': 'getPerformanceByNumberOfFeedbacks'}) }}">Get Performance and frequency by # of FBs</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'GetVoiceRangeOfGoodUsers'}) }}">Get voice range of all good users</a></li>
+			<li><a href="{{ path(current_route, {'tool': 'GetPerformanceByNumberOfFeedbacks'}) }}">Get Performance and frequency by # of FBs</a></li>
 		</ul>
 
 		<p><a href="{{ url(current_route, { long: 1}) }}" class="btn-neutral">Load long reports ⇲</a></p>
@@ -91,7 +91,7 @@
 	{% endfor %}
 	</div>
 
-	<h4>Users by songbook language</h4>
+	<h4>Songbook #users and performance</h4>
 	<table class="data-table">
 		<thead>
 			<tr><th>Language</th><th>Users</th><th>%</th><th colspan="2">Performance</th></tr>

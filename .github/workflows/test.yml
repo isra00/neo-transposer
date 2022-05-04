@@ -3,53 +3,72 @@ name: Test Neo-Transposer
 on: [push]
 
 env:
-  NT_DB_HOST: 127.0.0.1
+  NT_DB_HOST: host.docker.internal
   NT_DB_USER: root
   NT_DB_PASSWORD: root
-  NT_DB_DATABASE: transposer
+  NT_DB_DATABASE: nt_only_songs
+  NT_DB_DATABASE_INTEGRATION: nt_empty_tables
   NT_DEBUG: 1
   NT_PROFILER: 0
+  NT_ADMIN_USERNAME: unused
+  NT_ADMIN_PASSWORD: unused
+  NT_ANALYTICS_ID: UA-xxxxxxxx-1
+  NT_MAXMIND_LICENSE_KEY: ${{ secrets.NT_MAXMIND_LICENSE_KEY }}
+  REGISTRY: ghcr.io
 
 jobs:
-  test:
-    runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        operating-system: ['ubuntu-18.04', 'ubuntu-20.04']
-        php-versions: ['7.3', '7.4']
+  test-and-distribute:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: curl
-          tools: composer
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
 
-      - name: Install dependencies
-        run: composer install
+      - name: 📦 Build the DEV Docker image
+        run: make build-dev
 
-      - name: Run PHPUnit
-        run: ./vendor/bin/phpunit
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: PHPUnit-coverage-report
-          path: tests/reports
-
-      - name: Turn on Ubuntu MySQL (SUDO)
+      - name: ⚙ Run fixture containers
         run: |
-          sudo systemctl enable mysql.service
-          sudo systemctl start mysql.service
+          make start
+          make start-db-for-test
 
-      - name: Load MySQL data
+      - name: 🧪 Unit & integration tests, functional test
+        run: make test
+
+      - name: 🧪 Acceptance tests
+        run: make test-acceptance
+
+      - name: 📝 Get tests' outputs
+        if: always()
+        run: make get-test-outputs dest=.
+
+      - name: Upload tests' outputs as artifacts
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: Codeception-outputs
+          path: _output
+
+      - name: 📦 Build the PROD Docker image
+        run: make build-prod
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for the registry
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: transposer:for-prod
+
+      - name: 🚀 Upload to GitHub's container repository
         run: |
-          mysql -uroot -proot -e 'SHOW VARIABLES LIKE "version";'
-          mysql -uroot -proot -e 'CREATE DATABASE transposer COLLATE utf8_general_ci'
-          mysql -uroot -proot transposer < song_data.sql
-          
-      - name: Functional test All Transpositions
-        run: php tests/testAllTranspositions.php
+          docker tag transposer:for-prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
+          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod

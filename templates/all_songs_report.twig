@@ -1,16 +1,16 @@
 {% extends "base.twig" %}
 
-{% macro printTransposition(transposition, song, prefix, typeOfTransposition) %}
+{% macro printTransposition(transposition, transposed_song_with_fb, prefix, typeOfTransposition) %}
 
 	{% if (typeOfTransposition == "centered1") %}
-		{% set other = (song.feedbackTransposition != null and song.feedbackTransposition != "centered1") %}
+		{% set other = (transposed_song_with_fb.feedbackTranspositionWhichWorked != null and transposed_song_with_fb.feedbackTranspositionWhichWorked != "centered1") %}
 	{% else %}
-		{% set other = (not (song.feedbackTransposition == typeOfTransposition)) %}
+		{% set other = (not (transposed_song_with_fb.feedbackTranspositionWhichWorked == typeOfTransposition)) %}
 	{% endif %}
 
 	<li class="trans-{{ typeOfTransposition }} {% if other %}other{% endif %}">
 
-		{% if (song.feedbackTransposition == typeOfTransposition) %}
+		{% if (transposed_song_with_fb.feedbackTranspositionWhichWorked == typeOfTransposition) %}
 		<span class="feedback green" title="{% trans %}You have reported this transposition as fitting your voice{% endtrans %}">✔</span>
 		{% else %}
 		<span class="marker-when-multiple">›</span>
@@ -25,7 +25,7 @@
 		{% if transposition.asBook %}
 			{% trans %}(as in the book){% endtrans %}
 		{% else %}
-			{% for i, original_chord in song.song.originalChordsForPrint %}
+			{% for i, original_chord in transposed_song_with_fb.transposedSong.song.originalChordsForPrint %}
 				<span class="chord-pair">
 					{{ original_chord|raw }}
 					&rarr;
@@ -72,21 +72,21 @@
 
 <div>
 	<ul class="songs-list">
-	{% for song in songs %}
+	{% for transposed_song_with_fb in all_songs_transposed_with_fb %}
 		<li>
-			<h2>{{ song.song.page|default('&#248;')|raw }}
-			· {{ song.song.title }}
-			{% if global.debug %}<a href="{{ path('transpose_song', {'id_song' : song.song.idSong }) }}">[{{ song.song.idSong }}]</a>{% endif %}
+			<h2>{{ transposed_song_with_fb.transposedSong.song.page|default('&#248;')|raw }}
+			· {{ transposed_song_with_fb.transposedSong.song.title }}
+			{% if global.debug %}<a href="{{ path('transpose_song', {'id_song' : transposed_song_with_fb.transposedSong.song.idSong }) }}">[{{ transposed_song_with_fb.transposedSong.song.idSong }}]</a>{% endif %}
 			</h2>
 
 			<ul>
 {% block songTranspositions %}
-			{% for transposition in song.transpositions|slice(0,2) -%}
-				{{ self.printTransposition(transposition, song, null, "centered" ~ loop.index ) }}
+			{% for transposition in transposed_song_with_fb.transposedSong.transpositions|slice(0,2) -%}
+				{{ self.printTransposition(transposition, transposed_song_with_fb, null, "centered" ~ loop.index ) }}
 			{%- endfor %}
 
-			{% if song.peopleCompatible %}
-				{{ self.printTransposition(song.peopleCompatible, song, "[" ~ "Assembly"|trans ~ song.peopleCompatibleStatusMicroMsg ~ "]", "peopleCompatible") }}
+			{% if transposed_song_with_fb.peopleCompatible %}
+				{{ self.printTransposition(transposed_song_with_fb.peopleCompatible, transposed_song_with_fb, "[" ~ "Assembly"|trans ~ transposed_song_with_fb.peopleCompatibleStatusMicroMsg ~ "]", "peopleCompatible") }}
 			{%- endif %}
 {% endblock %}
 			</ul>
@@ -118,14 +118,14 @@ $(function() {
 		$(".icon-print").hide();
 	}
 
-	$(".icon-print").click(function(e) {
+	$(".icon-print").click(function() {
 		ga('send', 'event', 'AllSongsReport', 'Print');
 		window.print();
 	});
 
 	$(".icon-download")
 		.attr("href", "javascript:void(0)") //Progressive enhancement
-		.click(function(e) {
+		.click(function() {
 			location.href = "{{ path('all_songs_report', {'dl': 1}) }}";
 			ga('send', 'event', 'AllSongsReport', 'Download');
 		});

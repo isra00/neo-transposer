@@ -2,12 +2,20 @@
 
 namespace NeoTransposer\Controllers;
 
-use \NeoTransposer\Model\TransposedSong;
-use \NeoTransposer\Persistence\UserPersistence;
-use \Symfony\Component\HttpFoundation\Request;
+use NeoTransposer\Domain\Repository\UserRepository;
+use NeoTransposer\Domain\TransposedSong;
+use NeoTransposer\NeoApp;
+use Symfony\Component\HttpFoundation\Request;
 
-class TransposeSongApi extends \NeoTransposer\AppAccess
+class TransposeSongApi
 {
+	protected $app;
+
+	public function __construct(NeoApp $app)
+	{
+		$this->app = $app;
+	}
+
 	public function handleApiRequest(Request $req, $id_song)
 	{
 		if (empty($req->get('userToken')))
@@ -15,11 +23,11 @@ class TransposeSongApi extends \NeoTransposer\AppAccess
 			throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 		}
 
-		$userPersistence = new UserPersistence($this->app['db']);
+		$userRepository = $this->app[UserRepository::class];
 
-		if (!$user = $userPersistence->fetchUserFromField('id_user', $req->get('userToken')))
+		if (!$user = $userRepository->readFromId(intval($req->get('userToken'))))
 		{
-			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
 		}
 
 		$this->app['neouser'] = $user;
@@ -34,7 +42,7 @@ class TransposeSongApi extends \NeoTransposer\AppAccess
 		$this->app['locale'] = $song->song->bookLocale;
 		$this->app['translator']->setLocale($this->app['locale']);
 
-		$song->transpose();
+		$song->transpose($user->range);
 
 		$songArray = json_decode(json_encode($song), true);
 		$transpositions = [];
