@@ -5,3 +5,8 @@ Disallow: /sura-yako
 Disallow: /transpose/sura-yako
 Disallow: /get-lucky
 Disallow: /transpose/get-lucky
+Disallow: /es/user/voice
+Disallow: /en/user/voice
+Disallow: /pt/user/voice
+Disallow: /it/user/voice
+Disallow: /sw/user/voice
