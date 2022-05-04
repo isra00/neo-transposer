@@ -2,46 +2,44 @@
 
 namespace NeoTransposer\Controllers;
 
+use NeoTransposer\Domain\NotesNotation;
+use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
-use \Symfony\Component\HttpFoundation\Response;
-use NeoTransposer\Model\{TransposedSong, PeopleCompatibleCalculation};
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Transpose Song page: transposes the given song for the singer's voice range.
  */
 class AllSongsReport
 {
-    public $peopleCompatibleMicroMessages = [
-        PeopleCompatibleCalculation::ALREADY_COMPATIBLE   => '',
-        PeopleCompatibleCalculation::WIDER_THAN_SINGER    => '',
-        PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE   => '',
-        PeopleCompatibleCalculation::TOO_HIGH_FOR_PEOPLE  => '',
-        PeopleCompatibleCalculation::ADJUSTED_WELL        => ' ★',
-        PeopleCompatibleCalculation::ADJUSTED_WIDER       => ' ☆',
-        PeopleCompatibleCalculation::NOT_ADJUSTED_WIDER   => '',
-        PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA => '',
-    ];
-
     /**
      * HTML report. If dl query string arg is present, the page is offered to
      * download, included the styles inside the HTML.
      *
-     * @param  \NeoTransposer\NeoApp $app The NeoApp
-     * @return string The rendered view (HTML).
+     * @param  NeoApp $app The NeoApp
+     * @return string|Response The rendered view (HTML) or the downloadable HTML.
      */
-    public function get(\NeoTransposer\NeoApp $app, Request $req)
+    public function get(NeoApp $app, Request $req)
     {
-        $allTranspositions = $this->getAllTranspositions($app);
+        $idBook = $app[\NeoTransposer\Domain\Repository\BookRepository::class]->readIdBookFromLocale($app['locale']);
+
+        $allSongsReport = $app[\NeoTransposer\Domain\AllSongsReport::class];
+
+        $allSongsTransposedWithFeedback = $allSongsReport->getAllTranspositions(
+            $idBook,
+            $app['neouser']
+        );
 
         $your_voice = $app['neouser']->getVoiceAsString(
             $app['translator'],
+            new NotesNotation(),
             $app['neoconfig']['languages'][$app['locale']]['notation']
         );
 
         $tplVars = array(
-            'songs'       => $allTranspositions,
+            'all_songs_transposed_with_fb' => $allSongsTransposedWithFeedback,
             'your_voice'  => $your_voice,
-            'header_link' => $app->path('book_' . $allTranspositions[0]->song->idBook),
+            'header_link' => $app->path('book_' . $idBook),
             'page_title'  => $app->trans('All transpositions for your voice'),
         );
 
@@ -65,74 +63,11 @@ class AllSongsReport
 
         return new Response(
             $responseBody, 200, array(
-            'Cache-Control'         => 'private',
-            'Content-Type'             => 'application/stream',
-            'Content-Length'         => strlen($responseBody),
-            'Content-Disposition'     => 'attachment; filename=' . $filename,
+                'Cache-Control'       => 'private',
+                'Content-Type'        => 'application/stream',
+                'Content-Length'      => strlen($responseBody),
+                'Content-Disposition' => 'attachment; filename=' . $filename,
             )
         );
-    }
-
-    /**
-     * Fetches all the songs from the current book and transposes them.
-     *
-     * @return array Array of TransposedSong objects.
-     */
-    public function getAllTranspositions(\NeoTransposer\NeoApp $app)
-    {
-
-        $sql = <<<SQL
-SELECT song.id_song, page, title, transposition_feedback.worked, transposition_feedback.transposition
-FROM song 
-JOIN book USING (id_book)
-LEFT JOIN transposition_feedback
-	ON transposition_feedback.id_song = song.id_song
-	AND transposition_feedback.id_user = ?
-WHERE
-	locale = ?
-	AND NOT song.id_song IN (118, 319)
-ORDER BY page, title
-SQL;
-
-        $ids = $app['db']->fetchAll($sql, [$app['neouser']->id_user, $app['locale']]);
-
-        $songs = [];
-
-        foreach ($ids as $id)
-        {
-            /**
-             * @refactor Performance: Hacer una sola query para todos los cantos (si acaso una adicional para los
-             *           acordes), e instanciar TransposedSong con el constructor, no con el
-             *           createTransposedSongFromSongId().
-             */
-            $song = TransposedSong::fromDb($id['id_song'], $app);
-
-            $song->transpose();
-
-            /**
-             * @refactor Insertar atributos públicos en runtime no es muy SOLID...
-             *           Solución: usar una clase wrapper TransposedSongInReport
-             */
-            $song->peopleCompatibleStatusMicroMsg = $this->peopleCompatibleMicroMessages[$song->getPeopleCompatibleStatus()];
-            $song->feedbackWorked = $id['worked'];
-            $song->feedbackTransposition = $id['transposition'];
-
-            /** @see https://github.com/isra00/neo-transposer/issues/129#issuecomment-1086611165 */
-            if (
-                ("peopleCompatible" == $song->feedbackTransposition && empty($song->getPeopleCompatible()))
-                || ("notEquivalent" == $song->feedbackTransposition && empty($song->not_equivalent))
-            ) {
-                $song->feedbackWorked = false;
-                $song->feedbackTransposition = null;
-            }
-
-            //Remove bracketed text from song title (used for clarifications)
-            /** @todo Remove this: bracketed text differentiates variants! */
-            $song->song->title = preg_replace('/(.)\[.*\]/', '$1', $song->song->title);
-
-            $songs[] = $song;
-        }
-
-        return $songs;
     }
 }

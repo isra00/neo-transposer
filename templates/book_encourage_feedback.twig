@@ -4,17 +4,17 @@
 
 {% if app.neouser.isLoggedIn %}
 
-	{% if app.neouser.feedbacksReported == 0 %}
+	{% if user_performance.reports == 0 %}
 	<div class="encourage-feedback">
 		<h2>{% if app.neouser.firstTime %}<span>{% trans %}Last step:{% endtrans %}</span>{% endif %} <span>{% trans %}Verify with 2 songs that we have measured your voice accurately{% endtrans %}</span></h2>
 		<p>{% trans %}Choose <strong>2</strong> songs from the list and try to sing them with the chords suited to your voice. Please, <strong>report whether or not it has worked</strong>, so that the system may improve your performance.{% endtrans %}</p>
 		<p class="advice">{% trans %}Your voice:{% endtrans %} {{ your_voice|raw }}</p>
 	</div>
 
-	{% elseif app.neouser.feedbacksReported == 1 %}
+	{% elseif user_performance.reports == 1 %}
 
 		<div class="encourage-feedback img-left">
-		{% if user_performance < 1 %}
+		{% if user_performance.score < 1 %}
 			<h2>{% trans %}Oops! Ok, let's try again{% endtrans %}</h2>
 			<p>{% trans %}Please, try another song, and report whether the chords have worked for you.{% endtrans %}</p>
 		{% else %}
@@ -23,14 +23,14 @@
 		{% endif %}
 		</div>
 
-	{% elseif app.neouser.feedbacksReported == 2 and app.neouser.firstTime %}
+	{% elseif user_performance.reports == 2 and app.neouser.firstTime %}
 
-		{% if user_performance == 0 %}
+		{% if user_performance.score == 0 %}
 			<div class="encourage-feedback achieved-minimum-fb all-negative">
 				<h2>{% trans %}Well, this is a bit embarrassing{% endtrans %}</h2>
 				<p>{% trans %}It seems like none of the songs you have reported has worked for you. Please try some more songs and if the problem still persists, I will propose you to change your voice range.{% endtrans %}</p>
 			</div>
-		{% elseif user_performance > 0 and user_performance < 1 %}
+		{% elseif user_performance.score > 0 and user_performance.score < 1 %}
 			<div class="encourage-feedback achieved-minimum-fb">
 				<h2>{% trans %}Nothing's perfect, but let's keep trying!{% endtrans %}</h2>
 				<p>{% trans %}Well, it seems like one of the songs fits you, the other doesn't. You may try others, and I'm sure they will go better!{% endtrans %}</p>

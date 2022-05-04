@@ -2,10 +2,11 @@
 
 namespace NeoTransposer;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use NeoTransposer\Domain\Entity\User;
+use NeoTransposer\Domain\GeoIp\GeoIpResolver;
+use NeoTransposer\Domain\GeoIp\IpToLocaleResolver;
 use Silex\Application;
-use NeoTransposer\Model\User;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * An extension of Silex Application with custom stuff.
@@ -19,6 +20,9 @@ class NeoApp extends Application
     protected $notifications = ['error' => [], 'success' => []];
 
     protected $hostname;
+
+    /** Defined by SEO rules */
+    protected const PAGE_TITLE_MAX_LENGTH = 55;
 
     /**
      * Load config, register services in Silex and set before() filter.
@@ -34,11 +38,13 @@ class NeoApp extends Application
         $this['root_dir'] = $rootDir;
 
         //Trick for non-web scripts (e.g. testAllTranspositions)
-        $this->hostname = $hostname ? ($hostname) : $_SERVER['HTTP_HOST'];
+        $this->hostname = $hostname ?: $_SERVER['HTTP_HOST'];
 
         $this->registerSilexServices($rootDir);
-        $this->registerCustomServices();
+        $this->initializeSession();
         $this->registerErrorHandler();
+
+        include __DIR__ . '/services.php';
 
         if (!empty($config['debug'])) {
             $this['debug'] = $config['debug'];
@@ -77,7 +83,7 @@ class NeoApp extends Application
      * language, the catechumens sing in that language (with a few exceptions,
      * like USA). This is why geoip language detection works better.
      *
-     * The way getPreferredLanguage() works is by 'extending' the array with the
+     * The way getPreferredLanguage() works is by 'expanding' the array with the
      * 'only language' values, e.g. [es_ES, en_US] => [es_ES, es, en_US, en],
      * but if the 'only language' values are already present, leave them where
      * they are. This way, in a request like [es_ES, en_GB, en, es] 'en' will be
@@ -87,43 +93,14 @@ class NeoApp extends Application
      *
      * @param Request $request  The HTTP request.
      */
-    public function setLocaleAutodetect(Request $request)
+    public function setLocaleAutodetect(Request $request): void
     {
         $this['locale'] = $request->getPreferredLanguage(
             array_keys($this['neoconfig']['languages'])
         );
 
-        $this->setLocaleByCountry($request->getClientIp());
-    }
-
-    /**
-     * Set app locale based on geo-IP-detected country (MaxMind's GeoIp2 lib)
-     * using a language-country table.
-     *
-     * @param string $ip        Client IP.
-     */
-    protected function setLocaleByCountry($ip)
-    {
-        $localesByCountry = [
-            'sw' => ['TZ', 'KE'],
-            'pt' => ['BR', 'PT', 'AO', 'CV', 'GW', 'MZ', 'ST', 'TL'],
-            'es' => [
-                'AR', 'BO', 'CL', 'CO', 'CR', 'DO', 'EC', 'SV', 'GT', 'HN', 'MX', 'NI', 'PA', 'PY', 'PE', 'PR', 'ES', 'UY', 'VE', 'CU', 'GQ'
-            ],
-            'it' => ['IT']
-        ];
-
-        try {
-            $record = $this['geoIp2Reader']->country($ip);
-        } catch (\GeoIp2\Exception\AddressNotFoundException $e) {
-            return;
-        }
-
-        foreach ($localesByCountry as $locale => $countries) {
-            if (false !== array_search($record->country->isoCode, $countries)) {
-                $this['locale'] = $locale;
-            }
-        }
+        $ipToLocaleResolver = $this[IpToLocaleResolver::class];
+        $this['locale'] = $ipToLocaleResolver->resolveIpToLocale($request->getClientIp()) ?? $this['locale'];
     }
 
     /**
@@ -133,7 +110,7 @@ class NeoApp extends Application
      *
      * @see composer.json, since some of these services require ext dependencies.
      */
-    protected function registerSilexServices($rootDir)
+    protected function registerSilexServices($rootDir): void
     {
         if (!$this['debug']) {
             $twigOptions = ['cache' => $rootDir . '/cache/twig'];
@@ -162,7 +139,7 @@ class NeoApp extends Application
             2592000,                        //Lifetime: 1 month
             '/; samesite=Lax',              //Path + samesite (see <https://www.php.net/manual/es/function.session-set-cookie-params.php#125072>)
             $this->hostname,                //Domain
-            !$this['neoconfig']['debug'],   //Secure
+            !(bool) $this['neoconfig']['debug'],   //Secure
             true                            //httponly
         );
 
@@ -183,44 +160,16 @@ class NeoApp extends Application
     /**
      * Services available for every controller.
      */
-    protected function registerCustomServices()
+    protected function initializeSession(): void
     {
-        $this['books'] = function ($app) {
-            $books = $app['db']->fetchAll('SELECT * FROM book ORDER BY id_book DESC');
-            $booksNice = [];
-            foreach ($books as $book) {
-                $booksNice[$book['id_book']] = $book;
-            }
-            return $booksNice;
-        };
-
-        $this['chord_printers.get'] = $this->protect(function ($printer) {
-            $printer = "\NeoTransposer\Model\ChordPrinter\ChordPrinter$printer";
-            return new $printer();
-        });
-
-        $this['geoIp2Reader'] = function ($app) {
-            return new \GeoIp2\Database\Reader(
-                $app['root_dir'] . '/' . $app['neoconfig']['mmdb']
-            );
-        };
-
         if (!$this['session']->get('user')) {
             $this['session']->set('user', new User());
         }
 
         $this['neouser'] = $this['session']->get('user');
-
-        $this['new.AutomaticTransposer'] = $this->factory(function ($app) {
-            return new \NeoTransposer\Model\AutomaticTransposer($app);
-        });
-
-        $this['new.Transposition'] = $this->factory(function ($app) {
-            return new \NeoTransposer\Model\Transposition($app);
-        });
     }
 
-    protected function registerErrorHandler()
+    protected function registerErrorHandler(): void
     {
         //Silex default error pages are better for debugging.
         if ($this['neoconfig']['debug']) {
@@ -234,7 +183,7 @@ class NeoApp extends Application
             //For unknown reasons, translator falls back to English. This needed.
             $this['translator']->setLocale($this['locale']);
 
-            if (false !== array_search($code, [404, 500])) {
+            if (in_array($code, [404, 500])) {
                 return $this->render("error-$code.twig", array(
                     'error_code' => $code,
                 ));
@@ -265,9 +214,9 @@ class NeoApp extends Application
      * @param string $type 'error' or 'success'.
      * @param string $text Text of the notification.
      */
-    public function addNotification($type, $text)
+    public function addNotification($type, $text): void
     {
-        if (false === array_search($type, array_keys($this->notifications))) {
+        if (!in_array($type, array_keys($this->notifications))) {
             throw new \OutOfRangeException("Notification type $type not valid");
         }
         $this->notifications[$type][] = $text;
@@ -280,7 +229,7 @@ class NeoApp extends Application
      * @param  array  $parameters Array variables.
      * @return string             The rendered template.
      */
-    public function render($view, array $parameters = [], $modifyTitle = true)
+    public function render($view, array $parameters = [], $modifyTitle = true): string
     {
         if ($modifyTitle) {
             $this->setPageTitle($parameters);
@@ -297,22 +246,19 @@ class NeoApp extends Application
     /**
      * Set final page title adding a certain suffix if the title specified in
      * the controller is not too long.
+     *
      * @param array &$parameters Template variables (should contain page_title)
      */
-    protected function setPageTitle(&$parameters)
+    protected function setPageTitle(array &$parameters): void
     {
-        //Defined by SEO rules
-        $maxTitleLength = 55;
-
-        $software = $this['neoconfig']['software_name'];
         $suffix = $this->trans($this['neoconfig']['seo_title_suffix']);
 
         if (isset($parameters['page_title'])) {
-            if (strlen($parameters['page_title']) < $maxTitleLength - strlen($suffix)) {
+            if (strlen($parameters['page_title']) < self::PAGE_TITLE_MAX_LENGTH - strlen($suffix)) {
                 $parameters['page_title'] = $parameters['page_title'] . " · $suffix";
             }
         } else {
-            $parameters['page_title'] = $software;
+            $parameters['page_title'] = $this['neoconfig']['software_name'];
         }
     }
 }
