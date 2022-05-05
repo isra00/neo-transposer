@@ -49,6 +49,8 @@ COPY ./build/php-prod.ini /usr/local/etc/php/conf.d/neo-transposer-prod.ini
 FROM nt-common AS dev
 
 COPY ./build/php-dev.ini /usr/local/etc/php/conf.d/neo-transposer-dev.ini
+#For some reason, xdebug sneaks his way into the prod image!
+RUN rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 #xdebug is not a core extension so it must be installed with PECL. 3.1 is the highest version supporting PHP 7.3
 RUN pecl install xdebug-3.1.4 \
