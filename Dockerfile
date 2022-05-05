@@ -28,8 +28,9 @@ EXPOSE 80
 
 RUN apt update && apt install -y libzip-dev zlib1g-dev; \
     docker-php-ext-install mysqli pdo_mysql zip; \
+    mkdir /var/www/nt-sessions; \
     usermod -u 1000 www-data; \
-    chown -R www-data:www-data /var/www/html; \
+    chown -R www-data:www-data /var/www; \
     a2enmod rewrite headers deflate expires
 
 COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
