@@ -34,6 +34,7 @@ RUN apt update && apt install -y libzip-dev zlib1g-dev; \
 
 COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
+#Esto no es muy elegante, quizá mejor /var/www/neo-transposer. Habría que actualizarlo en el composer de prod
 COPY --from=composer --chown=www-data ${WORKDIR} /var/www/html/
 
 
