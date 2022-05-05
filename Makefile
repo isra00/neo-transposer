@@ -30,6 +30,7 @@ start start-local: stop
 		-e NT_ADMIN_PASSWORD \
 		-e NT_ANALYTICS_ID \
 		-e NT_DEBUG \
+		-e NT_PROFILER \
 		--add-host=host.docker.internal:172.17.0.1 \
 		--name transposer-dev \
 		$(OPTIONAL_VOLUME) \
@@ -68,7 +69,7 @@ test-acceptance:
 	docker exec -t transposer-dev php /var/www/html/vendor/bin/codecept run acceptance
 
 get-test-outputs:
-	 docker cp transposer-dev:/var/www/html/tests/_output $(dest)
+	 docker cp transposer-dev:/var/www/html/tests/_output .
 
 clean:
 	rm -r cache/twig/*
