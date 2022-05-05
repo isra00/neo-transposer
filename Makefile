@@ -5,6 +5,7 @@
 
 # This should be run on post-commit, right? Otherwise serve would fail bc commit name has changed.
 build-dev:
+	sh update_mmdb.sh
 	docker build --target dev -t transposer:`git rev-parse --short HEAD`-dev .
 
 build-prod:
