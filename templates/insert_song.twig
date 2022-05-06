@@ -9,8 +9,8 @@
 	<p>
 		<label for="book">Book:</label>
 		<select name="id_book" id="book">
-		{% for id, book in app.books %}
-			<option value="{{ id }}" {% if id == id_book %}selected="selected"{% endif %}>{{ book.lang_name }}</option>
+		{% for id, book in all_books %}
+			<option value="{{ id }}" {% if id == id_book %}selected="selected"{% endif %}>{{ book.langName }}</option>
 		{% endfor %}
 		</select>
 	</p>

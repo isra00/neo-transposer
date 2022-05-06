@@ -75,7 +75,7 @@
 	<div class="circles-container">
 	{% for book in song_availability %}
 		<h4 class="data-circle small-circle">
-			<span>{{ app.books[book.id_book].lang_name }}</span> 
+			<span>{{ book.lang_name }}</span>
 			<b>{{ ((book.current / book.total) * 100)|round(0, 'floor') }}<small>%</small></b>
 		</h4>
 	{% endfor %}
@@ -85,7 +85,7 @@
 	<div class="circles-container">
 	{% for book in song_availability %}
 		<h4 class="data-circle small-circle">
-			<span>{{ app.books[book.id_book].lang_name }}</span> 
+			<span>{{ book.lang_name }}</span>
 			<b>{{ ((book.peopledata / book.current) * 100)|round(0, 'floor') }}<small>%</small></b>
 		</h4>
 	{% endfor %}
@@ -174,7 +174,7 @@
 	{% for book in songs_with_fb %}
 		{% set book_fb = book.total - book.nofb %}
 		<tr>
-			<th>{{ app.books[book.id_book].lang_name }}:</th>
+			<th>{{ book.lang_name }}:</th>
 			<td>{{ ((book_fb / book.total) * 100)|round }}<small>%</small></td>
 			<td>
 				<div class="clearfix inline-graph">{{ self.feedbackGraph(book_fb, book.nofb) }}</div>

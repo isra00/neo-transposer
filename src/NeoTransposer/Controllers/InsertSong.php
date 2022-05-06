@@ -19,6 +19,7 @@ class InsertSong
 
 		return $app->render('insert_song.twig', array_merge($tpl_vars, [
 			'page_title' => 'Insert Song · ' . $app['neoconfig']['software_name'],
+            'all_books'  => $app[BookRepository::class]->readAllBooks()
 		]), false);
 	}
 
@@ -51,7 +52,7 @@ class InsertSong
 		$app->addNotification('success', 'Song inserted');
 
 		return $this->get(
-			$app, 
+			$app,
 			array('id_book' => $request->get('id_book'))
 		);
 	}

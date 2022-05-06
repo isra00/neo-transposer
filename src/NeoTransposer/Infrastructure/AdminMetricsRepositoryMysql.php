@@ -92,12 +92,13 @@ SQL;
 	public function readSongAvailability(): array
     {
 		$sql = <<<SQL
-SELECT 
-  book.id_book, 
+SELECT
+  book.lang_name,
+  book.id_book,
   song_count total,
   sc.current,
   peopledata.peopledata
-FROM 
+FROM
   book
 JOIN
 (
@@ -124,7 +125,7 @@ SQL;
 		$sql = <<<SQL
 SELECT song.id_song, title, song.lowest_note, song.highest_note, count(*) fbs
 FROM transposition_feedback
-JOIN song ON transposition_feedback.id_song = song.id_song 
+JOIN song ON transposition_feedback.id_song = song.id_song
 GROUP BY id_song
 ORDER BY song.id_book, fbs DESC
 SQL;
@@ -142,7 +143,7 @@ SQL;
 				'yes'			=> $yes,
 				'no'			=> $no,
 				'performance'	=> $yes / ($yes + $no),
-				
+
 				'title'			=> $song['title'],
 				'lowest_note'	=> $song['lowest_note'],
 				'highest_note'	=> $song['highest_note'],
@@ -174,7 +175,7 @@ LEFT JOIN
 	GROUP BY id_user
 ) n ON user.id_user = n.id_user
 LEFT JOIN unhappy_user ON n.id_user = unhappy_user.id_user
-WHERE 
+WHERE
 (
 	unhappy_user.id_user IS NULL
 	AND yes/(y.yes + n.no) < ?
@@ -209,7 +210,7 @@ SQL;
 			$day = $day['day'];
 
 			$sql = <<<SQL
-SELECT '$day' day, 
+SELECT '$day' day,
 	c_yes, c_no, c_yes+c_no c_total, c_yes/(c_yes+c_no)*100 c_performance,
 	d_yes, d_no, d_yes+d_no d_total, d_yes/(d_yes+d_no)*100 d_performance
 FROM
@@ -252,7 +253,7 @@ SQL;
 	public function readSongsWithFeedback(): array
     {
 		$sql = <<<SQL
-SELECT nofb.id_book, nofb.nofb, total.total FROM
+SELECT nofb.id_book, nofb.nofb, total.total, book.lang_name FROM
 (
  SELECT id_book, count(song.id_song) nofb
  FROM song
@@ -264,13 +265,15 @@ JOIN
 (
 	SELECT id_book, count(id_song) total FROM song GROUP BY id_book
 ) total ON nofb.id_book = total.id_book
-/* Trick for ES & PT book (the JOIN on NULL fails and does not appear, since 
- * they have 100%), unnecessary in Mysql >= 8 
+JOIN book ON book.id_book = total.id_book
+/* Trick for ES & PT book (the JOIN on NULL fails and does not appear, since
+ * they have 100%), unnecessary in Mysql >= 8
  */
 UNION
-SELECT id_book, 0, COUNT(DISTINCT id_song)
+SELECT id_book, 0, COUNT(DISTINCT id_song), book.lang_name
 FROM transposition_feedback
 JOIN song USING (id_song)
+JOIN book USING (id_book)
 GROUP BY id_book
 HAVING id_book=2 OR id_book=4
 SQL;
@@ -376,12 +379,12 @@ SQL;
 
 		$sql = <<<SQL
 SELECT user.country, COUNT(id_user) total, good
-FROM 
+FROM
   user
 JOIN
   (
-    SELECT country, COUNT(id_user) good 
-    FROM user 
+    SELECT country, COUNT(id_user) good
+    FROM user
     WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1
     GROUP BY user.country
   ) goods ON goods.country = user.country
@@ -429,7 +432,7 @@ SQL;
 			}
 		}
 
-		usort($performance, function($a, $b) 
+		usort($performance, function($a, $b)
 		{
 			return ($a['performance'] < $b['performance']) ? 1 : -1;
 		});
@@ -510,7 +513,7 @@ SQL;
 SELECT lang_name, id_book, count(id_user) users
 FROM user
 LEFT JOIN book USING (id_book)
-GROUP BY user.id_book 
+GROUP BY user.id_book
 ORDER BY users DESC
 SQL;
 

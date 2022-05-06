@@ -5,7 +5,7 @@
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 	{% endif %}
 
-	{% for id, book in app.books%}
+	{% for id, book in all_books%}
 	<link rel="alternate" hreflang="{{ book.locale }}" href="{{ app.absoluteBasePath }}{{ path("login", {'_locale': book.locale}) }}" />
 	{% endfor %}
 

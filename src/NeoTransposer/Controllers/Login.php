@@ -36,6 +36,7 @@ class Login
             $app['session']->set('callbackSetUserToken', $req->get('callbackSetUserToken'));
         }
 
+        $tpl_vars['all_books']        = $app[BookRepository::class]->readAllBooks();
         $tpl_vars['external']         = !empty($req->get('external'));
         $tpl_vars['languages']        = $app['neoconfig']['languages'];
         $tpl_vars['page_title']       = $app->trans('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
