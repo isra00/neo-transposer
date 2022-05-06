@@ -69,6 +69,7 @@ class Book
 		$response = new Response($app->render($template, [
 			'page_title'	 		=> $app->trans('Songs of the Neocatechumenal Way in %lang%', ['%lang%' => $currentBook->langName()]),
 			'current_book'	 		=> $currentBook,
+			'all_books'	 		    => $app[BookRepository::class]->readAllBooks(),
 			'header_link'	 		=> $app->path('book_' . $currentBook->idBook()),
 			'songs'			 		=> $songs,
 			'show_unhappy_warning'	=> $showUnhappyWarning,
