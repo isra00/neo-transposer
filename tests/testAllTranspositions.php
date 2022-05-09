@@ -1,16 +1,20 @@
 <?php
 
-use NeoTransposer\Domain\AdminTasks\TestAllTranspositions;
+use NeoTransposerApp\Domain\AdminTasks\TestAllTranspositions;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$app = new \NeoTransposer\NeoApp(
-	require __DIR__ . '/../config.php',
+$app = new \NeoTransposerWeb\NeoApp(
+	require __DIR__ . '/../apps/NeoTransposerWeb/config.php',
 	realpath(__DIR__ . '/..'),
 	'dummy'
 );
 
-$test   = new TestAllTranspositions($app);
+$test = new TestAllTranspositions(
+    $app,
+    __DIR__ . '/testAllTranspositions.expected.json.json',
+    __DIR__ . '/testAllTranspositions.expected.PeopleCompatible.json'
+);
 $output = $test->run();
 $result = strpos($output, 'SUCCESSFUL');
 

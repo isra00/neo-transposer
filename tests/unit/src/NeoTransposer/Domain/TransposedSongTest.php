@@ -1,14 +1,14 @@
 <?php
 
-namespace NeoTransposer\Tests\Domain;
+namespace NeoTransposerApp\Tests\Domain;
 
-use NeoTransposer\Domain\AutomaticTransposer;
-use NeoTransposer\Domain\AutomaticTransposerFactory;
-use NeoTransposer\Domain\Entity\Song;
-use NeoTransposer\Domain\TransposedSong;
-use NeoTransposer\Domain\Transposition;
-use NeoTransposer\Domain\TranspositionFactory;
-use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposerApp\Domain\AutomaticTransposer;
+use NeoTransposerApp\Domain\AutomaticTransposerFactory;
+use NeoTransposerApp\Domain\Entity\Song;
+use NeoTransposerApp\Domain\TransposedSong;
+use NeoTransposerApp\Domain\Transposition;
+use NeoTransposerApp\Domain\TranspositionFactory;
+use NeoTransposerApp\Domain\ValueObject\NotesRange;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
 use Symfony\Component\Translation\Translator;
@@ -92,7 +92,7 @@ final class TransposedSongTest extends TestCase
         $printedChordSet = $this->printedChordSet;
 
         $app['factory.ChordPrinter'] = $app->protect(function ($printer) use ($printedChordSet) {
-            $mockPrinter = $this->createMock(\NeoTransposer\Domain\ChordPrinter\ChordPrinter::class);
+            $mockPrinter = $this->createMock(\NeoTransposerApp\Domain\ChordPrinter\ChordPrinter::class);
             $mockPrinter
                 //->expects($this->once())
                 ->method('printChordset')

@@ -1,6 +1,6 @@
 <?php
 
-namespace NeoTransposer\Tests\Infrastructure;
+namespace NeoTransposerApp\Tests\Infrastructure;
 
 use Faker\Factory;
 

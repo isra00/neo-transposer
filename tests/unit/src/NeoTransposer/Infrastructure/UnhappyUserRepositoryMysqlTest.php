@@ -1,10 +1,10 @@
 <?php
 
-namespace NeoTransposer\Tests\Infrastructure;
+namespace NeoTransposerApp\Tests\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Faker\Factory;
-use NeoTransposer\Infrastructure\UnhappyUserRepositoryMysql;
+use NeoTransposerApp\Infrastructure\UnhappyUserRepositoryMysql;
 
 class UnhappyUserRepositoryMysqlTest extends MysqlRepositoryTest
 {

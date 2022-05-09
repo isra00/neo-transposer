@@ -1,12 +1,12 @@
 <?php
 
-namespace NeoTransposer\Tests\Domain;
+namespace NeoTransposerApp\Tests\Domain;
 
-use NeoTransposer\Domain\NotesCalculator;
-use NeoTransposer\Domain\Transposition;
-use NeoTransposer\Domain\TranspositionFactory;
-use NeoTransposer\Domain\ValueObject\Chord;
-use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposerApp\Domain\NotesCalculator;
+use NeoTransposerApp\Domain\Transposition;
+use NeoTransposerApp\Domain\TranspositionFactory;
+use NeoTransposerApp\Domain\ValueObject\Chord;
+use NeoTransposerApp\Domain\ValueObject\NotesRange;
 use Silex\Application;
 use Symfony\Component\Translation\Translator;
 
@@ -45,7 +45,7 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
     {
         if (empty($this->app)) {
             $this->app = new Application([
-                'neoconfig'  => ['chord_scores' => include __DIR__ . '/../../../../../config.scores.php'],
+                'neoconfig'  => ['chord_scores' => include __DIR__ . '/../../../../../etc/config.scores.php'],
                 'translator' => $this->createStub(Translator::class)
             ]);
         }

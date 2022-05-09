@@ -21,13 +21,14 @@
 
     "autoload": {
         "psr-4": {
-            "NeoTransposer\\": "src/NeoTransposer"
+            "NeoTransposerApp\\": "src/NeoTransposerApp",
+            "NeoTransposerWeb\\": "apps/NeoTransposerWeb/src"
         }
     },
 
     "autoload-dev": {
         "psr-4": {
-            "NeoTransposer\\Tests\\": "tests/unit/src/NeoTransposer",
+            "NeoTransposerApp\\Tests\\": "tests/unit/src/NeoTransposer",
             "NeoTransposerTests\\Acceptance\\": "tests/acceptance"
         }
     },

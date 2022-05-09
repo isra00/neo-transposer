@@ -1,17 +1,17 @@
 <?php
 
-namespace NeoTransposer\Tests\Domain\Service;
+namespace NeoTransposerApp\Tests\Domain\Service;
 
-use NeoTransposer\Domain\Entity\Book;
-use NeoTransposer\Domain\Entity\User;
-use NeoTransposer\Domain\Exception\BookNotExistException;
-use NeoTransposer\Domain\Exception\UserNotExistException;
-use NeoTransposer\Domain\Repository\BookRepository;
-use NeoTransposer\Domain\Repository\SongRepository;
-use NeoTransposer\Domain\Repository\UserRepository;
-use NeoTransposer\Domain\Service\SongsLister;
-use NeoTransposer\Domain\SongsCollection;
-use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
+use NeoTransposerApp\Domain\Entity\Book;
+use NeoTransposerApp\Domain\Entity\User;
+use NeoTransposerApp\Domain\Exception\BookNotExistException;
+use NeoTransposerApp\Domain\Exception\UserNotExistException;
+use NeoTransposerApp\Domain\Repository\BookRepository;
+use NeoTransposerApp\Domain\Repository\SongRepository;
+use NeoTransposerApp\Domain\Repository\UserRepository;
+use NeoTransposerApp\Domain\Service\SongsLister;
+use NeoTransposerApp\Domain\SongsCollection;
+use NeoTransposerApp\Domain\SongsWithUserFeedbackCollection;
 use PHPUnit\Framework\TestCase;
 
 class SongsListerTest extends TestCase

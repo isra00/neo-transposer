@@ -5,7 +5,7 @@
 
 # This should be run on post-commit, right? Otherwise serve would fail bc commit name has changed.
 build-dev:
-	sh update_mmdb.sh
+	sh apps/NeoTransposerWeb/update_mmdb.sh
 	docker build --target dev -t transposer:`git rev-parse --short HEAD`-dev .
 
 build-prod:
@@ -14,9 +14,9 @@ build-prod:
 	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:for-prod
 
 # NT_PROFILER debería ser 0 en start (para test)
-start: OPTIONAL_VOLUME=
+start: OTHER_DOCKER_OPTIONS=
 #--user es para que si en Docker se escriben archivos, no se escriban como root sino como el usuario actual. ¿O www-data?
-start-local: OPTIONAL_VOLUME=-v ${CURDIR}:/var/www/html --user $(id -u):$(id -g)
+start-local: OTHER_DOCKER_OPTIONS=-v ${CURDIR}:/var/www/html --user $(id -u):$(id -g)
 
 # Esto pasaría a ser docker compose up excluyendo MySQL.
 start start-local: stop
@@ -34,7 +34,7 @@ start start-local: stop
 		-e NT_PROFILER \
 		--add-host=host.docker.internal:172.17.0.1 \
 		--name transposer-dev \
-		$(OPTIONAL_VOLUME) \
+		$(OTHER_DOCKER_OPTIONS) \
 		transposer:`git rev-parse --short HEAD`-dev
 
 start-db-for-test:

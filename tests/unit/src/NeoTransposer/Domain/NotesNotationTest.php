@@ -1,9 +1,9 @@
 <?php
 /** @noinspection ReturnTypeCanBeDeclaredInspection */
 
-namespace NeoTransposer\Tests\Domain;
+namespace NeoTransposerApp\Tests\Domain;
 
-use NeoTransposer\Domain\NotesNotation;
+use NeoTransposerApp\Domain\NotesNotation;
 
 class NotesNotationTest extends \PHPUnit\Framework\TestCase
 {

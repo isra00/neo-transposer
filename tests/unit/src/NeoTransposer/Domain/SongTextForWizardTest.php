@@ -1,8 +1,8 @@
 <?php
 
-namespace NeoTransposer\Tests\Domain;
+namespace NeoTransposerApp\Tests\Domain;
 
-use NeoTransposer\Domain\SongTextForWizard;
+use NeoTransposerApp\Domain\SongTextForWizard;
 use PHPUnit\Framework\TestCase;
 
 class SongTextForWizardTest extends TestCase

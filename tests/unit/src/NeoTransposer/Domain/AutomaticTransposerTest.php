@@ -1,14 +1,14 @@
 <?php
 
-namespace NeoTransposer\Tests\Domain;
+namespace NeoTransposerApp\Tests\Domain;
 
-use NeoTransposer\Domain\AutomaticTransposer;
-use NeoTransposer\Domain\NotesCalculator;
-use NeoTransposer\Domain\PeopleCompatibleCalculation;
-use NeoTransposer\Domain\Transposition;
-use NeoTransposer\Domain\TranspositionFactory;
-use NeoTransposer\Domain\ValueObject\Chord;
-use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposerApp\Domain\AutomaticTransposer;
+use NeoTransposerApp\Domain\NotesCalculator;
+use NeoTransposerApp\Domain\PeopleCompatibleCalculation;
+use NeoTransposerApp\Domain\Transposition;
+use NeoTransposerApp\Domain\TranspositionFactory;
+use NeoTransposerApp\Domain\ValueObject\Chord;
+use NeoTransposerApp\Domain\ValueObject\NotesRange;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\Translator;
 
@@ -26,7 +26,7 @@ class AutomaticTransposerTest extends TestCase
     public function setUp() : void
     {
         //includePath must be defined in phpunit.xml
-        $this->chordsScoreConfig = include __DIR__ . '/../../../../../config.scores.php';
+        $this->chordsScoreConfig = include __DIR__ . '/../../../../../etc/config.scores.php';
     }
 
     protected function buildAutomaticTransposer(
@@ -395,7 +395,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A1', 'E3'),
             new NotesRange('A1', 'D3'),
             [Chord::fromString('Am'), Chord::fromString('Dm')],
-            true, 
+            true,
             new NotesRange('G#2', 'D3')
         );
 
@@ -424,7 +424,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A1', 'E3'),
             new NotesRange('B1', 'B2'),
             [Chord::fromString('D'), Chord::fromString('Em')],
-            false, 
+            false,
             new NotesRange('B1', 'B2')
         );
 
@@ -453,7 +453,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A1', 'E3'),
             new NotesRange('B1', 'E3'),
             [Chord::fromString('Am'), Chord::fromString('Dm'), Chord::fromString('E')],
-            true, 
+            true,
             new NotesRange('B1', 'F2')
         );
 

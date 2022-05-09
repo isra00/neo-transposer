@@ -157,12 +157,12 @@ if (isset($_POST['sent']))
                 $start = microtime(true);
                 require $deployDir . '/vendor/autoload.php';
 
-                $app = new NeoTransposer\NeoApp(
+                $app = new NeoTransposerApp\NeoApp(
                     require __DIR__ . '/config.php',
                     realpath(__DIR__)
                 );
 
-                $serveCssController = new \NeoTransposer\Controllers\ServeCss;
+                $serveCssController = new \NeoTransposerApp\Controllers\ServeCss;
 
                 $actions[] = array(
                     'command' => 'Re-compile CSS',
@@ -216,8 +216,8 @@ $willDeployBroken = isset($lastCommit['build'])
 
 $whoami = runCommand("whoami")['output'][0];
 
-$cssDate = file_exists("$deployDir/web/static/compiled-" . $neoConfig['css_cache'] . ".css")
-    ? date('d/m/Y H:i:s', filectime("$deployDir/web/static/compiled-" . $neoConfig['css_cache'] . ".css"))
+$cssDate = file_exists("$deployDir/public/static/compiled-" . $neoConfig['css_cache'] . ".css")
+    ? date('d/m/Y H:i:s', filectime("$deployDir/public/static/compiled-" . $neoConfig['css_cache'] . ".css"))
     : 'no file';
 
 ?>

@@ -1,9 +1,9 @@
 <?php
 
-namespace NeoTransposer\Tests\Domain\ValueObject;
+namespace NeoTransposerApp\Tests\Domain\ValueObject;
 
-use NeoTransposer\Domain\Exception\SongDataException;
-use NeoTransposer\Domain\ValueObject\Chord;
+use NeoTransposerApp\Domain\Exception\SongDataException;
+use NeoTransposerApp\Domain\ValueObject\Chord;
 use PHPUnit\Framework\TestCase;
 
 class ChordTest extends TestCase
