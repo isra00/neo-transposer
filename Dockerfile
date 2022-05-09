@@ -45,6 +45,9 @@ FROM nt-common AS prod
 #@todo PROD should have a different Composer run, without dev stuff
 COPY ./build/php-prod.ini /usr/local/etc/php/conf.d/neo-transposer-prod.ini
 
+#This reduces 1/2 of the app's folder size
+RUN rm -rf /var/www/html/.git; \
+    rm -rf /var/www/html/web/static/img/source
 
 # ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS dev
