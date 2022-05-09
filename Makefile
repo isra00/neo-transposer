@@ -3,13 +3,14 @@
 
 #Quedarían pendientes targets para composer, pero es un coñazo
 
+update-mmdb:
+	cd apps/NeoTransposerWeb && sh update_mmdb.sh
+
 # This should be run on post-commit, right? Otherwise serve would fail bc commit name has changed.
-build-dev:
-	sh apps/NeoTransposerWeb/update_mmdb.sh
+build-dev: update-mmdb
 	docker build --target dev -t transposer:`git rev-parse --short HEAD`-dev .
 
-build-prod:
-	sh update_mmdb.sh
+build-prod: update-mmdb
 	docker build --target prod -t transposer:`git rev-parse --short HEAD`-prod .
 	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:for-prod
 
