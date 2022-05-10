@@ -87,7 +87,11 @@ $this[Domain\AdminTasks\CheckChordsOrder::class] = function ($app) {
 };
 
 $this[Domain\AdminTasks\TestAllTranspositions::class] = function ($app) {
-    return new Domain\AdminTasks\TestAllTranspositions($app);
+    return new Domain\AdminTasks\TestAllTranspositions(
+        $app,
+        $app['neoconfig']['test_all_transpositions_expected'],
+        $app['neoconfig']['test_all_transpositions_expected_pc']
+    );
 };
 
 $this[Domain\AdminTasks\GetVoiceRangeOfGoodUsers::class] = function ($app) {
