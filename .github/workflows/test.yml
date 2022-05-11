@@ -72,3 +72,14 @@ jobs:
         run: |
           docker tag transposer:for-prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
           docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
+
+      - name: Run Trivy vulnerability scanner against the Prod image
+        uses: anandg112/trivy-action@feat/add-skip-dirs-option
+        with:
+          image-ref: 'transposer:for-prod'
+          ignore-unfixed: true
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results-fs.sarif'
+          severity: 'CRITICAL'
+          skip-dirs: "ignored-dir"
