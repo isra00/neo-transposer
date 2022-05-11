@@ -76,7 +76,7 @@ jobs:
       - name: Run Trivy vulnerability scanner against the Prod image
         uses: anandg112/trivy-action@feat/add-skip-dirs-option
         with:
-          image-ref: 'transposer:for-prod'
+          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
           ignore-unfixed: true
           format: 'sarif'
           output: 'trivy-results.sarif'
