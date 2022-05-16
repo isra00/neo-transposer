@@ -25,7 +25,7 @@ class TransposeSong
             $app['neouser']->range = new NotesRange('B1', 'F#3');
         }
         //If null user, redirect to User Settings
-        elseif (empty($app['neouser']->range->lowest)) {
+        elseif (empty($app['neouser']->range->lowest())) {
             $app->setLocaleAutodetect($req);
 
             return $app->redirect(

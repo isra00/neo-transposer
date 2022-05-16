@@ -73,8 +73,8 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 		{
 			return $this->dbConnection->update('user',
 				[
-					'lowest_note'	=> $user->range->lowest ?? null,
-					'highest_note'	=> $user->range->highest ?? null,
+					'lowest_note'	=> $user->range ? $user->range->lowest() : null,
+					'highest_note'	=> $user->range ? $user->range->highest() : null,
 					'id_book'		=> $user->id_book,
 					'wizard_step1' 	=> $user->wizard_step1,
 					'wizard_lowest_attempts' => $user->wizard_lowest_attempts,
@@ -86,13 +86,13 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
         /** @todo Refactor this. registerIp should be just one more field, no special treatment. */
 		$this->dbConnection->insert('user', array(
 			'email'			=> $user->email,
-			'lowest_note'	=> $user->range->lowest ?? null,
-			'highest_note'	=> $user->range->highest ?? null,
+			'lowest_note'	=> !empty($user->range) ? $user->range->lowest() : null,
+			'highest_note'	=> $user->range ? $user->range->highest() : null,
 			'id_book'		=> $user->id_book,
 			'register_ip'	=> $registerIp
 		));
 
-		return $user->id_user = intval($this->dbConnection->lastInsertId());
+		return $user->id_user = (int) $this->dbConnection->lastInsertId();
 	}
 
     /**
@@ -121,8 +121,8 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 			$this->dbConnection->insert('log_voice_range', array(
 				'id_user'		=> $user->id_user,
 				'method'		=> $method,
-				'lowest_note'	=> $user->range->lowest,
-				'highest_note'	=> $user->range->highest
+				'lowest_note'	=> $user->range->lowest(),
+				'highest_note'	=> $user->range->highest()
 			));
 		}
 

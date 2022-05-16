@@ -5,16 +5,25 @@ namespace NeoTransposerApp\Domain\ValueObject;
 use NeoTransposerApp\Domain\Exception\SongDataException;
 
 /** @todo PHP8: implements Stringable */
-/** @todo Make it immutable */
+/** @todo PHP8.1 Make it immutable (readonly properties) */
 final class Chord
 {
     public $fundamental;
     public $attributes;
 
+    private const REGEX_FUNDAMENTAL = '([ABCDEFG]#?b?)';
+    private const REGEX_ATTRIBUTES = '([mM45679]*|dim)';
+
+    /**
+     * @throws SongDataException
+     */
     public function __construct(string $fundamental, string $attributes = null)
     {
+        $this->ensureFundamentalIsValid($fundamental);
+        $this->ensureAttributesIsValid($attributes);
+
         $this->fundamental = $fundamental;
-        $this->attributes = $attributes;
+        $this->attributes  = $attributes;
     }
 
     /**
@@ -22,7 +31,7 @@ final class Chord
      */
     public static function fromString(string $name): Chord
     {
-        $regexp = '/^([ABCDEFG]#?b?)([mM45679]*|dim)$/';
+        $regexp = '/^' . self::REGEX_FUNDAMENTAL . self::REGEX_ATTRIBUTES . '$/';
 		preg_match($regexp, $name, $match);
 
 		if (!isset($match[2]))
@@ -36,5 +45,21 @@ final class Chord
     public function __toString()
     {
         return $this->fundamental . $this->attributes;
+    }
+
+    private function ensureFundamentalIsValid(string $fundamental): void
+    {
+        if (0 === preg_match('/^' . self::REGEX_FUNDAMENTAL . '$/', $fundamental))
+        {
+            throw new SongDataException("Invalid chord fundamental");
+        }
+    }
+
+    private function ensureAttributesIsValid(?string $attributes): void
+    {
+        if (0 === preg_match('/^' . self::REGEX_ATTRIBUTES . '$/', (string) $attributes))
+        {
+            throw new SongDataException("Invalid chord attributes");
+        }
     }
 }

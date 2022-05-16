@@ -4,13 +4,10 @@ namespace NeoTransposerApp\Domain\ValueObject;
 
 use NeoTransposerApp\Domain\NotesCalculator;
 
-/**
- * @refactor Para que esto sea realmente un value object los atributos deben ser inmutables.
- */
 class NotesRange
 {
-	public $lowest;
-	public $highest;
+	private $lowest;
+	private $highest;
 
 	public function __construct(string $lowest=null, string $highest=null)
 	{

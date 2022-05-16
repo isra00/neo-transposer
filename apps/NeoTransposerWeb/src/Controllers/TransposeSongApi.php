@@ -32,7 +32,7 @@ class TransposeSongApi
 
 		$this->app['neouser'] = $user;
 
-		if (empty($user->range->lowest))
+		if (empty($user->range->lowest()))
 		{
 			throw new \Symfony\Component\HttpKernel\Exception\ConflictHttpException();
 		}

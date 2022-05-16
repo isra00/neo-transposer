@@ -97,8 +97,8 @@ class NotesCalculator
     public function transposeRange(NotesRange $range, $offset): NotesRange
     {
         return new NotesRange(
-            $this->transposeNote($range->lowest, $offset),
-            $this->transposeNote($range->highest, $offset)
+            $this->transposeNote($range->lowest(), $offset),
+            $this->transposeNote($range->highest(), $offset)
         );
     }
 
@@ -111,14 +111,12 @@ class NotesCalculator
      */
     public function distanceWithOctave(string $note1, string $note2): int
     {
-        return intval(array_search($note1, $this->numbered_scale)) - intval(
-                array_search($note2, $this->numbered_scale)
-            );
+        return (int) array_search($note1, $this->numbered_scale, true) - (int) array_search($note2, $this->numbered_scale, true);
     }
 
     public function rangeWideness(NotesRange $range): int
     {
-        return $this->distanceWithOctave($range->highest, $range->lowest);
+        return $this->distanceWithOctave($range->highest(), $range->lowest());
     }
 
     /**
@@ -133,7 +131,7 @@ class NotesCalculator
     {
         $transposedFundamental = $this->arrayIndex(
             self::ACOUSTIC_SCALE,
-            intval(array_search($chord->fundamental, self::ACOUSTIC_SCALE)) + $amount
+            (int) array_search($chord->fundamental, self::ACOUSTIC_SCALE, true) + $amount
         );
 
         return new Chord($transposedFundamental, $chord->attributes);

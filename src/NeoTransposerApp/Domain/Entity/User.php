@@ -66,7 +66,7 @@ class User
      */
     public function hasRange(): bool
     {
-        return !empty($this->range->lowest);
+        return !empty($this->range);
     }
 
 	/**
@@ -88,13 +88,13 @@ class User
 	 */
 	public function getVoiceAsString(TranslatorInterface $trans, NotesNotation $notesNotation, string $notation='american') : string
 	{
-		return $notesNotation->getVoiceRangeAsString($trans, $notation, $this->range->lowest, $this->range->highest);
+		return $notesNotation->getVoiceRangeAsString($trans, $notation, $this->range->lowest(), $this->range->highest());
 	}
 
     public function shouldEncourageFeedback(): bool
     {
         return (
-            !empty($this->range->lowest)
+            !empty($this->range->lowest())
             && ($this->performance->reports() < 2 || ($this->performance->reports() == 2 && $this->firstTime))
         );
     }

@@ -39,11 +39,11 @@ class TranspositionChart
         $this->voiceChart[] = [
             'caption'         => $caption,
             'css'             => $cssClass,
-            'lowest'          => $range->lowest,
-            'highest'         => $range->highest,
-            'lowestForPrint'  => $notesNotation->getNotation($range->lowest, $this->notation),
-            'highestForPrint' => $notesNotation->getNotation($range->highest, $this->notation),
-            'length'          => abs($this->nc->distanceWithOctave($range->lowest, $range->highest)) - 1,
+            'lowest'          => $range->lowest(),
+            'highest'         => $range->highest(),
+            'lowestForPrint'  => $notesNotation->getNotation($range->lowest(), $this->notation),
+            'highestForPrint' => $notesNotation->getNotation($range->highest(), $this->notation),
+            'length'          => abs($this->nc->distanceWithOctave($range->lowest(), $range->highest())) - 1,
         ];
     }
 

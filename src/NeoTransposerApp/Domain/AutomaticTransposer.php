@@ -150,10 +150,11 @@ class AutomaticTransposer
                 : 0;
         }
 
-        $centeredOffset = intval(
-            (-1) * $this->notesCalculator->distanceWithOctave($this->songRange->lowest, $this->singerRange->lowest)
-            + $offsetFromSingerLowest
-        );
+        $centeredOffset = (int)((-1) * $this->notesCalculator->distanceWithOctave(
+                $this->songRange->lowest(),
+                $this->singerRange->lowest()
+            )
+            + $offsetFromSingerLowest);
 
         $centeredTransposition = $this->transpositionFactory->createTransposition(
             $this->notesCalculator->transposeChords($this->originalChords, $centeredOffset),
@@ -161,8 +162,8 @@ class AutomaticTransposer
             false,
             $centeredOffset,
             new NotesRange(
-                $this->notesCalculator->transposeNote($this->songRange->lowest, $centeredOffset),
-                $this->notesCalculator->transposeNote($this->songRange->highest, $centeredOffset)
+                $this->notesCalculator->transposeNote($this->songRange->lowest(), $centeredOffset),
+                $this->notesCalculator->transposeNote($this->songRange->highest(), $centeredOffset)
             ),
             null
         );
@@ -340,8 +341,8 @@ class AutomaticTransposer
                 false,
                 $offset,
                 new NotesRange(
-                    $this->notesCalculator->transposeNote($centeredTransposition->range->lowest, $dif),
-                    $this->notesCalculator->transposeNote($centeredTransposition->range->highest, $dif)
+                    $this->notesCalculator->transposeNote($centeredTransposition->range->lowest(), $dif),
+                    $this->notesCalculator->transposeNote($centeredTransposition->range->highest(), $dif)
                 ),
                 $dif
             );
@@ -371,8 +372,8 @@ class AutomaticTransposer
                 }
 
                 //If it's too low or too high, discard it
-                if ($this->notesCalculator->distanceWithOctave($notEquivalent->range->lowest, $this->singerRange->lowest) < 0
-                    || $this->notesCalculator->distanceWithOctave($notEquivalent->range->highest, $this->singerRange->highest) > 0
+                if ($this->notesCalculator->distanceWithOctave($notEquivalent->range->lowest(), $this->singerRange->lowest()) < 0
+                    || $this->notesCalculator->distanceWithOctave($notEquivalent->range->highest(), $this->singerRange->highest()) > 0
                 ) {
                     continue;
                 }
@@ -426,8 +427,8 @@ class AutomaticTransposer
         $centeredTransposition = $this->calculateCenteredTransposition();
 
         $peopleRangeInCentered = new NotesRange(
-            $this->notesCalculator->transposeNote($this->songPeopleRange->lowest, $centeredTransposition->offset),
-            $this->notesCalculator->transposeNote($this->songPeopleRange->highest, $centeredTransposition->offset)
+            $this->notesCalculator->transposeNote($this->songPeopleRange->lowest(), $centeredTransposition->offset),
+            $this->notesCalculator->transposeNote($this->songPeopleRange->highest(), $centeredTransposition->offset)
         );
 
         // 2) The centeredTransposition already falls within people's range.
@@ -441,18 +442,18 @@ class AutomaticTransposer
         }
 
         $fromPeopleLowestInCenteredToPeopleLowest = $this->notesCalculator->distanceWithOctave(
-            $this->standardPeopleRange->lowest,
-            $peopleRangeInCentered->lowest
+            $this->standardPeopleRange->lowest(),
+            $peopleRangeInCentered->lowest()
         );
 
         $fromSingerLowestCenteredToSingerLowest   = $this->notesCalculator->distanceWithOctave(
-            $this->singerRange->lowest,
-            $this->centeredTransposition->range->lowest
+            $this->singerRange->lowest(),
+            $this->centeredTransposition->range->lowest()
         );
 
         $fromSingerHighestCenteredToSingerHighest = $this->notesCalculator->distanceWithOctave(
-            $this->singerRange->highest,
-            $this->centeredTransposition->range->highest
+            $this->singerRange->highest(),
+            $this->centeredTransposition->range->highest()
         );
 
         // 4) peopleSong range is wider than people's range.
@@ -502,8 +503,8 @@ class AutomaticTransposer
         }
 
         $fromPeopleHighestInCenteredToPeopleHighest = $this->notesCalculator->distanceWithOctave(
-            $this->standardPeopleRange->highest,
-            $peopleRangeInCentered->highest
+            $this->standardPeopleRange->highest(),
+            $peopleRangeInCentered->highest()
         );
 
         // 6) The centered transposition is too high for the people

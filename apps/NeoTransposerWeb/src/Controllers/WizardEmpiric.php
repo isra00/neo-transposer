@@ -10,6 +10,7 @@ use NeoTransposerApp\Domain\Repository\UserRepository;
 use NeoTransposerApp\Domain\Service\UnhappinessManager;
 use NeoTransposerApp\Domain\SongTextForWizard;
 use NeoTransposerApp\Domain\TransposedSong;
+use NeoTransposerApp\Domain\ValueObject\NotesRange;
 use NeoTransposerWeb\NeoApp;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,22 +58,26 @@ class WizardEmpiric
 		//If yes, lower down 1 semitone and retry
 		if ('yes' == $req->get('can_sing'))
 		{
-			$app['neouser']->range->lowest  = $this->nc->transposeNote($app['neouser']->range->lowest, -1);
-			$app['neouser']->range->highest = $this->nc->transposeNote($app['neouser']->range->highest, -1);
+			$app['neouser']->range = new NotesRange(
+                $this->nc->transposeNote($app['neouser']->range->lowest(), -1),
+                $this->nc->transposeNote($app['neouser']->range->highest(), -1)
+            );
 			$app['neouser']->wizard_lowest_attempts++;
 		}
 
 		// If no, we recover the previous highest note as the singer's highest note and redirect to Highest Note test wizard.
 		if ('no' == $req->get('can_sing'))
 		{
-			$app['neouser']->range->lowest  = $this->nc->transposeNote($app['neouser']->range->lowest, +1);
-			$app['neouser']->range->highest = $this->nc->transposeNote($app['neouser']->range->highest, +1);
+			$app['neouser']->range = new NotesRange(
+                $this->nc->transposeNote($app['neouser']->range->lowest(), +1),
+                $this->nc->transposeNote($app['neouser']->range->highest(), +1)
+            );
 
 			return $app->redirect($app->path('wizard_empiric_highest'));
 		}
 
 		//If too low, next "yes" won't work as usual
-		if ('C1' == $app['neouser']->range->lowest)
+		if ('C1' == $app['neouser']->range->lowest())
 		{
 			$action_yes = 'tooLow';
 		}
@@ -100,12 +105,12 @@ class WizardEmpiric
 		if ('yes' == $req->get('can_sing'))
 		{
 			$nc = new NotesCalculator();
-			$app['neouser']->range->highest = $nc->transposeNote($app['neouser']->range->highest, +1);
+			$app['neouser']->range = new NotesRange($app['neouser']->range->lowest(), $nc->transposeNote($app['neouser']->range->highest(), +1));
 			$app['neouser']->wizard_highest_attempts++;
 		}
 
 		// If user clicks "yes" many times, he/she will reach the highest possible note (B4)!
-		if (end($this->nc->numbered_scale) == $app['neouser']->range->highest)
+		if (end($this->nc->numbered_scale) == $app['neouser']->range->highest())
 		{
 			$action_yes = 'tooHigh';
 		}
@@ -113,9 +118,9 @@ class WizardEmpiric
 		// If not, we recover the last one and pass to the next step
 		// ...and if after being alerted that B4 is too much, he/she decides to continue, stop here
 		// and force B4.
-		if ('no' == $req->get('can_sing') || $app['neouser']->range->highest == 'C1')
+		if ('no' == $req->get('can_sing') || $app['neouser']->range->highest() == 'C1')
 		{
-			$app['neouser']->range->highest = $this->nc->transposeNote($app['neouser']->range->highest, -1);
+			$app['neouser']->range = new NotesRange($app['neouser']->range->lowest(), $this->nc->transposeNote($app['neouser']->range->highest(), -1));
 			return $this->finish($req, $app);
 		}
 

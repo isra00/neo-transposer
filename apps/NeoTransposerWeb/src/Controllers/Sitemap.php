@@ -8,7 +8,7 @@ use NeoTransposerWeb\NeoApp;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Implements an XML Sitemap with login, book and song pages.
+ * Implements an XML Sitemap with login, static pages, book and song pages.
  */
 class Sitemap
 {

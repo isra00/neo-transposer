@@ -115,20 +115,20 @@ SQL;
 
         foreach ($allSongs as $transposedSong) {
             $testResult[$transposedSong->song->idSong] = [
-                'songLowestNote'  => $transposedSong->song->range->lowest,
-                'songHighestNote' => $transposedSong->song->range->highest,
+                'songLowestNote'  => $transposedSong->song->range->lowest(),
+                'songHighestNote' => $transposedSong->song->range->highest(),
                 'centered1'       => [
                     'offset'      => $transposedSong->transpositions[0]->offset,
-                    'lowestNote'  => $transposedSong->transpositions[0]->range->lowest,
-                    'highestNote' => $transposedSong->transpositions[0]->range->highest,
+                    'lowestNote'  => $transposedSong->transpositions[0]->range->lowest(),
+                    'highestNote' => $transposedSong->transpositions[0]->range->highest(),
                     'score'       => $transposedSong->transpositions[0]->score,
                     'capo'        => $transposedSong->transpositions[0]->getCapo(),
                     'chords'      => join(',', $transposedSong->transpositions[0]->chords)
                 ],
                 'centered2'       => [
                     'offset'      => $transposedSong->transpositions[1]->offset,
-                    'lowestNote'  => $transposedSong->transpositions[1]->range->lowest,
-                    'highestNote' => $transposedSong->transpositions[1]->range->highest,
+                    'lowestNote'  => $transposedSong->transpositions[1]->range->lowest(),
+                    'highestNote' => $transposedSong->transpositions[1]->range->highest(),
                     'score'       => $transposedSong->transpositions[1]->score,
                     'capo'        => $transposedSong->transpositions[1]->getCapo(),
                     'chords'      => join(',', $transposedSong->transpositions[1]->chords)
@@ -138,8 +138,8 @@ SQL;
             if ($transposedSong->not_equivalent) {
                 $testResult[$transposedSong->song->idSong]['notEquivalent'] = [
                     'offset'                => $transposedSong->not_equivalent->offset,
-                    'lowestNote'            => $transposedSong->not_equivalent->range->lowest,
-                    'highestNote'           => $transposedSong->not_equivalent->range->highest,
+                    'lowestNote'            => $transposedSong->not_equivalent->range->lowest(),
+                    'highestNote'           => $transposedSong->not_equivalent->range->highest(),
                     'score'                 => $transposedSong->not_equivalent->score,
                     'capo'                  => $transposedSong->not_equivalent->getCapo(),
                     'deviationFromCentered' => $transposedSong->not_equivalent->deviationFromCentered,
@@ -154,14 +154,14 @@ SQL;
                 if ($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) {
                     $testResult[$transposedSong->song->idSong]['peopleCompatible'] = [
                         'offset'                => $peopleCompatibleTransposition->offset,
-                        'lowestNote'            => $peopleCompatibleTransposition->range->lowest,
-                        'highestNote'           => $peopleCompatibleTransposition->range->highest,
+                        'lowestNote'            => $peopleCompatibleTransposition->range->lowest(),
+                        'highestNote'           => $peopleCompatibleTransposition->range->highest(),
                         'score'                 => $peopleCompatibleTransposition->score,
                         'capo'                  => $peopleCompatibleTransposition->getCapo(),
                         'deviationFromCentered' => $peopleCompatibleTransposition->deviationFromCentered,
                         'chords'                => join(',', $peopleCompatibleTransposition->chords),
-                        'peopleLowestNote'      => $peopleCompatibleTransposition->peopleRange->lowest,
-                        'peopleHighestNote'     => $peopleCompatibleTransposition->peopleRange->highest,
+                        'peopleLowestNote'      => $peopleCompatibleTransposition->peopleRange->lowest(),
+                        'peopleHighestNote'     => $peopleCompatibleTransposition->peopleRange->highest(),
                     ];
                 }
             }

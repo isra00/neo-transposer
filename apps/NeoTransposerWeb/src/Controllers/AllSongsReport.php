@@ -58,7 +58,7 @@ class AllSongsReport
         }
 
         $filename = $app->trans('Transpositions')
-        . '-' . str_replace('#', 'd', $app['neouser']->range->lowest . '-' . $app['neouser']->range->highest)
+        . '-' . str_replace('#', 'd', $app['neouser']->range->lowest() . '-' . $app['neouser']->range->highest())
         . '.html';
 
         return new Response(
