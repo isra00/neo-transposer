@@ -23,7 +23,7 @@ class AllSongsReport
     {
         $idBook = $app[\NeoTransposerApp\Domain\Repository\BookRepository::class]->readIdBookFromLocale($app['locale']);
 
-        $allSongsReport = $app[\NeoTransposerApp\Domain\AllSongsReport::class];
+        $allSongsReport = $app[\NeoTransposerApp\Domain\Service\AllSongsReporter::class];
 
         $allSongsTransposedWithFeedback = $allSongsReport->getAllTranspositions(
             $idBook,
@@ -45,7 +45,7 @@ class AllSongsReport
 
         if ($req->get('dl')) {
             $tplVars['print_css_code'] = file_get_contents($app['root_dir'] . '/public/static/style.css')
-            . file_get_contents($app['root_dir'] . '/public/static/print.css');
+                . file_get_contents($app['root_dir'] . '/public/static/print.css');
 
             $tplVars['header_link'] = $app['absoluteBasePath'];
         }

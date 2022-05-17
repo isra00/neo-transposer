@@ -1,14 +1,17 @@
 <?php
 
-namespace NeoTransposerApp\Domain;
+namespace NeoTransposerApp\Domain\Service;
 
 use NeoTransposerApp\Domain\Entity\Song;
 use NeoTransposerApp\Domain\Entity\User;
+use NeoTransposerApp\Domain\PeopleCompatibleCalculation;
 use NeoTransposerApp\Domain\Repository\SongChordRepository;
 use NeoTransposerApp\Domain\Repository\SongRepository;
+use NeoTransposerApp\Domain\TransposedSong;
+use NeoTransposerApp\Domain\TransposedSongWithFeedback;
 use NeoTransposerWeb\NeoApp;
 
-class AllSongsReport
+class AllSongsReporter
 {
     protected $songRepository;
     protected $songChordRepository;
@@ -60,10 +63,10 @@ class AllSongsReport
 
             /** @see https://github.com/isra00/neo-transposer/issues/129#issuecomment-1086611165 */
             if (
-                ("peopleCompatible" == $feedbackTranspositionWhichWorked && empty(
+                ('peopleCompatible' === $feedbackTranspositionWhichWorked && empty(
                     $transposedSong->getPeopleCompatible()
                     ))
-                || ("notEquivalent" == $feedbackTranspositionWhichWorked && empty($transposedSong->not_equivalent))
+                || ('notEquivalent' === $feedbackTranspositionWhichWorked && empty($transposedSong->not_equivalent))
             ) {
                 $feedbackWorked = false;
                 $feedbackTranspositionWhichWorked = null;

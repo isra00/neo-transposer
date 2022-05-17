@@ -4,6 +4,7 @@ namespace NeoTransposerApp;
 
 use NeoTransposerApp\Domain\GeoIp\GeoIpResolver;
 use NeoTransposerApp\Domain\GeoIp\IpToLocaleResolver;
+use NeoTransposerApp\Domain;
 
 //Port
 $this[Domain\Repository\SongRepository::class] = function ($app) {
@@ -114,8 +115,8 @@ $this[Domain\Repository\SongChordRepository::class] = function ($app) {
     return new Infrastructure\SongChordRepositoryMysql($app['db']);
 };
 
-$this[Domain\AllSongsReport::class] = function ($app) {
-    return new Domain\AllSongsReport(
+$this[Domain\Service\AllSongsReporter::class] = function ($app) {
+    return new Domain\Service\AllSongsReporter(
         $app[Domain\Repository\SongRepository::class],
         $app[Domain\Repository\SongChordRepository::class],
         $app

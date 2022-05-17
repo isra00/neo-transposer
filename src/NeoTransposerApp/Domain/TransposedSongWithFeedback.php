@@ -25,4 +25,15 @@ class TransposedSongWithFeedback
     {
         return $this->transposedSong;
     }
+
+    public function feedbackWorked(): ?bool
+    {
+        return $this->feedbackWorked;
+    }
+
+    public function feedbackTranspositionWhichWorked(): ?string
+    {
+        return $this->feedbackTranspositionWhichWorked;
+    }
+
 }
