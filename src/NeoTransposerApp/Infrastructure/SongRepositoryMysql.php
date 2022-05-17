@@ -86,7 +86,7 @@ SQL;
 			[$songRow['id_song']]
 		);
 
-		return new Song(
+		return Song::fromDbColumns(
             $songRow,
             array_map(
             function($row) {
@@ -100,34 +100,24 @@ SQL;
         return $this->dbConnection->fetchAll('SELECT * FROM song');
     }
 
-    public function createSong(
-        int $idBook,
-        int $page,
-        string $title,
-        string $lowestNote,
-        string $highestNote,
-        string $peopleLowestNote,
-        string $peopleHighestNote,
-        bool $firstChordIsNote,
-        string $slug,
-        array $chords
-    ): void {
+    public function createSong(Song $song): void {
 
         $this->dbConnection->insert('song', [
-			'id_book' 				=> $idBook,
-			'page' 					=> $page,
-			'title' 				=> $title,
-			'lowest_note' 			=> $lowestNote,
-			'highest_note' 			=> $highestNote,
-			'people_lowest_note' 	=> $peopleLowestNote,
-			'people_highest_note' 	=> $peopleHighestNote,
-			'first_chord_is_tone' 	=> $firstChordIsNote,
-			'slug'	 				=> $slug
+			'id_book' 				=> $song->idBook(),
+			'page' 					=> $song->page(),
+			'title' 				=> $song->title(),
+			'lowest_note' 			=> $song->range()->lowest(),
+			'highest_note' 			=> $song->range()->highest(),
+            /** @todo PHP8.1 usar null-safe operator */
+			'people_lowest_note' 	=> $song->peopleRange() ? $song->peopleRange()->lowest() : null,
+			'people_highest_note' 	=> $song->peopleRange() ? $song->peopleRange()->highest() : null,
+			'first_chord_is_tone' 	=> $song->firstChordIsKey(),
+			'slug'	 				=> $song->slug()
 		]);
 
 		$idSong = $this->dbConnection->lastInsertId();
 
-		foreach ($chords as $position=>$chord)
+		foreach ($song->originalChords() as $position=>$chord)
 		{
 			if (strlen($chord))
 			{

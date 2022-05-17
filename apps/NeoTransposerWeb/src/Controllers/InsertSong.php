@@ -45,7 +45,7 @@ class InsertSong
 			strtoupper($request->get('highest_note')),
 			strtoupper($request->get('people_lowest_note')),
 			strtoupper($request->get('people_highest_note')),
-			boolval($request->get('first_chord_is_key')),
+            (bool)$request->get('first_chord_is_key'),
             $songChords
         );
 

@@ -10,14 +10,14 @@ use NeoTransposerApp\Domain\ValueObject\NotesRange;
  */
 class Song
 {
-    /** @todo Make all these protected and create getters */
+    /** @todo Make all these private and create getters */
     public $idSong;
     public $idBook;
     public $page;
     public $title;
     public $range;
     public $slug;
-    public $firstChordIsTone;
+    public $firstChordIsKey;
 
     /**
      * @var NotesRange|null
@@ -33,28 +33,106 @@ class Song
     public $originalChords = [];
     public $originalChordsForPrint = [];
 
-    public function __construct($dbColumns, $originalChords)
+    public function __construct(?int $idSong, int $idBook, int $page, string $title, NotesRange $range, string $slug, bool $firstChordIsKey, ?NotesRange $peopleRange, ?string $bookChordPrinter, ?string $bookLocale, array $originalChords)
     {
-        //From table song
-        $this->idSong           = $dbColumns['id_song'];
-        $this->idBook           = $dbColumns['id_book'];
-        $this->page             = $dbColumns['page'];
-        $this->title            = $dbColumns['title'];
-        $this->range            = new NotesRange($dbColumns['lowest_note'], $dbColumns['highest_note']);
-        $this->slug             = $dbColumns['slug'];
-        $this->firstChordIsTone = $dbColumns['first_chord_is_tone'];
-        $this->peopleRange      = (!empty($dbColumns['people_lowest_note']) && !empty($dbColumns['people_highest_note'])) ? new NotesRange($dbColumns['people_lowest_note'], $dbColumns['people_highest_note']) : null;
+        $this->idSong = $idSong;
+        $this->idBook = $idBook;
+        $this->page = $page;
+        $this->title = $title;
+        $this->range = $range;
+        $this->slug = $slug;
+        $this->firstChordIsKey = $firstChordIsKey;
+        $this->peopleRange = $peopleRange;
+        $this->bookChordPrinter = $bookChordPrinter;    //Used by TransposedSong
+        $this->bookLocale = $bookLocale;                //Used by Controllers\TransposeSong
+        $this->originalChords = $originalChords;
+    }
 
-        //From table book
-        $this->bookChordPrinter = $dbColumns['chord_printer']; //Used by TransposedSong
-        $this->bookLocale       = $dbColumns['locale'];        //Might be unused
+    public static function fromDbColumns($dbColumns, $originalChords): Song
+    {
+        return new self(
 
-        //From table song_chord
-        $this->originalChords   = $originalChords;
+            //From table song
+            (int) $dbColumns['id_song'],
+            (int) $dbColumns['id_book'],
+            (int) $dbColumns['page'],
+            $dbColumns['title'],
+            new NotesRange($dbColumns['lowest_note'], $dbColumns['highest_note']),
+            $dbColumns['slug'],
+            (bool) $dbColumns['first_chord_is_tone'],
+            (!empty($dbColumns['people_lowest_note']) && !empty($dbColumns['people_highest_note'])) ? new NotesRange($dbColumns['people_lowest_note'], $dbColumns['people_highest_note']) : null,
+
+            //From table book
+            $dbColumns['chord_printer'],
+            $dbColumns['locale'],
+
+            //From table song_chord
+            $originalChords
+        );
     }
 
     public function setOriginalChordsForPrint(ChordPrinter $chordPrinter) : void
     {
         $this->originalChordsForPrint = $chordPrinter->printChordset($this->originalChords);
+    }
+
+    public function idSong(): int
+    {
+        return $this->idSong;
+    }
+
+    public function idBook(): int
+    {
+        return $this->idBook;
+    }
+
+    public function page(): int
+    {
+        return $this->page;
+    }
+
+    public function title(): string
+    {
+        return $this->title;
+    }
+
+    public function range(): NotesRange
+    {
+        return $this->range;
+    }
+
+    public function slug(): string
+    {
+        return $this->slug;
+    }
+
+    public function firstChordIsKey(): bool
+    {
+        return $this->firstChordIsKey;
+    }
+
+    public function peopleRange(): ?NotesRange
+    {
+        return $this->peopleRange;
+    }
+
+    public function bookChordPrinter(): string
+    {
+        return $this->bookChordPrinter;
+    }
+
+    public function bookLocale(): string
+    {
+        return $this->bookLocale;
+    }
+
+    public function originalChords(): array
+    {
+        return $this->originalChords;
+    }
+
+    public function originalChordsForPrint(): array
+    {
+        return $this->originalChordsForPrint;
     }
 }

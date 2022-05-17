@@ -13,18 +13,7 @@ interface SongRepository
     public function fetchSongByIdOrSlug(string $idSong): ?Song;
     public function readSongByField(string $field, $value): ?Song;
     public function readAllSongs(): array;
-    public function createSong(
-        int $idBook,
-        int $page,
-        string $title,
-        string $lowestNote,
-        string $highestNote,
-        string $peopleLowestNote,
-        string $peopleHighestNote,
-        bool $firstChordIsNote,
-        string $slug,
-        array $chords
-    ): void;
+    public function createSong(Song $song): void;
 
     public function slugAlreadyExists(string $slug): bool;
 }

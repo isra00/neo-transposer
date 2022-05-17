@@ -2,9 +2,11 @@
 
 namespace NeoTransposerApp\Domain\Service;
 
+use NeoTransposerApp\Domain\Entity\Song;
 use NeoTransposerApp\Domain\Exception\SlugAlreadyExistsException;
 use NeoTransposerApp\Domain\Repository\BookRepository;
 use NeoTransposerApp\Domain\Repository\SongRepository;
+use NeoTransposerApp\Domain\ValueObject\NotesRange;
 
 class SongCreator
 {
@@ -25,21 +27,23 @@ class SongCreator
         string $highestNote,
         string $peopleLowestNote,
         string $peopleHighestNote,
-        bool $firstChordIsNote,
+        bool $firstChordIsKey,
         array $chords
     ): void {
-
         $this->songRepository->createSong(
-            $idBook,
-            $page,
-            $title,
-            $lowestNote,
-            $highestNote,
-            $peopleLowestNote,
-            $peopleHighestNote,
-            $firstChordIsNote,
-            $this->getSlug($title, $idBook),
-            $chords
+            new Song(
+                null,
+                $idBook,
+                $page,
+                $title,
+                new NotesRange($lowestNote, $highestNote),
+                $this->getSlug($title, $idBook),
+                $firstChordIsKey,
+                new NotesRange($peopleLowestNote, $peopleHighestNote),
+                null,
+                null,
+                $chords
+            )
         );
     }
 
@@ -52,7 +56,7 @@ class SongCreator
 		if ($slugAlreadyExists)
 		{
 			$lang_name = $this->bookRepository->readBookLangFromId($idBook);
-			$candidate = $candidate . '-' . $this->urlize($lang_name);
+			$candidate .= '-' . $this->urlize($lang_name);
 			$slugAlreadyExists = $this->songRepository->slugAlreadyExists($candidate);
 
 			if ($slugAlreadyExists)

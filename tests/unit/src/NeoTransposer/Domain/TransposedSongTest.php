@@ -41,7 +41,7 @@ final class TransposedSongTest extends TestCase
 
     protected function buildSong(): Song
     {
-        $song = new Song(
+        $song = Song::fromDbColumns(
             [
                 'id_song'             => 'testIdSong',
                 'id_book'             => 'testIdBook',
@@ -50,7 +50,7 @@ final class TransposedSongTest extends TestCase
                 'lowest_note'         => 'A2',
                 'highest_note'        => 'D3',
                 'slug'                => 'testSlug',
-                'first_chord_is_tone' => 'testFirstChordIsTone',
+                'first_chord_is_tone' => 'testFirstChordIsKey',
                 'people_lowest_note'  => 'testPeopleLowest',
                 'people_highest_note' => 'testPeopleHighest',
                 'chord_printer'       => 'testChordPrinter',

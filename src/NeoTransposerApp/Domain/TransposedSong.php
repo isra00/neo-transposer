@@ -79,7 +79,7 @@ class TransposedSong
             $userRange,
             $this->song->range,
             $this->song->originalChords,
-            $this->song->firstChordIsTone,
+            $this->song->firstChordIsKey,
             $this->song->peopleRange
         );
 
@@ -170,7 +170,7 @@ class TransposedSong
      */
     public function removeEasierNotEquivalentIfConflictWithPeopleCompatible(): void
     {
-        if ($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->not_equivalent)
+        if (($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->not_equivalent))
             || $this->pcCalculation->peopleCompatibleTransposition
         ) {
             $this->not_equivalent = null;

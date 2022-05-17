@@ -42,7 +42,7 @@ class AllSongsReporter
      * @return TransposedSongWithFeedback[]
      * @throws \Exception
      */
-    public function getAllTranspositions(int $idBook, User $user): array
+    public function getAllTranspositionsWithFeedback(int $idBook, User $user): array
     {
         $songRows = $this->songRepository->readBookSongsWithUserFeedback($idBook, $user->id_user)->asArray();
 
@@ -52,7 +52,7 @@ class AllSongsReporter
 
             /** @refactor Performance: make a single query for all chords of all songs of the given book */
             $transposedSong = new TransposedSong(
-                new Song($songRow, $this->songChordRepository->readSongChords($songRow['id_song'])),
+                Song::fromDbColumns($songRow, $this->songChordRepository->readSongChords($songRow['id_song'])),
                 $this->app
             );
 

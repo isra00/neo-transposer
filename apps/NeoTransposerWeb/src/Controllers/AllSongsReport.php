@@ -25,7 +25,7 @@ class AllSongsReport
 
         $allSongsReport = $app[\NeoTransposerApp\Domain\Service\AllSongsReporter::class];
 
-        $allSongsTransposedWithFeedback = $allSongsReport->getAllTranspositions(
+        $allSongsTransposedWithFeedback = $allSongsReport->getAllTranspositionsWithFeedback(
             $idBook,
             $app['neouser']
         );

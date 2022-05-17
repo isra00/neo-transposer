@@ -20,8 +20,7 @@ class SongCreatorTest extends TestCase
             ->with('some-title')
             ->willReturn(false);
         $mockSongRepository->expects($this->once())
-            ->method('createSong')
-            ->with(1, 2, 'Sömé tìtlê', 'A1', 'A2', 'B1', 'G2', false, 'some-title', ['A', 'B']);
+            ->method('createSong');
 
         $mockBookRepository = $this->createMock(BookRepository::class);
 
@@ -42,8 +41,7 @@ class SongCreatorTest extends TestCase
             ->willReturn('thelanguage');
 
         $mockSongRepository->expects($this->once())
-            ->method('createSong')
-            ->with(1, 2, 'Some title', 'A1', 'A2', 'B1', 'G2', false, 'some-title-thelanguage', ['A', 'B']);
+            ->method('createSong');
 
         $sut = new SongCreator($mockSongRepository, $mockBookRepository);
         $sut->createSong(1, 2, 'Some title', 'A1', 'A2', 'B1', 'G2', false, ['A', 'B']);
