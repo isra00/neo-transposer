@@ -39,6 +39,7 @@
 	ExpiresByType image/png 				"access plus 2 months"
 	ExpiresByType image/svg+xml 			"access plus 2 months"
 	ExpiresByType text/css 					"access plus 1 year"
+	ExpiresByType audio/mpeg 				"access plus 1 year"
 	ExpiresByType text/javascript 			"access plus 1 month"
 	ExpiresByType application/x-javascript 	"access plus 1 month"
 	ExpiresByType application/javascript 	"access plus 1 month"
