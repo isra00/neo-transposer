@@ -30,7 +30,7 @@ abstract class ChordPrinter
 
 	public function printChord(Chord $chord)
 	{
-		return $this->printChordInNotation($chord->fundamental, $chord->attributes);
+		return $this->printChordInNotation($chord->fundamental(), $chord->attributes());
 	}
 
 	public function printChordHtml($chord): string

@@ -8,8 +8,8 @@ use NeoTransposerApp\Domain\Exception\SongDataException;
 /** @todo PHP8.1 Make it immutable (readonly properties) */
 final class Chord
 {
-    public $fundamental;
-    public $attributes;
+    private $fundamental;
+    private $attributes;
 
     private const REGEX_FUNDAMENTAL = '([ABCDEFG]#?b?)';
     private const REGEX_ATTRIBUTES = '([mM45679]*|dim)';
@@ -61,5 +61,15 @@ final class Chord
         {
             throw new SongDataException("Invalid chord attributes");
         }
+    }
+
+    public function fundamental(): string
+    {
+        return $this->fundamental;
+    }
+
+    public function attributes(): ?string
+    {
+        return $this->attributes;
     }
 }

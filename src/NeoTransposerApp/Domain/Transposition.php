@@ -144,8 +144,6 @@ class Transposition
         $this->deviationFromCentered = $deviationFromCentered;
 
         $this->setScore();
-
-        return $this; //For fluent constructions
     }
 
     /**
@@ -225,18 +223,19 @@ class Transposition
 		 * This is needed because some songs, like Sola a Solo, start with a
 		 * 4-note chord (Dm5), or Song of Moses (C7).
 		 */
-        $firstChord->attributes = (false !== strpos($firstChord->attributes, 'm'))
-            ? 'm' : '';
+        $firstChord = new Chord(
+            $firstChord->fundamental(), (false !== strpos($firstChord->attributes(), 'm'))
+            ? 'm' : ''
+        );
 
         //The key is always expressed in major form, so we resolve the minor
         //relatives, it is, the key will be its third minor.
-        if ($firstChord->attributes == 'm') {
-            $position = intval(array_search($firstChord->fundamental, NotesCalculator::ACOUSTIC_SCALE));
-            $firstChord->fundamental = $ncalc->arrayIndex(NotesCalculator::ACOUSTIC_SCALE, $position + 3);
-            $firstChord->attributes = null;
+        if ($firstChord->attributes() === 'm') {
+            $position = (int) array_search($firstChord->fundamental(), NotesCalculator::ACOUSTIC_SCALE);
+            $firstChord = new Chord($ncalc->arrayIndex(NotesCalculator::ACOUSTIC_SCALE, $position + 3), null);
         }
 
-        return $firstChord->fundamental . $firstChord->attributes;
+        return $firstChord->fundamental() . $firstChord->attributes();
     }
 
     public function setAlternativeChords(NotesCalculator $nc): void
@@ -246,7 +245,7 @@ class Transposition
 
             /** @todo Refactor with array_walk */
             foreach ($this->chords as &$chord) {
-                $chord = Chord::fromString(self::ALTERNATIVE_CHORDS[$key][strval($chord)] ?? $chord);
+                $chord = Chord::fromString(self::ALTERNATIVE_CHORDS[$key][(string) $chord] ?? $chord);
             }
             $this->setScore();
         }

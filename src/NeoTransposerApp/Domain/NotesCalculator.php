@@ -131,10 +131,10 @@ class NotesCalculator
     {
         $transposedFundamental = $this->arrayIndex(
             self::ACOUSTIC_SCALE,
-            (int) array_search($chord->fundamental, self::ACOUSTIC_SCALE, true) + $amount
+            (int) array_search($chord->fundamental(), self::ACOUSTIC_SCALE, true) + $amount
         );
 
-        return new Chord($transposedFundamental, $chord->attributes);
+        return new Chord($transposedFundamental, $chord->attributes());
     }
 
     /*
@@ -164,11 +164,11 @@ class NotesCalculator
     public function getKey(Chord $firstChord): string
     {
         //Search 'm' to support all kinds of minor chords.
-        return (false === strpos($firstChord->attributes, 'm'))
-            ? $firstChord->fundamental
+        return (false === strpos($firstChord->attributes(), 'm'))
+            ? $firstChord->fundamental()
             : $this->arrayIndex(
                 self::ACOUSTIC_SCALE,
-                intval(array_search($firstChord->fundamental, self::ACOUSTIC_SCALE)) + 3
+                (int) array_search($firstChord->fundamental(), self::ACOUSTIC_SCALE, true) + 3
             );
     }
 }
