@@ -11,7 +11,7 @@ build-dev:
 build-prod:
 	sh update_mmdb.sh
 	docker build --target prod -t transposer:`git rev-parse --short HEAD`-prod .
-	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:for-prod
+	docker tag transposer:`git rev-parse --short HEAD`-prod transposer:for-prod
 
 # NT_PROFILER debería ser 0 en start (para test)
 start: OPTIONAL_VOLUME=
@@ -20,6 +20,7 @@ start-local: OPTIONAL_VOLUME=-v ${CURDIR}:/var/www/html --user $(id -u):$(id -g)
 
 # Esto pasaría a ser docker compose up excluyendo MySQL.
 start start-local: stop
+	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:for-prod
 	docker start transposer-dev || docker run --rm -dit -p 80:80 \
 		-e NT_DB_HOST \
 		-e NT_DB_USER \
