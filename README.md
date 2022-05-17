@@ -33,12 +33,28 @@ See [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ### Pre-commit hook ###
 
-You should include this code in `.git/hooks/pre-commit` if you deal with PHP code:
+You must run the complete test suite and build process locally before committing changes to git. To do so, make sure you have `make` and `docker` installed, set the environment variables 
 
-```php
+You should include this code in `.git/hooks/pre-commit`.
+
+```bash
 #!/bin/sh
-exec ~/phpunit.phar
-exec ~/composer validate
+
+export NT_DB_HOST=host.docker.internal
+export NT_DB_USER=root
+export NT_DB_PASSWORD=root
+export NT_DB_DATABASE=nt_prod
+export NT_DB_TEST_DATABASE=nt_empty_tables
+export NT_DEBUG=1
+export NT_PROFILER=0
+export NT_MAXMIND_LICENSE_KEY=[set your value]
+
+make -s stop-all
+make -s build-dev
+make -s start
+make -s start-db-for-test
+make -s test
+make -s test-acceptance
 ```
 
 ### Getting help ###

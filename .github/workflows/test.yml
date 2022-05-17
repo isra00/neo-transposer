@@ -72,3 +72,17 @@ jobs:
         run: |
           docker tag transposer:for-prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
           docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
+
+      - name: Run Trivy vulnerability scanner against the Prod image
+        uses: anandg112/trivy-action@feat/add-skip-dirs-option
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: 'trivy-results.sarif'
