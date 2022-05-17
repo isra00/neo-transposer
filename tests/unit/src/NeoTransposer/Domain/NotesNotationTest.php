@@ -33,7 +33,7 @@ class NotesNotationTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(
             'A &rarr; A +1 octave',
-            $this->notesNotation->getVoiceRangeAsString($transMock, 'american', 'A1', 'A2')
+            $this->notesNotation->getVoiceRangeAsString($transMock, 'A1', 'A2', 'american')
         );
     }
 
@@ -48,7 +48,7 @@ class NotesNotationTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(
             'La &rarr; La +1 octave',
-            $this->notesNotation->getVoiceRangeAsString($transMock, 'latin', 'A1', 'A2')
+            $this->notesNotation->getVoiceRangeAsString($transMock, 'A1', 'A2', 'latin')
         );
     }
 }

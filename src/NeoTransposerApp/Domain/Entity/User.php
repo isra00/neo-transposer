@@ -88,7 +88,7 @@ class User
 	 */
 	public function getVoiceAsString(TranslatorInterface $trans, NotesNotation $notesNotation, string $notation='american') : string
 	{
-		return $notesNotation->getVoiceRangeAsString($trans, $notation, $this->range->lowest(), $this->range->highest());
+		return $notesNotation->getVoiceRangeAsString($trans, $this->range->lowest(), $this->range->highest(), $notation);
 	}
 
     public function shouldEncourageFeedback(): bool

@@ -4,7 +4,7 @@ namespace NeoTransposerApp\Domain\ValueObject;
 
 use NeoTransposerApp\Domain\NotesCalculator;
 
-class NotesRange
+final class NotesRange
 {
 	private $lowest;
 	private $highest;

@@ -54,7 +54,7 @@ class NotesNotation
     public function getNotationArray(array $notes, string $notation): array
     {
         $thisObject = $this;
-        return array_map(function($note) use ($notation, $thisObject)
+        return array_map(static function($note) use ($notation, $thisObject)
         {
             return $thisObject->getNotation($note, $notation);
         }, $notes);
@@ -64,13 +64,18 @@ class NotesNotation
      * Returns a user-friendly string with the voice range:
      *
      * @param TranslatorInterface $trans       The Silex Translator object.
-     * @param string              $notation    Notation for notes (american|latin)
      * @param string              $lowestNote  Lowest note of the voice range.
      * @param string              $highestNote Highest note of the voice range.
+     * @param string              $notation    Notation for notes (american|latin)
      *
      * @return string             Something like "lowestNote - highestNote +x octaves"
      */
-    public function getVoiceRangeAsString(TranslatorInterface $trans, string $notation = 'american', string $lowestNote, string $highestNote): string
+    public function getVoiceRangeAsString(
+        TranslatorInterface $trans,
+        string $lowestNote,
+        string $highestNote,
+        string $notation = 'american'
+    ): string
     {
         preg_match(self::REGEXP_NOTE, $lowestNote, $match);
         $lowestNote = $match[1];
@@ -78,13 +83,12 @@ class NotesNotation
         preg_match(self::REGEXP_NOTE, $highestNote, $match);
         $highestNote = $match[1];
 
-        if ('latin' == $notation) {
+        if ('latin' === $notation) {
             $lowestNote = $this->getNotation($lowestNote, 'latin');
             $highestNote = $this->getNotation($highestNote, 'latin');
         }
 
-        $octave = intval($match[2]);
-        $octave = $octave - 1;
+        $octave = (int) $match[2] - 1;
 
         return "$lowestNote &rarr; $highestNote +$octave " . $trans->trans('oct');
     }

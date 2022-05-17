@@ -2,10 +2,10 @@
 
 namespace NeoTransposerApp\Domain\ValueObject;
 
-class UserPerformance
+final class UserPerformance
 {
-    protected $reports;
-    protected $score;
+    private $reports;
+    private $score;
 
     public function __construct(int $reports, float $score)
     {
