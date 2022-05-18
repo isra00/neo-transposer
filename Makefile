@@ -7,6 +7,7 @@
 build-dev:
 	sh update_mmdb.sh
 	docker build --target dev -t transposer:`git rev-parse --short HEAD`-dev .
+	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:latest-dev
 
 build-prod:
 	sh update_mmdb.sh
@@ -36,7 +37,7 @@ start start-local: stop
 		--add-host=host.docker.internal:172.17.0.1 \
 		--name transposer-dev \
 		$(OPTIONAL_VOLUME) \
-		transposer:`git rev-parse --short HEAD`-dev
+		transposer:latest-dev
 
 start-db-for-test:
 	@docker stop nt-mysql || true
