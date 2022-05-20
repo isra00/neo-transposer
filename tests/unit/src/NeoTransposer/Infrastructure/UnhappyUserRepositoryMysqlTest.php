@@ -5,11 +5,12 @@ namespace NeoTransposerApp\Tests\Infrastructure;
 use Doctrine\DBAL\Connection;
 use Faker\Factory;
 use NeoTransposerApp\Infrastructure\UnhappyUserRepositoryMysql;
+use UnitTester;
 
 class UnhappyUserRepositoryMysqlTest extends MysqlRepositoryTest
 {
     /**
-     * @var \UnitTester
+     * @var UnitTester
      */
     protected $tester;
 

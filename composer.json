@@ -42,7 +42,9 @@
         "codeception/module-db": "^1.2",
         "vimeo/psalm": "*",
         "fakerphp/faker": "^1.19",
-        "phpmd/phpmd": "@stable"
+        "phpmd/phpmd": "@stable",
+        "phpstan/phpstan": "^1.6",
+        "ergebnis/phpstan-rules": "^1.0"
     },
 
     "scripts": {

@@ -18,7 +18,8 @@ class RefreshCompiledCss implements AdminTask
 
     public function run(): string
     {
-        $serveCssController = new \NeoTransposerApp\Controllers\ServeCss();
+        //This clearly breaks DDD and hexagonal
+        $serveCssController = new \NeoTransposerWeb\Controllers\ServeCss();
         //The controller returns the redirect URL to the new CSS file
         return 'Generated new file ' . $serveCssController->get($this->dependencyContainer)->getTargetUrl();
     }

@@ -18,7 +18,8 @@ class RemoveOldCompiledCss implements AdminTask
 
     public function run(): string
     {
-        $serveCssController = new \NeoTransposerApp\Controllers\ServeCss();
+        //This breaks hexagonal and DDD
+        $serveCssController = new \NeoTransposerWeb\Controllers\ServeCss();
         $fileScheme = $serveCssController->min_file;
         $cssDir = realpath('.' . dirname($fileScheme));
         chdir($cssDir);

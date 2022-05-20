@@ -8,11 +8,11 @@ use NeoTransposerWeb\NeoApp;
 
 /**
  * A functional test for detecting changes in the transposition algorithm.
- * It generates an AllSongsReport for book and compares it with a pre-stored result set.
+ * Generate an AllSongsReport for book and compare it with a pre-stored result set.
  */
 class TestAllTranspositions implements AdminTask
 {
-    public const TEST_ALL_TRANSPOSITIONS_BOOK = 2;
+    public const ID_BOOK_TO_TEST = 2;
 
 	protected $app;
     protected $fileExpectedResults;
@@ -94,7 +94,7 @@ WHERE id_book = ?
 ORDER BY id_song
 SQL;
 
-        $ids = $this->app['db']->fetchAll($sql, [self::TEST_ALL_TRANSPOSITIONS_BOOK]);
+        $ids = $this->app['db']->fetchAll($sql, [self::ID_BOOK_TO_TEST]);
 
         $allSongs = [];
 

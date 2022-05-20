@@ -164,7 +164,7 @@ $this[Domain\AutomaticTransposerFactory::class] = function ($app) {
 };
 
 //Since this class has no state (all instances are exactly equal), we can cache it in the DC.
-$this[Domain\NotesCalculator::class] = function ($app) {
+$this[Domain\NotesCalculator::class] = function () {
     return new Domain\NotesCalculator();
 };
 
@@ -178,6 +178,6 @@ $this['factory.ChordPrinter'] = $this->protect(function ($printer) {
     return new $printer();
 });
 
-$this[IpToLocaleResolver::class] = function ($app) {
+$this[IpToLocaleResolver::class] = function () {
     return new IpToLocaleResolver($this[GeoIpResolver::class]);
 };

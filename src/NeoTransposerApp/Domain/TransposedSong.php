@@ -58,7 +58,7 @@ class TransposedSong
     public static function fromDb($idSong, NeoApp $dc): TransposedSong
     {
         $songRepository = $dc[SongRepository::class];
-        return new static($songRepository->fetchSongByIdOrSlug($idSong), $dc);
+        return new self($songRepository->fetchSongByIdOrSlug($idSong), $dc);
     }
 
     /**
@@ -118,7 +118,7 @@ class TransposedSong
         $this->song->setOriginalChordsForPrint($chordPrinter);
 
         array_map(
-            function ($transposition) use ($chordPrinter) {
+            static function ($transposition) use ($chordPrinter) {
                 if (!empty($transposition)) {
                     $transposition->setChordsForPrint($chordPrinter);
                 }

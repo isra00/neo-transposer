@@ -205,6 +205,8 @@ SQL;
 
 		$days_with_feedback = $this->dbConnection->fetchAll($sql);
 
+        $global_perf_chrono = [];
+
 		foreach ($days_with_feedback as $day)
 		{
 			$day = $day['day'];
