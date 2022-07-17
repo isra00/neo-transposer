@@ -66,11 +66,11 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: transposer:for-prod
+          images: transposer:prod
 
       - name: 🚀 Upload to GitHub's container repository
         run: |
-          docker tag transposer:for-prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
+          docker tag transposer:prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
           docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
 
       - name: Run Trivy vulnerability scanner against the Prod image

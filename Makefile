@@ -12,7 +12,7 @@ build-dev: update-mmdb
 
 build-prod: update-mmdb
 	docker build --target prod -t transposer:`git rev-parse --short HEAD`-prod .
-	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:for-prod
+	docker tag transposer:`git rev-parse --short HEAD`-prod transposer:prod
 
 # NT_PROFILER debería ser 0 en start (para test)
 start: OTHER_DOCKER_OPTIONS=
