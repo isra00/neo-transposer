@@ -38,15 +38,6 @@ COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
 #Esto no es muy elegante, quizá mejor /var/www/neo-transposer. Habría que actualizarlo en el composer de prod
 COPY --from=composer --chown=www-data ${WORKDIR} /var/www/html/
 
-# Install the New Relic APM PHP agent & daemon. To enable and configure it, add a /usr/local/etc/php/conf.d/newrelic.ini
-# https://docs.newrelic.com/docs/apm/agents/php-agent/advanced-installation/docker-other-container-environments-install-php-agent/#install-same-container
-RUN \
-  curl -L https://download.newrelic.com/php_agent/release/newrelic-php5-10.0.0.312-linux.tar.gz | tar -C /tmp -zx && \
-  export NR_INSTALL_USE_CP_NOT_LN=1 && \
-  export NR_INSTALL_SILENT=1 && \
-  /tmp/newrelic-php5-*/newrelic-install install && \
-  rm -rf /tmp/newrelic-php5-* /tmp/nrinstall*
-
 # ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS prod
 
@@ -56,6 +47,15 @@ COPY ./build/php-prod.ini /usr/local/etc/php/conf.d/neo-transposer-prod.ini
 #This reduces 1/2 of the app's folder size
 RUN rm -rf /var/www/html/.git; \
     rm -rf /var/www/html/web/static/img/source
+
+# Install the New Relic APM PHP agent & daemon. To enable and configure it, add a /usr/local/etc/php/conf.d/newrelic.ini
+# https://docs.newrelic.com/docs/apm/agents/php-agent/advanced-installation/docker-other-container-environments-install-php-agent/#install-same-container
+RUN \
+  curl -L https://download.newrelic.com/php_agent/release/newrelic-php5-10.0.0.312-linux.tar.gz | tar -C /tmp -zx && \
+  export NR_INSTALL_USE_CP_NOT_LN=1 && \
+  export NR_INSTALL_SILENT=1 && \
+  /tmp/newrelic-php5-*/newrelic-install install && \
+  rm -rf /tmp/newrelic-php5-* /tmp/nrinstall*
 
 # ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS dev
