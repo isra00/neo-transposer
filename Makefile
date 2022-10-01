@@ -63,7 +63,7 @@ stop-all: stop
 	@docker stop nt-mysql || true
 
 test:
-	docker exec -t transposer-dev vendor/bin/codecept run unit --coverage-html
+	docker exec -t transposer-dev vendor/bin/codecept run unit --coverage-html --coverage-xml
 	docker exec -t transposer-dev php tests/testAllTranspositions.php
 
 test-acceptance:
