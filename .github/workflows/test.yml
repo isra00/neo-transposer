@@ -73,12 +73,6 @@ jobs:
           docker tag transposer:prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
           docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
 
-      - name: 🕵️ SonarCloud code quality scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
       - name: 🕵️ Run Trivy vulnerability scanner against the Prod image
         uses: anandg112/trivy-action@feat/add-skip-dirs-option
         with:
@@ -96,7 +90,7 @@ jobs:
       - name: Fix code coverage paths
         run: sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' ./_output/coverage.xml
           
-      - name: SonarCloud Scan
+      - name: 🕵️ SonarCloud code quality scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
