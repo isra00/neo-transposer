@@ -78,3 +78,6 @@ get-test-outputs:
 clean:
 	rm -r cache/twig/*
 	rm -r cache/profiler/*
+
+composer:
+	@echo "To run composer, type docker exec -it transposer-dev composer.phar [command]"
