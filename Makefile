@@ -34,6 +34,7 @@ start start-local: stop
 		-e NT_ANALYTICS_ID \
 		-e NT_DEBUG \
 		-e NT_PROFILER \
+		-e NT_TRUSTED_PROXIES \
 		--add-host=host.docker.internal:172.17.0.1 \
 		--name transposer-dev \
 		$(OPTIONAL_VOLUME) \
