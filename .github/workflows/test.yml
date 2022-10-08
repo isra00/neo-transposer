@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
@@ -73,7 +75,7 @@ jobs:
           docker tag transposer:prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
           docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
 
-      - name: Run Trivy vulnerability scanner against the Prod image
+      - name: 🕵️ Run Trivy vulnerability scanner against the Prod image
         uses: anandg112/trivy-action@feat/add-skip-dirs-option
         with:
           image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
@@ -82,7 +84,16 @@ jobs:
           output: 'trivy-results.sarif'
           severity: 'CRITICAL'
 
-      - name: Upload Trivy scan results to GitHub Security tab
+      - name: 🕵️ Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: 'trivy-results.sarif'
+
+      - name: Fix code coverage paths
+        run: sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' ./_output/coverage.xml
+          
+      - name: 🕵️ SonarCloud code quality scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

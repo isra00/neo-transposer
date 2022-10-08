@@ -19,7 +19,7 @@ class ListSongsWithUserFeedback
      * @throws UserNotExistException
      * @throws BookNotExistException
      */
-    public function ListSongsWithUserFeedbackAsArray(int $idBook, ?int $idUser): array
+    public function listSongsWithUserFeedbackAsArray(int $idBook, ?int $idUser): array
     {
         return $idUser
             ? $this->songsLister->readBookSongsWithUserFeedback($idBook, $idUser)->asArray()

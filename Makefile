@@ -3,24 +3,25 @@
 
 #Quedarían pendientes targets para composer, pero es un coñazo
 
-update-mmdb:
-	cd apps/NeoTransposerWeb && sh update_mmdb.sh
-
 # This should be run on post-commit, right? Otherwise serve would fail bc commit name has changed.
-build-dev: update-mmdb
+build-dev:
+	sh update_mmdb.sh
 	docker build --target dev -t transposer:`git rev-parse --short HEAD`-dev .
+	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:latest-dev
 
-build-prod: update-mmdb
+build-prod:
+	sh update_mmdb.sh
 	docker build --target prod -t transposer:`git rev-parse --short HEAD`-prod .
 	docker tag transposer:`git rev-parse --short HEAD`-prod transposer:prod
 
 # NT_PROFILER debería ser 0 en start (para test)
-start: OTHER_DOCKER_OPTIONS=
+start: OPTIONAL_VOLUME=
 #--user es para que si en Docker se escriben archivos, no se escriban como root sino como el usuario actual. ¿O www-data?
-start-local: OTHER_DOCKER_OPTIONS=-v ${CURDIR}:/var/www/html --user $(id -u):$(id -g)
+start-local: OPTIONAL_VOLUME=-v ${CURDIR}:/var/www/html --user $(id -u):$(id -g)
 
 # Esto pasaría a ser docker compose up excluyendo MySQL.
 start start-local: stop
+	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:for-prod
 	docker start transposer-dev || docker run --rm -dit -p 80:80 \
 		-e NT_DB_HOST \
 		-e NT_DB_USER \
@@ -33,10 +34,11 @@ start start-local: stop
 		-e NT_ANALYTICS_ID \
 		-e NT_DEBUG \
 		-e NT_PROFILER \
+		-e NT_TRUSTED_PROXIES \
 		--add-host=host.docker.internal:172.17.0.1 \
 		--name transposer-dev \
-		$(OTHER_DOCKER_OPTIONS) \
-		transposer:`git rev-parse --short HEAD`-dev
+		$(OPTIONAL_VOLUME) \
+		transposer:latest-dev
 
 start-db-for-test:
 	@docker stop nt-mysql || true
@@ -62,7 +64,7 @@ stop-all: stop
 	@docker stop nt-mysql || true
 
 test:
-	docker exec -t transposer-dev vendor/bin/codecept run unit --coverage-html
+	docker exec -t transposer-dev vendor/bin/codecept run unit --coverage-html --coverage-xml
 	docker exec -t transposer-dev php tests/testAllTranspositions.php
 
 test-acceptance:
@@ -76,3 +78,6 @@ get-test-outputs:
 clean:
 	rm -r cache/twig/*
 	rm -r cache/profiler/*
+
+composer:
+	@echo "To run composer, type docker exec -it transposer-dev composer.phar [command]"
