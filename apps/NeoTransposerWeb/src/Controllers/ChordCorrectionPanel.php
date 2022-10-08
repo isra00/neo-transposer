@@ -2,7 +2,7 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Domain\AdminTasks\CheckChordsOrder;
+use NeoTransposer\Domain\AdminTasks\CheckChordsOrder;
 use Symfony\Component\HttpFoundation\Request;
 
 class ChordCorrectionPanel

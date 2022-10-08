@@ -33,7 +33,7 @@ RUN apt update && apt install -y libzip-dev zlib1g-dev; \
     chown -R www-data:www-data /var/www; \
     a2enmod rewrite headers deflate expires
 
-COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
+COPY infrastructure/apache.conf /etc/apache2/sites-enabled/000-default.conf
 
 #Esto no es muy elegante, quizá mejor /var/www/neo-transposer. Habría que actualizarlo en el composer de prod
 COPY --from=composer --chown=www-data ${WORKDIR} /var/www/html/
@@ -42,7 +42,7 @@ COPY --from=composer --chown=www-data ${WORKDIR} /var/www/html/
 FROM nt-common AS prod
 
 #@todo PROD should have a different Composer run, without dev stuff
-COPY ./build/php-prod.ini /usr/local/etc/php/conf.d/neo-transposer-prod.ini
+COPY infrastructure/php-prod.ini /usr/local/etc/php/conf.d/neo-transposer-prod.ini
 
 #This reduces 1/2 of the app's folder size
 RUN rm -rf /var/www/html/.git; \
@@ -69,7 +69,7 @@ RUN \
 # ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS dev
 
-COPY ./build/php-dev.ini /usr/local/etc/php/conf.d/neo-transposer-dev.ini
+COPY infrastructure/php-dev.ini /usr/local/etc/php/conf.d/neo-transposer-dev.ini
 
 #For some reason, xdebug sneaks his way into the prod image!
 #xdebug is not a core extension so it must be installed with PECL. 3.1 is the highest version supporting PHP 7.3

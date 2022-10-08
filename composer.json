@@ -21,6 +21,7 @@
 
     "autoload": {
         "psr-4": {
+            "NeoTransposerWeb\\": "apps/NeoTransposerWeb/src",
             "NeoTransposer\\": "src/NeoTransposer"
         }
     },

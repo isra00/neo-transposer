@@ -1,10 +1,10 @@
 <?php
 
-namespace NeoTransposerApp\Tests\Domain;
+namespace NeoTransposer\Tests\Domain;
 
-use NeoTransposerApp\Domain\NotesCalculator;
-use NeoTransposerApp\Domain\ValueObject\Chord;
-use NeoTransposerApp\Domain\ValueObject\NotesRange;
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\ValueObject\Chord;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
 {

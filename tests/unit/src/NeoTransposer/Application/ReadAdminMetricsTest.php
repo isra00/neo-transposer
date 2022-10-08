@@ -1,14 +1,14 @@
 <?php
 
-namespace NeoTransposerApp\Tests\Application;
+namespace NeoTransposer\Tests\Application;
 
-use NeoTransposerApp\Application\ReadAdminMetrics;
-use NeoTransposerApp\Domain\GeoIp\Country;
-use NeoTransposerApp\Domain\GeoIp\GeoIpLocation;
-use NeoTransposerApp\Domain\GeoIp\GeoIpResolver;
-use NeoTransposerApp\Domain\Repository\AdminMetricsRepository;
-use NeoTransposerApp\Domain\Repository\BookRepository;
-use NeoTransposerApp\Domain\Service\AdminMetricsReader;
+use NeoTransposer\Application\ReadAdminMetrics;
+use NeoTransposer\Domain\GeoIp\Country;
+use NeoTransposer\Domain\GeoIp\GeoIpLocation;
+use NeoTransposer\Domain\GeoIp\GeoIpResolver;
+use NeoTransposer\Domain\Repository\AdminMetricsRepository;
+use NeoTransposer\Domain\Repository\BookRepository;
+use NeoTransposer\Domain\Service\AdminMetricsReader;
 use PHPUnit\Framework\TestCase;
 
 class ReadAdminMetricsTest extends TestCase

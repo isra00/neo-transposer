@@ -2,14 +2,14 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Domain\Exception\SongNotExistException;
-use NeoTransposerApp\Domain\NotesCalculator;
-use NeoTransposerApp\Domain\NotesNotation;
-use NeoTransposerApp\Domain\PeopleCompatibleCalculation;
-use NeoTransposerApp\Domain\Repository\FeedbackRepository;
-use NeoTransposerApp\Domain\TransposedSong;
-use NeoTransposerApp\Domain\TranspositionChart;
-use NeoTransposerApp\Domain\ValueObject\NotesRange;
+use NeoTransposer\Domain\Exception\SongNotExistException;
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\NotesNotation;
+use NeoTransposer\Domain\PeopleCompatibleCalculation;
+use NeoTransposer\Domain\Repository\FeedbackRepository;
+use NeoTransposer\Domain\TransposedSong;
+use NeoTransposer\Domain\TranspositionChart;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposerWeb\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 

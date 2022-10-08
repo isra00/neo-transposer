@@ -1,11 +1,11 @@
 <?php
 
-namespace NeoTransposerApp\Tests\Domain\Service;
+namespace NeoTransposer\Tests\Domain\Service;
 
-use NeoTransposerApp\Domain\Exception\SlugAlreadyExistsException;
-use NeoTransposerApp\Domain\Repository\BookRepository;
-use NeoTransposerApp\Domain\Repository\SongRepository;
-use NeoTransposerApp\Domain\Service\SongCreator;
+use NeoTransposer\Domain\Exception\SlugAlreadyExistsException;
+use NeoTransposer\Domain\Repository\BookRepository;
+use NeoTransposer\Domain\Repository\SongRepository;
+use NeoTransposer\Domain\Service\SongCreator;
 use PHPUnit\Framework\TestCase;
 
 class SongCreatorTest extends TestCase

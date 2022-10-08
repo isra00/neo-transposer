@@ -2,7 +2,7 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Domain\ValueObject\NotesRange;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposerWeb\NeoApp;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

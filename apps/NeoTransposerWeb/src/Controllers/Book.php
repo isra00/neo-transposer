@@ -2,11 +2,11 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Application\ListSongsWithUserFeedback;
-use NeoTransposerApp\Domain\Exception\BookNotExistException;
-use NeoTransposerApp\Domain\NotesNotation;
-use NeoTransposerApp\Domain\Repository\BookRepository;
-use NeoTransposerApp\Domain\Service\UnhappinessManager;
+use NeoTransposer\Application\ListSongsWithUserFeedback;
+use NeoTransposer\Domain\Exception\BookNotExistException;
+use NeoTransposer\Domain\NotesNotation;
+use NeoTransposer\Domain\Repository\BookRepository;
+use NeoTransposer\Domain\Service\UnhappinessManager;
 use NeoTransposerWeb\NeoApp;
 use Symfony\Component\HttpFoundation\{Request, Response};
 

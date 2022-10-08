@@ -2,8 +2,8 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Domain\NotesCalculator;
-use NeoTransposerApp\Domain\NotesNotation;
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\NotesNotation;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

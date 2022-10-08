@@ -2,9 +2,8 @@
 
 namespace NeoTransposerWeb;
 
-use NeoTransposerApp\Domain\Entity\User;
-use NeoTransposerApp\Domain\GeoIp\GeoIpResolver;
-use NeoTransposerApp\Domain\GeoIp\IpToLocaleResolver;
+use NeoTransposer\Domain\Entity\User;
+use NeoTransposer\Domain\GeoIp\IpToLocaleResolver;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 

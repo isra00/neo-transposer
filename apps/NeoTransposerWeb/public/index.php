@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
-use NeoTransposerApp\Infrastructure\LoginFlow;
+use NeoTransposer\Infrastructure\LoginFlow;
 use Symfony\Component\HttpFoundation\Request;
 use NeoTransposerWeb\NeoApp;
 use Silex\Provider;

@@ -2,7 +2,7 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Domain\NotesNotation;
+use NeoTransposer\Domain\NotesNotation;
 use NeoTransposerWeb\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,9 +21,9 @@ class AllSongsReport
      */
     public function get(NeoApp $app, Request $req)
     {
-        $idBook = $app[\NeoTransposerApp\Domain\Repository\BookRepository::class]->readIdBookFromLocale($app['locale']);
+        $idBook = $app[\NeoTransposer\Domain\Repository\BookRepository::class]->readIdBookFromLocale($app['locale']);
 
-        $allSongsReport = $app[\NeoTransposerApp\Domain\Service\AllSongsReporter::class];
+        $allSongsReport = $app[\NeoTransposer\Domain\Service\AllSongsReporter::class];
 
         $allSongsTransposedWithFeedback = $allSongsReport->getAllTranspositionsWithFeedback(
             $idBook,

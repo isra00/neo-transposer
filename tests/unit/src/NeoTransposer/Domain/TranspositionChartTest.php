@@ -1,13 +1,13 @@
 <?php
 
-namespace NeoTransposerApp\Tests\Domain;
+namespace NeoTransposer\Tests\Domain;
 
-use NeoTransposerApp\Domain\Entity\Song;
-use NeoTransposerApp\Domain\Entity\User;
-use NeoTransposerApp\Domain\NotesCalculator;
-use NeoTransposerApp\Domain\Transposition;
-use NeoTransposerApp\Domain\ValueObject\NotesRange;
-use NeoTransposerApp\Domain\TranspositionChart;
+use NeoTransposer\Domain\Entity\Song;
+use NeoTransposer\Domain\Entity\User;
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\Transposition;
+use NeoTransposer\Domain\ValueObject\NotesRange;
+use NeoTransposer\Domain\TranspositionChart;
 use PHPUnit\Framework\TestCase;
 
 class TranspositionChartTest extends TestCase

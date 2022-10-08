@@ -2,7 +2,7 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Domain\Service\FeedbackRecorder;
+use NeoTransposer\Domain\Service\FeedbackRecorder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -1,6 +1,6 @@
 <?php
 
-use NeoTransposerApp\Domain\AdminTasks\TestAllTranspositions;
+use NeoTransposer\Domain\AdminTasks\TestAllTranspositions;
 
 require __DIR__ . '/../vendor/autoload.php';
 

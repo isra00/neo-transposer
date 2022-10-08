@@ -2,8 +2,8 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Domain\Repository\UserRepository;
-use NeoTransposerApp\Domain\TransposedSong;
+use NeoTransposer\Domain\Repository\UserRepository;
+use NeoTransposer\Domain\TransposedSong;
 use NeoTransposerWeb\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 

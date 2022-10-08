@@ -1,11 +1,11 @@
 <?php
 
-namespace NeoTransposerApp\Tests\Application;
+namespace NeoTransposer\Tests\Application;
 
-use NeoTransposerApp\Application\AdminTaskNotExistException;
-use NeoTransposerApp\Application\RunAdminTool;
-use NeoTransposerApp\Domain\AdminTasks\AdminTask;
-use NeoTransposerApp\Domain\AdminTasks\PopulateUsersCountry;
+use NeoTransposer\Application\AdminTaskNotExistException;
+use NeoTransposer\Application\RunAdminTool;
+use NeoTransposer\Domain\AdminTasks\AdminTask;
+use NeoTransposer\Domain\AdminTasks\PopulateUsersCountry;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
 

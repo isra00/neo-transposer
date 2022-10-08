@@ -1,11 +1,9 @@
 .PHONY: build
 .DEFAULT_GOAL := build-dev
 
-#Quedarían pendientes targets para composer, pero es un coñazo
-
 # This should be run on post-commit, right? Otherwise serve would fail bc commit name has changed.
 build-dev:
-	sh update_mmdb.sh
+	sh apps/NeoTransposerWeb/update_mmdb.sh
 	docker build --target dev -t transposer:`git rev-parse --short HEAD`-dev .
 	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:latest-dev
 
@@ -81,3 +79,6 @@ clean:
 
 composer:
 	@echo "To run composer, type docker exec -it transposer-dev composer.phar [command]"
+
+composer-dump:
+	docker exec -it transposer-dev composer.phar dump

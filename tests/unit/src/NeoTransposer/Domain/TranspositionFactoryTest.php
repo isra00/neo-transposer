@@ -1,10 +1,10 @@
 <?php
 
-namespace NeoTransposerApp\Tests\Domain;
+namespace NeoTransposer\Tests\Domain;
 
-use NeoTransposerApp\Domain\Transposition;
-use NeoTransposerApp\Domain\TranspositionFactory;
-use NeoTransposerApp\Domain\ValueObject\NotesRange;
+use NeoTransposer\Domain\Transposition;
+use NeoTransposer\Domain\TranspositionFactory;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
 use Symfony\Component\Translation\Translator;

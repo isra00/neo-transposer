@@ -2,15 +2,15 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Domain\AutomaticTransposer;
-use NeoTransposerApp\Domain\Entity\User;
-use NeoTransposerApp\Domain\NotesCalculator;
-use NeoTransposerApp\Domain\Repository\BookRepository;
-use NeoTransposerApp\Domain\Repository\UserRepository;
-use NeoTransposerApp\Domain\Service\UnhappinessManager;
-use NeoTransposerApp\Domain\SongTextForWizard;
-use NeoTransposerApp\Domain\TransposedSong;
-use NeoTransposerApp\Domain\ValueObject\NotesRange;
+use NeoTransposer\Domain\AutomaticTransposer;
+use NeoTransposer\Domain\Entity\User;
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\Repository\BookRepository;
+use NeoTransposer\Domain\Repository\UserRepository;
+use NeoTransposer\Domain\Service\UnhappinessManager;
+use NeoTransposer\Domain\SongTextForWizard;
+use NeoTransposer\Domain\TransposedSong;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposerWeb\NeoApp;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

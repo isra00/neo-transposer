@@ -1,10 +1,10 @@
 <?php
 
-namespace NeoTransposerApp;
+namespace NeoTransposer;
 
-use NeoTransposerApp\Domain\GeoIp\GeoIpResolver;
-use NeoTransposerApp\Domain\GeoIp\IpToLocaleResolver;
-use NeoTransposerApp\Domain;
+use NeoTransposer\Domain\GeoIp\GeoIpResolver;
+use NeoTransposer\Domain\GeoIp\IpToLocaleResolver;
+use NeoTransposer\Domain;
 
 //Port
 $this[Domain\Repository\SongRepository::class] = function ($app) {

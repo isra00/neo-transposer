@@ -1,12 +1,12 @@
 <?php
 
-namespace NeoTransposerApp\Tests\Domain;
+namespace NeoTransposer\Tests\Domain;
 
-use NeoTransposerApp\Domain\NotesCalculator;
-use NeoTransposerApp\Domain\Transposition;
-use NeoTransposerApp\Domain\TranspositionFactory;
-use NeoTransposerApp\Domain\ValueObject\Chord;
-use NeoTransposerApp\Domain\ValueObject\NotesRange;
+use NeoTransposer\Domain\NotesCalculator;
+use NeoTransposer\Domain\Transposition;
+use NeoTransposer\Domain\TranspositionFactory;
+use NeoTransposer\Domain\ValueObject\Chord;
+use NeoTransposer\Domain\ValueObject\NotesRange;
 use Silex\Application;
 use Symfony\Component\Translation\Translator;
 

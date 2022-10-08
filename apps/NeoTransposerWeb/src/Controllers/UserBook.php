@@ -2,7 +2,7 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Domain\Repository\BookRepository;
+use NeoTransposer\Domain\Repository\BookRepository;
 
 /**
  * Menu for choosing Book. Just that.

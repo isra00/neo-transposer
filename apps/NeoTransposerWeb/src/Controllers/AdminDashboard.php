@@ -2,8 +2,8 @@
 
 namespace NeoTransposerWeb\Controllers;
 
-use NeoTransposerApp\Application\AdminTaskNotExistException;
-use NeoTransposerApp\Application\RunAdminTool;
+use NeoTransposer\Application\AdminTaskNotExistException;
+use NeoTransposer\Application\RunAdminTool;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,7 +29,7 @@ class AdminDashboard
             }
 		}
 
-        $readMetricsUseCase = $app[\NeoTransposerApp\Application\ReadAdminMetrics::class];
+        $readMetricsUseCase = $app[\NeoTransposer\Application\ReadAdminMetrics::class];
         $metricsFromService = $readMetricsUseCase->readAdminMetrics(!empty($req->get('long')));
 
 		return $app->render('admin_dashboard.twig', $metricsFromService + [
