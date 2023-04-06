@@ -57,14 +57,14 @@
 		ga('set', 'dimension2', '{{ app.neouser.range.lowest|default('-') }}');
 		ga('set', 'dimension3', '{{ app.neouser.range.highest|default('-') }}');
 		ga('set', 'dimension5', window.colorSchemePref);
-		ga('set', 'contentGroup1', '{{ app.locale }}');#}
+		ga('set', 'contentGroup1', '{{ app.locale }}');
+		ga('send', 'pageview');#}
 
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
 		gtag('config', '{{ app.neoconfig.analytics_id }}');
 
-		ga('send', 'pageview');
 	</script>
 	{%- endif %}
 
