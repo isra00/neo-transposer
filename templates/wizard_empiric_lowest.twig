@@ -51,7 +51,7 @@
 		{
 			$(".test-area").hide();
 			$(".too-low").show();
-			ga('send', 'event', 'WizardError', 'LowestFirst', 'user_id: {{ app.neouser.id_user }}');
+			gtag('event', 'LowestFirst', {'event_category': 'WizardError', 'event_label': 'user_id: {{ app.neouser.id_user }}'});
 			NTSound.stopSound();
 		},
 

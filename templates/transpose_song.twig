@@ -224,8 +224,7 @@ NT = {
 	{
 		document.getElementById("voicechart-container").style.display = 'block';
 		$(oLinkContainer).remove();
-		ga('send', 'event', 'Actions', 'ShowVoiceChart', '{{ song.song.title }}');
-		gtag('event', 'ShowVoiceChart', {'event_category': 'Actions', 'event_label': '{{ song.song.title }}'})
+		gtag('event', 'ShowVoiceChart', {'event_category': 'Actions', 'event_label': '{{ song.song.title }}'});
 	},
 
 	sendFeedbackAjax: function(postJsonData, callbackSuccess)
@@ -241,7 +240,7 @@ NT = {
 				if (408 == XHR.status)
 				{
 					document.getElementById("feedback-thanks").style.display = 'none';
-					ga('send', 'event', 'FeedbackTransposition', 'FeedbackSentAfterSessionExpired', '{{ song.song.title }}');
+					gtag('event', 'FeedbackSentAfterSessionExpired', {'event_category': 'FeedbackTransposition', 'event_label': '{{ song.song.title }}'});
 
 					alert("{% trans %}Your session has expired. Please log-in and submit the feedback again.{% endtrans %}");
 					window.location.reload();
