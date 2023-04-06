@@ -32,6 +32,7 @@
 	{% if global.debug or global.request.headers.get('dnt') -%}
 	<script>var ga = function() {}</script>
 	{%- else -%}
+	<script async src="https://www.googletagmanager.com/gtag/js?id={{ app.neoconfig.analytics_id }}"></script>
 	<script>
 	
 		(function () {
@@ -43,7 +44,7 @@
 			}
 		})();
 
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		{# (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
@@ -55,7 +56,12 @@
 		ga('set', 'dimension2', '{{ app.neouser.range.lowest|default('-') }}');
 		ga('set', 'dimension3', '{{ app.neouser.range.highest|default('-') }}');
 		ga('set', 'dimension5', window.colorSchemePref);
-		ga('set', 'contentGroup1', '{{ app.locale }}');
+		ga('set', 'contentGroup1', '{{ app.locale }}');#}
+
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', '{{ app.neoconfig.analytics_id }}');
 		{%- endif %}
 
 		ga('send', 'pageview');
