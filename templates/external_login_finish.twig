@@ -12,7 +12,7 @@
 
 <script>
 window.onload = function() {
-	ga('send', 'event', 'Actions', 'ExternalLoginFinished');
+	gtag('event', 'ExternalLoginFinished', {'event_category': 'Actions'});
 	{{ global.session.get('callbackSetUserToken') }}('{{ app.neouser.id_user }}');
 };
 </script>

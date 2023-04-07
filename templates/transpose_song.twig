@@ -260,7 +260,7 @@ NT = {
 			pc_status: '{{ song.peopleCompatibleStatusMsg|default('') }}',
 		}, function()
 		{
-			ga('send', 'event', 'FeedbackTransposition', (iAnswer ? 'Worked' : 'NotWorked'), '{{ song.song.title }}');
+			gtag('event', (iAnswer ? 'Worked' : 'NotWorked'), {'event_category': 'FeedbackTransposition', 'event_label': '{{ song.song.title }}'});
 
 {% if app.neoconfig.detailed_feedback %}
 			if (1 == iAnswer)
@@ -317,7 +317,7 @@ NT = {
 		chordName = chordName.replace(/5$/, '9');
 
 		chordChartImg.addEventListener('error', function(event) {
-			ga('send', 'event', 'Actions', 'RequestMissingChordChart', chordName);
+			gtag('event', 'RequestMissingChordChart', {'event_category': 'Actions', 'event_label': chordName});
 			event.target.src = '{{ global.request.basepath }}/static/img/chords/unknown-{{ app.locale }}.png';
 		});
 

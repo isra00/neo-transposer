@@ -47,7 +47,8 @@
 
 		let dimensions = {
 			colorSchemePref: window.colorSchemePref,
-		}
+			external: '{{ global.request.get('external') }}'
+		};
 
 		{% if app.neouser.isLoggedIn -%}
 		dimensions.lowestNote = '{{ app.neouser.range.lowest|default('-') }}';

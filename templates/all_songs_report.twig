@@ -119,7 +119,7 @@ $(function() {
 	}
 
 	$(".icon-print").click(function() {
-		ga('send', 'event', 'AllSongsReport', 'Print');
+		gtag('event', 'Print', {'event_category': 'AllSongsReport'});
 		window.print();
 	});
 
@@ -127,7 +127,7 @@ $(function() {
 		.attr("href", "javascript:void(0)") //Progressive enhancement
 		.click(function() {
 			location.href = "{{ path('all_songs_report', {'dl': 1}) }}";
-			ga('send', 'event', 'AllSongsReport', 'Download');
+			gtag('event', 'Download', {'event_category': 'AllSongsReport'});
 		});
 
 	if (document.getElementById("show-others").checked)
