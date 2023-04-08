@@ -26,7 +26,7 @@ from (
 group by fbs
 order by fbs desc
 SQL;
-		$data = $this->dbConnection->fetchAll($sql);
+		$data = $this->dbConnection->fetchAllAssociative($sql);
 		$output = "# of FBs,# of users,AVG performance\n";
 		foreach ($data as $row)
 		{

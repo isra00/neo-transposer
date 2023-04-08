@@ -2,24 +2,34 @@
 
 namespace NeoTransposer;
 
+use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMSetup;
 use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\GeoIp\IpToLocaleResolver;
 
 //Port
 $this[Domain\Repository\SongRepository::class] = function ($app) {
     //Adapter
-    return new Infrastructure\SongRepositoryMysql($app['db']);
+    return new Infrastructure\SongRepositoryMysql(
+        $app['db'],
+        $app[EntityManager::class]
+    );
 };
 
 $this[Domain\Repository\UserRepository::class] = function ($app) {
     return new Infrastructure\UserRepositoryMysql(
         $app['db'],
+        $app[EntityManager::class],
         $app[Domain\Repository\FeedbackRepository::class]
     );
 };
 
 $this[Domain\Repository\FeedbackRepository::class] = function ($app) {
-    return new Infrastructure\FeedbackRepositoryMysql($app['db']);
+    return new Infrastructure\FeedbackRepositoryMysql(
+        $app['db'],
+        $app[EntityManager::class]
+    );
 };
 
 //A domain service depending on other domain services
@@ -46,7 +56,10 @@ $this[Domain\GeoIp\GeoIpResolver::class] = function ($app) {
 };
 
 $this[Domain\Repository\AdminMetricsRepository::class] = function ($app) {
-    return new Infrastructure\AdminMetricsRepositoryMysql($app['db']);
+    return new Infrastructure\AdminMetricsRepositoryMysql(
+        $app['db'],
+        $app[EntityManager::class]
+    );
 };
 
 $this[Application\ReadAdminMetrics::class] = function ($app) {
@@ -107,7 +120,10 @@ $this[Domain\AdminTasks\CheckMissingTranslations::class] = function ($app) {
 };
 
 $this[Domain\Repository\SongChordRepository::class] = function ($app) {
-    return new Infrastructure\SongChordRepositoryMysql($app['db']);
+    return new Infrastructure\SongChordRepositoryMysql(
+        $app['db'],
+        $app[EntityManager::class]
+    );
 };
 
 $this[Domain\AllSongsReport::class] = function ($app) {
@@ -119,11 +135,17 @@ $this[Domain\AllSongsReport::class] = function ($app) {
 };
 
 $this[Domain\Repository\BookRepository::class] = function ($app) {
-    return new Infrastructure\BookRepositoryMysql($app['db']);
+    return new Infrastructure\BookRepositoryMysql(
+        $app['db'],
+        $app[EntityManager::class]
+    );
 };
 
 $this[Domain\Repository\UnhappyUserRepository::class] = function ($app) {
-    return new Infrastructure\UnhappyUserRepositoryMysql($app['db']);
+    return new Infrastructure\UnhappyUserRepositoryMysql(
+        $app['db'],
+        $app[EntityManager::class]
+    );
 };
 
 $this[Domain\Service\FeedbackRecorder::class] = function ($app) {
@@ -175,4 +197,13 @@ $this['factory.ChordPrinter'] = $this->protect(function ($printer) {
 
 $this[IpToLocaleResolver::class] = function ($app) {
     return new IpToLocaleResolver($this[GeoIpResolver::class]);
+};
+
+$this[EntityManager::class] = function ($app) {
+    $config = ORMSetup::createAttributeMetadataConfiguration(
+        paths: [$app['root_dir'] . "/src"],
+        isDevMode: $app['neoconfig']['debug'],
+    );
+
+    return new EntityManager($app['db'], $config);
 };

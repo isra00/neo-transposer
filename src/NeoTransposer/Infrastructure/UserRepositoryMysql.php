@@ -3,6 +3,7 @@
 namespace NeoTransposer\Infrastructure;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
@@ -12,10 +13,10 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 {
     protected $userPerformanceRepository;
 
-    public function __construct(Connection $dbConnection, FeedbackRepository $userPerformanceRepository)
+    public function __construct(Connection $dbConnection, EntityManager $entityManager, FeedbackRepository $userPerformanceRepository)
     {
         $this->userPerformanceRepository = $userPerformanceRepository;
-        parent::__construct($dbConnection);
+        parent::__construct($dbConnection, $entityManager);
     }
 
 	public function readFromId(int $idUser): ?User
@@ -40,7 +41,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 
         $ret = null;
 
-		if ($userdata = $this->dbConnection->fetchAssoc($sql, array($fieldValue)))
+		if ($userdata = $this->dbConnection->fetchAssociative($sql, array($fieldValue)))
 		{
             $userPerformance = $this->userPerformanceRepository->readUserPerformance($userdata['id_user']);
 
@@ -114,7 +115,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 		}
 
         //If user had NULL voice, don't record the change
-		$currentVoiceRange = $this->dbConnection->fetchAssoc('SELECT lowest_note FROM user WHERE id_user = ?', [$user->id_user]);
+		$currentVoiceRange = $this->dbConnection->fetchAssociative('SELECT lowest_note FROM user WHERE id_user = ?', [$user->id_user]);
 
 		if (!empty($currentVoiceRange['lowest_note']))
 		{
@@ -131,7 +132,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 
     public function readIpFromUsersWithNullCountry(): array
     {
-        return $this->dbConnection->fetchAll('SELECT register_ip FROM user WHERE country IS NULL');
+        return $this->dbConnection->fetchAllAssociative('SELECT register_ip FROM user WHERE country IS NULL');
     }
 
     public function saveUserCountryByIp(string $countryIsoCode, string $ip): void
@@ -145,6 +146,6 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 
     public function readVoiceRangeFromAllUsers(): array
     {
-        return $this->dbConnection->fetchAll('SELECT id_user, email, lowest_note, highest_note FROM user');
+        return $this->dbConnection->fetchAllAssociative('SELECT id_user, email, lowest_note, highest_note FROM user');
     }
 }

@@ -16,7 +16,7 @@ FROM transposition_feedback
 WHERE `id_user` = ?
 GROUP BY worked
 SQL;
-		$result = $this->dbConnection->fetchAll($sql, [$idUser]);
+		$result = $this->dbConnection->fetchAllAssociative($sql, [$idUser]);
 
 		$performanceData = [0 => 0, 1 => 0];
 
@@ -96,7 +96,7 @@ SQL;
 
     public function readSongFeedbackForUser(int $idUser, int $idSong): ?bool
     {
-        $result = $this->dbConnection->fetchColumn(
+        $result = $this->dbConnection->fetchOne(
             'SELECT worked FROM transposition_feedback WHERE id_user = ? AND id_song = ?',
             [$idUser, $idSong]
         );
