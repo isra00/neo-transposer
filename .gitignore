@@ -16,3 +16,4 @@ GeoLite2-Country.mmdb
 .vscode
 .env
 _output
+web/adminer*
