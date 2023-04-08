@@ -3,16 +3,16 @@
 namespace NeoTransposer\Infrastructure;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
 
 abstract class MysqlRepository
 {
-    /**
-     * @var Connection
-     */
-    protected $dbConnection;
+    protected Connection $dbConnection;
+    protected EntityManager $entityManager;
 
-    public function __construct(Connection $dbConnection)
+    public function __construct(Connection $dbConnection, EntityManager $entityManager)
     {
         $this->dbConnection = $dbConnection;
+        $this->entityManager = $entityManager;
     }
 }

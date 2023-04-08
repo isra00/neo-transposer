@@ -2,11 +2,14 @@
 
 namespace NeoTransposer\Tests\Infrastructure;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMSetup;
 use Faker\Factory;
 
 class MysqlRepositoryTest extends \Codeception\Test\Unit
 {
     protected $dbConnection;
+    protected $entityManager;
 
     protected $faker;
 
@@ -21,6 +24,13 @@ class MysqlRepositoryTest extends \Codeception\Test\Unit
             'charset'  => 'utf8',
         ]);
         $this->dbConnection->executeQuery('USE ' . getenv('NT_DB_DATABASE_INTEGRATION'));
+
+        $doctrineConfig = ORMSetup::createAttributeMetadataConfiguration(
+            paths: [__DIR__ . '/../../../../../src'],
+            isDevMode: true,
+        );
+
+        $this->entityManager = new EntityManager($this->dbConnection, $doctrineConfig);
 
         $this->faker = Factory::create();
 

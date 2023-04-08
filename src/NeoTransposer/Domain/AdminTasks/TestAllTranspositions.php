@@ -90,7 +90,7 @@ WHERE id_book = ?
 ORDER BY id_song
 SQL;
 
-        $ids = $this->app['db']->fetchAll($sql, [self::TEST_ALL_TRANSPOSITIONS_BOOK]);
+        $ids = $this->app['db']->fetchAllAssociative($sql, [self::TEST_ALL_TRANSPOSITIONS_BOOK]);
 
         $allSongs = [];
 
@@ -144,8 +144,7 @@ SQL;
             }
 
             if ($this->app['neoconfig']['people_compatible']) {
-                $testResult[$transposedSong->song->idSong]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus(
-                );
+                $testResult[$transposedSong->song->idSong]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus();
 
                 if ($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) {
                     $testResult[$transposedSong->song->idSong]['peopleCompatible'] = [
@@ -209,8 +208,9 @@ SQL;
             foreach ($missingProperties as &$value) {
                 $value = 'missing';
             }
-            /** @todo Remove @ when upgrading to PHP7.4 (it should be possible to call array_merge with a null value) */
-            $diff = @array_merge($diff, $missingProperties);
+            if (is_array($diff)) {
+                $diff = array_merge($diff, $missingProperties);
+            }
         }
 
         return $diff;

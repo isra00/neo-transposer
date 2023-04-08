@@ -16,7 +16,7 @@ class GetVoiceRangeOfGoodUsers implements AdminTask
     
 	public function run(): string
 	{
-		$goodUsers = $this->dbConnection->fetchAll('SELECT id_user, wizard_step1, lowest_note, highest_note FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
+		$goodUsers = $this->dbConnection->fetchAllAssociative('SELECT id_user, wizard_step1, lowest_note, highest_note FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
 		$output = '';
 
 		$nc = new NotesCalculator();

@@ -26,7 +26,7 @@ AND NOT song.id_song IN (118, 319)
 ORDER BY page, title
 SQL;
 
-		$songs = $this->dbConnection->fetchAll($sql, [$idUser, $idBook]);
+		$songs = $this->dbConnection->fetchAllAssociative($sql, [$idUser, $idBook]);
 
         return new SongsWithUserFeedbackCollection($songs);
     }
@@ -41,7 +41,7 @@ AND NOT song.id_song IN (118, 319)
 ORDER BY page, title
 SQL;
 
-        return new SongsCollection($this->dbConnection->fetchAll($sql, [$idBook]));
+        return new SongsCollection($this->dbConnection->fetchAllAssociative($sql, [$idBook]));
     }
 
     /**
@@ -71,7 +71,7 @@ SQL;
     public function readSongByField(string $field, $value): ?Song
     {
         /** @refactor SELECT * FROM 2 tablas?? Disgregar lo que hace falta de book y lo que no */
-		$songRow = $this->dbConnection->fetchAssoc(
+		$songRow = $this->dbConnection->fetchAssociative(
 			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $field = ?",
 			[$value]
 		);
@@ -81,7 +81,7 @@ SQL;
 		}
 
         /** @refactor Replace by SongChordRepository::readSongChords() */
-		$originalChords = $this->dbConnection->fetchAll(
+		$originalChords = $this->dbConnection->fetchAllAssociative(
 			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
 			[$songRow['id_song']]
 		);
@@ -97,7 +97,7 @@ SQL;
 
     public function readAllSongs(): array
     {
-        return $this->dbConnection->fetchAll('SELECT * FROM song');
+        return $this->dbConnection->fetchAllAssociative('SELECT * FROM song');
     }
 
     public function createSong(
@@ -142,7 +142,7 @@ SQL;
 
     public function slugAlreadyExists(string $slug): bool
     {
-        return !empty($this->dbConnection->fetchAssoc(
+        return !empty($this->dbConnection->fetchAssociative(
 			'SELECT id_song, slug FROM song WHERE slug = ?',
 			[$slug]
 		));

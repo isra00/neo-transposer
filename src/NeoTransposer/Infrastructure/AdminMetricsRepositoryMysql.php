@@ -11,12 +11,12 @@ class AdminMetricsRepositoryMysql extends MysqlRepository implements AdminMetric
 
     public function readUserCountTotal(): int
     {
-        return intval($this->dbConnection->fetchColumn('SELECT COUNT(id_user) FROM user'));
+        return intval($this->dbConnection->fetchOne('SELECT COUNT(id_user) FROM user'));
     }
 
     public function readUserCountGood(): int
     {
-        return intval($this->dbConnection->fetchColumn('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1'));
+        return intval($this->dbConnection->fetchOne('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1'));
     }
 
 	public function readGlobalPerformance(): array
@@ -36,8 +36,8 @@ GROUP BY worked
 WITH ROLLUP
 SQL;
 
-		$global_performance['all'] = $this->dbConnection->fetchAll($sql_gp_all);
-		$global_performance['goods'] = $this->dbConnection->fetchAll($sql_gp_good_users);
+		$global_performance['all'] = $this->dbConnection->fetchAllAssociative($sql_gp_all);
+		$global_performance['goods'] = $this->dbConnection->fetchAllAssociative($sql_gp_good_users);
 
 		$answers = array('no', 'yes');
 
@@ -67,7 +67,7 @@ FROM transposition_feedback,
 ) not_null_users
 SQL;
 		$this->dbConnection->executeQuery("SET sql_mode=''");
-		return $this->dbConnection->fetchAssoc($sqlUsersReportingFb);
+		return $this->dbConnection->fetchAssociative($sqlUsersReportingFb);
 	}
 
 	/**
@@ -110,7 +110,7 @@ JOIN
 ) peopledata ON peopledata.id_book = book.id_book
 SQL;
 
-		return $this->dbConnection->fetchAll($sql);
+		return $this->dbConnection->fetchAllAssociative($sql);
 	}
 
 	/**
@@ -130,14 +130,14 @@ GROUP BY id_song
 ORDER BY song.id_book, fbs DESC
 SQL;
 
-		$fbsongs = $this->dbConnection->fetchAll($sql);
+		$fbsongs = $this->dbConnection->fetchAllAssociative($sql);
 
 		$feedback = [];
 
 		foreach ($fbsongs as $song)
 		{
-			$yes = (int) $this->dbConnection->fetchColumn('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=1', array($song['id_song']));
-			$no  = (int) $this->dbConnection->fetchColumn('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=0', array($song['id_song']));
+			$yes = (int) $this->dbConnection->fetchOne('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=1', array($song['id_song']));
+			$no  = (int) $this->dbConnection->fetchOne('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=0', array($song['id_song']));
 
 			$feedback[$song['id_song']] = array(
 				'yes'			=> $yes,
@@ -188,7 +188,7 @@ OR
 ORDER BY took_action, time_unhappy, total DESC
 SQL;
 
-		return $this->dbConnection->fetchAll($sql,[
+		return $this->dbConnection->fetchAllAssociative($sql,[
 			UnhappinessManager::UNHAPPY_THRESHOLD_PERF,
 			UnhappinessManager::UNHAPPY_THRESHOLD_REPORTS
 		]);
@@ -203,7 +203,7 @@ GROUP BY day
 ORDER BY day DESC
 SQL;
 
-		$days_with_feedback = $this->dbConnection->fetchAll($sql);
+		$days_with_feedback = $this->dbConnection->fetchAllAssociative($sql);
 
 		foreach ($days_with_feedback as $day)
 		{
@@ -243,7 +243,7 @@ JOIN
 ) sub_dno
 SQL;
 
-			$global_perf_chrono[] = $this->dbConnection->fetchAll($sql)[0];
+			$global_perf_chrono[] = $this->dbConnection->fetchAllAssociative($sql)[0];
 
 		}
 
@@ -277,7 +277,7 @@ JOIN book USING (id_book)
 GROUP BY id_book
 HAVING id_book=2 OR id_book=4
 SQL;
-		return $this->dbConnection->fetchAll($sql);
+		return $this->dbConnection->fetchAllAssociative($sql);
 	}
 
 	public function readMostActiveUsers(): array
@@ -302,7 +302,7 @@ JOIN
 ORDER BY total DESC
 LIMIT 30
 SQL;
-		return $this->dbConnection->fetchAll($sql);
+		return $this->dbConnection->fetchAllAssociative($sql);
 	}
 
 	public function readGoodUsersChronological(): array
@@ -320,7 +320,7 @@ join
 group by day
 order by day desc
 SQL;
-		return $this->dbConnection->fetchAll($sql);
+		return $this->dbConnection->fetchAllAssociative($sql);
 	}
 
 	/**
@@ -339,7 +339,7 @@ SQL;
 
 		//ONLY_FULL_GROUP_BY mode (default in MySQL>5.7) makes the query fail
 		$this->dbConnection->query("SET @@sql_mode=''");
-		$ips_for_country = $this->dbConnection->fetchAll('SELECT country, register_ip FROM user WHERE NOT country IS NULL GROUP BY country');
+		$ips_for_country = $this->dbConnection->fetchAllAssociative('SELECT country, register_ip FROM user WHERE NOT country IS NULL GROUP BY country');
 		$country_names = [];
 
 		foreach ($ips_for_country as $ip)
@@ -371,7 +371,7 @@ group by country
 order by n desc
 SQL;
 
-		$countries = $this->dbConnection->fetchAll($sql);
+		$countries = $this->dbConnection->fetchAllAssociative($sql);
 
 		$performance = [];
 
@@ -391,7 +391,7 @@ JOIN
 GROUP BY user.country order by total desc
 SQL;
 
-		$goodUsersCountryRaw = $this->dbConnection->fetchAll($sql);
+		$goodUsersCountryRaw = $this->dbConnection->fetchAllAssociative($sql);
 
 		$goodUsersCountry = [];
 		foreach ($goodUsersCountryRaw as $row)
@@ -422,7 +422,7 @@ join
   and worked=0
 ) sub_no
 SQL;
-			$countryPerformance = $this->dbConnection->fetchAll($sql);
+			$countryPerformance = $this->dbConnection->fetchAllAssociative($sql);
 
 			if ($countryPerformance[0]['total'] > 5)
 			{
@@ -451,7 +451,7 @@ GROUP BY transposition
 ORDER BY fbs DESC
 SQL;
         /** @todo Move that constant from AdminDashboard to ReadAdminMetrics (domain service) */
-		$fbsByTransposition = $this->dbConnection->fetchAll($sql, [$detailedFeedbackDeployed]);
+		$fbsByTransposition = $this->dbConnection->fetchAllAssociative($sql, [$detailedFeedbackDeployed]);
 
 		$total = array_sum(array_column($fbsByTransposition, 'fbs'));
 		foreach ($fbsByTransposition as &$fbs)
@@ -477,7 +477,7 @@ GROUP BY pc_status
 ORDER BY pc_status;
 SQL;
 
-		return $this->dbConnection->fetchAll($sql);
+		return $this->dbConnection->fetchAllAssociative($sql);
 	}
 
 	public function readDetailedFeedbackCenteredScoreRate(): array
@@ -491,7 +491,7 @@ AND NOT centered_score_rate IS NULL
 ORDER BY song.id_book, centered_score_rate DESC
 SQL;
 
-		return $this->dbConnection->fetchAll($sql);
+		return $this->dbConnection->fetchAllAssociative($sql);
 	}
 
 	public function readDetailedFeedbackDeviation(): array
@@ -504,7 +504,7 @@ GROUP BY transposition, deviation_from_center
 ORDER BY deviation_from_center
 SQL;
 
-		return $this->dbConnection->fetchAll($sql);
+		return $this->dbConnection->fetchAllAssociative($sql);
 	}
 
 	public function readUsersByBook(int $totalUsers): array
@@ -517,7 +517,7 @@ GROUP BY user.id_book
 ORDER BY users DESC
 SQL;
 
-		$users = $this->dbConnection->fetchAll($sql);
+		$users = $this->dbConnection->fetchAllAssociative($sql);
 		$usersBookId = [];
 
 		foreach ($users as &$book)
@@ -551,7 +551,7 @@ SQL;
 		foreach ($allBooks as $book)
 		{
 			$performance[$book->idBook()] = $this->aggregatePerformanceData(
-				$this->dbConnection->fetchAll($sql, [$book->idBook()])
+				$this->dbConnection->fetchAllAssociative($sql, [$book->idBook()])
 			);
 		}
 
@@ -566,6 +566,6 @@ FROM `transposition_feedback`
 JOIN user USING (id_user)
 GROUP BY user.wizard_step1
 SQL;
-		return $this->dbConnection->fetchAll($sql);
+		return $this->dbConnection->fetchAllAssociative($sql);
 	}
 }

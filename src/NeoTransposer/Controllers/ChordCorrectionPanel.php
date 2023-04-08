@@ -19,7 +19,7 @@ class ChordCorrectionPanel
 			return 'No inconsistent chord positions found :-)';
 		}
 
-		$chords = $app['db']->fetchAll(
+		$chords = $app['db']->fetchAllAssociative(
 			'SELECT * FROM song_chord JOIN song USING (id_song) WHERE id_song IN (?) ORDER BY id_song, position',
 			[array_keys($problematic)],
             [\Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
