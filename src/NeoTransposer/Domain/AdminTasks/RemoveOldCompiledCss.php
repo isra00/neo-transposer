@@ -17,11 +17,11 @@ class RemoveOldCompiledCss implements AdminTask
     {
         $serveCssController = new \NeoTransposer\Controllers\ServeCss();
         $fileScheme = $serveCssController->min_file;
-        $cssDir = realpath('.' . dirname($fileScheme));
+        $cssDir = realpath('.' . dirname((string) $fileScheme));
         chdir($cssDir);
         $currentFile = sprintf($fileScheme, $this->dependencyContainer['neoconfig']['css_cache']);
 
-        $allCssFiles = glob(sprintf(basename($fileScheme), '*'));
+        $allCssFiles = glob(sprintf(basename((string) $fileScheme), '*'));
         $deletedCounter = 0;
         $output = [];
         foreach ($allCssFiles as $file) {

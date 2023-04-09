@@ -210,7 +210,7 @@ class NeoApp extends Application
      */
     public function addNotification($type, $text): void
     {
-        if (!in_array($type, array_keys($this->notifications))) {
+        if (!array_key_exists($type, $this->notifications)) {
             throw new \OutOfRangeException("Notification type $type not valid");
         }
         $this->notifications[$type][] = $text;
@@ -248,7 +248,7 @@ class NeoApp extends Application
         $suffix = $this->trans($this['neoconfig']['seo_title_suffix']);
 
         if (isset($parameters['page_title'])) {
-            if (strlen($parameters['page_title']) < self::PAGE_TITLE_MAX_LENGTH - strlen($suffix)) {
+            if (strlen((string) $parameters['page_title']) < self::PAGE_TITLE_MAX_LENGTH - strlen($suffix)) {
                 $parameters['page_title'] = $parameters['page_title'] . " · $suffix";
             }
         } else {
