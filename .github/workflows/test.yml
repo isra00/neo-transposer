@@ -26,8 +26,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      #- uses: satackey/action-docker-layer-caching@v0.0.11
-      #  continue-on-error: true
+      - uses: satackey/action-docker-layer-caching
+        continue-on-error: true
 
       - name: 📦 Build the DEV Docker image
         run: make build-dev
