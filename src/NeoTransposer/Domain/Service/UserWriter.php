@@ -12,15 +12,11 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class UserWriter
 {
-    protected $userRepository;
-    protected $unhappyUser;
-    protected $bookRepository;
-
-    public function __construct(UserRepository $userRepository, BookRepository $bookRepository, UnhappinessManager $unhappyUser)
+    public function __construct(
+        protected UserRepository $userRepository,
+        protected BookRepository $bookRepository,
+        protected UnhappinessManager $unhappyUser)
     {
-        $this->userRepository = $userRepository;
-        $this->unhappyUser = $unhappyUser;
-        $this->bookRepository = $bookRepository;
     }
 
     /**

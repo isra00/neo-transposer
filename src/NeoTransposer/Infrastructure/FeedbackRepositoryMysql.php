@@ -71,7 +71,7 @@ ON DUPLICATE KEY UPDATE
 	centered_score_rate = ?,
 	deviation_from_center = ?
 SQL;
-		$this->dbConnection->executeUpdate($sql, array(
+		$this->dbConnection->executeUpdate($sql, [
 			$idSong,
 			$idUser,
             (int) $worked,
@@ -91,7 +91,7 @@ SQL;
 			$pcStatus,
 			$centeredScoreRate,
 			$deviationFromCentered
-		));
+		]);
     }
 
     public function readSongFeedbackForUser(int $idUser, int $idSong): ?bool
@@ -101,6 +101,6 @@ SQL;
             [$idUser, $idSong]
         );
 
-        return strlen($result) ? (bool) $result : null;
+        return strlen((string) $result) ? (bool) $result : null;
     }
 }

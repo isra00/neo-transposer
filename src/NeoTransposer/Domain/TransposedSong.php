@@ -20,11 +20,6 @@ use Silex\Application;
 class TransposedSong
 {
     /**
-     * @var Song
-     */
-    public $song;
-
-    /**
      * @var  array
      * @todo Rename to transpositionsCentered
      */
@@ -41,15 +36,11 @@ class TransposedSong
      */
     protected $pcCalculation;
 
-    /**
-     * @var Application;
-     */
-    protected $app;
-
-    public function __construct(Song $song, Application $app)
+    public function __construct(
+        public Song $song,
+        protected Application $app
+    )
     {
-        $this->song = $song;
-        $this->app  = $app;
     }
 
     /**
@@ -142,8 +133,6 @@ class TransposedSong
 
     /**
      * This IS actually used by transpose_song.twig's "peopleCompatibleStatusMsg"
-     *
-     * @return string|null
      */
     public function getPeopleCompatibleStatusMsg(): ?string
     {
@@ -152,8 +141,6 @@ class TransposedSong
 
     /**
      * User in removeEasierNotEquivalentIfConflictWithPeopleCompatible() and in transpose_song.twig
-     *
-     * @return bool
      */
     public function isAlreadyPeopleCompatible(): bool
     {
@@ -165,12 +152,11 @@ class TransposedSong
      * notEquivalent, because other saying "this transposition is already
      * compatible" would be partially false.
      *
-     * @return void
      * @throws Exception
      */
     public function removeEasierNotEquivalentIfConflictWithPeopleCompatible(): void
     {
-        if ($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->not_equivalent)
+        if (($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->not_equivalent))
             || $this->pcCalculation->peopleCompatibleTransposition
         ) {
             $this->not_equivalent = null;
@@ -180,9 +166,7 @@ class TransposedSong
     /**
      * Check whether the given transposition is within people's range for the current song.
      *
-     * @param Transposition $transposition
      *
-     * @return bool
      * @throws Exception
      */
     protected function isCompatibleWithPeople(Transposition $transposition): bool

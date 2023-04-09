@@ -11,11 +11,11 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class UserRepositoryMysql extends MysqlRepository implements UserRepository
 {
-    protected $userPerformanceRepository;
-
-    public function __construct(Connection $dbConnection, EntityManager $entityManager, FeedbackRepository $userPerformanceRepository)
+    public function __construct(
+        Connection $dbConnection,
+        EntityManager $entityManager,
+        protected FeedbackRepository $userPerformanceRepository)
     {
-        $this->userPerformanceRepository = $userPerformanceRepository;
         parent::__construct($dbConnection, $entityManager);
     }
 
@@ -41,7 +41,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 
         $ret = null;
 
-		if ($userdata = $this->dbConnection->fetchAssociative($sql, array($fieldValue)))
+		if ($userdata = $this->dbConnection->fetchAssociative($sql, [$fieldValue]))
 		{
             $userPerformance = $this->userPerformanceRepository->readUserPerformance($userdata['id_user']);
 
@@ -85,13 +85,13 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 		}
 
         /** @todo Refactor this. registerIp should be just one more field, no special treatment. */
-		$this->dbConnection->insert('user', array(
+		$this->dbConnection->insert('user', [
 			'email'			=> $user->email,
 			'lowest_note'	=> $user->range->lowest ?? null,
 			'highest_note'	=> $user->range->highest ?? null,
 			'id_book'		=> $user->id_book,
 			'register_ip'	=> $registerIp
-		));
+        ]);
 
 		return $user->id_user = intval($this->dbConnection->lastInsertId());
 	}
@@ -119,12 +119,12 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 
 		if (!empty($currentVoiceRange['lowest_note']))
 		{
-			$this->dbConnection->insert('log_voice_range', array(
+			$this->dbConnection->insert('log_voice_range', [
 				'id_user'		=> $user->id_user,
 				'method'		=> $method,
 				'lowest_note'	=> $user->range->lowest,
 				'highest_note'	=> $user->range->highest
-			));
+            ]);
 		}
 
 		$this->save($user);

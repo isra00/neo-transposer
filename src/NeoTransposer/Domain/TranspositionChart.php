@@ -9,11 +9,6 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 class TranspositionChart
 {
 	/**
-	 * @var NotesCalculator
-	 */
-	protected $nc;
-
-	/**
 	 * @var array
 	 */
 	protected $voiceChart = [];

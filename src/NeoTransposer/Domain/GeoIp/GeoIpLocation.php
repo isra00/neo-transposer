@@ -4,11 +4,8 @@ namespace NeoTransposer\Domain\GeoIp;
 
 class GeoIpLocation
 {
-    protected $country;
-
-    public function __construct(Country $country)
+    public function __construct(protected Country $country)
     {
-        $this->country = $country;
     }
 
     public function country()

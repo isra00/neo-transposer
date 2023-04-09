@@ -22,7 +22,7 @@ class UserVoice
             );
         }
 
-        return $app->render('user_voice.twig', array(
+        return $app->render('user_voice.twig', [
             'page_title'           => $app->trans('Your voice'),
             'scale'                => (new NotesCalculator())->numbered_scale,
             'accoustic_scale'      => NotesCalculator::ACOUSTIC_SCALE,
@@ -31,7 +31,7 @@ class UserVoice
                 $app['neoconfig']['languages'][$app['locale']]['notation']
             ),
             //First usage: if user manually selects range, they will be redirected to the book in their language
-            'redirect'             => $request->get('redirect') ?? $app->path('book_' . $app['neouser']->id_book)
-        ));
+            'redirect'             => $request->get('redirect') ?? $app->path('book_' . $app['neouser']->id_book),
+        ]);
     }
 }

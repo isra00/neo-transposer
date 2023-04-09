@@ -7,16 +7,13 @@ namespace NeoTransposer\Domain;
  */
 class SongTextForWizard
 {
-    /**
-     * Lyrics and chord placeholders (%0, %1...), as fetched from config file.
-     *
-     * @var string
-     */
-    protected $rawText;
-
-    public function __construct($rawText)
+    public function __construct(
+        /**
+         * Lyrics and chord placeholders (%0, %1...), as fetched from config file.
+         */
+        protected string $rawText
+    )
     {
-        $this->rawText = $rawText;
     }
 
     /**

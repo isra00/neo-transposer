@@ -89,9 +89,7 @@ SQL;
 		return new Song(
             $songRow,
             array_map(
-            function($row) {
-                return Chord::fromString($row['chord']);
-            }, $originalChords)
+            fn($row) => Chord::fromString($row['chord']), $originalChords)
         );
 	}
 
@@ -129,13 +127,13 @@ SQL;
 
 		foreach ($chords as $position=>$chord)
 		{
-			if (strlen($chord))
+			if ($chord != '')
 			{
-				$this->dbConnection->insert('song_chord', array(
+				$this->dbConnection->insert('song_chord', [
                     'id_song'  => $idSong,
                     'chord'    => $chord,
                     'position' => $position
-				));
+                ]);
 			}
 		}
     }

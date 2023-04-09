@@ -4,8 +4,6 @@ namespace NeoTransposer\Domain\GeoIp;
 
 class IpToLocaleResolver
 {
-    protected $geoIpResolver;
-
     protected const LOCALES_BY_COUNTRY = [
             'sw' => ['TZ', 'KE'],
             'pt' => ['BR', 'PT', 'AO', 'CV', 'GW', 'MZ', 'ST', 'TL'],
@@ -15,16 +13,15 @@ class IpToLocaleResolver
             'it' => ['IT']
         ];
 
-    public function __construct(GeoIpResolver $geoIpResolver)
+    public function __construct(protected GeoIpResolver $geoIpResolver)
     {
-        $this->geoIpResolver = $geoIpResolver;
     }
 
     public function resolveIpToLocale($ip): ?string
     {
         try {
             $record = $this->geoIpResolver->resolve($ip);
-        } catch (GeoIpException $e) {
+        } catch (GeoIpException) {
             return null;
         }
 

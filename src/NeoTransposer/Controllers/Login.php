@@ -20,11 +20,8 @@ class Login
     /**
      * Display login page (=landing page).
      *
-     * @param Request $req
-     * @param NeoApp  $app
      * @param array   $tpl_vars Additional vars for Twig, i.e. validation errors.
      *
-     * @return string
      */
     public function get(Request $req, NeoApp $app, array $tpl_vars = []): string
     {
@@ -50,14 +47,11 @@ class Login
      * Receive the login data and reload login if failed to log in, or redirect
      * to voice wizard if user has no voice range, or redirect to book.
      *
-     * @param Request $req
-     * @param NeoApp  $app
      *
-     * @return string|RedirectResponse
      */
-    public function post(Request $req, NeoApp $app)
+    public function post(Request $req, NeoApp $app): string|\Symfony\Component\HttpFoundation\RedirectResponse
     {
-        $req_email = trim($req->get('email'));
+        $req_email = trim((string) $req->get('email'));
 
         $isCaptchaValid = $app['debug'] || $app['neoconfig']['disable_recaptcha'] || $this->validateCaptcha($req, $app['neoconfig']['recaptcha_secret']);
 
@@ -95,7 +89,7 @@ class Login
             return $app->redirect(
                 $app->path(
                     'user_voice',
-                    array('_locale' => $app['locale'], 'firstTime' => '1')
+                    ['_locale' => $app['locale'], 'firstTime' => '1']
                 )
             );
         }

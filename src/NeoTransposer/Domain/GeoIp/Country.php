@@ -4,13 +4,8 @@ namespace NeoTransposer\Domain\GeoIp;
 
 class Country
 {
-    protected $isoCode;
-    protected $names = [];
-
-    public function __construct($isoCode, $names)
+    public function __construct(protected $isoCode, protected $names)
     {
-        $this->isoCode = $isoCode;
-        $this->names = $names;
     }
 
     public function isoCode()

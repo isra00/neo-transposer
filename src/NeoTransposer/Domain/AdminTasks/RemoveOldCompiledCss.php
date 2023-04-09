@@ -9,11 +9,8 @@ use Silex\Application;
  */
 class RemoveOldCompiledCss implements AdminTask
 {
-    protected $dependencyContainer;
-
-    public function __construct(Application $dependencyContainer)
+    public function __construct(protected Application $dependencyContainer)
     {
-        $this->dependencyContainer = $dependencyContainer;
     }
 
     public function run(): string

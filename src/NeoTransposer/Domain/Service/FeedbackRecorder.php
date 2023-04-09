@@ -8,13 +8,10 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class FeedbackRecorder
 {
-    protected $feedbackRepository;
-    protected $unhappyUser;
-
-    public function __construct(FeedbackRepository $feedbackRepository, UnhappinessManager $unhappyUser)
+    public function __construct(
+        protected FeedbackRepository $feedbackRepository,
+        protected UnhappinessManager $unhappyUser)
     {
-        $this->feedbackRepository = $feedbackRepository;
-        $this->unhappyUser = $unhappyUser;
     }
 
     public function recordFeedback(

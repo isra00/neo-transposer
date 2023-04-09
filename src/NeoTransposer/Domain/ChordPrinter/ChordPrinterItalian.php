@@ -35,7 +35,7 @@ final class ChordPrinterItalian extends ChordPrinter
 
 		$fundamental = str_replace('#', ' <em>d</em>', $fundamental);
 
-		if (false === strpos($attributes, 'dim'))
+		if (!str_contains($attributes, 'dim'))
 		{
 			$attributes = str_replace(
 				['m', 'M'],

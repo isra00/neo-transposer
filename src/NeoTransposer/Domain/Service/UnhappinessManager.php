@@ -14,7 +14,7 @@ class UnhappinessManager
      *
      * @var float
      */
-    const UNHAPPY_THRESHOLD_PERF = .5;
+    final const UNHAPPY_THRESHOLD_PERF = .5;
 
     /**
      * The minimum number of feedback reports for considering a user unhappy if
@@ -22,20 +22,13 @@ class UnhappinessManager
      *
      * @var int
      */
-    public const UNHAPPY_THRESHOLD_REPORTS = 5;
-
-    protected $unhappyUserRepository;
-    protected $neoconfig;
-    protected $feedbackRepository;
+    final public const UNHAPPY_THRESHOLD_REPORTS = 5;
 
     public function __construct(
-        UnhappyUserRepository $unhappyUserRepository,
-        array $neoconfig,
-        FeedbackRepository $feedbackRepository
-    ) {
-        $this->unhappyUserRepository = $unhappyUserRepository;
-        $this->neoconfig = $neoconfig;
-        $this->feedbackRepository = $feedbackRepository;
+        protected UnhappyUserRepository $unhappyUserRepository,
+        protected array $neoconfig,
+        protected FeedbackRepository $feedbackRepository)
+    {
     }
 
     public function setUnhappy(User $user)

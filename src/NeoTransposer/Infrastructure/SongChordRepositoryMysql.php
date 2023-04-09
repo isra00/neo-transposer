@@ -32,9 +32,7 @@ SQL;
 		);
 
         return array_map(
-            function ($chordRow) {
-                return Chord::fromString($chordRow['chord']);
-            },
+            fn($chordRow) => Chord::fromString($chordRow['chord']),
             $chordRows
         );
 

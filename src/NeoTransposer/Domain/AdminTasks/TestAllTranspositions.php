@@ -12,14 +12,11 @@ use NeoTransposer\NeoApp;
  */
 class TestAllTranspositions implements AdminTask
 {
-    public const TEST_ALL_TRANSPOSITIONS_BOOK = 2;
+    final public const TEST_ALL_TRANSPOSITIONS_BOOK = 2;
 
-	protected $app;
-
-	public function __construct(NeoApp $app)
-	{
-		$this->app = $app;
-	}
+	public function __construct(protected NeoApp $app)
+ {
+ }
 
     /**
      * Perform the test.

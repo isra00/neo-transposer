@@ -21,7 +21,7 @@ class AdminMetricsRepositoryMysql extends MysqlRepository implements AdminMetric
 
 	public function readGlobalPerformance(): array
 	{
-		$sql_gp_all = <<<SQL
+        $sql_gp_all = <<<SQL
 SELECT worked, count(worked) n
 FROM transposition_feedback
 GROUP BY worked
@@ -36,10 +36,12 @@ GROUP BY worked
 WITH ROLLUP
 SQL;
 
-		$global_performance['all'] = $this->dbConnection->fetchAllAssociative($sql_gp_all);
-		$global_performance['goods'] = $this->dbConnection->fetchAllAssociative($sql_gp_good_users);
+        $global_performance = [
+            'all'   => $this->dbConnection->fetchAllAssociative($sql_gp_all),
+            'goods' => $this->dbConnection->fetchAllAssociative($sql_gp_good_users)
+        ];
 
-		$answers = array('no', 'yes');
+		$answers = ['no', 'yes'];
 
 		foreach ($global_performance as &$raw_data)
 		{
@@ -77,9 +79,9 @@ SQL;
 	 */
 	protected function aggregatePerformanceData(array $raw_data): array
 	{
-		$answers = array('no', 'yes');
+		$answers = ['no', 'yes'];
 
-		$feedback_data = array('yes'=>0, 'no'=>0, 'total'=>0);
+		$feedback_data = ['yes'=>0, 'no'=>0, 'total'=>0];
 		foreach ($raw_data as &$row)
 		{
 			$key = is_null($row['worked']) ? 'total' : $answers[$row['worked']];
@@ -136,10 +138,10 @@ SQL;
 
 		foreach ($fbsongs as $song)
 		{
-			$yes = (int) $this->dbConnection->fetchOne('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=1', array($song['id_song']));
-			$no  = (int) $this->dbConnection->fetchOne('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=0', array($song['id_song']));
+			$yes = (int) $this->dbConnection->fetchOne('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=1', [$song['id_song']]);
+			$no  = (int) $this->dbConnection->fetchOne('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=0', [$song['id_song']]);
 
-			$feedback[$song['id_song']] = array(
+			$feedback[$song['id_song']] = [
 				'yes'			=> $yes,
 				'no'			=> $no,
 				'performance'	=> $yes / ($yes + $no),
@@ -148,7 +150,7 @@ SQL;
 				'lowest_note'	=> $song['lowest_note'],
 				'highest_note'	=> $song['highest_note'],
 				'wideness'		=> $nc->distanceWithOctave($song['highest_note'], $song['lowest_note']),
-			);
+			];
 			$feedback[$song['id_song']]['total'] = $feedback[$song['id_song']]['yes'] + $feedback[$song['id_song']]['no'];
 		}
 
@@ -196,7 +198,8 @@ SQL;
 
 	public function readGlobalPerfChronological(): array
     {
-		$sql = <<<SQL
+		$global_perf_chrono = [];
+        $sql = <<<SQL
 SELECT date(time) day
 FROM transposition_feedback
 GROUP BY day
@@ -345,9 +348,11 @@ SQL;
 		foreach ($ips_for_country as $ip)
 		{
 			try {
-                $country_names[$ip['country']] = $geoIpResolver->resolve($ip['register_ip'])->country()->names()['en'];
+                if (!is_null($geoIpResolver->resolve($ip['register_ip'])->country()->names())) {
+                    $country_names[$ip['country']] = $geoIpResolver->resolve($ip['register_ip'])->country()->names()['en'];
+                }
 			}
-			catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException $e)
+			catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException)
 			{
 				$country_names[$ip['country']] = $ip['country'];
 			}
@@ -427,7 +432,7 @@ SQL;
 			if ($countryPerformance[0]['total'] > 5)
 			{
 				$performance[$country] = $countryPerformance[0];
-				$performance[$country]['country_name'] 	= $country_names[$country];
+				$performance[$country]['country_name'] 	= @$country_names[$country];
 				$performance[$country]['good_users']	= $goodUsersCountry[$country];
 			}
 		}

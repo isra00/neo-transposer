@@ -6,18 +6,11 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class AutomaticTransposerFactory
 {
-    protected $transpositionFactory;
-    protected $standardPeopleRange;
-    protected $notesCalculator;
-
     public function __construct(
-        TranspositionFactory $transpositionFactory,
-        NotesRange $standardPeopleRange,
-        NotesCalculator $notesCalculator
-    ) {
-        $this->transpositionFactory = $transpositionFactory;
-        $this->standardPeopleRange = $standardPeopleRange;
-        $this->notesCalculator = $notesCalculator;
+        protected TranspositionFactory $transpositionFactory,
+        protected NotesRange $standardPeopleRange,
+        protected NotesCalculator $notesCalculator)
+    {
     }
 
     public function createAutomaticTransposer(
