@@ -81,3 +81,6 @@ clean:
 
 composer:
 	@echo "To run composer, type docker exec -it transposer-dev composer.phar [command]"
+
+bash:
+	docker exec -it transposer-dev bash
