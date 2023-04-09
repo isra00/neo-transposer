@@ -41,10 +41,10 @@ class InsertSong
 			$request->get('id_book'),
 			$request->get('page'),
 			$request->get('title'),
-			strtoupper($request->get('lowest_note')),
-			strtoupper($request->get('highest_note')),
-			strtoupper($request->get('people_lowest_note')),
-			strtoupper($request->get('people_highest_note')),
+			strtoupper((string) $request->get('lowest_note')),
+			strtoupper((string) $request->get('highest_note')),
+			strtoupper((string) $request->get('people_lowest_note')),
+			strtoupper((string) $request->get('people_highest_note')),
 			boolval($request->get('first_chord_is_key')),
             $songChords
         );

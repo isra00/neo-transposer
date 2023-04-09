@@ -106,7 +106,7 @@ class SongCreator
 			'º' => 'o',
         ];
 
-		$string = strtolower(trim($string));
+		$string = strtolower(trim((string) $string));
 		$string = str_replace($hyphenize, '-', $string);
 		$string = str_replace(
 			array_keys($flattenLetters),
