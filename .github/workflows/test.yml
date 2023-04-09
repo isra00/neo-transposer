@@ -26,16 +26,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: satackey/action-docker-layer-caching
-        continue-on-error: true
-
       - name: 📦 Build the DEV Docker image
         run: make build-dev
 
       - name: ⚙ Run fixture containers
         run: |
-          make start
           make start-db-for-test
+          make start
 
       - name: 🧪 Unit & integration tests, functional test
         run: make test
