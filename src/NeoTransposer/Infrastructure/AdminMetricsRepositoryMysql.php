@@ -11,12 +11,12 @@ class AdminMetricsRepositoryMysql extends MysqlRepository implements AdminMetric
 
     public function readUserCountTotal(): int
     {
-        return intval($this->dbConnection->fetchOne('SELECT COUNT(id_user) FROM user'));
+        return (int) $this->dbConnection->fetchOne('SELECT COUNT(id_user) FROM user');
     }
 
     public function readUserCountGood(): int
     {
-        return intval($this->dbConnection->fetchOne('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1'));
+        return (int) $this->dbConnection->fetchOne('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
     }
 
 	public function readGlobalPerformance(): array
@@ -527,7 +527,7 @@ SQL;
 
 		foreach ($users as &$book)
 		{
-			$book['percent'] = (intval($book['users']) / $totalUsers) * 100;
+			$book['percent'] = ((int) $book['users'] / $totalUsers) * 100;
 
 			if (empty($book['lang_name']))
 			{

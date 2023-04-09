@@ -89,21 +89,21 @@ class Transposition
         foreach ($this->chords as $chord) {
             $scoreForThisChord = 0;
 
-            if (isset($this->scoresConfig['chords'][strval($chord)])) {
-                $scoreForThisChord = $this->scoresConfig['chords'][strval($chord)];
+            if (isset($this->scoresConfig['chords'][(string) $chord])) {
+                $scoreForThisChord = $this->scoresConfig['chords'][(string) $chord];
             } else {
                 foreach ($this->scoresConfig['patterns'] as $pattern => $score) {
-                    if (preg_match("/$pattern/", strval($chord))) {
+                    if (preg_match("/$pattern/", (string) $chord)) {
                         $scoreForThisChord = $score;
                     }
                 }
 
                 if (0 == $scoreForThisChord) {
-                    throw new SongDataException("Unknown chord: " . strval($chord));
+                    throw new SongDataException("Unknown chord: " . (string) $chord);
                 }
             }
 
-            $this->scoreMap[strval($chord)] = $scoreForThisChord;
+            $this->scoreMap[(string) $chord] = $scoreForThisChord;
             $this->score += $scoreForThisChord;
         }
     }
@@ -160,8 +160,8 @@ class Transposition
 
         //The key is always expressed in major form, so we resolve the minor
         //relatives, it is, the key will be its third minor.
-        if ($firstChord->attributes == 'm') {
-            $position = intval(array_search($firstChord->fundamental, NotesCalculator::ACOUSTIC_SCALE));
+        if ($firstChord->attributes === 'm') {
+            $position = (int) array_search($firstChord->fundamental, NotesCalculator::ACOUSTIC_SCALE);
             $firstChord->fundamental = $ncalc->arrayIndex(NotesCalculator::ACOUSTIC_SCALE, $position + 3);
             $firstChord->attributes = null;
         }
@@ -176,7 +176,7 @@ class Transposition
 
             /** @todo Refactor with array_walk */
             foreach ($this->chords as &$chord) {
-                $chord = Chord::fromString(self::ALTERNATIVE_CHORDS[$key][strval($chord)] ?? $chord);
+                $chord = Chord::fromString(self::ALTERNATIVE_CHORDS[$key][(string) $chord] ?? $chord);
             }
             $this->setScore();
         }

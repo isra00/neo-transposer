@@ -60,7 +60,7 @@ class TransposeSong
 
         $tplVars = [];
 
-        if ($transposedSong->getPeopleCompatible()) {
+        if ($transposedSong->getPeopleCompatible() !== null) {
 
             $peopleCompatibleMsgUntranslated = '';
             switch ($transposedSong->getPeopleCompatibleStatus())
@@ -102,8 +102,7 @@ class TransposeSong
         }
 
         if (str_starts_with($req->headers->get('Accept'), 'application/json')) {
-            $transposeSongApi = new TransposeSongApi($app);
-            return $transposeSongApi->handleApiRequest($req, $id_song);
+            return (new TransposeSongApi($app))->handleApiRequest($req, $id_song);
         }
 
         return $app->render(
@@ -140,13 +139,13 @@ class TransposeSong
         $transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser'], $app['neoconfig']['languages'][$app['locale']]['notation']);
         $transpositionChart->addTransposition('Transposed:', 'transposed-song', $transposedSong->transpositions[0]);
 
-        if ($transposedSong->song->peopleRange) {
+        if ($transposedSong->song->peopleRange !== null) {
             $transpositionChart->addVoice('Original for people:', 'original-song original-people', $transposedSong->song->peopleRange);
             $transpositionChart->addVoice('Transposed for people:', 'transposed-song transposed-people', $transposedSong->transpositions[0]->peopleRange);
             $transpositionChart->addVoice('People standard:', 'people-standard', new NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]));
         }
 
-        if ($transposedSong->getPeopleCompatible()) {
+        if ($transposedSong->getPeopleCompatible() !== null) {
             $transpositionChart->addTransposition('Adjusted for you:', 'transposed-song', $transposedSong->getPeopleCompatible());
             $transpositionChart->addVoice('Adjusted for people:', 'people-compatible', $transposedSong->getPeopleCompatible()->peopleRange);
         }

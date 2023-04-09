@@ -83,7 +83,7 @@ class TransposedSong
         if ($this->app['neoconfig']['people_compatible']) {
             $this->pcCalculation = $transposer->calculatePeopleCompatible();
 
-            if ($this->not_equivalent) {
+            if ($this->not_equivalent !== null) {
                 $this->removeEasierNotEquivalentIfConflictWithPeopleCompatible();
             }
         }

@@ -31,7 +31,7 @@ class NotesNotation
         'G#' => 'Sol#'
     ];
 
-    protected const REGEXP_NOTE = '/([ABCDEFG]#?b?)([0-9])?/';
+    protected const REGEXP_NOTE = '/([ABCDEFG]#?b?)(\d)?/';
 
     /**
      * Returns a given note in the given notation (american or latin).
@@ -80,8 +80,8 @@ class NotesNotation
             $highestNote = $this->getNotation($highestNote, 'latin');
         }
 
-        $octave = intval($match[2]);
-        $octave = $octave - 1;
+        $octave = (int) $match[2];
+        $octave -= 1;
 
         return "$lowestNote &rarr; $highestNote +$octave " . $trans->trans('oct');
     }

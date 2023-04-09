@@ -57,7 +57,7 @@ SQL;
     {
         $fieldId = 'slug';
 
-        if (strval(intval($idSong)) === $idSong) {
+        if ((string) (int) $idSong === $idSong) {
             $fieldId = 'id_song';
             $idSong = (int)$idSong;
         }

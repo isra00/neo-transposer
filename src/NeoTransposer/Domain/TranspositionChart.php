@@ -8,10 +8,15 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class TranspositionChart
 {
-	/**
-	 * @var array
-	 */
-	protected $voiceChart = [];
+    /**
+     * @var \NeoTransposer\Domain\NotesCalculator|mixed
+     */
+    protected $nc;
+
+    /**
+     * @var array
+     */
+    protected $voiceChart = [];
 
 	/**
 	 * Notation for printing notes

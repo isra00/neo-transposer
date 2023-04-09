@@ -23,12 +23,12 @@ final class ChordPrinterItalian extends ChordPrinter
         $notesNotation = new NotesNotation();
 		$fundamental = $notesNotation->getNotation($fundamental, 'latin');
 
-		if ($fundamental == 'Sib')
+		if ($fundamental === 'Sib')
 		{
 			$fundamental = 'Si <em>b</em>';
 		}
 
-		if ($fundamental == 'Re#')
+		if ($fundamental === 'Re#')
 		{
 			$fundamental = 'Mi <em>b</em>';
 		}
@@ -45,7 +45,7 @@ final class ChordPrinterItalian extends ChordPrinter
 		}
 
 		//Add initial space if attributes are numbers or dim
-		if (preg_match('/([0-9]|dim)/', $attributes, $match))
+		if (preg_match('/(\d|dim)/', $attributes, $match))
 		{
 			//$attributes = " " . $match;
 			$attributes = str_replace($match[1], " " . $match[1], $attributes);

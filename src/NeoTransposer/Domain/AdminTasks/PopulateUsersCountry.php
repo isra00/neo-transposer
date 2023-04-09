@@ -21,7 +21,7 @@ class PopulateUsersCountry implements AdminTask
 		{
 			$ip = $ip['register_ip'];
 
-			if (!strlen(trim((string) $ip)))
+			if (trim((string) $ip) === '')
 			{
 				continue;
 			}

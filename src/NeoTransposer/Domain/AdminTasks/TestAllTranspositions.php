@@ -41,7 +41,7 @@ class TestAllTranspositions implements AdminTask
             array_keys($testResult)
         )
         ) {
-            $output .= '<strong>Missing songs: ' . join(', ', $missingSongs) . "</strong>\n";
+            $output .= '<strong>Missing songs: ' . implode(', ', $missingSongs) . "</strong>\n";
         }
 
         foreach ($testResult as $idSong => $result) {
@@ -53,23 +53,19 @@ class TestAllTranspositions implements AdminTask
                 foreach ($difference as $property => $resultValue) {
                     if (is_array($resultValue)) {
                         $output .= 'Transposition ' . $property . ":\n";
-
                         foreach ($resultValue as $transProperty => $transResultValue) {
                             $output .= "\t$transProperty: expected <em>" . $testData['expectedResults'][$idSong][$property][$transProperty] . '</em> but got <em>' . $transResultValue . "</em>\n";
                         }
-                    } else {
-                        if (isset($testData['expectedResults'][$idSong][$property])) {
-                            if (is_array($testData['expectedResults'][$idSong][$property])) {
-                                $testData['expectedResults'][$idSong][$property] = '[' . join(
-                                        '; ',
-                                        $testData['expectedResults'][$idSong][$property]
-                                    ) . ']';
-                            }
-
-                            $output .= "$property: expected <em>" . ((string)$testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
-                        } else {
-                            $output .= "Unexpected property $property <em>" . $resultValue . "</em> not specified in test data\n";
+                    } elseif (isset($testData['expectedResults'][$idSong][$property])) {
+                        if (is_array($testData['expectedResults'][$idSong][$property])) {
+                            $testData['expectedResults'][$idSong][$property] = '[' . implode(
+                                    '; ',
+                                    $testData['expectedResults'][$idSong][$property]
+                                ) . ']';
                         }
+                        $output .= "$property: expected <em>" . ((string)$testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
+                    } else {
+                        $output .= "Unexpected property $property <em>" . $resultValue . "</em> not specified in test data\n";
                     }
                 }
             }
@@ -116,7 +112,7 @@ SQL;
                     'highestNote' => $transposedSong->transpositions[0]->range->highest,
                     'score'       => $transposedSong->transpositions[0]->score,
                     'capo'        => $transposedSong->transpositions[0]->getCapo(),
-                    'chords'      => join(',', $transposedSong->transpositions[0]->chords)
+                    'chords'      => implode(',', $transposedSong->transpositions[0]->chords)
                 ],
                 'centered2'       => [
                     'offset'      => $transposedSong->transpositions[1]->offset,
@@ -124,7 +120,7 @@ SQL;
                     'highestNote' => $transposedSong->transpositions[1]->range->highest,
                     'score'       => $transposedSong->transpositions[1]->score,
                     'capo'        => $transposedSong->transpositions[1]->getCapo(),
-                    'chords'      => join(',', $transposedSong->transpositions[1]->chords)
+                    'chords'      => implode(',', $transposedSong->transpositions[1]->chords)
                 ]
             ];
 
@@ -136,14 +132,14 @@ SQL;
                     'score'                 => $transposedSong->not_equivalent->score,
                     'capo'                  => $transposedSong->not_equivalent->getCapo(),
                     'deviationFromCentered' => $transposedSong->not_equivalent->deviationFromCentered,
-                    'chords'                => join(',', $transposedSong->not_equivalent->chords),
+                    'chords'                => implode(',', $transposedSong->not_equivalent->chords),
                 ];
             }
 
             if ($this->app['neoconfig']['people_compatible']) {
                 $testResult[$transposedSong->song->idSong]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus();
 
-                if ($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) {
+                if (($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) !== null) {
                     $testResult[$transposedSong->song->idSong]['peopleCompatible'] = [
                         'offset'                => $peopleCompatibleTransposition->offset,
                         'lowestNote'            => $peopleCompatibleTransposition->range->lowest,
@@ -151,7 +147,7 @@ SQL;
                         'score'                 => $peopleCompatibleTransposition->score,
                         'capo'                  => $peopleCompatibleTransposition->getCapo(),
                         'deviationFromCentered' => $peopleCompatibleTransposition->deviationFromCentered,
-                        'chords'                => join(',', $peopleCompatibleTransposition->chords),
+                        'chords'                => implode(',', $peopleCompatibleTransposition->chords),
                         'peopleLowestNote'      => $peopleCompatibleTransposition->peopleRange->lowest,
                         'peopleHighestNote'     => $peopleCompatibleTransposition->peopleRange->highest,
                     ];
@@ -190,8 +186,8 @@ SQL;
             }
         }
 
-        if ($transpositionsDiff) {
-            $diff = $diff
+        if ($transpositionsDiff !== []) {
+            $diff = $diff !== []
                 ? array_merge($diff, $transpositionsDiff)
                 : null;
         }
@@ -205,6 +201,7 @@ SQL;
             foreach ($missingProperties as &$value) {
                 $value = 'missing';
             }
+            unset($value);
             if (is_array($diff)) {
                 $diff = array_merge($diff, $missingProperties);
             }

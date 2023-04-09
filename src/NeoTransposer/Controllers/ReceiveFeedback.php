@@ -35,7 +35,7 @@ class ReceiveFeedback
 			$app['neouser']->range,
 			$req->get('pc_status'),
             (float) $req->get('centered_score_rate'),
-            (int) $req->get('deviation') ? intval($req->get('deviation')) : null,
+            (int) $req->get('deviation') ?: null,
 			$req->get('transposition')
         );
 
