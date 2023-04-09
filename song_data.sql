@@ -1116,7 +1116,7 @@ INSERT INTO `song` VALUES (1103,5,162,'Portami in cielo','B1','E3','portami-in-c
 INSERT INTO `song` VALUES (1104,5,163,'Quando il Signore','A1','B2','quando-il-signore',1,'B1','B2',NULL);
 INSERT INTO `song` VALUES (1105,5,164,'Quando Israele uscì dall\'Egitto','E2','F#3','quando-israele-usci-dall\'egitto',0,'E2','F#3',NULL);
 INSERT INTO `song` VALUES (1106,5,165,'Quanto sono amabili le tue dimore','G1','G2','quanto-sono-amabili-le-tue-dimore',1,'G1','G2',NULL);
-INSERT INTO `song` VALUES (1107,5,166,'Questo è il mio comandamento','B1','E3','questo-e-il-mio-comandamento',1,'C1','E3',NULL);
+INSERT INTO `song` VALUES (1107,5,166,'Questo è il mio comandamento','B1','E3','questo-e-il-mio-comandamento',1,'C2','E3',NULL);
 INSERT INTO `song` VALUES (1108,5,167,'Resurrexit 2013','B1','E3','resurrexit-2013',1,'E2','E3',NULL);
 INSERT INTO `song` VALUES (1109,5,168,'Risuscitò','E2','D3','risuscito',1,'E2','D3',NULL);
 INSERT INTO `song` VALUES (1110,5,169,'Rivestitevi dell\'armatura di Dio','D2','G3','rivestitevi-dell\'armatura-di-dio',1,'D2','G3',NULL);
@@ -1159,8 +1159,8 @@ INSERT INTO `song` VALUES (1146,5,205,'Voglio andare a Gerusalemme','D2','G3','v
 INSERT INTO `song` VALUES (1147,5,206,'Voglio cantare','D2','C#3','voglio-cantare',1,'D2','C#3',NULL);
 INSERT INTO `song` VALUES (1148,5,207,'Voi siete la luce del mondo','E2','A3','voi-siete-la-luce-del-mondo',1,'G#2','E3',NULL);
 INSERT INTO `song` VALUES (1149,5,208,'Zaccheo','E2','F3','zaccheo',1,'E2','F3',NULL);
-INSERT INTO `song` VALUES (1150,5,219,'Acclamazione al Vangelo (Modello I)','A1','B2','acclamazione-al-vangelo-modello-i',1,'D2','A3',NULL);
-INSERT INTO `song` VALUES (1151,5,219,'Acclamazione al Vangelo (Modello II)','A1','B1','acclamazione-al-vangelo-modello-ii',1,'A1','G2',NULL);
+INSERT INTO `song` VALUES (1150,5,219,'Acclamazione al Vangelo (Modello I)','A1','B2','acclamazione-al-vangelo-modello-i',1,'D2','A2',NULL);
+INSERT INTO `song` VALUES (1151,5,219,'Acclamazione al Vangelo (Modello II)','A1','B2','acclamazione-al-vangelo-modello-ii',1,'A1','G2',NULL);
 INSERT INTO `song` VALUES (1152,5,220,'Agnello di Dio','B1','A2','agnello-di-dio',1,'B1','A2',NULL);
 INSERT INTO `song` VALUES (1153,5,221,'Alleluja pasquale','A1','D3','alleluja-pasquale',1,'A1','A2',NULL);
 INSERT INTO `song` VALUES (1154,5,222,'Alleluja per acclamazione al Vangelo (Modello I)','A1','B2','alleluja-per-acclamazione-al-vangelo-modello-i',1,'A1','G2',NULL);
