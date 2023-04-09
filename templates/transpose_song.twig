@@ -317,7 +317,7 @@ NT = {
 		chordName = chordName.replace(/5$/, '9');
 
 		chordChartImg.addEventListener('error', function(event) {
-			gtag('event', 'RequestMissingChordChart', {'event_category': 'Actions', 'event_label': chordName});
+			gtag('event', 'RequestMissingChordChart', {'event_category': 'Actions', 'chord_missing_chart': chordName});
 			event.target.src = '{{ global.request.basepath }}/static/img/chords/unknown-{{ app.locale }}.png';
 		});
 
