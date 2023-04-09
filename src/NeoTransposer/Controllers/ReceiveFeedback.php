@@ -44,8 +44,8 @@ class ReceiveFeedback
 		{
 			return $app->redirect($app->path(
 				'transpose_song',
-				array('id_song' => $req->get('id_song'))
-			) . '?fb=' . str_replace(array('1', '0'), array('yes', 'no'), (int) $req->get('worked')) . '#feedback');
+				['id_song' => $req->get('id_song')]
+			) . '?fb=' . str_replace(['1', '0'], ['yes', 'no'], (int) $req->get('worked')) . '#feedback');
 		}
 
 		return $app->json(['feedback' => 'received'], 200);

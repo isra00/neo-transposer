@@ -28,7 +28,7 @@ class LoginFlow
 
 		if (!$currentUser->hasRange())
 		{
-			$exempt = array(
+			$exempt = [
 				'user_settings',
 				'user_voice',
 				'set_user_data',
@@ -36,7 +36,7 @@ class LoginFlow
 				'wizard_select_standard',
 				'wizard_empiric_lowest',
 				'wizard_empiric_highest'
-			);
+			];
 
 			if (!in_array($currentRoute, $exempt))
 			{

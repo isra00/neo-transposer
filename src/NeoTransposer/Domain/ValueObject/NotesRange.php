@@ -9,20 +9,17 @@ use NeoTransposer\Domain\NotesCalculator;
  */
 class NotesRange
 {
-	public $lowest;
-	public $highest;
+    public function __construct(
+        public ?string $lowest = null,
+        public ?string $highest = null
+    ) {
+    }
 
-	public function __construct(string $lowest=null, string $highest=null)
-	{
-		$this->lowest  = $lowest;
-		$this->highest = $highest;
-	}
-
-	public function isWithinRange(NotesRange $otherRange, NotesCalculator $nc): bool
-	{
-		return ($nc->distanceWithOctave($this->highest, $otherRange->highest) <= 0)
-			&& ($nc->distanceWithOctave($otherRange->lowest, $this->lowest) <= 0);
-	}
+    public function isWithinRange(NotesRange $otherRange, NotesCalculator $nc): bool
+    {
+        return ($nc->distanceWithOctave($this->highest, $otherRange->highest) <= 0)
+            && ($nc->distanceWithOctave($otherRange->lowest, $this->lowest) <= 0);
+    }
 
     public function lowest(): ?string
     {

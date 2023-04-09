@@ -6,15 +6,12 @@ use NeoTransposer\Domain\Exception\SongDataException;
 
 /** @todo PHP8: implements Stringable */
 /** @todo Make it immutable */
-final class Chord
+final class Chord implements \Stringable
 {
-    public $fundamental;
-    public $attributes;
-
-    public function __construct(string $fundamental, string $attributes = null)
+    public function __construct(
+        public string $fundamental,
+        public ?string $attributes = null)
     {
-        $this->fundamental = $fundamental;
-        $this->attributes = $attributes;
     }
 
     /**
@@ -33,7 +30,7 @@ final class Chord
         return new Chord($match[1], $match[2]);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->fundamental . $this->attributes;
     }

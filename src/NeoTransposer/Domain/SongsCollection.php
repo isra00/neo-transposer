@@ -5,15 +5,16 @@ namespace NeoTransposer\Domain;
 class SongsCollection
 {
     /**
-     * assoc array of id_song, slug, page, title
-     * @todo Refactor this should be an array of Song objects
-     * @var array
+     * @param mixed[] $songs
      */
-    protected $songs;
-
-    public function __construct($songs)
+    public function __construct(
+        /**
+         * assoc array of id_song, slug, page, title
+         * @todo Refactor this should be an array of Song objects
+         */
+        protected $songs
+    )
     {
-        $this->songs = $songs;
     }
 
     public function asArray(): array

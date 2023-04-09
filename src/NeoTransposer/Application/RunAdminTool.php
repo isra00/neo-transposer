@@ -6,11 +6,8 @@ use Silex\Application;
 
 class RunAdminTool
 {
-    protected $dependencyContainer;
-
-    public function __construct(Application $dependencyContainer)
+    public function __construct(protected Application $dependencyContainer)
     {
-        $this->dependencyContainer = $dependencyContainer;
     }
 
     public function runAdminTask(string $adminTaskName): string
@@ -36,7 +33,7 @@ class RunAdminTool
         //This breaks Hexagonal Architecture. To fix it, we should have an Infrastructure\AdminTaskClassResolver doing this
         try {
             $taskObject = $this->dependencyContainer["NeoTransposer\\Domain\\AdminTasks\\$adminTaskName"];
-        } catch (\Pimple\Exception\UnknownIdentifierException $e)
+        } catch (\Pimple\Exception\UnknownIdentifierException)
         {
             throw new AdminTaskNotExistException("Dependency container didn't find valid task name $adminTaskName");
         }

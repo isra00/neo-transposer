@@ -12,16 +12,12 @@ use NeoTransposer\Domain\Repository\SongChordRepository;
  */
 class CheckChordsOrder implements AdminTask
 {
-    protected $songChordRepository;
-
-    public function __construct(SongChordRepository $songChordRepository)
+    public function __construct(protected SongChordRepository $songChordRepository)
     {
-        $this->songChordRepository = $songChordRepository;
     }
 
     /**
      * This method will also be used by chord correction panel
-     * @return array
      */
     public function checkChordOrderArray(): array
     {

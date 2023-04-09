@@ -30,7 +30,7 @@ class UnhappyUserRepositoryMysql extends MysqlRepository implements UnhappyUserR
         //If user was already unhappy, UNIQUE will make query fail, nothing done.
         try {
             $this->dbConnection->insert('unhappy_user', ['id_user' => $idUser]);
-        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException) {
         }
     }
 

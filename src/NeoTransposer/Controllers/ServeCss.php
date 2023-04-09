@@ -21,7 +21,7 @@ class ServeCss
 	public function get(\NeoTransposer\NeoApp $app): \Symfony\Component\HttpFoundation\RedirectResponse
 	{
 		$minified_css = $this->minify_css(file_get_contents($app['root_dir'] . '/web' . $this->src_file));
-		$minified_hash 	= md5($minified_css);
+		$minified_hash 	= md5((string) $minified_css);
 
 		file_put_contents(
 			$app['root_dir'] . '/web' . sprintf($this->min_file, $minified_hash),
@@ -49,7 +49,7 @@ class ServeCss
 	function minify_css($input) {
 		if(trim($input) === "") return $input;
 		return preg_replace(
-			array(
+			[
 				// Remove comment(s)
 				'#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')|\/\*(?!\!)(?>.*?\*\/)|^\s*|\s*$#s',
 				// Remove unused white-space(s)
@@ -71,8 +71,8 @@ class ServeCss
 				'#(?<=[\{;])(border|outline):none(?=[;\}\!])#',
 				// Remove empty selector(s)
 				'#(\/\*(?>.*?\*\/))|(^|[\{\}])(?:[^\s\{\}]+)\{\}#s'
-			),
-			array(
+            ],
+			[
 				'$1',
 				'$1$2$3$4$5$6$7',
 				'$1',
@@ -84,7 +84,7 @@ class ServeCss
 				'$1$2$3',
 				'$1:0',
 				'$1$2'
-			),
+            ],
 		$input);
 	}
 }

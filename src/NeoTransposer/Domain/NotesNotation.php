@@ -54,10 +54,7 @@ class NotesNotation
     public function getNotationArray(array $notes, string $notation): array
     {
         $thisObject = $this;
-        return array_map(function($note) use ($notation, $thisObject)
-        {
-            return $thisObject->getNotation($note, $notation);
-        }, $notes);
+        return array_map(fn($note) => $thisObject->getNotation($note, $notation), $notes);
     }
 
     /**

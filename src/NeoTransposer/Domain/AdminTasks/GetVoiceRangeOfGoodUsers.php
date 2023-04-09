@@ -7,11 +7,8 @@ use NeoTransposer\Domain\NotesCalculator;
 
 class GetVoiceRangeOfGoodUsers implements AdminTask
 {
-    protected $dbConnection;
-
-    public function __construct(Connection $dbConnection)
+    public function __construct(protected Connection $dbConnection)
     {
-        $this->dbConnection = $dbConnection;
     }
     
 	public function run(): string

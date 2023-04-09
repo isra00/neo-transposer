@@ -29,7 +29,7 @@ class InsertSong
         $songChords = [];
 		foreach ($request->get('chords') as $chord)
 		{
-			if (strlen($chord))
+			if (strlen((string) $chord))
 			{
                 $songChords[] = $chord;
 			}
@@ -53,7 +53,7 @@ class InsertSong
 
 		return $this->get(
 			$app,
-			array('id_book' => $request->get('id_book'))
+			['id_book' => $request->get('id_book')]
 		);
 	}
 }

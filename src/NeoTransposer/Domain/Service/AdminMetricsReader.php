@@ -6,17 +6,10 @@ use NeoTransposer\Domain\Repository;
 
 class AdminMetricsReader
 {
-    public const DETAILED_FB_DEPLOYED = '2017-08-11';
+    final public const DETAILED_FB_DEPLOYED = '2017-08-11';
 
-    protected $adminMetricsRepository;
-    protected $geoIpResolver;
-    private $bookRepository;
-
-    public function __construct(Repository\AdminMetricsRepository $adminMetricsRepository, Repository\BookRepository $bookRepository, \NeoTransposer\Domain\GeoIp\GeoIpResolver $geoIpResolver)
+    public function __construct(protected Repository\AdminMetricsRepository $adminMetricsRepository, private readonly Repository\BookRepository $bookRepository, protected \NeoTransposer\Domain\GeoIp\GeoIpResolver $geoIpResolver)
     {
-        $this->adminMetricsRepository = $adminMetricsRepository;
-        $this->geoIpResolver = $geoIpResolver;
-        $this->bookRepository = $bookRepository;
     }
 
     public function readAdminMetrics(bool $longReports): array

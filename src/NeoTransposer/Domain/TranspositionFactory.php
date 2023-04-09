@@ -7,11 +7,8 @@ use Silex\Application;
 
 class TranspositionFactory
 {
-    private $app;
-
-    public function __construct(Application $app)
+    public function __construct(private readonly Application $app)
     {
-        $this->app = $app;
     }
 
     /**

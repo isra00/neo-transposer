@@ -20,6 +20,7 @@ class TransposeSong
 {
     public function get(NeoApp $app, Request $req, $id_song)
     {
+        $transposedSong = null;
         //For the teaser (not logged in), transpose for a standard male voice
         if (!$app['neouser']->isLoggedIn()) {
             $app['neouser']->range = new NotesRange('B1', 'F#3');
@@ -31,14 +32,14 @@ class TransposeSong
             return $app->redirect(
                 $app->path(
                     'user_voice',
-                    array('_locale' => $app['locale'])
+                    ['_locale' => $app['locale']]
                 )
             );
         }
 
         try {
             $transposedSong = TransposedSong::fromDb($id_song, $app);
-        } catch (SongNotExistException $e) {
+        } catch (SongNotExistException) {
             $app->abort(404, "Song $id_song does not exist.");
         }
 
@@ -100,8 +101,7 @@ class TransposeSong
             );
         }
 
-        /** @todo usar str_starts_with() de PHP8 */
-        if (0 === strpos($req->headers->get('Accept'), 'application/json')) {
+        if (str_starts_with($req->headers->get('Accept'), 'application/json')) {
             $transposeSongApi = new TransposeSongApi($app);
             return $transposeSongApi->handleApiRequest($req, $id_song);
         }
@@ -115,7 +115,7 @@ class TransposeSong
                     'voice_chart'      => $transpositionChart->getChartHtml(),
                     'page_title'       => $app->trans(
                         '%song% (Neocatechumenal Way)',
-                        array('%song%' => $transposedSong->song->title)
+                        ['%song%' => $transposedSong->song->title]
                     ),
                     'header_link'      => $app->path('book_' . $transposedSong->song->idBook),
                     'meta_canonical'   => $app->url('transpose_song', ['id_song' => $transposedSong->song->slug]),

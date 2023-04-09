@@ -7,12 +7,7 @@ use Doctrine\ORM\EntityManager;
 
 abstract class MysqlRepository
 {
-    protected Connection $dbConnection;
-    protected EntityManager $entityManager;
-
-    public function __construct(Connection $dbConnection, EntityManager $entityManager)
+    public function __construct(protected Connection $dbConnection, protected EntityManager $entityManager)
     {
-        $this->dbConnection = $dbConnection;
-        $this->entityManager = $entityManager;
     }
 }

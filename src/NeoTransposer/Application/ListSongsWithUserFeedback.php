@@ -8,11 +8,8 @@ use NeoTransposer\Domain\Service\SongsLister;
 
 class ListSongsWithUserFeedback
 {
-    private $songsLister;
-
-    public function __construct(SongsLister $songsLister)
+    public function __construct(private readonly SongsLister $songsLister)
     {
-        $this->songsLister = $songsLister;
     }
 
     /**

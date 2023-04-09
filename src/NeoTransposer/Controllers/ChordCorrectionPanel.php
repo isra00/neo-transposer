@@ -47,7 +47,7 @@ class ChordCorrectionPanel
 
 			$songs[$chord['id_song']]['image'] = ($chord['id_book'] == 1)
 				? "/resucito-imgs/sw/{$chord['page']}.jpg"
-				: "/resucito-imgs/es/" . str_pad($chord['page'], 3, '0', STR_PAD_LEFT) . ".pdf";
+				: "/resucito-imgs/es/" . str_pad((string) $chord['page'], 3, '0', STR_PAD_LEFT) . ".pdf";
 
 			if ($count > 50)
 			{

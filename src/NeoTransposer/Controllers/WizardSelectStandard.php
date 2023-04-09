@@ -16,9 +16,9 @@ class WizardSelectStandard
 {
     public function showPage(NeoApp $app): string
     {
-        return $app->render('wizard_select_standard.twig', array(
+        return $app->render('wizard_select_standard.twig', [
             'page_title' => $app->trans('Voice measure wizard')
-        ));
+        ]);
     }
 
     /**

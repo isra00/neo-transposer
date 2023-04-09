@@ -30,7 +30,7 @@ class Book
                 (int)$id_book,
                 $app['neouser']->id_user
             );
-        } catch (BookNotExistException $unused)
+        } catch (BookNotExistException)
         {
             $this->abortBookNotExist($id_book);
         }

@@ -35,9 +35,7 @@ class WizardEmpiric
 		if (!isset($app['neoconfig']['voice_wizard'][$app['locale']]['lowest']))
 		{
 			/** @todo Add HTTP error code */
-			return $app->render('error.twig', array(
-				'error_title' => $app->trans('Sorry, the voice measure wizard is not available in ' . $app['neoconfig']['languages'][$app['locale']]['name'])
-			));
+			return $app->render('error.twig', ['error_title' => $app->trans('Sorry, the voice measure wizard is not available in ' . $app['neoconfig']['languages'][$app['locale']]['name'])]);
 		}
 
         //This should not happen, as user should come from selecting a standard range.
@@ -79,12 +77,15 @@ class WizardEmpiric
 		
 		$tpl = $this->prepareSongForTest('lowest', AutomaticTransposer::FORCE_LOWEST, $app);
 
-		return $app->render('wizard_empiric_lowest.twig', array_merge($tpl, array(
-            //Action yes/no means that the yes/no button will not submit the form but run the specified JS function
-			'action_yes'	=> $action_yes,
-			'action_no'		=> $action_no,
-		)));
-	}
+        return $app->render(
+            'wizard_empiric_lowest.twig',
+            array_merge($tpl, [
+                //Action yes/no means that the yes/no button will not submit the form but run the specified JS function
+                'action_yes' => $action_yes,
+                'action_no'  => $action_no,
+            ])
+        );
+    }
 
 	public function highest(Request $req, NeoApp $app)
 	{
@@ -121,19 +122,19 @@ class WizardEmpiric
 
 		$tpl = $this->prepareSongForTest('highest', AutomaticTransposer::FORCE_HIGHEST, $app);
 
-		return $app->render('wizard_empiric_highest.twig', array_merge($tpl, array(
+		return $app->render('wizard_empiric_highest.twig', array_merge($tpl, [
 			'action_yes'	=> $action_yes,
 			'action_no'		=> $action_no,
-		)));
+        ]));
 	}
 
 	public function prepareSongForTest($wizard_config_song, $forceVoiceLimit, NeoApp $app): array
 	{
-		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
+        $wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
         try {
             $transposedSong = TransposedSong::fromDb($wizard_config_song['id_song'], $app);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $app->abort(500, 'The song for the Wizard ' . $wizard_config_song['id_song'] . ' must exist in DB!');
         }
 

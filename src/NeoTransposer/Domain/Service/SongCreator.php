@@ -8,13 +8,10 @@ use NeoTransposer\Domain\Repository\SongRepository;
 
 class SongCreator
 {
-    protected $songRepository;
-    protected $bookRepository;
-
-    public function __construct(SongRepository $songRepository, BookRepository $bookRepository)
+    public function __construct(
+        protected SongRepository $songRepository,
+        protected BookRepository $bookRepository)
     {
-        $this->songRepository = $songRepository;
-        $this->bookRepository = $bookRepository;
     }
 
     public function createSong(
