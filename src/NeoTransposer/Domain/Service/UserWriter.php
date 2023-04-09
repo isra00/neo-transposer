@@ -28,7 +28,7 @@ class UserWriter
     {
         if ($idBook)
         {
-            if (!in_array($idBook, array_keys($this->bookRepository->readAllBooks())))
+            if (!array_key_exists($idBook, $this->bookRepository->readAllBooks()))
 			{
 				throw new BookNotExistException($idBook);
 			}

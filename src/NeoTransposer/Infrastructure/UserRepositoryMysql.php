@@ -93,7 +93,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 			'register_ip'	=> $registerIp
         ]);
 
-		return $user->id_user = intval($this->dbConnection->lastInsertId());
+		return $user->id_user = (int) $this->dbConnection->lastInsertId();
 	}
 
     /**

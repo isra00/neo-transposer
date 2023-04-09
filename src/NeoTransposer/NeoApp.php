@@ -249,7 +249,7 @@ class NeoApp extends Application
 
         if (isset($parameters['page_title'])) {
             if (strlen((string) $parameters['page_title']) < self::PAGE_TITLE_MAX_LENGTH - strlen($suffix)) {
-                $parameters['page_title'] = $parameters['page_title'] . " · $suffix";
+                $parameters['page_title'] .= " · $suffix";
             }
         } else {
             $parameters['page_title'] = $this['neoconfig']['software_name'];

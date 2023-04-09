@@ -29,7 +29,7 @@ class InsertSong
         $songChords = [];
 		foreach ($request->get('chords') as $chord)
 		{
-			if (strlen((string) $chord))
+			if ((string)$chord !== '')
 			{
                 $songChords[] = $chord;
 			}
@@ -45,7 +45,7 @@ class InsertSong
 			strtoupper((string) $request->get('highest_note')),
 			strtoupper((string) $request->get('people_lowest_note')),
 			strtoupper((string) $request->get('people_highest_note')),
-			boolval($request->get('first_chord_is_key')),
+			(bool) $request->get('first_chord_is_key'),
             $songChords
         );
 

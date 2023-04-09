@@ -73,7 +73,7 @@ class NotesCalculator
     public function arrayIndex(array $array, int $index)
     {
         if (abs($index) > count($array) - 1) {
-            $index = $index % count($array);
+            $index %= count($array);
         }
 
         return ($index < 0)
@@ -111,9 +111,7 @@ class NotesCalculator
      */
     public function distanceWithOctave(string $note1, string $note2): int
     {
-        return intval(array_search($note1, $this->numbered_scale)) - intval(
-                array_search($note2, $this->numbered_scale)
-            );
+        return (int) array_search($note1, $this->numbered_scale) - (int) array_search($note2, $this->numbered_scale);
     }
 
     public function rangeWideness(NotesRange $range): int
@@ -131,7 +129,7 @@ class NotesCalculator
     {
         $transposedFundamental = $this->arrayIndex(
             self::ACOUSTIC_SCALE,
-            intval(array_search($chord->fundamental, self::ACOUSTIC_SCALE)) + $amount
+            (int) array_search($chord->fundamental, self::ACOUSTIC_SCALE) + $amount
         );
 
         return new Chord($transposedFundamental, $chord->attributes);
@@ -161,11 +159,11 @@ class NotesCalculator
     public function getKey(Chord $firstChord): string
     {
         //Search 'm' to support all kinds of minor chords.
-        return (!str_contains($firstChord->attributes, 'm'))
-            ? $firstChord->fundamental
-            : $this->arrayIndex(
+        return (str_contains($firstChord->attributes, 'm'))
+            ? $this->arrayIndex(
                 self::ACOUSTIC_SCALE,
-                intval(array_search($firstChord->fundamental, self::ACOUSTIC_SCALE)) + 3
-            );
+                (int) array_search($firstChord->fundamental, self::ACOUSTIC_SCALE) + 3
+            )
+            : $firstChord->fundamental;
     }
 }

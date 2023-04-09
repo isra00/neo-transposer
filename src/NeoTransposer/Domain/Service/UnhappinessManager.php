@@ -68,9 +68,7 @@ class UnhappinessManager
 
     public function chooseStandard(User $user, string $standard)
     {
-        $standardVoices = array_keys($this->neoconfig['voice_wizard']['standard_voices']);
-
-        if (!in_array($standard, $standardVoices)) {
+        if (!array_key_exists($standard, $this->neoconfig['voice_wizard']['standard_voices'])) {
             throw new InvalidStandardRangeException("Invalid standard voice $standard");
         }
 

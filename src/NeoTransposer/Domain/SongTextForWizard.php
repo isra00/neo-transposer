@@ -28,7 +28,7 @@ class SongTextForWizard
     {
         $finalText = str_replace(' ', '&nbsp;', $this->rawText);
         foreach ($chords as $i => $chord) {
-            $finalText = str_replace("%$i", strval($chord), $finalText);
+            $finalText = str_replace("%$i", (string) $chord, $finalText);
         }
 
         return nl2br($finalText, false);

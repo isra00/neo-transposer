@@ -22,7 +22,7 @@ class TransposeSongApi
 
 		$userRepository = $this->app[UserRepository::class];
 
-		if (!$user = $userRepository->readFromId(intval($req->get('userToken'))))
+		if (!$user = $userRepository->readFromId((int) $req->get('userToken')))
 		{
 			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
 		}

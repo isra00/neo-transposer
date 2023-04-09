@@ -30,7 +30,7 @@ class WizardSelectStandard
         $standard_voices = $app['neoconfig']['voice_wizard']['standard_voices'];
 
         //Invalid voice gender => go back
-        if (!in_array($req->get('gender'), array_keys($standard_voices))) {
+        if (!array_key_exists($req->get('gender'), $standard_voices)) {
             return $app->redirect($app->path('wizard_step1'));
         }
 

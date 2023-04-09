@@ -121,10 +121,8 @@ class AutomaticTransposer
                 : 0;
         }
 
-        $centeredOffset = intval(
-            (-1) * $this->notesCalculator->distanceWithOctave($this->songRange->lowest, $this->singerRange->lowest)
-            + $offsetFromSingerLowest
-        );
+        $centeredOffset = (int) ((-1) * $this->notesCalculator->distanceWithOctave($this->songRange->lowest, $this->singerRange->lowest)
+        + $offsetFromSingerLowest);
 
         $centeredTransposition = $this->transpositionFactory->createTransposition(
             $this->notesCalculator->transposeChords($this->originalChords, $centeredOffset),
@@ -207,7 +205,7 @@ class AutomaticTransposer
             $transpositions, function (Transposition $one, Transposition $two) {
 
                 //If both have same score but one is asBook, that one goes first.
-                if ($one->score == $two->score) {
+                if ($one->score === $two->score) {
                     return ($two->getAsBook()) ? 1 : 0;
                 }
 
@@ -318,7 +316,7 @@ class AutomaticTransposer
             );
 
             /** @todo Pasar esto como parámetro para no marear con el estado */
-            if ($this->songPeopleRange) {
+            if ($this->songPeopleRange !== null) {
                 $near->calculatePeopleRange($this->songPeopleRange, $offset, $this->notesCalculator);
             }
 
@@ -439,7 +437,7 @@ class AutomaticTransposer
 
             if ($fromPeopleLowestInCenteredToPeopleLowest < 0) {
                    //When lowering, invert because of abs() above.
-                   $offsetFromCentered = $offsetFromCentered * (-1);
+                   $offsetFromCentered *= -1;
             }
 
             if (0 == $offsetFromCentered) {
