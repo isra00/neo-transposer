@@ -63,7 +63,6 @@ class TransposedSong
      */
     public function transpose(NotesRange $userRange, int $forceVoiceLimit = null): void
     {
-        /** @var AutomaticTransposerFactory */
         $transposerFactory = $this->app[AutomaticTransposerFactory::class];
 
         $transposer = $transposerFactory->createAutomaticTransposer(
@@ -101,9 +100,6 @@ class TransposedSong
      */
     protected function prepareForPrint(): void
     {
-        /**
-         * @var ChordPrinter
-         */
         $chordPrinter = $this->app['factory.ChordPrinter']($this->song->bookChordPrinter);
 
         $this->song->setOriginalChordsForPrint($chordPrinter);

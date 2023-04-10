@@ -63,7 +63,7 @@ class TestAllTranspositions implements AdminTask
                                     $testData['expectedResults'][$idSong][$property]
                                 ) . ']';
                         }
-                        $output .= "$property: expected <em>" . ((string)$testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
+                        $output .= "$property: expected <em>" . ($testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
                     } else {
                         $output .= "Unexpected property $property <em>" . $resultValue . "</em> not specified in test data\n";
                     }

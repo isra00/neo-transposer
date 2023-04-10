@@ -41,7 +41,7 @@ class TransposeSongApi
 
 		$song->transpose($user->range);
 
-		$songArray = json_decode(json_encode($song, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
+		json_decode(json_encode($song, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
 		$transpositions = [];
 		foreach ($song->transpositions as $transposition)
 		{

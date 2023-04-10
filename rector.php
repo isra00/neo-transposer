@@ -17,9 +17,9 @@ return static function (RectorConfig $rectorConfig): void {
 //        LevelSetList::UP_TO_PHP_81,
 //        SetList::PHP_81,
 //        SetList::ACTION_INJECTION_TO_CONSTRUCTOR_INJECTION,
-        SetList::CODE_QUALITY,
-//        SetList::CODING_STYLE,
-//        SetList::DEAD_CODE,
+//        SetList::CODE_QUALITY,
+//        SetList::CODING_STYLE, /* not processed */
+        SetList::DEAD_CODE,
 //        SetList::NAMING,
 //        SetList::PRIVATIZATION,
 //        SetList::TYPE_DECLARATION,

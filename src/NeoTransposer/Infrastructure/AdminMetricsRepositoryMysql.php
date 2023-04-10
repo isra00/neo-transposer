@@ -41,8 +41,6 @@ SQL;
             'goods' => $this->dbConnection->fetchAllAssociative($sql_gp_good_users)
         ];
 
-		$answers = ['no', 'yes'];
-
 		foreach ($global_performance as &$raw_data)
 		{
 			$raw_data = $this->aggregatePerformanceData($raw_data);

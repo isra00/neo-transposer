@@ -115,7 +115,6 @@ class SongCreator
 		);
 		$string = preg_replace('/(\-\-+)/', '-', $string);
 		$string = preg_replace('/^\-/', '', $string);
-		$string = preg_replace('/\-$/', '', $string);
-		return $string;
+		return preg_replace('/\-$/', '', $string);
 	}
 }
