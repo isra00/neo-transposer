@@ -65,7 +65,7 @@ stop-all: stop
 
 test:
 	docker exec -t transposer-dev vendor/bin/codecept run unit --coverage-html --coverage-xml
-	sed -i "s@\/var\/www\/html@\/\/wsl$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml
+	@sed -i "s@\/var\/www\/html@\/\/wsl$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml || true
 	docker exec -t transposer-dev php tests/testAllTranspositions.php
 
 test-acceptance:
