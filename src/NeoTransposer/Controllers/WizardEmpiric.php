@@ -19,11 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class WizardEmpiric
 {
-	/**
-	 * An instance of NotesCalculator
-	 * @var NotesCalculator
-	 */
-	private $nc;
+    private readonly NotesCalculator $nc;
 
 	public function __construct()
 	{
@@ -74,7 +70,7 @@ final class WizardEmpiric
 		{
 			$action_yes = 'tooLow';
 		}
-		
+
 		$tpl = $this->prepareSongForTest('lowest', AutomaticTransposer::FORCE_LOWEST, $app);
 
         return $app->render(
@@ -112,7 +108,7 @@ final class WizardEmpiric
 		}
 
 		// If not, we recover the last one and pass to the next step
-		// ...and if after being alerted that B4 is too much, he/she decides to continue, stop here 
+		// ...and if after being alerted that B4 is too much, he/she decides to continue, stop here
 		// and force B4.
 		if ('no' == $req->get('can_sing') || $app['neouser']->range->highest == 'C1')
 		{
@@ -132,6 +128,7 @@ final class WizardEmpiric
 	{
         $wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
+        $transposedSong = null;
         try {
             $transposedSong = TransposedSong::fromDb($wizard_config_song['id_song'], $app);
         } catch (\Exception) {

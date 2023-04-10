@@ -49,7 +49,7 @@ final class TransposedSong
     public static function fromDb($idSong, NeoApp $dc): TransposedSong
     {
         $songRepository = $dc[SongRepository::class];
-        return new static($songRepository->fetchSongByIdOrSlug($idSong), $dc);
+        return new self($songRepository->fetchSongByIdOrSlug($idSong), $dc);
     }
 
     /**

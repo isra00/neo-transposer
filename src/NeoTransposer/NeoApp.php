@@ -17,7 +17,7 @@ final class NeoApp extends Application
     use \Silex\Application\TranslationTrait;
     use \Silex\Application\UrlGeneratorTrait;
 
-    private $notifications = ['error' => [], 'success' => []];
+    private array $notifications = ['error' => [], 'success' => []];
 
     private $hostname;
 

@@ -31,10 +31,8 @@ class Transposition
 
     /**
      * Capo number for the transposition, ready to be shown in the UI.
-     *
-     * @var string
      */
-    private $capoForPrint;
+    private ?string $capoForPrint = null;
 
     /**
      * Used only for debug

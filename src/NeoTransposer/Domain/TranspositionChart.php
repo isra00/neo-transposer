@@ -13,10 +13,7 @@ final class TranspositionChart
      */
     private $nc;
 
-    /**
-     * @var array
-     */
-    private $voiceChart = [];
+    private array $voiceChart = [];
 
 	/**
 	 * Notation for printing notes

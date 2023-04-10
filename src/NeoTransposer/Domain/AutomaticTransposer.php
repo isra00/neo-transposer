@@ -43,17 +43,13 @@ class AutomaticTransposer
 
     /**
      * The calculated centered transposition.
-     *
-     * @var Transposition
      */
-    private $centeredTransposition;
+    private ?Transposition $centeredTransposition = null;
 
     /**
      * The calculated centered and equivalent transpositions, sorted by ease.
-     *
-     * @var array
      */
-    private $centeredAndEquivalent;
+    private ?array $centeredAndEquivalent = null;
 
 
     /**
