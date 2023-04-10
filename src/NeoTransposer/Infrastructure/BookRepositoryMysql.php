@@ -5,7 +5,7 @@ namespace NeoTransposer\Infrastructure;
 use NeoTransposer\Domain\Entity\Book;
 use NeoTransposer\Domain\Repository\BookRepository;
 
-class BookRepositoryMysql extends MysqlRepository implements BookRepository
+final class BookRepositoryMysql extends MysqlRepository implements BookRepository
 {
     public function readBookLangFromId(int $idBook): string
     {

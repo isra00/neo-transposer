@@ -9,7 +9,7 @@ use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
 use NeoTransposer\Domain\ValueObject\Chord;
 
-class SongRepositoryMysql extends MysqlRepository implements SongRepository
+final class SongRepositoryMysql extends MysqlRepository implements SongRepository
 {
     public function readBookSongsWithUserFeedback(int $idBook, int $idUser): SongsWithUserFeedbackCollection
     {

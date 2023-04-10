@@ -13,12 +13,12 @@ use Symfony\Component\HttpFoundation\{Request, Response};
 /**
  * Book page: show list of songs belonging to a given book.
  */
-class Book
+final class Book
 {
     /**
      * @var NeoApp
      */
-    protected $app;
+    private $app;
 
 	public function get(Request $req, NeoApp $app, $id_book)
 	{

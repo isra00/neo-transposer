@@ -10,7 +10,7 @@ use NeoTransposer\Domain\Repository\SongChordRepository;
  *
  * @return array|null Check results (to be displayed).
  */
-class CheckChordsOrder implements AdminTask
+final class CheckChordsOrder implements AdminTask
 {
     public function __construct(protected SongChordRepository $songChordRepository)
     {

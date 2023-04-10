@@ -4,7 +4,7 @@ namespace NeoTransposer\Controllers;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class WebManifest
+final class WebManifest
 {
 	public function get(\NeoTransposer\NeoApp $app)
 	{

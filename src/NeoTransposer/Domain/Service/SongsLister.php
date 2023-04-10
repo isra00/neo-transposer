@@ -10,7 +10,7 @@ use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
 
-class SongsLister
+final class SongsLister
 {
     public function __construct(
         protected SongRepository $songRepository,

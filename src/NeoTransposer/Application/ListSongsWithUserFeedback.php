@@ -6,7 +6,7 @@ use NeoTransposer\Domain\Exception\BookNotExistException;
 use NeoTransposer\Domain\Exception\UserNotExistException;
 use NeoTransposer\Domain\Service\SongsLister;
 
-class ListSongsWithUserFeedback
+final class ListSongsWithUserFeedback
 {
     public function __construct(private readonly SongsLister $songsLister)
     {

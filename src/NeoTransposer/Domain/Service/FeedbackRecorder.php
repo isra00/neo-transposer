@@ -6,7 +6,7 @@ use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
-class FeedbackRecorder
+final class FeedbackRecorder
 {
     public function __construct(
         protected FeedbackRepository $feedbackRepository,

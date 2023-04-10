@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Administrator's Insert Song form.
  */
-class InsertSong
+final class InsertSong
 {
 	public function get(NeoApp $app, $tpl_vars=[])
 	{

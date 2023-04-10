@@ -7,7 +7,7 @@ use NeoTransposer\Domain\Repository\BookRepository;
 /**
  * Menu for choosing Book. Just that.
  */
-class UserBook
+final class UserBook
 {
 	public function get(\NeoTransposer\NeoApp $app): string
 	{

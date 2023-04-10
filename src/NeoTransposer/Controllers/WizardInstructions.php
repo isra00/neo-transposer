@@ -4,7 +4,7 @@ namespace NeoTransposer\Controllers;
 
 use NeoTransposer\NeoApp;
 
-class WizardInstructions
+final class WizardInstructions
 {
     public function get(NeoApp $app): string
     {

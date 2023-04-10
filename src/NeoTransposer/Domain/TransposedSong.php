@@ -17,7 +17,7 @@ use Silex\Application;
  * This class is in an upper level than AutomaticTransposer and is intended to
  * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
  */
-class TransposedSong
+final class TransposedSong
 {
     /**
      * @var  array
@@ -34,7 +34,7 @@ class TransposedSong
     /**
      * @var PeopleCompatibleCalculation
      */
-    protected $pcCalculation;
+    private $pcCalculation;
 
     public function __construct(
         public Song $song,
@@ -98,7 +98,7 @@ class TransposedSong
     /**
      * Prepare transpositions for print (chords and capo sentence).
      */
-    protected function prepareForPrint(): void
+    private function prepareForPrint(): void
     {
         $chordPrinter = $this->app['factory.ChordPrinter']($this->song->bookChordPrinter);
 
@@ -112,7 +112,7 @@ class TransposedSong
             },
             array_merge(
                 $this->transpositions,
-                [$this->not_equivalent, $this->getPeopleCompatible()]
+                [$this->not_equivalent, $this->pcCalculation->peopleCompatibleTransposition]
             )
         );
     }
@@ -165,7 +165,7 @@ class TransposedSong
      *
      * @throws Exception
      */
-    protected function isCompatibleWithPeople(Transposition $transposition): bool
+    private function isCompatibleWithPeople(Transposition $transposition): bool
     {
         if (empty($this->song->peopleRange)) {
             throw new Exception("Can't call isCompatibleWithPeople for this song because this song has no peopleRange");

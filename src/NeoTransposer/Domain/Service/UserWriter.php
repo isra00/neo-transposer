@@ -10,7 +10,7 @@ use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
-class UserWriter
+final class UserWriter
 {
     public function __construct(
         protected UserRepository $userRepository,

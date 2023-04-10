@@ -5,9 +5,9 @@ namespace NeoTransposer\Controllers;
 /**
  * Controller that serves merged+compressed CSS files for the app.
  */
-class ServeCss
+final class ServeCss
 {
-	protected $src_file = '/static/style.css';
+	private const SRC_FILE = '/static/style.css';
 	public $min_file = '/static/compiled-%s.css';
 
 	/**
@@ -20,7 +20,7 @@ class ServeCss
 	 */
 	public function get(\NeoTransposer\NeoApp $app): \Symfony\Component\HttpFoundation\RedirectResponse
 	{
-		$minified_css = $this->minify_css(file_get_contents($app['root_dir'] . '/web' . $this->src_file));
+		$minified_css = $this->minify_css(file_get_contents($app['root_dir'] . '/web' . self::SRC_FILE));
 		$minified_hash 	= md5((string) $minified_css);
 
 		file_put_contents(

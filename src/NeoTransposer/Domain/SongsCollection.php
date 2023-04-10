@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain;
 
-class SongsCollection
+final class SongsCollection
 {
     /**
      * @param mixed[] $songs

@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\GeoIp;
 
-class GeoIpLocation
+final class GeoIpLocation
 {
     public function __construct(protected Country $country)
     {

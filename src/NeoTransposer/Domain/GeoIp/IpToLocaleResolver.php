@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\GeoIp;
 
-class IpToLocaleResolver
+final class IpToLocaleResolver
 {
     protected const LOCALES_BY_COUNTRY = [
             'sw' => ['TZ', 'KE'],

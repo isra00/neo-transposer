@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Transpose Song page: transposes the given song for the singer's voice range.
  */
-class AllSongsReport
+final class AllSongsReport
 {
     /**
      * HTML report. If dl query string arg is present, the page is offered to

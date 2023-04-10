@@ -4,7 +4,7 @@ namespace NeoTransposer\Application;
 
 use NeoTransposer\Domain\Service\AdminMetricsReader;
 
-class ReadAdminMetrics
+final class ReadAdminMetrics
 {
     public function __construct(protected AdminMetricsReader $adminMetricsReader)
     {

@@ -8,7 +8,7 @@ use NeoTransposer\Domain\Repository\SongChordRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\NeoApp;
 
-class AllSongsReport
+final class AllSongsReport
 {
     final public const PEOPLE_COMPATIBLE_MICRO_MESSAGES = [
         PeopleCompatibleCalculation::ALREADY_COMPATIBLE   => '',

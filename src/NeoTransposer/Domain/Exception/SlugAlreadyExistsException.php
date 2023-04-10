@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\Exception;
 
-class SlugAlreadyExistsException extends \Exception
+final class SlugAlreadyExistsException extends \Exception
 {
 
 }

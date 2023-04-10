@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\Exception;
 
-class InvalidStandardRangeException extends \Exception
+final class InvalidStandardRangeException extends \Exception
 {
 
 }

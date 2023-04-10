@@ -5,7 +5,7 @@ namespace NeoTransposer\Infrastructure;
 use NeoTransposer\Domain\Repository\UnhappyUserRepository;
 use NeoTransposer\Domain\Entity\User;
 
-class UnhappyUserRepositoryMysql extends MysqlRepository implements UnhappyUserRepository
+final class UnhappyUserRepositoryMysql extends MysqlRepository implements UnhappyUserRepository
 {
     public function readUserIsUnhappy(int $idUser): bool
     {

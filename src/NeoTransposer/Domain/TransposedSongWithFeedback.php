@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain;
 
-class TransposedSongWithFeedback
+final class TransposedSongWithFeedback
 {
     public function __construct(
         protected TransposedSong $transposedSong,

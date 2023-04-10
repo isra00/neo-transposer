@@ -5,7 +5,7 @@ namespace NeoTransposer\Domain\AdminTasks;
 use Doctrine\DBAL\Connection;
 use NeoTransposer\Domain\NotesCalculator;
 
-class GetVoiceRangeOfGoodUsers implements AdminTask
+final class GetVoiceRangeOfGoodUsers implements AdminTask
 {
     public function __construct(protected Connection $dbConnection)
     {

@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *
  * @todo Rename to UpdateUser
  */
-class SetUserData
+final class SetUserData
 {
 	public function get(Request $request, \NeoTransposer\NeoApp $app): RedirectResponse
 	{

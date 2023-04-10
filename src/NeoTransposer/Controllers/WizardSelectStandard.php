@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  * (WizardEmpiric) that voice range will be refined through empirical tests so
  * the real voice range can be measured.
  */
-class WizardSelectStandard
+final class WizardSelectStandard
 {
     public function showPage(NeoApp $app): string
     {

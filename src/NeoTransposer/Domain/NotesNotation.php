@@ -7,7 +7,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Convert different nomenclatures for notes (american and latin so far).
  */
-class NotesNotation
+final class NotesNotation
 {
     /**
      * Correspondence between American and Latin notation. This software always uses

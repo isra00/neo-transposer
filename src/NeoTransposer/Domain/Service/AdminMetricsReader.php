@@ -4,7 +4,7 @@ namespace NeoTransposer\Domain\Service;
 
 use NeoTransposer\Domain\Repository;
 
-class AdminMetricsReader
+final class AdminMetricsReader
 {
     final public const DETAILED_FB_DEPLOYED = '2017-08-11';
 

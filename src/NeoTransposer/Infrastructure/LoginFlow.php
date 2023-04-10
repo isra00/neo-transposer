@@ -4,7 +4,7 @@ namespace NeoTransposer\Infrastructure;
 
 use NeoTransposer\Domain\Entity\User;
 
-class LoginFlow
+final class LoginFlow
 {
 
 	/**

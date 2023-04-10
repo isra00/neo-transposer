@@ -34,7 +34,7 @@ class Transposition
      *
      * @var string
      */
-    protected $capoForPrint;
+    private $capoForPrint;
 
     /**
      * Used only for debug

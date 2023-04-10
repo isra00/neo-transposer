@@ -7,7 +7,7 @@ use NeoTransposer\NeoApp;
 /**
  * Re-compile the CSS file. Will not delete old compiled files.
  */
-class RefreshCompiledCss implements AdminTask
+final class RefreshCompiledCss implements AdminTask
 {
     public function __construct(protected NeoApp $dependencyContainer)
     {

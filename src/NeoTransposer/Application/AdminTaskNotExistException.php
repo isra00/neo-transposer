@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Application;
 
-class AdminTaskNotExistException extends \Exception
+final class AdminTaskNotExistException extends \Exception
 {
 
 }
