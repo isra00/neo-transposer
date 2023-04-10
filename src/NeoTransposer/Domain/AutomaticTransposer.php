@@ -233,9 +233,7 @@ class AutomaticTransposer
             $equivalents = $this->calculateEquivalentsWithCapo($centeredTransposition);
 
             $centeredAndEquivalent = array_merge([$centeredTransposition], $equivalents);
-            $centeredAndEquivalent = $this->sortTranspositionsByEase($centeredAndEquivalent);
-
-            $this->centeredAndEquivalent = $centeredAndEquivalent;
+            $this->centeredAndEquivalent = $this->sortTranspositionsByEase($centeredAndEquivalent);
         }
 
         //This shouldn't be done before to avoid conflicts

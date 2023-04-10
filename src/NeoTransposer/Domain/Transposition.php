@@ -99,7 +99,7 @@ class Transposition
                 }
 
                 if (0 == $scoreForThisChord) {
-                    throw new SongDataException("Unknown chord: " . (string) $chord);
+                    throw new SongDataException("Unknown chord: " . $chord);
                 }
             }
 
