@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Administrator's dashboard.
  */
-class AdminDashboard
+final class AdminDashboard
 {
 	public function get(Request $req, \NeoTransposer\NeoApp $app): string
 	{

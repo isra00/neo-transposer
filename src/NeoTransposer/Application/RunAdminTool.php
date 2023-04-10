@@ -4,7 +4,7 @@ namespace NeoTransposer\Application;
 
 use Silex\Application;
 
-class RunAdminTool
+final class RunAdminTool
 {
     public function __construct(protected Application $dependencyContainer)
     {

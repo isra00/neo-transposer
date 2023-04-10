@@ -22,7 +22,7 @@ class PeopleCompatibleCalculation
     final public const ADJUSTED_WELL        = 56;
     final public const NOT_ADJUSTED_WIDER   = 7;
 
-    protected $statusMsg = [
+    private const STATUS_MSG = [
         self::NO_PEOPLE_RANGE_DATA => 'no_people_range_data',
         self::ALREADY_COMPATIBLE   => 'already_compatible',
         self::WIDER_THAN_SINGER    => 'wider_than_singer',
@@ -56,6 +56,6 @@ class PeopleCompatibleCalculation
      */
     public function getStatusMsg() : string
     {
-        return $this->status ? $this->statusMsg[$this->status] : '(not set)';
+        return $this->status ? self::STATUS_MSG[$this->status] : '(not set)';
     }
 }

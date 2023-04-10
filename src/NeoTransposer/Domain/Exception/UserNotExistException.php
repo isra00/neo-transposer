@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\Exception;
 
-class UserNotExistException extends \Exception
+final class UserNotExistException extends \Exception
 {
     public function __construct(int $idUser)
     {

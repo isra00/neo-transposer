@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * AJAX Controller to receive/record user feedback. This URL has NO CONTENT.
  */
-class ReceiveFeedback
+final class ReceiveFeedback
 {
 	public function post(Request $req, \NeoTransposer\NeoApp $app): Response
 	{

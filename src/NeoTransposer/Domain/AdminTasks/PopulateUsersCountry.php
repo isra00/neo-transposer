@@ -5,7 +5,7 @@ namespace NeoTransposer\Domain\AdminTasks;
 use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\Repository\UserRepository;
 
-class PopulateUsersCountry implements AdminTask
+final class PopulateUsersCountry implements AdminTask
 {
     public function __construct(
         protected UserRepository $userRepository,

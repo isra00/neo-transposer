@@ -17,13 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Wizard Empiric: measure the user's voice range through an empirical test.
  */
-class WizardEmpiric
+final class WizardEmpiric
 {
 	/**
 	 * An instance of NotesCalculator
 	 * @var NotesCalculator
 	 */
-	protected $nc;
+	private $nc;
 
 	public function __construct()
 	{

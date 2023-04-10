@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\ValueObject;
 
-class UserPerformance
+final class UserPerformance
 {
     public function __construct(
         protected int $reports,

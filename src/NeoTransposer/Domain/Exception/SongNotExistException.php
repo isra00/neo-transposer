@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\Exception;
 
-class SongNotExistException extends \Exception
+final class SongNotExistException extends \Exception
 {
 
 }

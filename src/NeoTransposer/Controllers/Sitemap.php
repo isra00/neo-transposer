@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Implements an XML Sitemap with login, book and song pages.
  */
-class Sitemap
+final class Sitemap
 {
     /**
      * Generates the Sitemap.

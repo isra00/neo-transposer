@@ -5,7 +5,7 @@ namespace NeoTransposer\Domain\AdminTasks;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\UserRepository;
 
-class CheckUsersRangeConsistency implements AdminTask
+final class CheckUsersRangeConsistency implements AdminTask
 {
     public function __construct(protected UserRepository $userRepository)
     {

@@ -6,7 +6,7 @@ use NeoTransposer\Domain\Exception\SlugAlreadyExistsException;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
 
-class SongCreator
+final class SongCreator
 {
     public function __construct(
         protected SongRepository $songRepository,
@@ -40,7 +40,7 @@ class SongCreator
         );
     }
 
-	protected function getSlug(string $title, int $idBook): string
+	private function getSlug(string $title, int $idBook): string
 	{
 		$candidate = $this->urlize($title);
 		$slugAlreadyExists = $this->songRepository->slugAlreadyExists($candidate);
@@ -61,7 +61,7 @@ class SongCreator
 		return $candidate;
 	}
 
-	protected function urlize($string): string
+	private function urlize($string): string
 	{
 		$hyphenize = [' ', ',', '.', ':', '!', '¡', '¿', '?', '(', ')', '[', ']'];
 

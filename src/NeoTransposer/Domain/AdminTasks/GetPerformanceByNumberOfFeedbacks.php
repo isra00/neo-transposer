@@ -4,7 +4,7 @@ namespace NeoTransposer\Domain\AdminTasks;
 
 use Doctrine\DBAL\Connection;
 
-class GetPerformanceByNumberOfFeedbacks implements AdminTask
+final class GetPerformanceByNumberOfFeedbacks implements AdminTask
 {
     public function __construct(protected Connection $dbConnection)
     {

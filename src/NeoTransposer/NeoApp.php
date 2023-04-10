@@ -11,15 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * An extension of Silex Application with custom stuff.
  */
-class NeoApp extends Application
+final class NeoApp extends Application
 {
     use \Silex\Application\TwigTrait;
     use \Silex\Application\TranslationTrait;
     use \Silex\Application\UrlGeneratorTrait;
 
-    protected $notifications = ['error' => [], 'success' => []];
+    private $notifications = ['error' => [], 'success' => []];
 
-    protected $hostname;
+    private $hostname;
 
     /** Defined by SEO rules */
     protected const PAGE_TITLE_MAX_LENGTH = 55;
@@ -110,7 +110,7 @@ class NeoApp extends Application
      *
      * @see composer.json, since some of these services require ext dependencies.
      */
-    protected function registerSilexServices($rootDir): void
+    private function registerSilexServices($rootDir): void
     {
         $twigOptions = null;
         if (!$this['debug']) {
@@ -161,7 +161,7 @@ class NeoApp extends Application
     /**
      * Services available for every controller.
      */
-    protected function initializeSession(): void
+    private function initializeSession(): void
     {
         if (!$this['session']->get('user')) {
             $this['session']->set('user', new User());
@@ -170,7 +170,7 @@ class NeoApp extends Application
         $this['neouser'] = $this['session']->get('user');
     }
 
-    protected function registerErrorHandler(): void
+    private function registerErrorHandler(): void
     {
         //Silex default error pages are better for debugging.
         if ($this['neoconfig']['debug']) {
@@ -243,7 +243,7 @@ class NeoApp extends Application
      *
      * @param array &$parameters Template variables (should contain page_title)
      */
-    protected function setPageTitle(array &$parameters): void
+    private function setPageTitle(array &$parameters): void
     {
         $suffix = $this->trans($this['neoconfig']['seo_title_suffix']);
 

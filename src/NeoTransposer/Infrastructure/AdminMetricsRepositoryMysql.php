@@ -5,9 +5,9 @@ namespace NeoTransposer\Infrastructure;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
 use NeoTransposer\Domain\Service\UnhappinessManager;
 
-class AdminMetricsRepositoryMysql extends MysqlRepository implements AdminMetricsRepository
+final class AdminMetricsRepositoryMysql extends MysqlRepository implements AdminMetricsRepository
 {
-    protected $countryNames;
+    private $countryNames;
 
     public function readUserCountTotal(): int
     {
@@ -75,7 +75,7 @@ SQL;
 	 *
 	 * @psalm-return array{yes: int, no: int, total: int}
 	 */
-	protected function aggregatePerformanceData(array $raw_data): array
+	private function aggregatePerformanceData(array $raw_data): array
 	{
 		$answers = ['no', 'yes'];
 

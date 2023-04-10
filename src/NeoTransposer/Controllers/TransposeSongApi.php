@@ -7,7 +7,7 @@ use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 
-class TransposeSongApi
+final class TransposeSongApi
 {
     public function __construct(protected NeoApp $app)
     {

@@ -10,7 +10,7 @@ use NeoTransposer\NeoApp;
  * A functional test for detecting changes in the transposition algorithm.
  * It generates an AllSongsReport for book and compares it with a pre-stored result set.
  */
-class TestAllTranspositions implements AdminTask
+final class TestAllTranspositions implements AdminTask
 {
     final public const TEST_ALL_TRANSPOSITIONS_BOOK = 2;
 
@@ -74,7 +74,7 @@ class TestAllTranspositions implements AdminTask
         return empty($output) ? 'Test SUCCESSFUL: song transpositions are identical to expected :-)' : $output;
     }
 
-    protected function generateActualTestResult(array $testData)
+    private function generateActualTestResult(array $testData)
     {
         $sql = <<<SQL
 SELECT id_song
@@ -158,7 +158,7 @@ SQL;
         return $testResult;
     }
 
-    protected function diffTestResults($actual, $expected)
+    private function diffTestResults($actual, $expected)
     {
         $scalarProperties = ['songLowestNote', 'songHighestNote'];
         $arrayProperties = ['centered1', 'centered2', 'notEquivalent'];

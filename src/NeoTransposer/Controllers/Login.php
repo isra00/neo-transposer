@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Landing page with Login form.
  */
-class Login
+final class Login
 {
     protected const REGEXP_VALID_EMAIL = "[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
@@ -106,7 +106,7 @@ class Login
         return $app->redirect($target);
     }
 
-    protected function validateCaptcha(Request $req, string $secret): bool
+    private function validateCaptcha(Request $req, string $secret): bool
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');

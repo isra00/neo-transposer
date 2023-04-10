@@ -5,7 +5,7 @@ namespace NeoTransposer\Infrastructure;
 use NeoTransposer\Domain\Repository\SongChordRepository;
 use NeoTransposer\Domain\ValueObject\Chord;
 
-class SongChordRepositoryMysql extends MysqlRepository implements SongChordRepository
+final class SongChordRepositoryMysql extends MysqlRepository implements SongChordRepository
 {
     public function readAllSongChordsInOrder(): array
     {

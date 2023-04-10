@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Transpose Song page: transpose the given song for the singer's voice range.
  */
-class TransposeSong
+final class TransposeSong
 {
     public function get(NeoApp $app, Request $req, $id_song)
     {
@@ -134,7 +134,7 @@ class TransposeSong
         );
     }
 
-    protected function generateTranspositionChart(NotesCalculator $nc, NeoApp $app, TransposedSong $transposedSong) : TranspositionChart
+    private function generateTranspositionChart(NotesCalculator $nc, NeoApp $app, TransposedSong $transposedSong) : TranspositionChart
     {
         $transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser'], $app['neoconfig']['languages'][$app['locale']]['notation']);
         $transpositionChart->addTransposition('Transposed:', 'transposed-song', $transposedSong->transpositions[0]);

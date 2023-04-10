@@ -6,7 +6,7 @@ use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Domain\ValueObject\UserPerformance;
 
-class FeedbackRepositoryMysql extends MysqlRepository implements FeedbackRepository
+final class FeedbackRepositoryMysql extends MysqlRepository implements FeedbackRepository
 {
     public function readUserPerformance($idUser): UserPerformance
     {

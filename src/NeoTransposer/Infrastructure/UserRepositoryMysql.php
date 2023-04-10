@@ -9,7 +9,7 @@ use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
-class UserRepositoryMysql extends MysqlRepository implements UserRepository
+final class UserRepositoryMysql extends MysqlRepository implements UserRepository
 {
     public function __construct(
         Connection $dbConnection,
@@ -29,7 +29,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 		return $this->readFromField('email', $email);
 	}
 
-	protected function readFromField($field, $fieldValue): ?User
+	private function readFromField($field, $fieldValue): ?User
 	{
 		if (!in_array($field, ['email', 'id_user']))
 		{

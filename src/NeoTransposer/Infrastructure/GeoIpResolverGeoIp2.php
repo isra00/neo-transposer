@@ -12,7 +12,7 @@ use NeoTransposer\Domain\GeoIp\{Country,
     GeoIpNotFoundException,
     GeoIpResolver};
 
-class GeoIpResolverGeoIp2 implements GeoIpResolver
+final class GeoIpResolverGeoIp2 implements GeoIpResolver
 {
     public function __construct(protected Reader $reader)
     {

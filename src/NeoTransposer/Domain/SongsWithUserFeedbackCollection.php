@@ -3,7 +3,7 @@
 namespace NeoTransposer\Domain;
 
 //Idealmente esto sería un iterable, blablabla
-class SongsWithUserFeedbackCollection
+final class SongsWithUserFeedbackCollection
 {
     public function __construct(
         /**

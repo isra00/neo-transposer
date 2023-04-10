@@ -46,14 +46,14 @@ class AutomaticTransposer
      *
      * @var Transposition
      */
-    protected $centeredTransposition;
+    private $centeredTransposition;
 
     /**
      * The calculated centered and equivalent transpositions, sorted by ease.
      *
      * @var array
      */
-    protected $centeredAndEquivalent;
+    private $centeredAndEquivalent;
 
 
     /**

@@ -16,7 +16,7 @@ use NeoTransposer\Domain\Repository\SongRepository;
  *
  * @return string Check results, to be displayed.
  */
-class CheckSongsRangeConsistency implements AdminTask
+final class CheckSongsRangeConsistency implements AdminTask
 {
     public function __construct(protected SongRepository $songRepository)
     {

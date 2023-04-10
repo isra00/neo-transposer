@@ -5,7 +5,7 @@ namespace NeoTransposer\Controllers;
 use NeoTransposer\Domain\AdminTasks\CheckChordsOrder;
 use Symfony\Component\HttpFoundation\Request;
 
-class ChordCorrectionPanel
+final class ChordCorrectionPanel
 {
 	public function get(\NeoTransposer\NeoApp $app)
 	{

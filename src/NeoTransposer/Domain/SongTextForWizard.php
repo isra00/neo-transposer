@@ -5,7 +5,7 @@ namespace NeoTransposer\Domain;
 /**
  * Song text (with chords) that is shown in Wizard Empiric.
  */
-class SongTextForWizard
+final class SongTextForWizard
 {
     public function __construct(
         /**

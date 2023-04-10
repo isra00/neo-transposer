@@ -7,7 +7,7 @@ use Silex\Application;
 /**
  * Delete all compiled-*.css files except the one refered to in config.php
  */
-class RemoveOldCompiledCss implements AdminTask
+final class RemoveOldCompiledCss implements AdminTask
 {
     public function __construct(protected Application $dependencyContainer)
     {
