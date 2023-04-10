@@ -27,7 +27,6 @@ class User
      * @param string|null          $wizard_step1            Option checked in Wizard First Step
      * @param int|null             $wizard_lowest_attempts  No. of attempts in Wizard Lowest note.
      * @param int|null             $wizard_highest_attempts No. of attempts in Wizard Lowest note.
-     * @param UserPerformance|null $performance
      */
     public function __construct(
         public ?string $email = null,

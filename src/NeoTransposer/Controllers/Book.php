@@ -15,10 +15,7 @@ use Symfony\Component\HttpFoundation\{Request, Response};
  */
 final class Book
 {
-    /**
-     * @var NeoApp
-     */
-    private $app;
+    private ?NeoApp $app = null;
 
 	public function get(Request $req, NeoApp $app, $id_book)
 	{
