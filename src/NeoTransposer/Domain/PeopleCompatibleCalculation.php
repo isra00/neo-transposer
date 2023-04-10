@@ -33,11 +33,22 @@ class PeopleCompatibleCalculation
         self::NOT_ADJUSTED_WIDER   => 'not_adjusted_wider',
     ];
 
-    public function __construct(
-        public int $status, //One of the constants defined above.
-        public ?Transposition $peopleCompatibleTransposition = null
-    )
+    /**
+     * @var Transposition
+     */
+    public $peopleCompatibleTransposition;
+
+    /**
+     * One of the constants defined above.
+     *
+     * @var int
+     */
+    public $status;
+
+    public function __construct($status, Transposition $pct = null)
     {
+        $this->peopleCompatibleTransposition = $pct;
+        $this->status = $status;
     }
 
     /**
