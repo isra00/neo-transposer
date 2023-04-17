@@ -5,13 +5,10 @@ namespace NeoTransposer\Domain;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use Silex\Application;
 
-class TranspositionFactory
+final class TranspositionFactory
 {
-    private $app;
-
-    public function __construct(Application $app)
+    public function __construct(private readonly Application $app)
     {
-        $this->app = $app;
     }
 
     /**

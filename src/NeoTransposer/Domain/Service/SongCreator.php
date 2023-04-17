@@ -6,15 +6,12 @@ use NeoTransposer\Domain\Exception\SlugAlreadyExistsException;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
 
-class SongCreator
+final class SongCreator
 {
-    protected $songRepository;
-    protected $bookRepository;
-
-    public function __construct(SongRepository $songRepository, BookRepository $bookRepository)
+    public function __construct(
+        protected SongRepository $songRepository,
+        protected BookRepository $bookRepository)
     {
-        $this->songRepository = $songRepository;
-        $this->bookRepository = $bookRepository;
     }
 
     public function createSong(
@@ -43,7 +40,7 @@ class SongCreator
         );
     }
 
-	protected function getSlug(string $title, int $idBook): string
+	private function getSlug(string $title, int $idBook): string
 	{
 		$candidate = $this->urlize($title);
 		$slugAlreadyExists = $this->songRepository->slugAlreadyExists($candidate);
@@ -64,7 +61,7 @@ class SongCreator
 		return $candidate;
 	}
 
-	protected function urlize($string): string
+	private function urlize($string): string
 	{
 		$hyphenize = [' ', ',', '.', ':', '!', '¡', '¿', '?', '(', ')', '[', ']'];
 
@@ -109,7 +106,7 @@ class SongCreator
 			'º' => 'o',
         ];
 
-		$string = strtolower(trim($string));
+		$string = strtolower(trim((string) $string));
 		$string = str_replace($hyphenize, '-', $string);
 		$string = str_replace(
 			array_keys($flattenLetters),
@@ -118,7 +115,6 @@ class SongCreator
 		);
 		$string = preg_replace('/(\-\-+)/', '-', $string);
 		$string = preg_replace('/^\-/', '', $string);
-		$string = preg_replace('/\-$/', '', $string);
-		return $string;
+		return preg_replace('/\-$/', '', $string);
 	}
 }

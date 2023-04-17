@@ -5,7 +5,7 @@ namespace NeoTransposer\Controllers;
 use NeoTransposer\Domain\AdminTasks\CheckChordsOrder;
 use Symfony\Component\HttpFoundation\Request;
 
-class ChordCorrectionPanel
+final class ChordCorrectionPanel
 {
 	public function get(\NeoTransposer\NeoApp $app)
 	{
@@ -19,7 +19,7 @@ class ChordCorrectionPanel
 			return 'No inconsistent chord positions found :-)';
 		}
 
-		$chords = $app['db']->fetchAll(
+		$chords = $app['db']->fetchAllAssociative(
 			'SELECT * FROM song_chord JOIN song USING (id_song) WHERE id_song IN (?) ORDER BY id_song, position',
 			[array_keys($problematic)],
             [\Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
@@ -47,7 +47,7 @@ class ChordCorrectionPanel
 
 			$songs[$chord['id_song']]['image'] = ($chord['id_book'] == 1)
 				? "/resucito-imgs/sw/{$chord['page']}.jpg"
-				: "/resucito-imgs/es/" . str_pad($chord['page'], 3, '0', STR_PAD_LEFT) . ".pdf";
+				: "/resucito-imgs/es/" . str_pad((string) $chord['page'], 3, '0', STR_PAD_LEFT) . ".pdf";
 
 			if ($count > 50)
 			{

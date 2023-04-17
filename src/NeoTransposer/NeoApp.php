@@ -11,15 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * An extension of Silex Application with custom stuff.
  */
-class NeoApp extends Application
+final class NeoApp extends Application
 {
     use \Silex\Application\TwigTrait;
     use \Silex\Application\TranslationTrait;
     use \Silex\Application\UrlGeneratorTrait;
 
-    protected $notifications = ['error' => [], 'success' => []];
+    private array $notifications = ['error' => [], 'success' => []];
 
-    protected $hostname;
+    private $hostname;
 
     /** Defined by SEO rules */
     protected const PAGE_TITLE_MAX_LENGTH = 55;
@@ -110,33 +110,34 @@ class NeoApp extends Application
      *
      * @see composer.json, since some of these services require ext dependencies.
      */
-    protected function registerSilexServices($rootDir): void
+    private function registerSilexServices($rootDir): void
     {
+        $twigOptions = null;
         if (!$this['debug']) {
             $twigOptions = ['cache' => $rootDir . '/cache/twig'];
         }
 
-        $this->register(new \Silex\Provider\TwigServiceProvider(), array(
+        $this->register(new \Silex\Provider\TwigServiceProvider(), [
             'twig.path' => $this['neoconfig']['templates_dir'],
-            'twig.options' => array_merge($twigOptions, array(
+            'twig.options' => array_merge($twigOptions, [
                 'strict_variables' => false
-            ))
-        ));
+            ])
+        ]);
 
-        $this->register(new \Silex\Provider\DoctrineServiceProvider(), array(
-            'db.options' => array(
+        $this->register(new \Silex\Provider\DoctrineServiceProvider(), [
+            'db.options' => [
                 'driver'    => 'pdo_mysql',
                 'host'      => $this['neoconfig']['db']['host'],
                 'user'      => $this['neoconfig']['db']['user'],
                 'password'  => $this['neoconfig']['db']['password'],
                 'dbname'    => $this['neoconfig']['db']['database'],
                 'charset'   => $this['neoconfig']['db']['charset']
-            ),
-        ));
+            ],
+        ]);
 
         //Must be called before session_start()
         session_set_cookie_params(
-            2592000,                        //Lifetime: 1 month
+            2_592_000,                      //Lifetime: 1 month
             '/; samesite=Lax',              //Path + samesite (see <https://www.php.net/manual/es/function.session-set-cookie-params.php#125072>)
             $this->hostname,                //Domain
             !(bool) $this['neoconfig']['debug'],   //Secure
@@ -160,7 +161,7 @@ class NeoApp extends Application
     /**
      * Services available for every controller.
      */
-    protected function initializeSession(): void
+    private function initializeSession(): void
     {
         if (!$this['session']->get('user')) {
             $this['session']->set('user', new User());
@@ -169,7 +170,7 @@ class NeoApp extends Application
         $this['neouser'] = $this['session']->get('user');
     }
 
-    protected function registerErrorHandler(): void
+    private function registerErrorHandler(): void
     {
         //Silex default error pages are better for debugging.
         if ($this['neoconfig']['debug']) {
@@ -184,27 +185,20 @@ class NeoApp extends Application
             $this['translator']->setLocale($this['locale']);
 
             if (in_array($code, [404, 500])) {
-                return $this->render("error-$code.twig", array(
-                    'error_code' => $code,
-                ));
+                return $this->render("error-$code.twig", ['error_code' => $code]);
             }
 
-            switch (intdiv($code, 100)) {
-                case 4:
-                    $title = $this->trans('Request error');
-                    break;
-                case 5:
-                    $title = $this->trans('Server error');
-                    break;
-                default:
-                    $title = $this->trans('Unknown error');
-            }
+            $title = match (intdiv($code, 100)) {
+                4 => $this->trans('Request error'),
+                5 => $this->trans('Server error'),
+                default => $this->trans('Unknown error'),
+            };
 
-            return $this->render('error.twig', array(
+            return $this->render('error.twig', [
                 'error_code'        => $code,
                 'error_title'       => $title,
                 'error_description' => $this->trans('Error %code%', ['%code%' => $code])
-            ));
+            ]);
         });
     }
 
@@ -216,7 +210,7 @@ class NeoApp extends Application
      */
     public function addNotification($type, $text): void
     {
-        if (!in_array($type, array_keys($this->notifications))) {
+        if (!array_key_exists($type, $this->notifications)) {
             throw new \OutOfRangeException("Notification type $type not valid");
         }
         $this->notifications[$type][] = $text;
@@ -249,13 +243,13 @@ class NeoApp extends Application
      *
      * @param array &$parameters Template variables (should contain page_title)
      */
-    protected function setPageTitle(array &$parameters): void
+    private function setPageTitle(array &$parameters): void
     {
         $suffix = $this->trans($this['neoconfig']['seo_title_suffix']);
 
         if (isset($parameters['page_title'])) {
-            if (strlen($parameters['page_title']) < self::PAGE_TITLE_MAX_LENGTH - strlen($suffix)) {
-                $parameters['page_title'] = $parameters['page_title'] . " · $suffix";
+            if (strlen((string) $parameters['page_title']) < self::PAGE_TITLE_MAX_LENGTH - strlen($suffix)) {
+                $parameters['page_title'] .= " · $suffix";
             }
         } else {
             $parameters['page_title'] = $this['neoconfig']['software_name'];

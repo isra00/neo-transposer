@@ -6,7 +6,7 @@ use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Domain\ValueObject\UserPerformance;
 
-class FeedbackRepositoryMysql extends MysqlRepository implements FeedbackRepository
+final class FeedbackRepositoryMysql extends MysqlRepository implements FeedbackRepository
 {
     public function readUserPerformance($idUser): UserPerformance
     {
@@ -16,7 +16,7 @@ FROM transposition_feedback
 WHERE `id_user` = ?
 GROUP BY worked
 SQL;
-		$result = $this->dbConnection->fetchAll($sql, [$idUser]);
+		$result = $this->dbConnection->fetchAllAssociative($sql, [$idUser]);
 
 		$performanceData = [0 => 0, 1 => 0];
 
@@ -71,7 +71,7 @@ ON DUPLICATE KEY UPDATE
 	centered_score_rate = ?,
 	deviation_from_center = ?
 SQL;
-		$this->dbConnection->executeUpdate($sql, array(
+		$this->dbConnection->executeUpdate($sql, [
 			$idSong,
 			$idUser,
             (int) $worked,
@@ -91,16 +91,16 @@ SQL;
 			$pcStatus,
 			$centeredScoreRate,
 			$deviationFromCentered
-		));
+		]);
     }
 
     public function readSongFeedbackForUser(int $idUser, int $idSong): ?bool
     {
-        $result = $this->dbConnection->fetchColumn(
+        $result = $this->dbConnection->fetchOne(
             'SELECT worked FROM transposition_feedback WHERE id_user = ? AND id_song = ?',
             [$idUser, $idSong]
         );
 
-        return strlen($result) ? (bool) $result : null;
+        return strlen((string) $result) ? (bool) $result : null;
     }
 }

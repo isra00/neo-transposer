@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\Exception;
 
-class BookNotExistException extends \Exception
+final class BookNotExistException extends \Exception
 {
     public function __construct(int $idBook)
     {

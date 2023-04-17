@@ -10,18 +10,14 @@ use NeoTransposer\Domain\Repository\SongChordRepository;
  *
  * @return array|null Check results (to be displayed).
  */
-class CheckChordsOrder implements AdminTask
+final class CheckChordsOrder implements AdminTask
 {
-    protected $songChordRepository;
-
-    public function __construct(SongChordRepository $songChordRepository)
+    public function __construct(protected SongChordRepository $songChordRepository)
     {
-        $this->songChordRepository = $songChordRepository;
     }
 
     /**
      * This method will also be used by chord correction panel
-     * @return array
      */
     public function checkChordOrderArray(): array
     {

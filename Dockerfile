@@ -21,7 +21,7 @@ RUN composer dump-autoload --optimize --classmap-authoritative
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-FROM php:7.3-apache AS nt-common
+FROM php:8.1-apache AS nt-common
 
 ARG WORKDIR="/app"
 EXPOSE 80

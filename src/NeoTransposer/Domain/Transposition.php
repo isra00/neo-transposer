@@ -16,13 +16,6 @@ use Symfony\Component\Translation\TranslatorInterface;
 class Transposition
 {
     /**
-     * Transposed chords
-     *
-     * @var array
-     */
-    public $chords = [];
-
-    /**
      * Transposed chords, after being processed by a ChordPrinter
      *
      * @var array
@@ -37,51 +30,9 @@ class Transposition
     public $score = 0;
 
     /**
-     * Capo number for the transposition
-     *
-     * @var int
-     */
-    protected $capo = 0;
-
-    /**
      * Capo number for the transposition, ready to be shown in the UI.
-     *
-     * @var string
      */
-    protected $capoForPrint;
-
-    /**
-     * Whether the transposition is the same as the original one.
-     *
-     * @var bool
-     */
-    protected $asBook = false;
-
-    /**
-     * Offset used for transport from the original.
-     *
-     * @var int
-     */
-    public $offset = 0;
-
-    /**
-     * Song's lowest and highest note after transposing.
-     *
-     * @var NotesRange
-     */
-    public $range;
-
-    /**
-     * @var NotesRange
-     */
-    public $peopleRange;
-
-    /**
-     * Deviation from the centered transposition (in semitones), used by NotEquivalent and PeopleCompatible.
-     *
-     * @var integer
-     */
-    public $deviationFromCentered = 0;
+    private ?string $capoForPrint = null;
 
     /**
      * Used only for debug
@@ -90,17 +41,13 @@ class Transposition
      */
     public $scoreMap = [];
 
-    protected $scoresConfig = [];
-
-    protected $translator;
-
     /**
      * Array keys = musical keys (tonality) in which the replace will be done
      * Array values = array of chords original => replacement
      *
      * @var array
      */
-    public const ALTERNATIVE_CHORDS = [
+    final public const ALTERNATIVE_CHORDS = [
         'G' => [
             'B' => 'B7'
         ],
@@ -110,39 +57,20 @@ class Transposition
     ];
 
     /**
-     * @param array               $scoresConfig
-     * @param TranslatorInterface $translator
-     * @param array               $chords
-     * @param int|null            $capo
-     * @param bool|null           $asBook
-     * @param int|null            $offset
-     * @param NotesRange|null     $range
-     * @param int|null            $deviationFromCentered
-     * @param NotesRange|null     $peopleRange
      *
      * @throws SongDataException
      */
     public function __construct(
-        array $scoresConfig,
-        TranslatorInterface $translator,
-        array $chords = [],
-        ?int $capo = 0,
-        ?bool $asBook = false,
-        ?int $offset = 0,
-        ?NotesRange $range = null,
-        ?int $deviationFromCentered = 0,
-        ?NotesRange $peopleRange = null
+        protected array $scoresConfig,
+        protected TranslatorInterface $translator,
+        public array $chords = [],
+        protected ?int $capo = 0,
+        protected ?bool $asBook = false,
+        public ?int $offset = 0,
+        public ?NotesRange $range = null,
+        public ?int $deviationFromCentered = 0,
+        public ?NotesRange $peopleRange = null
     ) {
-        $this->translator = $translator;
-        $this->scoresConfig = $scoresConfig;
-        $this->chords = $chords;
-        $this->capo = $capo;
-        $this->asBook = $asBook;
-        $this->offset = $offset;
-        $this->range = $range;
-        $this->peopleRange = $peopleRange;
-        $this->deviationFromCentered = $deviationFromCentered;
-
         $this->setScore();
 
         return $this; //For fluent constructions
@@ -159,21 +87,21 @@ class Transposition
         foreach ($this->chords as $chord) {
             $scoreForThisChord = 0;
 
-            if (isset($this->scoresConfig['chords'][strval($chord)])) {
-                $scoreForThisChord = $this->scoresConfig['chords'][strval($chord)];
+            if (isset($this->scoresConfig['chords'][(string) $chord])) {
+                $scoreForThisChord = $this->scoresConfig['chords'][(string) $chord];
             } else {
                 foreach ($this->scoresConfig['patterns'] as $pattern => $score) {
-                    if (preg_match("/$pattern/", strval($chord))) {
+                    if (preg_match("/$pattern/", (string) $chord)) {
                         $scoreForThisChord = $score;
                     }
                 }
 
                 if (0 == $scoreForThisChord) {
-                    throw new SongDataException("Unknown chord: " . strval($chord));
+                    throw new SongDataException("Unknown chord: " . $chord);
                 }
             }
 
-            $this->scoreMap[strval($chord)] = $scoreForThisChord;
+            $this->scoreMap[(string) $chord] = $scoreForThisChord;
             $this->score += $scoreForThisChord;
         }
     }
@@ -195,7 +123,7 @@ class Transposition
     {
         if (empty($this->capoForPrint)) {
             $this->capoForPrint = ($this->capo)
-                ? $this->translator->trans('with capo %n%', array('%n%' => $this->capo))
+                ? $this->translator->trans('with capo %n%', ['%n%' => $this->capo])
                 : $this->translator->trans('no capo');
         }
 
@@ -225,13 +153,13 @@ class Transposition
 		 * This is needed because some songs, like Sola a Solo, start with a
 		 * 4-note chord (Dm5), or Song of Moses (C7).
 		 */
-        $firstChord->attributes = (false !== strpos($firstChord->attributes, 'm'))
+        $firstChord->attributes = (str_contains((string) $firstChord->attributes, 'm'))
             ? 'm' : '';
 
         //The key is always expressed in major form, so we resolve the minor
         //relatives, it is, the key will be its third minor.
-        if ($firstChord->attributes == 'm') {
-            $position = intval(array_search($firstChord->fundamental, NotesCalculator::ACOUSTIC_SCALE));
+        if ($firstChord->attributes === 'm') {
+            $position = (int) array_search($firstChord->fundamental, NotesCalculator::ACOUSTIC_SCALE);
             $firstChord->fundamental = $ncalc->arrayIndex(NotesCalculator::ACOUSTIC_SCALE, $position + 3);
             $firstChord->attributes = null;
         }
@@ -246,7 +174,7 @@ class Transposition
 
             /** @todo Refactor with array_walk */
             foreach ($this->chords as &$chord) {
-                $chord = Chord::fromString(self::ALTERNATIVE_CHORDS[$key][strval($chord)] ?? $chord);
+                $chord = Chord::fromString(self::ALTERNATIVE_CHORDS[$key][(string) $chord] ?? $chord);
             }
             $this->setScore();
         }

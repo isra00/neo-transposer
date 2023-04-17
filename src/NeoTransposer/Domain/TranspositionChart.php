@@ -6,23 +6,20 @@ use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
-class TranspositionChart
+final class TranspositionChart
 {
-	/**
-	 * @var NotesCalculator
-	 */
-	protected $nc;
+    /**
+     * @var \NeoTransposer\Domain\NotesCalculator|mixed
+     */
+    private $nc;
 
-	/**
-	 * @var array
-	 */
-	protected $voiceChart = [];
+    private array $voiceChart = [];
 
 	/**
 	 * Notation for printing notes
 	 * @var string
 	 */
-	protected $notation = '';
+	private $notation = '';
 
 	public function __construct(NotesCalculator $nc, Song $song, User $singer, $notation)
 	{

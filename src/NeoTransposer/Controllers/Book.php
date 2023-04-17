@@ -13,12 +13,9 @@ use Symfony\Component\HttpFoundation\{Request, Response};
 /**
  * Book page: show list of songs belonging to a given book.
  */
-class Book
+final class Book
 {
-    /**
-     * @var NeoApp
-     */
-    protected $app;
+    private ?NeoApp $app = null;
 
 	public function get(Request $req, NeoApp $app, $id_book)
 	{
@@ -30,7 +27,7 @@ class Book
                 (int)$id_book,
                 $app['neouser']->id_user
             );
-        } catch (BookNotExistException $unused)
+        } catch (BookNotExistException)
         {
             $this->abortBookNotExist($id_book);
         }

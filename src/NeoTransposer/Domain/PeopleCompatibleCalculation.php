@@ -13,16 +13,16 @@ class PeopleCompatibleCalculation
      * These numerical values are used as numbers in testAllTranspositions.expected.PeopleCompatible.json.
      * A refactor for using the strings of $statusMsg would have to adapt that JSON as well.
      */
-    public const NO_PEOPLE_RANGE_DATA = 1;
-    public const ALREADY_COMPATIBLE   = 2;
-    public const WIDER_THAN_SINGER    = 3;
-    public const ADJUSTED_WIDER       = 4;
-    public const TOO_LOW_FOR_PEOPLE   = 5;
-    public const TOO_HIGH_FOR_PEOPLE  = 6;
-    public const ADJUSTED_WELL        = 56;
-    public const NOT_ADJUSTED_WIDER   = 7;
+    final public const NO_PEOPLE_RANGE_DATA = 1;
+    final public const ALREADY_COMPATIBLE   = 2;
+    final public const WIDER_THAN_SINGER    = 3;
+    final public const ADJUSTED_WIDER       = 4;
+    final public const TOO_LOW_FOR_PEOPLE   = 5;
+    final public const TOO_HIGH_FOR_PEOPLE  = 6;
+    final public const ADJUSTED_WELL        = 56;
+    final public const NOT_ADJUSTED_WIDER   = 7;
 
-    protected $statusMsg = [
+    private const STATUS_MSG = [
         self::NO_PEOPLE_RANGE_DATA => 'no_people_range_data',
         self::ALREADY_COMPATIBLE   => 'already_compatible',
         self::WIDER_THAN_SINGER    => 'wider_than_singer',
@@ -40,7 +40,7 @@ class PeopleCompatibleCalculation
 
     /**
      * One of the constants defined above.
-     * 
+     *
      * @var int
      */
     public $status;
@@ -56,6 +56,6 @@ class PeopleCompatibleCalculation
      */
     public function getStatusMsg() : string
     {
-        return $this->status ? $this->statusMsg[$this->status] : '(not set)';
+        return $this->status ? self::STATUS_MSG[$this->status] : '(not set)';
     }
 }

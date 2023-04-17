@@ -10,20 +10,13 @@ use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
 
-class SongsLister
+final class SongsLister
 {
-    protected $songRepository;
-    protected $userRepository;
-    /**
-     * @var BookRepository
-     */
-    private $bookRepository;
-
-    public function __construct(SongRepository $songRepository, UserRepository $userRepository, BookRepository $bookRepository)
+    public function __construct(
+        protected SongRepository $songRepository,
+        protected UserRepository $userRepository,
+        private readonly BookRepository $bookRepository)
     {
-        $this->songRepository = $songRepository;
-        $this->userRepository = $userRepository;
-        $this->bookRepository = $bookRepository;
     }
 
     /**

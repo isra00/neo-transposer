@@ -2,6 +2,6 @@
 
 namespace NeoTransposer\Domain\Exception;
 
-class BadUserRangeException extends \Exception
+final class BadUserRangeException extends \Exception
 {
 }

@@ -7,14 +7,11 @@ use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\Request;
 
-class TransposeSongApi
+final class TransposeSongApi
 {
-	protected $app;
-
-	public function __construct(NeoApp $app)
-	{
-		$this->app = $app;
-	}
+    public function __construct(protected NeoApp $app)
+    {
+    }
 
 	public function handleApiRequest(Request $req, $id_song)
 	{
@@ -25,7 +22,7 @@ class TransposeSongApi
 
 		$userRepository = $this->app[UserRepository::class];
 
-		if (!$user = $userRepository->readFromId(intval($req->get('userToken'))))
+		if (!$user = $userRepository->readFromId((int) $req->get('userToken')))
 		{
 			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
 		}
@@ -44,7 +41,7 @@ class TransposeSongApi
 
 		$song->transpose($user->range);
 
-		$songArray = json_decode(json_encode($song), true);
+		json_decode(json_encode($song, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
 		$transpositions = [];
 		foreach ($song->transpositions as $transposition)
 		{

@@ -65,6 +65,7 @@ stop-all: stop
 
 test:
 	docker exec -t transposer-dev vendor/bin/codecept run unit --coverage-html --coverage-xml
+	@sed -i "s@\/var\/www\/html@\/\/wsl$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml || true
 	docker exec -t transposer-dev php tests/testAllTranspositions.php
 
 test-acceptance:
@@ -81,3 +82,6 @@ clean:
 
 composer:
 	@echo "To run composer, type docker exec -it transposer-dev composer.phar [command]"
+
+bash:
+	docker exec -it transposer-dev bash

@@ -2,7 +2,7 @@
 
 namespace NeoTransposer\Domain\GeoIp;
 
-class GeoIpNotFoundException extends GeoIpException
+final class GeoIpNotFoundException extends GeoIpException
 {
 
 }

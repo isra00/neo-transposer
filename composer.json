@@ -3,7 +3,7 @@
     "description": " Automatically transpose the chords of the songs of the Neocatechumenal Way so they fit the singer's voice",
     "license": "AGPL-3.0-or-later",
     "require": {
-        "php": "^7.3",
+        "php": "^8.1",
         "ext-curl": "*",
         "ext-mysqli": "*",
         "ext-pdo": "*",
@@ -14,9 +14,11 @@
         "symfony/twig-bridge": "~3.1",
         "symfony/translation": "~3.1",
         "symfony/security": "~3.4",
-        "doctrine/dbal": "2.5.*",
+        "doctrine/dbal": "3.2.*",
         "geoip2/geoip2": "~2.5",
-        "silex/web-profiler": "^2.0"
+        "silex/web-profiler": "^2.0",
+        "doctrine/orm": "2.*",
+        "symfony/cache": "3.*"
     },
 
     "autoload": {

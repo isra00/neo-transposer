@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Controller for the / route, which has NO CONTENTS.
  */
-class Index
+final class Index
 {
     /**
      * If logged in, redirect to the book. If not, redirect to login in the language of the browser

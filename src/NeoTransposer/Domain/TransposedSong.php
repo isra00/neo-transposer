@@ -17,13 +17,8 @@ use Silex\Application;
  * This class is in an upper level than AutomaticTransposer and is intended to
  * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
  */
-class TransposedSong
+final class TransposedSong
 {
-    /**
-     * @var Song
-     */
-    public $song;
-
     /**
      * @var  array
      * @todo Rename to transpositionsCentered
@@ -39,17 +34,13 @@ class TransposedSong
     /**
      * @var PeopleCompatibleCalculation
      */
-    protected $pcCalculation;
+    private $pcCalculation;
 
-    /**
-     * @var Application;
-     */
-    protected $app;
-
-    public function __construct(Song $song, Application $app)
+    public function __construct(
+        public Song $song,
+        protected Application $app
+    )
     {
-        $this->song = $song;
-        $this->app  = $app;
     }
 
     /**
@@ -58,7 +49,7 @@ class TransposedSong
     public static function fromDb($idSong, NeoApp $dc): TransposedSong
     {
         $songRepository = $dc[SongRepository::class];
-        return new static($songRepository->fetchSongByIdOrSlug($idSong), $dc);
+        return new self($songRepository->fetchSongByIdOrSlug($idSong), $dc);
     }
 
     /**
@@ -72,7 +63,6 @@ class TransposedSong
      */
     public function transpose(NotesRange $userRange, int $forceVoiceLimit = null): void
     {
-        /** @var AutomaticTransposerFactory */
         $transposerFactory = $this->app[AutomaticTransposerFactory::class];
 
         $transposer = $transposerFactory->createAutomaticTransposer(
@@ -92,7 +82,7 @@ class TransposedSong
         if ($this->app['neoconfig']['people_compatible']) {
             $this->pcCalculation = $transposer->calculatePeopleCompatible();
 
-            if ($this->not_equivalent) {
+            if ($this->not_equivalent !== null) {
                 $this->removeEasierNotEquivalentIfConflictWithPeopleCompatible();
             }
         }
@@ -108,11 +98,8 @@ class TransposedSong
     /**
      * Prepare transpositions for print (chords and capo sentence).
      */
-    protected function prepareForPrint(): void
+    private function prepareForPrint(): void
     {
-        /**
-         * @var ChordPrinter
-         */
         $chordPrinter = $this->app['factory.ChordPrinter']($this->song->bookChordPrinter);
 
         $this->song->setOriginalChordsForPrint($chordPrinter);
@@ -125,7 +112,7 @@ class TransposedSong
             },
             array_merge(
                 $this->transpositions,
-                [$this->not_equivalent, $this->getPeopleCompatible()]
+                [$this->not_equivalent, $this->pcCalculation->peopleCompatibleTransposition]
             )
         );
     }
@@ -142,8 +129,6 @@ class TransposedSong
 
     /**
      * This IS actually used by transpose_song.twig's "peopleCompatibleStatusMsg"
-     *
-     * @return string|null
      */
     public function getPeopleCompatibleStatusMsg(): ?string
     {
@@ -152,8 +137,6 @@ class TransposedSong
 
     /**
      * User in removeEasierNotEquivalentIfConflictWithPeopleCompatible() and in transpose_song.twig
-     *
-     * @return bool
      */
     public function isAlreadyPeopleCompatible(): bool
     {
@@ -165,12 +148,11 @@ class TransposedSong
      * notEquivalent, because other saying "this transposition is already
      * compatible" would be partially false.
      *
-     * @return void
      * @throws Exception
      */
     public function removeEasierNotEquivalentIfConflictWithPeopleCompatible(): void
     {
-        if ($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->not_equivalent)
+        if (($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->not_equivalent))
             || $this->pcCalculation->peopleCompatibleTransposition
         ) {
             $this->not_equivalent = null;
@@ -180,12 +162,10 @@ class TransposedSong
     /**
      * Check whether the given transposition is within people's range for the current song.
      *
-     * @param Transposition $transposition
      *
-     * @return bool
      * @throws Exception
      */
-    protected function isCompatibleWithPeople(Transposition $transposition): bool
+    private function isCompatibleWithPeople(Transposition $transposition): bool
     {
         if (empty($this->song->peopleRange)) {
             throw new Exception("Can't call isCompatibleWithPeople for this song because this song has no peopleRange");

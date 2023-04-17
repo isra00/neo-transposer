@@ -7,14 +7,14 @@ use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UnhappyUserRepository;
 
-class UnhappinessManager
+final class UnhappinessManager
 {
     /**
      * The performance below which a user is considered unhappy.
      *
      * @var float
      */
-    const UNHAPPY_THRESHOLD_PERF = .5;
+    final const UNHAPPY_THRESHOLD_PERF = .5;
 
     /**
      * The minimum number of feedback reports for considering a user unhappy if
@@ -22,20 +22,13 @@ class UnhappinessManager
      *
      * @var int
      */
-    public const UNHAPPY_THRESHOLD_REPORTS = 5;
-
-    protected $unhappyUserRepository;
-    protected $neoconfig;
-    protected $feedbackRepository;
+    final public const UNHAPPY_THRESHOLD_REPORTS = 5;
 
     public function __construct(
-        UnhappyUserRepository $unhappyUserRepository,
-        array $neoconfig,
-        FeedbackRepository $feedbackRepository
-    ) {
-        $this->unhappyUserRepository = $unhappyUserRepository;
-        $this->neoconfig = $neoconfig;
-        $this->feedbackRepository = $feedbackRepository;
+        protected UnhappyUserRepository $unhappyUserRepository,
+        protected array $neoconfig,
+        protected FeedbackRepository $feedbackRepository)
+    {
     }
 
     public function setUnhappy(User $user)
@@ -75,9 +68,7 @@ class UnhappinessManager
 
     public function chooseStandard(User $user, string $standard)
     {
-        $standardVoices = array_keys($this->neoconfig['voice_wizard']['standard_voices']);
-
-        if (!in_array($standard, $standardVoices)) {
+        if (!array_key_exists($standard, $this->neoconfig['voice_wizard']['standard_voices'])) {
             throw new InvalidStandardRangeException("Invalid standard voice $standard");
         }
 

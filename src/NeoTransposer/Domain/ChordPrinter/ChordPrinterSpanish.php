@@ -20,11 +20,11 @@ final class ChordPrinterSpanish extends ChordPrinter
 	 */
 	public function printChordInNotation($fundamental, $attributes)
 	{
-		if (false === strpos($attributes, 'dim'))
+		if (!str_contains($attributes, 'dim'))
 		{
 			$attributes = str_replace(
-				array('m', 'M'),
-				array('-', 'aum'),
+				['m', 'M'],
+				['-', 'aum'],
 				$attributes
 			);
 		}

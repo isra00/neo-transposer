@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * AJAX Controller to receive/record user feedback. This URL has NO CONTENT.
  */
-class ReceiveFeedback
+final class ReceiveFeedback
 {
 	public function post(Request $req, \NeoTransposer\NeoApp $app): Response
 	{
@@ -35,7 +35,7 @@ class ReceiveFeedback
 			$app['neouser']->range,
 			$req->get('pc_status'),
             (float) $req->get('centered_score_rate'),
-            (int) $req->get('deviation') ? intval($req->get('deviation')) : null,
+            (int) $req->get('deviation') ?: null,
 			$req->get('transposition')
         );
 
@@ -44,8 +44,8 @@ class ReceiveFeedback
 		{
 			return $app->redirect($app->path(
 				'transpose_song',
-				array('id_song' => $req->get('id_song'))
-			) . '?fb=' . str_replace(array('1', '0'), array('yes', 'no'), (int) $req->get('worked')) . '#feedback');
+				['id_song' => $req->get('id_song')]
+			) . '?fb=' . str_replace(['1', '0'], ['yes', 'no'], (int) $req->get('worked')) . '#feedback');
 		}
 
 		return $app->json(['feedback' => 'received'], 200);
