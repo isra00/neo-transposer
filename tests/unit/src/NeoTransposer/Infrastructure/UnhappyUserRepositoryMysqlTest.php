@@ -20,7 +20,10 @@ class UnhappyUserRepositoryMysqlTest extends MysqlRepositoryTest
 
     public function _before()
     {
-        $this->unhappyUserRepositoryMysql = new UnhappyUserRepositoryMysql($this->dbConnection);
+        $this->unhappyUserRepositoryMysql = new UnhappyUserRepositoryMysql(
+            $this->dbConnection,
+            $this->entityManager
+        );
     }
 
     public function testReadUserIsUnhappy()

@@ -3,19 +3,20 @@
 namespace NeoTransposer\Infrastructure;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
-class UserRepositoryMysql extends MysqlRepository implements UserRepository
+final class UserRepositoryMysql extends MysqlRepository implements UserRepository
 {
-    protected $userPerformanceRepository;
-
-    public function __construct(Connection $dbConnection, FeedbackRepository $userPerformanceRepository)
+    public function __construct(
+        Connection $dbConnection,
+        EntityManager $entityManager,
+        protected FeedbackRepository $userPerformanceRepository)
     {
-        $this->userPerformanceRepository = $userPerformanceRepository;
-        parent::__construct($dbConnection);
+        parent::__construct($dbConnection, $entityManager);
     }
 
 	public function readFromId(int $idUser): ?User
@@ -28,7 +29,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 		return $this->readFromField('email', $email);
 	}
 
-	protected function readFromField($field, $fieldValue): ?User
+	private function readFromField($field, $fieldValue): ?User
 	{
 		if (!in_array($field, ['email', 'id_user']))
 		{
@@ -40,7 +41,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 
         $ret = null;
 
-		if ($userdata = $this->dbConnection->fetchAssoc($sql, array($fieldValue)))
+		if ($userdata = $this->dbConnection->fetchAssociative($sql, [$fieldValue]))
 		{
             $userPerformance = $this->userPerformanceRepository->readUserPerformance($userdata['id_user']);
 
@@ -84,15 +85,15 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 		}
 
         /** @todo Refactor this. registerIp should be just one more field, no special treatment. */
-		$this->dbConnection->insert('user', array(
+		$this->dbConnection->insert('user', [
 			'email'			=> $user->email,
 			'lowest_note'	=> $user->range->lowest ?? null,
 			'highest_note'	=> $user->range->highest ?? null,
 			'id_book'		=> $user->id_book,
 			'register_ip'	=> $registerIp
-		));
+        ]);
 
-		return $user->id_user = intval($this->dbConnection->lastInsertId());
+		return $user->id_user = (int) $this->dbConnection->lastInsertId();
 	}
 
     /**
@@ -114,16 +115,16 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 		}
 
         //If user had NULL voice, don't record the change
-		$currentVoiceRange = $this->dbConnection->fetchAssoc('SELECT lowest_note FROM user WHERE id_user = ?', [$user->id_user]);
+		$currentVoiceRange = $this->dbConnection->fetchAssociative('SELECT lowest_note FROM user WHERE id_user = ?', [$user->id_user]);
 
 		if (!empty($currentVoiceRange['lowest_note']))
 		{
-			$this->dbConnection->insert('log_voice_range', array(
+			$this->dbConnection->insert('log_voice_range', [
 				'id_user'		=> $user->id_user,
 				'method'		=> $method,
 				'lowest_note'	=> $user->range->lowest,
 				'highest_note'	=> $user->range->highest
-			));
+            ]);
 		}
 
 		$this->save($user);
@@ -131,7 +132,7 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 
     public function readIpFromUsersWithNullCountry(): array
     {
-        return $this->dbConnection->fetchAll('SELECT register_ip FROM user WHERE country IS NULL');
+        return $this->dbConnection->fetchAllAssociative('SELECT register_ip FROM user WHERE country IS NULL');
     }
 
     public function saveUserCountryByIp(string $countryIsoCode, string $ip): void
@@ -145,6 +146,6 @@ class UserRepositoryMysql extends MysqlRepository implements UserRepository
 
     public function readVoiceRangeFromAllUsers(): array
     {
-        return $this->dbConnection->fetchAll('SELECT id_user, email, lowest_note, highest_note FROM user');
+        return $this->dbConnection->fetchAllAssociative('SELECT id_user, email, lowest_note, highest_note FROM user');
     }
 }

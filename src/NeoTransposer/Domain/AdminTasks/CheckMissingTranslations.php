@@ -4,13 +4,10 @@ namespace NeoTransposer\Domain\AdminTasks;
 
 use Doctrine\DBAL\Connection;
 
-class CheckMissingTranslations implements AdminTask
+final class CheckMissingTranslations implements AdminTask
 {
-    protected $languagesConfig;
-
-    public function __construct(array $languagesConfig)
+    public function __construct(protected array $languagesConfig)
     {
-        $this->languagesConfig = $languagesConfig;
     }
 
 	public function run(): string

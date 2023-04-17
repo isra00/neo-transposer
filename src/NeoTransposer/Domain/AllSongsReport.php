@@ -8,13 +8,9 @@ use NeoTransposer\Domain\Repository\SongChordRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\NeoApp;
 
-class AllSongsReport
+final class AllSongsReport
 {
-    protected $songRepository;
-    protected $songChordRepository;
-    protected $app;
-
-    public const PEOPLE_COMPATIBLE_MICRO_MESSAGES = [
+    final public const PEOPLE_COMPATIBLE_MICRO_MESSAGES = [
         PeopleCompatibleCalculation::ALREADY_COMPATIBLE   => '',
         PeopleCompatibleCalculation::WIDER_THAN_SINGER    => '',
         PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE   => '',
@@ -25,17 +21,14 @@ class AllSongsReport
         PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA => '',
     ];
 
-    public function __construct(SongRepository $songRepository, SongChordRepository $songChordRepository, NeoApp $app)
+    public function __construct(
+        protected SongRepository $songRepository,
+        protected SongChordRepository $songChordRepository,
+        protected NeoApp $app)
     {
-        $this->songRepository = $songRepository;
-        $this->songChordRepository = $songChordRepository;
-        $this->app = $app;
     }
 
     /**
-     * @param int  $idBook
-     * @param User $user
-     *
      * @return TransposedSongWithFeedback[]
      * @throws \Exception
      */
@@ -71,7 +64,7 @@ class AllSongsReport
 
             //Remove bracketed text from song title (used for clarifications)
             /** @todo Remove this: bracketed text differentiates variants! */
-            $transposedSong->song->title = preg_replace('/(.)\[.*\]/', '$1', $transposedSong->song->title);
+            $transposedSong->song->title = preg_replace('/(.)\[.*\]/', '$1', (string) $transposedSong->song->title);
 
             $transposedSongWithFeedback = new TransposedSongWithFeedback(
                 $transposedSong,

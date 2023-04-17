@@ -5,18 +5,15 @@ namespace NeoTransposer\Domain;
 /**
  * Song text (with chords) that is shown in Wizard Empiric.
  */
-class SongTextForWizard
+final class SongTextForWizard
 {
-    /**
-     * Lyrics and chord placeholders (%0, %1...), as fetched from config file.
-     *
-     * @var string
-     */
-    protected $rawText;
-
-    public function __construct($rawText)
+    public function __construct(
+        /**
+         * Lyrics and chord placeholders (%0, %1...), as fetched from config file.
+         */
+        protected string $rawText
+    )
     {
-        $this->rawText = $rawText;
     }
 
     /**
@@ -31,7 +28,7 @@ class SongTextForWizard
     {
         $finalText = str_replace(' ', '&nbsp;', $this->rawText);
         foreach ($chords as $i => $chord) {
-            $finalText = str_replace("%$i", strval($chord), $finalText);
+            $finalText = str_replace("%$i", (string) $chord, $finalText);
         }
 
         return nl2br($finalText, false);

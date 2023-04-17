@@ -12,13 +12,10 @@ use NeoTransposer\Domain\GeoIp\{Country,
     GeoIpNotFoundException,
     GeoIpResolver};
 
-class GeoIpResolverGeoIp2 implements GeoIpResolver
+final class GeoIpResolverGeoIp2 implements GeoIpResolver
 {
-    protected $reader;
-
-    public function __construct(Reader $reader)
+    public function __construct(protected Reader $reader)
     {
-        $this->reader = $reader;
     }
 
     /**
@@ -29,9 +26,9 @@ class GeoIpResolverGeoIp2 implements GeoIpResolver
     {
         try {
             $geoIp2Result = $this->reader->country($ip);
-        } catch (AddressNotFoundException $e) {
+        } catch (AddressNotFoundException) {
             throw new GeoIpNotFoundException();
-        } catch (InvalidDatabaseException $e) {
+        } catch (InvalidDatabaseException) {
             throw new GeoIpException("Error in GeoIp2 database file");
         }
 

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Administrator's Insert Song form.
  */
-class InsertSong
+final class InsertSong
 {
 	public function get(NeoApp $app, $tpl_vars=[])
 	{
@@ -29,7 +29,7 @@ class InsertSong
         $songChords = [];
 		foreach ($request->get('chords') as $chord)
 		{
-			if (strlen($chord))
+			if ((string)$chord !== '')
 			{
                 $songChords[] = $chord;
 			}
@@ -41,11 +41,11 @@ class InsertSong
 			$request->get('id_book'),
 			$request->get('page'),
 			$request->get('title'),
-			strtoupper($request->get('lowest_note')),
-			strtoupper($request->get('highest_note')),
-			strtoupper($request->get('people_lowest_note')),
-			strtoupper($request->get('people_highest_note')),
-			boolval($request->get('first_chord_is_key')),
+			strtoupper((string) $request->get('lowest_note')),
+			strtoupper((string) $request->get('highest_note')),
+			strtoupper((string) $request->get('people_lowest_note')),
+			strtoupper((string) $request->get('people_highest_note')),
+			(bool) $request->get('first_chord_is_key'),
             $songChords
         );
 
@@ -53,7 +53,7 @@ class InsertSong
 
 		return $this->get(
 			$app,
-			array('id_book' => $request->get('id_book'))
+			['id_book' => $request->get('id_book')]
 		);
 	}
 }

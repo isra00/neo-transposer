@@ -16,13 +16,10 @@ use NeoTransposer\Domain\Repository\SongRepository;
  *
  * @return string Check results, to be displayed.
  */
-class CheckSongsRangeConsistency implements AdminTask
+final class CheckSongsRangeConsistency implements AdminTask
 {
-    protected $songRepository;
-
-    public function __construct(SongRepository $songRepository)
+    public function __construct(protected SongRepository $songRepository)
     {
-        $this->songRepository = $songRepository;
     }
 
     public function run(): string
@@ -34,7 +31,7 @@ class CheckSongsRangeConsistency implements AdminTask
         $output = [];
 
         foreach ($songs as $song) {
-            if ($song['lowest_note'] != $nc->lowestNote(array($song['lowest_note'], $song['highest_note']))) {
+            if ($song['lowest_note'] != $nc->lowestNote([$song['lowest_note'], $song['highest_note']])) {
                 $output[] = $song['id_song'] . ' ' . $song['lowest_note'] . ' is higher than ' . $song['highest_note'] . '!';
             }
 
@@ -44,7 +41,7 @@ class CheckSongsRangeConsistency implements AdminTask
 
             if (!empty($song['people_lowest_note']) && !empty($song['people_highest_note'])) {
                 if ($song['people_lowest_note'] != $nc->lowestNote(
-                        array($song['people_lowest_note'], $song['people_highest_note'])
+                        [$song['people_lowest_note'], $song['people_highest_note']]
                     )) {
                     $output[] = $song['id_song'] . ' assembly lowest_note ' . $song['people_lowest_note'] . ' is higher than ' . $song['people_highest_note'] . '!';
                 }

@@ -15,7 +15,7 @@ class NotesCalculator
      *
      * @var array
      */
-    public const ACOUSTIC_SCALE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    final public const ACOUSTIC_SCALE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
     /**
      * All the accoustic notes (including # but not bemol) of 4 octaves, like in
@@ -73,7 +73,7 @@ class NotesCalculator
     public function arrayIndex(array $array, int $index)
     {
         if (abs($index) > count($array) - 1) {
-            $index = $index % count($array);
+            $index %= count($array);
         }
 
         return ($index < 0)
@@ -111,9 +111,7 @@ class NotesCalculator
      */
     public function distanceWithOctave(string $note1, string $note2): int
     {
-        return intval(array_search($note1, $this->numbered_scale)) - intval(
-                array_search($note2, $this->numbered_scale)
-            );
+        return (int) array_search($note1, $this->numbered_scale) - (int) array_search($note2, $this->numbered_scale);
     }
 
     public function rangeWideness(NotesRange $range): int
@@ -124,16 +122,14 @@ class NotesCalculator
     /**
      * Transpose a chord adding or subtracting semitones.
      *
-     * @param Chord $chord
      * @param int   $amount Number of semitones to add or substract.
-     *
      * @return Chord Final chord.
      */
     public function transposeChord(Chord $chord, $amount): Chord
     {
         $transposedFundamental = $this->arrayIndex(
             self::ACOUSTIC_SCALE,
-            intval(array_search($chord->fundamental, self::ACOUSTIC_SCALE)) + $amount
+            (int) array_search($chord->fundamental, self::ACOUSTIC_SCALE) + $amount
         );
 
         return new Chord($transposedFundamental, $chord->attributes);
@@ -148,9 +144,7 @@ class NotesCalculator
      */
     public function transposeChords($chordList, $amount): array
     {
-        return array_map(function ($originalChord) use ($amount) {
-            return $this->transposeChord($originalChord, $amount);
-        }, $chordList);
+        return array_map(fn($originalChord) => $this->transposeChord($originalChord, $amount), $chordList);
     }
 
     /**
@@ -159,18 +153,17 @@ class NotesCalculator
      * song based on the chord passed (which should be the first one), in the
      * form of a major scale (e.g. first chord is G => G; first chord is Em => G).
      *
-     * @param Chord $firstChord
      *
      * @return string The key, expressed as major chord in american notation.
      */
     public function getKey(Chord $firstChord): string
     {
         //Search 'm' to support all kinds of minor chords.
-        return (false === strpos($firstChord->attributes, 'm'))
-            ? $firstChord->fundamental
-            : $this->arrayIndex(
+        return (str_contains($firstChord->attributes, 'm'))
+            ? $this->arrayIndex(
                 self::ACOUSTIC_SCALE,
-                intval(array_search($firstChord->fundamental, self::ACOUSTIC_SCALE)) + 3
-            );
+                (int) array_search($firstChord->fundamental, self::ACOUSTIC_SCALE) + 3
+            )
+            : $firstChord->fundamental;
     }
 }

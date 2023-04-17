@@ -10,17 +10,13 @@ use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
-class UserWriter
+final class UserWriter
 {
-    protected $userRepository;
-    protected $unhappyUser;
-    protected $bookRepository;
-
-    public function __construct(UserRepository $userRepository, BookRepository $bookRepository, UnhappinessManager $unhappyUser)
+    public function __construct(
+        protected UserRepository $userRepository,
+        protected BookRepository $bookRepository,
+        protected UnhappinessManager $unhappyUser)
     {
-        $this->userRepository = $userRepository;
-        $this->unhappyUser = $unhappyUser;
-        $this->bookRepository = $bookRepository;
     }
 
     /**
@@ -32,7 +28,7 @@ class UserWriter
     {
         if ($idBook)
         {
-            if (!in_array($idBook, array_keys($this->bookRepository->readAllBooks())))
+            if (!array_key_exists($idBook, $this->bookRepository->readAllBooks()))
 			{
 				throw new BookNotExistException($idBook);
 			}

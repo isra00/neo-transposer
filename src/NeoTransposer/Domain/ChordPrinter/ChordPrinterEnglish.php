@@ -24,8 +24,8 @@ final class ChordPrinterEnglish extends ChordPrinter
 		}
 
 		return $fundamental . str_replace(
-			array('4', '6', '7'),
-			array('<sup>4</sup>', '<sup>6</sup>', '<sup>7</sup>'),
+			['4', '6', '7'],
+			['<sup>4</sup>', '<sup>6</sup>', '<sup>7</sup>'],
 			$attributes
 		);
 	}

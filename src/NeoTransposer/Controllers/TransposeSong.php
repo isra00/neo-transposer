@@ -16,10 +16,11 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Transpose Song page: transpose the given song for the singer's voice range.
  */
-class TransposeSong
+final class TransposeSong
 {
     public function get(NeoApp $app, Request $req, $id_song)
     {
+        $transposedSong = null;
         //For the teaser (not logged in), transpose for a standard male voice
         if (!$app['neouser']->isLoggedIn()) {
             $app['neouser']->range = new NotesRange('B1', 'F#3');
@@ -31,14 +32,14 @@ class TransposeSong
             return $app->redirect(
                 $app->path(
                     'user_voice',
-                    array('_locale' => $app['locale'])
+                    ['_locale' => $app['locale']]
                 )
             );
         }
 
         try {
             $transposedSong = TransposedSong::fromDb($id_song, $app);
-        } catch (SongNotExistException $e) {
+        } catch (SongNotExistException) {
             $app->abort(404, "Song $id_song does not exist.");
         }
 
@@ -59,7 +60,7 @@ class TransposeSong
 
         $tplVars = [];
 
-        if ($transposedSong->getPeopleCompatible()) {
+        if ($transposedSong->getPeopleCompatible() !== null) {
 
             $peopleCompatibleMsgUntranslated = '';
             switch ($transposedSong->getPeopleCompatibleStatus())
@@ -100,10 +101,8 @@ class TransposeSong
             );
         }
 
-        /** @todo usar str_starts_with() de PHP8 */
-        if (0 === strpos($req->headers->get('Accept'), 'application/json')) {
-            $transposeSongApi = new TransposeSongApi($app);
-            return $transposeSongApi->handleApiRequest($req, $id_song);
+        if (str_starts_with($req->headers->get('Accept'), 'application/json')) {
+            return (new TransposeSongApi($app))->handleApiRequest($req, $id_song);
         }
 
         return $app->render(
@@ -115,7 +114,7 @@ class TransposeSong
                     'voice_chart'      => $transpositionChart->getChartHtml(),
                     'page_title'       => $app->trans(
                         '%song% (Neocatechumenal Way)',
-                        array('%song%' => $transposedSong->song->title)
+                        ['%song%' => $transposedSong->song->title]
                     ),
                     'header_link'      => $app->path('book_' . $transposedSong->song->idBook),
                     'meta_canonical'   => $app->url('transpose_song', ['id_song' => $transposedSong->song->slug]),
@@ -135,18 +134,18 @@ class TransposeSong
         );
     }
 
-    protected function generateTranspositionChart(NotesCalculator $nc, NeoApp $app, TransposedSong $transposedSong) : TranspositionChart
+    private function generateTranspositionChart(NotesCalculator $nc, NeoApp $app, TransposedSong $transposedSong) : TranspositionChart
     {
         $transpositionChart = new TranspositionChart($nc, $transposedSong->song, $app['neouser'], $app['neoconfig']['languages'][$app['locale']]['notation']);
         $transpositionChart->addTransposition('Transposed:', 'transposed-song', $transposedSong->transpositions[0]);
 
-        if ($transposedSong->song->peopleRange) {
+        if ($transposedSong->song->peopleRange !== null) {
             $transpositionChart->addVoice('Original for people:', 'original-song original-people', $transposedSong->song->peopleRange);
             $transpositionChart->addVoice('Transposed for people:', 'transposed-song transposed-people', $transposedSong->transpositions[0]->peopleRange);
             $transpositionChart->addVoice('People standard:', 'people-standard', new NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]));
         }
 
-        if ($transposedSong->getPeopleCompatible()) {
+        if ($transposedSong->getPeopleCompatible() !== null) {
             $transpositionChart->addTransposition('Adjusted for you:', 'transposed-song', $transposedSong->getPeopleCompatible());
             $transpositionChart->addVoice('Adjusted for people:', 'people-compatible', $transposedSong->getPeopleCompatible()->peopleRange);
         }

@@ -2,18 +2,15 @@
 
 namespace NeoTransposer\Domain\AdminTasks;
 
-use Silex\Application;
+use NeoTransposer\NeoApp;
 
 /**
  * Re-compile the CSS file. Will not delete old compiled files.
  */
-class RefreshCompiledCss implements AdminTask
+final class RefreshCompiledCss implements AdminTask
 {
-    protected $dependencyContainer;
-
-    public function __construct(Application $dependencyContainer)
+    public function __construct(protected NeoApp $dependencyContainer)
     {
-        $this->dependencyContainer = $dependencyContainer;
     }
 
     public function run(): string

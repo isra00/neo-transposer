@@ -5,15 +5,12 @@ namespace NeoTransposer\Domain\AdminTasks;
 use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\Repository\UserRepository;
 
-class PopulateUsersCountry implements AdminTask
+final class PopulateUsersCountry implements AdminTask
 {
-    protected $userRepository;
-    protected $geoIpResolver;
-
-    public function __construct(UserRepository $userRepository, GeoIpResolver $geoIpResolver)
+    public function __construct(
+        protected UserRepository $userRepository,
+        protected GeoIpResolver $geoIpResolver)
     {
-        $this->userRepository = $userRepository;
-        $this->geoIpResolver = $geoIpResolver;
     }
 
     public function run(): string
@@ -24,7 +21,7 @@ class PopulateUsersCountry implements AdminTask
 		{
 			$ip = $ip['register_ip'];
 
-			if (!strlen(trim($ip)))
+			if (trim((string) $ip) === '')
 			{
 				continue;
 			}
@@ -33,7 +30,7 @@ class PopulateUsersCountry implements AdminTask
 			{
                 $location = $this->geoIpResolver->resolve($ip);
 			}
-			catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException $e)
+			catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException)
 			{
 				continue;
 			}

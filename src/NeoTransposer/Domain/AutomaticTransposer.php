@@ -28,8 +28,8 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  */
 class AutomaticTransposer
 {
-    public const FORCE_LOWEST  = 1;
-    public const FORCE_HIGHEST = 2;
+    final public const FORCE_LOWEST  = 1;
+    final public const FORCE_HIGHEST = 2;
 
     /**
      * Offsets (in semitones) from the centered transposition, used for
@@ -37,44 +37,19 @@ class AutomaticTransposer
      *
      * @var array
      */
-    public const OFFSETS_NOT_EQUIVALENT = [-1, 1];
+    final public const OFFSETS_NOT_EQUIVALENT = [-1, 1];
 
-    public const AMOUNT_CENTERED_TRANSPOSITIONS = 2;
-
-    protected $transpositionFactory;
-    protected $standardPeopleRange;
-
-    /** @var NotesRange */
-    protected $singerRange;
-
-    /** @var NotesRange */
-    protected $songRange;
-
-    /** @var array */
-    protected $originalChords;
-
-    /** @var bool */
-    protected $firstChordIsKey;
-
-    /** @var NotesRange */
-    protected $songPeopleRange;
+    final public const AMOUNT_CENTERED_TRANSPOSITIONS = 2;
 
     /**
      * The calculated centered transposition.
-     *
-     * @var Transposition
      */
-    protected $centeredTransposition;
+    private ?Transposition $centeredTransposition = null;
 
     /**
      * The calculated centered and equivalent transpositions, sorted by ease.
-     *
-     * @var array
      */
-    protected $centeredAndEquivalent;
-
-    /**  @var NotesCalculator */
-    protected $notesCalculator;
+    private ?array $centeredAndEquivalent = null;
 
 
     /**
@@ -87,23 +62,15 @@ class AutomaticTransposer
      * @param NotesRange|null $songPeopleRange Song's voice range for people
      */
     public function __construct(
-        NotesCalculator $notesCalculator,
-        TranspositionFactory $transpositionFactory,
-        NotesRange $standardPeopleRange,
-        NotesRange $singerRange,
-        NotesRange $songRange,
-        array $originalChords,
-        bool $firstChordIsKey,
-        NotesRange $songPeopleRange = null
-    ) {
-        $this->notesCalculator = $notesCalculator;
-        $this->transpositionFactory = $transpositionFactory;
-        $this->standardPeopleRange = $standardPeopleRange;
-        $this->singerRange = $singerRange;
-        $this->songRange = $songRange;
-        $this->originalChords = $originalChords;
-        $this->firstChordIsKey = $firstChordIsKey;
-        $this->songPeopleRange = $songPeopleRange;
+        protected NotesCalculator $notesCalculator,
+        protected TranspositionFactory $transpositionFactory,
+        protected NotesRange $standardPeopleRange,
+        protected NotesRange $singerRange,
+        protected NotesRange $songRange,
+        protected array $originalChords,
+        protected bool $firstChordIsKey,
+        protected ?NotesRange $songPeopleRange = null)
+    {
     }
 
     /**
@@ -150,10 +117,8 @@ class AutomaticTransposer
                 : 0;
         }
 
-        $centeredOffset = intval(
-            (-1) * $this->notesCalculator->distanceWithOctave($this->songRange->lowest, $this->singerRange->lowest)
-            + $offsetFromSingerLowest
-        );
+        $centeredOffset = (int) ((-1) * $this->notesCalculator->distanceWithOctave($this->songRange->lowest, $this->singerRange->lowest)
+        + $offsetFromSingerLowest);
 
         $centeredTransposition = $this->transpositionFactory->createTransposition(
             $this->notesCalculator->transposeChords($this->originalChords, $centeredOffset),
@@ -236,7 +201,7 @@ class AutomaticTransposer
             $transpositions, function (Transposition $one, Transposition $two) {
 
                 //If both have same score but one is asBook, that one goes first.
-                if ($one->score == $two->score) {
+                if ($one->score === $two->score) {
                     return ($two->getAsBook()) ? 1 : 0;
                 }
 
@@ -264,9 +229,7 @@ class AutomaticTransposer
             $equivalents = $this->calculateEquivalentsWithCapo($centeredTransposition);
 
             $centeredAndEquivalent = array_merge([$centeredTransposition], $equivalents);
-            $centeredAndEquivalent = $this->sortTranspositionsByEase($centeredAndEquivalent);
-
-            $this->centeredAndEquivalent = $centeredAndEquivalent;
+            $this->centeredAndEquivalent = $this->sortTranspositionsByEase($centeredAndEquivalent);
         }
 
         //This shouldn't be done before to avoid conflicts
@@ -347,7 +310,7 @@ class AutomaticTransposer
             );
 
             /** @todo Pasar esto como parámetro para no marear con el estado */
-            if ($this->songPeopleRange) {
+            if ($this->songPeopleRange !== null) {
                 $near->calculatePeopleRange($this->songPeopleRange, $offset, $this->notesCalculator);
             }
 
@@ -413,7 +376,6 @@ class AutomaticTransposer
      * This algorithm does not deal with the relation of this transposition
      * with others (i.e. hiding notEquivalent when there is peopleCompatible, etc.)
      *
-     * @return PeopleCompatibleCalculation
      * @throws Exception\SongDataException
      */
     public function calculatePeopleCompatible() : PeopleCompatibleCalculation
@@ -469,7 +431,7 @@ class AutomaticTransposer
 
             if ($fromPeopleLowestInCenteredToPeopleLowest < 0) {
                    //When lowering, invert because of abs() above.
-                   $offsetFromCentered = $offsetFromCentered * (-1);
+                   $offsetFromCentered *= -1;
             }
 
             if (0 == $offsetFromCentered) {

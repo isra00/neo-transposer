@@ -4,13 +4,10 @@ namespace NeoTransposer\Application;
 
 use NeoTransposer\Domain\Service\AdminMetricsReader;
 
-class ReadAdminMetrics
+final class ReadAdminMetrics
 {
-    protected $adminMetricsReader;
-
-    public function __construct(AdminMetricsReader $adminMetricsReader)
+    public function __construct(protected AdminMetricsReader $adminMetricsReader)
     {
-        $this->adminMetricsReader = $adminMetricsReader;
     }
 
     public function readAdminMetrics(bool $longReports): array

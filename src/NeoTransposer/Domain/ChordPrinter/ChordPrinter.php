@@ -22,10 +22,7 @@ abstract class ChordPrinter
 
 	public function printChordset(array $chordset): array
 	{
-        return array_map(function($chord)
-        {
-            return $this->printChordHtml($chord);
-        }, $chordset);
+        return array_map(fn($chord) => $this->printChordHtml($chord), $chordset);
 	}
 
 	public function printChord(Chord $chord)

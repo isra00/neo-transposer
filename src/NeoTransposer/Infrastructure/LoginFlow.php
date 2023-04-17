@@ -4,14 +4,14 @@ namespace NeoTransposer\Infrastructure;
 
 use NeoTransposer\Domain\Entity\User;
 
-class LoginFlow
+final class LoginFlow
 {
 
 	/**
 	 * Redirections depending on the state of the user:
      * - If user has no id -> login, unless we're in login.
      * - If user has no voice range -> user/voice, unless we're in $exempt.
-	 *
+	 * @todo Rename into redirectIfNotLoggedInOrNoRange, or something like that.
 	 */
 	public static function redirectIfUserDoesNotComply(string $currentRoute, User $currentUser): ?string
 	{
@@ -28,7 +28,7 @@ class LoginFlow
 
 		if (!$currentUser->hasRange())
 		{
-			$exempt = array(
+			$exempt = [
 				'user_settings',
 				'user_voice',
 				'set_user_data',
@@ -36,7 +36,7 @@ class LoginFlow
 				'wizard_select_standard',
 				'wizard_empiric_lowest',
 				'wizard_empiric_highest'
-			);
+			];
 
 			if (!in_array($currentRoute, $exempt))
 			{

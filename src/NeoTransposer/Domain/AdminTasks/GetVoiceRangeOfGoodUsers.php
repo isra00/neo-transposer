@@ -5,18 +5,15 @@ namespace NeoTransposer\Domain\AdminTasks;
 use Doctrine\DBAL\Connection;
 use NeoTransposer\Domain\NotesCalculator;
 
-class GetVoiceRangeOfGoodUsers implements AdminTask
+final class GetVoiceRangeOfGoodUsers implements AdminTask
 {
-    protected $dbConnection;
-
-    public function __construct(Connection $dbConnection)
+    public function __construct(protected Connection $dbConnection)
     {
-        $this->dbConnection = $dbConnection;
     }
     
 	public function run(): string
 	{
-		$goodUsers = $this->dbConnection->fetchAll('SELECT id_user, wizard_step1, lowest_note, highest_note FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
+		$goodUsers = $this->dbConnection->fetchAllAssociative('SELECT id_user, wizard_step1, lowest_note, highest_note FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
 		$output = '';
 
 		$nc = new NotesCalculator();

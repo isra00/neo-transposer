@@ -17,13 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Wizard Empiric: measure the user's voice range through an empirical test.
  */
-class WizardEmpiric
+final class WizardEmpiric
 {
-	/**
-	 * An instance of NotesCalculator
-	 * @var NotesCalculator
-	 */
-	protected $nc;
+    private readonly NotesCalculator $nc;
 
 	public function __construct()
 	{
@@ -35,9 +31,7 @@ class WizardEmpiric
 		if (!isset($app['neoconfig']['voice_wizard'][$app['locale']]['lowest']))
 		{
 			/** @todo Add HTTP error code */
-			return $app->render('error.twig', array(
-				'error_title' => $app->trans('Sorry, the voice measure wizard is not available in ' . $app['neoconfig']['languages'][$app['locale']]['name'])
-			));
+			return $app->render('error.twig', ['error_title' => $app->trans('Sorry, the voice measure wizard is not available in ' . $app['neoconfig']['languages'][$app['locale']]['name'])]);
 		}
 
         //This should not happen, as user should come from selecting a standard range.
@@ -76,15 +70,18 @@ class WizardEmpiric
 		{
 			$action_yes = 'tooLow';
 		}
-		
+
 		$tpl = $this->prepareSongForTest('lowest', AutomaticTransposer::FORCE_LOWEST, $app);
 
-		return $app->render('wizard_empiric_lowest.twig', array_merge($tpl, array(
-            //Action yes/no means that the yes/no button will not submit the form but run the specified JS function
-			'action_yes'	=> $action_yes,
-			'action_no'		=> $action_no,
-		)));
-	}
+        return $app->render(
+            'wizard_empiric_lowest.twig',
+            array_merge($tpl, [
+                //Action yes/no means that the yes/no button will not submit the form but run the specified JS function
+                'action_yes' => $action_yes,
+                'action_no'  => $action_no,
+            ])
+        );
+    }
 
 	public function highest(Request $req, NeoApp $app)
 	{
@@ -111,7 +108,7 @@ class WizardEmpiric
 		}
 
 		// If not, we recover the last one and pass to the next step
-		// ...and if after being alerted that B4 is too much, he/she decides to continue, stop here 
+		// ...and if after being alerted that B4 is too much, he/she decides to continue, stop here
 		// and force B4.
 		if ('no' == $req->get('can_sing') || $app['neouser']->range->highest == 'C1')
 		{
@@ -121,19 +118,20 @@ class WizardEmpiric
 
 		$tpl = $this->prepareSongForTest('highest', AutomaticTransposer::FORCE_HIGHEST, $app);
 
-		return $app->render('wizard_empiric_highest.twig', array_merge($tpl, array(
+		return $app->render('wizard_empiric_highest.twig', array_merge($tpl, [
 			'action_yes'	=> $action_yes,
 			'action_no'		=> $action_no,
-		)));
+        ]));
 	}
 
 	public function prepareSongForTest($wizard_config_song, $forceVoiceLimit, NeoApp $app): array
 	{
-		$wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
+        $wizard_config_song = $app['neoconfig']['voice_wizard'][$app['locale']][$wizard_config_song];
 
+        $transposedSong = null;
         try {
             $transposedSong = TransposedSong::fromDb($wizard_config_song['id_song'], $app);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $app->abort(500, 'The song for the Wizard ' . $wizard_config_song['id_song'] . ' must exist in DB!');
         }
 

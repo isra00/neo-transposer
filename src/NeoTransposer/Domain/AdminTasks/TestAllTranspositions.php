@@ -10,16 +10,13 @@ use NeoTransposer\NeoApp;
  * A functional test for detecting changes in the transposition algorithm.
  * It generates an AllSongsReport for book and compares it with a pre-stored result set.
  */
-class TestAllTranspositions implements AdminTask
+final class TestAllTranspositions implements AdminTask
 {
-    public const TEST_ALL_TRANSPOSITIONS_BOOK = 2;
+    final public const TEST_ALL_TRANSPOSITIONS_BOOK = 2;
 
-	protected $app;
-
-	public function __construct(NeoApp $app)
-	{
-		$this->app = $app;
-	}
+	public function __construct(protected NeoApp $app)
+ {
+ }
 
     /**
      * Perform the test.
@@ -44,7 +41,7 @@ class TestAllTranspositions implements AdminTask
             array_keys($testResult)
         )
         ) {
-            $output .= '<strong>Missing songs: ' . join(', ', $missingSongs) . "</strong>\n";
+            $output .= '<strong>Missing songs: ' . implode(', ', $missingSongs) . "</strong>\n";
         }
 
         foreach ($testResult as $idSong => $result) {
@@ -56,23 +53,19 @@ class TestAllTranspositions implements AdminTask
                 foreach ($difference as $property => $resultValue) {
                     if (is_array($resultValue)) {
                         $output .= 'Transposition ' . $property . ":\n";
-
                         foreach ($resultValue as $transProperty => $transResultValue) {
                             $output .= "\t$transProperty: expected <em>" . $testData['expectedResults'][$idSong][$property][$transProperty] . '</em> but got <em>' . $transResultValue . "</em>\n";
                         }
-                    } else {
-                        if (isset($testData['expectedResults'][$idSong][$property])) {
-                            if (is_array($testData['expectedResults'][$idSong][$property])) {
-                                $testData['expectedResults'][$idSong][$property] = '[' . join(
-                                        '; ',
-                                        $testData['expectedResults'][$idSong][$property]
-                                    ) . ']';
-                            }
-
-                            $output .= "$property: expected <em>" . ((string)$testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
-                        } else {
-                            $output .= "Unexpected property $property <em>" . $resultValue . "</em> not specified in test data\n";
+                    } elseif (isset($testData['expectedResults'][$idSong][$property])) {
+                        if (is_array($testData['expectedResults'][$idSong][$property])) {
+                            $testData['expectedResults'][$idSong][$property] = '[' . implode(
+                                    '; ',
+                                    $testData['expectedResults'][$idSong][$property]
+                                ) . ']';
                         }
+                        $output .= "$property: expected <em>" . ($testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
+                    } else {
+                        $output .= "Unexpected property $property <em>" . $resultValue . "</em> not specified in test data\n";
                     }
                 }
             }
@@ -81,7 +74,7 @@ class TestAllTranspositions implements AdminTask
         return empty($output) ? 'Test SUCCESSFUL: song transpositions are identical to expected :-)' : $output;
     }
 
-    protected function generateActualTestResult(array $testData)
+    private function generateActualTestResult(array $testData)
     {
         $sql = <<<SQL
 SELECT id_song
@@ -90,7 +83,7 @@ WHERE id_book = ?
 ORDER BY id_song
 SQL;
 
-        $ids = $this->app['db']->fetchAll($sql, [self::TEST_ALL_TRANSPOSITIONS_BOOK]);
+        $ids = $this->app['db']->fetchAllAssociative($sql, [self::TEST_ALL_TRANSPOSITIONS_BOOK]);
 
         $allSongs = [];
 
@@ -119,7 +112,7 @@ SQL;
                     'highestNote' => $transposedSong->transpositions[0]->range->highest,
                     'score'       => $transposedSong->transpositions[0]->score,
                     'capo'        => $transposedSong->transpositions[0]->getCapo(),
-                    'chords'      => join(',', $transposedSong->transpositions[0]->chords)
+                    'chords'      => implode(',', $transposedSong->transpositions[0]->chords)
                 ],
                 'centered2'       => [
                     'offset'      => $transposedSong->transpositions[1]->offset,
@@ -127,7 +120,7 @@ SQL;
                     'highestNote' => $transposedSong->transpositions[1]->range->highest,
                     'score'       => $transposedSong->transpositions[1]->score,
                     'capo'        => $transposedSong->transpositions[1]->getCapo(),
-                    'chords'      => join(',', $transposedSong->transpositions[1]->chords)
+                    'chords'      => implode(',', $transposedSong->transpositions[1]->chords)
                 ]
             ];
 
@@ -139,15 +132,14 @@ SQL;
                     'score'                 => $transposedSong->not_equivalent->score,
                     'capo'                  => $transposedSong->not_equivalent->getCapo(),
                     'deviationFromCentered' => $transposedSong->not_equivalent->deviationFromCentered,
-                    'chords'                => join(',', $transposedSong->not_equivalent->chords),
+                    'chords'                => implode(',', $transposedSong->not_equivalent->chords),
                 ];
             }
 
             if ($this->app['neoconfig']['people_compatible']) {
-                $testResult[$transposedSong->song->idSong]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus(
-                );
+                $testResult[$transposedSong->song->idSong]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus();
 
-                if ($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) {
+                if (($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) !== null) {
                     $testResult[$transposedSong->song->idSong]['peopleCompatible'] = [
                         'offset'                => $peopleCompatibleTransposition->offset,
                         'lowestNote'            => $peopleCompatibleTransposition->range->lowest,
@@ -155,7 +147,7 @@ SQL;
                         'score'                 => $peopleCompatibleTransposition->score,
                         'capo'                  => $peopleCompatibleTransposition->getCapo(),
                         'deviationFromCentered' => $peopleCompatibleTransposition->deviationFromCentered,
-                        'chords'                => join(',', $peopleCompatibleTransposition->chords),
+                        'chords'                => implode(',', $peopleCompatibleTransposition->chords),
                         'peopleLowestNote'      => $peopleCompatibleTransposition->peopleRange->lowest,
                         'peopleHighestNote'     => $peopleCompatibleTransposition->peopleRange->highest,
                     ];
@@ -166,7 +158,7 @@ SQL;
         return $testResult;
     }
 
-    protected function diffTestResults($actual, $expected)
+    private function diffTestResults($actual, $expected)
     {
         $scalarProperties = ['songLowestNote', 'songHighestNote'];
         $arrayProperties = ['centered1', 'centered2', 'notEquivalent'];
@@ -194,8 +186,8 @@ SQL;
             }
         }
 
-        if ($transpositionsDiff) {
-            $diff = $diff
+        if ($transpositionsDiff !== []) {
+            $diff = $diff !== []
                 ? array_merge($diff, $transpositionsDiff)
                 : null;
         }
@@ -209,8 +201,10 @@ SQL;
             foreach ($missingProperties as &$value) {
                 $value = 'missing';
             }
-            /** @todo Remove @ when upgrading to PHP7.4 (it should be possible to call array_merge with a null value) */
-            $diff = @array_merge($diff, $missingProperties);
+            unset($value);
+            if (is_array($diff)) {
+                $diff = array_merge($diff, $missingProperties);
+            }
         }
 
         return $diff;

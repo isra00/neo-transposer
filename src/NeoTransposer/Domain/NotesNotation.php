@@ -7,7 +7,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Convert different nomenclatures for notes (american and latin so far).
  */
-class NotesNotation
+final class NotesNotation
 {
     /**
      * Correspondence between American and Latin notation. This software always uses
@@ -31,7 +31,7 @@ class NotesNotation
         'G#' => 'Sol#'
     ];
 
-    protected const REGEXP_NOTE = '/([ABCDEFG]#?b?)([0-9])?/';
+    protected const REGEXP_NOTE = '/([ABCDEFG]#?b?)(\d)?/';
 
     /**
      * Returns a given note in the given notation (american or latin).
@@ -54,10 +54,7 @@ class NotesNotation
     public function getNotationArray(array $notes, string $notation): array
     {
         $thisObject = $this;
-        return array_map(function($note) use ($notation, $thisObject)
-        {
-            return $thisObject->getNotation($note, $notation);
-        }, $notes);
+        return array_map(fn($note) => $thisObject->getNotation($note, $notation), $notes);
     }
 
     /**
@@ -83,8 +80,8 @@ class NotesNotation
             $highestNote = $this->getNotation($highestNote, 'latin');
         }
 
-        $octave = intval($match[2]);
-        $octave = $octave - 1;
+        $octave = (int) $match[2];
+        $octave -= 1;
 
         return "$lowestNote &rarr; $highestNote +$octave " . $trans->trans('oct');
     }

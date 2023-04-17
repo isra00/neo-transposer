@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *
  * @todo Rename to UpdateUser
  */
-class SetUserData
+final class SetUserData
 {
 	public function get(Request $request, \NeoTransposer\NeoApp $app): RedirectResponse
 	{
@@ -30,20 +30,19 @@ class SetUserData
             );
         } catch (BookNotExistException $e) {
             throw new BadRequestHttpException('Invalid request: ' . $e->getMessage());
-        } catch (BadUserRangeException $e)
+        } catch (BadUserRangeException)
         {
             return $app->redirect($app->path(
                 'user_voice',
                 ['bad_voice_range' => '1']
             ));
-        } catch (InvalidStandardRangeException $e)
+        } catch (InvalidStandardRangeException)
         {
             $app->abort(400, 'Bad value for URL parameter unhappy_choose_std');
         }
 
-		return $app->redirect($request->get('redirect')
-			? $request->get('redirect')
-			: $app->path('book_' . $app['neouser']->id_book)
+		return $app->redirect(
+            $request->get('redirect') ?: $app->path('book_' . $app['neouser']->id_book)
 		);
 	}
 }

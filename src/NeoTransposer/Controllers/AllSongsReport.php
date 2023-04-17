@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Transpose Song page: transposes the given song for the singer's voice range.
  */
-class AllSongsReport
+final class AllSongsReport
 {
     /**
      * HTML report. If dl query string arg is present, the page is offered to
@@ -19,7 +19,7 @@ class AllSongsReport
      * @param  NeoApp $app The NeoApp
      * @return string|Response The rendered view (HTML) or the downloadable HTML.
      */
-    public function get(NeoApp $app, Request $req)
+    public function get(NeoApp $app, Request $req): string|\Symfony\Component\HttpFoundation\Response
     {
         $idBook = $app[\NeoTransposer\Domain\Repository\BookRepository::class]->readIdBookFromLocale($app['locale']);
 
@@ -36,12 +36,12 @@ class AllSongsReport
             $app['neoconfig']['languages'][$app['locale']]['notation']
         );
 
-        $tplVars = array(
+        $tplVars = [
             'all_songs_transposed_with_fb' => $allSongsTransposedWithFeedback,
             'your_voice'  => $your_voice,
             'header_link' => $app->path('book_' . $idBook),
             'page_title'  => $app->trans('All transpositions for your voice'),
-        );
+        ];
 
         if ($req->get('dl')) {
             $tplVars['print_css_code'] = file_get_contents($app['root_dir'] . '/web/static/style.css')
@@ -62,12 +62,12 @@ class AllSongsReport
         . '.html';
 
         return new Response(
-            $responseBody, 200, array(
+            $responseBody, 200, [
                 'Cache-Control'       => 'private',
                 'Content-Type'        => 'application/stream',
                 'Content-Length'      => strlen($responseBody),
                 'Content-Disposition' => 'attachment; filename=' . $filename,
-            )
+            ]
         );
     }
 }

@@ -5,13 +5,10 @@ namespace NeoTransposer\Domain\AdminTasks;
 use Doctrine\DBAL\Connection;
 use NeoTransposer\Domain\Repository\SongChordRepository;
 
-class CheckOrphanChords implements AdminTask
+final class CheckOrphanChords implements AdminTask
 {
-    protected $songChordRepository;
-
-    public function __construct(SongChordRepository $songChordRepository)
+    public function __construct(protected SongChordRepository $songChordRepository)
     {
-        $this->songChordRepository = $songChordRepository;
     }
     
 	public function run(): string
