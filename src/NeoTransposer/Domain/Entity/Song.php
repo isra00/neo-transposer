@@ -10,7 +10,6 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  */
 class Song
 {
-    public $originalChords;
     /** @todo Make all these protected and create getters */
     public $idSong;
     public $idBook;
@@ -27,6 +26,8 @@ class Song
 
     public $bookChordPrinter;
     public $bookLocale;
+
+    public $originalChords;
     public $originalChordsForPrint = [];
 
     public function __construct($dbColumns, $originalChords)
