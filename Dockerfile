@@ -25,6 +25,7 @@ FROM php:8.1-apache AS nt-common
 
 ARG WORKDIR="/app"
 EXPOSE 80
+ENV TZ="Europe/Madrid"
 
 RUN apt update && apt install -y libzip-dev zlib1g-dev; \
     docker-php-ext-install mysqli pdo_mysql zip; \
