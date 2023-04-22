@@ -52,7 +52,7 @@ RUN rm -rf /var/www/html/.git; \
 # Install the New Relic APM PHP agent & daemon. To enable and configure it, add a /usr/local/etc/php/conf.d/newrelic.ini
 # https://docs.newrelic.com/docs/apm/agents/php-agent/advanced-installation/docker-other-container-environments-install-php-agent/#install-same-container
 RUN \
-  curl -L https://download.newrelic.com/php_agent/archive/10.0.0.312/newrelic-php5-10.0.0.312-linux.tar.gz | tar -C /tmp -zx && \
+  curl -L https://download.newrelic.com/php_agent/archive/10.9.0.324/newrelic-php5-10.9.0.324-linux.tar.gz | tar -C /tmp -zx && \
   export NR_INSTALL_USE_CP_NOT_LN=1 && \
   export NR_INSTALL_SILENT=1 && \
   /tmp/newrelic-php5-*/newrelic-install install && \
