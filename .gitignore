@@ -18,3 +18,23 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+
+tests/_output
+dump.sh
+vendor
+TODO
+web/resucito-imgs/
+.sublime-project
+.sublime-project.sublime-workspace
+cache/profiler
+web/static/compiled-*.css
+tests/phpmd/phpmd.html
+GeoLite2-Country.mmdb
+**/Thumbs.db*
+.code-workspace.code-workspace
+.idea
+.vscode
+.env
+_output
+web/adminer*
