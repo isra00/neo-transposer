@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c52ad076-c016-494e-b64a-0f6c950b2171" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CODE_OF_CONDUCT.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/apache.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/php-dev.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/php-prod.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cache/twig/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeception.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.scores.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.wizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crontab.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/psalm.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rector.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sonar-project.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/song_data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Application/AdminTaskNotExistException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Application/ListSongsWithUserFeedback.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Application/ReadAdminMetrics.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Application/RunAdminTool.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/AdminDashboard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/AllSongsReport.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/Book.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/ChordCorrectionPanel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/Index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/InsertSong.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/Login.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/ReceiveFeedback.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/ServeCss.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/SetUserData.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/Sitemap.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/TransposeSong.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/TransposeSongApi.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/UserBook.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/UserVoice.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/WebManifest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/WizardEmpiric.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/WizardInstructions.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Controllers/WizardSelectStandard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/AdminTask.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/CheckChordsOrder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/CheckMissingTranslations.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/CheckOrphanChords.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/CheckSongsRangeConsistency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/CheckUsersRangeConsistency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/GetPerformanceByNumberOfFeedbacks.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/GetVoiceRangeOfGoodUsers.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/PopulateUsersCountry.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/RefreshCompiledCss.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/RemoveOldCompiledCss.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AdminTasks/TestAllTranspositions.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AllSongsReport.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AutomaticTransposer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/AutomaticTransposerFactory.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/ChordPrinter/ChordPrinter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/ChordPrinter/ChordPrinterEnglish.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/ChordPrinter/ChordPrinterItalian.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/ChordPrinter/ChordPrinterSpanish.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/ChordPrinter/ChordPrinterSwahili.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Entity/Book.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Entity/Song.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Entity/User.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Exception/BadUserRangeException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Exception/BookNotExistException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Exception/InvalidStandardRangeException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Exception/SlugAlreadyExistsException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Exception/SongDataException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Exception/SongNotExistException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Exception/UserNotExistException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/GeoIp/Country.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/GeoIp/GeoIpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/GeoIp/GeoIpLocation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/GeoIp/GeoIpNotFoundException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/GeoIp/GeoIpResolver.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/GeoIp/IpToLocaleResolver.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/NotesCalculator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/NotesNotation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/PeopleCompatibleCalculation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Repository/AdminMetricsRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Repository/BookRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Repository/FeedbackRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Repository/SongChordRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Repository/SongRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Repository/UnhappyUserRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Repository/UserRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Service/AdminMetricsReader.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Service/FeedbackRecorder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Service/SongCreator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Service/SongsLister.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Service/UnhappinessManager.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Service/UserWriter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/SongTextForWizard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/SongsCollection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/SongsWithUserFeedbackCollection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/TransposedSong.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/TransposedSongWithFeedback.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/Transposition.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/TranspositionChart.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/TranspositionFactory.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/ValueObject/Chord.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/ValueObject/NotesRange.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Domain/ValueObject/UserPerformance.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/AdminMetricsRepositoryMysql.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/BookRepositoryMysql.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/FeedbackRepositoryMysql.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/GeoIpResolverGeoIp2.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/LoginFlow.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/MysqlRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/SongChordRepositoryMysql.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/SongRepositoryMysql.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/UnhappyUserRepositoryMysql.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/Infrastructure/UserRepositoryMysql.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/NeoApp.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NeoTransposer/services.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_data/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_output/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_support/AcceptanceTester.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_support/FunctionalTester.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_support/Helper/Acceptance.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_support/Helper/Functional.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_support/Helper/Unit.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_support/UnitTester.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_support/_generated/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/acceptance.suite.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/acceptance/EncourageFeedbackCest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/acceptance/FeedbackCest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/acceptance/LoginCest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/acceptance/Shared.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/acceptance/TransposeSongCest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/acceptance/UnhappyUserCest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/functional.suite.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/selenium-ide/Neo-Transposer.side" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testAllTranspositions.expected.PeopleCompatible.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testAllTranspositions.expected.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/testAllTranspositions.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit.suite.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Application/ReadAdminMetricsTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Application/RunAdminToolTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/AutomaticTransposerTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/NotesCalculatorTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/NotesNotationTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/Service/SongCreatorTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/Service/SongsListerTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/SongTextForWizardTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/TransposedSongTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/TranspositionChartTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/TranspositionFactoryTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/TranspositionTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Domain/ValueObject/ChordTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Infrastructure/MysqlRepositoryTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/src/NeoTransposer/Infrastructure/UnhappyUserRepositoryMysqlTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trans/es.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trans/it.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trans/pt.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trans/sw.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/update_mmdb.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/.htaccess" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_-5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_-6.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_-7.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_-8.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_0.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/1066_1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/236_-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/236_-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/236_-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/236_-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/236_-5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/236_-6.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/236_-7.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/255_-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/255_-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/255_-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/255_-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/255_-5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/255_0.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/368_-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/368_-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/368_-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/368_-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/368_-5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/368_-6.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/368_-7.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/368_0.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/368_1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_-5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_-6.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_-7.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_-8.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_0.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/44_2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/519_-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/519_-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/519_-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/519_-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/519_-5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/519_0.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/519_1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/519_2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/569_-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/569_-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/569_-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/569_-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/569_-5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/569_-6.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/569_-7.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/569_0.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/569_1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-10.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-6.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-7.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-8.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_-9.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_0 Am.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_0.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/769_2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_-5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_-6.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_-7.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_0.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_5.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_6.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_7.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/audio/824_8.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/apple-touch-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/bottom-shadow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/burning-guitar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/A.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/A6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/A7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/A7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Am.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Am5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Am6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Am7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Am9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/As.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/As6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/As65dim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/As7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/As7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Asm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Asm9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/B.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/B6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/B7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/B7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Bm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Bm6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Bm9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/C.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/C6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/C7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/C7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Cm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Cm9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Cs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Cs6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Cs7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Cs7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Csdim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Csm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/D.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/D6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/D7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/D7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Dm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Dm5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Dm6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Dm9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Dmdim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Ds.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Ds6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Ds7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Ds7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Dsm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/E.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/E6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/E7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/E7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/E7_.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/E7__.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/E9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Em.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Em6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Em7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Em9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/F.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/F6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/F7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/F75dim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/F7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fs59dim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fs6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fs7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fs7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fsdim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fsm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fsm6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Fsm9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/G.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/G6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/G7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/G79.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/G7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/G7_.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Gm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Gm6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Gm9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Gs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Gs6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Gs7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Gs7M.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Gsdim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/Gsm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/unknown-en.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/unknown-es.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/unknown-it.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/unknown-pt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/chords/unknown-sw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/dialog-information.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/encourage-feedback-en.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/encourage-feedback-es.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/encourage-feedback-it.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/encourage-feedback-pt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/encourage-feedback-sw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flag-es.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flag-gb.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flag-it.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flag-pt.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flag-tz.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ad.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ae.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/af.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ai.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/al.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/am.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/an.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ao.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/as.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/at.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/au.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/aw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ax.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/az.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ba.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/be.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/br.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/by.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/bz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ca.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/catalonia.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ch.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ci.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ck.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/cz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/de.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/dj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/dk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/dm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/do.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/dz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ec.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ee.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/eg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/eh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/england.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/er.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/es.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/et.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/europeanunion.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/fam.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/fi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/fj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/fk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/fm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/fo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/fr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ga.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ge.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/gy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/hk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/hm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/hn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/hr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ht.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/hu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/id.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/il.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/in.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/io.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/iq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ir.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/is.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/it.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/jm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/jo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/jp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ke.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/kg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/kh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ki.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/km.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/kn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/kp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/kr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/kw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ky.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/kz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/la.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/lb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/lc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/li.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/lk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/lr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ls.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/lt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/lu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/lv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ly.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ma.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/md.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/me.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ml.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ms.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/my.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/mz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/na.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/nc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ne.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/nf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ng.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ni.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/nl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/no.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/np.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/nr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/nu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/nz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/om.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pe.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ps.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/pw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/py.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/qa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/re.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ro.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/rs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ru.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/rw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/scotland.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/se.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/si.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/so.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/st.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/sz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/td.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/th.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/to.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/tz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ua.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ug.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/um.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/us.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/uy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/uz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/va.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/vc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/vg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/vi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/vn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/vu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/wales.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/wf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ws.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/ye.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/yt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/za.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/zm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/flags/zw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/icon-192x192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/icon-512x512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/icon-dl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/icon-megaphon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/icon-print.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/logo-red.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/manifesto-banner-r.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/manifesto-banner.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-600x315.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-en-600x315.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-en.200.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-es-600x315.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-es.200.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-es.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-it-600x315.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-it.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-it.small.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-pt-600x315.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-pt.200.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-small.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-sw-600x315.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-sw.200.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/mkt-sw.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/people-star.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/people.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/perfect-key-pc.en.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/perfect-key-pc.es.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/perfect-key-pc.sw.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/play-controls.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/resucilex-banner.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/search.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/encourage-feedback.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/finger.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/logo-red-maskable.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/mkt-es.original.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/mkt-it.original.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/mkt-it.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/mkt-sw.original.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/perfect-key.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/resucilex-banner.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/resucito.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/img/source/unknown-sw.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/mailcheck-1.1.2.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/print.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/zepto.min.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/web-link" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/intl" />
+      <path value="$PROJECT_DIR$/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/vendor/symfony/doctrine-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/vendor/symfony/phpunit-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-http" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/debug-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/twig-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/doctrine-messenger" />
+      <path value="$PROJECT_DIR$/vendor/symfony/web-profiler-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/symfony/browser-kit" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/vendor/symfony/twig-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/notifier" />
+      <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/vendor/symfony/messenger" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/vendor/symfony/expression-language" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/sql-formatter" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/common" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/vendor/psr/link" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/vendor/symfony/runtime" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-core" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/password-hasher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="2On4J8c141rO6lrQ4jvhql6ONcR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.PHP&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner scope="XML" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c52ad076-c016-494e-b64a-0f6c950b2171" name="Changes" comment="" />
+      <created>1682182938184</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682182938184</updated>
+      <workItem from="1682182940355" duration="8411000" />
+      <workItem from="1682213604275" duration="590000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

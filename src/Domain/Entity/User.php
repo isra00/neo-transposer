@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Domain\Entity;
+
+use App\Domain\NotesNotation;
+use App\Domain\ValueObject\NotesRange;
+use App\Domain\ValueObject\UserPerformance;
+use Symfony\Component\Translation\TranslatorInterface;
+
+/**
+ * Represents a user
+ */
+class User
+{
+    //These are stored in MySQL as log_voice_range.method
+	final public const METHOD_WIZARD  = 'wizard';
+	final public const METHOD_MANUAL  = 'manual';
+	final public const METHOD_UNHAPPY = 'auto_unhappy';
+
+	public $firstTime = false;
+
+    /**
+     * @param string|null          $email                   User email
+     * @param null                 $id_user                 User ID
+     * @param NotesRange|null      $range                   User highest note
+     * @param null                 $id_book                 Book
+     * @param string|null          $wizard_step1            Option checked in Wizard First Step
+     * @param int|null             $wizard_lowest_attempts  No. of attempts in Wizard Lowest note.
+     * @param int|null             $wizard_highest_attempts No. of attempts in Wizard Lowest note.
+     */
+    public function __construct(
+        public ?string $email = null,
+        public $id_user = null,
+        public ?NotesRange $range = null,
+        public $id_book = null,
+        public ?string $wizard_step1 = null,
+        public ?int $wizard_lowest_attempts = null,
+        public ?int $wizard_highest_attempts = null,
+        public ?UserPerformance $performance = null
+    ) {
+    }
+
+    public function setPerformance(UserPerformance $performance): void
+    {
+        $this->performance = $performance;
+    }
+
+    /**
+     * Whether the user has a defined voice range.
+     */
+    public function hasRange(): bool
+    {
+        return !empty($this->range->lowest);
+    }
+
+    /**
+     * Check if user is logged in or an anonymous user
+     */
+    public function isLoggedIn(): bool
+    {
+        return !empty($this->id_user);
+    }
+
+	/**
+	 * Format the voice of the User as lowest_note - highest note +x octaves
+	 * 
+	 * @param   TranslatorInterface $trans 		The Translator service.
+	 * @param   string              $notation 	The notation (american/latin).
+	 * @return  string 				Formatted string.
+	 */
+	public function getVoiceAsString(TranslatorInterface $trans, NotesNotation $notesNotation, string $notation='american') : string
+	{
+		return $notesNotation->getVoiceRangeAsString($trans, $notation, $this->range->lowest, $this->range->highest);
+	}
+
+    public function shouldEncourageFeedback(): bool
+    {
+        return (
+            !empty($this->range->lowest)
+            && ($this->performance->reports() < 2 || ($this->performance->reports() == 2 && $this->firstTime))
+        );
+    }
+}

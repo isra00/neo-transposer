@@ -1,35 +1,35 @@
 <!doctype html>
-<html translate="no" lang="{{ app.locale }}">
+<html translate="no" lang="{{ app.request.locale }}">
 <head>
 
 	<meta charset="{{ _charset }}" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>{{ page_title }}</title>
-	<link rel="stylesheet" href="{{ global.request.basepath }}/static/{{ neoapp_css_file }}" type="text/css" />
+	<link rel="stylesheet" href="{{ app.request.getBaseURL() }}/static/style.css" type="text/css" />
 	
-	<link rel="icon" type="image/svg+xml" sizes="512x512" href="{{ global.request.basepath }}/static/img/logo-red.svg">
-	<link rel="icon" type="image/png" sizes="512x512" href="{{ global.request.basepath }}/static/img/icon-512x512.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="{{ global.request.basepath }}/static/img/icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="180x180" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
-	<link rel="apple-touch-icon"      sizes="180x180" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
-	<link rel="icon" href="{{ global.request.basepath }}/favicon.ico">
+	<link rel="icon" type="image/svg+xml" sizes="512x512" href="{{ app.request.getBaseURL() }}/static/img/logo-red.svg">
+	<link rel="icon" type="image/png" sizes="512x512" href="{{ app.request.getBaseURL() }}/static/img/icon-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="{{ app.request.getBaseURL() }}/static/img/icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="180x180" href="{{ app.request.getBaseURL() }}/static/img/apple-touch-icon.png">
+	<link rel="apple-touch-icon"      sizes="180x180" href="{{ app.request.getBaseURL() }}/static/img/apple-touch-icon.png">
+	<link rel="icon" href="{{ app.request.getBaseURL() }}/favicon.ico">
 
-	<link rel="manifest" href="{{ path('webmanifest', {_locale: app.locale}) }}">
+	<link rel="manifest" href="{{ path('webmanifest', {_locale: app.request.locale}) }}">
 
-	<meta property="og:url" content="{{ app.absoluteUriWithoutQuery }}">
+	<meta property="og:url" content="{{ app.request.pathinfo }}">
 	<meta property="og:title" content="{{ page_title }}">
 	<meta property="og:description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}">
-	<meta property="og:site_name" content="{{ app.neoconfig.software_name }}">
+	<meta property="og:site_name" content="{{ nt.software_name }}">
 	<meta property="og:type" content="website">
-	<meta property="og:image" content="{{ app.absoluteBasePath }}/static/img/mkt-{{ app.locale}}-600x315.jpg">
-	<meta property="og:locale" content="{{ app.locale}}">
+	<meta property="og:image" content="{{ app.request.getBaseURL() }}/static/img/mkt-{{ app.request.locale}}-600x315.jpg">
+	<meta property="og:locale" content="{{ app.request.locale}}">
 
 	<meta name="google" content="notranslate" />
 	<meta name="description" content="{{ meta_description|default('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.'|trans) }}" />
-	{% if meta_canonical %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
+	{% if meta_canonical is defined %}<link rel="canonical" href="{{ meta_canonical }}" />{% endif %}
 
-	{% if global.debug or global.request.headers.get('dnt') -%}
+	{% if app.debug or global.request.headers.get('dnt') -%}
 	<script>var gtag = function() {}</script>
 	{%- else -%}
 	<script async src="https://www.googletagmanager.com/gtag/js?id={{ app.neoconfig.analytics_id }}"></script>
@@ -50,17 +50,17 @@
 			external: '{{ global.request.get('external') }}'
 		};
 
-		{% if app.neouser.isLoggedIn -%}
-		dimensions.lowestNote = '{{ app.neouser.range.lowest|default('-') }}';
-		dimensions.highestNote = '{{ app.neouser.range.highest|default('-') }}';
-		dimensions.user_id = '{{ app.neouser.id_user }}';
-		{%- endif %}
+{#		{% if neouser.isLoggedIn -%}#}
+{#		dimensions.lowestNote = '{{ neouser.range.lowest|default('-') }}';#}
+{#		dimensions.highestNote = '{{ neouser.range.highest|default('-') }}';#}
+{#		dimensions.user_id = '{{ neouser.id_user }}';#}
+{#		{%- endif %}#}
 
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
 		gtag('config', '{{ app.neoconfig.analytics_id }}', dimensions);
-		gtag('set', 'content_group', '{{ app.locale }}');
+		gtag('set', 'content_group', '{{ app.request.locale }}');
 
 	</script>
 	{%- endif %}
@@ -68,33 +68,34 @@
 	{% block header_extra %}{% endblock %}
 </head>
 
-<body class="lang-{{ app.locale }} {% block page_class %}{% endblock %}" id="top">
+<body class="lang-{{ app.request.locale }} {% block page_class %}{% endblock %}" id="top">
 
 	<div class="wrapper">
 
 		{% block languageSwitchTop %}{% endblock %}
 
 		{% block header %}
+		{% set current_route = app.request.attributes.get('_route') %}
 		<nav class="header">
 			<div class="inside">
 
-				{% if header_link -%}
+				{% if header_link is defined -%}
 					<h2>
-						<a href="{{ header_link }}">{{ app.neoconfig.software_name }}</a>
+						<a href="{{ header_link }}">{{ nt.software_name }}</a>
 					</h2>
 				{%- else -%}
 					{% if current_route == 'login' -%}
-					<h1>{{ app.neoconfig.software_name }}</h1>
+					<h1>{{ nt.software_name }}</h1>
 					{% else -%}
-					<h2>{{ app.neoconfig.software_name }}</h2>
+					<h2>{{ nt.software_name }}</h2>
 					{%- endif %}
 				{%- endif %}
 
-				{% if app.neouser.isLoggedIn and current_route != 'login' -%}
-				<span class="user">
-					<a href="{{ path('login', {_locale: app.locale}) }}">{% trans %}Log-out{% endtrans %}</a>
-				</span>
-				{%- endif %}
+{#				{% if neouser.isLoggedIn and current_route != 'login' -%}#}
+{#				<span class="user">#}
+{#					<a href="{{ path('login', {_locale: app.request.locale}) }}">{% trans %}Log-out{% endtrans %}</a>#}
+{#				</span>#}
+{#				{%- endif %}#}
 
 			</div>
 		</nav>
@@ -102,13 +103,13 @@
 
 		<section class="main">
 
-		{% if notifications.error %}
-			{% for notification in notifications.error %}
+		{% if app.flashes('error') %}
+			{% for notification in app.flashes('error') %}
 			<div class="notification error">{{ notification }}</div>
 			{% endfor %}
 		{% endif %}
-		{% if notifications.success %}
-			{% for notification in notifications.success %}
+		{% if app.flashes('success') %}
+			{% for notification in app.flashes('success') %}
 			<div class="notification success">{{ notification }}</div>
 			{% endfor %}
 		{% endif %}
@@ -127,7 +128,7 @@
 	{% endblock %}
 
 	{% macro loadJsFramework() -%}
-	<script src="{{ global.request.basepath }}/static/zepto.min.js"></script>
+	<script src="{{ app.request.getBaseURL() }}/static/zepto.min.js"></script>
 	{%- endmacro %}
 
 </body>

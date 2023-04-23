@@ -1,4 +1,0 @@
-0 6 * * 3 cd /var/www/neo-transposer.com/ && ./update_mmdb.sh >/dev/null 2>&1
-
-# Requires HTTP credentials to be stored in .wgetrc for non interactive authentication
-0 7 * * 3 wget -q http://neo-transposer.com/admin/dashboard?tool=populateCountry -O /dev/null >/dev/null 2>&1
