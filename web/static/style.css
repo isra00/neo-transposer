@@ -460,8 +460,9 @@ a.link-all-report {
 		padding: .4em 0;
 		display: block;
 	}
-		.song-index li a .black {
+		* .page-number {
 			color: #222;
+			display: none;
 		}
 	.song-index #no-results {
 		display: none;

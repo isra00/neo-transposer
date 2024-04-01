@@ -74,9 +74,10 @@
 	<ul class="songs-list">
 	{% for transposed_song_with_fb in all_songs_transposed_with_fb %}
 		<li>
-			<h2>{{ transposed_song_with_fb.transposedSong.song.page|default('&#248;')|raw }}
-			· {{ transposed_song_with_fb.transposedSong.song.title }}
-			{% if global.debug %}<a href="{{ path('transpose_song', {'id_song' : transposed_song_with_fb.transposedSong.song.idSong }) }}">[{{ transposed_song_with_fb.transposedSong.song.idSong }}]</a>{% endif %}
+			<h2>
+				<span class="page-number">{{ transposed_song_with_fb.transposedSong.song.page|default('&#248;')|raw }} · </span>
+				{{ transposed_song_with_fb.transposedSong.song.title }}
+				{% if global.debug %}<a href="{{ path('transpose_song', {'id_song' : transposed_song_with_fb.transposedSong.song.idSong }) }}">[{{ transposed_song_with_fb.transposedSong.song.idSong }}]</a>{% endif %}
 			</h2>
 
 			<ul>

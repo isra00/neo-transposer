@@ -157,3 +157,33 @@ CREATE TABLE `user` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-03-20 23:56:56
+
+# Deprecated?
+
+DELIMITER ;;
+
+DROP PROCEDURE IF EXISTS `NoteToNumber`;;
+CREATE FUNCTION `NoteToNumber` (`note_code` char(3)) RETURNS INT
+BEGIN
+    DECLARE note_number INT;
+    SET note_number = CAST(SUBSTRING(note_code, LENGTH(note_code)) AS UNSIGNED);
+
+    RETURN
+        CASE
+            WHEN note_code LIKE 'C#%' THEN 2 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'C%' THEN 1 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'D#%' THEN 4 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'D%' THEN 3 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'E%' THEN 5 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'F#%' THEN 7 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'F%' THEN 6 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'G#%' THEN 9 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'G%' THEN 8 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'A#%' THEN 11 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'A%' THEN 10 + 12 * (note_number - 1)
+            WHEN note_code LIKE 'B%' THEN 12 + 12 * (note_number - 1)
+            ELSE -1
+        END;
+END;;
+
+DELIMITER ;

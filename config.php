@@ -75,6 +75,6 @@ return [
     'people_compatible'                      => true,
     'detailed_feedback'                      => true,
     'audio'                                  => true,
-    'show_manifesto'                         => true,
-    'disable_recaptcha'                      => true
+    'show_manifesto'                         => false,
+    'disable_recaptcha'                      => true,
 ];
