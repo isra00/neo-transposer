@@ -162,7 +162,7 @@ CREATE TABLE `user` (
 
 DELIMITER ;;
 
-DROP PROCEDURE IF EXISTS `NoteToNumber`;;
+DROP FUNCTION IF EXISTS `NoteToNumber`;;
 CREATE FUNCTION `NoteToNumber` (`note_code` char(3)) RETURNS INT
 BEGIN
     DECLARE note_number INT;
