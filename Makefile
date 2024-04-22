@@ -53,7 +53,7 @@ start-db-for-test:
 
 start-db-local:
 	@docker stop nt-mysql || true
-	docker run --rm -dit -p 3306:3306 --name nt-mysql -e MYSQL_ROOT_PASSWORD=root -v /var/www/vhosts/dev-env/mysql5:/var/lib/mysql mysql:5.7-debian
+	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=root -v /var/www/vhosts/dev-env/mysql5:/var/lib/mysql mysql:5.7-debian
 	sleep 15
 
 #No need to delete it after stopping since it's run with --rm
