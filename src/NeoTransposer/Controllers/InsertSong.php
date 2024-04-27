@@ -39,7 +39,7 @@ final class InsertSong
 
         $songCreator->createSong(
 			$request->get('id_book'),
-			$request->get('page'),
+			$request->get('page') ? (int)$request->get('page') : null,
 			$request->get('title'),
 			strtoupper((string) $request->get('lowest_note')),
 			strtoupper((string) $request->get('highest_note')),

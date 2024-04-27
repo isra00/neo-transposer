@@ -100,7 +100,7 @@ SQL;
 
     public function createSong(
         int $idBook,
-        int $page,
+        ?int $page,
         string $title,
         string $lowestNote,
         string $highestNote,
