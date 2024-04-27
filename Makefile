@@ -42,7 +42,7 @@ start start-local: stop
 
 start-db-for-test:
 	@docker stop nt-mysql || true
-	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} mysql:5.7-debian --bind-address=0.0.0.0
+	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} mysql:8.3 --bind-address=0.0.0.0
 	sleep 15
 	@if [ -z "$NT_DB_USER" ] || [ -z "$NT_DB_PASSWORD" ] || [ -z "$NT_DB_DATABASE" ] || [ -z "$NT_DB_DATABASE_INTEGRATION" ]; then echo "Environment variables NT_DB_USER, NT_DB_PASSWORD, NT_DB_DATABASE and NT_DB_DATABASE_INTEGRATION must be set before calling this recipe" >&2; exit 1; fi
 	docker exec    nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE ${NT_DB_DATABASE} COLLATE 'utf8_general_ci'"
@@ -53,7 +53,7 @@ start-db-for-test:
 
 start-db-local:
 	@docker stop nt-mysql || true
-	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=root -v /var/www/vhosts/dev-env/mysql5:/var/lib/mysql mysql:5.7-debian
+	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=root -v /var/www/vhosts/dev-env/mysql5:/var/lib/mysql mysql:8.3
 	sleep 15
 
 #No need to delete it after stopping since it's run with --rm

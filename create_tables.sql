@@ -164,6 +164,7 @@ DELIMITER ;;
 
 DROP FUNCTION IF EXISTS `NoteToNumber`;;
 CREATE FUNCTION `NoteToNumber` (`note_code` char(3)) RETURNS INT
+DETERMINISTIC
 BEGIN
     DECLARE note_number INT;
     SET note_number = CAST(SUBSTRING(note_code, LENGTH(note_code)) AS UNSIGNED);
