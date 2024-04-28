@@ -54,7 +54,8 @@ final class TransposedSongTest extends TestCase
                 'people_lowest_note'  => 'testPeopleLowest',
                 'people_highest_note' => 'testPeopleHighest',
                 'chord_printer'       => 'testChordPrinter',
-                'locale'              => 'testLocale'
+                'locale'              => 'testLocale',
+                'url'                 => 'testUrl'
             ],
             ["Am", "Dm"]
         );
