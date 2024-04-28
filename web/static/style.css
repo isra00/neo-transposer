@@ -1654,7 +1654,7 @@ h2.step-1 {
 	width: 2.5em;
 	font-size: 1em;
 }
-.insert-song .field-title input[type=text] {
+.insert-song .field-wide input[type=text] {
 	width: auto;
 }
 

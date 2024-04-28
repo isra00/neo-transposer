@@ -23,7 +23,8 @@ interface SongRepository
         string $peopleHighestNote,
         bool $firstChordIsNote,
         string $slug,
-        array $chords
+        array $chords,
+        ?string $url = null
     ): void;
 
     public function slugAlreadyExists(string $slug): bool;

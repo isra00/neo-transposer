@@ -66,6 +66,7 @@ CREATE TABLE `song` (
   `people_lowest_note` char(3) DEFAULT NULL,
   `people_highest_note` char(3) DEFAULT NULL,
   `artistic_adjustment` tinyint DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1205 DEFAULT CHARSET=utf8mb3;

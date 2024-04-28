@@ -108,7 +108,8 @@ SQL;
         string $peopleHighestNote,
         bool $firstChordIsNote,
         string $slug,
-        array $chords
+        array $chords,
+        ?string $url = null
     ): void {
 
         $this->dbConnection->insert('song', [
@@ -120,7 +121,8 @@ SQL;
 			'people_lowest_note' 	=> $peopleLowestNote,
 			'people_highest_note' 	=> $peopleHighestNote,
 			'first_chord_is_tone' 	=> $firstChordIsNote,
-			'slug'	 				=> $slug
+			'slug'	 				=> $slug,
+			'url'	 				=> $url
 		]);
 
 		$idSong = $this->dbConnection->lastInsertId();
