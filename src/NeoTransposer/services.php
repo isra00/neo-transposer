@@ -48,12 +48,10 @@ $this[Domain\Repository\AdminMetricsRepository::class] = fn($app) => new Infrast
     $app[EntityManager::class]
 );
 
-$this[Application\ReadAdminMetrics::class] = fn($app) => new Application\ReadAdminMetrics(
-    new Domain\Service\AdminMetricsReader(
-        $app[Domain\Repository\AdminMetricsRepository::class],
-        $app[Domain\Repository\BookRepository::class],
-        $app[GeoIpResolver::class]
-    )
+$this[Domain\Service\AdminMetricsReader::class] = fn($app) => new Domain\Service\AdminMetricsReader(
+    $app[Domain\Repository\AdminMetricsRepository::class],
+    $app[Domain\Repository\BookRepository::class],
+    $app[GeoIpResolver::class]
 );
 
 $this[Domain\AdminTasks\PopulateUsersCountry::class] = fn($app) => new Domain\AdminTasks\PopulateUsersCountry(

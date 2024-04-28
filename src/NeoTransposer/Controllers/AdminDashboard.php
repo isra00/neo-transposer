@@ -2,8 +2,6 @@
 
 namespace NeoTransposer\Controllers;
 
-use NeoTransposer\Application\AdminTaskNotExistException;
-use NeoTransposer\Application\RunAdminTool;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,19 +15,36 @@ final class AdminDashboard
 
 		$toolOutput = '';
 
-		if ($task = $req->get('tool'))
+		if ($tool = $req->get('tool'))
 		{
-            $runAdminTaskUseCase = new RunAdminTool($app);
+            $allTools = [
+                'PopulateUsersCountry',
+                'CheckSongsRangeConsistency',
+                'CheckUsersRangeConsistency',
+                'RefreshCompiledCss',
+                'RemoveOldCompiledCss',
+                'CheckChordsOrder',
+                'TestAllTranspositions',
+                'GetVoiceRangeOfGoodUsers',
+                'CheckOrphanChords',
+                'GetPerformanceByNumberOfFeedbacks',
+                'CheckMissingTranslations'
+            ];
+
+            if (!in_array($tool, $allTools)) {
+                $app->abort(404, "Invalid tool name $tool");
+            }
 
             try {
-                $toolOutput = $runAdminTaskUseCase->runAdminTask($task);
-            } catch (AdminTaskNotExistException $e)
+                $toolObject = $app["NeoTransposer\\Domain\\AdminTasks\\$tool"];
+            } catch (\Pimple\Exception\UnknownIdentifierException)
             {
-                $app->abort(404, $e->getMessage());
+                $app->abort(404, 'Invalid admin tool');
             }
+            return $toolObject->run();
 		}
 
-        $readMetricsUseCase = $app[\NeoTransposer\Application\ReadAdminMetrics::class];
+        $readMetricsUseCase = $app[\NeoTransposer\Domain\Service\AdminMetricsReader::class];
         $metricsFromService = $readMetricsUseCase->readAdminMetrics(!empty($req->get('long')));
 
 		return $app->render('admin_dashboard.twig', $metricsFromService + [

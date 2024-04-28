@@ -1,8 +1,7 @@
 <?php
 
-namespace NeoTransposer\Tests\Application;
+namespace NeoTransposer\Tests\Domain\Service;
 
-use NeoTransposer\Application\ReadAdminMetrics;
 use NeoTransposer\Domain\GeoIp\Country;
 use NeoTransposer\Domain\GeoIp\GeoIpLocation;
 use NeoTransposer\Domain\GeoIp\GeoIpResolver;
@@ -11,7 +10,7 @@ use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Service\AdminMetricsReader;
 use PHPUnit\Framework\TestCase;
 
-class ReadAdminMetricsTest extends TestCase
+class AdminMetricsReaderTest extends TestCase
 {
     /**
      * Outside-in test for the use case, domain service and mocked repository
@@ -51,6 +50,8 @@ class ReadAdminMetricsTest extends TestCase
             ->willReturn(['theReadPerformanceByBook']);
         $mockAdminMetricsRepository->method('readPerformanceByVoice')
             ->willReturn(['theReadPerformanceByVoice']);
+        $mockAdminMetricsRepository->method('readSongsWithUrl')
+            ->willReturn(['theSongsWithUrl']);
 
         $mockBookRepo = $this->createMock(BookRepository::class);
         $mockBookRepo->method('readAllBooks')
@@ -70,8 +71,7 @@ class ReadAdminMetricsTest extends TestCase
             ->with('1.1.1.1')
             ->willReturn(new GeoIpLocation(new Country('TK', ['en' => 'Turkey'])));
 
-        $realDomainService  = new AdminMetricsReader($mockAdminMetricsRepository, $mockBookRepo, $mockGeoIpResolver);
-        $sut = new ReadAdminMetrics($realDomainService);
+        $sut  = new AdminMetricsReader($mockAdminMetricsRepository, $mockBookRepo, $mockGeoIpResolver);
 
         $expected = [
             'user_count'			=> 123,
@@ -94,6 +94,7 @@ class ReadAdminMetricsTest extends TestCase
             'usersByBook'			=> ['theReadUsersByBook'],
             'performanceByBook'		=> ['theReadPerformanceByBook'],
             'performanceByVoice'	=> ['theReadPerformanceByVoice'],
+            'songsWithUrl'	        => ['theSongsWithUrl'],
         ];
 
         $this->assertEquals($expected, $sut->readAdminMetrics(false));

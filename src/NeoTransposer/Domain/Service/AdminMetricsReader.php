@@ -36,7 +36,8 @@ final class AdminMetricsReader
 			'dfb_deviation'			=> $this->adminMetricsRepository->readDetailedFeedbackDeviation(),
 			'usersByBook'			=> $this->adminMetricsRepository->readUsersByBook($userCountTotal),
 			'performanceByBook'		=> $this->adminMetricsRepository->readPerformanceByBook($this->bookRepository->readAllBooks()),
-			'performanceByVoice'	=> $this->adminMetricsRepository->readPerformanceByVoice()
+			'performanceByVoice'	=> $this->adminMetricsRepository->readPerformanceByVoice(),
+            'songsWithUrl'          => $this->adminMetricsRepository->readSongsWithUrl(),
         ];
     }
 }
