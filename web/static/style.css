@@ -644,6 +644,22 @@ a.link-all-report {
 .transpose-song h1 {
 	text-align: center;
 }
+.transpose-song h3 {
+  text-align: center;
+  font-size: .85em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.transpose-song h3 span {
+	font-size: .85em;
+	height: .85em;
+	display: inline-block;
+	vertical-align: baseline;
+}
+	.transpose-song h3 span svg {
+		height: 100%;
+		width: auto;
+	}
 .transpose-song .explanation {
 	margin-bottom: 0;
 	clear: both;

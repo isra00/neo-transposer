@@ -196,6 +196,9 @@ return array(
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Caminho Neocatecumenal)',
 
+    'Official audio and lyrics'
+    => 'Áudio e letras oficiais',
+
 	'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!'
 	=> 'Transpor os acordes de &quot;%song%&quot; (canto do Caminho Neocatecumenal) automaticamente para que você possa cantar sem stress!',
 
