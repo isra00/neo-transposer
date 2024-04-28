@@ -24,4 +24,5 @@ interface AdminMetricsRepository
     public function readUsersByBook(int $totalUsers): array;
     public function readPerformanceByBook(array $allBooks): array;
     public function readPerformanceByVoice(): array;
+    public function readSongsWithUrl(): array;
 }

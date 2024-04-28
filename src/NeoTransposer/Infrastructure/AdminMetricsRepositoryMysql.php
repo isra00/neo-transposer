@@ -571,4 +571,15 @@ GROUP BY user.wizard_step1
 SQL;
 		return $this->dbConnection->fetchAllAssociative($sql);
 	}
+
+    public function readSongsWithUrl(): array
+    {
+		$sql = <<<SQL
+SELECT book.lang_name, COUNT(*) total, SUM(IF(url IS NOT NULL, 1, 0)) AS with_url
+FROM song
+JOIN book USING (id_book)
+GROUP BY id_book
+SQL;
+		return $this->dbConnection->fetchAllAssociative($sql);
+    }
 }

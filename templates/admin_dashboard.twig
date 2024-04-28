@@ -109,6 +109,22 @@
 		</tbody>
 	</table>
 
+	<h4>Songs with URL</h4>
+	<table class="data-table">
+		<thead>
+			<tr><th>Language</th><th colspan="2">Songs with URL</th></tr>
+		</thead>
+		<tbody>
+			{% for book in songsWithUrl %}
+				<tr>
+					<td>{{ book.lang_name }}</td>
+					<td>{{ self.feedbackGraph(book.with_url, book.total - book.with_url) }}</td>
+					<td>{{ ((book.with_url / book.total) * 100)|round() }}%</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
 </article>
 
 <article>
