@@ -23,7 +23,8 @@ final class SongCreator
         string $peopleLowestNote,
         string $peopleHighestNote,
         bool $firstChordIsNote,
-        array $chords
+        array $chords,
+        ?string $url = null
     ): void {
 
         $this->songRepository->createSong(
@@ -36,7 +37,8 @@ final class SongCreator
             $peopleHighestNote,
             $firstChordIsNote,
             $this->getSlug($title, $idBook),
-            $chords
+            $chords,
+            $url
         );
     }
 
