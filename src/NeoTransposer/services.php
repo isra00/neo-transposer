@@ -33,11 +33,6 @@ $this[Domain\Service\SongsLister::class] = fn($app) => new Domain\Service\SongsL
     $app[Domain\Repository\BookRepository::class]
 );
 
-//An application service (use case) depending on a domain service
-$this[Application\ListSongsWithUserFeedback::class] = fn($app) => new Application\ListSongsWithUserFeedback(
-    $app[Domain\Service\SongsLister::class]
-);
-
 //Why factory? One single instance is enough for us
 $this[Domain\GeoIp\GeoIpResolver::class] = fn($app) => new Infrastructure\GeoIpResolverGeoIp2(
     new \GeoIp2\Database\Reader($app['root_dir'] . '/' . $app['neoconfig']['mmdb'])
