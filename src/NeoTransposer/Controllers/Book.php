@@ -2,10 +2,10 @@
 
 namespace NeoTransposer\Controllers;
 
-use NeoTransposer\Application\ListSongsWithUserFeedback;
 use NeoTransposer\Domain\Exception\BookNotExistException;
 use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\Repository\BookRepository;
+use NeoTransposer\Domain\Service\SongsLister;
 use NeoTransposer\Domain\Service\UnhappinessManager;
 use NeoTransposer\NeoApp;
 use Symfony\Component\HttpFoundation\{Request, Response};
@@ -21,12 +21,12 @@ final class Book
 	{
         $this->app = $app;
 
+        $songsLister = $app[SongsLister::class];
+
         try {
-            $useCaseListSongsWithUserFeedback = $app[ListSongsWithUserFeedback::class];
-            $songs = $useCaseListSongsWithUserFeedback->ListSongsWithUserFeedbackAsArray(
-                (int)$id_book,
-                $app['neouser']->id_user
-            );
+            $songs = $app['neouser']->id_user
+                ? $songsLister->readBookSongsWithUserFeedback((int)$id_book, $app['neouser']->id_user)->asArray()
+                : $songsLister->readBookSongs((int)$id_book)->asArray();
         } catch (BookNotExistException)
         {
             $this->abortBookNotExist($id_book);
@@ -85,7 +85,7 @@ final class Book
 			$response->headers->add([
 				'Cache-Control' => 'private, must-revalidate, max-age=0',
 				'Pragma'		=> 'no-cache',
-				'Expires'		=> 'Sat, 26 Jul 1997 05:00:00 GMT'
+				'Expires'		=> 'Tue, 8 Mar 1988 07:00:00 GMT'
 			]);
 		}
 
