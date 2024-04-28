@@ -65,6 +65,7 @@ COPY ./build/php-dev.ini /usr/local/etc/php/conf.d/neo-transposer-dev.ini
 
 #For some reason, xdebug sneaks his way into the prod image!
 #xdebug is not a core extension so it must be installed with PECL. 3.1 is the highest version supporting PHP 7.3
+#@todo Update XDebug version to latest; ensure it's not in prod image.
 RUN rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && curl -s https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer | php -- --quiet \
     && chmod +x composer.phar \

@@ -192,7 +192,10 @@ return [
 
 	//TransposeSong
 	'%song% (Neocatechumenal Way)'
-	=> '%song% (Cammino Neocatecumenale)', 
+	=> '%song% (Cammino Neocatecumenale)',
+
+    'Official audio and lyrics'
+    => 'Testo e audio ufficiali',
 
 	'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!'
 	=> 'Trasporta automaticamente gli accordi di &quot;%song%&quot; (canto del Cammino Neocatecumenale) per cantare senza stress!', 

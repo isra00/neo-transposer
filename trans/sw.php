@@ -195,6 +195,9 @@ return array(
 	'%song% (Neocatechumenal Way)'
 	=> '%song% (Njia ya Neokatekumenato)',
 
+    'Official audio and lyrics'
+    => 'Maneno na audio rasmi',
+
 	'Transpose the chords of &quot;%song%&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!'
 	=> 'Neo-Transposer inabadilisha ufunguo wa &quot;%song%&quot; (wimbo wa Njia ya Neokatekumenato) kulingana na sauti yako binafsi ili uweze kuimba na hakika!',
 

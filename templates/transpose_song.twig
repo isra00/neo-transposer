@@ -61,6 +61,15 @@
 	<small>{% if global.debug %}[{{ song.song.idSong }}]{% endif %}</small>
 </h1>
 
+{% if song.song.url %}
+<h3 class="song-url">
+	<a href="{{ song.song.url }}" target="_blank">
+		{% trans %}Official audio and lyrics{% endtrans %}
+		<span><svg width="auto" height="100%" viewBox="0 0 1.5629659 1.5629659" id="svg1" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <g id="Lager_80" data-name="Lager 80" transform="matrix(0.04883963,0,0,0.04883963,0,9.7839678e-5)"> <path id="Path_89" data-name="Path 89" d="m 24,22 v 5 a 1,1 0 0 1 -1,1 H 5 A 1,1 0 0 1 4,27 V 9 A 1,1 0 0 1 5,8 h 5 A 2,2 0 0 0 12,6 V 6 A 2,2 0 0 0 10,4 H 3 A 3,3 0 0 0 0,7 v 22 a 3,3 0 0 0 3,3 h 22 a 3,3 0 0 0 3,-3 v -7 a 2,2 0 0 0 -2,-2 v 0 a 2,2 0 0 0 -2,2 z" fill="CurrentColor" /> <rect id="Rectangle_40" data-name="Rectangle 40" width="16" height="4" rx="2" transform="translate(16)" fill="CurrentColor" x="0" y="0" /> <rect id="Rectangle_41" data-name="Rectangle 41" width="16" height="4" rx="2" transform="rotate(90,16,16)" fill="CurrentColor" x="0" y="0" /> <g id="Group_37" data-name="Group 37"> <rect id="Rectangle_42" data-name="Rectangle 42" width="32.296001" height="3.971" rx="1.9859999" transform="rotate(-45,30.162249,2.3423875)" fill="CurrentColor" x="0" y="0" /> </g> </g> </svg></span>
+	</a>
+</h3>
+{% endif %}
+
 <p class="explanation">{% trans %}These two transpositions match your voice (they are equivalent). The first one has easier chords:{% endtrans %}</p>
 
 <div class="transpositions-list">
