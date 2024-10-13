@@ -1,0 +1,86 @@
+{
+    "name": "isra00/neo-transposer",
+    "description": " Automatically transpose the chords of the songs of the Neocatechumenal Way so they fit the singer's voice",
+    "type": "project",
+    "license": "AGPL-3.0-or-later",
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^11.9",
+        "laravel/tinker": "^2.9",
+        "geoip2/geoip2": "~2.5"
+    },
+    "require-dev": {
+        "codeception/codeception": "^5.1",
+        "codeception/module-asserts": "^3.0",
+        "codeception/module-db": "^3.1",
+        "codeception/module-phpbrowser": "^3.0",
+        "codeception/module-webdriver": "^4.0",
+        "fakerphp/faker": "^1.23",
+        "laravel/pint": "^1.13",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.1",
+        "phpmd/phpmd": "^2.15",
+        "rector/rector": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
+
+            "NeoTransposer\\": "src/NeoTransposer"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+
+            "NeoTransposer\\Tests\\": "tests/unit/src/NeoTransposer",
+            "NeoTransposerTests\\Acceptance\\": "tests/acceptance"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
+        ],
+
+        "test": [
+            "vendor/bin/codecept run unit --coverage-html",
+            "php tests/testAllTranspositions.php"
+        ],
+        "test-acceptance": [
+            "docker start selenium_chrome || docker run -d -p 4444:4444 -p 7900:7900 --shm-size=2g --name selenium_chrome selenium/standalone-chrome",
+            "vendor/bin/codecept run acceptance"
+        ],
+        "quality": "vendor/bin/phpmd src/ html cleancode,codesize,design,naming,unusedcode --reportfile tests/reports/phpmd.html"
+
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
