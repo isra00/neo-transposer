@@ -26,7 +26,7 @@ AND NOT song.id_song IN (118, 319)
 ORDER BY page, title
 SQL;
 
-		$songs = $this->dbConnection->fetchAllAssociative($sql, [$idUser, $idBook]);
+		$songs = (array)$this->dbConnection->select($sql, [$idUser, $idBook]);
 
         return new SongsWithUserFeedbackCollection($songs);
     }
@@ -41,7 +41,7 @@ AND NOT song.id_song IN (118, 319)
 ORDER BY page, title
 SQL;
 
-        return new SongsCollection($this->dbConnection->fetchAllAssociative($sql, [$idBook]));
+        return new SongsCollection((array)$this->dbConnection->select($sql, [$idBook]));
     }
 
     /**
@@ -81,7 +81,7 @@ SQL;
 		}
 
         /** @refactor Replace by SongChordRepository::readSongChords() */
-		$originalChords = $this->dbConnection->fetchAllAssociative(
+		$originalChords = (array)$this->dbConnection->select(
 			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
 			[$songRow['id_song']]
 		);
@@ -95,7 +95,7 @@ SQL;
 
     public function readAllSongs(): array
     {
-        return $this->dbConnection->fetchAllAssociative('SELECT * FROM song');
+        return (array)$this->dbConnection->select('SELECT * FROM song');
     }
 
     public function createSong(

@@ -67,7 +67,7 @@ final class NotesNotation
      *
      * @return string             Something like "lowestNote - highestNote +x octaves"
      */
-    public function getVoiceRangeAsString(TranslatorInterface $trans, string $notation = 'american', string $lowestNote, string $highestNote): string
+    public function getVoiceRangeAsString(string $notation = 'american', string $lowestNote, string $highestNote): string
     {
         preg_match(self::REGEXP_NOTE, $lowestNote, $match);
         $lowestNote = $match[1];
@@ -83,6 +83,6 @@ final class NotesNotation
         $octave = (int) $match[2];
         $octave -= 1;
 
-        return "$lowestNote &rarr; $highestNote +$octave " . $trans->trans('oct');
+        return "$lowestNote &rarr; $highestNote +$octave " . __('oct');
     }
 }
