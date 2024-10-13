@@ -5,14 +5,14 @@
 
 # This should be run on post-commit, right? Otherwise serve would fail bc commit name has changed.
 build-dev:
-	sh update_mmdb.sh
-	docker build --target dev -t transposer:`git rev-parse --short HEAD`-dev .
-	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:latest-dev
+	#sh update_mmdb.sh
+	docker build --target dev -t transposerlaravel:`git rev-parse --short HEAD`-dev .
+	docker tag transposerlaravel:`git rev-parse --short HEAD`-dev transposerlaravel:latest-dev
 
 build-prod:
 	sh update_mmdb.sh
-	docker build --target prod -t transposer:`git rev-parse --short HEAD`-prod .
-	docker tag transposer:`git rev-parse --short HEAD`-prod transposer:prod
+	docker build --target prod -t transposerlaravel:`git rev-parse --short HEAD`-prod .
+	docker tag transposerlaravel:`git rev-parse --short HEAD`-prod transposerlaravel:prod
 
 # NT_PROFILER debería ser 0 en start (para test)
 start: OPTIONAL_VOLUME=
@@ -21,8 +21,8 @@ start-local: OPTIONAL_VOLUME=-v ${CURDIR}:/var/www/html --user $(id -u):$(id -g)
 
 # Esto pasaría a ser docker compose up excluyendo MySQL.
 start start-local: stop
-	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:for-prod
-	docker start transposer-dev || docker run --rm -dit -p 80:80 \
+	docker tag transposerlaravel:`git rev-parse --short HEAD`-dev transposerlaravel:for-prod
+	docker start transposerlaravel-dev || docker run --rm -dit -p 80:80 \
 		-e NT_DB_HOST \
 		-e NT_DB_USER \
 		-e NT_DB_PASSWORD \
@@ -36,9 +36,9 @@ start start-local: stop
 		-e NT_PROFILER \
 		-e NT_TRUSTED_PROXIES \
 		--add-host=host.docker.internal:172.17.0.1 \
-		--name transposer-dev \
+		--name transposerlaravel-dev \
 		$(OPTIONAL_VOLUME) \
-		transposer:latest-dev
+		transposerlaravel:latest-dev
 
 start-db-for-test:
 	@docker stop nt-mysql || true
@@ -58,30 +58,30 @@ start-db-local:
 
 #No need to delete it after stopping since it's run with --rm
 stop:
-	@docker stop transposer-dev || true
+	@docker stop transposerlaravel-dev || true
 
 stop-all: stop
 	@docker stop nt-mysql || true
 
 test:
-	docker exec -t transposer-dev vendor/bin/codecept run unit --coverage-html --coverage-xml
+	docker exec -t transposerlaravel-dev vendor/bin/codecept run unit --coverage-html --coverage-xml
 	@sed -i "s@\/var\/www\/html@\/\/wsl$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml || true
-	docker exec -t transposer-dev php tests/testAllTranspositions.php
+	docker exec -t transposerlaravel-dev php tests/testAllTranspositions.php
 
 test-acceptance:
 	docker start selenium-chrome || docker run -d --name selenium-chrome --add-host=host.docker.internal:172.17.0.1 -p 4444:4444 -p 7900:7900 --shm-size=2g selenium/standalone-chrome
 	sleep 5
-	docker exec -t transposer-dev php /var/www/html/vendor/bin/codecept run acceptance
+	docker exec -t transposerlaravel-dev php /var/www/html/vendor/bin/codecept run acceptance
 
 get-test-outputs:
-	 docker cp transposer-dev:/var/www/html/tests/_output .
+	 docker cp transposerlaravel-dev:/var/www/html/tests/_output .
 
 clean:
 	rm -r cache/twig/*
 	rm -r cache/profiler/*
 
 composer:
-	@echo "To run composer, type docker exec -it transposer-dev composer.phar [command]"
+	@echo "To run composer, type docker exec -it transposerlaravel-dev composer.phar [command]"
 
 bash:
-	docker exec -it transposer-dev bash
+	docker exec -it transposerlaravel-dev bash

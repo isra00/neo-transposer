@@ -1,27 +1,4 @@
-FROM composer:2.3.5 as composer
-
-ARG WORKDIR="/app"
-
-WORKDIR ${WORKDIR}
-
-COPY composer.json composer.lock ${WORKDIR}/
-RUN composer install  \
-    --ignore-platform-reqs \
-    --no-ansi \
-#    --no-autoloader \
-#    --no-dev \
-    --no-interaction
-#    --no-scripts
-
-# Mola lo del multi-stage pero composer no puede comprobar si las extensiones php están presentes
-# no-dev interesa??? no-scripts interesa??
-
-COPY . ${WORKDIR}
-RUN composer dump-autoload --optimize --classmap-authoritative
-
-
-# ----------------------------------------------------------------------------------------------------------------------
-FROM php:8.1-apache AS nt-common
+FROM php:8.3-apache AS nt-common
 
 ARG WORKDIR="/app"
 EXPOSE 80
@@ -35,9 +12,6 @@ RUN apt update && apt install -y libzip-dev zlib1g-dev; \
     a2enmod rewrite headers deflate expires
 
 COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
-
-#Esto no es muy elegante, quizá mejor /var/www/neo-transposer. Habría que actualizarlo en el composer de prod
-COPY --from=composer --chown=www-data ${WORKDIR} /var/www/html/
 
 # ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS prod
@@ -67,12 +41,14 @@ COPY ./build/php-dev.ini /usr/local/etc/php/conf.d/neo-transposer-dev.ini
 #xdebug is not a core extension so it must be installed with PECL. 3.1 is the highest version supporting PHP 7.3
 #@todo Update XDebug version to latest; ensure it's not in prod image.
 RUN rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && curl -s https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer | php -- --quiet \
+    && curl -s https://getcomposer.org/download/2.8.1/composer.phar > composer.phar \
     && chmod +x composer.phar \
     && mv composer.phar /usr/bin \
-    && pecl install xdebug-3.1.4 \
+    && pecl install xdebug \
 	&& docker-php-ext-enable xdebug \
     && apt-get -y update \
     && apt-get install -y libicu-dev \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl
+    && docker-php-ext-install intl \
+    && apt-get install -y unzip \
+    && composer install
