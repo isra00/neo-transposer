@@ -48,8 +48,8 @@ return [
         ]
     ],
 
-    'voice_wizard'                           => include 'config.wizard.php',
-    'chord_scores'                           => include 'config.scores.php',
+    'voice_wizard'                           => include 'nt.wizard.php',
+    'chord_scores'                           => include 'nt.scores.php',
     'templates_dir'                          => __DIR__ . '/templates',
     'mmdb'                                   => 'GeoLite2-Country.mmdb',
     'test_all_transpositions_expected'       => __DIR__ . '/tests/testAllTranspositions.expected.json',
