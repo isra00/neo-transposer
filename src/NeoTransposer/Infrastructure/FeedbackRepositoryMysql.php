@@ -16,7 +16,7 @@ FROM transposition_feedback
 WHERE `id_user` = ?
 GROUP BY worked
 SQL;
-		$result = $this->dbConnection->fetchAllAssociative($sql, [$idUser]);
+		$result = (array)$this->dbConnection->select($sql, [$idUser]);
 
 		$performanceData = [0 => 0, 1 => 0];
 

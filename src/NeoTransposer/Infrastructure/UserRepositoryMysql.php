@@ -12,11 +12,9 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 final class UserRepositoryMysql extends MysqlRepository implements UserRepository
 {
     public function __construct(
-        Connection $dbConnection,
-        EntityManager $entityManager,
         protected FeedbackRepository $userPerformanceRepository)
     {
-        parent::__construct($dbConnection, $entityManager);
+        parent::__construct();
     }
 
 	public function readFromId(int $idUser): ?User
@@ -62,7 +60,7 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 
 	/**
 	 * Create or update the user in the database.
-	 * 
+	 *
 	 * @param  User       $user       The User object to persist.
 	 * @param string|null $registerIp The IP address with which the user registered.
 	 *
@@ -132,7 +130,7 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 
     public function readIpFromUsersWithNullCountry(): array
     {
-        return $this->dbConnection->fetchAllAssociative('SELECT register_ip FROM user WHERE country IS NULL');
+        return (array)$this->dbConnection->select('SELECT register_ip FROM user WHERE country IS NULL');
     }
 
     public function saveUserCountryByIp(string $countryIsoCode, string $ip): void
@@ -146,6 +144,6 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 
     public function readVoiceRangeFromAllUsers(): array
     {
-        return $this->dbConnection->fetchAllAssociative('SELECT id_user, email, lowest_note, highest_note FROM user');
+        return (array)$this->dbConnection->select('SELECT id_user, email, lowest_note, highest_note FROM user');
     }
 }
