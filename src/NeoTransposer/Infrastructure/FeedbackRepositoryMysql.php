@@ -22,7 +22,8 @@ SQL;
 
 		foreach ($result as $row)
 		{
-			$performanceData[(int) $row['worked']] = $row['count'];
+            //$row = (array) $row;
+			$performanceData[(int) $row->worked] = $row->count;
 		}
 
 		$performance = (0 === array_sum($performanceData))
@@ -96,7 +97,7 @@ SQL;
 
     public function readSongFeedbackForUser(int $idUser, int $idSong): ?bool
     {
-        $result = $this->dbConnection->fetchOne(
+        $result = self::dbal()->fetchOne(
             'SELECT worked FROM transposition_feedback WHERE id_user = ? AND id_song = ?',
             [$idUser, $idSong]
         );

@@ -71,7 +71,7 @@ SQL;
     public function readSongByField(string $field, $value): ?Song
     {
         /** @refactor SELECT * FROM 2 tablas?? Disgregar lo que hace falta de book y lo que no */
-		$songRow = $this->dbConnection->fetchAssociative(
+		$songRow = self::dbal()->fetchAssociative(
 			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $field = ?",
 			[$value]
 		);
@@ -81,7 +81,7 @@ SQL;
 		}
 
         /** @refactor Replace by SongChordRepository::readSongChords() */
-		$originalChords = (array)$this->dbConnection->select(
+		$originalChords = self::dbal()->fetchAllAssociative(
 			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
 			[$songRow['id_song']]
 		);

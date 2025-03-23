@@ -68,7 +68,8 @@ CREATE TABLE `song` (
   `artistic_adjustment` tinyint DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_song`),
-  UNIQUE KEY `slug` (`slug`)
+  UNIQUE KEY `slug` (`slug`),
+  KEY `id_book` (`id_book`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1205 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

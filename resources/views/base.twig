@@ -15,7 +15,7 @@
 	<link rel="apple-touch-icon"      sizes="180x180" href="{{ global.request.basepath }}/static/img/apple-touch-icon.png">
 	<link rel="icon" href="{{ global.request.basepath }}/favicon.ico">
 
-	<link rel="manifest" href="{{ path('webmanifest', {_locale: app.locale}) }}">
+	<link rel="manifest" href="{{ url('webmanifest', {_locale: app.locale}) }}">
 
 	<meta property="og:url" content="{{ app.absoluteUriWithoutQuery }}">
 	<meta property="og:title" content="{{ page_title }}">
@@ -91,7 +91,7 @@
 
 				{% if app.neouser.isLoggedIn and current_route != 'login' -%}
 				<span class="user">
-					<a href="{{ path('login', {_locale: app.locale}) }}">{% trans %}Log-out{% endtrans %}</a>
+					<a href="{{ url('login', {_locale: app.locale}) }}">{{ trans('Log-out') }}</a>
 				</span>
 				{%- endif %}
 
@@ -120,8 +120,8 @@
 
 	{% block footer %}
 	<footer>
-		{% trans with { '%url%': 'http://github.com/isra00/neo-transposer' } %}Developed as <a href="%url%">free software</a> in Tanzania.{% endtrans %}
-		<a href="mailto:neo-transposer@mail.com">{%trans %}Contact{% endtrans %}</a>.
+		{{ trans('Developed as <a href="%url%">free software</a> in Tanzania.', { '%url%': 'http://github.com/isra00/neo-transposer' }) }}
+		<a href="mailto:neo-transposer@mail.com">{{ trans('Contact') }}</a>.
 	</footer>
 	{% endblock %}
 

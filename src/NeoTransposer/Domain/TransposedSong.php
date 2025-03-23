@@ -7,8 +7,6 @@ use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\NeoApp;
-use Silex\Application;
 
 /**
  * Read a song from DB, calculate its transpositions, sort them according to
@@ -36,20 +34,16 @@ final class TransposedSong
      */
     private $pcCalculation;
 
-    public function __construct(
-        public Song $song,
-        protected Application $app
-    )
+    public function __construct(public Song $song)
     {
     }
 
     /**
      * @throws Exception
      */
-    public static function fromDb($idSong, NeoApp $dc): TransposedSong
+    public static function fromDb($idSong): TransposedSong
     {
-        $songRepository = $dc[SongRepository::class];
-        return new self($songRepository->fetchSongByIdOrSlug($idSong), $dc);
+        return new self(app(SongRepository::class)->fetchSongByIdOrSlug($idSong));
     }
 
     /**
@@ -63,7 +57,7 @@ final class TransposedSong
      */
     public function transpose(NotesRange $userRange, int $forceVoiceLimit = null): void
     {
-        $transposerFactory = $this->app[AutomaticTransposerFactory::class];
+        $transposerFactory = app(AutomaticTransposerFactory::class);
 
         $transposer = $transposerFactory->createAutomaticTransposer(
             $userRange,
@@ -79,7 +73,7 @@ final class TransposedSong
         );
         $this->not_equivalent = $transposer->getEasierNotEquivalent();
 
-        if ($this->app['neoconfig']['people_compatible']) {
+        if (config('nt.people_compatible')) {
             $this->pcCalculation = $transposer->calculatePeopleCompatible();
 
             if ($this->not_equivalent !== null) {
@@ -100,7 +94,7 @@ final class TransposedSong
      */
     private function prepareForPrint(): void
     {
-        $chordPrinter = $this->app['factory.ChordPrinter']($this->song->bookChordPrinter);
+        $chordPrinter = app('factory.ChordPrinter')($this->song->bookChordPrinter);
 
         $this->song->setOriginalChordsForPrint($chordPrinter);
 

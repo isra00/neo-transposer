@@ -4,12 +4,18 @@
     "type": "project",
     "license": "AGPL-3.0-or-later",
     "require": {
-        "php": "^8.3",
+        "php": "^8.2",
+        "ext-curl": "*",
+        "ext-pdo": "*",
+        "doctrine/orm": "^3.3",
+        "geoip2/geoip2": "~2.5",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "geoip2/geoip2": "~2.5"
+        "rcrowe/twigbridge": "^0.14.4",
+        "symfony/cache": "^7.1"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.14",
         "codeception/codeception": "^5.1",
         "codeception/module-asserts": "^3.0",
         "codeception/module-db": "^3.1",
