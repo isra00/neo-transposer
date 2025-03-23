@@ -56,6 +56,12 @@ start-db-local:
 	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=root -v /var/www/vhosts/dev-env/mysql5:/var/lib/mysql mysql:8.3
 	sleep 15
 
+start-db-prod:
+	@docker stop nt-mysql || true
+	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=root -v ./neo-transposer.sql:/docker-entrypoint-initdb.d/neo-transposer.sql mysql:8.3
+	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} mysql:8.3 --bind-address=0.0.0.0
+	sleep 10
+
 #No need to delete it after stopping since it's run with --rm
 stop:
 	@docker stop transposerlaravel-dev || true

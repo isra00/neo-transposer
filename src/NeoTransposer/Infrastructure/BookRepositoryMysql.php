@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Infrastructure;
 
+use Doctrine\ORM\EntityManager;
 use NeoTransposer\Domain\Entity\Book;
 use NeoTransposer\Domain\Repository\BookRepository;
 
@@ -17,7 +18,7 @@ final class BookRepositoryMysql extends MysqlRepository implements BookRepositor
 
     public function readIdBookFromLocale(string $locale): int
     {
-        return $this->entityManager
+        return app(EntityManager::class)
             ->createQuery('SELECT b FROM ' . Book::class . ' b WHERE b.locale = ?1')
             ->setParameter(1, $locale)
             ->getResult()[0]

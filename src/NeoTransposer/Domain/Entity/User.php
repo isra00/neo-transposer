@@ -5,7 +5,6 @@ namespace NeoTransposer\Domain\Entity;
 use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Domain\ValueObject\UserPerformance;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Represents a user
@@ -18,6 +17,10 @@ class User
 	final public const METHOD_UNHAPPY = 'auto_unhappy';
 
 	public $firstTime = false;
+
+    // For Laravel Auth.
+    protected $rememberToken;
+    public $timestamps = false;
 
     /**
      * @param string|null          $email                   User email

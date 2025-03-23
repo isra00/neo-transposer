@@ -26,15 +26,14 @@ final class UnhappinessManager
 
     public function __construct(
         protected UnhappyUserRepository $unhappyUserRepository,
-        protected array $neoconfig,
-        protected FeedbackRepository $feedbackRepository)
+        protected FeedbackRepository $feedbackRepository
+    )
     {
     }
 
     public function setUnhappy(User $user)
     {
-        if ($user->performance->score() < self::UNHAPPY_THRESHOLD_PERF && $user->performance->reports(
-            ) >= self::UNHAPPY_THRESHOLD_REPORTS) {
+        if ($user->performance->score() < self::UNHAPPY_THRESHOLD_PERF && $user->performance->reports() >= self::UNHAPPY_THRESHOLD_REPORTS) {
             $this->unhappyUserRepository->writeUnhappyUser($user->id_user);
         } elseif ($this->isUnhappyNoAction($user)) {
             //If user was unhappy with no action but their performance is good, delete unhappy.
@@ -68,7 +67,7 @@ final class UnhappinessManager
 
     public function chooseStandard(User $user, string $standard)
     {
-        if (!array_key_exists($standard, $this->neoconfig['voice_wizard']['standard_voices'])) {
+        if (!array_key_exists($standard, config('nt.voice_wizard.standard_voices'))) {
             throw new InvalidStandardRangeException("Invalid standard voice $standard");
         }
 

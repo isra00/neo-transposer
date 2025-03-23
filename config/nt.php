@@ -48,7 +48,7 @@ return [
         ]
     ],
 
-    'voice_wizard'                           => include 'nt.wizard.php',
+    'voice_wizard'                           => include 'nt.voice_wizard.php',
     'chord_scores'                           => include 'nt.scores.php',
     'templates_dir'                          => __DIR__ . '/templates',
     'mmdb'                                   => 'GeoLite2-Country.mmdb',
@@ -60,14 +60,14 @@ return [
     'sitemap_lastmod'                        => '2022-03-08T10:00Z',
     'recaptcha_secret'                       => getenv('NT_RECAPTCHA_SECRET'),
 
-    'software_name'                          => 'Neo-Transposer',
+    'software_name'                          => 'Neo-Transposer', /* Deprecated */
     'seo_title_suffix'                       => 'Transpose chords',
 
     'admins' => [getenv('NT_ADMIN_USERNAME') => ['ROLE_ADMIN', getenv('NT_ADMIN_PASSWORD')]],
 
     'people_range'                           => ['B1', 'B2'],
 
-    'debug'                                  => getenv('NT_DEBUG'),
+    //'debug'                                  => getenv('NT_DEBUG'), //Ya está en app.php
     'profiler'                               => getenv('NT_PROFILER'),
 
     //Feature flags
