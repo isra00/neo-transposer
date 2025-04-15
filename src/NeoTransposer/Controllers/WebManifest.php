@@ -11,7 +11,7 @@ final class WebManifest
 
 		$json = [
 			"name" 			=> $app->trans('Transpose the songs of the Neocatechumenal Way · Neo-Transposer'),
-			"short_name" 	=> "Neo-Transposer",
+			"short_name" 	=> "Neo Transposer",
 			"description" 	=> $app->trans('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!'),
 			"categories"	=> "utilities",
 			"background_color" => "#D32F2F",
