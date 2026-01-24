@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
+use App\View\Composers\PageTitleComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
@@ -65,7 +66,8 @@ class AppServiceProvider extends ServiceProvider
             ? time()
             : trim(exec('git log --pretty="%h" -n1 HEAD')));
 
-        // Poner aquí la chicha de NeoApp.php
+        View::composer('*', PageTitleComposer::class);
+
         $this->initializeSession();
     }
 

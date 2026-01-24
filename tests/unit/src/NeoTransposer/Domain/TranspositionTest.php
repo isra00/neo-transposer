@@ -7,10 +7,9 @@ use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Silex\Application;
-use Symfony\Component\Translation\Translator;
+use Tests\TestCase;
 
-class TranspositionTest extends \PHPUnit\Framework\TestCase
+class TranspositionTest extends TestCase
 {
     /**
      * Fixture of the SUT.
@@ -24,10 +23,14 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
      */
     protected $notesCalculator;
 
-    protected $app;
+    protected $transpositionFactory;
 
     public function setUp(): void
     {
+        parent::setUp();
+
+        $this->transpositionFactory = new TranspositionFactory();
+
         $this->transposition = $this->buildTransposition(
             [Chord::fromString('Em'), Chord::fromString('Am'), Chord::fromString('B')],
             null,
@@ -41,18 +44,6 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
         $this->notesCalculator = new NotesCalculator();
     }
 
-    protected function buildApp(): Application
-    {
-        if (empty($this->app)) {
-            $this->app = new Application([
-                'neoconfig'  => ['chord_scores' => include __DIR__ . '/../../../../../config.scores.php'],
-                'translator' => $this->createStub(Translator::class)
-            ]);
-        }
-
-        return $this->app;
-    }
-
     protected function buildTransposition(
         array $chords = [],
         ?int $capo = 0,
@@ -62,8 +53,7 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
         ?int $deviationFromCentered = 0,
         ?NotesRange $peopleRange = null
     ) {
-
-        return (new TranspositionFactory($this->buildApp()))->createTransposition(
+        return $this->transpositionFactory->createTransposition(
             $chords,
             $capo,
             $asBook,
@@ -73,12 +63,6 @@ class TranspositionTest extends \PHPUnit\Framework\TestCase
             $peopleRange
         );
     }
-
-    /*public function testGetWithAlternativeChords()
-    {
-        $expected = new Transposition(array('Em', 'Am', 'B7'));
-        $this->assertEquals($expected, $this->transp->getWithAlternativeChords());
-    }*/
 
     public function testGetWithAlternativeChords()
     {

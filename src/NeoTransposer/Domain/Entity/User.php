@@ -18,7 +18,7 @@ class User
 
 	public $firstTime = false;
 
-    // For Laravel Auth.
+    // For Laravel Auth. Still needed?
     protected $rememberToken;
     public $timestamps = false;
 

@@ -82,7 +82,7 @@ final class TransposedSong
         }
 
         //If there is notEquivalent, show only one centered.
-        if ($this->not_equivalent && $this->app['neoconfig']['hide_second_centered_if_not_equivalent']) {
+        if ($this->not_equivalent && config('nt.hide_second_centered_if_not_equivalent')) {
             unset($this->transpositions[1]);
         }
 
@@ -167,8 +167,8 @@ final class TransposedSong
 
         $nc          = new NotesCalculator();
         $peopleRange = new NotesRange(
-            $this->app['neoconfig']['people_range'][0],
-            $this->app['neoconfig']['people_range'][1]
+            config('nt.people_range')[0],
+            config('nt.people_range')[1]
         );
 
         return $nc->transposeRange(

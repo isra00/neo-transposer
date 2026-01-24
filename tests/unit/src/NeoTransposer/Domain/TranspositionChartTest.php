@@ -16,7 +16,7 @@ class TranspositionChartTest extends TestCase
 	{
 		$mockNc = $this->getMockBuilder(NotesCalculator::class)
 						->disableOriginalConstructor()
-						->setMethods(['distanceWithOctave', 'lowestNote'])
+						->onlyMethods(['distanceWithOctave', 'lowestNote'])
 						->getMock();
 
 		//Exactly number of voices * 2 (1 for each voice + again in array_walk)

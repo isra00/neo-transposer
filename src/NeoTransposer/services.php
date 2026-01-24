@@ -35,7 +35,7 @@ $this[Domain\Service\SongsLister::class] = fn($app) => new Domain\Service\SongsL
 
 //Why factory? One single instance is enough for us
 $this[Domain\GeoIp\GeoIpResolver::class] = fn($app) => new Infrastructure\GeoIpResolverGeoIp2(
-    new \GeoIp2\Database\Reader($app['root_dir'] . '/' . $app['neoconfig']['mmdb'])
+    new \GeoIp2\Database\Reader($app['root_dir'] . '/' . config('nt.mmdb'))
 );
 
 $this[Domain\Repository\AdminMetricsRepository::class] = fn($app) => new Infrastructure\AdminMetricsRepositoryMysql(
@@ -69,7 +69,7 @@ $this[Domain\AdminTasks\TestAllTranspositions::class]             = fn($app) => 
 $this[Domain\AdminTasks\GetVoiceRangeOfGoodUsers::class]          = fn($app) => new Domain\AdminTasks\GetVoiceRangeOfGoodUsers($app['db']);
 $this[Domain\AdminTasks\CheckOrphanChords::class]                 = fn($app) => new Domain\AdminTasks\CheckOrphanChords($app[Domain\Repository\SongChordRepository::class]);
 $this[Domain\AdminTasks\GetPerformanceByNumberOfFeedbacks::class] = fn($app) => new Domain\AdminTasks\GetPerformanceByNumberOfFeedbacks($app['db']);
-$this[Domain\AdminTasks\CheckMissingTranslations::class]          = fn($app) => new Domain\AdminTasks\CheckMissingTranslations($app['neoconfig']['languages']);
+$this[Domain\AdminTasks\CheckMissingTranslations::class]          = fn($app) => new Domain\AdminTasks\CheckMissingTranslations(config('nt.languages'));
 
 $this[Domain\Repository\SongChordRepository::class] = fn($app) => new Infrastructure\SongChordRepositoryMysql(
     $app['db'],
@@ -100,7 +100,6 @@ $this[Domain\Service\FeedbackRecorder::class] = fn($app) => new Domain\Service\F
 //Transitional while UnhappyUser is not hexagonalized
 $this[Domain\Service\UnhappinessManager::class] = fn($app) => new Domain\Service\UnhappinessManager(
     $app[Domain\Repository\UnhappyUserRepository::class],
-    $app['neoconfig'],
     $app[Domain\Repository\FeedbackRepository::class]
 );
 
@@ -112,7 +111,6 @@ $this[Domain\Service\UserWriter::class] = fn($app) => new Domain\Service\UserWri
 
 $this[Domain\AutomaticTransposerFactory::class] = fn($app) => new Domain\AutomaticTransposerFactory(
     $app[Domain\TranspositionFactory::class],
-    new Domain\ValueObject\NotesRange($app['neoconfig']['people_range'][0], $app['neoconfig']['people_range'][1]),
     $app[Domain\NotesCalculator::class]
 );
 
@@ -132,7 +130,7 @@ $this[IpToLocaleResolver::class] = fn($app) => new IpToLocaleResolver($this[GeoI
 $this[EntityManager::class] = function ($app) {
     $config = ORMSetup::createAttributeMetadataConfiguration(
         paths: [$app['root_dir'] . "/src"],
-        isDevMode: $app['neoconfig']['debug'],
+        isDevMode: config('nt.debug'),
     );
 
     return new EntityManager($app['db'], $config);

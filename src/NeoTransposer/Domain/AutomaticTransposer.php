@@ -8,19 +8,19 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  * Core algorithm for transposing songs. It implements four types of transpositions:
  *
  * 1) centered: the song voice range is transposed to the center of singer's voice range.
- * 2) equivalentsWithCapo: transpositions equivalent to the centered using capo 1 to 5, 
+ * 2) equivalentsWithCapo: transpositions equivalent to the centered using capo 1 to 5,
  *    searching one whose chords are easier than the centered.
- * 3) notEquivalent: transpose the centered ±1 and get its equivalents with capo, 
+ * 3) notEquivalent: transpose the centered ±1 and get its equivalents with capo,
  *    searching one whose chords are easier than the centered and the equivalentsWithCapo.
- * 4) peopleCompatible: transposition that is within the singer's voice range but 
- *    also within the people's voice range in the parts of the song that are sung 
- *    by the people. Additional data is required (people_lowest_note, 
+ * 4) peopleCompatible: transposition that is within the singer's voice range but
+ *    also within the people's voice range in the parts of the song that are sung
+ *    by the people. Additional data is required (people_lowest_note,
  *    people_highest_note) for each song.
- * 
+ *
  * Additionally, after transposing the chords, some chords that are difficult to
  * beginners are replaced by others somehow equivalent, like B7 instead of B. This
  * is only done if the song data has the flag firstChordIsKey enabled.
- * 
+ *
  * The flag forceVoiceLimit is not used in real life transpositions, but only in
  * the Empiric Wizard to force the singer to use the lowest or highest voice.
  *
@@ -112,7 +112,7 @@ class AutomaticTransposer
 
         //This will transpose the song in the lowest or highest limit of the singer's range
         if ($forceVoiceLimit) {
-            $offsetFromSingerLowest = ($forceVoiceLimit == self::FORCE_HIGHEST) 
+            $offsetFromSingerLowest = ($forceVoiceLimit == self::FORCE_HIGHEST)
                 ? ($singerWideness - $songWideness)
                 : 0;
         }
@@ -190,7 +190,7 @@ class AutomaticTransposer
     /**
      * Sorts an array of Transpositions from lowest to highest score.
      * If two have same score but one is asBook, that one takes precedence.
-     * 
+     *
      * @param  array $transpositions Array of Transpositions, with the score already set.
      * @return array The sorted array
      * @todo Refactor sacar de esta clase, quizá un método estático de Transposition
@@ -391,7 +391,7 @@ class AutomaticTransposer
             $this->notesCalculator->transposeNote($this->songPeopleRange->lowest, $centeredTransposition->offset),
             $this->notesCalculator->transposeNote($this->songPeopleRange->highest, $centeredTransposition->offset)
         );
-    
+
         // 2) The centeredTransposition already falls within people's range.
         if ($peopleRangeInCentered->isWithinRange($this->standardPeopleRange, $this->notesCalculator)) {
             return new PeopleCompatibleCalculation(PeopleCompatibleCalculation::ALREADY_COMPATIBLE);
@@ -406,7 +406,7 @@ class AutomaticTransposer
             $this->standardPeopleRange->lowest,
             $peopleRangeInCentered->lowest
         );
-        
+
         $fromSingerLowestCenteredToSingerLowest   = $this->notesCalculator->distanceWithOctave(
             $this->singerRange->lowest,
             $this->centeredTransposition->range->lowest
@@ -480,7 +480,7 @@ class AutomaticTransposer
                 : PeopleCompatibleCalculation::ADJUSTED_WELL;
 
             return $this->createPeopleCompatibleCalculation(
-                $status, 
+                $status,
                 $offsetFromCentered,
                 $peopleRangeInCentered
             );
@@ -541,7 +541,7 @@ class AutomaticTransposer
                 $trans->setAlternativeChords($this->notesCalculator);
             }
         }
-        
+
         return $this->sortTranspositionsByEase($equivalentsWithCapo)[0];
     }
 }

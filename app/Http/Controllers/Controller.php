@@ -27,7 +27,7 @@ abstract class Controller
      */
     protected function setLocaleAutodetect(Request $request, IpToLocaleResolver $ipToLocaleResolver): void
     {
-        App::setLocale($request->getPreferredLanguage(array_keys(config('nt.languages'))));
+        App::setLocale($request->getPreferredLanguage(array_keys($this['neoconfig']['languages'])));
         App::setLocale($ipToLocaleResolver->resolveIpToLocale($request->getClientIp()) ?? App::currentLocale());
     }
 }

@@ -4,8 +4,9 @@
 namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\NotesNotation;
+use Tests\TestCase;
 
-class NotesNotationTest extends \PHPUnit\Framework\TestCase
+class NotesNotationTest extends TestCase
 {
     /**
      * @var NotesNotation
@@ -14,6 +15,7 @@ class NotesNotationTest extends \PHPUnit\Framework\TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
         $this->notesNotation = new NotesNotation();
     }
 
@@ -24,31 +26,17 @@ class NotesNotationTest extends \PHPUnit\Framework\TestCase
 
     public function testGetVoiceRangeAsString()
     {
-        $transMock = $this->createMock(\Symfony\Component\Translation\Translator::class);
-
-        $transMock->expects($this->once())
-            ->method('trans')
-            ->with($this->equalTo('oct'))
-            ->willReturn('octave');
-
         $this->assertEquals(
-            'A &rarr; A +1 octave',
-            $this->notesNotation->getVoiceRangeAsString($transMock, 'american', 'A1', 'A2')
+            'A &rarr; A +1 oct',
+            $this->notesNotation->getVoiceRangeAsString('american', 'A1', 'A2')
         );
     }
 
     public function testGetVoiceRangeAsStringLatinNotation()
     {
-        $transMock = $this->createMock(\Symfony\Component\Translation\Translator::class);
-
-        $transMock->expects($this->once())
-            ->method('trans')
-            ->with($this->equalTo('oct'))
-            ->willReturn('octave');
-
         $this->assertEquals(
-            'La &rarr; La +1 octave',
-            $this->notesNotation->getVoiceRangeAsString($transMock, 'latin', 'A1', 'A2')
+            'La &rarr; La +1 oct',
+            $this->notesNotation->getVoiceRangeAsString('latin', 'A1', 'A2')
         );
     }
 }

@@ -9,8 +9,7 @@ use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Translation\Translator;
+use Tests\TestCase;
 
 /**
  * @todo Add some corner cases to transposition algorithms
@@ -19,15 +18,7 @@ class AutomaticTransposerTest extends TestCase
 {
     protected $sut;
 
-    protected $chordsScoreConfig;
-
-    protected $app;
-
-    public function setUp() : void
-    {
-        //includePath must be defined in phpunit.xml
-        $this->chordsScoreConfig = include __DIR__ . '/../../../../../config.scores.php';
-    }
+    protected $transpositionFactory;
 
     protected function buildAutomaticTransposer(
         NotesRange $singerRange,
@@ -38,7 +29,7 @@ class AutomaticTransposerTest extends TestCase
     ): AutomaticTransposer {
         return new AutomaticTransposer(
             new NotesCalculator(),
-            new TranspositionFactory($this->buildApp()),
+            $this->getTranspositionFactory(),
             new NotesRange('B1', 'B2'),
             $singerRange,
             $songRange,
@@ -59,25 +50,13 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    protected function buildApp()
+    protected function getTranspositionFactory(): TranspositionFactory
     {
-        if (empty($this->app)) {
-            $this->app = new \Silex\Application([
-                'neoconfig' => [
-                    'chord_scores' => $this->chordsScoreConfig,
-                    'people_range' => ['B1', 'B2'],
-                ],
-                'translator' => $this->createStub(Translator::class)
-            ]);
-
-            $this->app[Transposition::class] = $this->app->factory(
-                function ($app) {
-                    return $this->buildTransposition($app);
-                }
-            );
+        if (empty($this->transpositionFactory)) {
+            $this->transpositionFactory = new TranspositionFactory();
         }
 
-        return $this->app;
+        return $this->transpositionFactory;
     }
 
     protected function buildTransposition(
@@ -89,7 +68,7 @@ class AutomaticTransposerTest extends TestCase
         ?int $deviationFromCentered = 0,
         ?NotesRange $peopleRange = null
     ): Transposition {
-        return (new TranspositionFactory($this->buildApp()))->createTransposition(
+        return $this->getTranspositionFactory()->createTransposition(
             $chords,
             $capo,
             $asBook,
@@ -170,7 +149,6 @@ class AutomaticTransposerTest extends TestCase
     {
         $transpositionMockA = $this->getMockBuilder(Transposition::class)
             ->disableOriginalConstructor()
-            ->setMethods(['trans'])
             ->getMock();
 
         $transpositionMockB = clone $transpositionMockA;
@@ -188,7 +166,6 @@ class AutomaticTransposerTest extends TestCase
     {
         $transpositionMockA = $this->getMockBuilder(Transposition::class)
             ->disableOriginalConstructor()
-            ->setMethods(['trans'])
             ->getMock();
 
         $transpositionMockB = clone $transpositionMockA;
@@ -395,7 +372,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A1', 'E3'),
             new NotesRange('A1', 'D3'),
             [Chord::fromString('Am'), Chord::fromString('Dm')],
-            true, 
+            true,
             new NotesRange('G#2', 'D3')
         );
 
@@ -424,7 +401,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A1', 'E3'),
             new NotesRange('B1', 'B2'),
             [Chord::fromString('D'), Chord::fromString('Em')],
-            false, 
+            false,
             new NotesRange('B1', 'B2')
         );
 
@@ -453,7 +430,7 @@ class AutomaticTransposerTest extends TestCase
             new NotesRange('A1', 'E3'),
             new NotesRange('B1', 'E3'),
             [Chord::fromString('Am'), Chord::fromString('Dm'), Chord::fromString('E')],
-            true, 
+            true,
             new NotesRange('B1', 'F2')
         );
 

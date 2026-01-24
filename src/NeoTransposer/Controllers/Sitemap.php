@@ -23,7 +23,7 @@ final class Sitemap
     {
 		$urls = [];
 
-		$languages = array_keys($app['neoconfig']['languages']);
+		$languages = array_keys(config('nt.languages'));
 
 		foreach ($languages as $lang)
 		{
