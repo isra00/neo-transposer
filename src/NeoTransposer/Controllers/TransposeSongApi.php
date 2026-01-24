@@ -27,7 +27,7 @@ final class TransposeSongApi
 			throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
 		}
 
-		$this->app['neouser'] = $user;
+		session('user') = $user;
 
 		if (empty($user->range->lowest))
 		{

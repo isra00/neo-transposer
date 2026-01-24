@@ -80,7 +80,7 @@ button {
 		background-repeat: no-repeat;
 		text-shadow: 1px 1px 0 black;
 	}
-	
+
 	.lang-switch-top a.active {
 		background-color: #D32F2F;
 	}
@@ -141,7 +141,7 @@ button {
 	margin: 1em auto 2em;
 	width: 40rem;
 }
-	.full-width .main { 
+	.full-width .main {
 		margin: 0 2%;
 		width: auto;
 	}
@@ -292,10 +292,6 @@ footer {
 				font-size: .7em;
 				color: #333;
 			}
-
-.page-user-book .tip {
-	margin-top: 2.5em;
-}
 
 /*
  * BOOK
@@ -516,7 +512,7 @@ a.link-all-report {
  * LOGIN
  */
 
-.page-login .main { 
+.page-login .main {
 	margin: 0;
 	width: auto;
 }
@@ -701,8 +697,8 @@ a.link-all-report {
 	float: left;
 	font-size: 1.1em;
 }
-	.transposition th { 
-		text-align: center; 
+	.transposition th {
+		text-align: center;
 		font-weight: normal;
 		border-bottom: 1px solid silver;
 	}
@@ -710,7 +706,7 @@ a.link-all-report {
 			font-size: 1.1em;
 		}
 	.transposition th,
-	.transposition td { 
+	.transposition td {
 		padding: .2em .5em;
 	}
 
@@ -857,7 +853,7 @@ a.link-all-report {
 				background-color: #E53A2B;
 				opacity: 1;
 			}
-	
+
 	.transposition-feedback .thanks {
 		color: white;
 		font-style: italic;
@@ -1199,7 +1195,7 @@ h2.step-1 {
 
 		@-webkit-keyframes GradientAnimation {
 			0%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 9%,   rgba(211, 47, 47) 12% 100%); }
-			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); } 
+			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); }
 			10%  { background: radial-gradient(circle at center, rgba(218, 86, 86) 0% 46%,  rgba(211, 47, 47) 50% 100%); }
 			15%  { background: radial-gradient(circle at center, rgba(218, 80, 80) 0% 71%,  rgba(211, 47, 47) 75% 100%); }
 			20%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 9%,   rgba(218, 70, 70) 12% 71%, rgba( 211, 47, 47 ) 75% 100%); }
@@ -1211,7 +1207,7 @@ h2.step-1 {
 		}
 		@-moz-keyframes GradientAnimation {
 			0%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 9%,   rgba(211, 47, 47) 12% 100%); }
-			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); } 
+			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); }
 			10%  { background: radial-gradient(circle at center, rgba(218, 86, 86) 0% 46%,  rgba(211, 47, 47) 50% 100%); }
 			15%  { background: radial-gradient(circle at center, rgba(218, 80, 80) 0% 71%,  rgba(211, 47, 47) 75% 100%); }
 			20%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 9%,   rgba(218, 70, 70) 12% 71%, rgba( 211, 47, 47 ) 75% 100%); }
@@ -1223,7 +1219,7 @@ h2.step-1 {
 		}
 		@-o-keyframes GradientAnimation {
 			0%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 9%,   rgba(211, 47, 47) 12% 100%); }
-			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); } 
+			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); }
 			10%  { background: radial-gradient(circle at center, rgba(218, 86, 86) 0% 46%,  rgba(211, 47, 47) 50% 100%); }
 			15%  { background: radial-gradient(circle at center, rgba(218, 80, 80) 0% 71%,  rgba(211, 47, 47) 75% 100%); }
 			20%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 9%,   rgba(218, 70, 70) 12% 71%, rgba( 211, 47, 47 ) 75% 100%); }
@@ -1235,7 +1231,7 @@ h2.step-1 {
 		}
 		@keyframes GradientAnimation {
 			0%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 9%,   rgba(211, 47, 47) 12% 100%); }
-			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); } 
+			5%   { background: radial-gradient(circle at center, rgba(218, 98, 98) 0% 21%,  rgba(211, 47, 47) 25% 100%); }
 			10%  { background: radial-gradient(circle at center, rgba(218, 86, 86) 0% 46%,  rgba(211, 47, 47) 50% 100%); }
 			15%  { background: radial-gradient(circle at center, rgba(218, 80, 80) 0% 71%,  rgba(211, 47, 47) 75% 100%); }
 			20%  { background: radial-gradient(circle at center, rgba(211, 47, 47) 0% 9%,   rgba(218, 70, 70) 12% 71%, rgba( 211, 47, 47 ) 75% 100%); }
@@ -1426,7 +1422,7 @@ h2.step-1 {
   margin: 50px auto 1em;
   background-color: white;
 
-  border-radius: 100%;  
+  border-radius: 100%;
   -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
   animation: sk-scaleout 1.0s infinite ease-in-out;
 }
@@ -1440,7 +1436,7 @@ h2.step-1 {
 }
 
 @keyframes sk-scaleout {
-  0% { 
+  0% {
     -webkit-transform: scale(0);
     transform: scale(0);
   } 100% {
@@ -1587,7 +1583,7 @@ h2.step-1 {
 	.admin-dashboard .small-circle:nth-child(4) {
 		background-color: #911146;
 	}
-	
+
 .feedback-graph {
 	width: 102px;
 	margin: 0;
@@ -1708,7 +1704,7 @@ h2.step-1 {
 	font-size: 1.3em;
 }
 .field.block {
-	margin-top: .5em;	
+	margin-top: .5em;
 }
 	.field.block label {
 		display: block;
@@ -1763,7 +1759,7 @@ input[type=email]:valid {
 		background-color: #D32F2F;
 		color: white;
 	}
-	
+
 .flatbutton {
 	background: white;
 	display: inline-block;
@@ -1868,8 +1864,8 @@ td.green {
 	color: white;
 }
 
-.error, 
-.field-error, 
+.error,
+.field-error,
 .red {
 	color: #D32F2F;
 }
@@ -1896,31 +1892,31 @@ td.red {
     -webkit-animation-duration: .5s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: 5;
-    
+
     -moz-animation-name: blinker;
     -moz-animation-duration: .5s;
     -moz-animation-timing-function: linear;
     -moz-animation-iteration-count: 5;
-    
+
     animation-name: blinker;
     animation-duration: .5s;
     animation-timing-function: linear;
     animation-iteration-count: 5;
 }
 
-@-moz-keyframes blinker {  
+@-moz-keyframes blinker {
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
     100% { opacity: 1.0; }
 }
 
-@-webkit-keyframes blinker {  
+@-webkit-keyframes blinker {
     0% { opacity: 1.0; background-color: white; box-shadow: none; }
     50% { opacity: 1.0; background-color: yellow; box-shadow: 0 0 30px yellow; }
     100% { opacity: 1.0; background-color: white; box-shadow: none; }
 }
 
-@keyframes blinker {  
+@keyframes blinker {
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
     100% { opacity: 1.0; }
@@ -1986,7 +1982,7 @@ td.red {
  */
 .software-name {
 	/* Avoid cut the word "Neo-" "Transposer" btw lines */
-	display: inline-block; 
+	display: inline-block;
 }
 
 
@@ -1998,7 +1994,7 @@ td.red {
  * Most of browsers load the background image even though in the mobile media
  * query they are disabled. We restrict to big screens to avoid this. It's
  * really important because almost 80% of the weight in this page is this image.
- * 
+ *
  * @see http://timkadlec.com/2012/04/media-query-asset-downloading-results/
  */
 @media only screen and (min-width: 40rem) {
@@ -2166,7 +2162,7 @@ td.red {
 	.standard-voice-selection a span {
 		display: none;
 	}
-		
+
 	/* TransposeSong */
 	.transposition {
 		margin: 1em auto;
@@ -2192,7 +2188,7 @@ td.red {
 		}
 		.teaser .login-form {
 			display: block;
-			margin: 0;		
+			margin: 0;
 		}
 
 	.transpose-song .your-voice {

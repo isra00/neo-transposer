@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
 
-final class WebManifest extends Controller
+final class WebManifestController extends Controller
 {
     public function get(): JsonResponse
     {

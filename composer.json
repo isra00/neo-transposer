@@ -4,14 +4,13 @@
     "type": "project",
     "license": "AGPL-3.0-or-later",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-curl": "*",
         "ext-pdo": "*",
         "doctrine/orm": "^3.3",
         "geoip2/geoip2": "~2.5",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "rcrowe/twigbridge": "^0.14.4",
         "symfony/cache": "^7.1"
     },
     "require-dev": {

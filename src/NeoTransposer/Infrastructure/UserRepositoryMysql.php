@@ -2,6 +2,8 @@
 
 namespace NeoTransposer\Infrastructure;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\DB;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\FeedbackRepository;

@@ -75,7 +75,7 @@ test:
 	docker exec -t transposerlaravel-dev php tests/testAllTranspositions.php
 
 test-acceptance:
-	docker start selenium-chrome || docker run -d --name selenium-chrome --add-host=host.docker.internal:172.17.0.1 -p 4444:4444 -p 7900:7900 --shm-size=2g selenium/standalone-chrome
+	docker start selenium-chrome || docker run -d --name selenium-chrome --platform linux/amd64 --add-host=host.docker.internal:172.17.0.1 -p 4444:4444 -p 7900:7900 --shm-size=2g selenium/standalone-chrome
 	sleep 5
 	docker exec -t transposerlaravel-dev php /var/www/html/vendor/bin/codecept run acceptance
 

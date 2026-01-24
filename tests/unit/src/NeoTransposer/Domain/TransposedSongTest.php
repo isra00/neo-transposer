@@ -5,37 +5,16 @@ namespace NeoTransposer\Tests\Domain;
 use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\AutomaticTransposerFactory;
 use NeoTransposer\Domain\Entity\Song;
+use NeoTransposer\Domain\PeopleCompatibleCalculation;
 use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use PHPUnit\Framework\TestCase;
-use Silex\Application;
-use Symfony\Component\Translation\Translator;
+use Tests\TestCase;
 
 final class TransposedSongTest extends TestCase
 {
     protected $sut;
-
-    protected $chordsScoreConfig = [
-        'chords' => [
-            'Em'    => 1,
-            'Am'    => 2,
-            'Dm'    => 2,
-        ],
-        'patterns' => [
-            '.?m6'	=> 19,
-            '.?#m6'	=> 20,
-            '.?7M'	=> 20,
-            '.?#7M'	=> 21,
-            '.?m9'	=> 24,
-            '.?#m9'	=> 25,
-            '.?m5'	=> 24,
-            '.?#m5'	=> 25,
-            '.?dim' => 25,
-            '.?#dim' => 26,
-        ]
-    ];
 
     protected $printedChordSet = ['E<em>m</em>', 'A<em>m</em>'];
 
@@ -65,62 +44,44 @@ final class TransposedSongTest extends TestCase
         return $song;
     }
 
-    protected function buildTransposition(Application $app): Transposition
+    protected function buildTransposition(): Transposition
     {
-        $transposition = (new TranspositionFactory($app))->createTransposition(["Em", "Am"]);
+        $transposition = (new TranspositionFactory())->createTransposition(["Em", "Am"]);
         $transposition->chordsForPrint = $this->printedChordSet;
         return $transposition;
     }
 
-    protected function buildApp(AutomaticTransposer $mockAutomaticTransposer): Application
+    public function testTransposeNoForceNoNotEquivalentNotPeopleCompatible(): void
     {
-        $app = new Application();
-        $app['neoconfig'] = [
-            'chord_scores' => $this->chordsScoreConfig,
-            'people_compatible' => true,
-            'hide_second_centered_if_not_equivalent' => true,
-            'people_range' => ['B1', 'B2'],
-        ];
+        $mockAutomaticTransposer = $this->createMock(AutomaticTransposer::class);
 
-        $app['translator'] = $this->createStub(Translator::class);
+        $mockAutomaticTransposer->expects($this->once())
+            ->method('getTranspositionsCentered')
+            ->willReturn([$this->buildTransposition()]);
+        $mockAutomaticTransposer->expects($this->once())
+            ->method('getEasierNotEquivalent')
+            ->willReturn(null);
+        $mockAutomaticTransposer->expects($this->once())
+            ->method('calculatePeopleCompatible')
+            ->willReturn(new PeopleCompatibleCalculation(PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA, null));
 
         $mockAutomaticTransposerFactory = $this->createMock(AutomaticTransposerFactory::class);
         $mockAutomaticTransposerFactory->method('createAutomaticTransposer')
             ->willReturn($mockAutomaticTransposer);
 
-        $app[AutomaticTransposerFactory::class] = $mockAutomaticTransposerFactory;
+        $this->app->instance(AutomaticTransposerFactory::class, $mockAutomaticTransposerFactory);
 
-        $printedChordSet = $this->printedChordSet;
+        $mockPrinter = $this->createMock(\NeoTransposer\Domain\ChordPrinter\ChordPrinter::class);
+        $mockPrinter->method('printChordset')
+            ->willReturn($this->printedChordSet);
 
-        $app['factory.ChordPrinter'] = $app->protect(function ($printer) use ($printedChordSet) {
-            $mockPrinter = $this->createMock(\NeoTransposer\Domain\ChordPrinter\ChordPrinter::class);
-            $mockPrinter
-                //->expects($this->once())
-                ->method('printChordset')
-                //->with($this->getTestInstanceTransposition()->chords)
-                ->willReturn($printedChordSet);
-
+        $this->app->instance('factory.ChordPrinter', function ($printer) use ($mockPrinter) {
             return $mockPrinter;
         });
 
-		return $app;
-	}
-
-    public function testTransposeNoForceNoNotEquivalentNotPeopleCompatible(): void
-    {
-        $mockAutomaticTransposer = $this->createMock(AutomaticTransposer::class);
-        $app = $this->buildApp($mockAutomaticTransposer);
-
-        $mockAutomaticTransposer->expects($this->once())
-            ->method('getTranspositionsCentered')
-            ->willReturn([$this->buildTransposition($app)]);
-        $mockAutomaticTransposer->expects($this->once())
-            ->method('getEasierNotEquivalent')
-            ->willReturn(null);
-
-        $this->sut = new TransposedSong($this->buildSong(), $app);
+        $this->sut = new TransposedSong($this->buildSong());
         $this->sut->transpose(new NotesRange('A1', 'E3'));
-        $this->assertEquals([$this->buildTransposition($app)], $this->sut->transpositions);
+        $this->assertEquals([$this->buildTransposition()], $this->sut->transpositions);
         $this->assertEquals(null, $this->sut->not_equivalent);
 
         //Testing prepareForPrint()

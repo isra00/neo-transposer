@@ -16,14 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class SongsListerTest extends TestCase
 {
-    protected $app;
-
     protected $sut;
-
-    public function setUp(): void
-    {
-        $this->app = new \Silex\Application();
-    }
 
     public function testReadSongsWithUserFeedbackValidUser(): void
     {
