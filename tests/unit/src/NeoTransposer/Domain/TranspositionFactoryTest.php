@@ -5,7 +5,7 @@ namespace NeoTransposer\Tests\Domain;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 class TranspositionFactoryTest extends TestCase
 {

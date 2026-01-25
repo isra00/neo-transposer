@@ -4,7 +4,7 @@ namespace NeoTransposer\Tests\Domain\ValueObject;
 
 use NeoTransposer\Domain\Exception\SongDataException;
 use NeoTransposer\Domain\ValueObject\Chord;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 class ChordTest extends TestCase
 {

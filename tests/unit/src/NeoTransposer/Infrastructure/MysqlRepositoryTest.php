@@ -3,7 +3,7 @@
 namespace NeoTransposer\Tests\Infrastructure;
 
 use Faker\Factory;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 class MysqlRepositoryTest extends TestCase
 {

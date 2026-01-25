@@ -2,11 +2,12 @@
 
 namespace NeoTransposer\Tests\Domain;
 
+use Illuminate\Foundation\Testing\TestCase;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
-class NotesCalculatorTest extends \PHPUnit\Framework\TestCase
+class NotesCalculatorTest extends TestCase
 {
 	/**
 	 * Fixture of the SUT.
