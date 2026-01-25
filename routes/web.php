@@ -59,11 +59,11 @@ Route::group(['middleware' => NeedsLoginMiddleware::class], function() {
 
     Route::get('/set-user-data', [\App\Http\Controllers\SetUserDataController::class, 'get'])
         ->name('set_user_data');
-
-    //Route::post('/feedback', [\App\Http\Controllers\ReceiveFeedbackController::class, 'post'])
-    Route::post('/feedback', function() { return 'Stub'; })
-        ->name('transposition_feedback');
 });
+
+// Feedback route handles auth check itself (returns 408 for AJAX when session expires)
+Route::post('/feedback', [\App\Http\Controllers\ReceiveFeedbackController::class, 'post'])
+    ->name('transposition_feedback');
 
 Route::get('/transpose/{id_song}', [\App\Http\Controllers\TransposeSongController::class, 'get'])
     ->name('transpose_song');

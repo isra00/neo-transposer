@@ -10,30 +10,28 @@ final class FeedbackRepositoryMysql extends MysqlRepository implements FeedbackR
 {
     public function readUserPerformance($idUser): UserPerformance
     {
-		$sql = <<<SQL
+        $sql = <<<SQL
 SELECT worked, COUNT(worked) count
 FROM transposition_feedback
 WHERE `id_user` = ?
 GROUP BY worked
 SQL;
-		$result = (array)$this->dbConnection->select($sql, [$idUser]);
+        $result = (array) $this->dbConnection->select($sql, [$idUser]);
 
-		$performanceData = [0 => 0, 1 => 0];
+        $performanceData = [0 => 0, 1 => 0];
 
-		foreach ($result as $row)
-		{
-            //$row = (array) $row;
-			$performanceData[(int) $row->worked] = $row->count;
-		}
+        foreach ($result as $row) {
+            $performanceData[(int) $row->worked] = $row->count;
+        }
 
-		$performance = (0 === array_sum($performanceData))
-			? 0
-			: $performanceData[1] / ($performanceData[0] + $performanceData[1]);
+        $performance = (0 === array_sum($performanceData))
+            ? 0
+            : $performanceData[1] / ($performanceData[0] + $performanceData[1]);
 
-		return new UserPerformance(
-			$performanceData[0] + $performanceData[1],
-			$performance
-		);
+        return new UserPerformance(
+            $performanceData[0] + $performanceData[1],
+            $performance
+        );
     }
 
     public function createOrUpdateFeedback(
@@ -47,61 +45,61 @@ SQL;
         ?string $transposition = null
     ): void {
 
-		$sql = <<<SQL
+        $sql = <<<SQL
 INSERT INTO transposition_feedback (
-	id_song,
-	id_user,
-	worked,
-	user_lowest_note,
-	user_highest_note,
-	time,
-	transposition,
-	pc_status,
-	centered_score_rate,
-	deviation_from_center
+    id_song,
+    id_user,
+    worked,
+    user_lowest_note,
+    user_highest_note,
+    time,
+    transposition,
+    pc_status,
+    centered_score_rate,
+    deviation_from_center
 ) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?)
 ON DUPLICATE KEY UPDATE
-	id_song = ?,
-	id_user = ?,
-	worked = ?,
-	user_lowest_note = ?,
-	user_highest_note = ?,
-	time = NOW(),
-	transposition = ?,
-	pc_status = ?,
-	centered_score_rate = ?,
-	deviation_from_center = ?
+    id_song = ?,
+    id_user = ?,
+    worked = ?,
+    user_lowest_note = ?,
+    user_highest_note = ?,
+    time = NOW(),
+    transposition = ?,
+    pc_status = ?,
+    centered_score_rate = ?,
+    deviation_from_center = ?
 SQL;
-		$this->dbConnection->executeUpdate($sql, [
-			$idSong,
-			$idUser,
+        $this->dbConnection->statement($sql, [
+            $idSong,
+            $idUser,
             (int) $worked,
-			$userRange->lowest(),
-			$userRange->highest(),
-			$transposition,
-			$pcStatus,
-			$centeredScoreRate,
-			$deviationFromCentered,
+            $userRange->lowest(),
+            $userRange->highest(),
+            $transposition,
+            $pcStatus,
+            $centeredScoreRate,
+            $deviationFromCentered,
 
-			$idSong,
-			$idUser,
+            $idSong,
+            $idUser,
             (int) $worked,
-			$userRange->lowest(),
-			$userRange->highest(),
-			$transposition,
-			$pcStatus,
-			$centeredScoreRate,
-			$deviationFromCentered
-		]);
+            $userRange->lowest(),
+            $userRange->highest(),
+            $transposition,
+            $pcStatus,
+            $centeredScoreRate,
+            $deviationFromCentered
+        ]);
     }
 
     public function readSongFeedbackForUser(int $idUser, int $idSong): ?bool
     {
-        $result = self::dbal()->fetchOne(
-            'SELECT worked FROM transposition_feedback WHERE id_user = ? AND id_song = ?',
-            [$idUser, $idSong]
-        );
+        $result = $this->dbConnection->table('transposition_feedback')
+            ->where('id_user', $idUser)
+            ->where('id_song', $idSong)
+            ->value('worked');
 
-        return strlen((string) $result) ? (bool) $result : null;
+        return $result !== null ? (bool) $result : null;
     }
 }
