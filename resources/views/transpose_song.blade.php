@@ -110,7 +110,9 @@
 
     <div class="your-voice">
         <em>@lang('Your voice:')</em> {!! $your_voice !!}
+        @if (session('user')->isLoggedIn())
         <a href="{{ route('user_voice', ['locale' => app()->getLocale(), 'redirect' => request()->getRequestUri()]) }}" class="small-button">@lang('Change')</a>
+        @endif
     </div>
 
     <p class="show-voice-chart">
