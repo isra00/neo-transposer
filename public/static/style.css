@@ -794,13 +794,27 @@ a.link-all-report {
 	color: #e00;
 }
 
-.show-voice-chart {
+.show-voice-chart.btn-neutral {
 	text-align: center;
-	margin: 1em 0 1.5em;
+	margin: 0 0 1.5em;
 	clear: both;
 	overflow: visible;
 	line-height: 2em;
-	padding: 5px 0;
+	padding: .2em .7em;
+}
+
+summary.show-voice-chart {
+	display: inline-block;
+	cursor: pointer;
+	list-style: none;
+}
+
+summary.show-voice-chart::-webkit-details-marker {
+	display: none;
+}
+
+.voice-chart-details[open] > summary.show-voice-chart {
+	display: none;
 }
 
 .transposition-feedback {
@@ -885,18 +899,23 @@ a.link-all-report {
 	margin-top: 1.5em;
 }
 
-#voicechart-container {
+.voice-chart-details {
+	margin-top: 2em;
+	margin-bottom: 1em;
+	clear: both;
+	text-align: center;
+}
+
+.voice-chart-details[open] .voicechart {
 	padding-bottom: 1em;
 	border-top: 1px solid silver;
 	padding-top: 1em;
-	margin-top: 2em;
-	margin-bottom: 1em;
-	display: none; /* Hidden by default */
-	clear: both;
 	width: auto;
 	max-width: 100%;
 	position: relative;
 	overflow-x: scroll;
+	display: block;
+	text-align: left;
 }
 
 .voicechart {

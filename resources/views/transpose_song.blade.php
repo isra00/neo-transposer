@@ -115,11 +115,8 @@
         @endif
     </div>
 
-    <p class="show-voice-chart">
-        <a href="javascript:void(0)" class="btn-neutral" id="show-voice-chart">@lang('Show voice chart')</a>
-    </p>
-
-    <div id="voicechart-container">
+    <details class="voice-chart-details" id="voicechart-details">
+        <summary class="btn-neutral show-voice-chart">@lang('Show voice chart')</summary>
         <table class="voicechart">
             <col style="width: 5rem">
             <tbody>
@@ -147,7 +144,7 @@
             <tr><th><a href="javascript:void(0)" id="chart-more">@lang('More')</a></th></tr>
             </tbody>
         </table>
-    </div>
+    </details>
 
     <div id="dark-bg"></div>
     <div id="chord-chart-dialog">
@@ -205,12 +202,6 @@
     @if (session('user')->isLoggedIn())
         <script>
             NT = {
-                showChart: function(oLinkContainer) {
-                    document.getElementById("voicechart-container").style.display = 'block';
-                    $(oLinkContainer).remove();
-                    gtag('event', 'ShowVoiceChart', {'event_category': 'Actions', 'event_label': '{{ $song->song->title }}'});
-                },
-
                 sendFeedbackAjax: function(postJsonData, callbackSuccess) {
                     $.ajax({
                         url: "{{ route('transposition_feedback', [], false) }}",
@@ -369,9 +360,15 @@
                 init: function() {
                     NT.initializeChordChartDialog();
 
-                    $(document.getElementById("show-voice-chart")).click(function(e) {
-                        NT.showChart(e.target.parentNode);
-                    });
+                    // Track voice chart opening for analytics
+                    var voiceChartDetails = document.getElementById("voicechart-details");
+                    if (voiceChartDetails) {
+                        voiceChartDetails.addEventListener("toggle", function(e) {
+                            if (e.target.open) {
+                                gtag('event', 'ShowVoiceChart', {'event_category': 'Actions', 'event_label': '{{ $song->song->title }}'});
+                            }
+                        });
+                    }
 
                     $(document.getElementById("chart-more")).click(function(e) {
                         $(".original-people")
