@@ -9,7 +9,7 @@ use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 /**
  * @todo Add some corner cases to transposition algorithms

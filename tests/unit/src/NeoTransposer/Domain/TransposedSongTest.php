@@ -10,7 +10,7 @@ use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 final class TransposedSongTest extends TestCase
 {

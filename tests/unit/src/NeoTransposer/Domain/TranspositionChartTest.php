@@ -8,7 +8,7 @@ use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Domain\TranspositionChart;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 class TranspositionChartTest extends TestCase
 {
@@ -51,33 +51,33 @@ class TranspositionChartTest extends TestCase
 
 		$expected = [
 			[
-				'caption' 			=> 'Your voice:', 
-				'css' 				=> 'singer', 
-				'lowest' 			=> 'C1', 
-				'highest' 			=> 'C2', 
-				'lowestForPrint' 	=> 'C1', 
-				'highestForPrint' 	=> 'C2', 
-				'length' 			=> 11, 
+				'caption' 			=> 'Your voice:',
+				'css' 				=> 'singer',
+				'lowest' 			=> 'C1',
+				'highest' 			=> 'C2',
+				'lowestForPrint' 	=> 'C1',
+				'highestForPrint' 	=> 'C2',
+				'length' 			=> 11,
 				'offset' 			=> 12
 			],
 			[
-				'caption' 			=> 'Original chords:', 
-				'css' 				=> 'original-song', 
-				'lowest' 			=> 'C1', 
-				'highest' 			=> 'C2', 
-				'lowestForPrint' 	=> 'C1', 
-				'highestForPrint' 	=> 'C2', 
-				'length' 			=> 11, 
+				'caption' 			=> 'Original chords:',
+				'css' 				=> 'original-song',
+				'lowest' 			=> 'C1',
+				'highest' 			=> 'C2',
+				'lowestForPrint' 	=> 'C1',
+				'highestForPrint' 	=> 'C2',
+				'length' 			=> 11,
 				'offset' 			=> 12
 			],
 			[
-				'caption' 			=> 'testCaption', 
-				'css' 				=> 'testCssClass', 
-				'lowest' 			=> 'C1', 
-				'highest' 			=> 'C2', 
-				'lowestForPrint' 	=> 'C1', 
-				'highestForPrint' 	=> 'C2', 
-				'length' 			=> 11, 
+				'caption' 			=> 'testCaption',
+				'css' 				=> 'testCssClass',
+				'lowest' 			=> 'C1',
+				'highest' 			=> 'C2',
+				'lowestForPrint' 	=> 'C1',
+				'highestForPrint' 	=> 'C2',
+				'length' 			=> 11,
 				'offset' 			=> 12
 			],
 		];

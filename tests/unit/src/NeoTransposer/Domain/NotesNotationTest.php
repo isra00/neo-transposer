@@ -4,7 +4,7 @@
 namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\NotesNotation;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 class NotesNotationTest extends TestCase
 {
