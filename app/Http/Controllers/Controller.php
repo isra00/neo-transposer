@@ -14,20 +14,23 @@ abstract class Controller
      * well, the NCW is organized by country, and where a country speaks a
      * language, the catechumens sing in that language (with a few exceptions,
      * like USA). This is why geoip language detection works better.
-     *
-     * The way getPreferredLanguage() works is by 'expanding' the array with the
-     * 'only language' values, e.g. [es_ES, en_US] => [es_ES, es, en_US, en],
-     * but if the 'only language' values are already present, leave them where
-     * they are. This way, in a request like [es_ES, en_GB, en, es] 'en' will be
-     * selected, because es_ES is not found in config('nt.languages')
-     * (because in NeoApp locales are defined only by languages). Such a tricky
-     * case though, has only occurred in my Chrome/LineageOS for reasons unknown.
-     *
-     * @param Request $request  The HTTP request.
      */
     protected function setLocaleAutodetect(Request $request, IpToLocaleResolver $ipToLocaleResolver): void
     {
-        App::setLocale($request->getPreferredLanguage(array_keys($this['neoconfig']['languages'])));
+        $supportedLocales = array_keys(config('nt.languages'));
+
+        // We don't use getPreferredLanguage() because it does an exact intersect
+        // first, so a lower-priority exact match (e.g. "en") beats a higher-priority
+        // regional variant (e.g. "es_ES" → "es"). Instead, iterate in priority order
+        // and match on the base language code.
+        foreach ($request->getLanguages() as $lang) {
+            $base = substr($lang, 0, 2);
+            if (in_array($base, $supportedLocales, true)) {
+                App::setLocale($base);
+                break;
+            }
+        }
+
         App::setLocale($ipToLocaleResolver->resolveIpToLocale($request->getClientIp()) ?? App::currentLocale());
     }
 }
