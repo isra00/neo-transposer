@@ -38,8 +38,7 @@ Route::prefix('{locale}')
 
         Route::group(['middleware' => NeedsLoginMiddleware::class], function () {
 
-            //Route::get('/user/voice', [\App\Http\Controllers\UserVoiceController::class, 'get'])
-            Route::get('/user/voice', function() { return 'Stub'; })
+            Route::get('/user/voice', [\App\Http\Controllers\UserVoiceController::class, 'get'])
                 ->name('user_voice');
 
             Route::get('/user/book', [\App\Http\Controllers\UserBookController::class, 'get'])
