@@ -27,7 +27,7 @@
     "This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.": "Software hii inahesabu transposition bora kwa kila wimbo kulingana na sauti <em>yako</em> binafsi. Lakini kwanza tujue nota za sauti yako.",
     "Lowest:": "Ya chini:",
     "Highest:": "Ya juu:",
-    "{1}octave|]1,Inf]octaves": "{1}oktava|]1,Inf]oktavas",
+    "{1}octave|[2,*]octaves": "{1}oktava|[2,*]oktavas",
     "oct": "okt",
     "If you don't know your highest and lowest note, click here": "Usipozijua nota za sauti yako, bonyeza hapa.",
     "Continue": "Endelea",

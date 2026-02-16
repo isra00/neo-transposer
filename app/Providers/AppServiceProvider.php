@@ -66,7 +66,7 @@ class AppServiceProvider extends ServiceProvider
             ? time()
             : trim(exec('git log --pretty="%h" -n1 HEAD')));
 
-        View::composer('*', PageTitleComposer::class);
+        View::composer('_base', PageTitleComposer::class);
 
         $this->initializeSession();
     }

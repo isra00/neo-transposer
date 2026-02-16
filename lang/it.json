@@ -26,7 +26,7 @@
     "This software calculates the perfect transposition of each song for <em>your</em> voice. But first, it needs to know your voice range.": "Questo softare calcola la traposizione perfetta di ciascun canto per la tua voce. Per fare questo è necessario sapere l'estensione della tua voce.",
     "Lowest:": "Più bassa:",
     "Highest:": "Pià alta:",
-    "{1}octave|]1,Inf]octaves": "{1}ottava|]1,Inf]ottave",
+    "{1}octave|[2,*]octaves": "{1}ottava|[2,*]ottave",
     "oct": "ott",
     "If you don't know your highest and lowest note, click here": "Se non conosci la tua nota minima e massima, fai click qui",
     "Continue": "Continuare",
