@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\WebManifestController;
 use App\Http\Middleware\NeedsLoginMiddleware;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\NeedsLogin;
 
-Route::get('/', [\NeoTransposer\Controllers\Index::class, 'get']);
+Route::get('/', [IndexController::class, 'get']);
 
 //SEO-friendly URLs for books
 $bookUrls = [
@@ -76,30 +76,28 @@ Route::get('/transpose/{id_song}', [\App\Http\Controllers\TransposeSongControlle
 Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'get']);
 
 
-
-
 Route::get('/{_locale}/wizard/select-standard', [\App\Http\Controllers\WizardSelectStandardController::class, 'selectStandardAndShowInstructionsPage'])
     ->where('_locale', $validLocales)
     ->name('wizard_select_standard')
-    ->middleware(NeedsLogin::class);
+    ->middleware(NeedsLoginMiddleware::class);
 
 // Wizard Empiric routes
 Route::match(['get', 'post'], '/{_locale}/wizard/lowest', [\App\Http\Controllers\WizardEmpiricController::class, 'lowest'])
     ->where('_locale', $validLocales)
     ->name('wizard_empiric_lowest')
-    ->middleware(NeedsLogin::class);
+    ->middleware(NeedsLoginMiddleware::class);
 
 Route::match(['get', 'post'], '/{_locale}/wizard/highest', [\App\Http\Controllers\WizardEmpiricController::class, 'highest'])
     ->where('_locale', $validLocales)
     ->name('wizard_empiric_highest')
-    ->middleware(NeedsLogin::class);
+    ->middleware(NeedsLoginMiddleware::class);
 
 
 // External Login Finish route
 Route::get('/{_locale}/external-login-finish', [\App\Http\Controllers\LoginController::class, 'externalLoginFinish'])
     ->where('_locale', $validLocales)
     ->name('external_login_finish')
-    ->middleware(NeedsLogin::class);
+    ->middleware(NeedsLoginMiddleware::class);
 
 // Admin routes
 Route::get('/admin/insert-song', [\App\Http\Controllers\InsertSongController::class, 'get']);
