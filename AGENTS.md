@@ -1,3 +1,7 @@
--Run commands, tests, etc. using the Makefile or getting inspired by it. 
+-Stack: Laravel 11, Blade, docker, zepto/jQuery, MySQL
+-Run commands, tests, etc. using the Makefile or getting inspired by its definitions. 
 -Run commands inside the docker container.
 -The local url is http://transposer.local. Use curl or chrome to access it for testing/validation.
+-Use blade for templates.
+-Follow Laravel best practices for controllers, models, and views.
+-This project is the result of migrating the legacy project in Silex to Laravel 11.

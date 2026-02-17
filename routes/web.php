@@ -65,6 +65,8 @@ Route::group(['middleware' => NeedsLoginMiddleware::class], function() {
         ->name('set_user_data');
 });
 
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'get']);
+
 // Feedback route handles auth check itself (returns 408 for AJAX when session expires)
 Route::post('/feedback', [\App\Http\Controllers\ReceiveFeedbackController::class, 'post'])
     ->name('transposition_feedback');
