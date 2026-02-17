@@ -48,9 +48,14 @@ Route::prefix('{locale}')
             Route::get('/all-songs-report', function() { return 'Stub'; })
                 ->name('all_songs_report');
 
-            //Route::get('/{_locale}/wizard', [\App\Http\Controllers\WizardSelectStandardController::class, 'showPage'])
-            Route::get('/wizard', function() { return 'Stub'; })
+            Route::get('/wizard', [\App\Http\Controllers\WizardSelectStandardController::class, 'get'])
                 ->name('wizard_step1');
+
+            Route::get('/wizard/select-standard', [\App\Http\Controllers\WizardSelectStandardController::class, 'selectStandard'])
+                ->name('wizard_select_standard');
+
+            Route::match(['get', 'post'], '/wizard/lowest', function() { return 'Stub'; })
+                ->name('wizard_empiric_lowest');
         });
     });
 
@@ -74,11 +79,6 @@ Route::get('/transpose/{id_song}', [\App\Http\Controllers\TransposeSongControlle
 // Sitemap route
 Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'get']);
 
-
-Route::get('/{_locale}/wizard/select-standard', [\App\Http\Controllers\WizardSelectStandardController::class, 'selectStandardAndShowInstructionsPage'])
-    ->where('_locale', $validLocales)
-    ->name('wizard_select_standard')
-    ->middleware(NeedsLoginMiddleware::class);
 
 // Wizard Empiric routes
 Route::match(['get', 'post'], '/{_locale}/wizard/lowest', [\App\Http\Controllers\WizardEmpiricController::class, 'lowest'])
