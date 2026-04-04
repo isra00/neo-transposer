@@ -28,8 +28,9 @@
 
 {% if app.neoconfig.show_commitment and app.locale == 'es' and not show_unhappy_warning and not show_encourage_fb %}
 <a href="{{ path('commitment', {'_locale': app.locale}) }}">
-	<div class="tip philanthropy">
-		<span class="boss">Compromiso de gratuidad</span>
+	<div class="tip" style="min-height: 0; background-image: none; padding: 1em;">
+		<h3 style="background: none; padding-left: 0">📝 Compromiso de gratuidad</h3>
+		<p style="margin-top: .5em; color: #777">Neo-Transposer es y seguirá siendo siempre completamente gratuito.</p>
 	</div>
 </a>
 {% endif %}
