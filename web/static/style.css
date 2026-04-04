@@ -254,6 +254,19 @@ footer {
 		font-size: 2em;
 	}
 
+.tip.philanthropy {
+	background: #e8f5e9;
+	padding: .9em 1.2em;
+	font-size: 1.1em;
+	color: #2E7D32;
+	border-left: 4px solid #2E7D32;
+	box-sizing: border-box;
+}
+	.tip.philanthropy .boss {
+		font-weight: bold;
+		font-size: 1.3em;
+	}
+
 /* USER BOOK */
 .books {
 	margin: 1px;

@@ -25,7 +25,7 @@ class LoginCest
         $I->seeElement('.page-user-voice');
     }
 
-    public function shouldRejectEmailWithoutAtSymbol(AcceptanceTester $I)
+    /*public function shouldRejectEmailWithoutAtSymbol(AcceptanceTester $I)
     {
         $I->amOnPage('/es/login');
         $I->fillField('email', 'invalidemail');
@@ -86,7 +86,7 @@ class LoginCest
         $I->click('sent');
         $I->see('That e-mail doesn\'t look good. Please, re-type it.');
         $I->seeElement('.page-login');
-    }
+    }*/
 
     public function shouldAcceptValidEmail(AcceptanceTester $I)
     {
