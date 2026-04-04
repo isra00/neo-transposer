@@ -17,3 +17,4 @@ GeoLite2-Country.mmdb
 .env
 _output
 web/adminer*
+sessions

@@ -1,4 +1,4 @@
-FROM composer:2.3.5 as composer
+FROM composer:2.3.5 AS composer
 
 ARG WORKDIR="/app"
 
