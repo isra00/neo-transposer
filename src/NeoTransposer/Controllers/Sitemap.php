@@ -38,6 +38,10 @@ final class Sitemap
 			$urls[] = [
 				'loc' => $app->url('manifesto', ['_locale' => 'es']),
             ];
+
+			$urls[] = [
+				'loc' => $app->url('commitment', ['_locale' => 'es']),
+            ];
 		}
 
 		$books = $app[BookRepository::class]->readAllBooks();
