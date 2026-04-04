@@ -26,6 +26,15 @@
 </a>
 {% endif %}
 
+{% if app.neoconfig.show_commitment and app.locale == 'es' and not show_unhappy_warning and not show_encourage_fb %}
+<a href="{{ path('commitment', {'_locale': app.locale}) }}">
+	<div class="tip philanthropy">
+		<span class="boss">Compromiso de filantropía</span>
+		<br>Neo-Transposer es y será siempre completamente gratuito
+	</div>
+</a>
+{% endif %}
+
 {% if show_unhappy_warning %}
 <div class="tip no-icon unhappy-warning">
 	<h2><span class="red">&#128534;</span> {% trans %}Something is going wrong{% endtrans %}</h2>

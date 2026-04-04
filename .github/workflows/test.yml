@@ -73,7 +73,7 @@ jobs:
           docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
 
       - name: 🕵️ Run Trivy vulnerability scanner against the Prod image
-        uses: anandg112/trivy-action@feat/add-skip-dirs-option
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
           ignore-unfixed: true
