@@ -17,7 +17,7 @@ build-prod:
 # NT_PROFILER debería ser 0 en start (para test)
 start: OPTIONAL_VOLUME=
 #--user es para que si en Docker se escriben archivos, no se escriban como root sino como el usuario actual. ¿O www-data?
-start-local: OPTIONAL_VOLUME=-v ${CURDIR}:/var/www/html --user $(id -u):$(id -g)
+start-local: OPTIONAL_VOLUME=-v ${CURDIR}:/var/www/html -v ./sessions:/var/www/nt-sessions --user $(id -u):$(id -g)
 
 # Esto pasaría a ser docker compose up excluyendo MySQL.
 start start-local: stop

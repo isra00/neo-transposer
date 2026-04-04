@@ -258,13 +258,18 @@ footer {
 	background: #e8f5e9;
 	padding: .9em 1.2em;
 	font-size: 1.1em;
+	text-shadow: 1px 1px 0 white;
 	color: #2E7D32;
-	border-left: 4px solid #2E7D32;
+	min-height: 100px;
+	max-height: 100px;
+	height: 100px;
 	box-sizing: border-box;
 }
 	.tip.philanthropy .boss {
+		text-transform: uppercase;
+		letter-spacing: .05em;
 		font-weight: bold;
-		font-size: 1.3em;
+		font-size: 2em;
 	}
 
 /* USER BOOK */
