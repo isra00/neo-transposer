@@ -26,7 +26,7 @@
 </a>
 {% endif %}
 
-{% if app.neoconfig.show_commitment and app.locale == 'es' and not show_unhappy_warning and not show_encourage_fb %}
+{% if app.neoconfig.show_commitment and app.neouser.isLoggedIn and app.locale == 'es' and not show_unhappy_warning and not show_encourage_fb %}
 <a href="{{ path('commitment', {'_locale': app.locale}) }}" class="actionable-banner">
 	<div class="actionable-banner-content">
 		<div>
