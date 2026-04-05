@@ -254,24 +254,6 @@ footer {
 		font-size: 2em;
 	}
 
-.tip.philanthropy {
-	background: #e8f5e9;
-	padding: .9em 1.2em;
-	font-size: 1.1em;
-	text-shadow: 1px 1px 0 white;
-	color: #2E7D32;
-	min-height: 100px;
-	max-height: 100px;
-	height: 100px;
-	box-sizing: border-box;
-}
-	.tip.philanthropy .boss {
-		text-transform: uppercase;
-		letter-spacing: .05em;
-		font-weight: bold;
-		font-size: 2em;
-	}
-
 /* USER BOOK */
 .books {
 	margin: 1px;
@@ -1953,6 +1935,40 @@ td.red {
 		border-bottom: 1px solid silver;
 		padding: .2em .3em;
 	}
+
+a.actionable-banner {
+    text-decoration: none;
+    display: block;
+    margin: 1em 0;
+    border-radius: .3em;
+    background: #eee;
+}
+a.actionable-banner:hover {
+    background: #e7e7e7;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+}
+.actionable-banner-content {
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.actionable-banner h3 {
+    margin: 0;
+    color: #444;
+    font-size: 1em;
+}
+.actionable-banner p {
+    margin: .3em 0 0;
+    color: #777;
+    font-size: .9em;
+}
+.actionable-banner-chevron {
+    font-size: 1.5em;
+    color: #999;
+    margin-left: 1em;
+    flex-shrink: 0;
+}
 
 /*
  * STATIC PAGES
