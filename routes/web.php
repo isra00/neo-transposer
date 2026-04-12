@@ -33,8 +33,26 @@ Route::prefix('{locale}')
 
         Route::get('/manifest.json', [WebManifestController::class, 'get'])->name('webmanifest');
 
-        Route::get('/people-compatible-transpositions',  function() { return 'Stub'; })
-            ->name('people-compatible-info');
+        Route::get('/commitment', function () {
+            return response()->view('pages.commitment.' . app()->getLocale(), [
+                'page_title' => 'Compromiso de gratuidad',
+                'page_class' => 'static-page',
+            ]);
+        })->where('locale', 'es')->name('commitment');
+
+        Route::get('/people-compatible-transpositions', function () {
+            $locale = app()->getLocale();
+            $templateFile = 'pages.people-compatible-info.' . $locale;
+
+            if (!view()->exists($templateFile)) {
+                $templateFile = 'pages.people-compatible-info.en';
+            }
+
+            return response()->view($templateFile, [
+                'page_title' => __('People-compatible transpositions'),
+                'page_class' => 'static-page',
+            ]);
+        })->name('people-compatible-info');
 
         Route::group(['middleware' => NeedsLoginMiddleware::class], function () {
 
@@ -44,8 +62,7 @@ Route::prefix('{locale}')
             Route::get('/user/book', [\App\Http\Controllers\UserBookController::class, 'get'])
                 ->name('user_book');
 
-            //Route::get('/all-songs-report', [\App\Http\Controllers\AllSongsReportController::class, 'get'])
-            Route::get('/all-songs-report', function() { return 'Stub'; })
+            Route::get('/all-songs-report', [\App\Http\Controllers\AllSongsReportController::class, 'get'])
                 ->name('all_songs_report');
 
             Route::get('/wizard', [\App\Http\Controllers\WizardSelectStandardController::class, 'get'])

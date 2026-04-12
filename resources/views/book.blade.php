@@ -23,6 +23,18 @@
         </a>
     @endif
 
+    @if (config('nt.show_commitment') && session('user')->isLoggedIn() && app()->getLocale() === 'es' && !$show_unhappy_warning && !$show_encourage_fb)
+        <a href="{{ route('commitment', ['locale' => app()->getLocale()]) }}" class="actionable-banner">
+            <div class="actionable-banner-content">
+                <div>
+                    <h3>📝 Compromiso de gratuidad</h3>
+                    <p>Neo-Transposer es y seguirá siendo siempre completamente gratuito.</p>
+                </div>
+                <span class="actionable-banner-chevron">›</span>
+            </div>
+        </a>
+    @endif
+
     @if ($show_unhappy_warning)
         <div class="tip no-icon unhappy-warning">
             <h2><span class="red">&#128534;</span> @lang('Something is going wrong')</h2>

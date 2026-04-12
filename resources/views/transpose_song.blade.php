@@ -65,7 +65,7 @@
     @if ($song->isAlreadyPeopleCompatible())
         <p class="tip people-compatible-info star">
             @lang('With these chords the assembly too will be able to sing the song comfortably.')
-            <small><a href="{{ url('people-compatible-info', ['locale' => app()->getLocale()]) }}">@lang('Learn more')</a></small>
+            <small><a href="{{ route('people-compatible-info', ['locale' => app()->getLocale()]) }}">@lang('Learn more')</a></small>
         </p>
     @endif
 
