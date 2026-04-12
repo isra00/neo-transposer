@@ -52,8 +52,8 @@ return [
     'chord_scores'                           => include 'nt.scores.php',
     'templates_dir'                          => __DIR__ . '/templates',
     'mmdb'                                   => 'GeoLite2-Country.mmdb',
-    'test_all_transpositions_expected'       => __DIR__ . '/tests/testAllTranspositions.expected.json',
-    'test_all_transpositions_expected_pc'    => __DIR__ . '/tests/testAllTranspositions.expected.PeopleCompatible.json',
+    'test_all_transpositions_expected'       => __DIR__ . '/../tests/testAllTranspositions.expected.json',
+    'test_all_transpositions_expected_pc'    => __DIR__ . '/../tests/testAllTranspositions.expected.PeopleCompatible.json',
     'css_cache'                              => '1314aa7b1c8163def2c403ef1f8dade8',
 
     'analytics_id'                           => getenv('NT_ANALYTICS_ID'),

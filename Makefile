@@ -43,7 +43,7 @@ start start-local: stop
 start-db-for-test:
 	@docker stop nt-mysql || true
 	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} mysql:8.3 --bind-address=0.0.0.0
-	sleep 15
+	sleep 10
 	@if [ -z "$NT_DB_USER" ] || [ -z "$NT_DB_PASSWORD" ] || [ -z "$NT_DB_DATABASE" ] || [ -z "$NT_DB_DATABASE_INTEGRATION" ]; then echo "Environment variables NT_DB_USER, NT_DB_PASSWORD, NT_DB_DATABASE and NT_DB_DATABASE_INTEGRATION must be set before calling this recipe" >&2; exit 1; fi
 	docker exec    nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE ${NT_DB_DATABASE} COLLATE 'utf8_general_ci'"
 	docker exec -i nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} ${NT_DB_DATABASE} < create_tables.sql
@@ -54,7 +54,7 @@ start-db-for-test:
 start-db-local:
 	@docker stop nt-mysql || true
 	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=root -v /var/www/vhosts/dev-env/mysql5:/var/lib/mysql mysql:8.3
-	sleep 15
+	sleep 10
 
 start-db-prod:
 	@docker stop nt-mysql || true
@@ -72,7 +72,7 @@ stop-all: stop
 test:
 	docker exec -t transposerlaravel-dev vendor/bin/codecept run unit --coverage-html --coverage-xml
 	@sed -i "s@\/var\/www\/html@\/\/wsl$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml || true
-	docker exec -t transposerlaravel-dev php tests/testAllTranspositions.php
+	docker exec -t transposerlaravel-dev php artisan app:test-all-transpositions
 
 test-acceptance:
 	docker start selenium-chrome || docker run -d --name selenium-chrome --platform linux/amd64 --add-host=host.docker.internal:172.17.0.1 -p 4444:4444 -p 7900:7900 --shm-size=2g selenium/standalone-chrome
