@@ -254,6 +254,40 @@ footer {
 		font-size: 2em;
 	}
 
+a.actionable-banner {
+	text-decoration: none;
+	display: block;
+	margin: 1em 0;
+	border-radius: .3em;
+	background: #eee;
+}
+a.actionable-banner:hover {
+	background: #e7e7e7;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+}
+.actionable-banner-content {
+	padding: 1em;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.actionable-banner h3 {
+	margin: 0;
+	color: #444;
+	font-size: 1em;
+}
+.actionable-banner p {
+	margin: .3em 0 0;
+	color: #777;
+	font-size: .9em;
+}
+.actionable-banner-chevron {
+	font-size: 1.5em;
+	color: #999;
+	margin-left: 1em;
+	flex-shrink: 0;
+}
+
 /* USER BOOK */
 .books {
 	margin: 1px;
@@ -1405,6 +1439,14 @@ h2.step-1 {
 		}
 
 		.all-songs-report .other.block {
+			display: block;
+		}
+
+		.all-songs-report .trans-peopleCompatible {
+			display: none;
+		}
+
+		.all-songs-report .trans-peopleCompatible.block {
 			display: block;
 		}
 

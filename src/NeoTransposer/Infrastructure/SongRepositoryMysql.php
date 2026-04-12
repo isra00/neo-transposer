@@ -26,9 +26,9 @@ AND NOT song.id_song IN (118, 319)
 ORDER BY page, title
 SQL;
 
-		$songs = (array)$this->dbConnection->select($sql, [$idUser, $idBook]);
-
-        return new SongsWithUserFeedbackCollection($songs);
+        return new SongsWithUserFeedbackCollection(
+            (array) $this->dbConnection->select($sql, [$idUser, $idBook])
+        );
     }
 
     public function readBookSongs(int $idBook): SongsCollection

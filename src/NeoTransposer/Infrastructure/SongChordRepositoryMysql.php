@@ -26,13 +26,13 @@ SQL;
 
     public function readSongChords(int $idSong): array
     {
-        $chordRows = (array)$this->dbConnection->select(
+        $chordRows = $this->dbConnection->select(
 			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
 			[$idSong]
 		);
 
         return array_map(
-            fn($chordRow) => Chord::fromString($chordRow['chord']),
+            fn($chordRow) => Chord::fromString($chordRow->chord),
             $chordRows
         );
 

@@ -12,6 +12,7 @@ use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
+use NeoTransposer\Domain\Repository\SongChordRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\Domain\Repository\UnhappyUserRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
@@ -20,6 +21,7 @@ use Illuminate\Contracts\Foundation\Application;
 use NeoTransposer\Infrastructure\FeedbackRepositoryMysql;
 use NeoTransposer\Infrastructure\GeoIpResolverGeoIp2;
 use NeoTransposer\Infrastructure\MysqlRepository;
+use NeoTransposer\Infrastructure\SongChordRepositoryMysql;
 use NeoTransposer\Infrastructure\SongRepositoryMysql;
 use NeoTransposer\Infrastructure\UnhappyUserRepositoryMysql;
 use NeoTransposer\Infrastructure\UserRepositoryMysql;
@@ -33,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(BookRepository::class, BookRepositoryMysql::class);
         $this->app->bind(SongRepository::class, SongRepositoryMysql::class);
+        $this->app->bind(SongChordRepository::class, SongChordRepositoryMysql::class);
         $this->app->bind(UserRepository::class, UserRepositoryMysql::class);
         $this->app->bind(FeedbackRepository::class, FeedbackRepositoryMysql::class);
         $this->app->bind(UnhappyUserRepository::class, UnhappyUserRepositoryMysql::class);
