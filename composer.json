@@ -63,7 +63,7 @@
 
         "test": [
             "vendor/bin/codecept run unit --coverage-html",
-            "php tests/testAllTranspositions.php"
+            "php artisan app:test-all-transpositions"
         ],
         "test-acceptance": [
             "docker start selenium_chrome || docker run -d -p 4444:4444 -p 7900:7900 --shm-size=2g --name selenium_chrome selenium/standalone-chrome",
