@@ -54,8 +54,11 @@ Route::prefix('{locale}')
             Route::get('/wizard/select-standard', [\App\Http\Controllers\WizardSelectStandardController::class, 'selectStandard'])
                 ->name('wizard_select_standard');
 
-            Route::match(['get', 'post'], '/wizard/lowest', function() { return 'Stub'; })
+            Route::match(['get', 'post'], '/wizard/lowest', [\App\Http\Controllers\WizardEmpiricController::class, 'lowest'])
                 ->name('wizard_empiric_lowest');
+
+            Route::match(['get', 'post'], '/wizard/highest', [\App\Http\Controllers\WizardEmpiricController::class, 'highest'])
+                ->name('wizard_empiric_highest');
         });
     });
 
