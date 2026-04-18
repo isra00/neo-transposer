@@ -40,3 +40,4 @@ GeoLite2-Country.mmdb
 _output
 /public/adminer*
 ntprod.sql
+public/static/compiled*
