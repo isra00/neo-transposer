@@ -5,7 +5,7 @@
 
 # This should be run on post-commit, right? Otherwise serve would fail bc commit name has changed.
 build-dev:
-	#sh update_mmdb.sh
+	sh update_mmdb.sh
 	docker build --target dev -t transposerlaravel:`git rev-parse --short HEAD`-dev .
 	docker tag transposerlaravel:`git rev-parse --short HEAD`-dev transposerlaravel:latest-dev
 
