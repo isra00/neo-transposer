@@ -132,20 +132,22 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 
     public function readIpFromUsersWithNullCountry(): array
     {
-        return (array)$this->dbConnection->select('SELECT register_ip FROM user WHERE country IS NULL');
+        return array_map(
+            fn($row) => (array) $row,
+            $this->dbConnection->select('SELECT register_ip FROM user WHERE country IS NULL')
+        );
     }
 
     public function saveUserCountryByIp(string $countryIsoCode, string $ip): void
     {
-        $this->dbConnection->update(
-            'user',
-            ['country' => $countryIsoCode],
-            ['register_ip' => $ip]
-        );
+        $this->dbConnection->table('user')->where('register_ip', $ip)->update(['country' => $countryIsoCode]);
     }
 
     public function readVoiceRangeFromAllUsers(): array
     {
-        return (array)$this->dbConnection->select('SELECT id_user, email, lowest_note, highest_note FROM user');
+        return array_map(
+            fn($row) => (array) $row,
+            $this->dbConnection->select('SELECT id_user, email, lowest_note, highest_note FROM user')
+        );
     }
 }

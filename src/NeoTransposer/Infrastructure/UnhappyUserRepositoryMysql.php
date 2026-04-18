@@ -9,7 +9,7 @@ final class UnhappyUserRepositoryMysql extends MysqlRepository implements Unhapp
 {
     public function readUserIsUnhappy(int $idUser): bool
     {
-        return false !== $this->dbConnection->fetchOne(
+        return false !== self::dbal()->fetchOne(
                 'SELECT id_user FROM unhappy_user WHERE id_user = ?',
                 [$idUser]
             );
@@ -36,7 +36,7 @@ final class UnhappyUserRepositoryMysql extends MysqlRepository implements Unhapp
 
     public function delete(int $idUser): void
     {
-        $this->dbConnection->delete('unhappy_user', ['id_user' => $idUser]);
+        self::dbal()->delete('unhappy_user', ['id_user' => $idUser]);
     }
 
     public function updateUnhappyUser(string $action, float $performanceBeforeAction, int $idUser): void

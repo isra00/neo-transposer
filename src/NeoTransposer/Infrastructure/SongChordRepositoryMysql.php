@@ -9,8 +9,9 @@ final class SongChordRepositoryMysql extends MysqlRepository implements SongChor
 {
     public function readAllSongChordsInOrder(): array
     {
-        return (array)$this->dbConnection->select(
-            'SELECT * FROM `song_chord` ORDER BY id_song ASC, position ASC'
+        return array_map(
+            fn($row) => (array) $row,
+            $this->dbConnection->select('SELECT * FROM `song_chord` ORDER BY id_song ASC, position ASC')
         );
     }
 

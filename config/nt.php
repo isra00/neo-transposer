@@ -29,22 +29,18 @@ return [
         'es' => [
             'name'     => 'Español',
             'notation' => 'latin',
-            'file'     => __DIR__ . '/trans/es.php'
         ],
         'sw' => [
             'name'     => 'Kiswahili',
             'notation' => 'american',
-            'file'     => __DIR__ . '/trans/sw.php'
         ],
         'pt' => [
             'name'     => 'Português',
             'notation' => 'latin',
-            'file'     => __DIR__ . '/trans/pt.php'
         ],
         'it' => [
             'name'     => 'Italiano',
             'notation' => 'latin',
-            'file'     => __DIR__ . '/trans/it.php'
         ]
     ],
 
@@ -54,7 +50,7 @@ return [
     'mmdb'                                   => 'GeoLite2-Country.mmdb',
     'test_all_transpositions_expected'       => __DIR__ . '/../tests/testAllTranspositions.expected.json',
     'test_all_transpositions_expected_pc'    => __DIR__ . '/../tests/testAllTranspositions.expected.PeopleCompatible.json',
-    'css_cache'                              => '1314aa7b1c8163def2c403ef1f8dade8',
+    'css_cache'                              => '332db24297179e87b53376af59e92869',
 
     'analytics_id'                           => getenv('NT_ANALYTICS_ID'),
     'sitemap_lastmod'                        => '2022-03-08T10:00Z',
