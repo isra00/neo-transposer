@@ -2,41 +2,29 @@
 
 namespace NeoTransposer\Domain\AdminTasks;
 
-use Silex\Application;
+use App\Http\Controllers\ServeCssController;
 
-/**
- * Delete all compiled-*.css files except the one refered to in config.php
- */
 final class RemoveOldCompiledCss implements AdminTask
 {
-    public function __construct(protected Application $dependencyContainer)
-    {
-    }
-
     public function run(): string
     {
-        $serveCssController = new \NeoTransposer\Controllers\ServeCss();
-        $fileScheme = $serveCssController->min_file;
-        $cssDir = realpath('.' . dirname((string) $fileScheme));
-        chdir($cssDir);
-        $currentFile = sprintf($fileScheme, $this->dependencyContainer['neoconfig']['css_cache']);
+        $currentFile = basename(sprintf(ServeCssController::MIN_FILE_PATTERN, config('nt.css_cache')));
+        $cssDir = dirname(public_path(ServeCssController::MIN_FILE_PATTERN));
 
-        $allCssFiles = glob(sprintf(basename((string) $fileScheme), '*'));
-        $deletedCounter = 0;
+        $allCssFiles = glob($cssDir . '/' . basename(sprintf(ServeCssController::MIN_FILE_PATTERN, '*')));
         $output = [];
+
         foreach ($allCssFiles as $file) {
-            if ($file != basename($currentFile)) {
-                unlink($cssDir . '/' . $file);
-                $deletedCounter++;
-                $output[] = "Deleted $file";
+            if (basename($file) != $currentFile) {
+                unlink($file);
+                $output[] = "Deleted " . basename($file);
             }
         }
 
-		if (empty($output))
-		{
-			$output[] = 'No old compiled CSS found';
-		}
+        if (empty($output)) {
+            $output[] = 'No old compiled CSS found';
+        }
 
-		return implode("\n", $output);
+        return implode("\n", $output);
     }
 }
