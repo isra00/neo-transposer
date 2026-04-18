@@ -10,8 +10,6 @@ final class ChordCorrectionPanelController extends Controller
 {
     public function get(CheckChordsOrder $checkChordsOrder)
     {
-        app()->setLocale('es');
-
         $problematic = $checkChordsOrder->checkChordOrderArray();
 
         if (!$problematic) {

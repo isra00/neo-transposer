@@ -24,8 +24,6 @@ final class AdminDashboardController extends Controller
 
     public function get(Request $request, AdminMetricsReader $adminMetricsReader)
     {
-        app()->setLocale('es');
-
         if ($tool = $request->get('tool')) {
             if (!in_array($tool, self::TOOLS)) {
                 abort(404, "Invalid tool name $tool");

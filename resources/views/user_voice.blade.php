@@ -19,7 +19,7 @@
 				@lang('Lowest:')
 				<select name="lowest_note" id="lowest_note">
 				@foreach ($acoustic_scale as $i => $note)
-					<option value="{{ $note }}1"@if(session('user')->range->lowest == $note . '1') selected="selected"@endif>{{ $acoustic_scale_nice[$i] }}</option>
+					<option value="{{ $note }}1"@if(session('user')->range?->lowest == $note . '1') selected="selected"@endif>{{ $acoustic_scale_nice[$i] }}</option>
 				@endforeach
 				</select>
 			</span>
@@ -28,13 +28,13 @@
 				@lang('Highest:')
 				<select name="highest_note" id="highest_note">
 				@foreach ($acoustic_scale as $i => $note)
-					<option value="{{ $note }}1"@if(session('user')->range->highest == $note . '1') selected="selected"@endif>{{ $acoustic_scale_nice[$i] }}</option>
+					<option value="{{ $note }}1"@if(session('user')->range?->highest == $note . '1') selected="selected"@endif>{{ $acoustic_scale_nice[$i] }}</option>
 				@endforeach
 
 				@for ($octave = 2; $octave <= 3; $octave++)
 					<optgroup label="+{{ $octave - 1 }} {{ trans_choice('{1}octave|[2,*]octaves', $octave - 1) }}">
 					@foreach ($acoustic_scale as $i => $note)
-						<option value="{{ $note }}{{ $octave }}"@if(session('user')->range->highest == $note . $octave) selected="selected"@endif>{{ $acoustic_scale_nice[$i] }} + {{ $octave - 1 }}{{ __('oct') }}</option>
+						<option value="{{ $note }}{{ $octave }}"@if(session('user')->range?->highest == $note . $octave) selected="selected"@endif>{{ $acoustic_scale_nice[$i] }} + {{ $octave - 1 }}{{ __('oct') }}</option>
 					@endforeach
 					</optgroup>
 				@endfor
