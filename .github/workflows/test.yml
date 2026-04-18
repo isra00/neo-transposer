@@ -3,6 +3,7 @@ name: Test Neo-Transposer
 on: [push]
 
 env:
+  APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
   NT_DB_HOST: host.docker.internal
   NT_DB_USER: root
   NT_DB_PASSWORD: root
