@@ -1,3 +1,20 @@
+FROM composer:2.8.1 AS composer
+
+ARG WORKDIR="/app"
+
+WORKDIR ${WORKDIR}
+
+COPY composer.json composer.lock ${WORKDIR}/
+RUN composer install \
+    --ignore-platform-reqs \
+    --no-ansi \
+    --no-interaction \
+    --no-scripts
+
+COPY . ${WORKDIR}
+RUN composer dump-autoload --optimize --classmap-authoritative
+
+# ----------------------------------------------------------------------------------------------------------------------
 FROM php:8.3-apache AS nt-common
 
 ARG WORKDIR="/app"
@@ -12,6 +29,8 @@ RUN apt update && apt install -y libzip-dev zlib1g-dev; \
     a2enmod rewrite headers deflate expires
 
 COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
+
+COPY --from=composer --chown=www-data ${WORKDIR} /var/www/html/
 
 # ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS prod
