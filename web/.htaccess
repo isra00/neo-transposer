@@ -12,6 +12,8 @@
 	RewriteRule ^(apple\-touch\-icon.*)$ /static/img/$1 [R=301,L]
 
 	RewriteCond %{REQUEST_FILENAME} !-f
+	# This condition excludes saves PHP from handling non-existing static requests (which took down the server when a bot requested non-existing .zip's repeatedly)
+	RewriteCond %{REQUEST_URI} !\.(zip|pdf|jpg|jpeg|png|gif|css|js)$ [NC]
 	RewriteRule ^ index.php [QSA,L]
 </IfModule>
 
