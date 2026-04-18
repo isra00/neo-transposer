@@ -79,6 +79,10 @@ test:
 test-acceptance:
 	docker start selenium-chrome || docker run -d --name selenium-chrome --platform linux/amd64 --add-host=host.docker.internal:172.17.0.1 -p 4444:4444 -p 7900:7900 --shm-size=2g selenium/standalone-chrome
 	sleep 5
+	# Restart dev container with NT_DEBUG=0.
+	$(MAKE) stop
+	NT_DEBUG=0 $(MAKE) start-local
+	sleep 3
 	docker exec -t transposerlaravel-dev php /var/www/html/vendor/bin/codecept run acceptance
 
 get-test-outputs:
