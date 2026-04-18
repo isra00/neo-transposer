@@ -420,7 +420,7 @@
 		<tbody>
 	@foreach ($dfb_pc_status as $fbpc)
 			<tr>
-				<td>{{ $fbpc['pc_status'] ?? '[unspecified]' }}</td>
+				<td>{{ $fbpc['pc_status'] ?: '[unspecified]' }}</td>
 				<td>{{ $fbpc['fbss'] }}</td>
 				<td>{{ round(($fbpc['chosePeopleCompatible'] / $fbpc['fbss']) * 100) }}<small>%</small></td>
 			</tr>
@@ -459,7 +459,7 @@
 		<thead><tr>
 			<th>Transposition</th>
 			<th>Deviation</th>
-			<th># fb</th>
+			<th># fb 👍</th>
 		</tr></thead>
 		<tbody>
 		@foreach ($dfb_deviation as $row)
