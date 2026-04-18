@@ -115,39 +115,35 @@ SQL;
         ?string $url = null
     ): void {
 
-        $this->dbConnection->insert('song', [
-			'id_book' 				=> $idBook,
-			'page' 					=> $page,
-			'title' 				=> $title,
-			'lowest_note' 			=> $lowestNote,
-			'highest_note' 			=> $highestNote,
-			'people_lowest_note' 	=> $peopleLowestNote,
-			'people_highest_note' 	=> $peopleHighestNote,
-			'first_chord_is_tone' 	=> $firstChordIsNote,
-			'slug'	 				=> $slug,
-			'url'	 				=> $url
-		]);
+        $idSong = $this->dbConnection->table('song')->insertGetId([
+            'id_book'             => $idBook,
+            'page'                => $page,
+            'title'               => $title,
+            'lowest_note'         => $lowestNote,
+            'highest_note'        => $highestNote,
+            'people_lowest_note'  => $peopleLowestNote,
+            'people_highest_note' => $peopleHighestNote,
+            'first_chord_is_tone' => $firstChordIsNote,
+            'slug'                => $slug,
+            'url'                 => $url,
+        ]);
 
-		$idSong = $this->dbConnection->lastInsertId();
-
-		foreach ($chords as $position=>$chord)
-		{
-			if ($chord != '')
-			{
-				$this->dbConnection->insert('song_chord', [
+        foreach ($chords as $position => $chord) {
+            if ($chord != '') {
+                $this->dbConnection->table('song_chord')->insert([
                     'id_song'  => $idSong,
                     'chord'    => $chord,
-                    'position' => $position
+                    'position' => $position,
                 ]);
-			}
-		}
+            }
+        }
     }
 
     public function slugAlreadyExists(string $slug): bool
     {
-        return !empty($this->dbConnection->fetchAssociative(
-			'SELECT id_song, slug FROM song WHERE slug = ?',
-			[$slug]
-		));
+        return null !== $this->dbConnection->selectOne(
+            'SELECT id_song FROM song WHERE slug = ?',
+            [$slug]
+        );
     }
 }
