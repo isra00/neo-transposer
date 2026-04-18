@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ $page_title }}</title>
-    <link rel="stylesheet" href="{{ url('/static/style.css?v=' . $cssVersion) }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url('/static/' . $cssFile) }}" type="text/css" />
 
     <link rel="icon" type="image/svg+xml" sizes="512x512" href="{{ url('/static/img/logo-red.svg') }}">
     <link rel="icon" type="image/png" sizes="512x512" href="{{ url('/static/img/icon-512x512.png') }}">
