@@ -133,6 +133,10 @@ Route::middleware(\App\Http\Middleware\AdminBasicAuth::class)->group(function ()
     Route::get('/admin/chord-correction', [\App\Http\Controllers\ChordCorrectionPanelController::class, 'get'])
         ->name('chord_correction_panel');
     Route::post('/admin/chord-correction', [\App\Http\Controllers\ChordCorrectionPanelController::class, 'post']);
+
+    Route::get('/admin/insert-song', [\App\Http\Controllers\InsertSongController::class, 'get'])
+        ->name('insert_song');
+    Route::post('/admin/insert-song', [\App\Http\Controllers\InsertSongController::class, 'post']);
 });
 /*
 Route::get('/admin/insert-song', [\App\Http\Controllers\InsertSongController::class, 'get']);
