@@ -8,7 +8,7 @@ use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Service\AdminMetricsReader;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 class AdminMetricsReaderTest extends TestCase
 {

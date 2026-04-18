@@ -87,6 +87,10 @@ Route::group(['middleware' => NeedsLoginMiddleware::class], function() {
 
 Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'get']);
 
+// Lazily compiles /static/compiled-<hash>.css when Apache doesn't find it on disk.
+Route::get('/static/compiled-{hash}.css', [\App\Http\Controllers\ServeCssController::class, 'get'])
+    ->where('hash', '[a-f0-9]{32}');
+
 // Feedback route handles auth check itself (returns 408 for AJAX when session expires)
 Route::post('/feedback', [\App\Http\Controllers\ReceiveFeedbackController::class, 'post'])
     ->name('transposition_feedback');
@@ -119,14 +123,20 @@ Route::get('/{_locale}/external-login-finish', [\App\Http\Controllers\LoginContr
     ->where('_locale', $validLocales)
     ->name('external_login_finish')
     ->middleware(NeedsLoginMiddleware::class);
-
+*/
 // Admin routes
+Route::get('/admin/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'get'])
+    ->middleware(\App\Http\Middleware\AdminBasicAuth::class)
+    ->name('admin_dashboard');
+
+Route::middleware(\App\Http\Middleware\AdminBasicAuth::class)->group(function () {
+    Route::get('/admin/chord-correction', [\App\Http\Controllers\ChordCorrectionPanelController::class, 'get'])
+        ->name('chord_correction_panel');
+    Route::post('/admin/chord-correction', [\App\Http\Controllers\ChordCorrectionPanelController::class, 'post']);
+});
+/*
 Route::get('/admin/insert-song', [\App\Http\Controllers\InsertSongController::class, 'get']);
 Route::post('/admin/insert-song', [\App\Http\Controllers\InsertSongController::class, 'post']);
-Route::get('/admin/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'get']);
-Route::get('/admin/chord-correction', [\App\Http\Controllers\ChordCorrectionPanelController::class, 'get']);
-Route::post('/admin/chord-correction', [\App\Http\Controllers\ChordCorrectionPanelController::class, 'post'])
-    ->name('chord_correction_panel');
 
 // Serve CSS route
 Route::get('/static/compiled-' . config('neoconfig.css_cache') . '.css', [\App\Http\Controllers\ServeCssController::class, 'get']);

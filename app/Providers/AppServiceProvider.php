@@ -23,6 +23,8 @@ use NeoTransposer\Infrastructure\GeoIpResolverGeoIp2;
 use NeoTransposer\Infrastructure\MysqlRepository;
 use NeoTransposer\Infrastructure\SongChordRepositoryMysql;
 use NeoTransposer\Infrastructure\SongRepositoryMysql;
+use NeoTransposer\Domain\Repository\AdminMetricsRepository;
+use NeoTransposer\Infrastructure\AdminMetricsRepositoryMysql;
 use NeoTransposer\Infrastructure\UnhappyUserRepositoryMysql;
 use NeoTransposer\Infrastructure\UserRepositoryMysql;
 
@@ -39,6 +41,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserRepository::class, UserRepositoryMysql::class);
         $this->app->bind(FeedbackRepository::class, FeedbackRepositoryMysql::class);
         $this->app->bind(UnhappyUserRepository::class, UnhappyUserRepositoryMysql::class);
+        $this->app->bind(AdminMetricsRepository::class, AdminMetricsRepositoryMysql::class);
+
+        $this->app->bind(\NeoTransposer\Domain\AdminTasks\CheckMissingTranslations::class, function () {
+            return new \NeoTransposer\Domain\AdminTasks\CheckMissingTranslations(config('nt.languages'));
+        });
 
         $this->app->singleton(GeoIpResolver::class, function (Application $app) {
             return $app->make(GeoIpResolverGeoIp2::class, ['reader' => new \GeoIp2\Database\Reader(base_path() . '/' . config('nt.mmdb'))]);
@@ -65,9 +72,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::share('cssVersion', config('app.debug')
-            ? time()
-            : trim(exec('git log --pretty="%h" -n1 HEAD')));
+        View::share('cssFile', config('app.debug')
+            ? 'style.css?nocache=' . time()
+            : 'compiled-' . config('nt.css_cache') . '.css');
 
         View::composer('_base', PageTitleComposer::class);
 

@@ -95,7 +95,10 @@ SQL;
 
     public function readAllSongs(): array
     {
-        return (array)$this->dbConnection->select('SELECT * FROM song');
+        return array_map(
+            fn($row) => (array) $row,
+            $this->dbConnection->select('SELECT * FROM song')
+        );
     }
 
     public function createSong(

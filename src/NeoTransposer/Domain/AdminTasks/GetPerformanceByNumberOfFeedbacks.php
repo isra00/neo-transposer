@@ -2,14 +2,10 @@
 
 namespace NeoTransposer\Domain\AdminTasks;
 
-use Doctrine\DBAL\Connection;
+use Illuminate\Support\Facades\DB;
 
 final class GetPerformanceByNumberOfFeedbacks implements AdminTask
 {
-    public function __construct(protected Connection $dbConnection)
-    {
-    }
-    
 	public function run(): string
 	{
 		$sql = <<<SQL
@@ -23,11 +19,11 @@ from (
 group by fbs
 order by fbs desc
 SQL;
-		$data = $this->dbConnection->fetchAllAssociative($sql);
+		$data = DB::select($sql);
 		$output = "# of FBs,# of users,AVG performance\n";
 		foreach ($data as $row)
 		{
-			$output .= implode(',', $row) . "\n";
+			$output .= implode(',', (array) $row) . "\n";
 		}
 
 		return $output;
