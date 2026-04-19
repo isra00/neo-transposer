@@ -151,13 +151,7 @@ final class WizardEmpiricController extends Controller
         $this->unhappinessManager->changedVoiceRangeFromWizard($user);
 
         $redirectRoute = 'book_' . $this->bookRepository->readIdBookFromLocale($locale);
-        $params = ['wizardFinished' => 1];
 
-        if (!empty(session('callbackSetUserToken'))) {
-            $redirectRoute = 'external_login_finish';
-            $params['locale'] = $locale;
-        }
-
-        return redirect()->route($redirectRoute, $params);
+        return redirect()->route($redirectRoute, ['wizardFinished' => 1]);
     }
 }
