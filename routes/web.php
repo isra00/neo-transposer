@@ -34,24 +34,30 @@ Route::prefix('{locale}')
         Route::get('/manifest.json', [WebManifestController::class, 'get'])->name('webmanifest');
 
         Route::get('/commitment', function () {
-            return response()->view('pages.commitment.' . app()->getLocale(), [
+            return response(view()->file(resource_path('views/pages/commitment.' . app()->getLocale() . '.blade.php'), [
                 'page_title' => 'Compromiso de gratuidad',
                 'page_class' => 'static-page',
-            ]);
+            ]));
         })->where('locale', 'es')->name('commitment');
 
-        Route::get('/people-compatible-transpositions', function () {
-            $locale = app()->getLocale();
-            $templateFile = 'pages.people-compatible-info.' . $locale;
+        Route::get('/manifesto', function () {
+            return response(view()->file(resource_path('views/pages/manifesto.' . app()->getLocale() . '.blade.php'), [
+                'page_title' => 'Manifiesto',
+                'page_class' => 'static-page',
+            ]));
+        })->where('locale', 'es')->name('manifesto');
 
-            if (!view()->exists($templateFile)) {
-                $templateFile = 'pages.people-compatible-info.en';
+        Route::get('/people-compatible-transpositions', function () {
+            $templatePath = resource_path('views/pages/people-compatible-info.' . app()->getLocale() . '.blade.php');
+
+            if (!file_exists($templatePath)) {
+                $templatePath = resource_path('views/pages/people-compatible-info.en.blade.php');
             }
 
-            return response()->view($templateFile, [
+            return response(view()->file($templatePath, [
                 'page_title' => __('People-compatible transpositions'),
                 'page_class' => 'static-page',
-            ]);
+            ]));
         })->name('people-compatible-info');
 
         Route::group(['middleware' => NeedsLoginMiddleware::class], function () {
@@ -117,12 +123,6 @@ Route::match(['get', 'post'], '/{_locale}/wizard/highest', [\App\Http\Controller
     ->name('wizard_empiric_highest')
     ->middleware(NeedsLoginMiddleware::class);
 
-
-// External Login Finish route
-Route::get('/{_locale}/external-login-finish', [\App\Http\Controllers\LoginController::class, 'externalLoginFinish'])
-    ->where('_locale', $validLocales)
-    ->name('external_login_finish')
-    ->middleware(NeedsLoginMiddleware::class);
 */
 // Admin routes
 Route::get('/admin/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'get'])
@@ -151,14 +151,6 @@ Route::get('/get-lucky', [\App\Http\Controllers\TransposeSongController::class, 
 
 Route::get('/sura-yako', [\App\Http\Controllers\TransposeSongController::class, 'get'])
     ->defaults('id_song', 319);
-
-// Manifesto page route
-Route::get('/{_locale}/manifesto', function ($_locale) {
-    return view('pages.manifesto.' . $_locale, [
-        'page_title' => __('Manifesto')
-    ]);
-})->where('_locale', 'es')
-    ->name('manifesto');
 
 // People-compatible transpositions route
 Route::get('/{_locale}/people-compatible-transpositions', function ($_locale) {

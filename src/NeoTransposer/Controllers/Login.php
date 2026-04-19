@@ -21,7 +21,6 @@ final class Login
      * Display login page (=landing page).
      *
      * @param array   $tpl_vars Additional vars for Twig, i.e. validation errors.
-     *
      */
     public function get(Request $req, NeoApp $app, array $tpl_vars = []): string
     {
@@ -46,8 +45,6 @@ final class Login
     /**
      * Receive the login data and reload login if failed to log in, or redirect
      * to voice wizard if user has no voice range, or redirect to book.
-     *
-     *
      */
     public function post(Request $req, NeoApp $app): string|\Symfony\Component\HttpFoundation\RedirectResponse
     {

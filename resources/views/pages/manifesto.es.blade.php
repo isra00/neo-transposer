@@ -1,11 +1,9 @@
-{% extends "base.twig" %}
+@extends('_base')
 
-{% block page_class %}static-page{% endblock %}
-
-{% block content %}
+@section('content')
 
 <div class="inside">
-	<h1>{% trans %}Manifiesto{% endtrans %}</h1>
+	<h1>Manifiesto</h1>
 
 	<p>Vivimos en un mundo saturado de tecnología, y la mayor parte de ella, en vez de facilitarnos la vida, nos la complica. No solo no resuelve los grandes problemas (violencia, soledad, pobreza, corrupción, falta de sentido de la vida, ignorancia...), sino que nos añade muchos otros. Y nos mete en una cultura de adicción a la novedad, <a href="http://alfonscornella.com/thought/infoxicacion/">infoxicación</a>, consumismo y superficialidad.</p>
 	<p>Los que hacen tecnología (incluidos algunos hermanos del Camino) están concentrados en los objetivos medibles: beneficio económico, número de visitas, número de likes. Lo importante es que el producto y la marca se vuelvan famosos, acaparen la atención, rindan económicamente. Los efectos que esto cause en la vida de las personas ya no importan. Lo importante son los medios, no los fines.</p>
@@ -24,4 +22,4 @@
 	<a href="mailto:neo-transposer@mail.com">neo-transposer@mail.com</a></p>
 </div>
 
-{% endblock %}
+@endsection

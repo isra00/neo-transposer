@@ -13,15 +13,13 @@
 @section('page_class', '')
 
 @section('languageSwitchTop')
-    @if (!request()->has('external'))
-        <nav class="lang-switch-top">
-            @foreach (config('nt.languages') as $locale => $lang)
-                <a class="flag-{{ $locale }} @if ($locale == app()->getLocale()) active @endif" hreflang="{{ $locale }}" href="{{ route('login', ['locale' => $locale]) }}">
-                    {{ Str::substr($lang['name'], 0, 3) }}<span>{{ Str::substr($lang['name'], 3) }}</span>
-                </a>
-            @endforeach
-        </nav>
-    @endif
+    <nav class="lang-switch-top">
+        @foreach (config('nt.languages') as $locale => $lang)
+            <a class="flag-{{ $locale }} @if ($locale == app()->getLocale()) active @endif" hreflang="{{ $locale }}" href="{{ route('login', ['locale' => $locale]) }}">
+                {{ Str::substr($lang['name'], 0, 3) }}<span>{{ Str::substr($lang['name'], 3) }}</span>
+            </a>
+        @endforeach
+    </nav>
 @endsection
 
 @section('content')

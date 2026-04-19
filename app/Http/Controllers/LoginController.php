@@ -24,7 +24,6 @@ class LoginController extends Controller
         session(['user' => new User()]);
 
         $tplVars['all_books']        = $bookRepository->readAllBooks();
-        $tplVars['external']         = !empty($req->get('external')); /** @deprecated  */
         $tplVars['page_title']       = __('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
         $tplVars['meta_description'] = __('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
         $tplVars['meta_canonical']   = url()->current();
