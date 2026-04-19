@@ -8,54 +8,14 @@ use NeoTransposer\Infrastructure\LoginFlow;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
-        health: '/up',
+        commands: __DIR__.'/../routes/console.php'
     )
     ->withMiddleware(function (Middleware $middleware) {
-
-        $middleware->validateCsrfTokens(except: [
-            '*',
-        ]);
-
-        /*$middleware->redirectGuestsTo(function(\Illuminate\Http\Request $request) {
-
-            $currentRoute = request()->route()->getName();
-            dd($currentRoute);
-
-            //Login page has its own redirection logic.
-            if ($currentRoute === 'login')
-            {
-                return null;
-            }
-
-            $currentUser = new \NeoTransposer\Domain\Entity\User('fake', 1, null, 2);
-
-            if (empty($currentUser->id_user))
-            {
-                return 'login';
-            }
-
-            if (!$currentUser->hasRange())
-            {
-                $exempt = [
-                    'user_settings',
-                    'user_voice',
-                    'set_user_data',
-                    'wizard_step1',
-                    'wizard_select_standard',
-                    'wizard_empiric_lowest',
-                    'wizard_empiric_highest'
-                ];
-
-                if (!in_array($currentRoute, $exempt))
-                {
-                    return 'user_voice';
-                }
-            }
-
-            return null;
-        });*/
+        $middleware->validateCsrfTokens(except: ['*']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
+            app(\App\Support\LocaleAutodetector::class)->detect($request);
+            return null;
+        });
     })->create();

@@ -73,7 +73,7 @@ stop-all: stop
 test:
 	@docker exec transposerlaravel-dev bash -c "mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini.disabled /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null; true"
 	@docker exec nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${NT_DB_DATABASE_INTEGRATION} COLLATE 'utf8_general_ci'"
-	docker exec -t transposerlaravel-dev vendor/bin/codecept run unit --coverage-html --coverage-xml
+	docker exec -t transposerlaravel-dev vendor/bin/codecept run --skip acceptance --coverage-html --coverage-xml
 	@sed "s@\/var\/www\/html@\/\/wsl$$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml > tests/_output/coverage.xml.tmp && mv tests/_output/coverage.xml.tmp tests/_output/coverage.xml || true
 	docker exec -t transposerlaravel-dev php artisan app:test-all-transpositions
 

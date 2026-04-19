@@ -156,7 +156,6 @@ final class TransposedSong
     /**
      * Check whether the given transposition is within people's range for the current song.
      *
-     *
      * @throws Exception
      */
     private function isCompatibleWithPeople(Transposition $transposition): bool
