@@ -44,7 +44,8 @@ start start-local: stop
 start-db-local:
 	@docker stop nt-mysql || true
 	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} -v nt-mysql:/var/lib/mysql mysql:8.3
-	sleep 5
+	@echo "Waiting for MySQL to be ready..."
+	@for i in $$(seq 1 30); do docker exec nt-mysql mysql -uroot -p${NT_DB_PASSWORD} -e "SELECT 1" >/dev/null 2>&1 && break; sleep 2; done
 
 import-prod-db:
 	docker exec nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "SET GLOBAL log_bin_trust_function_creators = 1; CREATE DATABASE IF NOT EXISTS ${NT_DB_DATABASE} COLLATE 'utf8_general_ci'"
@@ -53,7 +54,8 @@ import-prod-db:
 start-db-for-test:
 	@docker stop nt-mysql || true
 	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} mysql:8.3
-	sleep 5
+	@echo "Waiting for MySQL to be ready..."
+	@for i in $$(seq 1 30); do docker exec nt-mysql mysql -uroot -p${NT_DB_PASSWORD} -e "SELECT 1" >/dev/null 2>&1 && break; sleep 2; done
 	@if [ -z "$NT_DB_USER" ] || [ -z "$NT_DB_PASSWORD" ] || [ -z "$NT_DB_DATABASE" ] || [ -z "$NT_DB_DATABASE_INTEGRATION" ]; then echo "Environment variables NT_DB_USER, NT_DB_PASSWORD, NT_DB_DATABASE and NT_DB_DATABASE_INTEGRATION must be set before calling this recipe" >&2; exit 1; fi
 	docker exec    nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE ${NT_DB_DATABASE} COLLATE 'utf8_general_ci'"
 	docker exec -i nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} ${NT_DB_DATABASE} < create_tables.sql
@@ -70,6 +72,7 @@ stop-all: stop
 
 test:
 	@docker exec transposerlaravel-dev bash -c "mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini.disabled /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null; true"
+	@docker exec nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${NT_DB_DATABASE_INTEGRATION} COLLATE 'utf8_general_ci'"
 	docker exec -t transposerlaravel-dev vendor/bin/codecept run unit --coverage-html --coverage-xml
 	@sed "s@\/var\/www\/html@\/\/wsl$$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml > tests/_output/coverage.xml.tmp && mv tests/_output/coverage.xml.tmp tests/_output/coverage.xml || true
 	docker exec -t transposerlaravel-dev php artisan app:test-all-transpositions

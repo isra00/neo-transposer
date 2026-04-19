@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Stack: Laravel 11, Blade, Docker, zepto/jQuery, MySQL
+Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 
 ## Development
 
@@ -8,6 +8,8 @@ Stack: Laravel 11, Blade, Docker, zepto/jQuery, MySQL
 - Run commands inside the Docker container or via the Makefile.
 - Use `make start-local` for development, `make test` for tests, `make bash` for shell.
 - The app runs in Docker; DB host is `host.docker.internal`.
+- When running locally, unit tests use the NT_DB_DATABASE_INTEGRATION schema seeded with test data. The test-all-transpositions (functional test) and acceptance (e2e) ones run against whatever database is running, to facilitate testing algorithm and song data changes done locally.
+- In the CI environment, all tests run against the test database schema (see the GHA test.yml flow).
 
 ## Silex → Laravel migration
 
@@ -38,6 +40,7 @@ This project is being migrated from Silex to Laravel 11. Many controllers and vi
 - Twig used `%key%` placeholders; Laravel uses `:key`. Update JSON files in `lang/` when migrating.
 - HTML entities (`&larr;`) go outside `@lang()`, not inside the translation key.
 - Use `{!! __(...) !!}` when the translated string contains HTML (e.g. `<strong>`).
+- Beware of quotation marks within translation strings. Make sure everything is escaped properly.
 
 ### Scripts & commands
 - Legacy standalone PHP scripts should become Artisan commands with `app:kebab-case` naming.
