@@ -41,27 +41,25 @@ start start-local: stop
 		$(OPTIONAL_VOLUME) \
 		transposerlaravel:latest-dev
 
+start-db-local:
+	@docker stop nt-mysql || true
+	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} -v nt-mysql:/var/lib/mysql mysql:8.3
+	sleep 5
+
+import-prod-db:
+	docker exec nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "SET GLOBAL log_bin_trust_function_creators = 1; CREATE DATABASE IF NOT EXISTS ${NT_DB_DATABASE} COLLATE 'utf8_general_ci'"
+	docker exec -i nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} ${NT_DB_DATABASE} < ntprod.sql
+
 start-db-for-test:
 	@docker stop nt-mysql || true
-	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} mysql:8.3 --bind-address=0.0.0.0
-	sleep 10
+	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} mysql:8.3
+	sleep 5
 	@if [ -z "$NT_DB_USER" ] || [ -z "$NT_DB_PASSWORD" ] || [ -z "$NT_DB_DATABASE" ] || [ -z "$NT_DB_DATABASE_INTEGRATION" ]; then echo "Environment variables NT_DB_USER, NT_DB_PASSWORD, NT_DB_DATABASE and NT_DB_DATABASE_INTEGRATION must be set before calling this recipe" >&2; exit 1; fi
 	docker exec    nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE ${NT_DB_DATABASE} COLLATE 'utf8_general_ci'"
 	docker exec -i nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} ${NT_DB_DATABASE} < create_tables.sql
 	docker exec -i nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} ${NT_DB_DATABASE} < song_data.sql
 	docker exec    nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE ${NT_DB_DATABASE_INTEGRATION} COLLATE 'utf8_general_ci'"
 	docker exec -i nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} ${NT_DB_DATABASE_INTEGRATION} < create_tables.sql
-
-start-db-local:
-	@docker stop nt-mysql || true
-	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=root -v /var/www/vhosts/dev-env/mysql5:/var/lib/mysql mysql:8.3
-	sleep 10
-
-start-db-prod:
-	@docker stop nt-mysql || true
-	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=root -v ./neo-transposer.sql:/docker-entrypoint-initdb.d/neo-transposer.sql mysql:8.3
-	docker run --rm -dit -p 3306:3306 --name nt-mysql --platform linux/x86_64 -e MYSQL_ROOT_PASSWORD=${NT_DB_PASSWORD} mysql:8.3 --bind-address=0.0.0.0
-	sleep 10
 
 #No need to delete it after stopping since it's run with --rm
 stop:
@@ -79,10 +77,6 @@ test:
 test-acceptance:
 	docker start selenium-chrome || docker run -d --name selenium-chrome --platform linux/amd64 --add-host=host.docker.internal:172.17.0.1 -p 4444:4444 -p 7900:7900 --shm-size=2g selenium/standalone-chrome
 	sleep 5
-	# Restart dev container with NT_DEBUG=0.
-	$(MAKE) stop
-	NT_DEBUG=0 $(MAKE) start-local
-	sleep 3
 	docker exec -t transposerlaravel-dev php /var/www/html/vendor/bin/codecept run acceptance
 
 get-test-outputs:
@@ -91,6 +85,14 @@ get-test-outputs:
 clean:
 	rm -r cache/twig/*
 	rm -r cache/profiler/*
+
+xdebug-off:
+	docker exec transposerlaravel-dev bash -c "mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini.disabled 2>/dev/null; apache2ctl graceful"
+	@echo "Xdebug disabled."
+
+xdebug-on:
+	docker exec transposerlaravel-dev bash -c "mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini.disabled /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null; apache2ctl graceful"
+	@echo "Xdebug enabled."
 
 composer:
 	@echo "To run composer, type docker exec -it transposerlaravel-dev composer.phar [command]"

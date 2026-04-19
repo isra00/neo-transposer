@@ -23,6 +23,7 @@ class Shared
     {
         $I->amOnPage('/cantos-camino-neocatecumenal');
         $I->click('.song-index li:nth-child(' . $songIndex . ') a');
+        $I->executeJS('document.querySelectorAll(".phpdebugbar").forEach(e => e.remove())');
         $I->click($clickElement);
     }
 }
