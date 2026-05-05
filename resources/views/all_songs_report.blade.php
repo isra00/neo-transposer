@@ -52,6 +52,15 @@
                 ])
             @endforeach
 
+            @if ($item->feedbackTranspositionWhichWorked === 'notEquivalent' && $item->transposedSong->not_equivalent)
+                @include('partial_all_songs_transposition', [
+                    'transposition' => $item->transposedSong->not_equivalent,
+                    'item' => $item,
+                    'prefix' => null,
+                    'typeOfTransposition' => 'notEquivalent',
+                ])
+            @endif
+
             @if (config('nt.show_people_compatible_in_report') && $item->transposedSong->getPeopleCompatible())
                 @include('partial_all_songs_transposition', [
                     'transposition' => $item->transposedSong->getPeopleCompatible(),
@@ -89,7 +98,12 @@ function togglePeopleCompatible()
             elements[e].classList.toggle("block");
     }
 }
+</script>
 
+@endsection
+
+@section('scripts')
+<script>
 $(function() {
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1 && navigator.userAgent.toLowerCase().indexOf("android") > -1)
@@ -115,5 +129,4 @@ $(function() {
     }
 });
 </script>
-
 @endsection
