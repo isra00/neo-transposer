@@ -23,6 +23,8 @@ final class AllSongsReportController extends Controller
             config('nt.languages')[$locale]['notation']
         );
 
+        $debug = (bool) $req->get('debug');
+
         $tplVars = [
             'all_songs_transposed_with_fb' => $allSongsTransposedWithFeedback,
             'your_voice'    => $your_voice,
@@ -39,7 +41,8 @@ final class AllSongsReportController extends Controller
             $tplVars['header_link'] = url('/');
         }
 
-        $responseBody = response()->view('all_songs_report', $tplVars)->getContent();
+        $tpl = $debug ? 'all_songs_report_debug' : 'all_songs_report';
+        $responseBody = response()->view($tpl, $tplVars)->getContent();
 
         if (!$req->get('dl')) {
             return response($responseBody);
