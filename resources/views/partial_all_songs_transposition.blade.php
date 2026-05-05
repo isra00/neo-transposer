@@ -1,6 +1,6 @@
 @php
     if ($typeOfTransposition == 'centered1') {
-        $other = ($item->feedbackTranspositionWhichWorked !== null && $item->feedbackTranspositionWhichWorked !== 'centered1');
+        $other = false;
     } else {
         $other = ($item->feedbackTranspositionWhichWorked !== $typeOfTransposition);
     }
@@ -9,9 +9,9 @@
 <li class="trans-{{ $typeOfTransposition }} @if($other) other @endif">
 
     @if ($item->feedbackTranspositionWhichWorked == $typeOfTransposition)
-    <span class="feedback green" title="@lang('You have reported this transposition as fitting your voice')">&#10004;</span>
+        <span class="feedback green" title="@lang('You have reported this transposition as fitting your voice')">&#10004;</span>
     @else
-    <span class="marker-when-multiple">&#8250;</span>
+        <span class="marker-when-multiple">&#8250;</span>
     @endif
 
     <span class="prefix">{{ $prefix }}</span>
