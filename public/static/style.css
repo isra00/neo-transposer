@@ -1468,6 +1468,15 @@ h2.step-1 {
 		.all-songs-report .songs-list.showing-others .marker-when-multiple {
 			display: inline;
 		}
+.all-songs-report .songs-list.debug li strong {
+    color: gray;
+}
+.all-songs-report .songs-list.debug li strong::before {
+    content: "[";
+}
+.all-songs-report .songs-list.debug li strong::after {
+    content: "]";
+}
 
 /* Admin Dashboard */
 .admin-dashboard {

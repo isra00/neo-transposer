@@ -32,6 +32,7 @@
 <p class="note">@lang('C = capo. If not written, no capo should be used.')</p>
 
 <div>
+    @section('songsList')
     <ul class="songs-list">
     @foreach ($all_songs_transposed_with_fb as $item)
         <li>
@@ -63,6 +64,7 @@
         </li>
     @endforeach
     </ul>
+    @show
 </div>
 
 <script>
