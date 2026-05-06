@@ -53,7 +53,7 @@ return [
     'css_cache'                              => '332db24297179e87b53376af59e92869',
 
     'analytics_id'                           => getenv('NT_ANALYTICS_ID'),
-    'sitemap_lastmod'                        => '2022-03-08T10:00Z',
+    'sitemap_lastmod'                        => '2026-05-08T10:00Z',
     'recaptcha_secret'                       => getenv('NT_RECAPTCHA_SECRET'),
 
     'software_name'                          => 'Neo-Transposer', /* Deprecated */

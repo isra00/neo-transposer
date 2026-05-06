@@ -71,7 +71,7 @@ jobs:
       - name: 🚀 Upload to GitHub's container repository
         run: |
           docker tag transposerlaravel:prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
-          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
+          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}-laravel:${{ github.sha }}-prod
 
       - name: 🕵️ Run Trivy vulnerability scanner against the Prod image
         uses: anandg112/trivy-action@feat/add-skip-dirs-option
@@ -89,7 +89,7 @@ jobs:
 
       - name: Fix code coverage paths
         run: sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' ./_output/coverage.xml
-          
+
 #      - name: 🕵️ SonarCloud code quality scan
 #        uses: SonarSource/sonarcloud-github-action@v1.9.1
 #        env:
