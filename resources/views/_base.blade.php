@@ -29,7 +29,7 @@
     <meta name="description" content="{{ $meta_description ?? __('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.') }}" />
 
     @if(isset($meta_canonical))
-    <link rel="canonical" href="{{ $meta_canonical }}" />
+    <link rel="canonical" href="{{ str_replace('new.neo-transposer.com', 'neo-transposer.com', $meta_canonical) }}" />
     @endif
 
     @if(config('app.debug') || request()->header('dnt'))
