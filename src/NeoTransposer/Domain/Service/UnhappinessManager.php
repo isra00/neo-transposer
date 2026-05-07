@@ -41,11 +41,6 @@ final class UnhappinessManager
         }
     }
 
-    public function isUnhappy(User $user): bool
-    {
-        return $this->unhappyUserRepository->readUserIsUnhappy($user->id_user);
-    }
-
     /**
      * Whether the user is unhappy and has taken no action so far.
      */
