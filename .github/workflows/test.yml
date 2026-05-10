@@ -4,6 +4,7 @@ on: [push]
 
 env:
   APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+  APP_ENV: testing
   NT_DB_HOST: host.docker.internal
   NT_DB_USER: root
   NT_DB_PASSWORD: root
