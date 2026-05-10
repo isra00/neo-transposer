@@ -24,6 +24,7 @@ start start-local: stop
 	docker tag transposerlaravel:`git rev-parse --short HEAD`-dev transposerlaravel:for-prod
 	docker start transposerlaravel-dev || docker run --rm -dit -p 80:80 \
 		-e APP_KEY \
+		-e APP_ENV \
 		-e NT_DB_HOST \
 		-e NT_DB_USER \
 		-e NT_DB_PASSWORD \
