@@ -76,9 +76,7 @@ SQL;
 	}
 
 	/**
-	 * @return (int|mixed)[]
-	 *
-	 * @psalm-return array{yes: int, no: int, total: int}
+	 * @return array{yes: int, no: int, total: int}
 	 */
 	private function aggregatePerformanceData(array $raw_data): array
 	{
@@ -119,9 +117,7 @@ SQL;
 	}
 
 	/**
-	 * @return (float|int|mixed)[][]
-	 *
-	 * @psalm-return array<array{yes: int, no: int, performance: float, title: mixed, lowest_note: mixed, highest_note: mixed, wideness: int, total?: int}>
+	 * @return array<array{yes: int, no: int, performance: float, title: mixed, lowest_note: mixed, highest_note: mixed, wideness: int, total?: int}>
 	 */
 	public function readFeedback(): array
 	{
@@ -366,7 +362,7 @@ SQL;
 	}
 
 	/**
-	 * @psalm-return list<mixed>
+	 * @return list<mixed>
 	 */
 	public function readPerformanceByCountry(\NeoTransposer\Domain\GeoIp\GeoIpResolver $geoIpResolver): array
 	{

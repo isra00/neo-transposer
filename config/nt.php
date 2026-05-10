@@ -3,14 +3,14 @@
 return [
 
     'db' => [
-        'host'     => getenv('NT_DB_HOST'),
-        'user'     => getenv('NT_DB_USER'),
-        'password' => getenv('NT_DB_PASSWORD'),
-        'database' => getenv('NT_DB_DATABASE'),
+        'host'     => env('NT_DB_HOST'),
+        'user'     => env('NT_DB_USER'),
+        'password' => env('NT_DB_PASSWORD'),
+        'database' => env('NT_DB_DATABASE'),
         'charset'  => 'utf8',
     ],
 
-    'trusted_proxies' => explode(',', getenv('NT_TRUSTED_PROXIES')),
+    'trusted_proxies' => explode(',', env('NT_TRUSTED_PROXIES', '')),
 
     // URLs for the Book controller. Every book must have an entry here!
     'book_url' => [
@@ -52,19 +52,19 @@ return [
     'test_all_transpositions_expected_pc'    => __DIR__ . '/../tests/testAllTranspositions.expected.PeopleCompatible.json',
     'css_cache'                              => '332db24297179e87b53376af59e92869',
 
-    'analytics_id'                           => getenv('NT_ANALYTICS_ID'),
+    'analytics_id'                           => env('NT_ANALYTICS_ID'),
     'sitemap_lastmod'                        => '2026-05-08T10:00Z',
-    'recaptcha_secret'                       => getenv('NT_RECAPTCHA_SECRET'),
+    'recaptcha_secret'                       => env('NT_RECAPTCHA_SECRET'),
 
     'software_name'                          => 'Neo-Transposer', /* Deprecated */
     'seo_title_suffix'                       => 'Transpose chords',
 
-    'admins' => [getenv('NT_ADMIN_USERNAME') => ['ROLE_ADMIN', getenv('NT_ADMIN_PASSWORD')]],
+    'admins' => [env('NT_ADMIN_USERNAME') => ['ROLE_ADMIN', env('NT_ADMIN_PASSWORD')]],
 
     'people_range'                           => ['B1', 'B2'],
 
     //'debug'                                  => getenv('NT_DEBUG'), //Ya está en app.php
-    'profiler'                               => getenv('NT_PROFILER'),
+    'profiler'                               => env('NT_PROFILER'),
 
     //Feature flags
     'hide_second_centered_if_not_equivalent' => false,

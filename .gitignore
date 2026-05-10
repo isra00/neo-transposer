@@ -41,3 +41,4 @@ _output
 /public/adminer*
 ntprod.sql
 public/static/compiled*
+last-mmdb.tar.gz
