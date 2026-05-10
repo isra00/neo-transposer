@@ -28,9 +28,11 @@
     <meta name="google" content="notranslate" />
     <meta name="description" content="{{ $meta_description ?? __('Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.') }}" />
 
-    @if(isset($meta_canonical))
-    <link rel="canonical" href="{{ str_replace('new.neo-transposer.com', 'neo-transposer.com', $meta_canonical) }}" />
-    @endif
+    @php
+        $canonicalUrl = $meta_canonical ?? url()->current();
+        $canonicalUrl = preg_replace('#://[^/]+#', '://' . config('nt.canonical_domain'), $canonicalUrl);
+    @endphp
+    <link rel="canonical" href="{{ $canonicalUrl }}" />
 
     @if(config('app.debug') || request()->header('dnt'))
     <script>var gtag = function() {}</script>
