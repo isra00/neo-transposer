@@ -58,6 +58,7 @@ return [
 
     'software_name'                          => 'Neo-Transposer', /* Deprecated */
     'seo_title_suffix'                       => 'Transpose chords',
+    'canonical_domain'                       => 'neo-transposer.com',
 
     'admins' => [env('NT_ADMIN_USERNAME') => ['ROLE_ADMIN', env('NT_ADMIN_PASSWORD')]],
 
