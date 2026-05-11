@@ -41,7 +41,7 @@ final class SitemapController extends Controller
 		foreach ($songs as $song)
 		{
 			$urls[] = [
-				'loc' => route('transpose_song', ['id_song' => $song->slug]),
+				'loc' => route('transpose_song', ['id_song' => $song['slug']]),
 			];
 		}
 
