@@ -131,7 +131,7 @@
                             <div class="note-in-chart">{{ $voice['lowestForPrint'] }}</div>
                         </div>
                     </td>
-                    @for ($i = 0; $i < $voice['length'] - 1; $i++)
+                    @for ($i = 0; $i < $voice['length']; $i++)
                         <td><div class="colored">&#11035;</div></td>
                     @endfor
                     <td class="note">
