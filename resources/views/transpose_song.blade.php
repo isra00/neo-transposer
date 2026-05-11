@@ -1,7 +1,7 @@
 @extends('_base')
 
 @section('header_extra')
-    @if (!session('user')->isLoggedIn() && !config('app.neoconfig.disable_recaptcha'))
+    @if (!session('user')->isLoggedIn() && !config('nt.disable_recaptcha'))
         <script src='https://www.google.com/recaptcha/api.js'></script>
     @endif
 @endsection
