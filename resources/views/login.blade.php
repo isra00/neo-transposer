@@ -1,7 +1,7 @@
 @extends('_base')
 
 @section('header_extra')
-    @if (!config('app.debug') && !config('neoconfig.disable_recaptcha'))
+    @if (!config('app.debug') && !config('nt.disable_recaptcha'))
         <script src='https://www.google.com/recaptcha/api.js'></script>
     @endif
 
