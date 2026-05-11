@@ -67,7 +67,7 @@ final class NotesNotation
      *
      * @return string             Something like "lowestNote - highestNote +x octaves"
      */
-    public function getVoiceRangeAsString(string $notation = 'american', string $lowestNote, string $highestNote): string
+    public function getVoiceRangeAsString(string $notation, string $lowestNote, string $highestNote): string
     {
         preg_match(self::REGEXP_NOTE, $lowestNote, $match);
         $lowestNote = $match[1];
