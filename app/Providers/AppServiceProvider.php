@@ -78,6 +78,8 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('_base', PageTitleComposer::class);
 
+        config(['session.domain' => request()->getHost()]);
+
         $this->initializeSession();
     }
 
