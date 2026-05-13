@@ -38,6 +38,8 @@ class LoginController extends Controller
      */
     public function post(Request $req, BookRepository $bookRepository, UserRepository $userRepository, string $locale)
     {
+        $req->validate(['email' => 'required|string']);
+
         $req_email = trim($req->string('email'));
 
         $isCaptchaValid = config('app.debug') || config('nt.disable_recaptcha') || $this->validateCaptcha($req, config('nt.recaptcha_secret'));
