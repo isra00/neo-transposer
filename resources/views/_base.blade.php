@@ -37,7 +37,7 @@
     @if(config('app.debug') || request()->header('dnt'))
     <script>var gtag = function() {}</script>
     @else
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.analytics_id') }}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('nt.analytics_id') }}"></script>
     <script>
         (function () {
             window.colorSchemePref = 'No Preference';
@@ -62,7 +62,7 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '{{ config('services.analytics_id') }}', dimensions);
+        gtag('config', '{{ config('nt.analytics_id') }}', dimensions);
         gtag('set', 'content_group', '{{ app()->getLocale() }}');
     </script>
     @endif
