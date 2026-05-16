@@ -11,6 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php'
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $proxies = config('nt.trusted_proxies');
+        $middleware->trustProxies(at: $proxies === '*' ? '*' : array_filter(explode(',', $proxies)));
         $middleware->validateCsrfTokens(except: ['*']);
         $middleware->append(\App\Http\Middleware\AddLaravelHeader::class);
     })

@@ -10,7 +10,7 @@ return [
         'charset'  => 'utf8',
     ],
 
-    'trusted_proxies' => explode(',', env('NT_TRUSTED_PROXIES', '')),
+    'trusted_proxies' => env('NT_TRUSTED_PROXIES', ''),
 
     // URLs for the Book controller. Every book must have an entry here!
     'book_url' => [
