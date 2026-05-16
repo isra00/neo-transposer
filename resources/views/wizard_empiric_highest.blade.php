@@ -41,8 +41,7 @@
 	<script>
 	NT = {
 
-		tooHigh: function()
-		{
+		tooHigh: function() {
 			$(".test-area").hide();
 			$(".too-high").show();
 			gtag('event', 'HighestTooHigh', {'event_category': 'WizardError', 'event_label': 'user_id: {{ session('user')->id_user }}'});
@@ -55,16 +54,14 @@
 			});
 		},
 
-		preventFormSubmit: function()
-		{
+		preventFormSubmit: function() {
 			$("#form-answer").submit(function(e) {
 				e.preventDefault();
 			});
 		}
 	};
 
-	$(function()
-	{
+	$(function() {
 		$(".tooHigh").click(function(e) {
 			NT.preventFormSubmit();
 			NT.tooHigh();

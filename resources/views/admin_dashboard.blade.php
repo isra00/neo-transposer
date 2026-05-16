@@ -476,12 +476,10 @@
 @section('scripts')
 <script>
 BC3 = {
-    generateToc: function()
-    {
+    generateToc: function() {
         toc_level = $(".floating_toc").data("toc-levels");
         titulos = $("h" + toc_level);
-        for (i in titulos.get())
-        {
+        for (i in titulos.get()) {
             marker = "h" + toc_level + "_" + i;
 
             (function(j, marker, titulos) {

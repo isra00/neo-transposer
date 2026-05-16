@@ -48,8 +48,7 @@
 
 		var NTSound = {
 
-			initializeSoundControl: function()
-			{
+			initializeSoundControl: function() {
 				var oAudio = document.getElementsByTagName("audio")[0],
 					oPlayControl = document.getElementById("play-control");
 
@@ -57,40 +56,34 @@
 
 					$(oPlayControl).toggleClass("playing").toggleClass("stopped");
 
-					if (oAudio.paused)
-					{
+					if (oAudio.paused) {
 						oAudio.play();
 						gtag('event', 'AudioPlay', {'event_category': 'Actions', 'event_label': oAudio.attributes.src.nodeValue});
 					}
-					else
-					{
+					else {
 						oAudio.pause();
 						oAudio.currentTime = 0;
 						gtag('event', 'AudioStop', {'event_category': 'Actions', 'event_label': oAudio.attributes.src.nodeValue});
 					}
 				});
 
-				oAudio.addEventListener('ended', function(event)
-				{
+				oAudio.addEventListener('ended', function(event) {
 					$(oPlayControl).removeClass("playing").addClass("stopped");
 				});
 
-				oAudio.addEventListener('error', function(event)
-				{
+				oAudio.addEventListener('error', function(event) {
 					$(document.getElementById("sound")).remove();
 				});
 
 				//Auto-play (it is disabled in most of mobile browsers)
 				oAudio.play();
 
-				if (!oAudio.paused)
-				{
+				if (!oAudio.paused) {
 					$(oPlayControl).removeClass("stopped").addClass("playing");
 				}
 			},
 
-			stopSound: function()
-			{
+			stopSound: function() {
 				var oAudio = document.getElementsByTagName("audio")[0],
 					oPlayControl = document.getElementById("play-control");
 

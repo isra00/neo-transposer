@@ -77,28 +77,23 @@ NotesCalculator = {
 	aAccousticScale: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
 	aNumberedScale: [],
 
-	init: function()
-	{
+	init: function() {
 		var i=0;
 
-		for (i = 1; i < 5; i++)
-		{
-			for (sNote in this.aAccousticScale)
-			{
+		for (i = 1; i < 5; i++) {
+			for (sNote in this.aAccousticScale) {
 				this.aNumberedScale.push(this.aAccousticScale[sNote] + String(i));
 			}
 		}
 	},
 
-	noteNumber: function(sNote)
-	{
+	noteNumber: function(sNote) {
 		var n = this.aNumberedScale.indexOf(sNote);
 		return (n < 0) ? false : n;
 	}
 };
 
-function forceKeyPressUppercase(e)
-{
+function forceKeyPressUppercase(e) {
 	var charInput = e.keyCode;
 	if((charInput >= 97) && (charInput <= 122)) {
 	  if(!e.ctrlKey && !e.metaKey && !e.altKey) {
@@ -112,8 +107,7 @@ function forceKeyPressUppercase(e)
 	}
 }
 
-$(function()
-{
+$(function() {
 	NotesCalculator.init();
 
 	document.getElementById("lowest_note").addEventListener("keypress", forceKeyPressUppercase, false);
@@ -121,8 +115,7 @@ $(function()
 	document.getElementById("people_lowest_note").addEventListener("keypress", forceKeyPressUppercase, false);
 	document.getElementById("people_highest_note").addEventListener("keypress", forceKeyPressUppercase, false);
 
-	document.getElementsByTagName("form")[0].addEventListener('keyup', function(eTheForm)
-	{
+	document.getElementsByTagName("form")[0].addEventListener('keyup', function(eTheForm) {
 		var eLowest = document.getElementById("lowest_note"),
 			eHighest = document.getElementById("highest_note"),
 			ePeopleLowest = document.getElementById("people_lowest_note"),
@@ -131,26 +124,20 @@ $(function()
 			chords = []
 			noDuplicateChords = true;
 
-		if (eLowest.value.length && eHighest.value.length)
-		{
-			if (NotesCalculator.noteNumber(eLowest.value) >= NotesCalculator.noteNumber(eHighest.value))
-			{
+		if (eLowest.value.length && eHighest.value.length) {
+			if (NotesCalculator.noteNumber(eLowest.value) >= NotesCalculator.noteNumber(eHighest.value)) {
 				eLowest.setCustomValidity("Lowest is not lower than highest!");
 			}
-			else
-			{
+			else {
 				eLowest.setCustomValidity("");
 			}
 		}
 
-		if (ePeopleLowest.value.length && ePeopleHighest.value.length)
-		{
-			if (NotesCalculator.noteNumber(ePeopleLowest.value) >= NotesCalculator.noteNumber(ePeopleHighest.value))
-			{
+		if (ePeopleLowest.value.length && ePeopleHighest.value.length) {
+			if (NotesCalculator.noteNumber(ePeopleLowest.value) >= NotesCalculator.noteNumber(ePeopleHighest.value)) {
 				ePeopleLowest.setCustomValidity("Lowest is not lower than highest!");
 			}
-			else
-			{
+			else {
 				ePeopleLowest.setCustomValidity("");
 			}
 		}
@@ -158,20 +145,16 @@ $(function()
 		chordInputs = document.getElementById("field-chords").querySelectorAll("input");
 
 		(function (chords) {
-			chordInputs.forEach(input =>
-			{
+			chordInputs.forEach(input => {
 				if (!input.value.length) return;
 
-				if (chords.indexOf(input.value) > -1)
-				{
+				if (chords.indexOf(input.value) > -1) {
 					noDuplicateChords = false;
 					input.setCustomValidity("Duplicate chord");
 				}
-				else
-				{
+				else {
 					chords.push(input.value);
-					if (noDuplicateChords)
-					{
+					if (noDuplicateChords) {
 						input.setCustomValidity("");
 					}
 				}

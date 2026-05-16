@@ -40,36 +40,31 @@
 	<script>
 	NT = {
 
-		lowFirstTime: function()
-		{
+		lowFirstTime: function() {
 			$(".test-area").hide();
 			$(".low-first-time").show();
 			NTSound.stopSound();
 		},
 
-		tooLow: function()
-		{
+		tooLow: function() {
 			$(".test-area").hide();
 			$(".too-low").show();
 			gtag('event', 'LowestFirst', {'event_category': 'WizardError', 'event_label': 'user_id: {{ session('user')->id_user }}'});
 			NTSound.stopSound();
 		},
 
-		repeatTest: function()
-		{
+		repeatTest: function() {
 			document.forms[0].submit();
 		},
 
-		preventFormSubmit: function()
-		{
+		preventFormSubmit: function() {
 			$("#form-answer").submit(function(e) {
 				e.preventDefault();
 			});
 		}
 	};
 
-	$(function()
-	{
+	$(function() {
 		$(".lowFirstTime").click(function(e) {
 			NT.preventFormSubmit();
 			NT.lowFirstTime();

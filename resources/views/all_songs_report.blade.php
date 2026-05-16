@@ -77,23 +77,19 @@
 </div>
 
 <script>
-function toggle()
-{
+function toggle() {
     var aAllElements = document.getElementsByClassName("other");
     document.querySelector(".songs-list").classList.toggle("showing-others")
-    for (e in aAllElements)
-    {
+    for (e in aAllElements) {
         if (typeof aAllElements[e].classList != "undefined")
             aAllElements[e].classList.toggle("block");
     }
 }
 
-function togglePeopleCompatible()
-{
+function togglePeopleCompatible() {
     var elements = document.getElementsByClassName("trans-peopleCompatible");
     document.querySelector(".songs-list").classList.toggle("showing-people-compatible");
-    for (var e in elements)
-    {
+    for (var e in elements) {
         if (typeof elements[e].classList != "undefined")
             elements[e].classList.toggle("block");
     }
@@ -106,8 +102,7 @@ function togglePeopleCompatible()
 <script>
 $(function() {
 
-    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1 && navigator.userAgent.toLowerCase().indexOf("android") > -1)
-    {
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1 && navigator.userAgent.toLowerCase().indexOf("android") > -1) {
         $(".icon-print").hide();
     }
 
@@ -123,8 +118,7 @@ $(function() {
             gtag('event', 'Download', {'event_category': 'AllSongsReport'});
         });
 
-    if (document.getElementById("show-others").checked)
-    {
+    if (document.getElementById("show-others").checked) {
         toggle();
     }
 });

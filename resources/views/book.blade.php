@@ -226,8 +226,7 @@
 
     var NTBook = {
 
-        initializeQuickSearch: function()
-        {
+        initializeQuickSearch: function() {
             var eQuickSearch = document.getElementById("quick-search"),
                 eSongList = document.getElementsByClassName("song-index")[0],
                 isTouchScreen = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
@@ -236,8 +235,7 @@
 
             eQuickSearch.value = "";
 
-            String.prototype.removeAccents = function(replaceList = "")
-            {
+            String.prototype.removeAccents = function(replaceList = "") {
                 var repl = function(occurrence) {
                     replaceList.push();
                 } || "";
@@ -246,18 +244,15 @@
 
             $(eQuickSearch)
 
-                .focus(function()
-                {
+                .focus(function() {
                     aElementsToHide.hide();
 
-                    if (isTouchScreen)
-                    {
+                    if (isTouchScreen) {
                         window.scrollTo(0, eQuickSearch.getBoundingClientRect().top);
                     }
                 })
 
-                .keyup(function(event)
-                {
+                .keyup(function(event) {
                     var sSearchString = event.target.value,
                         eTitle,
                         oRegExp,
@@ -265,30 +260,26 @@
 
                     document.getElementById("no-results").style.display = 'none';
 
-                    if (sSearchString.length > 0)
-                    {
+                    if (sSearchString.length > 0) {
                         aElementsToHide.hide();
 
                         var sSearchStringWithDiacritics = applyDiacritics(sSearchString, "regex");
 
                         //Optional apostrophe before every "e"
-                        if (isItalian)
-                        {
+                        if (isItalian) {
                             sSearchStringWithDiacritics = sSearchStringWithDiacritics.replaceAll("(?:e|", "'?(?:e|");
                         }
 
                         oRegExp = new RegExp("(" + sSearchStringWithDiacritics + ")", "ig");
 
-                        $(".song-index li").each(function()
-                        {
+                        $(".song-index li").each(function() {
                             this.style.display = 'none';
                             eTitle = this.getElementsByTagName("h4")[0];
 
                             //Remove previous highlights to have clean text
                             eTitle.innerHTML = eTitle.innerHTML.replace(/<\/?mark>/ig, "");
 
-                            if (eTitle.innerText.search(oRegExp) != -1)
-                            {
+                            if (eTitle.innerText.search(oRegExp) != -1) {
                                 eTitle.innerHTML = eTitle.innerHTML.replace(oRegExp, "<mark>$1</mark>");
                                 this.style.display = 'block';
                                 iResults++;
@@ -304,19 +295,15 @@
                         else if (event.keyCode !== undefined)
                             code = event.keyCode;
 
-                        if (code == "Enter" && iResults == 1)
-                        {
+                        if (code == "Enter" && iResults == 1) {
                             document.querySelector("mark").click();
                         }
 
 
-                        if (!iResults)
-                        {
+                        if (!iResults) {
                             document.getElementById("no-results").style.display = 'block';
                         }
-                    }
-                    else
-                    {
+                    } else {
                         eSongList.innerHTML = eSongList.innerHTML.replace(/<\/?mark>/ig, "");
                         $(".song-index li").css("display", "block");
                     }
@@ -332,8 +319,7 @@
          */
         preventPageCache: function() {
             window.addEventListener( "pageshow", function ( event ) {
-                if (event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 ))
-                {
+                if (event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 )) {
                     window.setTimeout(function() {
                         window.location.hash = 'top';
                         window.scrollTo(0, 0);

@@ -70,8 +70,7 @@
 @section('scripts')
 	<script>
 	NT = {
-		selectGender: function(oLinkClicked)
-		{
+		selectGender: function(oLinkClicked) {
 			$(oLinkClicked.parentNode).addClass('slided');
 			$('.sub-gender').hide();
 			document.getElementById(oLinkClicked.dataset.show).style.display = 'block';

@@ -18,8 +18,7 @@
 </form>
 
 <script>
-    function login(token)
-    {
+    function login(token) {
         document.getElementById("login-form").submit();
     }
 </script>
@@ -36,22 +35,16 @@
         };
     })(), true);
 
-    function validate(inputElement)
-    {
-        if (inputElement.validity.patternMismatch)
-        {
+    function validate(inputElement) {
+        if (inputElement.validity.patternMismatch) {
             document.getElementById("error").innerHTML = "@lang('That e-mail doesn\'t look good. Please, re-type it.')"
-			}
-        else
-        {
+        } else {
             document.getElementById("error").innerHTML = "";
         }
     }
 
-    function mcheck(inputElement)
-    {
-        if (inputElement.validity.valid)
-        {
+    function mcheck(inputElement) {
+        if (inputElement.validity.valid) {
             Mailcheck.run({
                 email: inputElement.value,
                 suggested: function(suggestion) {
