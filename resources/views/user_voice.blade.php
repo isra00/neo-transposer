@@ -76,8 +76,7 @@
 				index_highest	= notes.indexOf(highest);
 
 			//Index < 0 means not found ==> above the 1st octave.
-			if (index_highest > -1)
-			{
+			if (index_highest > -1) {
 				alert("@lang('Are you sure that is your real voice range? If you don\'t know, you can use the assistant to measure it.')");
 				document.querySelector(".wizard-button").classList.add("blink");
 				return false;

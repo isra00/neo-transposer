@@ -36,8 +36,7 @@
 				current--;
 				oCountDown.innerHTML = current.toString();
 
-				if (current < 1)
-				{
+				if (current < 1) {
 					$(document.getElementById("submit")).removeAttr("disabled");
 					$(document.getElementById("countdown")).css("visibility", "hidden");
 					clearInterval(intervalButtonOk);
