@@ -37,6 +37,7 @@ start start-local: stop
 		-e NT_DEBUG \
 		-e NT_PROFILER \
 		-e NT_TRUSTED_PROXIES \
+		-e SENTRY_LARAVEL_DSN \
 		--add-host=host.docker.internal:172.17.0.1 \
 		--name transposerlaravel-dev \
 		$(OPTIONAL_VOLUME) \

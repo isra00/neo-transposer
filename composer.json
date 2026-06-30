@@ -11,6 +11,7 @@
         "geoip2/geoip2": "~2.5",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "sentry/sentry-laravel": "^4.26",
         "symfony/cache": "^7.1"
     },
     "require-dev": {
