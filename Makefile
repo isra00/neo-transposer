@@ -78,6 +78,7 @@ test:
 	docker exec -t transposerlaravel-dev vendor/bin/codecept run --skip acceptance --coverage-html --coverage-xml
 	@sed "s@\/var\/www\/html@\/\/wsl$$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml > tests/_output/coverage.xml.tmp && mv tests/_output/coverage.xml.tmp tests/_output/coverage.xml || true
 	docker exec -t transposerlaravel-dev php artisan app:test-all-transpositions
+	docker exec -t transposerlaravel-dev php artisan app:test-song-urls
 
 test-acceptance:
 	docker start selenium-chrome || docker run -d --name selenium-chrome --platform linux/amd64 --add-host=host.docker.internal:172.17.0.1 -p 4444:4444 -p 7900:7900 --shm-size=2g selenium/standalone-chrome
