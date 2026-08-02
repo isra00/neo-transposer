@@ -12,18 +12,11 @@ use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\Service\SongsLister;
 use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 class SongsListerTest extends TestCase
 {
-    protected $app;
-
     protected $sut;
-
-    public function setUp(): void
-    {
-        $this->app = new \Silex\Application();
-    }
 
     public function testReadSongsWithUserFeedbackValidUser(): void
     {

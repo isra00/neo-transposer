@@ -1,2 +1,10 @@
-cache/*
+.git
+.env
+.DS_Store
+node_modules
+vendor
 tests/_output
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*

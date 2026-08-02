@@ -3,7 +3,7 @@
 namespace NeoTransposer\Tests\Domain;
 
 use NeoTransposer\Domain\SongTextForWizard;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 class SongTextForWizardTest extends TestCase
 {

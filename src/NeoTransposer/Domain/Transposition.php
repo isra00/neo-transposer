@@ -62,7 +62,6 @@ class Transposition
      */
     public function __construct(
         protected array $scoresConfig,
-        protected TranslatorInterface $translator,
         public array $chords = [],
         protected ?int $capo = 0,
         protected ?bool $asBook = false,
@@ -123,8 +122,8 @@ class Transposition
     {
         if (empty($this->capoForPrint)) {
             $this->capoForPrint = ($this->capo)
-                ? $this->translator->trans('with capo %n%', ['%n%' => $this->capo])
-                : $this->translator->trans('no capo');
+                ? __('with capo :n', ['n' => $this->capo])
+                : __('no capo');
         }
 
         return $this->capoForPrint;

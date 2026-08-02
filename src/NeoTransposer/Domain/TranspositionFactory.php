@@ -7,7 +7,7 @@ use Silex\Application;
 
 final class TranspositionFactory
 {
-    public function __construct(private readonly Application $app)
+    public function __construct()
     {
     }
 
@@ -24,8 +24,7 @@ final class TranspositionFactory
         ?NotesRange $peopleRange = null
     ): Transposition {
         return new Transposition(
-            $this->app['neoconfig']['chord_scores'],
-            $this->app['translator'],
+            config('nt.chord_scores'),
             $chords,
             $capo,
             $asBook,

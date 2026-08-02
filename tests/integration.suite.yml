@@ -1,0 +1,9 @@
+# Codeception Test Suite Configuration
+#
+# Suite for Laravel HTTP integration/feature tests (extend Illuminate\Foundation\Testing\TestCase).
+
+actor: IntegrationTester
+modules:
+    enabled:
+        - Asserts
+    step_decorators: ~

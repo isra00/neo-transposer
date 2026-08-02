@@ -6,7 +6,6 @@ use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\SongChordRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
-use NeoTransposer\NeoApp;
 
 final class AllSongsReport
 {
@@ -23,8 +22,7 @@ final class AllSongsReport
 
     public function __construct(
         protected SongRepository $songRepository,
-        protected SongChordRepository $songChordRepository,
-        protected NeoApp $app)
+        protected SongChordRepository $songChordRepository)
     {
     }
 
@@ -40,10 +38,11 @@ final class AllSongsReport
 
         foreach ($songRows as $songRow) {
 
+            $songRow = (array) $songRow;
+
             /** @refactor Performance: make a single query for all chords of all songs of the given book */
             $transposedSong = new TransposedSong(
-                new Song($songRow, $this->songChordRepository->readSongChords($songRow['id_song'])),
-                $this->app
+                new Song($songRow, $this->songChordRepository->readSongChords($songRow['id_song']))
             );
 
             $transposedSong->transpose($user->range);

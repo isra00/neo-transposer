@@ -2,38 +2,28 @@
 
 namespace NeoTransposer\Tests\Infrastructure;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMSetup;
 use Faker\Factory;
+use Illuminate\Foundation\Testing\TestCase;
+use Illuminate\Support\Facades\DB;
 
-class MysqlRepositoryTest extends \Codeception\Test\Unit
+class MysqlRepositoryTest extends TestCase
 {
-    protected $dbConnection;
-    protected $entityManager;
-
     protected $faker;
 
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    protected function setUp(): void
     {
-        $this->dbConnection = \Doctrine\DBAL\DriverManager::getConnection([
-            'driver'   => 'pdo_mysql',
-            'host'     => getenv('NT_DB_HOST'),
-            'user'     => getenv('NT_DB_USER'),
-            'password' => getenv('NT_DB_PASSWORD'),
-            'database' => getenv('NT_DB_DATABASE_INTEGRATION'),
-            'charset'  => 'utf8',
-        ]);
-        $this->dbConnection->executeQuery('USE ' . getenv('NT_DB_DATABASE_INTEGRATION'));
-
-        $doctrineConfig = ORMSetup::createAttributeMetadataConfiguration(
-            paths: [__DIR__ . '/../../../../../src'],
-            isDevMode: true,
-        );
-
-        $this->entityManager = new EntityManager($this->dbConnection, $doctrineConfig);
-
+        parent::setUp();
         $this->faker = Factory::create();
 
-        parent::__construct($name, $data, $dataName);
+        // Change Laravel's DB to the test one.
+
+        config(['database.connections.mysql.database' => getenv('NT_DB_DATABASE_INTEGRATION')]);
+        DB::purge('mysql');
+
+        // Reset the static DBAL connection so it picks up the integration database
+        $reflection = new \ReflectionClass(\NeoTransposer\Infrastructure\MysqlRepository::class);
+        $prop = $reflection->getProperty('dbal');
+        $prop->setAccessible(true);
+        $prop->setValue(null, null);
     }
 }

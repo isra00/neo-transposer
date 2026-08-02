@@ -32,8 +32,8 @@ class TransposeSongCest
         Shared::givenASpanishNewUserWithManualRangeInBookPage($I);
 
         $I->amOnPage('/transpose/gracias-a-yahveh');
-        $I->scrollTo('#show-voice-chart');
-        $I->click('#show-voice-chart');
+        $I->scrollTo('.show-voice-chart');
+        $I->click('.show-voice-chart');
 
         $I->seeElement('table.voicechart');
     }
