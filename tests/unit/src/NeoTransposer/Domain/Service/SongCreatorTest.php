@@ -6,7 +6,7 @@ use NeoTransposer\Domain\Exception\SlugAlreadyExistsException;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\Domain\Service\SongCreator;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
 class SongCreatorTest extends TestCase
 {

@@ -26,9 +26,9 @@ AND NOT song.id_song IN (118, 319)
 ORDER BY page, title
 SQL;
 
-		$songs = $this->dbConnection->fetchAllAssociative($sql, [$idUser, $idBook]);
-
-        return new SongsWithUserFeedbackCollection($songs);
+        return new SongsWithUserFeedbackCollection(
+            (array) $this->dbConnection->select($sql, [$idUser, $idBook])
+        );
     }
 
     public function readBookSongs(int $idBook): SongsCollection
@@ -41,7 +41,7 @@ AND NOT song.id_song IN (118, 319)
 ORDER BY page, title
 SQL;
 
-        return new SongsCollection($this->dbConnection->fetchAllAssociative($sql, [$idBook]));
+        return new SongsCollection((array)$this->dbConnection->select($sql, [$idBook]));
     }
 
     /**
@@ -71,7 +71,7 @@ SQL;
     public function readSongByField(string $field, $value): ?Song
     {
         /** @refactor SELECT * FROM 2 tablas?? Disgregar lo que hace falta de book y lo que no */
-		$songRow = $this->dbConnection->fetchAssociative(
+		$songRow = self::dbal()->fetchAssociative(
 			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $field = ?",
 			[$value]
 		);
@@ -81,7 +81,7 @@ SQL;
 		}
 
         /** @refactor Replace by SongChordRepository::readSongChords() */
-		$originalChords = $this->dbConnection->fetchAllAssociative(
+		$originalChords = self::dbal()->fetchAllAssociative(
 			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
 			[$songRow['id_song']]
 		);
@@ -95,7 +95,10 @@ SQL;
 
     public function readAllSongs(): array
     {
-        return $this->dbConnection->fetchAllAssociative('SELECT * FROM song');
+        return array_map(
+            fn($row) => (array) $row,
+            $this->dbConnection->select('SELECT * FROM song')
+        );
     }
 
     public function createSong(
@@ -112,39 +115,35 @@ SQL;
         ?string $url = null
     ): void {
 
-        $this->dbConnection->insert('song', [
-			'id_book' 				=> $idBook,
-			'page' 					=> $page,
-			'title' 				=> $title,
-			'lowest_note' 			=> $lowestNote,
-			'highest_note' 			=> $highestNote,
-			'people_lowest_note' 	=> $peopleLowestNote,
-			'people_highest_note' 	=> $peopleHighestNote,
-			'first_chord_is_tone' 	=> $firstChordIsNote,
-			'slug'	 				=> $slug,
-			'url'	 				=> $url
-		]);
+        $idSong = $this->dbConnection->table('song')->insertGetId([
+            'id_book'             => $idBook,
+            'page'                => $page,
+            'title'               => $title,
+            'lowest_note'         => $lowestNote,
+            'highest_note'        => $highestNote,
+            'people_lowest_note'  => $peopleLowestNote,
+            'people_highest_note' => $peopleHighestNote,
+            'first_chord_is_tone' => $firstChordIsNote,
+            'slug'                => $slug,
+            'url'                 => $url,
+        ]);
 
-		$idSong = $this->dbConnection->lastInsertId();
-
-		foreach ($chords as $position=>$chord)
-		{
-			if ($chord != '')
-			{
-				$this->dbConnection->insert('song_chord', [
+        foreach ($chords as $position => $chord) {
+            if ($chord != '') {
+                $this->dbConnection->table('song_chord')->insert([
                     'id_song'  => $idSong,
                     'chord'    => $chord,
-                    'position' => $position
+                    'position' => $position,
                 ]);
-			}
-		}
+            }
+        }
     }
 
     public function slugAlreadyExists(string $slug): bool
     {
-        return !empty($this->dbConnection->fetchAssociative(
-			'SELECT id_song, slug FROM song WHERE slug = ?',
-			[$slug]
-		));
+        return null !== $this->dbConnection->selectOne(
+            'SELECT id_song FROM song WHERE slug = ?',
+            [$slug]
+        );
     }
 }

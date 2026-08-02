@@ -5,7 +5,6 @@ namespace NeoTransposer\Domain\Entity;
 use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 use NeoTransposer\Domain\ValueObject\UserPerformance;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Represents a user
@@ -18,6 +17,10 @@ class User
 	final public const METHOD_UNHAPPY = 'auto_unhappy';
 
 	public $firstTime = false;
+
+    // For Laravel Auth. Still needed?
+    protected $rememberToken;
+    public $timestamps = false;
 
     /**
      * @param string|null          $email                   User email
@@ -63,14 +66,13 @@ class User
 
 	/**
 	 * Format the voice of the User as lowest_note - highest note +x octaves
-	 * 
-	 * @param   TranslatorInterface $trans 		The Translator service.
-	 * @param   string              $notation 	The notation (american/latin).
+	 *
+     * @param   string $notation The notation (american/latin).
 	 * @return  string 				Formatted string.
 	 */
-	public function getVoiceAsString(TranslatorInterface $trans, NotesNotation $notesNotation, string $notation='american') : string
+	public function getVoiceAsString(NotesNotation $notesNotation, string $notation='american') : string
 	{
-		return $notesNotation->getVoiceRangeAsString($trans, $notation, $this->range->lowest, $this->range->highest);
+		return $notesNotation->getVoiceRangeAsString($notation, $this->range->lowest, $this->range->highest);
 	}
 
     public function shouldEncourageFeedback(): bool

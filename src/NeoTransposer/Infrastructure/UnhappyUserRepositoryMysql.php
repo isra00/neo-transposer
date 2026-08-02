@@ -9,7 +9,7 @@ final class UnhappyUserRepositoryMysql extends MysqlRepository implements Unhapp
 {
     public function readUserIsUnhappy(int $idUser): bool
     {
-        return false !== $this->dbConnection->fetchOne(
+        return false !== self::dbal()->fetchOne(
                 'SELECT id_user FROM unhappy_user WHERE id_user = ?',
                 [$idUser]
             );
@@ -18,7 +18,7 @@ final class UnhappyUserRepositoryMysql extends MysqlRepository implements Unhapp
     public function readUserIsUnhappyAndNoAction(int $idUser): bool
     {
         return !empty(
-            $this->dbConnection->fetchOne(
+            $this->dbConnection->selectOne(
                 'SELECT id_user, took_action FROM unhappy_user WHERE id_user = ? AND took_action IS NULL',
                 [$idUser]
             )
@@ -29,19 +29,19 @@ final class UnhappyUserRepositoryMysql extends MysqlRepository implements Unhapp
     {
         //If user was already unhappy, UNIQUE will make query fail, nothing done.
         try {
-            $this->dbConnection->insert('unhappy_user', ['id_user' => $idUser]);
+            self::dbal()->insert('unhappy_user', ['id_user' => $idUser]);
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException) {
         }
     }
 
     public function delete(int $idUser): void
     {
-        $this->dbConnection->delete('unhappy_user', ['id_user' => $idUser]);
+        self::dbal()->delete('unhappy_user', ['id_user' => $idUser]);
     }
 
     public function updateUnhappyUser(string $action, float $performanceBeforeAction, int $idUser): void
     {
-        $this->dbConnection->update(
+        self::dbal()->update(
             'unhappy_user',
             [
                 'took_action' => date('Y-m-d H:i:s'),

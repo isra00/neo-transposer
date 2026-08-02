@@ -6,11 +6,14 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class AutomaticTransposerFactory
 {
+    private NotesRange $standardPeopleRange;
+
     public function __construct(
         protected TranspositionFactory $transpositionFactory,
-        protected NotesRange $standardPeopleRange,
-        protected NotesCalculator $notesCalculator)
+        protected NotesCalculator $notesCalculator
+    )
     {
+        $this->standardPeopleRange = new NotesRange(config('nt.people_range')[0], config('nt.people_range')[1]);
     }
 
     public function createAutomaticTransposer(
@@ -23,7 +26,7 @@ class AutomaticTransposerFactory
         return new AutomaticTransposer(
             $this->notesCalculator,
             $this->transpositionFactory,
-            $this->standardPeopleRange,
+            $this->standardPeopleRange, //@todo Leer config aquí y eliminar $this->standardPeopleRange
             $singerRange,
             $songRange,
             $originalChords,

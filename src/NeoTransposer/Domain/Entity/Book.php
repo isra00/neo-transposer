@@ -53,20 +53,9 @@ class Book
         return $this->details;
     }
 
-    public function chordPrinter(): string
-    {
-        return $this->chordPrinter;
-    }
-
     public function locale(): string
     {
         return $this->locale;
     }
-
-    public function songCount(): int
-    {
-        return $this->songCount;
-    }
-
 
 }

@@ -4,6 +4,7 @@ namespace NeoTransposer\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
+use Illuminate\Support\Facades\DB;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
@@ -12,11 +13,9 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 final class UserRepositoryMysql extends MysqlRepository implements UserRepository
 {
     public function __construct(
-        Connection $dbConnection,
-        EntityManager $entityManager,
         protected FeedbackRepository $userPerformanceRepository)
     {
-        parent::__construct($dbConnection, $entityManager);
+        parent::__construct();
     }
 
 	public function readFromId(int $idUser): ?User
@@ -41,8 +40,9 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 
         $ret = null;
 
-		if ($userdata = $this->dbConnection->fetchAssociative($sql, [$fieldValue]))
+		if ($userdata = $this->dbConnection->select($sql, [$fieldValue]))
 		{
+            $userdata = (array) $userdata[0];
             $userPerformance = $this->userPerformanceRepository->readUserPerformance($userdata['id_user']);
 
 			$ret = new User(
@@ -62,7 +62,7 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 
 	/**
 	 * Create or update the user in the database.
-	 * 
+	 *
 	 * @param  User       $user       The User object to persist.
 	 * @param string|null $registerIp The IP address with which the user registered.
 	 *
@@ -70,9 +70,8 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 	 */
 	public function save(User $user, string $registerIp = null): ?int
 	{
-		if ($user->id_user)
-		{
-			return $this->dbConnection->update('user',
+		if ($user->id_user) {
+			return $this->dbal()->update('user',
 				[
 					'lowest_note'	=> $user->range->lowest ?? null,
 					'highest_note'	=> $user->range->highest ?? null,
@@ -85,7 +84,7 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 		}
 
         /** @todo Refactor this. registerIp should be just one more field, no special treatment. */
-		$this->dbConnection->insert('user', [
+		$this->dbConnection->table('user')->insert([
 			'email'			=> $user->email,
 			'lowest_note'	=> $user->range->lowest ?? null,
 			'highest_note'	=> $user->range->highest ?? null,
@@ -93,7 +92,7 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 			'register_ip'	=> $registerIp
         ]);
 
-		return $user->id_user = (int) $this->dbConnection->lastInsertId();
+		return $user->id_user = (int) DB::getPdo()->lastInsertId();
 	}
 
     /**
@@ -115,11 +114,12 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 		}
 
         //If user had NULL voice, don't record the change
-		$currentVoiceRange = $this->dbConnection->fetchAssociative('SELECT lowest_note FROM user WHERE id_user = ?', [$user->id_user]);
+		$currentVoiceRange = $this->dbConnection->select('SELECT lowest_note FROM user WHERE id_user = ?', [$user->id_user]);
+        $currentVoiceRange = (array) $currentVoiceRange[0];
 
 		if (!empty($currentVoiceRange['lowest_note']))
 		{
-			$this->dbConnection->insert('log_voice_range', [
+			$this->dbal()->insert('log_voice_range', [
 				'id_user'		=> $user->id_user,
 				'method'		=> $method,
 				'lowest_note'	=> $user->range->lowest,
@@ -132,20 +132,22 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 
     public function readIpFromUsersWithNullCountry(): array
     {
-        return $this->dbConnection->fetchAllAssociative('SELECT register_ip FROM user WHERE country IS NULL');
+        return array_map(
+            fn($row) => (array) $row,
+            $this->dbConnection->select('SELECT register_ip FROM user WHERE country IS NULL')
+        );
     }
 
     public function saveUserCountryByIp(string $countryIsoCode, string $ip): void
     {
-        $this->dbConnection->update(
-            'user',
-            ['country' => $countryIsoCode],
-            ['register_ip' => $ip]
-        );
+        $this->dbConnection->table('user')->where('register_ip', $ip)->update(['country' => $countryIsoCode]);
     }
 
     public function readVoiceRangeFromAllUsers(): array
     {
-        return $this->dbConnection->fetchAllAssociative('SELECT id_user, email, lowest_note, highest_note FROM user');
+        return array_map(
+            fn($row) => (array) $row,
+            $this->dbConnection->select('SELECT id_user, email, lowest_note, highest_note FROM user')
+        );
     }
 }

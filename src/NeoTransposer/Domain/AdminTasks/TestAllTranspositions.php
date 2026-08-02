@@ -2,9 +2,9 @@
 
 namespace NeoTransposer\Domain\AdminTasks;
 
+use Illuminate\Support\Facades\DB;
 use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use NeoTransposer\NeoApp;
 
 /**
  * A functional test for detecting changes in the transposition algorithm.
@@ -14,10 +14,6 @@ final class TestAllTranspositions implements AdminTask
 {
     final public const TEST_ALL_TRANSPOSITIONS_BOOK = 2;
 
-	public function __construct(protected NeoApp $app)
- {
- }
-
     /**
      * Perform the test.
      *
@@ -25,10 +21,9 @@ final class TestAllTranspositions implements AdminTask
      */
     public function run(): string
     {
+        $configKey = 'nt.test_all_transpositions_expected' . (config('nt.people_compatible') ? '_pc' : '');
         $testData = json_decode(
-            file_get_contents(
-                $this->app['neoconfig']['test_all_transpositions_expected' . (($this->app['neoconfig']['people_compatible']) ? '_pc' : '')]
-            ),
+            file_get_contents(config($configKey)),
             true
         );
 
@@ -76,19 +71,15 @@ final class TestAllTranspositions implements AdminTask
 
     private function generateActualTestResult(array $testData)
     {
-        $sql = <<<SQL
-SELECT id_song
-FROM song 
-WHERE id_book = ? 
-ORDER BY id_song
-SQL;
-
-        $ids = $this->app['db']->fetchAllAssociative($sql, [self::TEST_ALL_TRANSPOSITIONS_BOOK]);
+        $songIds = DB::table('song')
+            ->where('id_book', self::TEST_ALL_TRANSPOSITIONS_BOOK)
+            ->orderBy('id_song')
+            ->pluck('id_song');
 
         $allSongs = [];
 
-        foreach ($ids as $id) {
-            $song = TransposedSong::fromDb($id['id_song'], $this->app);
+        foreach ($songIds as $idSong) {
+            $song = TransposedSong::fromDb($idSong);
 
             $song->transpose(
                 new NotesRange(
@@ -136,7 +127,7 @@ SQL;
                 ];
             }
 
-            if ($this->app['neoconfig']['people_compatible']) {
+            if (config('nt.people_compatible')) {
                 $testResult[$transposedSong->song->idSong]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus();
 
                 if (($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) !== null) {
@@ -163,7 +154,7 @@ SQL;
         $scalarProperties = ['songLowestNote', 'songHighestNote'];
         $arrayProperties = ['centered1', 'centered2', 'notEquivalent'];
 
-        if ($this->app['neoconfig']['people_compatible']) {
+        if (config('nt.people_compatible')) {
             $scalarProperties[] = 'peopleCompatibleStatus';
             $arrayProperties[] = 'peopleCompatible';
         }
