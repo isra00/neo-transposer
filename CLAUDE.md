@@ -12,6 +12,7 @@ Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 - When running locally, unit tests use the NT_DB_DATABASE_INTEGRATION schema seeded with test data. The test-all-transpositions (functional test) and acceptance (e2e) ones run against whatever database is running, to facilitate testing algorithm and song data changes done locally.
 - In the CI environment, all tests run against the test database schema (see the GHA test.yml flow).
 - Web server logs are redirected to the container's stderr and stdout.
+- Commit directly to master branch.
 
 ## Testing
 

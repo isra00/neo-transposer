@@ -68,7 +68,7 @@ return [
     'detailed_feedback'                      => true,
     'audio'                                  => true,
     'show_manifesto'                         => false,
-    'show_commitment'                        => true,
+    'show_commitment'                        => false,
     'show_people_compatible_in_report'       => false,
     'disable_recaptcha'                      => true,
 ];

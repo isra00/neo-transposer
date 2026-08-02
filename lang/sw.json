@@ -1,7 +1,7 @@
 {
     "/* General */": "",
-    "Developed as <a href=\":url\">free software</a> in Tanzania.": "Imetengenezwa Tanzania kama <a href=\":url\">software huru</a>.",
-    "Contact": "Mawasiliano",
+    "This is <a href=\":urlCode\">free</a> and <a href=\":urlCommitment\">non-profit</a> software.": "Hii ni software <a href=\":urlCode\">huru</a> na <a href=\":urlCommitment\">isiyolenga faida</a>.",
+    "Contact me": "Wasiliana nami",
     "Log-out": "Ondoka",
     "Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.": "Neo-Transposer inabadilisha yenyewe nyimbo za Njia ya Neokatekumenato kwa ajili yako, ili ziendane na sauti yako kikamilifu.",
     "Transpose chords": "Badilisha kordi",
