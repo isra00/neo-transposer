@@ -51,7 +51,7 @@ return [
     'css_cache'                              => '332db24297179e87b53376af59e92869',
 
     'analytics_id'                           => env('NT_ANALYTICS_ID'),
-    'sitemap_lastmod'                        => '2026-05-08T10:00Z',
+    'sitemap_lastmod'                        => '2026-07-01T10:00Z',
     'recaptcha_secret'                       => env('NT_RECAPTCHA_SECRET'),
 
     'software_name'                          => 'Neo-Transposer', /* Deprecated */
@@ -61,9 +61,6 @@ return [
     'admins' => [env('NT_ADMIN_USERNAME') => ['ROLE_ADMIN', env('NT_ADMIN_PASSWORD')]],
 
     'people_range'                           => ['B1', 'B2'],
-
-    //'debug'                                  => getenv('NT_DEBUG'), //Ya está en app.php
-    'profiler'                               => env('NT_PROFILER'),
 
     //Feature flags
     'hide_second_centered_if_not_equivalent' => false,
