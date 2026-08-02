@@ -1,7 +1,7 @@
 {
     "/* General */": "",
-    "Developed as <a href=\":url\">free software</a> in Tanzania.": "<a href=\":url\">Software livre</a> desenvolvido na Tanzânia.",
-    "Contact": "Contato",
+    "This is <a href=\":urlCode\">free</a> and <a href=\":urlCommitment\">non-profit</a> software.": "Este é um software <a href=\":urlCode\">livre</a> e <a href=\":urlCommitment\">sem fins lucrativos</a>.",
+    "Contact me": "Fale comigo",
     "Log-out": "Sair",
     "Neo-Transposer automatically transposes the songs of the Neocatechumenal Way for you, so they fit your voice perfectly.": "Neo-Transposer transporta automaticamente os cantos do Caminho Neocatecumenal para você, para que se encaixem perfeitamente à sua voz",
     "Transpose chords": "Transportar acordes",
