@@ -67,17 +67,17 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: transposerlaravel:prod
+          images: transposer:prod
 
       - name: 🚀 Upload to GitHub's container repository
         run: |
-          docker tag transposerlaravel:prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}-laravel:${{ github.sha }}-prod
-          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}-laravel:${{ github.sha }}-prod
+          docker tag transposer:prod ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
+          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
 
       - name: 🕵️ Run Trivy vulnerability scanner against the Prod image
         uses: aquasecurity/trivy-action@v0.35.0
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}-laravel:${{ github.sha }}-prod
+          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.repository }}:${{ github.sha }}-prod
           ignore-unfixed: true
           format: 'sarif'
           output: 'trivy-results.sarif'

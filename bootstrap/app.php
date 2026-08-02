@@ -15,7 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $proxies = env('NT_TRUSTED_PROXIES', '');
         $middleware->trustProxies(at: $proxies === '*' ? '*' : array_filter(explode(',', $proxies)));
         $middleware->validateCsrfTokens(except: ['*']);
-        $middleware->append(\App\Http\Middleware\AddLaravelHeader::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
