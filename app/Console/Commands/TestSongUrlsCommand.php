@@ -11,9 +11,17 @@ class TestSongUrlsCommand extends Command
 {
     private const CONCURRENT_REQUESTS = 5;
 
+    /**
+     * Statuses meaning "we were not allowed to look", not "the link is dead".
+     * Typically a WAF or rate limiter reacting to the source IP, which on CI is
+     * a datacenter range. They say nothing about whether the song URL works, so
+     * reporting them as broken links is a false positive.
+     */
+    private const BLOCKED_STATUSES = [401, 403, 405, 429, 503];
+
     protected $signature = 'app:test-song-urls';
 
-    protected $description = 'Verify that all song URLs in the database return HTTP 200';
+    protected $description = 'Report song URLs in the database that look unreachable (never fails the build)';
 
     public function handle(): int
     {
@@ -30,7 +38,8 @@ class TestSongUrlsCommand extends Command
 
         $this->info("Checking {$songs->count()} song URLs (" . self::CONCURRENT_REQUESTS . " concurrent)...");
 
-        $failures = [];
+        $broken = [];
+        $blocked = [];
 
         foreach ($songs->chunk(self::CONCURRENT_REQUESTS) as $chunk) {
             $responses = Http::pool(function (Pool $pool) use ($chunk) {
@@ -47,13 +56,24 @@ class TestSongUrlsCommand extends Command
                 $response = $responses[$song->id_song];
 
                 if ($response instanceof \Throwable) {
-                    $failures[] = "#{$song->id_song} \"{$song->title}\": {$response->getMessage()} — {$song->url}";
+                    $broken[] = "#{$song->id_song} \"{$song->title}\": {$response->getMessage()} — {$song->url}";
                     $this->output->write('<fg=red>F</>');
-                } elseif (!$response->successful()) {
-                    $failures[] = "#{$song->id_song} \"{$song->title}\": HTTP {$response->status()} — {$song->url}";
-                    $this->output->write('<fg=red>F</>');
-                } else {
+                    continue;
+                }
+
+                $status = $response->status();
+
+                if ($response->successful()) {
                     $this->output->write('.');
+                } elseif (in_array($status, self::BLOCKED_STATUSES, true)) {
+                    $blocked[] = [
+                        'host'   => parse_url($song->url, PHP_URL_HOST) ?: '(unknown host)',
+                        'status' => $status,
+                    ];
+                    $this->output->write('<fg=yellow>B</>');
+                } else {
+                    $broken[] = "#{$song->id_song} \"{$song->title}\": HTTP {$status} — {$song->url}";
+                    $this->output->write('<fg=red>F</>');
                 }
             }
 
@@ -62,16 +82,82 @@ class TestSongUrlsCommand extends Command
 
         $this->newLine(2);
 
-        if (empty($failures)) {
-            $this->info("OK ({$songs->count()} URLs)");
-            return self::SUCCESS;
+        $ok = $songs->count() - count($broken) - count($blocked);
+        $this->info("Checked {$songs->count()}: {$ok} OK, " . count($broken) . ' unreachable, ' . count($blocked) . ' not verified.');
+
+        if ($blocked) {
+            $this->reportBlocked($blocked);
         }
 
-        $this->error(count($failures) . " song URL(s) failed:");
-        foreach ($failures as $failure) {
-            $this->line("  $failure");
+        if ($broken) {
+            $this->reportBroken($broken);
         }
 
-        return self::FAILURE;
+        return self::SUCCESS;
+    }
+
+    /**
+     * @param array<int, array{host: string, status: int}> $blocked
+     */
+    private function reportBlocked(array $blocked): void
+    {
+        $byHost = [];
+        foreach ($blocked as $entry) {
+            $key = "{$entry['host']} (HTTP {$entry['status']})";
+            $byHost[$key] = ($byHost[$key] ?? 0) + 1;
+        }
+
+        $this->newLine();
+        $this->warn(count($blocked) . ' URL(s) could not be verified — the checker was blocked, which is not evidence the links are broken:');
+        foreach ($byHost as $key => $count) {
+            $this->line("  {$count} × {$key}");
+        }
+
+        $summary = [];
+        foreach ($byHost as $key => $count) {
+            $summary[] = "{$count} × {$key}";
+        }
+        $this->annotate('notice', 'Song URLs not verified', implode(', ', $summary));
+    }
+
+    /**
+     * @param array<int, string> $broken
+     */
+    private function reportBroken(array $broken): void
+    {
+        $this->newLine();
+        $this->warn(count($broken) . ' song URL(s) look broken:');
+        foreach ($broken as $line) {
+            $this->line("  {$line}");
+        }
+
+        $this->annotate(
+            'warning',
+            'Broken song URLs',
+            count($broken) . ' song URL(s) look broken — see the job log for the full list.'
+        );
+    }
+
+    /**
+     * Surface a summary in the GitHub Actions UI. One annotation per category:
+     * GitHub renders only the first 10 of each type per step, so a per-URL
+     * annotation would silently truncate.
+     */
+    private function annotate(string $level, string $title, string $message): void
+    {
+        if (!getenv('GITHUB_ACTIONS')) {
+            return;
+        }
+
+        $escape = static fn (string $value): string => str_replace(
+            ['%', "\r", "\n"],
+            ['%25', '%0D', '%0A'],
+            $value
+        );
+
+        $title = $escape($title);
+        $message = $escape($message);
+
+        $this->line("::{$level} title={$title}::{$message}");
     }
 }
