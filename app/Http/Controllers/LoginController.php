@@ -10,7 +10,12 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    protected const REGEXP_VALID_EMAIL = "[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+    /**
+     * Anchored: an unanchored pattern matches a substring, so "%@gmail.com" would
+     * pass validation on its "@gmail.com" tail. "%" is excluded from the local part
+     * because it is a SQL LIKE wildcard and no real address uses it.
+     */
+    protected const REGEXP_VALID_EMAIL = "^[a-z0-9!#$&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
 
     /**
      * Display login page (=landing page).
@@ -44,7 +49,8 @@ class LoginController extends Controller
 
         $isCaptchaValid = config('app.debug') || config('nt.disable_recaptcha') || $this->validateCaptcha($req, config('nt.recaptcha_secret'));
 
-        if (!preg_match('/' . self::REGEXP_VALID_EMAIL . '/i', $req_email) || !$isCaptchaValid) {
+        // The D modifier makes "$" mean end-of-string, not "before a trailing newline".
+        if (!preg_match('/' . self::REGEXP_VALID_EMAIL . '/iD', $req_email) || !$isCaptchaValid) {
             $errorMsg = $isCaptchaValid ?
                 'That e-mail doesn\'t look good. Please, re-type it.'
                 : 'The Captcha code is not valid. If you are human, please try again or update your browser to log-in.';
