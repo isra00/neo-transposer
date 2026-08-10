@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
-use NeoTransposer\Controllers\TransposeSongApi;
 use NeoTransposer\Domain\Exception\SongNotExistException;
 use NeoTransposer\Domain\GeoIp\IpToLocaleResolver;
 use NeoTransposer\Domain\NotesCalculator;
@@ -37,7 +36,7 @@ final class TransposeSongController extends Controller
         try {
             $transposedSong = TransposedSong::fromDb($id_song);
         } catch (SongNotExistException) {
-            $app->abort(404, "Song $id_song does not exist.");
+            abort(404, "Song $id_song does not exist.");
         }
 
         $transposedSong->transpose(session('user')->range);
@@ -94,11 +93,6 @@ final class TransposeSongController extends Controller
                 session('user')->id_user ?? null,
                 $transposedSong->song->idSong
             );
-        }
-
-        /** @deprecated  */
-        if (str_starts_with($req->headers->get('Accept'), 'application/json')) {
-            return (new TransposeSongApi($app))->handleApiRequest($req, $id_song);
         }
 
         return response()->view(
