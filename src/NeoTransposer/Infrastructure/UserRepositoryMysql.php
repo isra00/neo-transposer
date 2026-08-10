@@ -35,8 +35,9 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 			throw new \InvalidArgumentException('Only email and id_user are accepted');
 		}
 
-        /** @todo Refactor: LIKE $idUser?? WTF la consulta debe ser distinta */
-		$sql = "SELECT * FROM user WHERE $field LIKE ?";
+		// Exact match only: LIKE would let a caller pass "%" or "_" wildcards and
+		// match an arbitrary user's row (login is passwordless, so that is a takeover).
+		$sql = "SELECT * FROM user WHERE $field = ?";
 
         $ret = null;
 
