@@ -39,7 +39,7 @@
         <div class="tip no-icon unhappy-warning">
             <h2><span class="red">&#128534;</span> @lang('Something is going wrong')</h2>
             <p>@lang('Until now, almost all transpositions have <strong>not</strong> worked for you. Perhaps your voice range you set is not the actual one.')</p>
-            <p>@lang('Try to <strong><a href=":url">do again the voice test</a></strong>. That may improve your results. If not, just choose whether you have female or male voice and Neo-Transposer will set for you a standard voice range. That will make you get better transpoositions!', ['url' => route('wizard_step1', ['locale' => app()->getLocale()])])</p>
+            <p>@lang('Try to <strong><a href=":url">do again the voice test</a></strong>. That may improve your results. If not, just choose whether you have female or male voice and Neo-Transposer will set for you a standard voice range. That will make you get better transpositions!', ['url' => route('wizard_step1', ['locale' => app()->getLocale()])])</p>
             <p class="standard-voice-selection">
                 <a href="{{ route('set_user_data', ['lowest_note' => config('nt.voice_wizard.standard_voices.female')[0], 'highest_note' => config('nt.voice_wizard.standard_voices.female')[1], 'unhappy_choose_std' => 'female']) }}" class="flatbutton red bigbutton">@lang('<span>My voice is </span>female')</a>
                 <a href="{{ route('set_user_data', ['lowest_note' => config('nt.voice_wizard.standard_voices.male')[0], 'highest_note' => config('nt.voice_wizard.standard_voices.male')[1], 'unhappy_choose_std' => 'male']) }}" class="flatbutton red bigbutton">@lang('<span>My voice is </span>male')</a>

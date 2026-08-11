@@ -39,7 +39,7 @@
         <section class="landing-info">
             <h3>@lang('How does it work?')</h3>
 
-            <p class="with-number"><span><i>1</i></span> @lang('First, you measure the limits of your voice by singing the chorus of a sing in different keys. It\'s a bit tiresome, but don\'t worry, you\'ll have to do it just once.')</p>
+            <p class="with-number"><span><i>1</i></span> @lang('First, you measure the limits of your voice by singing the chorus of a song in different keys. It\'s a bit tiresome, but don\'t worry, you\'ll have to do it just once.')</p>
             <p class="with-number"><span><i>2</i></span> @lang('After measuring your voice, choose any song and Neo-Transposer will calculate the chords and capo the fit you most.')</p>
 
             {{--
