@@ -20,5 +20,12 @@ interface FeedbackRepository
         ?string $transposition = null
     ): void;
 
-    public function readSongFeedbackForUser(int $idUser, int $idSong): ?bool;
+    /**
+     * The feedback the user gave about a song, or null if they gave none.
+     *
+     * @return \stdClass|null With 2 fields: worked (0/1) and transposition, which says
+     *                        which one worked (centered1, centered2, notEquivalent or
+     *                        peopleCompatible) and is NULL for basic yes/no feedback.
+     */
+    public function readSongFeedbackForUser(int $idUser, int $idSong): ?\stdClass;
 }

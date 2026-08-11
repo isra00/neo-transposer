@@ -93,13 +93,11 @@ SQL;
         ]);
     }
 
-    public function readSongFeedbackForUser(int $idUser, int $idSong): ?bool
+    public function readSongFeedbackForUser(int $idUser, int $idSong): ?\stdClass
     {
-        $result = $this->dbConnection->table('transposition_feedback')
+        return $this->dbConnection->table('transposition_feedback')
             ->where('id_user', $idUser)
             ->where('id_song', $idSong)
-            ->value('worked');
-
-        return $result !== null ? (bool) $result : null;
+            ->first(['worked', 'transposition']);
     }
 }
