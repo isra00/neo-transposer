@@ -26,7 +26,7 @@ final class SetUserDataController
                 $request->query('unhappy_choose_std')
             );
         } catch (BookNotExistException $e) {
-            throw new BadRequestHttpException('Invalid request: ' . $e->getMessage());
+            abort(404, $e->getMessage());
         } catch (BadUserRangeException) {
             return redirect()->route('user_voice', ['bad_voice_range' => '1']);
         } catch (InvalidStandardRangeException) {
