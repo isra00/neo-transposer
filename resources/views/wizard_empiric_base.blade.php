@@ -30,6 +30,7 @@
 		</div>
 
 		<form class="answer" method="post" action="{{ url()->current() }}" id="form-answer">
+			@csrf
 			<h3>@lang('Could you sing it?')</h3>
 
 			<nav>

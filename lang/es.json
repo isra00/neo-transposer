@@ -196,6 +196,10 @@
     "You may have clicked on a broken link, or perhaps you wrote the URL manually and made a mistake.": "Quizá hiciste click en un enlace que tenía un error, o quizá has escrito a mano la dirección y te has confundido.",
     "Try to go back to the <a href=\":url\">home page</a>.": "Prueba a volver al <a href=\":url\">inicio</a>.",
 
+    "/* error-419 */": "",
+    "Your session has expired": "Tu sesión ha expirado",
+    "The page was open for too long, so the form was not submitted.": "La página ha estado abierta demasiado tiempo, así que el formulario no se ha enviado.",
+
     "/* error-500 */": "",
     "Internal error": "Error interno",
     "Sorry! It's not your fault, but Neo-Transposer has just failed internally.": "Lo siento. No ha sido culpa tuya, pero Neo-Transposer ha fallado por dentro.",

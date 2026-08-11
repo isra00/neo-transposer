@@ -207,10 +207,14 @@
                         url: "{{ route('transposition_feedback', [], false) }}",
                         type: "POST",
                         dataType: "json",
-                        data: postJsonData,
+                        // The form's @csrf field is not sent here: callers build this payload by
+                        // hand, so the token has to be merged in for /feedback to accept the POST.
+                        data: $.extend({_token: "{{ csrf_token() }}"}, postJsonData),
                         success: callbackSuccess,
                         error: function(XHR) {
-                            if (XHR.status === 408) {
+                            // An expired session now shows up as 419 (stale token) because CSRF is
+                            // verified before the controller, which is what returns 408.
+                            if (XHR.status === 408 || XHR.status === 419) {
                                 document.getElementById("feedback-thanks").style.display = 'none';
                                 gtag('event', 'FeedbackSentAfterSessionExpired', {'event_category': 'FeedbackTransposition', 'event_label': '{{ $song->song->title }}'});
 
