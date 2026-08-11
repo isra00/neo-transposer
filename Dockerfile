@@ -65,6 +65,4 @@ RUN rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && mv composer.phar /usr/bin \
     && pecl install xdebug \
 	&& docker-php-ext-enable xdebug \
-    && apt-get install -y libicu-dev unzip \
-    && docker-php-ext-configure intl \
-    && docker-php-ext-install intl
+    && apt-get install -y unzip
