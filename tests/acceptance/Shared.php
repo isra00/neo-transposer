@@ -12,6 +12,19 @@ class Shared
         $I->executeJS('document.querySelectorAll(".phpdebugbar").forEach(e => e.remove())');
     }
 
+    /**
+     * Wait until no Zepto AJAX request is in flight.
+     *
+     * The feedback buttons report to the server via AJAX, and the click handler
+     * updates the DOM before the request resolves. Navigating away right after
+     * clicking therefore aborts the request and the feedback is never recorded,
+     * which made the tests that depend on accumulated feedback flaky.
+     */
+    public static function waitForAjax(AcceptanceTester $I): void
+    {
+        $I->waitForJS('return window.$ && $.active === 0', 10);
+    }
+
     public static function givenASpanishNewUserWithManualRangeInBookPage(AcceptanceTester $I): void
     {
         $faker = Factory::create();
@@ -49,5 +62,6 @@ class Shared
         $I->click('.song-index li:nth-child(' . $songIndex . ') a');
         self::removeDebugBar($I);
         $I->click($clickElement);
+        self::waitForAjax($I);
     }
 }
