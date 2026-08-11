@@ -7,6 +7,9 @@
             @if(config('app.debug'))
                 <small class="score">[{{ round($transposition->score) }}]</small>
             @endif
+            @if($feedback_worked ?? false)
+                <span class="feedback green" title="@lang('You have reported this transposition as fitting your voice')">&#10004;</span>
+            @endif
         </th>
     </tr>
     </thead>

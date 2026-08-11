@@ -9,6 +9,14 @@
 @section('page_class', 'transpose-song')
 
 @section('content')
+    @php
+        //Null when the user gave no feedback (or is not logged in), so both stay falsy.
+        $userSaidItWorked = $feedback ? (bool) $feedback->worked : null;
+
+        //Only positive feedback marks a transposition; basic yes/no doesn't name any.
+        $transpositionThatWorked = $userSaidItWorked ? $feedback->transposition : null;
+    @endphp
+
     @if (!session('user')->isLoggedIn())
         <div class="teaser">
             <div class="inside">
@@ -40,7 +48,7 @@
 
     <div class="transpositions-list">
         @foreach ($song->transpositions as $transposition)
-            @include('partial_print_transposition', ['transposition' => $transposition, 'original_chords' => $song->song->originalChordsForPrint])
+            @include('partial_print_transposition', ['transposition' => $transposition, 'original_chords' => $song->song->originalChordsForPrint, 'feedback_worked' => $transpositionThatWorked === 'centered' . $loop->iteration])
         @endforeach
     </div>
 
@@ -48,7 +56,7 @@
         @php $difference = ($song->not_equivalent->deviationFromCentered > 0) ? __('higher') : __('lower') @endphp
         <p class="explanation">@lang('This other transposition is a bit :difference, but it has easier chords and may also fit your voice:', ['difference' => $difference])</p>
         <div class="transpositions-list">
-            @include('partial_print_transposition', ['transposition' => $song->not_equivalent, 'original_chords' => $song->song->originalChordsForPrint])
+            @include('partial_print_transposition', ['transposition' => $song->not_equivalent, 'original_chords' => $song->song->originalChordsForPrint, 'feedback_worked' => $transpositionThatWorked === 'notEquivalent'])
         </div>
     @endif
 
@@ -58,7 +66,7 @@
             <small><a class="inline-block" href="{{ route('people-compatible-info', ['locale' => app()->getLocale()]) }}">@lang('Learn more')</a></small>
         </p>
         <div class="transpositions-list">
-            @include('partial_print_transposition', ['transposition' => $song->getPeopleCompatible(), 'original_chords' => $song->song->originalChordsForPrint])
+            @include('partial_print_transposition', ['transposition' => $song->getPeopleCompatible(), 'original_chords' => $song->song->originalChordsForPrint, 'feedback_worked' => $transpositionThatWorked === 'peopleCompatible'])
         </div>
     @endif
 
@@ -84,11 +92,11 @@
             <input type="hidden" name="pc_status" value="{{ $song->getPeopleCompatibleStatusMsg() ?? '' }}">
 
             <p class="answers" @if($non_js_fb) style="display: none" @endif>
-                <button type="submit" name="worked" value="1" class="yes @if($feedback == 'yes') highlighted @endif" id="feedback-yes" @if($feedback == 'yes') title="@lang('You have reported the proposed transposition as valid')" @endif data-worked="1">
-                    @lang('Yes') @if($feedback == 'yes') &#10004; @endif
+                <button type="submit" name="worked" value="1" class="yes @if($userSaidItWorked) highlighted @endif" id="feedback-yes" @if($userSaidItWorked) title="@lang('You have reported the proposed transposition as valid')" @endif data-worked="1">
+                    @lang('Yes') @if($userSaidItWorked) &#10004; @endif
                     <small>@lang('It has worked')</small>
                 </button>
-                <button type="submit" name="worked" value="0" class="no @if($feedback == 'no') highlighted @endif @if($feedback == 'yes') lowlighted @endif" id="feedback-no" data-worked="0">
+                <button type="submit" name="worked" value="0" class="no @if($userSaidItWorked === false) highlighted @endif @if($userSaidItWorked) lowlighted @endif" id="feedback-no" data-worked="0">
                     @lang('No')
                     <small>@lang('It hasn\'t worked')</small>
                 </button>
