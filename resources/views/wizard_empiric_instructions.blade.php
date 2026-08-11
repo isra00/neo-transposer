@@ -11,6 +11,7 @@
 	<p>@lang('Try to do your best to sing with your lowest possible voice, since this test tries to find the limits of your voice.')</p>
 
 	<form method="post" action="{{ $form_action }}" class="margintop">
+		@csrf
 		<p class="center">
 			<button id="submit" type="submit" value="sent" class="btn-neutral bigbutton">@lang('Understood')</button>
 			<small id="countdown"><span id="seconds">5</span> @lang('seconds')...</small>

@@ -104,12 +104,11 @@ Route::post('/feedback', [\App\Http\Controllers\ReceiveFeedbackController::class
 Route::get('/transpose/{id_song}', [\App\Http\Controllers\TransposeSongController::class, 'get'])
     ->name('transpose_song');
 
-// Admin routes. ValidateCsrfToken is applied here rather than app-wide: see bootstrap/app.php.
+// Admin routes. CSRF is verified by the `web` group, so it is not repeated here.
 // PreventResponseCaching is listed first so it also covers AdminBasicAuth's 401 response.
 Route::middleware([
     \App\Http\Middleware\PreventResponseCaching::class,
     \App\Http\Middleware\AdminBasicAuth::class,
-    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
 ])->group(function () {
     Route::get('/admin/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'get'])
         ->name('admin_dashboard');

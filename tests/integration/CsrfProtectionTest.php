@@ -8,23 +8,22 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 
 /**
- * CSRF verification is scoped to the admin routes: they write song data behind
- * browser-cached Basic auth, so a forged POST from any page an admin visits used
- * to be enough to corrupt the catalogue.
+ * Every write route verifies CSRF tokens, via the `web` group rather than per-route, so
+ * that a new POST route is protected by default. The forged-POST scenario that motivated
+ * this is the admin one — those routes write song data behind browser-cached Basic auth —
+ * but the public forms are covered too now that they all send a token.
  *
- * These tests assert the middleware wiring instead of issuing POSTs, because
- * ValidateCsrfToken::handle() short-circuits on runningUnitTests() — an
- * HTTP-level test would return the same status however the middleware is wired.
+ * The wiring is asserted instead of issuing POSTs, because ValidateCsrfToken::handle()
+ * short-circuits on runningUnitTests() — an HTTP-level test would return the same status
+ * however the middleware is wired. What a POST cannot prove, the two source-level tests
+ * at the bottom cover: a route that verifies tokens is only useful if the page that
+ * targets it actually sends one.
  */
 final class CsrfProtectionTest extends TestCase
 {
-    private const ADMIN_WRITE_ROUTES = [
+    private const WRITE_ROUTES = [
         'admin/insert-song',
         'admin/chord-correction',
-    ];
-
-    /** Public forms predate the Laravel migration and don't all send a token yet. */
-    private const PUBLIC_WRITE_ROUTES = [
         'feedback',
         '{locale}/login',
         '{locale}/wizard/lowest',
@@ -43,9 +42,9 @@ final class CsrfProtectionTest extends TestCase
         return app('router')->gatherRouteMiddleware($route);
     }
 
-    public function testAdminWriteRoutesVerifyCsrfTokens(): void
+    public function testWriteRoutesVerifyCsrfTokens(): void
     {
-        foreach (self::ADMIN_WRITE_ROUTES as $uri) {
+        foreach (self::WRITE_ROUTES as $uri) {
             $this->assertContains(
                 ValidateCsrfToken::class,
                 $this->middlewareFor('POST', $uri),
@@ -54,9 +53,9 @@ final class CsrfProtectionTest extends TestCase
         }
     }
 
-    public function testAdminWriteRoutesStartSessionBeforeVerifyingCsrfTokens(): void
+    public function testWriteRoutesStartSessionBeforeVerifyingCsrfTokens(): void
     {
-        foreach (self::ADMIN_WRITE_ROUTES as $uri) {
+        foreach (self::WRITE_ROUTES as $uri) {
             $middleware = $this->middlewareFor('POST', $uri);
 
             $session = array_search(StartSession::class, $middleware, true);
@@ -78,7 +77,7 @@ final class CsrfProtectionTest extends TestCase
         $this->assertNotContains(
             '*',
             $exempt,
-            'A wildcard exemption silently disables CSRF verification on the admin routes too'
+            'A wildcard exemption silently disables CSRF verification on every write route'
         );
     }
 
@@ -96,14 +95,48 @@ final class CsrfProtectionTest extends TestCase
         $this->assertSame(session()->token(), $match[1], 'the rendered token must be the session token');
     }
 
-    public function testPublicWriteRoutesStayExemptFromCsrfVerification(): void
+    public function testEveryPostFormInTheViewsCarriesACsrfField(): void
     {
-        foreach (self::PUBLIC_WRITE_ROUTES as $uri) {
-            $this->assertNotContains(
-                ValidateCsrfToken::class,
-                $this->middlewareFor('POST', $uri),
-                "POST /{$uri} would start rejecting requests: add @csrf to its form before protecting it"
-            );
+        foreach ($this->bladeFiles() as $path) {
+            $source = file_get_contents($path);
+            preg_match_all('#<form\b[^>]*\bmethod=(["\'])post\1.*?</form>#is', $source, $forms);
+
+            foreach ($forms[0] as $form) {
+                $this->assertStringContainsString(
+                    '@csrf',
+                    $form,
+                    basename($path) . ' has a POST form without @csrf, which the web group will now reject'
+                );
+            }
         }
+    }
+
+    public function testTheFeedbackAjaxCallSendsTheCsrfToken(): void
+    {
+        // This POST is the one @csrf cannot cover: the payload is a hand-built object, so
+        // the hidden field in the surrounding form is never read.
+        $source = file_get_contents(resource_path('views/transpose_song.blade.php'));
+
+        $this->assertMatchesRegularExpression(
+            '/_token:\s*"\{\{\s*csrf_token\(\)\s*\}\}"/',
+            $source,
+            'the AJAX feedback payload must carry a token, or every feedback POST 419s'
+        );
+    }
+
+    /** @return list<string> absolute paths of every Blade template */
+    private function bladeFiles(): array
+    {
+        $files = new \RegexIterator(
+            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(resource_path('views'))),
+            '/\.blade\.php$/'
+        );
+
+        $paths = array_keys(iterator_to_array($files));
+        sort($paths);
+
+        $this->assertNotEmpty($paths, 'no Blade templates found — the scan would pass vacuously');
+
+        return $paths;
     }
 }
