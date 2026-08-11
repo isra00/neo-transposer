@@ -1,0 +1,49 @@
+name: Check song URLs
+
+on:
+  schedule:
+    - cron: '23 3 * * *'
+  workflow_dispatch:
+
+env:
+  APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+  APP_ENV: testing
+  NT_DB_HOST: host.docker.internal
+  NT_DB_USER: root
+  NT_DB_PASSWORD: root
+  NT_DB_DATABASE: nt_only_songs
+  NT_DB_DATABASE_INTEGRATION: nt_empty_tables
+  NT_DEBUG: 1
+  NT_ADMIN_USERNAME: unused
+  NT_ADMIN_PASSWORD: unused
+  NT_ANALYTICS_ID: UA-xxxxxxxx-1
+  NT_MAXMIND_LICENSE_KEY: ${{ secrets.NT_MAXMIND_LICENSE_KEY }}
+
+jobs:
+  check-song-urls:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: 🐳 Set up Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: ⚙ Boot the DB container in the background
+        run: make start-db-container
+
+      # Reads the layer cache the test workflow populates, so this is mostly a cache hit.
+      - name: 📦 Build the DEV Docker image
+        env:
+          DOCKER_BUILD: docker buildx build --load
+          DOCKER_BUILD_ARGS: --cache-from=type=gha,scope=dev
+        run: make build-dev
+
+      - name: ⚙ Initialise the DB and start the app
+        run: |
+          make init-test-db
+          make start
+
+      - name: 🔗 Check every song URL
+        run: make test-song-urls
