@@ -7,7 +7,7 @@ Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 - Local URL: http://transposer.local
 - Production URL: https://neo-transposer.com
 - Run commands inside the Docker container or via the Makefile.
-- Use `make start-local` for development, `make test` for tests, `make bash` for shell.
+- Use `make start-local` + `make start-db-local` for development, `make test` for tests, `make bash` for shell.
 - The app runs in Docker; DB host is `host.docker.internal`.
 - When running locally, unit tests use the NT_DB_DATABASE_INTEGRATION schema seeded with test data. The test-all-transpositions (functional test) and acceptance (e2e) ones run against whatever database is running, to facilitate testing algorithm and song data changes done locally.
 - In the CI environment, all tests run against the test database schema (see the GHA test.yml flow).

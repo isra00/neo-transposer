@@ -273,7 +273,7 @@ class AutomaticTransposer
         foreach ($notEquivalentSorted as $transposition)
         {
             if (0 == $transposition->getCapo()) {
-                $notEquivalentSorted[0] = $transposition;
+                return $transposition;
             }
         }
 
