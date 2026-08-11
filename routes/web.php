@@ -104,12 +104,16 @@ Route::post('/feedback', [\App\Http\Controllers\ReceiveFeedbackController::class
 Route::get('/transpose/{id_song}', [\App\Http\Controllers\TransposeSongController::class, 'get'])
     ->name('transpose_song');
 
-// Admin routes
-Route::get('/admin/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'get'])
-    ->middleware(\App\Http\Middleware\AdminBasicAuth::class)
-    ->name('admin_dashboard');
+// Admin routes. ValidateCsrfToken is applied here rather than app-wide: see bootstrap/app.php.
+// PreventResponseCaching is listed first so it also covers AdminBasicAuth's 401 response.
+Route::middleware([
+    \App\Http\Middleware\PreventResponseCaching::class,
+    \App\Http\Middleware\AdminBasicAuth::class,
+    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+])->group(function () {
+    Route::get('/admin/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'get'])
+        ->name('admin_dashboard');
 
-Route::middleware(\App\Http\Middleware\AdminBasicAuth::class)->group(function () {
     Route::get('/admin/chord-correction', [\App\Http\Controllers\ChordCorrectionPanelController::class, 'get'])
         ->name('chord_correction_panel');
     Route::post('/admin/chord-correction', [\App\Http\Controllers\ChordCorrectionPanelController::class, 'post']);

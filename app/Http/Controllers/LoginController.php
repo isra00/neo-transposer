@@ -26,6 +26,12 @@ class LoginController extends Controller
     {
         // Log-out always
         $req->session()->flush();
+
+        // flush() drops every attribute, including the _token that StartSession created
+        // earlier in this request. Without a fresh one the @csrf in the form below renders
+        // value="" and the login POST could never pass CSRF verification.
+        $req->session()->regenerateToken();
+
         session(['user' => new User()]);
 
         $tplVars['all_books']        = $bookRepository->readAllBooks();
