@@ -13,6 +13,7 @@ Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 - In the CI environment, all tests run against the test database schema (see the GHA test.yml flow).
 - Web server logs are redirected to the container's stderr and stdout.
 - Commit directly to master branch.
+- Apply usual Laravel conventions
 
 ## Testing
 
@@ -22,7 +23,7 @@ Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 
 ## Silex → Laravel migration
 
-This project is being migrated from Silex to Laravel 11. Many controllers and views are still in legacy form under `src/NeoTransposer/`. When migrating, apply these patterns:
+This project was migrated from Silex to Laravel 11. Many controllers and views are still in legacy form under `src/NeoTransposer/`. When migrating, apply these patterns:
 
 ### Container & config
 - `$app['neoconfig']['x']` → `config('nt.x')`
