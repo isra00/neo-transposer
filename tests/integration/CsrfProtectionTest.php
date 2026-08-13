@@ -8,16 +8,20 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 
 /**
- * Every write route verifies CSRF tokens, via the `web` group rather than per-route, so
- * that a new POST route is protected by default. The forged-POST scenario that motivated
- * this is the admin one — those routes write song data behind browser-cached Basic auth —
- * but the public forms are covered too now that they all send a token.
+ * CSRF verification is currently DISABLED on every route: bootstrap/app.php registers a
+ * wildcard exemption, so ValidateCsrfToken runs but short-circuits before comparing
+ * tokens. No write route is protected — including the admin ones, which write song data
+ * behind browser-cached Basic auth, the scenario that originally motivated the checks.
+ *
+ * These tests no longer assert protection, because there is none. What they still pin is
+ * everything needed to restore it by deleting the `except` argument in bootstrap/app.php:
+ * the middleware is still wired into the `web` group ahead of the session, and every page
+ * that targets a write route still emits a token. If one of those drifts, re-enabling CSRF
+ * would silently break that form instead of protecting it.
  *
  * The wiring is asserted instead of issuing POSTs, because ValidateCsrfToken::handle()
  * short-circuits on runningUnitTests() — an HTTP-level test would return the same status
- * however the middleware is wired. What a POST cannot prove, the two source-level tests
- * at the bottom cover: a route that verifies tokens is only useful if the page that
- * targets it actually sends one.
+ * however the middleware is wired.
  */
 final class CsrfProtectionTest extends TestCase
 {
@@ -42,13 +46,16 @@ final class CsrfProtectionTest extends TestCase
         return app('router')->gatherRouteMiddleware($route);
     }
 
-    public function testWriteRoutesVerifyCsrfTokens(): void
+    public function testWriteRoutesStillHaveTheCsrfMiddlewareWired(): void
     {
+        // Present but exempted, so this asserts reachability rather than enforcement:
+        // removing the middleware would mean re-enabling CSRF takes more than deleting
+        // the `except` argument in bootstrap/app.php.
         foreach (self::WRITE_ROUTES as $uri) {
             $this->assertContains(
                 ValidateCsrfToken::class,
                 $this->middlewareFor('POST', $uri),
-                "POST /{$uri} must verify CSRF tokens"
+                "POST /{$uri} must keep the CSRF middleware in its stack"
             );
         }
     }
@@ -70,14 +77,17 @@ final class CsrfProtectionTest extends TestCase
         }
     }
 
-    public function testCsrfVerificationIsNotGloballyExempted(): void
+    public function testCsrfVerificationIsGloballyExempted(): void
     {
+        // Inverted on purpose: CSRF was disabled by request, and this pins that it is a
+        // deliberate wildcard exemption rather than protection lost to an accident
+        // elsewhere. Flip back to assertNotContains when CSRF is re-enabled.
         $exempt = (new \ReflectionProperty(ValidateCsrfToken::class, 'neverVerify'))->getValue();
 
-        $this->assertNotContains(
+        $this->assertContains(
             '*',
             $exempt,
-            'A wildcard exemption silently disables CSRF verification on every write route'
+            'CSRF is meant to be disabled globally; bootstrap/app.php should exempt "*"'
         );
     }
 

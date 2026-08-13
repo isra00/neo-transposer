@@ -15,10 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
         $proxies = env('NT_TRUSTED_PROXIES', '');
         $middleware->trustProxies(at: $proxies === '*' ? '*' : array_filter(explode(',', $proxies)));
 
-        // CSRF verification is left in the `web` group on purpose, so a new POST route is
-        // protected by default rather than by remembering to opt in. Every write path now
-        // sends a token: the Blade forms via @csrf, and the AJAX /feedback call by merging
-        // csrf_token() into its hand-built payload. See tests/integration/CsrfProtectionTest.
+        // CSRF verification is disabled on every route by request. The middleware still runs
+        // in the `web` group, but the wildcard exemption makes it a no-op, so every POST —
+        // login, /set-user-data, /feedback, and the admin song writes — now accepts requests
+        // with no token or a forged one, whatever origin they come from.
+        //
+        // To restore protection, drop the `except` argument (or this call entirely): the
+        // Blade forms still emit @csrf and the AJAX /feedback payload still merges
+        // csrf_token(), so nothing else has to change. See tests/integration/CsrfProtectionTest.
+        $middleware->validateCsrfTokens(except: ['*']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
