@@ -71,7 +71,7 @@ SQL;
     public function readSongByField(string $field, $value): ?Song
     {
         /** @refactor SELECT * FROM 2 tablas?? Disgregar lo que hace falta de book y lo que no */
-		$songRow = self::dbal()->fetchAssociative(
+		$songRow = $this->dbConnection->selectOne(
 			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $field = ?",
 			[$value]
 		);
@@ -81,15 +81,15 @@ SQL;
 		}
 
         /** @refactor Replace by SongChordRepository::readSongChords() */
-		$originalChords = self::dbal()->fetchAllAssociative(
+		$originalChords = $this->dbConnection->select(
 			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
-			[$songRow['id_song']]
+			[$songRow->id_song]
 		);
 
 		return new Song(
-            $songRow,
+            (array) $songRow,
             array_map(
-            fn($row) => Chord::fromString($row['chord']), $originalChords)
+            fn($row) => Chord::fromString($row->chord), $originalChords)
         );
 	}
 
@@ -115,28 +115,33 @@ SQL;
         ?string $url = null
     ): void {
 
-        $idSong = $this->dbConnection->table('song')->insertGetId([
-            'id_book'             => $idBook,
-            'page'                => $page,
-            'title'               => $title,
-            'lowest_note'         => $lowestNote,
-            'highest_note'        => $highestNote,
-            'people_lowest_note'  => $peopleLowestNote,
-            'people_highest_note' => $peopleHighestNote,
-            'first_chord_is_tone' => $firstChordIsNote,
-            'slug'                => $slug,
-            'url'                 => $url,
-        ]);
+        $this->dbConnection->transaction(function () use (
+            $idBook, $page, $title, $lowestNote, $highestNote, $peopleLowestNote,
+            $peopleHighestNote, $firstChordIsNote, $slug, $chords, $url
+        ) {
+            $idSong = $this->dbConnection->table('song')->insertGetId([
+                'id_book'             => $idBook,
+                'page'                => $page,
+                'title'               => $title,
+                'lowest_note'         => $lowestNote,
+                'highest_note'        => $highestNote,
+                'people_lowest_note'  => $peopleLowestNote,
+                'people_highest_note' => $peopleHighestNote,
+                'first_chord_is_tone' => $firstChordIsNote,
+                'slug'                => $slug,
+                'url'                 => $url,
+            ]);
 
-        foreach ($chords as $position => $chord) {
-            if ($chord != '') {
-                $this->dbConnection->table('song_chord')->insert([
-                    'id_song'  => $idSong,
-                    'chord'    => $chord,
-                    'position' => $position,
-                ]);
+            foreach ($chords as $position => $chord) {
+                if ($chord != '') {
+                    $this->dbConnection->table('song_chord')->insert([
+                        'id_song'  => $idSong,
+                        'chord'    => $chord,
+                        'position' => $position,
+                    ]);
+                }
             }
-        }
+        });
     }
 
     public function slugAlreadyExists(string $slug): bool

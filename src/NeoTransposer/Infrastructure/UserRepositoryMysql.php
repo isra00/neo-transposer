@@ -2,9 +2,6 @@
 
 namespace NeoTransposer\Infrastructure;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManager;
-use Illuminate\Support\Facades\DB;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
@@ -72,28 +69,26 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 	public function save(User $user, string $registerIp = null): ?int
 	{
 		if ($user->id_user) {
-			return $this->dbal()->update('user',
-				[
+			return $this->dbConnection->table('user')
+				->where('id_user', (int) $user->id_user)
+				->update([
 					'lowest_note'	=> $user->range->lowest ?? null,
 					'highest_note'	=> $user->range->highest ?? null,
 					'id_book'		=> $user->id_book,
 					'wizard_step1' 	=> $user->wizard_step1,
 					'wizard_lowest_attempts' => $user->wizard_lowest_attempts,
 					'wizard_highest_attempts' => $user->wizard_highest_attempts,
-				], ['id_user' => (int) $user->id_user]
-			);
+				]);
 		}
 
         /** @todo Refactor this. registerIp should be just one more field, no special treatment. */
-		$this->dbConnection->table('user')->insert([
+		return $user->id_user = (int) $this->dbConnection->table('user')->insertGetId([
 			'email'			=> $user->email,
 			'lowest_note'	=> $user->range->lowest ?? null,
 			'highest_note'	=> $user->range->highest ?? null,
 			'id_book'		=> $user->id_book,
 			'register_ip'	=> $registerIp
         ]);
-
-		return $user->id_user = (int) DB::getPdo()->lastInsertId();
 	}
 
     /**
@@ -114,21 +109,23 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
 			throw new \InvalidArgumentException("Invalid voice range update method '$method'");
 		}
 
-        //If user had NULL voice, don't record the change
-		$currentVoiceRange = $this->dbConnection->select('SELECT lowest_note FROM user WHERE id_user = ?', [$user->id_user]);
-        $currentVoiceRange = (array) $currentVoiceRange[0];
+		$this->dbConnection->transaction(function () use ($user, $method) {
+            //If user had NULL voice, don't record the change
+			$currentVoiceRange = $this->dbConnection->select('SELECT lowest_note FROM user WHERE id_user = ?', [$user->id_user]);
+			$currentVoiceRange = (array) $currentVoiceRange[0];
 
-		if (!empty($currentVoiceRange['lowest_note']))
-		{
-			$this->dbal()->insert('log_voice_range', [
-				'id_user'		=> $user->id_user,
-				'method'		=> $method,
-				'lowest_note'	=> $user->range->lowest,
-				'highest_note'	=> $user->range->highest
-            ]);
-		}
+			if (!empty($currentVoiceRange['lowest_note']))
+			{
+				$this->dbConnection->table('log_voice_range')->insert([
+					'id_user'		=> $user->id_user,
+					'method'		=> $method,
+					'lowest_note'	=> $user->range->lowest,
+					'highest_note'	=> $user->range->highest
+				]);
+			}
 
-		$this->save($user);
+			$this->save($user);
+		});
 	}
 
     public function readIpFromUsersWithNullCountry(): array

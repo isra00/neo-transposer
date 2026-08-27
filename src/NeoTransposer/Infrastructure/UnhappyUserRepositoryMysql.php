@@ -9,7 +9,7 @@ final class UnhappyUserRepositoryMysql extends MysqlRepository implements Unhapp
 {
     public function readUserIsUnhappy(int $idUser): bool
     {
-        return false !== self::dbal()->fetchOne(
+        return null !== $this->dbConnection->selectOne(
                 'SELECT id_user FROM unhappy_user WHERE id_user = ?',
                 [$idUser]
             );
@@ -27,27 +27,21 @@ final class UnhappyUserRepositoryMysql extends MysqlRepository implements Unhapp
 
     public function writeUnhappyUser(int $idUser): void
     {
-        //If user was already unhappy, UNIQUE will make query fail, nothing done.
-        try {
-            self::dbal()->insert('unhappy_user', ['id_user' => $idUser]);
-        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException) {
-        }
+        //If user was already unhappy, UNIQUE would make the query fail, so ignore it.
+        $this->dbConnection->table('unhappy_user')->insertOrIgnore(['id_user' => $idUser]);
     }
 
     public function delete(int $idUser): void
     {
-        self::dbal()->delete('unhappy_user', ['id_user' => $idUser]);
+        $this->dbConnection->table('unhappy_user')->where('id_user', $idUser)->delete();
     }
 
     public function updateUnhappyUser(string $action, float $performanceBeforeAction, int $idUser): void
     {
-        self::dbal()->update(
-            'unhappy_user',
-            [
-                'took_action' => date('Y-m-d H:i:s'),
-                'action' => $action,
-                'perf_before_action' => $performanceBeforeAction,
-            ], ['id_user' => $idUser]
-        );
+        $this->dbConnection->table('unhappy_user')->where('id_user', $idUser)->update([
+            'took_action' => date('Y-m-d H:i:s'),
+            'action' => $action,
+            'perf_before_action' => $performanceBeforeAction,
+        ]);
     }
 }
