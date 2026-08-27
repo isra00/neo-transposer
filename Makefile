@@ -98,11 +98,11 @@ COVERAGE_ARGS ?= --coverage-xml
 test:
 	@docker exec transposer-dev bash -c "mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini.disabled /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null; true"
 	@docker exec nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${NT_DB_DATABASE_INTEGRATION} COLLATE 'utf8_general_ci'"
-	docker exec -t transposer-dev vendor/bin/codecept run --skip acceptance $(COVERAGE_ARGS)
+	docker exec -t -u www-data transposer-dev vendor/bin/codecept run --skip acceptance $(COVERAGE_ARGS)
 	@# Only applies when the sources are bind-mounted (make start-local); in CI the outputs
 	@# live inside the container until `make get-test-outputs`, so there is nothing to rewrite.
 	@if [ -f tests/_output/coverage.xml ]; then sed "s@\/var\/www\/html@\/\/wsl$$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml > tests/_output/coverage.xml.tmp && mv tests/_output/coverage.xml.tmp tests/_output/coverage.xml; fi
-	docker exec -t transposer-dev php artisan app:test-all-transpositions
+	docker exec -t -u www-data transposer-dev php artisan app:test-all-transpositions
 
 # Link-rot report over every song URL in the DB. It hits ~700 third-party sites and can
 # never fail the build, so it runs on a schedule (.github/workflows/song-urls.yml) rather
@@ -124,7 +124,7 @@ wait-selenium:
 	echo "Selenium did not become ready in 60s" >&2; exit 1
 
 test-acceptance: start-selenium wait-selenium
-	docker exec -t transposer-dev php /var/www/html/vendor/bin/codecept run acceptance
+	docker exec -t -u www-data transposer-dev php /var/www/html/vendor/bin/codecept run acceptance
 
 get-test-outputs:
 	 docker cp transposer-dev:/var/www/html/tests/_output .
