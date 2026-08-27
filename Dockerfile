@@ -21,7 +21,8 @@ ARG WORKDIR="/app"
 EXPOSE 80
 ENV TZ="Europe/Madrid"
 
-RUN apt update && apt install -y libzip-dev zlib1g-dev; \
+RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev zlib1g-dev; \
+    rm -rf /var/lib/apt/lists/*; \
     docker-php-ext-install mysqli pdo_mysql zip; \
     mkdir /var/www/nt-sessions; \
     usermod -u 1000 www-data; \
@@ -60,9 +61,10 @@ COPY ./build/php-dev.ini /usr/local/etc/php/conf.d/neo-transposer-dev.ini
 #xdebug is not a core extension so it must be installed with PECL. 3.1 is the highest version supporting PHP 7.3
 #@todo Update XDebug version to latest; ensure it's not in prod image.
 RUN rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && curl -s https://getcomposer.org/download/2.8.1/composer.phar > composer.phar \
-    && chmod +x composer.phar \
-    && mv composer.phar /usr/bin \
+    && curl -fsSL https://getcomposer.org/download/2.8.1/composer.phar -o /usr/bin/composer.phar \
+    && chmod +x /usr/bin/composer.phar \
     && pecl install xdebug \
-	&& docker-php-ext-enable xdebug \
-    && apt-get install -y unzip
+    && docker-php-ext-enable xdebug \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends unzip \
+    && rm -rf /var/lib/apt/lists/*
