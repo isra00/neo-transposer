@@ -29,7 +29,7 @@ CREATE TABLE `book` (
   `locale` char(2) NOT NULL,
   `song_count` smallint unsigned NOT NULL COMMENT 'Total # of songs that should be present. For management purposes only.',
   PRIMARY KEY (`id_book`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `log_voice_range` (
   `lowest_note` char(3) NOT NULL,
   `highest_note` char(3) NOT NULL,
   KEY `id_user` (`id_user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,11 +66,11 @@ CREATE TABLE `song` (
   `people_lowest_note` char(3) DEFAULT NULL,
   `people_highest_note` char(3) DEFAULT NULL,
   `artistic_adjustment` tinyint DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`),
   KEY `id_book` (`id_book`)
-) ENGINE=MyISAM AUTO_INCREMENT=1205 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1205 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +84,7 @@ CREATE TABLE `song_chord` (
   `chord` char(6) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `position` int unsigned NOT NULL,
   UNIQUE KEY `id_song_chord` (`id_song`,`chord`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `transposition_feedback` (
   `centered_score_rate` float DEFAULT NULL,
   UNIQUE KEY `id_song_id_user` (`id_song`,`id_user`),
   KEY `id_user` (`id_user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `unhappy_user` (
   `action` char(10) DEFAULT NULL,
   `perf_before_action` decimal(5,4) unsigned DEFAULT NULL,
   UNIQUE KEY `id_user` (`id_user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +147,7 @@ CREATE TABLE `user` (
   `country` char(2) DEFAULT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=34500 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=34500 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
