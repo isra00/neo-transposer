@@ -29,10 +29,7 @@ final class TransposedSong
      */
     public $not_equivalent;
 
-    /**
-     * @var PeopleCompatibleCalculation
-     */
-    private $pcCalculation;
+    private PeopleCompatibleCalculation $pcCalculation;
 
     public function __construct(public Song $song)
     {
@@ -73,12 +70,10 @@ final class TransposedSong
         );
         $this->not_equivalent = $transposer->getEasierNotEquivalent();
 
-        if (config('nt.people_compatible')) {
-            $this->pcCalculation = $transposer->calculatePeopleCompatible();
+        $this->pcCalculation = $transposer->calculatePeopleCompatible();
 
-            if ($this->not_equivalent !== null) {
-                $this->removeEasierNotEquivalentIfConflictWithPeopleCompatible();
-            }
+        if ($this->not_equivalent !== null) {
+            $this->removeEasierNotEquivalentIfConflictWithPeopleCompatible();
         }
 
         //If there is notEquivalent, show only one centered.

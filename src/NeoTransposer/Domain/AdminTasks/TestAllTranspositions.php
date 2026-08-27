@@ -21,9 +21,8 @@ final class TestAllTranspositions implements AdminTask
      */
     public function run(): string
     {
-        $configKey = 'nt.test_all_transpositions_expected' . (config('nt.people_compatible') ? '_pc' : '');
         $testData = json_decode(
-            file_get_contents(config($configKey)),
+            file_get_contents(config('nt.test_all_transpositions_expected')),
             true
         );
 
@@ -127,22 +126,20 @@ final class TestAllTranspositions implements AdminTask
                 ];
             }
 
-            if (config('nt.people_compatible')) {
-                $testResult[$transposedSong->song->idSong]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus();
+            $testResult[$transposedSong->song->idSong]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus();
 
-                if (($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) !== null) {
-                    $testResult[$transposedSong->song->idSong]['peopleCompatible'] = [
-                        'offset'                => $peopleCompatibleTransposition->offset,
-                        'lowestNote'            => $peopleCompatibleTransposition->range->lowest,
-                        'highestNote'           => $peopleCompatibleTransposition->range->highest,
-                        'score'                 => $peopleCompatibleTransposition->score,
-                        'capo'                  => $peopleCompatibleTransposition->getCapo(),
-                        'deviationFromCentered' => $peopleCompatibleTransposition->deviationFromCentered,
-                        'chords'                => implode(',', $peopleCompatibleTransposition->chords),
-                        'peopleLowestNote'      => $peopleCompatibleTransposition->peopleRange->lowest,
-                        'peopleHighestNote'     => $peopleCompatibleTransposition->peopleRange->highest,
-                    ];
-                }
+            if (($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) !== null) {
+                $testResult[$transposedSong->song->idSong]['peopleCompatible'] = [
+                    'offset'                => $peopleCompatibleTransposition->offset,
+                    'lowestNote'            => $peopleCompatibleTransposition->range->lowest,
+                    'highestNote'           => $peopleCompatibleTransposition->range->highest,
+                    'score'                 => $peopleCompatibleTransposition->score,
+                    'capo'                  => $peopleCompatibleTransposition->getCapo(),
+                    'deviationFromCentered' => $peopleCompatibleTransposition->deviationFromCentered,
+                    'chords'                => implode(',', $peopleCompatibleTransposition->chords),
+                    'peopleLowestNote'      => $peopleCompatibleTransposition->peopleRange->lowest,
+                    'peopleHighestNote'     => $peopleCompatibleTransposition->peopleRange->highest,
+                ];
             }
         }
 
@@ -151,13 +148,8 @@ final class TestAllTranspositions implements AdminTask
 
     private function diffTestResults($actual, $expected)
     {
-        $scalarProperties = ['songLowestNote', 'songHighestNote'];
-        $arrayProperties = ['centered1', 'centered2', 'notEquivalent'];
-
-        if (config('nt.people_compatible')) {
-            $scalarProperties[] = 'peopleCompatibleStatus';
-            $arrayProperties[] = 'peopleCompatible';
-        }
+        $scalarProperties = ['songLowestNote', 'songHighestNote', 'peopleCompatibleStatus'];
+        $arrayProperties = ['centered1', 'centered2', 'notEquivalent', 'peopleCompatible'];
 
         $diff = @array_diff(
             array_intersect_key($actual, array_flip($scalarProperties)),

@@ -47,7 +47,6 @@ return [
     'templates_dir'                          => __DIR__ . '/templates',
     'mmdb'                                   => 'GeoLite2-Country.mmdb',
     'test_all_transpositions_expected'       => __DIR__ . '/../tests/testAllTranspositions.expected.json',
-    'test_all_transpositions_expected_pc'    => __DIR__ . '/../tests/testAllTranspositions.expected.PeopleCompatible.json',
     'css_cache'                              => '332db24297179e87b53376af59e92869',
 
     'analytics_id'                           => env('NT_ANALYTICS_ID'),
@@ -64,7 +63,6 @@ return [
 
     //Feature flags
     'hide_second_centered_if_not_equivalent' => false,
-    'people_compatible'                      => true,
     'detailed_feedback'                      => true,
     'audio'                                  => true,
     'show_manifesto'                         => false,

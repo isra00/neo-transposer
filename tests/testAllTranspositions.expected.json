@@ -22,7 +22,8 @@
 				"score": 12,
 				"capo": 0,
 				"chords": "A,F#m,E,D"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"27": {
 			"songLowestNote": "C2",
@@ -42,36 +43,29 @@
 				"score": 24,
 				"capo": 0,
 				"chords": "A,F#m,E7,E,D,C#"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"28": {
 			"songLowestNote": "A1",
-			"songHighestNote": "D3",
+			"songHighestNote": "E3",
 			"centered1": {
-				"offset": 1,
-				"lowestNote": "A#1",
-				"highestNote": "D#3",
-				"score": 11,
-				"capo": 1,
-				"chords": "Am,E,Dm,F"
-			},
-			"centered2": {
-				"offset": 1,
-				"lowestNote": "A#1",
-				"highestNote": "D#3",
-				"score": 24,
-				"capo": 4,
-				"chords": "F#m,C#,Bm,D"
-			},
-			"notEquivalent": {
 				"offset": 0,
 				"lowestNote": "A1",
-				"highestNote": "D3",
+				"highestNote": "E3",
 				"score": 9,
 				"capo": 5,
-				"deviationFromCentered": -1,
 				"chords": "Em,B7,Am,C"
-			}
+			},
+			"centered2": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "E3",
+				"score": 11,
+				"capo": 0,
+				"chords": "Am,E,Dm,F"
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"29": {
 			"songLowestNote": "E2",
@@ -91,7 +85,8 @@
 				"score": 12,
 				"capo": 5,
 				"chords": "Dm,A,Gm"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"145": {
 			"songLowestNote": "E1",
@@ -101,7 +96,7 @@
 				"lowestNote": "A1",
 				"highestNote": "E3",
 				"score": 25,
-				"capo": 3,
+				"capo": 5,
 				"chords": "Am,A7,Dm9,F7M,E"
 			},
 			"centered2": {
@@ -111,7 +106,8 @@
 				"score": 48,
 				"capo": 0,
 				"chords": "Dm,D7,Gm9,A#7M,A"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"146": {
 			"songLowestNote": "E2",
@@ -131,6 +127,18 @@
 				"score": 24,
 				"capo": 4,
 				"chords": "Dm,Gm,A,A#,D7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 12,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "Em,Am,B7,C,E7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"148": {
@@ -152,14 +160,17 @@
 				"capo": 4,
 				"chords": "F#m,Bm,C#,E,D"
 			},
-			"notEquivalent": {
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
 				"offset": 0,
 				"lowestNote": "A1",
 				"highestNote": "D3",
 				"score": 11,
 				"capo": 5,
 				"deviationFromCentered": -1,
-				"chords": "Em,Am,B7,D,C"
+				"chords": "Em,Am,B7,D,C",
+				"peopleLowestNote": "G#2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"149": {
@@ -180,7 +191,8 @@
 				"score": 27,
 				"capo": 0,
 				"chords": "Bm,Em,D,E,F#,F#7"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"150": {
 			"songLowestNote": "E2",
@@ -200,7 +212,8 @@
 				"score": 24,
 				"capo": 2,
 				"chords": "F#m,D,Bm,C#"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"151": {
 			"songLowestNote": "C#2",
@@ -220,7 +233,8 @@
 				"score": 8,
 				"capo": 2,
 				"chords": "A,F#m"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"152": {
 			"songLowestNote": "A2",
@@ -240,7 +254,8 @@
 				"score": 9,
 				"capo": 4,
 				"chords": "G,C,F"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"153": {
 			"songLowestNote": "G1",
@@ -260,7 +275,8 @@
 				"score": 17,
 				"capo": 0,
 				"chords": "B,C,Em,B7"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"154": {
 			"songLowestNote": "G2",
@@ -280,7 +296,8 @@
 				"score": 9,
 				"capo": 2,
 				"chords": "F,A,Dm"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"155": {
 			"songLowestNote": "D2",
@@ -309,7 +326,8 @@
 				"capo": 5,
 				"deviationFromCentered": -1,
 				"chords": "A,C,D,E7,Am,Dm,Em,E"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"156": {
 			"songLowestNote": "A1",
@@ -329,6 +347,18 @@
 				"score": 26,
 				"capo": 3,
 				"chords": "C,Em,F,Dm6,G7"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 25,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "D,F#m,G,Em6,A7",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"157": {
@@ -349,26 +379,39 @@
 				"score": 27,
 				"capo": 5,
 				"chords": "Em,Am9,B7,B7"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"158": {
-			"songLowestNote": "F2",
+			"songLowestNote": "E2",
 			"songHighestNote": "E3",
 			"centered1": {
-				"offset": -4,
+				"offset": -3,
 				"lowestNote": "C#2",
-				"highestNote": "C3",
+				"highestNote": "C#3",
 				"score": 8,
-				"capo": 1,
+				"capo": 2,
 				"chords": "G,B7,C"
 			},
 			"centered2": {
-				"offset": -4,
+				"offset": -3,
 				"lowestNote": "C#2",
-				"highestNote": "C3",
+				"highestNote": "C#3",
 				"score": 12,
-				"capo": 4,
+				"capo": 5,
 				"chords": "E,G#,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 8,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "G,B7,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"159": {
@@ -390,14 +433,17 @@
 				"capo": 1,
 				"chords": "Gm,F,A#,Dm"
 			},
-			"notEquivalent": {
-				"offset": 5,
-				"lowestNote": "C2",
-				"highestNote": "E3",
-				"score": 7,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Am,G,C,Em"
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "A1",
+				"highestNote": "C#3",
+				"score": 11,
+				"capo": 4,
+				"deviationFromCentered": -2,
+				"chords": "Dm,C,F,Am",
+				"peopleLowestNote": "E2",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"160": {
@@ -419,14 +465,17 @@
 				"capo": 4,
 				"chords": "F#m,E,C#,D,C#7"
 			},
-			"notEquivalent": {
-				"offset": -5,
-				"lowestNote": "C2",
-				"highestNote": "C3",
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -6,
+				"lowestNote": "B1",
+				"highestNote": "B2",
 				"score": 13,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Em,D,B7,C,B7"
+				"capo": 4,
+				"deviationFromCentered": -2,
+				"chords": "Em,D,B7,C,B7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"161": {
@@ -447,6 +496,18 @@
 				"score": 13,
 				"capo": 0,
 				"chords": "Am,G,F,E,Dm"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -1,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 11,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Em,D,C,B7,Am",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"163": {
@@ -467,6 +528,18 @@
 				"score": 28,
 				"capo": 0,
 				"chords": "F,Em,D,G,A,Dm,C,A#,A7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 27,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "C,Bm,A,D,E,Am,G,F,E7",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"164": {
@@ -487,7 +560,8 @@
 				"score": 13,
 				"capo": 0,
 				"chords": "Dm,Gm,A7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"165": {
 			"songLowestNote": "D2",
@@ -507,6 +581,18 @@
 				"score": 14,
 				"capo": 3,
 				"chords": "D,Em,G,F#7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 12,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "C,Dm,F,E7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"166": {
@@ -527,6 +613,18 @@
 				"score": 5,
 				"capo": 5,
 				"chords": "Em,B7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -1,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 5,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Em,B7",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"167": {
@@ -547,7 +645,8 @@
 				"score": 42,
 				"capo": 5,
 				"chords": "Bm,D,F#,G,Em,Em9,A,B7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"168": {
 			"songLowestNote": "E2",
@@ -567,6 +666,18 @@
 				"score": 30,
 				"capo": 2,
 				"chords": "Bm,Em,F#7,G,A7,D,F#m"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 18,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "Am,Dm,E7,F,G7,C,Em",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"169": {
@@ -587,6 +698,18 @@
 				"score": 35,
 				"capo": 1,
 				"chords": "D,Em,A7,F#,Bm,B7,G,A,G#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -2,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 27,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "C,Dm,G7,E,Am,A7,F,G,F#",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"170": {
@@ -607,6 +730,18 @@
 				"score": 16,
 				"capo": 4,
 				"chords": "C,Dm,C7,F,G"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 10,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "D,Em,D7,G,A",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"171": {
@@ -627,6 +762,18 @@
 				"score": 21,
 				"capo": 3,
 				"chords": "Bm,Em,A,G,F#7"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 14,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Am,Dm,G,F,E7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"172": {
@@ -647,7 +794,8 @@
 				"score": 29,
 				"capo": 2,
 				"chords": "Bm,G7,F#,G,F#7,A"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"173": {
 			"songLowestNote": "A1",
@@ -667,7 +815,8 @@
 				"score": 34,
 				"capo": 5,
 				"chords": "Em,Am9,C,B7,G,Bm"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"174": {
 			"songLowestNote": "A1",
@@ -687,6 +836,18 @@
 				"score": 30,
 				"capo": 2,
 				"chords": "D,F#,Em9,A,G"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 20,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "C,E,Dm9,G,F",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"175": {
@@ -707,6 +868,18 @@
 				"score": 10,
 				"capo": 3,
 				"chords": "Dm,Gm"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 3,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "Em,Am",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"176": {
@@ -727,7 +900,8 @@
 				"score": 22,
 				"capo": 0,
 				"chords": "D,F#,G,A7,Bm,A"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"177": {
 			"songLowestNote": "D2",
@@ -747,7 +921,8 @@
 				"score": 19,
 				"capo": 2,
 				"chords": "F#m,D,E,C#"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"178": {
 			"songLowestNote": "G1",
@@ -767,6 +942,18 @@
 				"score": 22,
 				"capo": 2,
 				"chords": "D,Bm,G,A,A#"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "A1",
+				"highestNote": "C#3",
+				"score": 17,
+				"capo": 5,
+				"deviationFromCentered": -2,
+				"chords": "A,F#m,D,E,F",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"179": {
@@ -787,7 +974,8 @@
 				"score": 18,
 				"capo": 3,
 				"chords": "D,Bm,Em,F#m,E"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"180": {
 			"songLowestNote": "G1",
@@ -807,7 +995,8 @@
 				"score": 17,
 				"capo": 0,
 				"chords": "Bm,G,F#,A"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"181": {
 			"songLowestNote": "F#2",
@@ -827,7 +1016,8 @@
 				"score": 21,
 				"capo": 0,
 				"chords": "Bm,B7,Em,F#7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"182": {
 			"songLowestNote": "E2",
@@ -847,7 +1037,8 @@
 				"score": 15,
 				"capo": 5,
 				"chords": "Dm,C,A,A#"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"183": {
 			"songLowestNote": "B1",
@@ -867,7 +1058,8 @@
 				"score": 20,
 				"capo": 0,
 				"chords": "D,Bm,F#,G,Em,A"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"184": {
 			"songLowestNote": "E2",
@@ -887,6 +1079,18 @@
 				"score": 49,
 				"capo": 1,
 				"chords": "Em,B,C,Am,Bm,D,F#,A,E,C#,F#m"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 42,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Dm,A,A#,Gm,Am,C,E,G,D,B,Em",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"185": {
@@ -907,6 +1111,18 @@
 				"score": 17,
 				"capo": 5,
 				"chords": "Bm,G,F#,D"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": -7,
+				"lowestNote": "A1",
+				"highestNote": "C3",
+				"score": 11,
+				"capo": 5,
+				"deviationFromCentered": -2,
+				"chords": "Am,F,E,C",
+				"peopleLowestNote": "C2",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"186": {
@@ -927,7 +1143,8 @@
 				"score": 18,
 				"capo": 0,
 				"chords": "Am,C,E,F,A7,G,Dm"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"188": {
 			"songLowestNote": "A1",
@@ -948,14 +1165,17 @@
 				"capo": 4,
 				"chords": "Bm,Em,F#7,F#"
 			},
-			"notEquivalent": {
-				"offset": 2,
-				"lowestNote": "B1",
-				"highestNote": "E3",
-				"score": 11,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,Am,B7,B7"
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 9,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Am,Dm,E7,E",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"189": {
@@ -976,7 +1196,8 @@
 				"score": 23,
 				"capo": 3,
 				"chords": "D,Bm,G,Em,F#7,A"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"190": {
 			"songLowestNote": "D2",
@@ -996,7 +1217,8 @@
 				"score": 32,
 				"capo": 2,
 				"chords": "Bm,A,Em,F#7,G,A7,D,F#m"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"191": {
 			"songLowestNote": "D2",
@@ -1016,26 +1238,39 @@
 				"score": 19,
 				"capo": 2,
 				"chords": "F#m,E,D,C#"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"192": {
 			"songLowestNote": "E2",
-			"songHighestNote": "E3",
+			"songHighestNote": "F3",
 			"centered1": {
-				"offset": -3,
-				"lowestNote": "C#2",
+				"offset": -4,
+				"lowestNote": "C2",
 				"highestNote": "C#3",
 				"score": 9,
-				"capo": 2,
+				"capo": 1,
 				"chords": "Em,B7,D,C"
 			},
 			"centered2": {
-				"offset": -3,
-				"lowestNote": "C#2",
+				"offset": -4,
+				"lowestNote": "C2",
 				"highestNote": "C#3",
 				"score": 15,
-				"capo": 4,
+				"capo": 3,
 				"chords": "Dm,A,C,A#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 9,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "Em,B7,D,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"193": {
@@ -1056,6 +1291,18 @@
 				"score": 21,
 				"capo": 3,
 				"chords": "G,D,A7,D7,B,Em"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 19,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "F,C,G7,C7,A,Dm",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"194": {
@@ -1076,6 +1323,18 @@
 				"score": 30,
 				"capo": 3,
 				"chords": "Gm,Dm,D#,D7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "C2",
+				"highestNote": "B2",
+				"score": 11,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "Am,Em,F,E7",
+				"peopleLowestNote": "C2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"195": {
@@ -1096,7 +1355,8 @@
 				"score": 15,
 				"capo": 4,
 				"chords": "Dm,A#,C,A"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"196": {
 			"songLowestNote": "D2",
@@ -1116,6 +1376,18 @@
 				"score": 22,
 				"capo": 3,
 				"chords": "Bm,Em,F#7,A7,D"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "A1",
+				"highestNote": "B2",
+				"score": 12,
+				"capo": 2,
+				"deviationFromCentered": -3,
+				"chords": "Am,Dm,E7,G7,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"197": {
@@ -1136,7 +1408,8 @@
 				"score": 23,
 				"capo": 3,
 				"chords": "Bm,F#7,D,Em,A,G"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"198": {
 			"songLowestNote": "A1",
@@ -1156,6 +1429,18 @@
 				"score": 27,
 				"capo": 2,
 				"chords": "Bm,F#7,B7,Em,F#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 12,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "Am,E7,A7,Dm,E",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"199": {
@@ -1176,7 +1461,8 @@
 				"score": 15,
 				"capo": 0,
 				"chords": "Am,G,E,Dm,F,C"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"200": {
 			"songLowestNote": "B1",
@@ -1196,7 +1482,8 @@
 				"score": 29,
 				"capo": 3,
 				"chords": "Bm,Em,F#7,Em6"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"201": {
 			"songLowestNote": "D2",
@@ -1216,6 +1503,18 @@
 				"score": 9,
 				"capo": 1,
 				"chords": "Bm,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 4,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Am,G",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"202": {
@@ -1236,6 +1535,18 @@
 				"score": 13,
 				"capo": 4,
 				"chords": "Dm,A7,Gm"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 7,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "Em,B7,Am",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"203": {
@@ -1256,6 +1567,18 @@
 				"score": 18,
 				"capo": 2,
 				"chords": "Bm,Em,F#,G,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "A#1",
+				"highestNote": "B2",
+				"score": 13,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "Am,Dm,E,F,G",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"204": {
@@ -1276,6 +1599,18 @@
 				"score": 24,
 				"capo": 4,
 				"chords": "A,C#m,D,E7,E"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -8,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 16,
+				"capo": 4,
+				"deviationFromCentered": -2,
+				"chords": "G,Bm,C,D7,D",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"205": {
@@ -1296,7 +1631,8 @@
 				"score": 11,
 				"capo": 0,
 				"chords": "Am,F,E,G"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"206": {
 			"songLowestNote": "B1",
@@ -1316,7 +1652,8 @@
 				"score": 20,
 				"capo": 0,
 				"chords": "D,Bm,F#,G,A7"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"207": {
 			"songLowestNote": "E2",
@@ -1336,7 +1673,8 @@
 				"score": 17,
 				"capo": 2,
 				"chords": "A,B,E,E7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"208": {
 			"songLowestNote": "E2",
@@ -1356,6 +1694,18 @@
 				"score": 14,
 				"capo": 0,
 				"chords": "Am,Dm,E7,F,G"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -6,
+				"lowestNote": "A#1",
+				"highestNote": "C#3",
+				"score": 11,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Em,Am,B7,C,D",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"209": {
@@ -1376,6 +1726,18 @@
 				"score": 22,
 				"capo": 4,
 				"chords": "C#,Bm,F#m"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -7,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 6,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "E,Dm,Am",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"210": {
@@ -1396,6 +1758,18 @@
 				"score": 15,
 				"capo": 5,
 				"chords": "D,Bm,G,E,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -1,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 15,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "D,Bm,G,E,A",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"211": {
@@ -1405,27 +1779,28 @@
 				"offset": -3,
 				"lowestNote": "B1",
 				"highestNote": "D#3",
-				"score": 32,
+				"score": 34,
 				"capo": 4,
-				"chords": "G,Bm,C,Am6,D7,B7"
+				"chords": "G,Bm,C,Am6,D7,B7,D"
 			},
 			"centered2": {
 				"offset": -3,
 				"lowestNote": "B1",
 				"highestNote": "D#3",
-				"score": 53,
+				"score": 55,
 				"capo": 2,
-				"chords": "A,C#m,D,Bm6,E7,C#"
+				"chords": "A,C#m,D,Bm6,E7,C#,E"
 			},
 			"notEquivalent": {
 				"offset": -2,
 				"lowestNote": "C2",
 				"highestNote": "E3",
-				"score": 28,
+				"score": 30,
 				"capo": 0,
 				"deviationFromCentered": 1,
-				"chords": "C,Em,F,Dm6,G7,E"
-			}
+				"chords": "C,Em,F,Dm6,G7,E,G"
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"212": {
 			"songLowestNote": "F2",
@@ -1445,6 +1820,18 @@
 				"score": 16,
 				"capo": 5,
 				"chords": "Bm,G,Em,F#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -8,
+				"lowestNote": "A1",
+				"highestNote": "B2",
+				"score": 11,
+				"capo": 4,
+				"deviationFromCentered": -3,
+				"chords": "Am,F,Dm,E",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"213": {
@@ -1465,7 +1852,8 @@
 				"score": 22,
 				"capo": 4,
 				"chords": "Dm,A#,A7,Gm"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"214": {
 			"songLowestNote": "G2",
@@ -1485,6 +1873,18 @@
 				"score": 6,
 				"capo": 0,
 				"chords": "Am,G,Dm"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -6,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 5,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Em,D,Am",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"215": {
@@ -1505,7 +1905,8 @@
 				"score": 24,
 				"capo": 4,
 				"chords": "Dm,Gm,A#,A,A7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"216": {
 			"songLowestNote": "B1",
@@ -1525,6 +1926,18 @@
 				"score": 19,
 				"capo": 2,
 				"chords": "F#m,D,C#,E"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": -2,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 9,
+				"capo": 3,
+				"deviationFromCentered": -1,
+				"chords": "Em,C,B7,D",
+				"peopleLowestNote": "G2",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"217": {
@@ -1545,6 +1958,18 @@
 				"score": 62,
 				"capo": 0,
 				"chords": "Gm5,Dm,Dm6,G7,C,Em,F,B,G,D"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 4,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 52,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Dm5,Am,Am6,D7,G,Bm,C,F#,D,A",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"218": {
@@ -1565,7 +1990,8 @@
 				"score": 21,
 				"capo": 3,
 				"chords": "Bm,D,F#7,Em,G"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"219": {
 			"songLowestNote": "F2",
@@ -1586,14 +2012,17 @@
 				"capo": 4,
 				"chords": "F#m,F#7,Bm,C#,D"
 			},
-			"notEquivalent": {
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
 				"offset": -5,
 				"lowestNote": "C2",
 				"highestNote": "B2",
 				"score": 12,
 				"capo": 5,
 				"deviationFromCentered": -1,
-				"chords": "Em,E7,Am,B7,C"
+				"chords": "Em,E7,Am,B7,C",
+				"peopleLowestNote": "C2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"220": {
@@ -1614,6 +2043,18 @@
 				"score": 16,
 				"capo": 0,
 				"chords": "Em,F#,G,Bm"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -2,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 11,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "Dm,E,F,Am",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"221": {
@@ -1634,7 +2075,8 @@
 				"score": 25,
 				"capo": 2,
 				"chords": "Dm,C,A,G,F,A7,A#"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"222": {
 			"songLowestNote": "A1",
@@ -1654,6 +2096,18 @@
 				"score": 13,
 				"capo": 5,
 				"chords": "Dm,Gm,A7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "B2",
+				"score": 7,
+				"capo": 0,
+				"deviationFromCentered": -3,
+				"chords": "Em,Am,B7",
+				"peopleLowestNote": "E2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"223": {
@@ -1674,7 +2128,8 @@
 				"score": 12,
 				"capo": 2,
 				"chords": "Dm,Gm,A"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"224": {
 			"songLowestNote": "A1",
@@ -1694,6 +2149,18 @@
 				"score": 17,
 				"capo": 0,
 				"chords": "D,F#,Bm,G"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "C3",
+				"score": 9,
+				"capo": 5,
+				"deviationFromCentered": -2,
+				"chords": "G,B7,Em,C",
+				"peopleLowestNote": "E2",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"225": {
@@ -1715,14 +2182,17 @@
 				"capo": 1,
 				"chords": "F,Am,Dm,A#,C"
 			},
-			"notEquivalent": {
-				"offset": 7,
-				"lowestNote": "D2",
-				"highestNote": "D3",
-				"score": 14,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "G,Bm,Em,C,D"
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 4,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 12,
+				"capo": 4,
+				"deviationFromCentered": -2,
+				"chords": "C,Em,Am,F,G",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"226": {
@@ -1743,6 +2213,18 @@
 				"score": 23,
 				"capo": 3,
 				"chords": "Dm,Gm,A,C,A#"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 11,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "Em,Am,B7,D,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"227": {
@@ -1763,6 +2245,18 @@
 				"score": 19,
 				"capo": 2,
 				"chords": "F#m,E,D,C#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 9,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "Em,D,C,B7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"228": {
@@ -1783,6 +2277,18 @@
 				"score": 24,
 				"capo": 4,
 				"chords": "A,C#m,D,E,E7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -2,
+				"lowestNote": "C2",
+				"highestNote": "B2",
+				"score": 13,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "C,Em,F,G,G7",
+				"peopleLowestNote": "C2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"229": {
@@ -1803,6 +2309,18 @@
 				"score": 15,
 				"capo": 5,
 				"chords": "Dm,C,A#,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 9,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Em,D,C,B7",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"230": {
@@ -1824,14 +2342,17 @@
 				"capo": 4,
 				"chords": "F#m,C#7,D,C#,Bm"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "A1",
-				"highestNote": "D3",
-				"score": 13,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Em,B7,C,B7,Am"
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 14,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "Am,E7,F,E,Dm",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "E3"
 			}
 		},
 		"231": {
@@ -1852,7 +2373,8 @@
 				"score": 26,
 				"capo": 2,
 				"chords": "Dm,C,A#,A,A7,Gm"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"232": {
 			"songLowestNote": "A1",
@@ -1873,15 +2395,7 @@
 				"capo": 4,
 				"chords": "Bm,Em,F#"
 			},
-			"notEquivalent": {
-				"offset": 7,
-				"lowestNote": "E2",
-				"highestNote": "C3",
-				"score": 7,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,Am,B7"
-			}
+			"peopleCompatibleStatus": 2
 		},
 		"233": {
 			"songLowestNote": "E2",
@@ -1901,6 +2415,18 @@
 				"score": 31,
 				"capo": 2,
 				"chords": "F#m,E,C#,D,E7,A,Bm"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 16,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "Em,D,B7,C,D7,G,Am",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"234": {
@@ -1921,7 +2447,8 @@
 				"score": 19,
 				"capo": 2,
 				"chords": "C#,D,F#m,E"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"235": {
 			"songLowestNote": "A1",
@@ -1941,7 +2468,8 @@
 				"score": 21,
 				"capo": 5,
 				"chords": "Bm,F#7,G,Em,D"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"236": {
 			"songLowestNote": "G#2",
@@ -1961,6 +2489,18 @@
 				"score": 20,
 				"capo": 4,
 				"chords": "F,Dm,A#,C,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -9,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 11,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "G,Em,C,D,B7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"237": {
@@ -1981,6 +2521,18 @@
 				"score": 19,
 				"capo": 0,
 				"chords": "D,Em,A7,Bm,F#"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": -4,
+				"lowestNote": "A1",
+				"highestNote": "C3",
+				"score": 11,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "C,Dm,G7,Am,E",
+				"peopleLowestNote": "C2",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"238": {
@@ -2001,14 +2553,26 @@
 				"score": 26,
 				"capo": 0,
 				"chords": "Bm,G,F#,C#7,Em,A"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "C3",
+				"score": 17,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "Am,F,E,B7,Dm,G",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"239": {
-			"songLowestNote": "F2",
+			"songLowestNote": "E2",
 			"songHighestNote": "F3",
 			"centered1": {
 				"offset": -4,
-				"lowestNote": "C#2",
+				"lowestNote": "C2",
 				"highestNote": "C#3",
 				"score": 39,
 				"capo": 1,
@@ -2016,20 +2580,23 @@
 			},
 			"centered2": {
 				"offset": -4,
-				"lowestNote": "C#2",
+				"lowestNote": "C2",
 				"highestNote": "C#3",
 				"score": 48,
 				"capo": 4,
 				"chords": "F#m5,Bm,C#,F#m,E,A,D"
 			},
-			"notEquivalent": {
-				"offset": -5,
-				"lowestNote": "C2",
-				"highestNote": "C3",
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -6,
+				"lowestNote": "A#1",
+				"highestNote": "B2",
 				"score": 37,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Em5,Am,B7,Em,D,G,C"
+				"capo": 4,
+				"deviationFromCentered": -2,
+				"chords": "Em5,Am,B7,Em,D,G,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"240": {
@@ -2050,7 +2617,8 @@
 				"score": 42,
 				"capo": 0,
 				"chords": "Am5,G7,F7,E,Am,Dm"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"241": {
 			"songLowestNote": "E2",
@@ -2070,7 +2638,8 @@
 				"score": 12,
 				"capo": 5,
 				"chords": "Dm,Gm,C"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"242": {
 			"songLowestNote": "A2",
@@ -2090,7 +2659,8 @@
 				"score": 17,
 				"capo": 0,
 				"chords": "G,A,Gm,Dm,A7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"243": {
 			"songLowestNote": "G2",
@@ -2110,7 +2680,8 @@
 				"score": 23,
 				"capo": 0,
 				"chords": "D,Bm,G,A,F#7,Em"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"244": {
 			"songLowestNote": "A1",
@@ -2130,7 +2701,8 @@
 				"score": 11,
 				"capo": 0,
 				"chords": "Am,G,F,E"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"245": {
 			"songLowestNote": "A2",
@@ -2150,7 +2722,8 @@
 				"score": 13,
 				"capo": 4,
 				"chords": "Bm,F#"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"246": {
 			"songLowestNote": "E2",
@@ -2171,15 +2744,7 @@
 				"capo": 4,
 				"chords": "Bm,F#7,Em"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "E2",
-				"highestNote": "C3",
-				"score": 7,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,B7,Am"
-			}
+			"peopleCompatibleStatus": 2
 		},
 		"247": {
 			"songLowestNote": "A2",
@@ -2199,7 +2764,8 @@
 				"score": 10,
 				"capo": 3,
 				"chords": "D,G,F#"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"248": {
 			"songLowestNote": "G2",
@@ -2219,7 +2785,8 @@
 				"score": 4,
 				"capo": 2,
 				"chords": "Dm,C"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"249": {
 			"songLowestNote": "E2",
@@ -2240,15 +2807,7 @@
 				"capo": 1,
 				"chords": "Dm,Gm"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "E2",
-				"highestNote": "C3",
-				"score": 3,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,Am"
-			}
+			"peopleCompatibleStatus": 2
 		},
 		"250": {
 			"songLowestNote": "C#2",
@@ -2268,7 +2827,8 @@
 				"score": 11,
 				"capo": 0,
 				"chords": "Am,Dm,F,E"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"251": {
 			"songLowestNote": "E2",
@@ -2288,7 +2848,8 @@
 				"score": 15,
 				"capo": 2,
 				"chords": "Dm,A,A7,Gm"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"253": {
 			"songLowestNote": "E2",
@@ -2317,7 +2878,8 @@
 				"capo": 0,
 				"deviationFromCentered": 1,
 				"chords": "Em,B7,Am,G,C"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"254": {
 			"songLowestNote": "E2",
@@ -2337,7 +2899,8 @@
 				"score": 16,
 				"capo": 4,
 				"chords": "Bm,F#7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"255": {
 			"songLowestNote": "D2",
@@ -2357,7 +2920,8 @@
 				"score": 19,
 				"capo": 2,
 				"chords": "F#m,C#,D,E"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"256": {
 			"songLowestNote": "F#2",
@@ -2377,6 +2941,18 @@
 				"score": 23,
 				"capo": 3,
 				"chords": "F,A,Dm,A#,C7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -7,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 12,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "G,B7,Em,C,D7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"257": {
@@ -2397,6 +2973,18 @@
 				"score": 22,
 				"capo": 1,
 				"chords": "D,G,E,A7,Bm,F#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 16,
+				"capo": 4,
+				"deviationFromCentered": 1,
+				"chords": "C,F,D,G7,Am,E",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "A2"
 			}
 		},
 		"258": {
@@ -2417,6 +3005,18 @@
 				"score": 23,
 				"capo": 3,
 				"chords": "Dm,C,A#,A,Gm"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 11,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "Em,D,C,B7,Am",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"259": {
@@ -2437,7 +3037,8 @@
 				"score": 13,
 				"capo": 3,
 				"chords": "D,G,A,Bm"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"260": {
 			"songLowestNote": "G2",
@@ -2457,7 +3058,8 @@
 				"score": 9,
 				"capo": 2,
 				"chords": "F,A,Dm"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"261": {
 			"songLowestNote": "D2",
@@ -2477,7 +3079,8 @@
 				"score": 10,
 				"capo": 5,
 				"chords": "Bm,A,Em"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"262": {
 			"songLowestNote": "E2",
@@ -2497,6 +3100,18 @@
 				"score": 4,
 				"capo": 3,
 				"chords": "C,G"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 4,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "D,A",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"263": {
@@ -2517,6 +3132,18 @@
 				"score": 13,
 				"capo": 3,
 				"chords": "D,G,A,Bm"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 11,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "C,F,G,Am",
+				"peopleLowestNote": "E2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"264": {
@@ -2537,7 +3164,8 @@
 				"score": 13,
 				"capo": 3,
 				"chords": "D,G,A,Bm"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"265": {
 			"songLowestNote": "E2",
@@ -2557,7 +3185,8 @@
 				"score": 21,
 				"capo": 0,
 				"chords": "Bm,Em,F#7,G,A"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"266": {
 			"songLowestNote": "A1",
@@ -2577,6 +3206,18 @@
 				"score": 26,
 				"capo": 4,
 				"chords": "E,F#m,D,C#,Bm"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 13,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "G,Am,F,E,Dm",
+				"peopleLowestNote": "G2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"267": {
@@ -2597,6 +3238,18 @@
 				"score": 17,
 				"capo": 1,
 				"chords": "Bm,A,G,F#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 11,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Am,G,F,E",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"268": {
@@ -2617,6 +3270,18 @@
 				"score": 19,
 				"capo": 1,
 				"chords": "Bm,D,A,F#m,G"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -1,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 12,
+				"capo": 4,
+				"deviationFromCentered": 1,
+				"chords": "Am,C,G,Em,F",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "E3"
 			}
 		},
 		"269": {
@@ -2637,6 +3302,18 @@
 				"score": 18,
 				"capo": 5,
 				"chords": "G,D,C,Bm,Am,D7"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 18,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "G,D,C,Bm,Am,D7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"270": {
@@ -2657,7 +3334,8 @@
 				"score": 14,
 				"capo": 5,
 				"chords": "Bm,D,G,A7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"271": {
 			"songLowestNote": "E2",
@@ -2677,6 +3355,18 @@
 				"score": 19,
 				"capo": 3,
 				"chords": "Bm,Em,F#7,G"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 12,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Am,Dm,E7,F",
+				"peopleLowestNote": "D#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"272": {
@@ -2697,6 +3387,18 @@
 				"score": 19,
 				"capo": 3,
 				"chords": "Bm,Em,F#7,G"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 12,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Am,Dm,E7,F",
+				"peopleLowestNote": "D#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"273": {
@@ -2717,7 +3419,8 @@
 				"score": 28,
 				"capo": 0,
 				"chords": "A,Bm,G,F#,D,F#7"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"274": {
 			"songLowestNote": "A1",
@@ -2737,7 +3440,8 @@
 				"score": 18,
 				"capo": 0,
 				"chords": "Dm,F,Gm,A7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"275": {
 			"songLowestNote": "D2",
@@ -2757,6 +3461,18 @@
 				"score": 18,
 				"capo": 3,
 				"chords": "D,Bm,Em,F#m,E"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "A1",
+				"highestNote": "B2",
+				"score": 9,
+				"capo": 2,
+				"deviationFromCentered": -3,
+				"chords": "C,Am,Dm,Em,D",
+				"peopleLowestNote": "E2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"276": {
@@ -2777,6 +3493,18 @@
 				"score": 25,
 				"capo": 1,
 				"chords": "D,A7,Bm,F#7,G,A"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 17,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "C,G7,Am,E7,F,G",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"277": {
@@ -2797,6 +3525,18 @@
 				"score": 26,
 				"capo": 4,
 				"chords": "E,F#m,D,C#,Bm"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 13,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "G,Am,F,E,Dm",
+				"peopleLowestNote": "G2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"278": {
@@ -2817,7 +3557,8 @@
 				"score": 28,
 				"capo": 0,
 				"chords": "Bm,A,D,G,F#7,F#"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"279": {
 			"songLowestNote": "B1",
@@ -2837,7 +3578,8 @@
 				"score": 19,
 				"capo": 5,
 				"chords": "Bm,Em,F#7,G"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"280": {
 			"songLowestNote": "E2",
@@ -2857,6 +3599,18 @@
 				"score": 9,
 				"capo": 0,
 				"chords": "Dm,F,C"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 6,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Am,C,G",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"281": {
@@ -2877,6 +3631,18 @@
 				"score": 15,
 				"capo": 2,
 				"chords": "D,A,A#,Dm"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -7,
+				"lowestNote": "A#1",
+				"highestNote": "C3",
+				"score": 11,
+				"capo": 5,
+				"deviationFromCentered": -2,
+				"chords": "A,E,F,Am",
+				"peopleLowestNote": "D#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"282": {
@@ -2897,6 +3663,18 @@
 				"score": 15,
 				"capo": 3,
 				"chords": "Dm,F,Gm"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 5,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "Em,G,Am",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"283": {
@@ -2917,6 +3695,18 @@
 				"score": 22,
 				"capo": 4,
 				"chords": "F#m,Bm,C#"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 6,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "Am,Dm,E",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"284": {
@@ -2937,7 +3727,8 @@
 				"score": 17,
 				"capo": 2,
 				"chords": "Bm,A,G,F#"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"285": {
 			"songLowestNote": "A1",
@@ -2957,7 +3748,8 @@
 				"score": 13,
 				"capo": 0,
 				"chords": "Am,G,F,E,Dm"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"286": {
 			"songLowestNote": "E2",
@@ -2977,6 +3769,18 @@
 				"score": 15,
 				"capo": 5,
 				"chords": "Dm,C,A#,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 9,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Em,D,C,B7",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"287": {
@@ -2997,7 +3801,8 @@
 				"score": 17,
 				"capo": 0,
 				"chords": "D,A,Bm,F#"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"288": {
 			"songLowestNote": "F#2",
@@ -3017,6 +3822,18 @@
 				"score": 31,
 				"capo": 0,
 				"chords": "A,Bm,E7,C#,F#m,E,D"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -7,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 16,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "G,Am,D7,B7,Em,D,C",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"289": {
@@ -3037,6 +3854,18 @@
 				"score": 27,
 				"capo": 2,
 				"chords": "D,Bm,Em,A7,B7,A,F#,G"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "A1",
+				"highestNote": "C#3",
+				"score": 21,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "C,Am,Dm,G7,A7,G,E,F",
+				"peopleLowestNote": "F#2",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"290": {
@@ -3057,7 +3886,8 @@
 				"score": 20,
 				"capo": 2,
 				"chords": "Dm,Gm,A7,F,G"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"291": {
 			"songLowestNote": "E2",
@@ -3077,7 +3907,8 @@
 				"score": 19,
 				"capo": 1,
 				"chords": "Bm,Em,F#7,A"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"292": {
 			"songLowestNote": "C#2",
@@ -3097,7 +3928,8 @@
 				"score": 13,
 				"capo": 0,
 				"chords": "C,E,Am,G,F"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"293": {
 			"songLowestNote": "A1",
@@ -3118,14 +3950,17 @@
 				"capo": 4,
 				"chords": "Bm,A,D,E,F#,Em,F#7"
 			},
-			"notEquivalent": {
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
 				"offset": 2,
 				"lowestNote": "B1",
 				"highestNote": "E3",
 				"score": 17,
 				"capo": 0,
 				"deviationFromCentered": 1,
-				"chords": "Em,D,G,A,B7,Am,B7"
+				"chords": "Em,D,G,A,B7,Am,B7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "E3"
 			}
 		},
 		"294": {
@@ -3146,6 +3981,18 @@
 				"score": 25,
 				"capo": 1,
 				"chords": "Bm,C,D,F#m,G,F#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 21,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Am,A#,C,Em,F,E",
+				"peopleLowestNote": "F#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"295": {
@@ -3167,14 +4014,17 @@
 				"capo": 4,
 				"chords": "Bm,Em,F#,F#7,D,F#m"
 			},
-			"notEquivalent": {
-				"offset": 2,
-				"lowestNote": "B1",
-				"highestNote": "E3",
-				"score": 20,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,Am,B7,B7,G,Bm"
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": 0,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 12,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Am,Dm,E,E7,C,Em",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"296": {
@@ -3195,7 +4045,8 @@
 				"score": 22,
 				"capo": 2,
 				"chords": "Bm,Em,F#,B7,D,G"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"297": {
 			"songLowestNote": "B1",
@@ -3215,7 +4066,8 @@
 				"score": 21,
 				"capo": 0,
 				"chords": "D,F#,Bm,Em,A7,G"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"298": {
 			"songLowestNote": "F2",
@@ -3235,6 +4087,18 @@
 				"score": 25,
 				"capo": 3,
 				"chords": "Dm,A#,A,C,F,G,A7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "C2",
+				"highestNote": "B2",
+				"score": 17,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "Em,C,B7,D,G,A,B7",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"299": {
@@ -3255,36 +4119,51 @@
 				"score": 27,
 				"capo": 0,
 				"chords": "Am,G,F,Dm,G7,E7,Em,F7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 4,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 26,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Em,D,C,Am,D7,B7,Bm,C7",
+				"peopleLowestNote": "D#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"300": {
-			"songLowestNote": "E2",
+			"songLowestNote": "B1",
 			"songHighestNote": "C3",
 			"centered1": {
-				"offset": -1,
-				"lowestNote": "D#2",
-				"highestNote": "B2",
-				"score": 19,
-				"capo": 4,
-				"chords": "Bm,Em,F#7,G"
+				"offset": 1,
+				"lowestNote": "C2",
+				"highestNote": "C#3",
+				"score": 9,
+				"capo": 1,
+				"chords": "Em,Am,B7,C"
 			},
 			"centered2": {
-				"offset": -1,
-				"lowestNote": "D#2",
-				"highestNote": "B2",
+				"offset": 1,
+				"lowestNote": "C2",
+				"highestNote": "C#3",
 				"score": 22,
-				"capo": 1,
+				"capo": 3,
 				"chords": "Dm,Gm,A7,A#"
 			},
-			"notEquivalent": {
+			"peopleCompatible": {
 				"offset": 0,
 				"lowestNote": "E2",
 				"highestNote": "C3",
 				"score": 9,
 				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,Am,B7,C"
-			}
+				"deviationFromCentered": -1,
+				"chords": "Em,Am,B7,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
+			},
+			"peopleCompatibleStatus": 56
 		},
 		"301": {
 			"songLowestNote": "A1",
@@ -3305,14 +4184,17 @@
 				"capo": 4,
 				"chords": "F#m,E,D,C#,Bm"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "A1",
-				"highestNote": "D3",
-				"score": 11,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Em,D,C,B7,Am"
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 13,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "Am,G,F,E,Dm",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "E3"
 			}
 		},
 		"302": {
@@ -3334,15 +4216,18 @@
 				"capo": 4,
 				"chords": "F#m,C#7,D7"
 			},
-			"notEquivalent": {
-				"offset": -5,
-				"lowestNote": "A1",
-				"highestNote": "D3",
-				"score": 10,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Em,B7,C7"
-			}
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 14,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "Am,E7,F7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
+			},
+			"peopleCompatibleStatus": 56
 		},
 		"303": {
 			"songLowestNote": "G#1",
@@ -3362,7 +4247,8 @@
 				"score": 28,
 				"capo": 4,
 				"chords": "A,C#,F#m,Bm,E,D"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"304": {
 			"songLowestNote": "E2",
@@ -3382,6 +4268,18 @@
 				"score": 15,
 				"capo": 5,
 				"chords": "Dm,A,C,A#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 9,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Em,B7,D,C",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"305": {
@@ -3402,7 +4300,8 @@
 				"score": 15,
 				"capo": 1,
 				"chords": "Bm,G,F#"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"306": {
 			"songLowestNote": "B1",
@@ -3422,7 +4321,8 @@
 				"score": 27,
 				"capo": 5,
 				"chords": "Em,Am,B7,C,Am9"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"307": {
 			"songLowestNote": "E2",
@@ -3442,6 +4342,18 @@
 				"score": 31,
 				"capo": 2,
 				"chords": "A,F#m,D,B,E,C#"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 13,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "G,Em,C,A,D,B7",
+				"peopleLowestNote": "E2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"308": {
@@ -3463,14 +4375,17 @@
 				"capo": 1,
 				"chords": "F,Dm,A#,C"
 			},
-			"notEquivalent": {
-				"offset": 7,
-				"lowestNote": "D2",
-				"highestNote": "D3",
-				"score": 7,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "G,Em,C,D"
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 4,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 11,
+				"capo": 4,
+				"deviationFromCentered": -2,
+				"chords": "C,Am,F,G",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"309": {
@@ -3491,6 +4406,18 @@
 				"score": 33,
 				"capo": 3,
 				"chords": "Dm,Gm,A7,A#,A,D,Bm"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 30,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "Em,Am,B7,C,B7,E,C#m",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"310": {
@@ -3511,6 +4438,18 @@
 				"score": 33,
 				"capo": 5,
 				"chords": "Dm,A#,Gm,A7,Am,A,C,F"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 24,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Em,C,Am,B7,Bm,B7,D,G",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"311": {
@@ -3532,14 +4471,17 @@
 				"capo": 4,
 				"chords": "F#m,Bm,C#,E,A,D"
 			},
-			"notEquivalent": {
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
 				"offset": -5,
 				"lowestNote": "B1",
 				"highestNote": "C3",
 				"score": 13,
 				"capo": 5,
 				"deviationFromCentered": -1,
-				"chords": "Em,Am,B7,D,G,C"
+				"chords": "Em,Am,B7,D,G,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"312": {
@@ -3560,6 +4502,18 @@
 				"score": 42,
 				"capo": 2,
 				"chords": "F#,B,C#,Bm,F#m,E,D"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -6,
+				"lowestNote": "A#1",
+				"highestNote": "B2",
+				"score": 15,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "E,A,B7,Am,Em,D,C",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"313": {
@@ -3581,14 +4535,17 @@
 				"capo": 4,
 				"chords": "F#m,Bm,D,C#,E"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "A1",
-				"highestNote": "D3",
-				"score": 11,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Em,Am,C,B7,D"
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 13,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "Am,Dm,F,E,G",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"314": {
@@ -3609,6 +4566,18 @@
 				"score": 21,
 				"capo": 3,
 				"chords": "A,Dm,Gm,A#"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 15,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "B,Em,Am,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "E3"
 			}
 		},
 		"317": {
@@ -3629,7 +4598,8 @@
 				"score": 46,
 				"capo": 0,
 				"chords": "D,G,A7,Bm,A,B,F#,E,B7,C#7"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"318": {
 			"songLowestNote": "D2",
@@ -3649,7 +4619,8 @@
 				"score": 16,
 				"capo": 5,
 				"chords": "Bm,A,G,D,E,Em"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"326": {
 			"songLowestNote": "F2",
@@ -3669,6 +4640,18 @@
 				"score": 15,
 				"capo": 5,
 				"chords": "D7,G,B7,E7,A7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -6,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 15,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "D7,G,B7,E7,A7",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"327": {
@@ -3689,7 +4672,8 @@
 				"score": 20,
 				"capo": 3,
 				"chords": "Bm,F#7,Em,G7"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"328": {
 			"songLowestNote": "G1",
@@ -3709,6 +4693,18 @@
 				"score": 28,
 				"capo": 3,
 				"chords": "Dm,A7,Gm,A#7"
+			},
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 12,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "Em,B7,Am,C7",
+				"peopleLowestNote": "F#2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"329": {
@@ -3729,6 +4725,18 @@
 				"score": 26,
 				"capo": 1,
 				"chords": "A,C#,F#m,D,Bm"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C2",
+				"highestNote": "C#3",
+				"score": 17,
+				"capo": 2,
+				"chords": "G,B,Em,C,Am",
+				"deviationFromCentered": -1,
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"330": {
@@ -3749,7 +4757,8 @@
 				"score": 19,
 				"capo": 1,
 				"chords": "Bm,Em,F#7,A"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"331": {
 			"songLowestNote": "G2",
@@ -3769,7 +4778,8 @@
 				"score": 12,
 				"capo": 5,
 				"chords": "D,Bm,Em,A"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"332": {
 			"songLowestNote": "D2",
@@ -3789,6 +4799,18 @@
 				"score": 29,
 				"capo": 1,
 				"chords": "Bm,F#7,Em,G,D,F#m,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 17,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Am,E7,Dm,F,C,Em,G",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"333": {
@@ -3810,14 +4832,17 @@
 				"capo": 4,
 				"chords": "F#m,E,D,C#7"
 			},
-			"notEquivalent": {
-				"offset": 5,
-				"lowestNote": "C2",
-				"highestNote": "C3",
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": 4,
+				"lowestNote": "B1",
+				"highestNote": "B2",
 				"score": 9,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Em,D,C,B7"
+				"capo": 4,
+				"deviationFromCentered": -2,
+				"chords": "Em,D,C,B7",
+				"peopleLowestNote": "D#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"334": {
@@ -3838,7 +4863,8 @@
 				"score": 40,
 				"capo": 5,
 				"chords": "Em,Bm,Am9,C,B,Am"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"335": {
 			"songLowestNote": "A1",
@@ -3858,7 +4884,8 @@
 				"score": 13,
 				"capo": 2,
 				"chords": "Bm,F#"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"336": {
 			"songLowestNote": "D2",
@@ -3878,6 +4905,18 @@
 				"score": 17,
 				"capo": 2,
 				"chords": "Bm,F#7,Em"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 7,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "Am,E7,Dm",
+				"peopleLowestNote": "E2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"337": {
@@ -3898,7 +4937,8 @@
 				"score": 4,
 				"capo": 2,
 				"chords": "Dm,C"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"338": {
 			"songLowestNote": "E2",
@@ -3918,6 +4958,18 @@
 				"score": 20,
 				"capo": 1,
 				"chords": "Bm,Em,C,B"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "C2",
+				"highestNote": "C#3",
+				"score": 15,
+				"capo": 2,
+				"chords": "Am,Dm,A#,A",
+				"deviationFromCentered": -1,
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"339": {
@@ -3938,7 +4990,8 @@
 				"score": 50,
 				"capo": 5,
 				"chords": "A,Dm,Gm,C7,A7,A#7M,A#"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"340": {
 			"songLowestNote": "B1",
@@ -3958,7 +5011,8 @@
 				"score": 29,
 				"capo": 2,
 				"chords": "F#m,C#7,D,C#,A,E"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"341": {
 			"songLowestNote": "A1",
@@ -3978,6 +5032,18 @@
 				"score": 10,
 				"capo": 3,
 				"chords": "Gm,D"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 4,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "Am,E",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "E3"
 			}
 		},
 		"342": {
@@ -3998,7 +5064,8 @@
 				"score": 32,
 				"capo": 5,
 				"chords": "A,C#,D,Bm,E,B7,A7,Em,Am"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"343": {
 			"songLowestNote": "E2",
@@ -4018,7 +5085,8 @@
 				"score": 21,
 				"capo": 0,
 				"chords": "D,F#7,Bm,G,Em"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"344": {
 			"songLowestNote": "D2",
@@ -4038,7 +5106,8 @@
 				"score": 23,
 				"capo": 1,
 				"chords": "Bm,F#7,Em,A,D,G"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"345": {
 			"songLowestNote": "E2",
@@ -4058,7 +5127,8 @@
 				"score": 19,
 				"capo": 2,
 				"chords": "Bm,Em,F#7,G"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"346": {
 			"songLowestNote": "D2",
@@ -4078,6 +5148,18 @@
 				"score": 24,
 				"capo": 2,
 				"chords": "Bm,D,F#m,Em,F#,G"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 14,
+				"capo": 2,
+				"deviationFromCentered": -2,
+				"chords": "Am,C,Em,Dm,E,F",
+				"peopleLowestNote": "F#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"348": {
@@ -4099,14 +5181,17 @@
 				"capo": 1,
 				"chords": "Dm,A#,C7,F,A7"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "D2",
-				"highestNote": "D3",
-				"score": 12,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,C,D7,G,B7"
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 15,
+				"capo": 4,
+				"deviationFromCentered": -2,
+				"chords": "Am,F,G7,C,E7",
+				"peopleLowestNote": "F#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"349": {
@@ -4127,6 +5212,18 @@
 				"score": 23,
 				"capo": 5,
 				"chords": "A7,Bm,C,B,Em"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "A1",
+				"highestNote": "B2",
+				"score": 18,
+				"capo": 4,
+				"deviationFromCentered": -3,
+				"chords": "G7,Am,A#,A,Dm",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"350": {
@@ -4148,14 +5245,17 @@
 				"capo": 2,
 				"chords": "C#,D,E,A,F#m"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "B1",
-				"highestNote": "E3",
-				"score": 13,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "E,F,G,C,Am"
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": -2,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 17,
+				"capo": 3,
+				"deviationFromCentered": -1,
+				"chords": "B,C,D,G,Em",
+				"peopleLowestNote": "G2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"351": {
@@ -4176,6 +5276,18 @@
 				"score": 27,
 				"capo": 3,
 				"chords": "A7,D,F#m,G,F#,Bm,Em"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "A1",
+				"highestNote": "D#3",
+				"score": 17,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "G7,C,Em,F,E,Am,Dm",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "D#3"
 			}
 		},
 		"352": {
@@ -4197,14 +5309,17 @@
 				"capo": 4,
 				"chords": "Bm,F#m,Em,F#"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "A#1",
-				"highestNote": "D3",
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": -1,
+				"lowestNote": "A1",
+				"highestNote": "C#3",
 				"score": 7,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Am,Em,Dm,E"
+				"capo": 4,
+				"deviationFromCentered": -2,
+				"chords": "Am,Em,Dm,E",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"353": {
@@ -4225,6 +5340,18 @@
 				"score": 47,
 				"capo": 4,
 				"chords": "F#m,Bm9,C#7,D,Bm"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 21,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "Am,Dm9,E7,F,Dm",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "E3"
 			}
 		},
 		"354": {
@@ -4246,15 +5373,18 @@
 				"capo": 1,
 				"chords": "Dm,Gm,Gm6,C7,F,A,Am,A#"
 			},
-			"notEquivalent": {
+			"peopleCompatible": {
 				"offset": 0,
 				"lowestNote": "A1",
 				"highestNote": "D3",
 				"score": 32,
 				"capo": 5,
 				"deviationFromCentered": -1,
-				"chords": "Am,Dm,Dm6,G7,C,E,Em,F"
-			}
+				"chords": "Am,Dm,Dm6,G7,C,E,Em,F",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "E3"
+			},
+			"peopleCompatibleStatus": 6
 		},
 		"355": {
 			"songLowestNote": "B1",
@@ -4274,7 +5404,8 @@
 				"score": 29,
 				"capo": 5,
 				"chords": "G,Bm,Em,Am,D,B,D7,C"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"356": {
 			"songLowestNote": "G2",
@@ -4294,7 +5425,8 @@
 				"score": 15,
 				"capo": 2,
 				"chords": "Dm,C,A#,A"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"357": {
 			"songLowestNote": "C2",
@@ -4314,6 +5446,18 @@
 				"score": 36,
 				"capo": 5,
 				"chords": "F,C,A#,Dm,Gm,A,A7,C7"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -1,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 26,
+				"capo": 4,
+				"deviationFromCentered": 1,
+				"chords": "G,D,C,Em,Am,B,B7,D7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "E3"
 			}
 		},
 		"358": {
@@ -4334,7 +5478,8 @@
 				"score": 16,
 				"capo": 3,
 				"chords": "Bm,Em,F#,G"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"359": {
 			"songLowestNote": "G1",
@@ -4354,7 +5499,8 @@
 				"score": 16,
 				"capo": 2,
 				"chords": "Bm,Em,F#,G"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"360": {
 			"songLowestNote": "A1",
@@ -4375,14 +5521,17 @@
 				"capo": 1,
 				"chords": "Dm,A7,Gm,A#,D7,A#7"
 			},
-			"notEquivalent": {
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
 				"offset": 2,
 				"lowestNote": "B1",
 				"highestNote": "E3",
 				"score": 17,
 				"capo": 0,
 				"deviationFromCentered": 1,
-				"chords": "Em,B7,Am,C,E7,C7"
+				"chords": "Em,B7,Am,C,E7,C7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"361": {
@@ -4403,6 +5552,18 @@
 				"score": 19,
 				"capo": 3,
 				"chords": "Bm,Em,G,F#7"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 12,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "Am,Dm,F,E7",
+				"peopleLowestNote": "E2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"362": {
@@ -4423,7 +5584,8 @@
 				"score": 31,
 				"capo": 5,
 				"chords": "Bm,F#7,Em6,Em,G"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"364": {
 			"songLowestNote": "F1",
@@ -4443,7 +5605,8 @@
 				"score": 20,
 				"capo": 2,
 				"chords": "D,Bm,G,F#,Em,A"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"365": {
 			"songLowestNote": "A1",
@@ -4463,7 +5626,8 @@
 				"score": 46,
 				"capo": 0,
 				"chords": "C#dim,A#7,A7,Dm,Gm"
-			}
+			},
+			"peopleCompatibleStatus": 3
 		},
 		"366": {
 			"songLowestNote": "E2",
@@ -4483,7 +5647,8 @@
 				"score": 34,
 				"capo": 0,
 				"chords": "Em,C7,Am,B,E7,F7,Dm,G"
-			}
+			},
+			"peopleCompatibleStatus": 7
 		},
 		"367": {
 			"songLowestNote": "G1",
@@ -4503,7 +5668,8 @@
 				"score": 21,
 				"capo": 3,
 				"chords": "A,Bm,G,F#,D,E"
-			}
+			},
+			"peopleCompatibleStatus": 1
 		},
 		"406": {
 			"songLowestNote": "E2",
@@ -4523,6 +5689,18 @@
 				"score": 15,
 				"capo": 3,
 				"chords": "A,Dm,A#,C"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 15,
+				"capo": 0,
+				"deviationFromCentered": -1,
+				"chords": "B,Em,C,D",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"407": {
@@ -4544,14 +5722,17 @@
 				"capo": 4,
 				"chords": "F#m,Bm,C#7,D,C#,E"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "A1",
-				"highestNote": "D3",
-				"score": 15,
-				"capo": 5,
-				"deviationFromCentered": -1,
-				"chords": "Em,Am,B7,C,B7,D"
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": 2,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 16,
+				"capo": 2,
+				"deviationFromCentered": 1,
+				"chords": "Am,Dm,E7,F,E,G",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"408": {
@@ -4573,14 +5754,17 @@
 				"capo": 1,
 				"chords": "Dm,A7,C,A#,Gm"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "B1",
-				"highestNote": "E3",
-				"score": 11,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,B7,D,C,Am"
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": -2,
+				"lowestNote": "A1",
+				"highestNote": "D3",
+				"score": 14,
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Am,E7,G,F,Dm",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"409": {
@@ -4601,6 +5785,18 @@
 				"score": 34,
 				"capo": 1,
 				"chords": "B,C,Em,D,E,C#,F#m,A"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 30,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "A,A#,Dm,C,D,B,Em,G",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"410": {
@@ -4621,6 +5817,18 @@
 				"score": 15,
 				"capo": 5,
 				"chords": "Dm,A#,C,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "C#2",
+				"highestNote": "B2",
+				"score": 9,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Em,C,D,B7",
+				"peopleLowestNote": "C#2",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"415": {
@@ -4650,7 +5858,8 @@
 				"capo": 0,
 				"deviationFromCentered": 1,
 				"chords": "Em,B7,G,C,Am"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"432": {
 			"songLowestNote": "D2",
@@ -4670,7 +5879,8 @@
 				"score": 22,
 				"capo": 3,
 				"chords": "D,Em,C,B,Bm"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"433": {
 			"songLowestNote": "D2",
@@ -4690,6 +5900,18 @@
 				"score": 23,
 				"capo": 0,
 				"chords": "D,Cm9"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "C#3",
+				"score": 22,
+				"capo": 4,
+				"deviationFromCentered": -1,
+				"chords": "A,Gm9",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C#3"
 			}
 		},
 		"436": {
@@ -4711,14 +5933,17 @@
 				"capo": 4,
 				"chords": "Bm,Em,F#7"
 			},
-			"notEquivalent": {
-				"offset": 0,
-				"lowestNote": "B1",
-				"highestNote": "E3",
+			"peopleCompatibleStatus": 6,
+			"peopleCompatible": {
+				"offset": -2,
+				"lowestNote": "A1",
+				"highestNote": "D3",
 				"score": 7,
-				"capo": 0,
-				"deviationFromCentered": 1,
-				"chords": "Em,Am,B7"
+				"capo": 5,
+				"deviationFromCentered": -1,
+				"chords": "Am,Dm,E7",
+				"peopleLowestNote": "D2",
+				"peopleHighestNote": "D3"
 			}
 		},
 		"437": {
@@ -4739,7 +5964,8 @@
 				"score": 13,
 				"capo": 1,
 				"chords": "D,Bm,A,G"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"438": {
 			"songLowestNote": "B1",
@@ -4760,14 +5986,17 @@
 				"capo": 2,
 				"chords": "F#m,Bm,C#"
 			},
-			"notEquivalent": {
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
 				"offset": 0,
 				"lowestNote": "B1",
 				"highestNote": "E3",
 				"score": 6,
 				"capo": 0,
 				"deviationFromCentered": 1,
-				"chords": "Am,Dm,E"
+				"chords": "Am,Dm,E",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "F2"
 			}
 		},
 		"439": {
@@ -4788,7 +6017,8 @@
 				"score": 16,
 				"capo": 0,
 				"chords": "Bm,G,F#,Em"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"440": {
 			"songLowestNote": "E2",
@@ -4808,6 +6038,18 @@
 				"score": 15,
 				"capo": 4,
 				"chords": "Dm,C,A#,A"
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -5,
+				"lowestNote": "B1",
+				"highestNote": "B2",
+				"score": 9,
+				"capo": 0,
+				"deviationFromCentered": -2,
+				"chords": "Em,D,C,B7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "B2"
 			}
 		},
 		"459": {
@@ -4828,6 +6070,18 @@
 				"score": 30,
 				"capo": 1,
 				"chords": "Bm,Em,F#,D,G,A#,A7"
+			},
+			"peopleCompatibleStatus": 4,
+			"peopleCompatible": {
+				"offset": -3,
+				"lowestNote": "B1",
+				"highestNote": "C3",
+				"score": 24,
+				"capo": 2,
+				"deviationFromCentered": -1,
+				"chords": "Am,Dm,E,C,F,G#,G7",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "C3"
 			}
 		},
 		"460": {
@@ -4848,7 +6102,8 @@
 				"score": 8,
 				"capo": 3,
 				"chords": "Bm,Em"
-			}
+			},
+			"peopleCompatibleStatus": 2
 		},
 		"461": {
 			"songLowestNote": "C2",
@@ -4868,7 +6123,17 @@
 				"score": 21,
 				"capo": 5,
 				"chords": "Dm,Gm,A,A#"
-			}
+			},
+			"peopleCompatibleStatus": 56,
+			"peopleCompatible": {
+				"offset": -1,
+				"lowestNote": "B1",
+				"highestNote": "E3",
+				"score": 9,
+				"capo": 4,
+				"deviationFromCentered": 1,
+				"chords": "Em,Am,B7,C",
+				"peopleLowestNote": "B1",
+				"peopleHighestNote": "G#2"}}
 		}
 	}
-}
