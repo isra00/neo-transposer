@@ -42,3 +42,4 @@ _output
 ntprod.sql
 public/static/compiled*
 last-mmdb.tar.gz
+neo_transposer.sql
