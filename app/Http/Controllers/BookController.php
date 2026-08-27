@@ -15,8 +15,6 @@ use NeoTransposer\Domain\Service\UnhappinessManager;
  */
 final class BookController extends Controller
 {
-    //private ?NeoApp $app = null;
-
 	public function get(Request $req, SongsLister $songsLister, BookRepository $bookRepository, UnhappinessManager $unhappinessManager, $bookId)
 	{
         try {
@@ -25,7 +23,7 @@ final class BookController extends Controller
                 : $songsLister->readBookSongs((int)$bookId)->asArray();
         } catch (BookNotExistException)
         {
-            $this->abortBookNotExist($bookId);
+            abort(404, "Book $bookId does not exist.");
         }
 
         $currentBook = $bookRepository->readBook((int) $bookId);
@@ -82,9 +80,4 @@ final class BookController extends Controller
 
 		return $response;
 	}
-
-    public function abortBookNotExist(int $idBook)
-    {
-        $this->app->abort(404, "Book $idBook does not exist.");
-    }
 }

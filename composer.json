@@ -39,6 +39,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
+            "Tests\\Integration\\": "tests/integration",
             "NeoTransposer\\Tests\\": "tests/unit/src/NeoTransposer",
             "NeoTransposerTests\\Acceptance\\": "tests/acceptance"
         }
