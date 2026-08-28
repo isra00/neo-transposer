@@ -21,12 +21,6 @@ final class WebManifestController extends Controller
             "start_url"        => "/",
             "icons"            => [
                 [
-                    "src"     => "/static/img/logo-red.svg",
-                    "sizes"   => "any",
-                    "type"    => "image/svg+xml",
-                    "purpose" => "any"
-                ],
-                [
                     "src"     => "/static/img/icon-192x192.png",
                     "sizes"   => "192x192",
                     "type"    => "image/png",
