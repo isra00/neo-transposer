@@ -27,15 +27,13 @@ See [Code of Conduct](CODE_OF_CONDUCT.md)
  * Reporting: If you find any mistake or have an improvement suggestion, feel free to [open an issue in GitHub](https://github.com/isra00/neo-transposer/issues) or e-mail me (see contact below).
  * Working on accepted issues: you may start by the most highly prioritized tasks in the [Main Backlog](https://github.com/isra00/neo-transposer/projects/2) or the [Technical Backlog](https://github.com/isra00/neo-transposer/projects/1). You can submit your code via fork and pull request.
  * If you write JavaScript code, it may use jQuery's API, though we actually use zepto.js for better performance.
- * If you write PHP code, it must adhere to PSR-12, except that we use tabs for indentation, not spaces.
- * Free contributions: Feel free to  to fork and submit a pull request with changes.
+ * If you write PHP code, it must adhere to PSR-12 and the Pint rules defined in pint.json.
+ * Free contributions: Feel free to fork and submit a pull request with changes.
  * Please note this is a non-profit project with no paid staff. No contribution will be rewarded in money or in specie, but it will be duly credited. Likewise, your contributions will NOT be used for any commercial purpose.
 
 ### Pre-commit hook ###
 
-You must run the complete test suite and build process locally before committing changes to git. To do so, make sure you have `make` and `docker` installed, set the environment variables 
-
-You should include this code in `.git/hooks/pre-commit`.
+You must run the complete test suite and build process locally before committing changes to git. To do so, make sure you have `make` and `docker` installed, set these environment variables 
 
 ```bash
 #!/bin/sh
@@ -48,7 +46,11 @@ export NT_DB_TEST_DATABASE=nt_empty_tables
 export NT_DEBUG=1
 export NT_PROFILER=0
 export NT_MAXMIND_LICENSE_KEY=[set your value]
+```
 
+Then run:
+
+```bash
 make -s stop-all
 make -s build-dev
 make -s start
@@ -57,6 +59,13 @@ make -s test
 make -s test-acceptance
 ```
 
+Please add this process to your git pre-commit hook by running:
+
+```bash
+make install-hooks`.
+```
+
+
 ### Getting help ###
 
-You can [open an issue in GitHub](https://github.com/isra00/neo-transposer/issues) or write me at neo-transposer@mail.com.
+You can [open an issue in GitHub](https://github.com/isra00/neo-transposer/issues) or write me at `neo-transposer@mail.com`.

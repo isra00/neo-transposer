@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use App\View\Composers\PageTitleComposer;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMSetup;
 use GeoIp2\Database\Reader;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\View;
@@ -24,7 +22,6 @@ use NeoTransposer\Infrastructure\AdminMetricsRepositoryMysql;
 use NeoTransposer\Infrastructure\BookRepositoryMysql;
 use NeoTransposer\Infrastructure\FeedbackRepositoryMysql;
 use NeoTransposer\Infrastructure\GeoIpResolverGeoIp2;
-use NeoTransposer\Infrastructure\MysqlRepository;
 use NeoTransposer\Infrastructure\SongChordRepositoryMysql;
 use NeoTransposer\Infrastructure\SongRepositoryMysql;
 use NeoTransposer\Infrastructure\UnhappyUserRepositoryMysql;
@@ -51,14 +48,6 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(GeoIpResolver::class, function (Application $app) {
             return $app->make(GeoIpResolverGeoIp2::class, ['reader' => new Reader(base_path() . '/' . config('nt.mmdb'))]);
-        });
-
-        /** @todo Migrar todo a Illuminate y dejar de usar Doctrine */
-        $this->app->singleton(EntityManager::class, function (Application $app) {
-            return new EntityManager(MysqlRepository::dbal(), ORMSetup::createAttributeMetadataConfiguration(
-                paths: [base_path() . '/src'],
-                isDevMode: config('app.debug')
-            ));
         });
 
         $this->app->bind('factory.ChordPrinter', function () {

@@ -10,8 +10,6 @@ use NeoTransposer\Domain\Service\UserWriter;
 
 /**
  * Sets the user data and redirect. There is no response body.
- *
- * @todo Rename to UpdateUser
  */
 final class SetUserDataController
 {

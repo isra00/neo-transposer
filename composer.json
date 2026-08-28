@@ -7,7 +7,6 @@
         "php": "^8.3",
         "ext-curl": "*",
         "ext-pdo": "*",
-        "doctrine/orm": "^3.3",
         "geoip2/geoip2": "~2.5",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
