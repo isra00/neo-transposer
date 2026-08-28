@@ -16,6 +16,17 @@ Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 - Declare things in the narrowest scope that fits: a value used by only one method is a local variable, not a class constant or property. Promote it only when a second method needs it.
 - Be straight to the point in your answers when interacting with the agent user.
 
+## Code style
+
+- Laravel Pint is the source of truth; the ruleset is `pint.json` (`laravel` preset with a
+  few PSR-12-compliant overrides). Don't hand-format against it.
+- `make lint` checks, `make lint-fix` fixes, `make check` adds static analysis.
+- PHPStan + Larastan at level 5: `make analyse`. Legacy `src/` errors are in
+  `phpstan-baseline.neon`; only regenerate it (`make analyse-baseline`) after fixing a
+  batch, never to silence new errors.
+- `make install-hooks` once per clone: pre-commit style check, and `git blame` skips the
+  reformat commit.
+
 ## Testing
 
 - We have unit tests (some of which actually make DB queries) in `tests/unit`, integration tests (Laravel feature tests) in `tests/integration`, and acceptance tests (e2e tests with Selenium) in `tests/acceptance`.
@@ -34,7 +45,6 @@ This project was migrated from Silex to Laravel 11. Many controllers and views a
 - `$app['neouser']` → `session('user')`
 - `$app['locale']` → `app()->getLocale()`
 - `$app['root_dir']` → `base_path()`
-- `NeoApp` class no longer exists. `src/NeoTransposer/services.php` is legacy and not loaded.
 - `TransposedSong::fromDb()` already uses `app()` internally — no `$app` parameter.
 
 ### Controllers

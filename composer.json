@@ -22,10 +22,10 @@
         "codeception/module-phpbrowser": "^3.0",
         "codeception/module-webdriver": "^4.0",
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.0",
         "laravel/pint": "^1.13",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.1",
-        "phpmd/phpmd": "^2.15"
+        "nunomaduro/collision": "^8.1"
     },
     "autoload": {
         "psr-4": {
@@ -68,8 +68,7 @@
         "test-acceptance": [
             "docker start selenium_chrome || docker run -d -p 4444:4444 -p 7900:7900 --shm-size=2g --name selenium_chrome selenium/standalone-chrome",
             "vendor/bin/codecept run acceptance"
-        ],
-        "quality": "vendor/bin/phpmd src/ html cleancode,codesize,design,naming,unusedcode --reportfile tests/reports/phpmd.html"
+        ]
 
     },
     "extra": {
