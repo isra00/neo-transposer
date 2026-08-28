@@ -21,9 +21,8 @@ Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 - Laravel Pint is the source of truth; the ruleset is `pint.json` (`laravel` preset with a
   few PSR-12-compliant overrides). Don't hand-format against it.
 - `make lint` checks, `make lint-fix` fixes, `make check` adds static analysis.
-- PHPStan + Larastan at level 5: `make analyse`. Legacy `src/` errors are in
-  `phpstan-baseline.neon`; only regenerate it (`make analyse-baseline`) after fixing a
-  batch, never to silence new errors.
+- PHPStan + Larastan at level 5: `make analyse`. The codebase is clean at this level, so
+  there is no baseline; fix new errors rather than reintroducing one.
 - `make install-hooks` once per clone: pre-commit style check, and `git blame` skips the
   reformat commit.
 

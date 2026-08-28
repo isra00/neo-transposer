@@ -14,7 +14,7 @@ interface UserRepository
 
     public function readVoiceRangeFromAllUsers(): array;
 
-    public function save(User $user, ?string $registerIp = null): ?int;
+    public function save(User $user, ?string $registerIp = null): int;
 
     public function saveWithVoiceChange(User $user, string $method): void;
 

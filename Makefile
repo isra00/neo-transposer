@@ -156,10 +156,6 @@ lint-dirty:
 	docker exec -t -u www-data transposer-dev vendor/bin/pint --test --dirty
 analyse:
 	docker exec -t -u www-data transposer-dev vendor/bin/phpstan analyse --memory-limit=512M
-# Regenerate the baseline of pre-existing errors. Run after fixing a batch of them,
-# never to silence errors in code you just wrote.
-analyse-baseline:
-	docker exec -t -u www-data transposer-dev vendor/bin/phpstan analyse --memory-limit=512M --generate-baseline
 # Everything CI checks, minus the test suites.
 check: lint analyse
 

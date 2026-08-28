@@ -27,18 +27,18 @@ class User
 
     /**
      * @param  string|null  $email  User email
-     * @param  null  $id_user  User ID
+     * @param  int|null  $id_user  User ID
      * @param  NotesRange|null  $range  User highest note
-     * @param  null  $id_book  Book
+     * @param  int|null  $id_book  Book
      * @param  string|null  $wizard_step1  Option checked in Wizard First Step
      * @param  int|null  $wizard_lowest_attempts  No. of attempts in Wizard Lowest note.
      * @param  int|null  $wizard_highest_attempts  No. of attempts in Wizard Lowest note.
      */
     public function __construct(
         public ?string $email = null,
-        public $id_user = null,
+        public ?int $id_user = null,
         public ?NotesRange $range = null,
-        public $id_book = null,
+        public ?int $id_book = null,
         public ?string $wizard_step1 = null,
         public ?int $wizard_lowest_attempts = null,
         public ?int $wizard_highest_attempts = null,

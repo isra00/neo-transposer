@@ -10,7 +10,7 @@ final class BookRepositoryMysql extends MysqlRepository implements BookRepositor
 {
     public function readBookLangFromId(int $idBook): string
     {
-        return $this->dbConnection->fetchOne(
+        return $this->dbConnection->scalar(
             'SELECT lang_name FROM book WHERE id_book = ?',
             [$idBook]
         );
@@ -46,7 +46,13 @@ final class BookRepositoryMysql extends MysqlRepository implements BookRepositor
 
     public function readBook(int $idBook): ?Book
     {
-        $row = (array) $this->dbConnection->select('SELECT * FROM book WHERE id_book = ?', [$idBook])[0];
+        $rows = $this->dbConnection->select('SELECT * FROM book WHERE id_book = ?', [$idBook]);
+
+        if (empty($rows)) {
+            return null;
+        }
+
+        $row = (array) $rows[0];
 
         return new Book(
             $row['id_book'],

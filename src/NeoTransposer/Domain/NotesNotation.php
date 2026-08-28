@@ -2,8 +2,6 @@
 
 namespace NeoTransposer\Domain;
 
-use Symfony\Component\Translation\TranslatorInterface;
-
 /**
  * Convert different nomenclatures for notes (american and latin so far).
  */
@@ -62,7 +60,6 @@ final class NotesNotation
     /**
      * Returns a user-friendly string with the voice range:
      *
-     * @param  TranslatorInterface  $trans  The Silex Translator object.
      * @param  string  $notation  Notation for notes (american|latin)
      * @param  string  $lowestNote  Lowest note of the voice range.
      * @param  string  $highestNote  Highest note of the voice range.

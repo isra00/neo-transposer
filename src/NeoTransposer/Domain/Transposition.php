@@ -67,8 +67,6 @@ class Transposition
         public ?NotesRange $peopleRange = null
     ) {
         $this->setScore();
-
-        return $this; // For fluent constructions
     }
 
     /**

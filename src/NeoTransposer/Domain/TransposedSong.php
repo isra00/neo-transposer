@@ -24,11 +24,9 @@ final class TransposedSong
     public $transpositions;
 
     /**
-     * @var Transposition
-     *
      * @todo Rename to transpositionNotEquivalent o transpositionEasierNotEquivalent
      */
-    public $not_equivalent;
+    public ?Transposition $not_equivalent = null;
 
     private PeopleCompatibleCalculation $pcCalculation;
 
@@ -112,7 +110,7 @@ final class TransposedSong
         return $this->pcCalculation->peopleCompatibleTransposition;
     }
 
-    public function getPeopleCompatibleStatus(): ?int
+    public function getPeopleCompatibleStatus(): int
     {
         return $this->pcCalculation->status;
     }
@@ -120,7 +118,7 @@ final class TransposedSong
     /**
      * This IS actually used by transpose_song.twig's "peopleCompatibleStatusMsg"
      */
-    public function getPeopleCompatibleStatusMsg(): ?string
+    public function getPeopleCompatibleStatusMsg(): string
     {
         return $this->pcCalculation->getStatusMsg();
     }

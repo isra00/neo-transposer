@@ -54,7 +54,7 @@ SQL;
      *
      * @todo Refactor esto. Id or Slug es doble responsabilidad. Solo el controller debería aceptar ambos.
      */
-    public function fetchSongByIdOrSlug(string $idSong): ?Song
+    public function fetchSongByIdOrSlug(string $idSong): Song
     {
         $fieldId = 'slug';
 
@@ -69,7 +69,7 @@ SQL;
     /**
      * @throws SongNotExistException
      */
-    public function readSongByField(string $field, $value): ?Song
+    public function readSongByField(string $field, $value): Song
     {
         /** @refactor SELECT * FROM 2 tablas?? Disgregar lo que hace falta de book y lo que no */
         $songRow = $this->dbConnection->selectOne(

@@ -63,7 +63,7 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
      * @param  string|null  $registerIp  The IP address with which the user registered.
      * @return int The user ID, if it was not set.
      */
-    public function save(User $user, ?string $registerIp = null): ?int
+    public function save(User $user, ?string $registerIp = null): int
     {
         if ($user->id_user) {
             return $this->dbConnection->table('user')
