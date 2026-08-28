@@ -20,11 +20,6 @@ class User
 
     public $firstTime = false;
 
-    // For Laravel Auth. Still needed?
-    protected $rememberToken;
-
-    public $timestamps = false;
-
     /**
      * @param  string|null  $email  User email
      * @param  int|null  $id_user  User ID

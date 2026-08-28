@@ -2,7 +2,6 @@
 
 namespace NeoTransposer\Infrastructure;
 
-use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\UnhappyUserRepository;
 
 final class UnhappyUserRepositoryMysql extends MysqlRepository implements UnhappyUserRepository

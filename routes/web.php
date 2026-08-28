@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'get']);
 
-// SEO-friendly URLs for books
+// SEO-friendly URLs for books. Every book in the DB must have an entry here!
 $bookUrls = [
     1 => '/nyimbo-njia-neokatekumenato',
     2 => '/cantos-camino-neocatecumenal',

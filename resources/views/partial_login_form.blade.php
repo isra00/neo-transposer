@@ -9,7 +9,7 @@
         <div id="mcheck"></div>
     </div>
     <div class="field block full-width">
-    @if(config('nt.debug') || config('nt.disable_recaptcha'))
+    @if(config('app.debug') || config('nt.disable_recaptcha'))
         <button type="submit" name="sent" class="bigbutton">@lang('Enter')</button>
     @else
         <button class="bigbutton g-recaptcha" data-sitekey="6LfXByMUAAAAAKkFOyhseUPNtuz8ZiilLUB3B5iX" data-callback="login">@lang('Enter')</button>
