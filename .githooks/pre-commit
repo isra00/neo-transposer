@@ -1,23 +1,28 @@
 #!/bin/sh
-#
-# Checks the style of staged PHP files with Pint. Enable with `make install-hooks`.
-# Reports only: run `make lint-fix` to fix, or `git commit --no-verify` to skip.
+# Checks staged PHP files with Pint, then runs the test suite. Enable with `make install-hooks`.
+# Pint reports only: run `make lint-fix` to fix, or `git commit --no-verify` to skip both.
 # PHPStan is left to CI; it is too slow for every commit.
 
 set -e
 
-staged=$(git diff --cached --name-only --diff-filter=ACMR -- '*.php')
-[ -z "$staged" ] && exit 0
-
 if ! docker exec transposer-dev true >/dev/null 2>&1; then
-    echo "pre-commit: the transposer-dev container is not running, so Pint cannot run." >&2
+    echo "pre-commit: the transposer-dev container is not running." >&2
     echo "Start it with \`make start-local\`, or skip with \`git commit --no-verify\`." >&2
     exit 1
 fi
 
 # The container's workdir is the bind-mounted repo root, so staged paths resolve as-is.
-if ! echo "$staged" | xargs docker exec -u www-data transposer-dev vendor/bin/pint --test; then
+staged=$(git diff --cached --name-only --diff-filter=ACMR -- '*.php')
+if [ -n "$staged" ]; then
+    if ! echo "$staged" | xargs docker exec -u www-data transposer-dev vendor/bin/pint --test; then
+        echo >&2
+        echo "Code style issues in staged files. Run \`make lint-fix\` and stage the result." >&2
+        exit 1
+    fi
+fi
+
+if ! make test; then
     echo >&2
-    echo "Code style issues in staged files. Run \`make lint-fix\` and stage the result." >&2
+    echo "Tests failed. Fix them, or skip with \`git commit --no-verify\`." >&2
     exit 1
 fi

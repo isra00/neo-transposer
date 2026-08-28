@@ -1,0 +1,12 @@
+# Revisions to skip when running `git blame`, so a mechanical reformat does not
+# show up as the last author of every line.
+#
+# Enable locally (once per clone) with:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+# `make install-hooks` does this for you. GitHub honours the file automatically.
+#
+# Only add commits that change formatting and nothing else.
+
+# Repo-wide Laravel Pint reformat (introduced pint.json).
+# SHA added after the commit exists — see CLAUDE.md.
+4119dbe9bb014ff4fff8bc9b507e2f74c03f4b32

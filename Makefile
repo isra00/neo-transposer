@@ -104,34 +104,16 @@ test:
 	@if [ -f tests/_output/coverage.xml ]; then sed "s@\/var\/www\/html@\/\/wsl$$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml > tests/_output/coverage.xml.tmp && mv tests/_output/coverage.xml.tmp tests/_output/coverage.xml; fi
 	docker exec -t -u www-data transposer-dev php artisan app:test-all-transpositions
 
-# Link-rot report over every song URL in the DB. It hits ~700 third-party sites and can
-# never fail the build, so it runs on a schedule (.github/workflows/song-urls.yml) rather
-# than on the push path.
+test-acceptance: start-selenium wait-selenium
+	docker exec -t -u www-data transposer-dev php /var/www/html/vendor/bin/codecept run acceptance
+
+get-test-outputs:
+	 docker cp transposer-dev:/var/www/html/tests/_output .
+
 test-song-urls:
 	docker exec -t transposer-dev php artisan app:test-song-urls
 
-# Code style and static analysis. The ruleset lives in pint.json (Laravel preset with
-# project overrides) and phpstan.neon. Both run in the container so local and CI agree.
-lint:
-	docker exec -t -u www-data transposer-dev vendor/bin/pint --test
-lint-fix:
-	docker exec -t -u www-data transposer-dev vendor/bin/pint
-# Only the files touched since the last commit, for a fast pre-commit check.
-lint-dirty:
-	docker exec -t -u www-data transposer-dev vendor/bin/pint --test --dirty
-analyse:
-	docker exec -t -u www-data transposer-dev vendor/bin/phpstan analyse --memory-limit=512M
-# Regenerate the baseline of pre-existing errors. Run after fixing a batch of them,
-# never to silence errors in code you just wrote.
-analyse-baseline:
-	docker exec -t -u www-data transposer-dev vendor/bin/phpstan analyse --memory-limit=512M --generate-baseline
-# Everything CI checks, minus the test suites.
-check: lint analyse
-# Point git at the versioned hooks in .githooks/. Run once per clone.
-install-hooks:
-	git config core.hooksPath .githooks
-	git config blame.ignoreRevsFile .git-blame-ignore-revs
-	@echo "Git hooks enabled from .githooks/, and blame set to skip .git-blame-ignore-revs"
+
 # Split from wait-selenium so CI can kick off the ~1.5 GB image pull before the Docker
 # build, rather than paying for it at the start of the acceptance suite.
 start-selenium:
@@ -144,12 +126,6 @@ wait-selenium:
 		sleep 1; \
 	done; \
 	echo "Selenium did not become ready in 60s" >&2; exit 1
-
-test-acceptance: start-selenium wait-selenium
-	docker exec -t -u www-data transposer-dev php /var/www/html/vendor/bin/codecept run acceptance
-
-get-test-outputs:
-	 docker cp transposer-dev:/var/www/html/tests/_output .
 
 clean:
 	rm -r cache/twig/*
@@ -168,3 +144,27 @@ composer:
 
 bash:
 	docker exec -it transposer-dev bash
+
+# Code style and static analysis. The ruleset lives in pint.json (Laravel preset with
+# project overrides) and phpstan.neon. Both run in the container so local and CI agree.
+lint:
+	docker exec -t -u www-data transposer-dev vendor/bin/pint --test
+lint-fix:
+	docker exec -t -u www-data transposer-dev vendor/bin/pint
+# Only the files touched since the last commit, for a fast pre-commit check.
+lint-dirty:
+	docker exec -t -u www-data transposer-dev vendor/bin/pint --test --dirty
+analyse:
+	docker exec -t -u www-data transposer-dev vendor/bin/phpstan analyse --memory-limit=512M
+# Regenerate the baseline of pre-existing errors. Run after fixing a batch of them,
+# never to silence errors in code you just wrote.
+analyse-baseline:
+	docker exec -t -u www-data transposer-dev vendor/bin/phpstan analyse --memory-limit=512M --generate-baseline
+# Everything CI checks, minus the test suites.
+check: lint analyse
+
+# Point git at the versioned hooks in .githooks/. Run once per clone.
+install-hooks:
+	git config core.hooksPath .githooks
+	git config blame.ignoreRevsFile .git-blame-ignore-revs
+	@echo "Git hooks enabled from .githooks/, and blame set to skip .git-blame-ignore-revs"
