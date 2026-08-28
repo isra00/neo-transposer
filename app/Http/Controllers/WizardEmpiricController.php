@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\BookRepository;
@@ -11,6 +10,7 @@ use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\Service\UnhappinessManager;
 use NeoTransposer\Domain\SongTextForWizard;
 use NeoTransposer\Domain\TransposedSong;
+use NeoTransposer\Domain\Transposer;
 
 /**
  * Wizard Empiric: measure the user's voice range through an empirical test.
@@ -72,7 +72,7 @@ final class WizardEmpiricController extends Controller
             $action_yes = 'tooLow';
         }
 
-        $tpl = $this->prepareSongForTest('lowest', AutomaticTransposer::FORCE_LOWEST);
+        $tpl = $this->prepareSongForTest('lowest', Transposer::FORCE_LOWEST);
 
         return response()->view('wizard_empiric_lowest', array_merge($tpl, [
             'page_title' => __('Voice measure wizard'),
@@ -107,7 +107,7 @@ final class WizardEmpiricController extends Controller
             return $this->finish();
         }
 
-        $tpl = $this->prepareSongForTest('highest', AutomaticTransposer::FORCE_HIGHEST);
+        $tpl = $this->prepareSongForTest('highest', Transposer::FORCE_HIGHEST);
 
         return response()->view('wizard_empiric_highest', array_merge($tpl, [
             'page_title' => __('Voice measure wizard'),
@@ -126,15 +126,15 @@ final class WizardEmpiricController extends Controller
         $transposedSong = TransposedSong::fromDb($wizardConfig['id_song']);
         $transposedSong->transpose($user->range, $forceVoiceLimit);
 
-        $transposedChords = $transposedSong->transpositions[0]->chordsForPrint;
+        $transposedChords = $transposedSong->transpositionsCentered[0]->chordsForPrint;
 
-        $audioFile = '/static/audio/' . $wizardConfig['id_song'] . '_' . $transposedSong->transpositions[0]->offset . '.mp3';
+        $audioFile = '/static/audio/' . $wizardConfig['id_song'] . '_' . $transposedSong->transpositionsCentered[0]->offset . '.mp3';
 
         return [
             'song'       => (new SongTextForWizard($wizardConfig['song_contents']))->getHtmlTextWithChords($transposedChords),
             'song_title' => $transposedSong->song->title,
             'song_key'   => $transposedChords[0],
-            'song_capo'  => $transposedSong->transpositions[0]->getCapoForPrint(),
+            'song_capo'  => $transposedSong->transpositionsCentered[0]->getCapoForPrint(),
             'show_audio' => config('nt.audio') && file_exists(public_path($audioFile)),
             'audio_file' => $audioFile,
         ];

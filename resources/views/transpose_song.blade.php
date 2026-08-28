@@ -47,16 +47,16 @@
     <p class="explanation">@lang('These two transpositions match your voice (they are equivalent). The first one has easier chords:')</p>
 
     <div class="transpositions-list">
-        @foreach ($song->transpositions as $transposition)
+        @foreach ($song->transpositionsCentered as $transposition)
             @include('partial_print_transposition', ['transposition' => $transposition, 'original_chords' => $song->song->originalChordsForPrint, 'feedback_worked' => $transpositionThatWorked === 'centered' . $loop->iteration])
         @endforeach
     </div>
 
-    @if ($song->not_equivalent)
-        @php $difference = ($song->not_equivalent->deviationFromCentered > 0) ? __('higher') : __('lower') @endphp
+    @if ($song->transpositionEasierNotEquivalent)
+        @php $difference = ($song->transpositionEasierNotEquivalent->deviationFromCentered > 0) ? __('higher') : __('lower') @endphp
         <p class="explanation">@lang('This other transposition is a bit :difference, but it has easier chords and may also fit your voice:', ['difference' => $difference])</p>
         <div class="transpositions-list">
-            @include('partial_print_transposition', ['transposition' => $song->not_equivalent, 'original_chords' => $song->song->originalChordsForPrint, 'feedback_worked' => $transpositionThatWorked === 'notEquivalent'])
+            @include('partial_print_transposition', ['transposition' => $song->transpositionEasierNotEquivalent, 'original_chords' => $song->song->originalChordsForPrint, 'feedback_worked' => $transpositionThatWorked === 'notEquivalent'])
         </div>
     @endif
 
@@ -87,8 +87,8 @@
         <form class="transposition-feedback" method="post" action="{{ route('transposition_feedback') }}">
             @csrf
             <input type="hidden" name="id_song" value="{{ $song->song->idSong }}">
-            <input type="hidden" name="centered_score_rate" value="{{ $song->transpositions[1]->score / $song->transpositions[0]->score }}">
-            <input type="hidden" name="deviation" value="{{ $song->not_equivalent->deviationFromCentered ?? $song->getPeopleCompatible()->deviationFromCentered ?? null }}">
+            <input type="hidden" name="centered_score_rate" value="{{ $song->transpositionsCentered[1]->score / $song->transpositionsCentered[0]->score }}">
+            <input type="hidden" name="deviation" value="{{ $song->transpositionEasierNotEquivalent->deviationFromCentered ?? $song->getPeopleCompatible()->deviationFromCentered ?? null }}">
             <input type="hidden" name="pc_status" value="{{ $song->getPeopleCompatibleStatusMsg() ?? '' }}">
 
             <p class="answers" @if($non_js_fb) style="display: none" @endif>
@@ -168,7 +168,7 @@
                 <div id="detailed-feedback-dialog">
                     <h4>@lang('Which one has worked for you?')</h4>
                     <ul id="transpositions-feedback">
-                        @foreach ($song->transpositions as $trans)
+                        @foreach ($song->transpositionsCentered as $trans)
                             <li>
                                 <a href="javascript:void(0)" class="detailed-fb-choice" data-transposition="centered{{ $loop->iteration }}" data-deviation="">
                                     <span class="chord-sans">{!! $trans->chordsForPrint[0] !!}</span>
@@ -178,11 +178,11 @@
                             </li>
                         @endforeach
 
-                        @if ($song->not_equivalent)
+                        @if ($song->transpositionEasierNotEquivalent)
                             <li>
-                                <a href="javascript:void(0)" class="detailed-fb-choice" data-transposition="notEquivalent" data-deviation="{{ $song->not_equivalent->deviationFromCentered }}">
-                                    <span class="chord-sans">{!! $song->not_equivalent->chordsForPrint[0] !!}</span>
-                                    <span class="capo">{{ $song->not_equivalent->getCapoForPrint() }}</span>
+                                <a href="javascript:void(0)" class="detailed-fb-choice" data-transposition="notEquivalent" data-deviation="{{ $song->transpositionEasierNotEquivalent->deviationFromCentered }}">
+                                    <span class="chord-sans">{!! $song->transpositionEasierNotEquivalent->chordsForPrint[0] !!}</span>
+                                    <span class="capo">{{ $song->transpositionEasierNotEquivalent->getCapoForPrint() }}</span>
                                     <small>★ {{ $difference }}</small>
                                     <span class="circle"></span>
                                 </a>
@@ -238,8 +238,8 @@
                         id_song: {{ $song->song->idSong }},
                         worked: iAnswer,
                         referer: '{{ request()->server('HTTP_REFERER') }}',
-                        centered_score_rate: '{{ $song->transpositions[1]->score / $song->transpositions[0]->score }}',
-                        deviation: '{{ $song->not_equivalent?->deviationFromCentered ?: $song->getPeopleCompatible()?->deviationFromCentered ?: null }}',
+                        centered_score_rate: '{{ $song->transpositionsCentered[1]->score / $song->transpositionsCentered[0]->score }}',
+                        deviation: '{{ $song->transpositionEasierNotEquivalent?->deviationFromCentered ?: $song->getPeopleCompatible()?->deviationFromCentered ?: null }}',
                         pc_status: '{{ $song->getPeopleCompatibleStatusMsg() ?? '' }}',
                     }, function() {
                         gtag('event', (iAnswer ? 'Worked' : 'NotWorked'), {'event_category': 'FeedbackTransposition', 'event_label': '{{ $song->song->title }}'});
@@ -260,7 +260,7 @@
                         transposition: transposition,
                         pc_status: '{{ $song->getPeopleCompatibleStatusMsg() }}',
                         deviation: deviation,
-                        centered_score_rate: {{ $song->transpositions[1]->score / $song->transpositions[0]->score }}
+                        centered_score_rate: {{ $song->transpositionsCentered[1]->score / $song->transpositionsCentered[0]->score }}
                     });
                 },
 

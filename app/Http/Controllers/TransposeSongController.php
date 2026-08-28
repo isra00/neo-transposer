@@ -83,7 +83,7 @@ final class TransposeSongController extends Controller
                 ]
             );
 
-            if ($transposedSong->getPeopleCompatible()->score < $transposedSong->transpositions[0]->score) {
+            if ($transposedSong->getPeopleCompatible()->score < $transposedSong->transpositionsCentered[0]->score) {
                 $tplVars['peopleCompatibleMsg'] .= ' ' . __('And it has easier chords!');
             }
         }
@@ -129,11 +129,11 @@ final class TransposeSongController extends Controller
     private function generateTranspositionChart(NotesCalculator $nc, TransposedSong $transposedSong): TranspositionChart
     {
         $transpositionChart = new TranspositionChart($nc, $transposedSong->song, session('user'), config('nt.languages')[App::getLocale()]['notation']);
-        $transpositionChart->addTransposition('Transposed:', 'transposed-song', $transposedSong->transpositions[0]);
+        $transpositionChart->addTransposition('Transposed:', 'transposed-song', $transposedSong->transpositionsCentered[0]);
 
         if ($transposedSong->song->peopleRange !== null) {
             $transpositionChart->addVoice('Original for people:', 'original-song original-people', $transposedSong->song->peopleRange);
-            $transpositionChart->addVoice('Transposed for people:', 'transposed-song transposed-people', $transposedSong->transpositions[0]->peopleRange);
+            $transpositionChart->addVoice('Transposed for people:', 'transposed-song transposed-people', $transposedSong->transpositionsCentered[0]->peopleRange);
             $transpositionChart->addVoice('People standard:', 'people-standard', new NotesRange(config('nt.people_range')[0], config('nt.people_range')[1]));
         }
 

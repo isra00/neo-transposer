@@ -11,7 +11,7 @@
         </h2>
 
         <ul>
-            @foreach ($item->transposedSong->transpositions as $idx => $transposition)
+            @foreach ($item->transposedSong->transpositionsCentered as $idx => $transposition)
                 <li>
                     <strong>centered{{ $idx + 1 }}</strong>
                     @if ($transposition->getCapo())
@@ -27,14 +27,14 @@
                 </li>
             @endforeach
 
-            @if ($item->transposedSong->not_equivalent)
+            @if ($item->transposedSong->transpositionEasierNotEquivalent)
                 <li>
-                    <strong>{{ $item->transposedSong->not_equivalent->deviationFromCentered > 0 ? '+' : '' }}{{ $item->transposedSong->not_equivalent->deviationFromCentered }} notEquivalent</strong>
-                    @if ($item->transposedSong->not_equivalent->getCapo())
-                        <span class="capo">C{{ $item->transposedSong->not_equivalent->getCapo() }}</span>
+                    <strong>{{ $item->transposedSong->transpositionEasierNotEquivalent->deviationFromCentered > 0 ? '+' : '' }}{{ $item->transposedSong->transpositionEasierNotEquivalent->deviationFromCentered }} notEquivalent</strong>
+                    @if ($item->transposedSong->transpositionEasierNotEquivalent->getCapo())
+                        <span class="capo">C{{ $item->transposedSong->transpositionEasierNotEquivalent->getCapo() }}</span>
                     @endif
                     @foreach ($item->transposedSong->song->originalChordsForPrint as $i => $original_chord)
-                        <span class="chord-pair">{!! $original_chord !!} &rarr; {!! $item->transposedSong->not_equivalent->chordsForPrint[$i] !!}@if (!$loop->last); @endif</span>
+                        <span class="chord-pair">{!! $original_chord !!} &rarr; {!! $item->transposedSong->transpositionEasierNotEquivalent->chordsForPrint[$i] !!}@if (!$loop->last); @endif</span>
                     @endforeach
                 </li>
             @endif

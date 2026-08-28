@@ -24,9 +24,9 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  * The flag forceVoiceLimit is not used in real life transpositions, but only in
  * the Empiric Wizard to force the singer to use the lowest or highest voice.
  *
- * @todo Refactor this class to make it more Single-Responsibility. Lo de "Automatic" sobra: TransposerAlgorithm o mejor Transposer
+ * @todo Refactor this class to make it more Single-Responsibility.
  */
-class AutomaticTransposer
+class Transposer
 {
     final public const FORCE_LOWEST = 1;
 

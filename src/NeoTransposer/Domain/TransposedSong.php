@@ -11,22 +11,17 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  * Read a song from DB, calculate its transpositions, sort them according to
  * some business logic and prepare for print.
  *
- * This class is in an upper level than AutomaticTransposer and is intended to
+ * This class is in an upper level than Transposer and is intended to
  * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
  */
 final class TransposedSong
 {
     /**
      * @var array
-     *
-     * @todo Rename to transpositionsCentered
      */
-    public $transpositions;
+    public $transpositionsCentered;
 
-    /**
-     * @todo Rename to transpositionNotEquivalent o transpositionEasierNotEquivalent
-     */
-    public ?Transposition $not_equivalent = null;
+    public ?Transposition $transpositionEasierNotEquivalent = null;
 
     private PeopleCompatibleCalculation $pcCalculation;
 
@@ -47,15 +42,15 @@ final class TransposedSong
      * transpositions.
      *
      * @param  int|null  $forceVoiceLimit  Force user's lowest or highest note (only used in Wizard).
-     *                                     AutomaticTransposer::FORCE_LOWEST or AutomaticTransposer::FORCE_HIGHEST.
+     *                                     Transposer::FORCE_LOWEST or Transposer::FORCE_HIGHEST.
      *
      * @throws Exception
      */
     public function transpose(NotesRange $userRange, ?int $forceVoiceLimit = null): void
     {
-        $transposerFactory = app(AutomaticTransposerFactory::class);
+        $transposerFactory = app(TransposerFactory::class);
 
-        $transposer = $transposerFactory->createAutomaticTransposer(
+        $transposer = $transposerFactory->createTransposer(
             $userRange,
             $this->song->range,
             $this->song->originalChords,
@@ -63,21 +58,21 @@ final class TransposedSong
             $this->song->peopleRange
         );
 
-        $this->transpositions = $transposer->getTranspositionsCentered(
-            AutomaticTransposer::AMOUNT_CENTERED_TRANSPOSITIONS,
+        $this->transpositionsCentered = $transposer->getTranspositionsCentered(
+            Transposer::AMOUNT_CENTERED_TRANSPOSITIONS,
             $forceVoiceLimit
         );
-        $this->not_equivalent = $transposer->getEasierNotEquivalent();
+        $this->transpositionEasierNotEquivalent = $transposer->getEasierNotEquivalent();
 
         $this->pcCalculation = $transposer->calculatePeopleCompatible();
 
-        if ($this->not_equivalent !== null) {
+        if ($this->transpositionEasierNotEquivalent !== null) {
             $this->removeEasierNotEquivalentIfConflictWithPeopleCompatible();
         }
 
         // If there is notEquivalent, show only one centered.
-        if ($this->not_equivalent && config('nt.hide_second_centered_if_not_equivalent')) {
-            unset($this->transpositions[1]);
+        if ($this->transpositionEasierNotEquivalent && config('nt.hide_second_centered_if_not_equivalent')) {
+            unset($this->transpositionsCentered[1]);
         }
 
         $this->prepareForPrint();
@@ -99,8 +94,8 @@ final class TransposedSong
                 }
             },
             array_merge(
-                $this->transpositions,
-                [$this->not_equivalent, $this->pcCalculation->peopleCompatibleTransposition]
+                $this->transpositionsCentered,
+                [$this->transpositionEasierNotEquivalent, $this->pcCalculation->peopleCompatibleTransposition]
             )
         );
     }
@@ -140,10 +135,10 @@ final class TransposedSong
      */
     public function removeEasierNotEquivalentIfConflictWithPeopleCompatible(): void
     {
-        if (($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->not_equivalent))
+        if (($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->transpositionEasierNotEquivalent))
             || $this->pcCalculation->peopleCompatibleTransposition
         ) {
-            $this->not_equivalent = null;
+            $this->transpositionEasierNotEquivalent = null;
         }
     }
 

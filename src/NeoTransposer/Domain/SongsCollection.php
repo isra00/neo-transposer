@@ -5,7 +5,7 @@ namespace NeoTransposer\Domain;
 final class SongsCollection
 {
     /**
-     * @param  mixed[]  $songs
+     * @param  array  $songs
      */
     public function __construct(
         /**

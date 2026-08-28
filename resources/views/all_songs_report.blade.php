@@ -43,7 +43,7 @@
             </h2>
 
             <ul>
-            @foreach (array_slice($item->transposedSong->transpositions, 0, 2) as $idx => $transposition)
+            @foreach (array_slice($item->transposedSong->transpositionsCentered, 0, 2) as $idx => $transposition)
                 @include('partial_all_songs_transposition', [
                     'transposition' => $transposition,
                     'item' => $item,
@@ -52,9 +52,9 @@
                 ])
             @endforeach
 
-            @if ($item->feedbackTranspositionWhichWorked === 'notEquivalent' && $item->transposedSong->not_equivalent)
+            @if ($item->feedbackTranspositionWhichWorked === 'notEquivalent' && $item->transposedSong->transpositionEasierNotEquivalent)
                 @include('partial_all_songs_transposition', [
-                    'transposition' => $item->transposedSong->not_equivalent,
+                    'transposition' => $item->transposedSong->transpositionEasierNotEquivalent,
                     'item' => $item,
                     'prefix' => null,
                     'typeOfTransposition' => 'notEquivalent',

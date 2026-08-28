@@ -56,7 +56,7 @@ final class AllSongsReport
                 ($feedbackTranspositionWhichWorked == 'peopleCompatible' && empty(
                     $transposedSong->getPeopleCompatible()
                 ))
-                || ($feedbackTranspositionWhichWorked == 'notEquivalent' && empty($transposedSong->not_equivalent))
+                || ($feedbackTranspositionWhichWorked == 'notEquivalent' && empty($transposedSong->transpositionEasierNotEquivalent))
             ) {
                 $feedbackWorked = false;
                 $feedbackTranspositionWhichWorked = null;

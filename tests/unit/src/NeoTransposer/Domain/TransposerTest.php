@@ -3,9 +3,9 @@
 namespace NeoTransposer\Tests\Domain;
 
 use Illuminate\Foundation\Testing\TestCase;
-use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\PeopleCompatibleCalculation;
+use NeoTransposer\Domain\Transposer;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
@@ -14,20 +14,20 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 /**
  * @todo Add some corner cases to transposition algorithms
  */
-class AutomaticTransposerTest extends TestCase
+class TransposerTest extends TestCase
 {
     protected $sut;
 
     protected $transpositionFactory;
 
-    protected function buildAutomaticTransposer(
+    protected function buildTransposer(
         NotesRange $singerRange,
         NotesRange $songRange,
         array $originalChords,
         $firstChordIsKey,
         ?NotesRange $songPeopleRange = null
-    ): AutomaticTransposer {
-        return new AutomaticTransposer(
+    ): Transposer {
+        return new Transposer(
             new NotesCalculator(),
             $this->getTranspositionFactory(),
             new NotesRange('B1', 'B2'),
@@ -39,9 +39,9 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    protected function buildAutomaticTransposerWithValues()
+    protected function buildTransposerWithValues()
     {
-        return $this->buildAutomaticTransposer(
+        return $this->buildTransposer(
             new NotesRange('G1', 'G3'),
             new NotesRange('B1', 'B2'),
             [Chord::fromString('Am'), Chord::fromString('Dm'), Chord::fromString('F'), Chord::fromString('C')],
@@ -93,13 +93,13 @@ class AutomaticTransposerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $this->buildAutomaticTransposerWithValues()->calculateCenteredTransposition()
+            $this->buildTransposerWithValues()->calculateCenteredTransposition()
         );
     }
 
     public function test_find_centered_transposition_as_book()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('F1', 'F3'),
             new NotesRange('B1', 'B2'),
             [Chord::fromString('Bm'), Chord::fromString('Em'), new Chord('G'), new Chord('D')],
@@ -132,7 +132,7 @@ class AutomaticTransposerTest extends TestCase
             null
         );
 
-        $equivalents = $this->buildAutomaticTransposerWithValues()->calculateEquivalentsWithCapo($testTransposition);
+        $equivalents = $this->buildTransposerWithValues()->calculateEquivalentsWithCapo($testTransposition);
 
         $expected = [
             1=> $this->buildTransposition(['A#m', 'D#m', 'F#', 'C#'], 1, false),
@@ -158,7 +158,7 @@ class AutomaticTransposerTest extends TestCase
 
         $this->assertEquals(
             [$transpositionMockA, $transpositionMockB],
-            $this->buildAutomaticTransposerWithValues()->sortTranspositionsByEase([$transpositionMockB, $transpositionMockA])
+            $this->buildTransposerWithValues()->sortTranspositionsByEase([$transpositionMockB, $transpositionMockA])
         );
     }
 
@@ -177,13 +177,13 @@ class AutomaticTransposerTest extends TestCase
 
         $this->assertEquals(
             [$transpositionMockA, $transpositionMockB],
-            $this->buildAutomaticTransposerWithValues()->sortTranspositionsByEase([$transpositionMockB, $transpositionMockA])
+            $this->buildTransposerWithValues()->sortTranspositionsByEase([$transpositionMockB, $transpositionMockA])
         );
     }
 
     public function test_get_easier_not_equivalent()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'D3'),
             new NotesRange('C#2', 'E3'),
             [Chord::fromString('D'), Chord::fromString('F#'), Chord::fromString('Bm'), Chord::fromString('A'), Chord::fromString('G')],
@@ -209,7 +209,7 @@ class AutomaticTransposerTest extends TestCase
 
     public function test_force_highest_voice()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('E2', 'A2'),
             [Chord::fromString('Am'), Chord::fromString('G')],
@@ -227,13 +227,13 @@ class AutomaticTransposerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $sut->calculateCenteredTransposition(AutomaticTransposer::FORCE_HIGHEST)
+            $sut->calculateCenteredTransposition(Transposer::FORCE_HIGHEST)
         );
     }
 
     public function test_force_lowest_voice()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('E2', 'A2'),
             [Chord::fromString('Am'), Chord::fromString('G')],
@@ -251,13 +251,13 @@ class AutomaticTransposerTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $sut->calculateCenteredTransposition(AutomaticTransposer::FORCE_LOWEST)
+            $sut->calculateCenteredTransposition(Transposer::FORCE_LOWEST)
         );
     }
 
     public function test_people_compatible_no_data()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], true
         );
 
@@ -274,7 +274,7 @@ class AutomaticTransposerTest extends TestCase
 
     public function test_people_compatible_already_compatible()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('A2', 'F3'),
             [Chord::fromString('Am'), Chord::fromString('E')],
@@ -295,7 +295,7 @@ class AutomaticTransposerTest extends TestCase
 
     public function test_people_compatible_wider_than_singer()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('A1', 'F3'),
             [Chord::fromString('Am'), Chord::fromString('E')],
@@ -316,7 +316,7 @@ class AutomaticTransposerTest extends TestCase
 
     public function test_people_compatible_wider_not_adjusted()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('D2', 'F#3'),
             [Chord::fromString('Em'), Chord::fromString('D')],
@@ -337,7 +337,7 @@ class AutomaticTransposerTest extends TestCase
 
     public function test_people_compatible_wider_adjusted()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('A1', 'D3'),
             [Chord::fromString('Am'), Chord::fromString('E')],
@@ -368,7 +368,7 @@ class AutomaticTransposerTest extends TestCase
 
     public function test_people_compatible_adjusted_but_still_too_high()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('A1', 'D3'),
             [Chord::fromString('Am'), Chord::fromString('Dm')],
@@ -397,7 +397,7 @@ class AutomaticTransposerTest extends TestCase
 
     public function test_people_compatible_adjusted_well_high()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('B1', 'B2'),
             [Chord::fromString('D'), Chord::fromString('Em')],
@@ -426,7 +426,7 @@ class AutomaticTransposerTest extends TestCase
 
     public function test_people_compatible_adjusted_well_low()
     {
-        $sut = $this->buildAutomaticTransposer(
+        $sut = $this->buildTransposer(
             new NotesRange('A1', 'E3'),
             new NotesRange('B1', 'E3'),
             [Chord::fromString('Am'), Chord::fromString('Dm'), Chord::fromString('E')],

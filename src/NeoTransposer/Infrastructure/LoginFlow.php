@@ -10,10 +10,8 @@ final class LoginFlow
      * Redirections depending on the state of the user:
      * - If user has no id -> login, unless we're in login.
      * - If user has no voice range -> user/voice, unless we're in $exempt.
-     *
-     * @todo Rename into redirectIfNotLoggedInOrNoRange, or something like that.
      */
-    public static function redirectIfUserDoesNotComply(string $currentRoute, User $currentUser): ?string
+    public static function redirectIfNotLoggedInOrNoRange(string $currentRoute, User $currentUser): ?string
     {
         // Login page has its own redirection logic.
         if ($currentRoute == 'login') {
