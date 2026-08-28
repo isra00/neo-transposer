@@ -22,6 +22,7 @@ final class WizardSelectStandardController extends Controller
 
     /**
      * This is a GET request.
+     *
      * @todo This should not be a GET request, for security (CSRF!) and RESTfulness.
      */
     public function selectStandard(Request $request)

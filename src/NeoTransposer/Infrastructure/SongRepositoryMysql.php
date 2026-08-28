@@ -13,8 +13,8 @@ final class SongRepositoryMysql extends MysqlRepository implements SongRepositor
 {
     public function readBookSongsWithUserFeedback(int $idBook, int $idUser): SongsWithUserFeedbackCollection
     {
-        //These 2 book columns are still needed by AllSongsReport
-		$sql = <<<SQL
+        // These 2 book columns are still needed by AllSongsReport
+        $sql = <<<'SQL'
 SELECT song.*, transposition_feedback.worked, transposition_feedback.transposition transposition_which_worked, book.chord_printer, book.locale, id_book
 FROM song
 JOIN book USING (id_book)
@@ -33,7 +33,7 @@ SQL;
 
     public function readBookSongs(int $idBook): SongsCollection
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT song.id_song, slug, page, title
 FROM song
 WHERE id_book = ?
@@ -41,25 +41,26 @@ AND NOT song.id_song IN (118, 319)
 ORDER BY page, title
 SQL;
 
-        return new SongsCollection((array)$this->dbConnection->select($sql, [$idBook]));
+        return new SongsCollection((array) $this->dbConnection->select($sql, [$idBook]));
     }
 
     /**
      * Factory: get a Song object from the DB
      *
-     * @param string $idSong Song ID or slug.
+     * @param  string  $idSong  Song ID or slug.
      * @return Song The requested Song object.
+     *
      * @throws SongNotExistException If song does not exist or has an invalid id_book associated.
      *
      * @todo Refactor esto. Id or Slug es doble responsabilidad. Solo el controller debería aceptar ambos.
      */
-	public function fetchSongByIdOrSlug(string $idSong): ?Song
+    public function fetchSongByIdOrSlug(string $idSong): ?Song
     {
         $fieldId = 'slug';
 
         if ((string) (int) $idSong === $idSong) {
             $fieldId = 'id_song';
-            $idSong = (int)$idSong;
+            $idSong = (int) $idSong;
         }
 
         return $this->readSongByField($fieldId, $idSong);
@@ -71,32 +72,32 @@ SQL;
     public function readSongByField(string $field, $value): ?Song
     {
         /** @refactor SELECT * FROM 2 tablas?? Disgregar lo que hace falta de book y lo que no */
-		$songRow = $this->dbConnection->selectOne(
-			"SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $field = ?",
-			[$value]
-		);
+        $songRow = $this->dbConnection->selectOne(
+            "SELECT * FROM song JOIN book ON song.id_book = book.id_book WHERE $field = ?",
+            [$value]
+        );
 
-		if (!$songRow) {
-			throw new SongNotExistException("The specified song does not exist or it's not bound to a valid book");
-		}
+        if (!$songRow) {
+            throw new SongNotExistException("The specified song does not exist or it's not bound to a valid book");
+        }
 
         /** @refactor Replace by SongChordRepository::readSongChords() */
-		$originalChords = $this->dbConnection->select(
-			'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
-			[$songRow->id_song]
-		);
+        $originalChords = $this->dbConnection->select(
+            'SELECT chord FROM song_chord JOIN song ON song_chord.id_song = song.id_song WHERE song.id_song = ? ORDER BY position ASC',
+            [$songRow->id_song]
+        );
 
-		return new Song(
+        return new Song(
             (array) $songRow,
             array_map(
-            fn($row) => Chord::fromString($row->chord), $originalChords)
+                fn ($row) => Chord::fromString($row->chord), $originalChords)
         );
-	}
+    }
 
     public function readAllSongs(): array
     {
         return array_map(
-            fn($row) => (array) $row,
+            fn ($row) => (array) $row,
             $this->dbConnection->select('SELECT * FROM song')
         );
     }
@@ -146,9 +147,9 @@ SQL;
 
     public function slugAlreadyExists(string $slug): bool
     {
-        return null !== $this->dbConnection->selectOne(
+        return $this->dbConnection->selectOne(
             'SELECT id_song FROM song WHERE slug = ?',
             [$slug]
-        );
+        ) !== null;
     }
 }

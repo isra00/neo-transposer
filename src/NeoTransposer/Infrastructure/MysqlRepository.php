@@ -4,7 +4,6 @@ namespace NeoTransposer\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\DB;
 
 abstract class MysqlRepository
@@ -30,6 +29,7 @@ abstract class MysqlRepository
                 'charset'  => 'utf8',
             ]);
         }
+
         return self::$dbal;
     }
 }

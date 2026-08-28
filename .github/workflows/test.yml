@@ -48,6 +48,11 @@ jobs:
           make init-test-db
           make start
 
+      - name: 🧹 Code style (Laravel Pint)
+        run: make lint
+      - name: 🔎 Static analysis (PHPStan)
+        run: make analyse
+
       - name: 🧪 Unit & integration tests, functional test
         run: make test
 

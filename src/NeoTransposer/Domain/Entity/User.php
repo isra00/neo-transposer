@@ -11,25 +11,28 @@ use NeoTransposer\Domain\ValueObject\UserPerformance;
  */
 class User
 {
-    //These are stored in MySQL as log_voice_range.method
-	final public const METHOD_WIZARD  = 'wizard';
-	final public const METHOD_MANUAL  = 'manual';
-	final public const METHOD_UNHAPPY = 'auto_unhappy';
+    // These are stored in MySQL as log_voice_range.method
+    final public const METHOD_WIZARD = 'wizard';
 
-	public $firstTime = false;
+    final public const METHOD_MANUAL = 'manual';
+
+    final public const METHOD_UNHAPPY = 'auto_unhappy';
+
+    public $firstTime = false;
 
     // For Laravel Auth. Still needed?
     protected $rememberToken;
+
     public $timestamps = false;
 
     /**
-     * @param string|null          $email                   User email
-     * @param null                 $id_user                 User ID
-     * @param NotesRange|null      $range                   User highest note
-     * @param null                 $id_book                 Book
-     * @param string|null          $wizard_step1            Option checked in Wizard First Step
-     * @param int|null             $wizard_lowest_attempts  No. of attempts in Wizard Lowest note.
-     * @param int|null             $wizard_highest_attempts No. of attempts in Wizard Lowest note.
+     * @param  string|null  $email  User email
+     * @param  null  $id_user  User ID
+     * @param  NotesRange|null  $range  User highest note
+     * @param  null  $id_book  Book
+     * @param  string|null  $wizard_step1  Option checked in Wizard First Step
+     * @param  int|null  $wizard_lowest_attempts  No. of attempts in Wizard Lowest note.
+     * @param  int|null  $wizard_highest_attempts  No. of attempts in Wizard Lowest note.
      */
     public function __construct(
         public ?string $email = null,
@@ -64,22 +67,21 @@ class User
         return !empty($this->id_user);
     }
 
-	/**
-	 * Format the voice of the User as lowest_note - highest note +x octaves
-	 *
-     * @param   string $notation The notation (american/latin).
-	 * @return  string 				Formatted string.
-	 */
-	public function getVoiceAsString(NotesNotation $notesNotation, string $notation='american') : string
-	{
-		return $notesNotation->getVoiceRangeAsString($notation, $this->range->lowest, $this->range->highest);
-	}
+    /**
+     * Format the voice of the User as lowest_note - highest note +x octaves
+     *
+     * @param  string  $notation  The notation (american/latin).
+     * @return string Formatted string.
+     */
+    public function getVoiceAsString(NotesNotation $notesNotation, string $notation = 'american'): string
+    {
+        return $notesNotation->getVoiceRangeAsString($notation, $this->range->lowest, $this->range->highest);
+    }
 
     public function shouldEncourageFeedback(): bool
     {
-        return (
+        return
             !empty($this->range->lowest)
-            && ($this->performance->reports() < 2 || ($this->performance->reports() == 2 && $this->firstTime))
-        );
+            && ($this->performance->reports() < 2 || ($this->performance->reports() == 2 && $this->firstTime));
     }
 }

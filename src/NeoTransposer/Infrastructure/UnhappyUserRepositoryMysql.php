@@ -2,17 +2,17 @@
 
 namespace NeoTransposer\Infrastructure;
 
-use NeoTransposer\Domain\Repository\UnhappyUserRepository;
 use NeoTransposer\Domain\Entity\User;
+use NeoTransposer\Domain\Repository\UnhappyUserRepository;
 
 final class UnhappyUserRepositoryMysql extends MysqlRepository implements UnhappyUserRepository
 {
     public function readUserIsUnhappy(int $idUser): bool
     {
-        return null !== $this->dbConnection->selectOne(
-                'SELECT id_user FROM unhappy_user WHERE id_user = ?',
-                [$idUser]
-            );
+        return $this->dbConnection->selectOne(
+            'SELECT id_user FROM unhappy_user WHERE id_user = ?',
+            [$idUser]
+        ) !== null;
     }
 
     public function readUserIsUnhappyAndNoAction(int $idUser): bool
@@ -27,7 +27,7 @@ final class UnhappyUserRepositoryMysql extends MysqlRepository implements Unhapp
 
     public function writeUnhappyUser(int $idUser): void
     {
-        //If user was already unhappy, UNIQUE would make the query fail, so ignore it.
+        // If user was already unhappy, UNIQUE would make the query fail, so ignore it.
         $this->dbConnection->table('unhappy_user')->insertOrIgnore(['id_user' => $idUser]);
     }
 

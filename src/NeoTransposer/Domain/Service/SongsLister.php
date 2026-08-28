@@ -28,8 +28,7 @@ final class SongsLister
             throw new UserNotExistException($idUser);
         }
 
-        if (empty($this->bookRepository->readBook($idBook)))
-        {
+        if (empty($this->bookRepository->readBook($idBook))) {
             throw new BookNotExistException($idBook);
         }
 
@@ -41,8 +40,7 @@ final class SongsLister
      */
     public function readBookSongs(int $idBook): SongsCollection
     {
-        if (empty($this->bookRepository->readBook($idBook)))
-        {
+        if (empty($this->bookRepository->readBook($idBook))) {
             throw new BookNotExistException($idBook);
         }
 

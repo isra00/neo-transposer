@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use NeoTransposer\Domain\AutomaticTransposer;
+use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\Service\UnhappinessManager;
 use NeoTransposer\Domain\SongTextForWizard;
 use NeoTransposer\Domain\TransposedSong;
-use NeoTransposer\Domain\Entity\User;
 
 /**
  * Wizard Empiric: measure the user's voice range through an empirical test.
@@ -48,19 +48,19 @@ final class WizardEmpiricController extends Controller
         $action_no = $action_yes = null;
 
         // If this is the first run, the user shouldn't click NO.
-        if (null === $request->get('can_sing')) {
+        if ($request->get('can_sing') === null) {
             $action_no = 'lowFirstTime';
         }
 
         // If yes, lower down 1 semitone and retry
-        if ('yes' == $request->get('can_sing')) {
+        if ($request->get('can_sing') == 'yes') {
             $user->range->lowest = $this->nc->transposeNote($user->range->lowest, -1);
             $user->range->highest = $this->nc->transposeNote($user->range->highest, -1);
             $user->wizard_lowest_attempts++;
         }
 
         // If no, we recover the previous highest note as the singer's highest note and redirect to Highest Note test wizard.
-        if ('no' == $request->get('can_sing')) {
+        if ($request->get('can_sing') == 'no') {
             $user->range->lowest = $this->nc->transposeNote($user->range->lowest, +1);
             $user->range->highest = $this->nc->transposeNote($user->range->highest, +1);
 
@@ -68,7 +68,7 @@ final class WizardEmpiricController extends Controller
         }
 
         // If too low, next "yes" won't work as usual
-        if ('C1' == $user->range->lowest) {
+        if ($user->range->lowest == 'C1') {
             $action_yes = 'tooLow';
         }
 
@@ -88,7 +88,7 @@ final class WizardEmpiricController extends Controller
         $action_no = $action_yes = null;
 
         // If yes, raise up 1 semitone and retry
-        if ('yes' == $request->get('can_sing')) {
+        if ($request->get('can_sing') == 'yes') {
             $user->range->highest = $this->nc->transposeNote($user->range->highest, +1);
             $user->wizard_highest_attempts++;
         }
@@ -101,8 +101,9 @@ final class WizardEmpiricController extends Controller
         // If not, we recover the last one and pass to the next step
         // ...and if after being alerted that B4 is too much, he/she decides to continue, stop here
         // and force B4.
-        if ('no' == $request->get('can_sing') || $user->range->highest == 'C1') {
+        if ($request->get('can_sing') == 'no' || $user->range->highest == 'C1') {
             $user->range->highest = $this->nc->transposeNote($user->range->highest, -1);
+
             return $this->finish();
         }
 

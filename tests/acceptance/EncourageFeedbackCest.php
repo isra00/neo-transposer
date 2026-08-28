@@ -3,7 +3,6 @@
 namespace NeoTransposerTests\Acceptance;
 
 use AcceptanceTester;
-use Faker\Factory;
 
 class EncourageFeedbackCest
 {

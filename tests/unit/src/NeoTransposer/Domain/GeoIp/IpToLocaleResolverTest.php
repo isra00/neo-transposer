@@ -49,8 +49,11 @@ final class IpToLocaleResolverTest extends TestCase
 
     private function fakeResolverReturning(string $isoCode): GeoIpResolver
     {
-        return new class($isoCode) implements GeoIpResolver {
-            public function __construct(private string $isoCode) {}
+        return new class($isoCode) implements GeoIpResolver
+        {
+            public function __construct(private string $isoCode)
+            {
+            }
 
             public function resolve(string $ip): GeoIpLocation
             {

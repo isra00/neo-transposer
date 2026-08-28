@@ -42,7 +42,7 @@ final class AdminCacheHeadersTest extends TestCase
         $this->assertStringContainsString('private', $cacheControl, "{$context} must not be cached by proxies");
     }
 
-    public function testAdminPagesAreNotStorableByAnyCache(): void
+    public function test_admin_pages_are_not_storable_by_any_cache(): void
     {
         $response = $this->getAsAdmin('/admin/insert-song');
 
@@ -50,7 +50,7 @@ final class AdminCacheHeadersTest extends TestCase
         $this->assertNotStorable($response, 'the insert-song form');
     }
 
-    public function testTheBasicAuthChallengeIsNotStorable(): void
+    public function test_the_basic_auth_challenge_is_not_storable(): void
     {
         $response = $this->get('/admin/insert-song');
 
@@ -58,7 +58,7 @@ final class AdminCacheHeadersTest extends TestCase
         $this->assertNotStorable($response, 'the 401 challenge');
     }
 
-    public function testAdminPagesSendAPastExpiresSoModExpiresCannotOverrideThem(): void
+    public function test_admin_pages_send_a_past_expires_so_mod_expires_cannot_override_them(): void
     {
         $expires = $this->getAsAdmin('/admin/insert-song')->headers->get('Expires');
 
@@ -70,7 +70,7 @@ final class AdminCacheHeadersTest extends TestCase
         );
     }
 
-    public function testPublicPagesAreLeftCacheable(): void
+    public function test_public_pages_are_left_cacheable(): void
     {
         // Guards against the middleware being promoted to the web group by accident:
         // no-store on every page would defeat the browser's back/forward cache sitewide.

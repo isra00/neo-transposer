@@ -11,11 +11,10 @@ class NeedsLoginMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if ($redirect = LoginFlow::redirectIfUserDoesNotComply($request->route()->getName(), $request->session()->get('user')))
-        {
-            //Locale necessary for Admin pages, which set no es/sw locale.
+        if ($redirect = LoginFlow::redirectIfUserDoesNotComply($request->route()->getName(), $request->session()->get('user'))) {
+            // Locale necessary for Admin pages, which set no es/sw locale.
             return redirect()->route($redirect, [
-                'locale' => ('en' == App::getLocale()) ? 'es' : App::getLocale()
+                'locale' => (App::getLocale() == 'en') ? 'es' : App::getLocale(),
             ]);
         }
 

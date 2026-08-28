@@ -2,20 +2,20 @@
 
 namespace NeoTransposer\Tests\Domain\Service;
 
+use Illuminate\Foundation\Testing\TestCase;
 use NeoTransposer\Domain\GeoIp\Country;
 use NeoTransposer\Domain\GeoIp\GeoIpLocation;
 use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Service\AdminMetricsReader;
-use Illuminate\Foundation\Testing\TestCase;
 
 class AdminMetricsReaderTest extends TestCase
 {
     /**
      * Outside-in test for the use case, domain service and mocked repository
      */
-    public function testReadAdminMetricsNoLongReports()
+    public function test_read_admin_metrics_no_long_reports()
     {
         $mockAdminMetricsRepository = $this->createMock(AdminMetricsRepository::class);
         $mockAdminMetricsRepository->method('readUserCountTotal')
@@ -63,7 +63,7 @@ class AdminMetricsReaderTest extends TestCase
                     'chord_printer' => 'Swahili',
                     'locale'        => 'sw',
                     'song_count'    => '227',
-                ]
+                ],
             ]);
 
         $mockGeoIpResolver = $this->createMock(GeoIpResolver::class);
@@ -71,7 +71,7 @@ class AdminMetricsReaderTest extends TestCase
             ->with('1.1.1.1')
             ->willReturn(new GeoIpLocation(new Country('TK', ['en' => 'Turkey'])));
 
-        $sut  = new AdminMetricsReader($mockAdminMetricsRepository, $mockBookRepo, $mockGeoIpResolver);
+        $sut = new AdminMetricsReader($mockAdminMetricsRepository, $mockBookRepo, $mockGeoIpResolver);
 
         $expected = [
             'user_count'			=> 123,

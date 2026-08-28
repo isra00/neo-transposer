@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 final class ServeCssController extends Controller
 {
     private const SRC_FILE = 'static/style.css';
+
     public const MIN_FILE_PATTERN = 'static/compiled-%s.css';
 
     /**
@@ -40,6 +41,7 @@ final class ServeCssController extends Controller
         if (trim($input) === '') {
             return $input;
         }
+
         return preg_replace(
             [
                 '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')|\/\*(?!\!)(?>.*?\*\/)|^\s*|\s*$#s',

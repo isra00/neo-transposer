@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Tests\Domain\Service;
 
+use Illuminate\Foundation\Testing\TestCase;
 use NeoTransposer\Domain\Entity\Book;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Exception\BookNotExistException;
@@ -12,13 +13,12 @@ use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\Service\SongsLister;
 use NeoTransposer\Domain\SongsCollection;
 use NeoTransposer\Domain\SongsWithUserFeedbackCollection;
-use Illuminate\Foundation\Testing\TestCase;
 
 class SongsListerTest extends TestCase
 {
     protected $sut;
 
-    public function testReadSongsWithUserFeedbackValidUser(): void
+    public function test_read_songs_with_user_feedback_valid_user(): void
     {
         $expected = [[
             'id_song' => 1,
@@ -53,7 +53,7 @@ class SongsListerTest extends TestCase
         $this->assertEquals($expected, $actualCollection->asArray());
     }
 
-    public function testReadSongsWithUserFeedbackInvalidBook()
+    public function test_read_songs_with_user_feedback_invalid_book()
     {
         $mockedSongRepository = $this->createStub(SongRepository::class);
         $mockedSongRepository->method('readBookSongsWithUserFeedback')
@@ -74,7 +74,7 @@ class SongsListerTest extends TestCase
         $this->sut->readBookSongsWithUserFeedback(6, 0);
     }
 
-    public function testReadSongsWithUserFeedbackInvalidUser()
+    public function test_read_songs_with_user_feedback_invalid_user()
     {
         $mockedSongRepository = $this->createStub(SongRepository::class);
         $mockedSongRepository->method('readBookSongsWithUserFeedback')
@@ -91,13 +91,13 @@ class SongsListerTest extends TestCase
         $this->sut->readBookSongsWithUserFeedback(0, 0);
     }
 
-    public function testReadSongsValidBook()
+    public function test_read_songs_valid_book()
     {
         $expected = [[
             'id_song' => 1,
             'slug'    => 'test-song',
             'page'    => 1,
-            'title'   => 'Test Song'
+            'title'   => 'Test Song',
         ]];
 
         $mockedSongRepository = $this->createMock(SongRepository::class);
@@ -128,7 +128,7 @@ class SongsListerTest extends TestCase
         $this->assertEquals($expected, $actualCollection->asArray());
     }
 
-    public function testReadSongsInvalidBook()
+    public function test_read_songs_invalid_book()
     {
         $mockedSongRepository = $this->createStub(SongRepository::class);
         $mockedSongRepository->method('readBookSongs')

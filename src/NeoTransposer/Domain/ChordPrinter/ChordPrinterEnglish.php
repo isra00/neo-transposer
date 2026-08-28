@@ -7,26 +7,25 @@ namespace NeoTransposer\Domain\ChordPrinter;
  */
 final class ChordPrinterEnglish extends ChordPrinter
 {
-	protected $cssClass = 'chord chord-british';
+    protected $cssClass = 'chord chord-british';
 
-	/**
-	 * Return a chord with English notation.
-	 * 
-	 * @param  string $fundamental Chord's root note.
-	 * @param  string $attributes  Chord's type or attributes.
-	 * @return string              The final notation (HTML).
-	 */
-	public function printChordInNotation($fundamental, $attributes)
-	{
-		if ($fundamental == 'A#')
-		{
-			$fundamental = 'B<em>b</em>';
-		}
+    /**
+     * Return a chord with English notation.
+     *
+     * @param  string  $fundamental  Chord's root note.
+     * @param  string  $attributes  Chord's type or attributes.
+     * @return string The final notation (HTML).
+     */
+    public function printChordInNotation($fundamental, $attributes)
+    {
+        if ($fundamental == 'A#') {
+            $fundamental = 'B<em>b</em>';
+        }
 
-		return $fundamental . str_replace(
-			['4', '6', '7'],
-			['<sup>4</sup>', '<sup>6</sup>', '<sup>7</sup>'],
-			$attributes
-		);
-	}
+        return $fundamental . str_replace(
+            ['4', '6', '7'],
+            ['<sup>4</sup>', '<sup>6</sup>', '<sup>7</sup>'],
+            $attributes
+        );
+    }
 }

@@ -10,7 +10,7 @@ final class FeedbackRepositoryMysql extends MysqlRepository implements FeedbackR
 {
     public function readUserPerformance($idUser): UserPerformance
     {
-        $sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT worked, COUNT(worked) count
 FROM transposition_feedback
 WHERE `id_user` = ?
@@ -24,7 +24,7 @@ SQL;
             $performanceData[(int) $row->worked] = $row->count;
         }
 
-        $performance = (0 === array_sum($performanceData))
+        $performance = (array_sum($performanceData) === 0)
             ? 0
             : $performanceData[1] / ($performanceData[0] + $performanceData[1]);
 
@@ -45,7 +45,7 @@ SQL;
         ?string $transposition = null
     ): void {
 
-        $sql = <<<SQL
+        $sql = <<<'SQL'
 INSERT INTO transposition_feedback (
     id_song,
     id_user,
@@ -89,7 +89,7 @@ SQL;
             $transposition,
             $pcStatus,
             $centeredScoreRate,
-            $deviationFromCentered
+            $deviationFromCentered,
         ]);
     }
 

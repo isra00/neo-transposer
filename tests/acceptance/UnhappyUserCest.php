@@ -14,8 +14,8 @@ class UnhappyUserCest
         $I->fillField('email', $faker->email());
         $I->click('sent');
         $I->click('#i-know');
-        $I->selectOption("form select[name=lowest_note]", 'A1');
-        $I->selectOption("form select[name=highest_note]", 'E3');
+        $I->selectOption('form select[name=lowest_note]', 'A1');
+        $I->selectOption('form select[name=highest_note]', 'E3');
         $I->click('form button');
     }
 

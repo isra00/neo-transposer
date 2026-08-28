@@ -1,13 +1,14 @@
 <?php
+
 namespace Helper;
 
+use Codeception\Module;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
-
 
 /**
  * Codeception/RemoteWebDriver extension for allowing setting custom HTTP headers for acceptance tests.
  */
-class Acceptance extends \Codeception\Module
+class Acceptance extends Module
 {
     public function haveHttpHeader(string $name, string $value): void
     {

@@ -8,5 +8,4 @@ namespace NeoTransposer\Domain\Exception;
  */
 final class SongDataException extends \Exception
 {
-	
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use NeoTransposer\Domain\Exception\SongNotExistException;
 use NeoTransposer\Domain\GeoIp\IpToLocaleResolver;
@@ -13,7 +14,6 @@ use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\TransposedSong;
 use NeoTransposer\Domain\TranspositionChart;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Illuminate\Http\Request;
 
 /**
  * Transpose Song page: transpose the given song for the singer's voice range.
@@ -24,12 +24,13 @@ final class TransposeSongController extends Controller
     {
         $transposedSong = null;
 
-        //For the teaser (not logged in), transpose for a standard male voice
+        // For the teaser (not logged in), transpose for a standard male voice
         if (!session('user')->isLoggedIn()) {
             session('user')->range = new NotesRange('B1', 'F#3');
         } elseif (empty(session('user')->range->lowest)) {
-            //If null user, redirect to User Settings in the selected song's language.
+            // If null user, redirect to User Settings in the selected song's language.
             $this->setLocaleAutodetect($req, $ipToLocaleResolver);
+
             return redirect()->route('user_voice', ['locale' => App::getLocale()]);
         }
 
@@ -57,8 +58,7 @@ final class TransposeSongController extends Controller
         if ($transposedSong->getPeopleCompatible() !== null) {
 
             $peopleCompatibleMsgUntranslated = '';
-            switch ($transposedSong->getPeopleCompatibleStatus())
-            {
+            switch ($transposedSong->getPeopleCompatibleStatus()) {
                 case PeopleCompatibleCalculation::ADJUSTED_WELL:
                     $peopleCompatibleMsgUntranslated = 'This other transposition, though a bit :difference, fits well the people of the assembly.';
                     $tplVars['peopleCompatibleClass'] = 'star';
@@ -79,7 +79,7 @@ final class TransposeSongController extends Controller
                 [
                     'difference' => ($transposedSong->getPeopleCompatible()->deviationFromCentered > 0)
                         ? __('higher')
-                        : __('lower')
+                        : __('lower'),
                 ]
             );
 
@@ -119,14 +119,14 @@ final class TransposeSongController extends Controller
                     'user_less_than_one_octave' => $nc->rangeWideness(session('user')->range) < 12,
                     'url_wizard'                => route('wizard_step1', ['locale' => App::getLocale()]),
 
-                    //Non-JS browsers show message after clicking on feedback
-                    'non_js_fb'                 => $req->get('fb')
+                    // Non-JS browsers show message after clicking on feedback
+                    'non_js_fb'                 => $req->get('fb'),
                 ]
             )
         );
     }
 
-    private function generateTranspositionChart(NotesCalculator $nc, TransposedSong $transposedSong) : TranspositionChart
+    private function generateTranspositionChart(NotesCalculator $nc, TransposedSong $transposedSong): TranspositionChart
     {
         $transpositionChart = new TranspositionChart($nc, $transposedSong->song, session('user'), config('nt.languages')[App::getLocale()]['notation']);
         $transpositionChart->addTransposition('Transposed:', 'transposed-song', $transposedSong->transpositions[0]);

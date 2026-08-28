@@ -2,6 +2,9 @@
 
 namespace NeoTransposer\Infrastructure;
 
+use NeoTransposer\Domain\GeoIp\GeoIpNotFoundException;
+use NeoTransposer\Domain\GeoIp\GeoIpResolver;
+use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
 use NeoTransposer\Domain\Service\UnhappinessManager;
 
@@ -11,7 +14,7 @@ final class AdminMetricsRepositoryMysql extends MysqlRepository implements Admin
 
     private function selectArrays(string $sql, array $params = []): array
     {
-        return array_map(fn($row) => (array) $row, $this->dbConnection->select($sql, $params));
+        return array_map(fn ($row) => (array) $row, $this->dbConnection->select($sql, $params));
     }
 
     public function readUserCountTotal(): int
@@ -24,16 +27,16 @@ final class AdminMetricsRepositoryMysql extends MysqlRepository implements Admin
         return (int) $this->dbConnection->scalar('SELECT COUNT(id_user) FROM user WHERE CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1');
     }
 
-	public function readGlobalPerformance(): array
-	{
-        $sql_gp_all = <<<SQL
+    public function readGlobalPerformance(): array
+    {
+        $sql_gp_all = <<<'SQL'
 SELECT worked, count(worked) n
 FROM transposition_feedback
 GROUP BY worked
 WITH ROLLUP
 SQL;
 
-		$sql_gp_good_users = <<<SQL
+        $sql_gp_good_users = <<<'SQL'
 SELECT worked, count(worked) n
 FROM transposition_feedback
 JOIN user on transposition_feedback.id_user = user.id_user AND CAST(SUBSTRING(highest_note, LENGTH(highest_note)) AS UNSIGNED) > 1
@@ -43,20 +46,19 @@ SQL;
 
         $global_performance = [
             'all'   => $this->selectArrays($sql_gp_all),
-            'goods' => $this->selectArrays($sql_gp_good_users)
+            'goods' => $this->selectArrays($sql_gp_good_users),
         ];
 
-		foreach ($global_performance as &$raw_data)
-		{
-			$raw_data = $this->aggregatePerformanceData($raw_data);
-		}
+        foreach ($global_performance as &$raw_data) {
+            $raw_data = $this->aggregatePerformanceData($raw_data);
+        }
 
-		return $global_performance;
-	}
+        return $global_performance;
+    }
 
-	public function readUsersReportingFeedback(): array
+    public function readUsersReportingFeedback(): array
     {
-		$sqlUsersReportingFb = <<<SQL
+        $sqlUsersReportingFb = <<<'SQL'
 SELECT COUNT(distinct id_user) AS users_reporting_fb, good_users, not_null_users
 FROM transposition_feedback,
 (
@@ -71,30 +73,30 @@ FROM transposition_feedback,
 	WHERE NOT user.lowest_note IS NULL
 ) not_null_users
 SQL;
-		$this->dbConnection->statement("SET sql_mode=''");
-		return (array) $this->dbConnection->selectOne($sqlUsersReportingFb);
-	}
+        $this->dbConnection->statement("SET sql_mode=''");
 
-	/**
-	 * @return array{yes: int, no: int, total: int}
-	 */
-	private function aggregatePerformanceData(array $raw_data): array
-	{
-		$answers = ['no', 'yes'];
+        return (array) $this->dbConnection->selectOne($sqlUsersReportingFb);
+    }
 
-		$feedback_data = ['yes'=>0, 'no'=>0, 'total'=>0];
-		foreach ($raw_data as &$row)
-		{
-			$key = is_null($row['worked']) ? 'total' : $answers[$row['worked']];
-			$feedback_data[$key] = $row['n'];
-		}
-
-		return $feedback_data;
-	}
-
-	public function readSongAvailability(): array
+    /**
+     * @return array{yes: int, no: int, total: int}
+     */
+    private function aggregatePerformanceData(array $raw_data): array
     {
-		$sql = <<<SQL
+        $answers = ['no', 'yes'];
+
+        $feedback_data = ['yes'=>0, 'no'=>0, 'total'=>0];
+        foreach ($raw_data as &$row) {
+            $key = is_null($row['worked']) ? 'total' : $answers[$row['worked']];
+            $feedback_data[$key] = $row['n'];
+        }
+
+        return $feedback_data;
+    }
+
+    public function readSongAvailability(): array
+    {
+        $sql = <<<'SQL'
 SELECT
   book.lang_name,
   book.id_book,
@@ -113,17 +115,17 @@ JOIN
 ) peopledata ON peopledata.id_book = book.id_book
 SQL;
 
-		return $this->selectArrays($sql);
-	}
+        return $this->selectArrays($sql);
+    }
 
-	/**
-	 * @return array<array{yes: int, no: int, performance: float, title: mixed, lowest_note: mixed, highest_note: mixed, wideness: int, total?: int}>
-	 */
-	public function readFeedback(): array
-	{
-		$nc = new \NeoTransposer\Domain\NotesCalculator;
+    /**
+     * @return array<array{yes: int, no: int, performance: float, title: mixed, lowest_note: mixed, highest_note: mixed, wideness: int, total?: int}>
+     */
+    public function readFeedback(): array
+    {
+        $nc = new NotesCalculator();
 
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT song.id_song, title, song.lowest_note, song.highest_note, count(*) fbs
 FROM transposition_feedback
 JOIN song ON transposition_feedback.id_song = song.id_song
@@ -131,34 +133,33 @@ GROUP BY id_song
 ORDER BY song.id_book, fbs DESC
 SQL;
 
-		$fbsongs = $this->selectArrays($sql);
+        $fbsongs = $this->selectArrays($sql);
 
-		$feedback = [];
+        $feedback = [];
 
-		foreach ($fbsongs as $song)
-		{
-			$yes = (int) $this->dbConnection->scalar('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=1', [$song['id_song']]);
-			$no  = (int) $this->dbConnection->scalar('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=0', [$song['id_song']]);
+        foreach ($fbsongs as $song) {
+            $yes = (int) $this->dbConnection->scalar('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=1', [$song['id_song']]);
+            $no = (int) $this->dbConnection->scalar('select count(worked) from transposition_feedback where id_song = ? group by worked having worked=0', [$song['id_song']]);
 
-			$feedback[$song['id_song']] = [
-				'yes'			=> $yes,
-				'no'			=> $no,
-				'performance'	=> $yes / ($yes + $no),
+            $feedback[$song['id_song']] = [
+                'yes'			=> $yes,
+                'no'			=> $no,
+                'performance'	=> $yes / ($yes + $no),
 
-				'title'			=> $song['title'],
-				'lowest_note'	=> $song['lowest_note'],
-				'highest_note'	=> $song['highest_note'],
-				'wideness'		=> $nc->distanceWithOctave($song['highest_note'], $song['lowest_note']),
-			];
-			$feedback[$song['id_song']]['total'] = $feedback[$song['id_song']]['yes'] + $feedback[$song['id_song']]['no'];
-		}
+                'title'			=> $song['title'],
+                'lowest_note'	=> $song['lowest_note'],
+                'highest_note'	=> $song['highest_note'],
+                'wideness'		=> $nc->distanceWithOctave($song['highest_note'], $song['lowest_note']),
+            ];
+            $feedback[$song['id_song']]['total'] = $feedback[$song['id_song']]['yes'] + $feedback[$song['id_song']]['no'];
+        }
 
-		return $feedback;
-	}
+        return $feedback;
+    }
 
-	public function readUnhappyUsers(): array
+    public function readUnhappyUsers(): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT unhappy_user.*, user.id_user id_user, user.email, y.yes yes, n.no no, y.yes + n.no total, yes/(y.yes + n.no) perf
 FROM user
 LEFT JOIN
@@ -189,29 +190,28 @@ OR
 ORDER BY took_action, time_unhappy, total DESC
 SQL;
 
-		return $this->selectArrays($sql, [
-			UnhappinessManager::UNHAPPY_THRESHOLD_PERF,
-			UnhappinessManager::UNHAPPY_THRESHOLD_REPORTS
-		]);
-	}
+        return $this->selectArrays($sql, [
+            UnhappinessManager::UNHAPPY_THRESHOLD_PERF,
+            UnhappinessManager::UNHAPPY_THRESHOLD_REPORTS,
+        ]);
+    }
 
-	public function readGlobalPerfChronological(): array
+    public function readGlobalPerfChronological(): array
     {
-		$global_perf_chrono = [];
-        $sql = <<<SQL
+        $global_perf_chrono = [];
+        $sql = <<<'SQL'
 SELECT date(time) day
 FROM transposition_feedback
 GROUP BY day
 ORDER BY day DESC
 SQL;
 
-		$days_with_feedback = $this->selectArrays($sql);
+        $days_with_feedback = $this->selectArrays($sql);
 
-		foreach ($days_with_feedback as $day)
-		{
-			$day = $day['day'];
+        foreach ($days_with_feedback as $day) {
+            $day = $day['day'];
 
-			$sql = <<<SQL
+            $sql = <<<SQL
 SELECT '$day' day,
 	c_yes, c_no, c_yes+c_no c_total, c_yes/(c_yes+c_no)*100 c_performance,
 	d_yes, d_no, d_yes+d_no d_total, d_yes/(d_yes+d_no)*100 d_performance
@@ -245,16 +245,16 @@ JOIN
 ) sub_dno
 SQL;
 
-			$global_perf_chrono[] = $this->selectArrays($sql)[0];
+            $global_perf_chrono[] = $this->selectArrays($sql)[0];
 
-		}
+        }
 
-		return $global_perf_chrono;
-	}
+        return $global_perf_chrono;
+    }
 
-	public function readSongsWithFeedback(): array
+    public function readSongsWithFeedback(): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT nofb.id_book, nofb.nofb, total.total, book.lang_name FROM
 (
  SELECT id_book, count(song.id_song) nofb
@@ -279,12 +279,13 @@ JOIN book USING (id_book)
 GROUP BY id_book
 HAVING id_book=2 OR id_book=4
 SQL;
-		return $this->selectArrays($sql);
-	}
 
-	public function readMostActiveUsers(): array
+        return $this->selectArrays($sql);
+    }
+
+    public function readMostActiveUsers(): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT user.*, y.yes yes, n.no no, y.yes + n.no total, yes/(y.yes + n.no) perf
 FROM user
 JOIN
@@ -304,12 +305,13 @@ JOIN
 ORDER BY total DESC
 LIMIT 30
 SQL;
-		return $this->selectArrays($sql);
-	}
 
-	public function readGoodUsersChronological(): array
+        return $this->selectArrays($sql);
+    }
+
+    public function readGoodUsersChronological(): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT date(register_time) day, goods.n goods, COUNT(id_user) total, concat(round((goods.n/COUNT(id_user))*100), '%') goods_rate
 FROM user
 join
@@ -322,53 +324,51 @@ join
 group by day
 order by day desc
 SQL;
-		return $this->selectArrays($sql);
-	}
 
-	/**
-	 * Get the names of all countries in user.country by geo-locating any IP for
-	 * each country.
+        return $this->selectArrays($sql);
+    }
+
+    /**
+     * Get the names of all countries in user.country by geo-locating any IP for
+     * each country.
      *
      * @todo This is inherently wrong. Getting country long name from some IP instead of from its short name already
      *       stored in DB is unreliable, because the IP might now belong to a different country.
-	 */
-	public function readCountryNamesList(\NeoTransposer\Domain\GeoIp\GeoIpResolver $geoIpResolver): array
-	{
-		if (!empty($this->countryNames))
-		{
-			return $this->countryNames;
-		}
+     */
+    public function readCountryNamesList(GeoIpResolver $geoIpResolver): array
+    {
+        if (!empty($this->countryNames)) {
+            return $this->countryNames;
+        }
 
-		//ONLY_FULL_GROUP_BY mode (default in MySQL>5.7) makes the query fail
-		$this->dbConnection->statement("SET @@sql_mode=''");
-		$ips_for_country = $this->selectArrays('SELECT country, register_ip FROM user WHERE NOT country IS NULL GROUP BY country');
-		$country_names = [];
+        // ONLY_FULL_GROUP_BY mode (default in MySQL>5.7) makes the query fail
+        $this->dbConnection->statement("SET @@sql_mode=''");
+        $ips_for_country = $this->selectArrays('SELECT country, register_ip FROM user WHERE NOT country IS NULL GROUP BY country');
+        $country_names = [];
 
-		foreach ($ips_for_country as $ip)
-		{
-			try {
+        foreach ($ips_for_country as $ip) {
+            try {
                 if (!is_null($geoIpResolver->resolve($ip['register_ip'])->country()->names())) {
                     $country_names[$ip['country']] = $geoIpResolver->resolve($ip['register_ip'])->country()->names()['en'];
                 }
-			}
-			catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException)
-			{
-				$country_names[$ip['country']] = $ip['country'];
-			}
-		}
+            } catch (GeoIpNotFoundException) {
+                $country_names[$ip['country']] = $ip['country'];
+            }
+        }
 
-		$this->countryNames = $country_names;
-		return $country_names;
-	}
+        $this->countryNames = $country_names;
 
-	/**
-	 * @return list<mixed>
-	 */
-	public function readPerformanceByCountry(\NeoTransposer\Domain\GeoIp\GeoIpResolver $geoIpResolver): array
-	{
-		$country_names = $this->readCountryNamesList($geoIpResolver);
+        return $country_names;
+    }
 
-		$sql = <<<SQL
+    /**
+     * @return list<mixed>
+     */
+    public function readPerformanceByCountry(GeoIpResolver $geoIpResolver): array
+    {
+        $country_names = $this->readCountryNamesList($geoIpResolver);
+
+        $sql = <<<'SQL'
 SELECT user.country, COUNT(id_user) total, good
 FROM
   user
@@ -382,15 +382,14 @@ JOIN
 GROUP BY user.country order by total desc
 SQL;
 
-		$goodUsersCountryRaw = $this->selectArrays($sql);
+        $goodUsersCountryRaw = $this->selectArrays($sql);
 
-		$goodUsersCountry = [];
-		foreach ($goodUsersCountryRaw as $row)
-		{
-			$goodUsersCountry[$row['country']] = $row['good'] / $row['total'];
-		}
+        $goodUsersCountry = [];
+        foreach ($goodUsersCountryRaw as $row) {
+            $goodUsersCountry[$row['country']] = $row['good'] / $row['total'];
+        }
 
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT
   user.country,
   SUM(CASE WHEN worked = 1 THEN 1 ELSE 0 END) AS yes,
@@ -405,22 +404,21 @@ HAVING total > 5
 ORDER BY performance DESC
 SQL;
 
-		$rows = $this->selectArrays($sql);
+        $rows = $this->selectArrays($sql);
 
-		$performance = [];
-		foreach ($rows as $row)
-		{
-			$row['country_name'] = @$country_names[$row['country']];
-			$row['good_users'] = $goodUsersCountry[$row['country']] ?? 0;
-			$performance[] = $row;
-		}
+        $performance = [];
+        foreach ($rows as $row) {
+            $row['country_name'] = @$country_names[$row['country']];
+            $row['good_users'] = $goodUsersCountry[$row['country']] ?? 0;
+            $performance[] = $row;
+        }
 
-		return $performance;
-	}
+        return $performance;
+    }
 
-	public function readDetailedFeedbackTransposition(string $detailedFeedbackDeployed): array
+    public function readDetailedFeedbackTransposition(string $detailedFeedbackDeployed): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT transposition, count(*) fbs
 FROM transposition_feedback
 WHERE worked = 1
@@ -429,20 +427,19 @@ GROUP BY transposition
 ORDER BY fbs DESC
 SQL;
         /** @todo Move that constant from AdminDashboard to ReadAdminMetrics (domain service) */
-		$fbsByTransposition = $this->selectArrays($sql, [$detailedFeedbackDeployed]);
+        $fbsByTransposition = $this->selectArrays($sql, [$detailedFeedbackDeployed]);
 
-		$total = array_sum(array_column($fbsByTransposition, 'fbs'));
-		foreach ($fbsByTransposition as &$fbs)
-		{
-			$fbs['fbs_relative'] = $fbs['fbs'] / $total;
-		}
+        $total = array_sum(array_column($fbsByTransposition, 'fbs'));
+        foreach ($fbsByTransposition as &$fbs) {
+            $fbs['fbs_relative'] = $fbs['fbs'] / $total;
+        }
 
-		return $fbsByTransposition;
-	}
+        return $fbsByTransposition;
+    }
 
-	public function readDetailedFeedbackPcStatus(): array
+    public function readDetailedFeedbackPcStatus(): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT pc_status, SUM(fbs) fbss, SUM(Case When transposition = 'peopleCompatible' THEN fbs ELSE 0 End) chosePeopleCompatible
 FROM
 (
@@ -455,12 +452,12 @@ GROUP BY pc_status
 ORDER BY pc_status;
 SQL;
 
-		return $this->selectArrays($sql);
-	}
+        return $this->selectArrays($sql);
+    }
 
-	public function readDetailedFeedbackCenteredScoreRate(): array
+    public function readDetailedFeedbackCenteredScoreRate(): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT id_song, title, time, centered_score_rate
 FROM transposition_feedback
 JOIN song USING (id_song)
@@ -469,12 +466,12 @@ AND NOT centered_score_rate IS NULL
 ORDER BY song.id_book, centered_score_rate DESC
 SQL;
 
-		return $this->selectArrays($sql);
-	}
+        return $this->selectArrays($sql);
+    }
 
-	public function readDetailedFeedbackDeviation(): array
+    public function readDetailedFeedbackDeviation(): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT transposition, deviation_from_center, count(*) fbs
 FROM transposition_feedback
 WHERE NOT deviation_from_center IS NULL
@@ -482,12 +479,12 @@ GROUP BY transposition, deviation_from_center
 ORDER BY deviation_from_center
 SQL;
 
-		return $this->selectArrays($sql);
-	}
+        return $this->selectArrays($sql);
+    }
 
-	public function readUsersByBook(int $totalUsers): array
-	{
-		$sql = <<<SQL
+    public function readUsersByBook(int $totalUsers): array
+    {
+        $sql = <<<'SQL'
 SELECT lang_name, id_book, count(id_user) users
 FROM user
 LEFT JOIN book USING (id_book)
@@ -495,27 +492,25 @@ GROUP BY user.id_book
 ORDER BY users DESC
 SQL;
 
-		$users = $this->selectArrays($sql);
-		$usersBookId = [];
+        $users = $this->selectArrays($sql);
+        $usersBookId = [];
 
-		foreach ($users as &$book)
-		{
-			$book['percent'] = ((int) $book['users'] / $totalUsers) * 100;
+        foreach ($users as &$book) {
+            $book['percent'] = ((int) $book['users'] / $totalUsers) * 100;
 
-			if (empty($book['lang_name']))
-			{
-				$book['lang_name'] = '(not set)';
-			}
+            if (empty($book['lang_name'])) {
+                $book['lang_name'] = '(not set)';
+            }
 
-			$usersBookId[$book['id_book']] = $book;
-		}
+            $usersBookId[$book['id_book']] = $book;
+        }
 
-		return $usersBookId;
-	}
+        return $usersBookId;
+    }
 
-	public function readPerformanceByBook(array $allBooks): array
-	{
-		$sql = <<<SQL
+    public function readPerformanceByBook(array $allBooks): array
+    {
+        $sql = <<<'SQL'
 SELECT
   id_book,
   SUM(CASE WHEN worked = 1 THEN 1 ELSE 0 END) AS yes,
@@ -526,40 +521,41 @@ JOIN song USING (id_song)
 GROUP BY id_book
 SQL;
 
-		$rows = $this->selectArrays($sql);
-		$performance = [];
+        $rows = $this->selectArrays($sql);
+        $performance = [];
 
-		foreach ($rows as $row)
-		{
-			$performance[$row['id_book']] = [
-				'yes'   => (int) $row['yes'],
-				'no'    => (int) $row['no'],
-				'total' => (int) $row['total'],
-			];
-		}
+        foreach ($rows as $row) {
+            $performance[$row['id_book']] = [
+                'yes'   => (int) $row['yes'],
+                'no'    => (int) $row['no'],
+                'total' => (int) $row['total'],
+            ];
+        }
 
-		return $performance;
-	}
+        return $performance;
+    }
 
-	public function readPerformanceByVoice(): array
+    public function readPerformanceByVoice(): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT user.wizard_step1 AS voiceType, count(*) AS fbs, sum(worked) / count(*) AS performance
 FROM `transposition_feedback`
 JOIN user USING (id_user)
 GROUP BY user.wizard_step1
 SQL;
-		return $this->selectArrays($sql);
-	}
+
+        return $this->selectArrays($sql);
+    }
 
     public function readSongsWithUrl(): array
     {
-		$sql = <<<SQL
+        $sql = <<<'SQL'
 SELECT book.lang_name, COUNT(*) total, SUM(IF(url IS NOT NULL, 1, 0)) AS with_url
 FROM song
 JOIN book USING (id_book)
 GROUP BY id_book
 SQL;
-		return $this->selectArrays($sql);
+
+        return $this->selectArrays($sql);
     }
 }

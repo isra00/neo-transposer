@@ -14,13 +14,20 @@ class PeopleCompatibleCalculation
      * A refactor for using the strings of $statusMsg would have to adapt that JSON as well.
      */
     final public const NO_PEOPLE_RANGE_DATA = 1;
-    final public const ALREADY_COMPATIBLE   = 2;
-    final public const WIDER_THAN_SINGER    = 3;
-    final public const ADJUSTED_WIDER       = 4;
-    final public const TOO_LOW_FOR_PEOPLE   = 5;
-    final public const TOO_HIGH_FOR_PEOPLE  = 6;
-    final public const ADJUSTED_WELL        = 56;
-    final public const NOT_ADJUSTED_WIDER   = 7;
+
+    final public const ALREADY_COMPATIBLE = 2;
+
+    final public const WIDER_THAN_SINGER = 3;
+
+    final public const ADJUSTED_WIDER = 4;
+
+    final public const TOO_LOW_FOR_PEOPLE = 5;
+
+    final public const TOO_HIGH_FOR_PEOPLE = 6;
+
+    final public const ADJUSTED_WELL = 56;
+
+    final public const NOT_ADJUSTED_WIDER = 7;
 
     private const STATUS_MSG = [
         self::NO_PEOPLE_RANGE_DATA => 'no_people_range_data',
@@ -45,7 +52,7 @@ class PeopleCompatibleCalculation
      */
     public $status;
 
-    public function __construct($status, Transposition $pct = null)
+    public function __construct($status, ?Transposition $pct = null)
     {
         $this->peopleCompatibleTransposition = $pct;
         $this->status = $status;
@@ -54,7 +61,7 @@ class PeopleCompatibleCalculation
     /**
      * Get a developer-friendly message for the status. Only for debugging.
      */
-    public function getStatusMsg() : string
+    public function getStatusMsg(): string
     {
         return $this->status ? self::STATUS_MSG[$this->status] : '(not set)';
     }

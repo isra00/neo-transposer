@@ -4,13 +4,12 @@ namespace NeoTransposer\Infrastructure;
 
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
-use GeoIp2\Exception\GeoIp2Exception;
 use MaxMind\Db\Reader\InvalidDatabaseException;
-use NeoTransposer\Domain\GeoIp\{Country,
-    GeoIpException,
-    GeoIpLocation,
-    GeoIpNotFoundException,
-    GeoIpResolver};
+use NeoTransposer\Domain\GeoIp\Country;
+use NeoTransposer\Domain\GeoIp\GeoIpException;
+use NeoTransposer\Domain\GeoIp\GeoIpLocation;
+use NeoTransposer\Domain\GeoIp\GeoIpNotFoundException;
+use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 
 final class GeoIpResolverGeoIp2 implements GeoIpResolver
 {
@@ -29,7 +28,7 @@ final class GeoIpResolverGeoIp2 implements GeoIpResolver
         } catch (AddressNotFoundException) {
             throw new GeoIpNotFoundException();
         } catch (InvalidDatabaseException) {
-            throw new GeoIpException("Error in GeoIp2 database file");
+            throw new GeoIpException('Error in GeoIp2 database file');
         }
 
         return new GeoIpLocation(

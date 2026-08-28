@@ -22,6 +22,7 @@ final class AdminViewHelpers
             $w = min(96, (int) round(($no / $total) * $width));
             $html .= ' <span class="no" style="width: ' . $w . 'px"><span>' . $no . '</span></span>';
         }
+
         return $html . '</div>';
     }
 }

@@ -1,8 +1,11 @@
 <?php
 
+use _generated\IntegrationTesterActions;
+use Codeception\Actor;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -15,10 +18,10 @@
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
-*/
-class IntegrationTester extends \Codeception\Actor
+ */
+class IntegrationTester extends Actor
 {
-    use _generated\IntegrationTesterActions;
+    use IntegrationTesterActions;
 
     /**
      * Define custom actions here

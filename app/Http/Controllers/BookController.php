@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use NeoTransposer\Domain\Exception\BookNotExistException;
 use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\Repository\BookRepository;
@@ -15,14 +15,13 @@ use NeoTransposer\Domain\Service\UnhappinessManager;
  */
 final class BookController extends Controller
 {
-	public function get(Request $req, SongsLister $songsLister, BookRepository $bookRepository, UnhappinessManager $unhappinessManager, $bookId)
-	{
+    public function get(Request $req, SongsLister $songsLister, BookRepository $bookRepository, UnhappinessManager $unhappinessManager, $bookId)
+    {
         try {
             $songs = session('user')->isLoggedIn()
-                ? $songsLister->readBookSongsWithUserFeedback((int)$bookId, session('user')->id_user)->asArray()
-                : $songsLister->readBookSongs((int)$bookId)->asArray();
-        } catch (BookNotExistException)
-        {
+                ? $songsLister->readBookSongsWithUserFeedback((int) $bookId, session('user')->id_user)->asArray()
+                : $songsLister->readBookSongs((int) $bookId)->asArray();
+        } catch (BookNotExistException) {
             abort(404, "Book $bookId does not exist.");
         }
 
@@ -34,50 +33,48 @@ final class BookController extends Controller
 
         $shouldEncourageFeedback = session('user')->isLoggedIn() && session('user')->shouldEncourageFeedback();
 
-		//If first time or user has reported < 2 fb, show encourage fb banners
-		if ($shouldEncourageFeedback)
-		{
-			$yourVoice = session('user')->getVoiceAsString(
+        // If first time or user has reported < 2 fb, show encourage fb banners
+        if ($shouldEncourageFeedback) {
+            $yourVoice = session('user')->getVoiceAsString(
                 new NotesNotation(),
-				config('nt.languages')[App::getLocale()]['notation']
-			);
+                config('nt.languages')[App::getLocale()]['notation']
+            );
 
             $template = 'book_encourage_feedback';
-		}
+        }
 
         $showUnhappyWarning = false;
 
-        if (session('user')->isLoggedin())
-        {
+        if (session('user')->isLoggedin()) {
             $showUnhappyWarning = $unhappinessManager->isUnhappyNoAction(session('user'));
         }
 
         $userPerformance = session('user')->isLoggedIn() ? session('user')->performance : null;
 
-		$response = response()->view($template, [
-			'page_title'	 		=> __('Songs of the Neocatechumenal Way in :lang', ['lang' => $currentBook->langName()]),
-			'current_book'	 		=> $currentBook,
-			'all_books'	 		    => $bookRepository->readAllBooks(),
-			'header_link'	 		=> route('book_' . $currentBook->idBook()),
-			'songs'			 		=> $songs,
+        $response = response()->view($template, [
+            'page_title'	 		=> __('Songs of the Neocatechumenal Way in :lang', ['lang' => $currentBook->langName()]),
+            'current_book'	 		=> $currentBook,
+            'all_books'	 		    => $bookRepository->readAllBooks(),
+            'header_link'	 		=> route('book_' . $currentBook->idBook()),
+            'songs'			 		=> $songs,
             'show_unhappy_warning'	=> $showUnhappyWarning,
-			'meta_description'		=> __(
-				'Songs and psalms of the Neocatechumenal Way in :lang. With Neo-Transposer you can transpose them automatically so they will fit your own voice.',
-				['lang' => $currentBook->langName()]
-			),
-			'your_voice'			=> $yourVoice ?? null,
-			'user_performance'		=> $userPerformance,
-			'show_encourage_fb'		=> $shouldEncourageFeedback,
-            'page_class' => 'page-book'
+            'meta_description'		=> __(
+                'Songs and psalms of the Neocatechumenal Way in :lang. With Neo-Transposer you can transpose them automatically so they will fit your own voice.',
+                ['lang' => $currentBook->langName()]
+            ),
+            'your_voice'			=> $yourVoice ?? null,
+            'user_performance'		=> $userPerformance,
+            'show_encourage_fb'		=> $shouldEncourageFeedback,
+            'page_class' => 'page-book',
         ]);
 
-        //Force no cache
-		if ($shouldEncourageFeedback) {
+        // Force no cache
+        if ($shouldEncourageFeedback) {
             $response->header('Cache-Control', 'max-age=0, private, must-revalidate');
-            $response->header('Pragma','no-cache');
+            $response->header('Pragma', 'no-cache');
             $response->header('Expires', 'Tue, 8 Mar 1988 07:00:00 GMT');
-		}
+        }
 
-		return $response;
-	}
+        return $response;
+    }
 }

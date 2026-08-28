@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Tests\Domain;
 
+use Illuminate\Foundation\Testing\TestCase;
 use NeoTransposer\Domain\AutomaticTransposer;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\PeopleCompatibleCalculation;
@@ -9,7 +10,6 @@ use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Illuminate\Foundation\Testing\TestCase;
 
 /**
  * @todo Add some corner cases to transposition algorithms
@@ -25,7 +25,7 @@ class AutomaticTransposerTest extends TestCase
         NotesRange $songRange,
         array $originalChords,
         $firstChordIsKey,
-        NotesRange $songPeopleRange = null
+        ?NotesRange $songPeopleRange = null
     ): AutomaticTransposer {
         return new AutomaticTransposer(
             new NotesCalculator(),
@@ -79,7 +79,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testCalculateCenteredTransposition()
+    public function test_calculate_centered_transposition()
     {
         $expected = $this->buildTransposition(
             [Chord::fromString('Bm'), Chord::fromString('Em'), new Chord('G'), new Chord('D')],
@@ -97,7 +97,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testFindCenteredTranspositionAsBook()
+    public function test_find_centered_transposition_as_book()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('F1', 'F3'),
@@ -120,7 +120,7 @@ class AutomaticTransposerTest extends TestCase
         $this->assertEquals($expected, $sut->calculateCenteredTransposition());
     }
 
-    public function testCalculateEquivalentsWithCapo()
+    public function test_calculate_equivalents_with_capo()
     {
         $testTransposition = $this->buildTransposition(
             [Chord::fromString('Bm'), Chord::fromString('Em'), new Chord('G'), new Chord('D')],
@@ -135,17 +135,17 @@ class AutomaticTransposerTest extends TestCase
         $equivalents = $this->buildAutomaticTransposerWithValues()->calculateEquivalentsWithCapo($testTransposition);
 
         $expected = [
-            1=> $this->buildTransposition( ['A#m', 'D#m', 'F#', 'C#'], 1, false),
-            $this->buildTransposition( ['Am', 'Dm', 'F', 'C'], 2, true),
-            $this->buildTransposition( ['G#m', 'C#m', 'E', 'B'], 3, false),
-            $this->buildTransposition( ['Gm', 'Cm', 'D#', 'A#'], 4, false),
-            $this->buildTransposition( ['F#m', 'Bm', 'D', 'A'], 5, false)
+            1=> $this->buildTransposition(['A#m', 'D#m', 'F#', 'C#'], 1, false),
+            $this->buildTransposition(['Am', 'Dm', 'F', 'C'], 2, true),
+            $this->buildTransposition(['G#m', 'C#m', 'E', 'B'], 3, false),
+            $this->buildTransposition(['Gm', 'Cm', 'D#', 'A#'], 4, false),
+            $this->buildTransposition(['F#m', 'Bm', 'D', 'A'], 5, false),
         ];
 
         $this->assertEquals($expected, $equivalents);
     }
 
-    public function testSortTranspositionsByEase()
+    public function test_sort_transpositions_by_ease()
     {
         $transpositionMockA = $this->getMockBuilder(Transposition::class)
             ->disableOriginalConstructor()
@@ -162,7 +162,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testSortTranspositionsByEaseWhenEqualScorePrioritizeAsBook()
+    public function test_sort_transpositions_by_ease_when_equal_score_prioritize_as_book()
     {
         $transpositionMockA = $this->getMockBuilder(Transposition::class)
             ->disableOriginalConstructor()
@@ -181,7 +181,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testGetEasierNotEquivalent()
+    public function test_get_easier_not_equivalent()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'D3'),
@@ -207,7 +207,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testForceHighestVoice()
+    public function test_force_highest_voice()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),
@@ -231,7 +231,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testForceLowestVoice()
+    public function test_force_lowest_voice()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),
@@ -255,7 +255,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testPeopleCompatibleNoData()
+    public function test_people_compatible_no_data()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'), new NotesRange('E2', 'A2'), ['Am', 'G'], true
@@ -272,7 +272,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testPeopleCompatibleAlreadyCompatible()
+    public function test_people_compatible_already_compatible()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),
@@ -293,7 +293,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testPeopleCompatibleWiderThanSinger()
+    public function test_people_compatible_wider_than_singer()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),
@@ -314,7 +314,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testPeopleCompatibleWiderNotAdjusted()
+    public function test_people_compatible_wider_not_adjusted()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),
@@ -335,7 +335,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testPeopleCompatibleWiderAdjusted()
+    public function test_people_compatible_wider_adjusted()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),
@@ -366,7 +366,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testPeopleCompatibleAdjustedButStillTooHigh()
+    public function test_people_compatible_adjusted_but_still_too_high()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),
@@ -395,7 +395,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testPeopleCompatibleAdjustedWellHigh()
+    public function test_people_compatible_adjusted_well_high()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),
@@ -424,7 +424,7 @@ class AutomaticTransposerTest extends TestCase
         );
     }
 
-    public function testPeopleCompatibleAdjustedWellLow()
+    public function test_people_compatible_adjusted_well_low()
     {
         $sut = $this->buildAutomaticTransposer(
             new NotesRange('A1', 'E3'),

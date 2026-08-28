@@ -32,6 +32,7 @@ final class AdminDashboardController extends Controller
             $class = "NeoTransposer\\Domain\\AdminTasks\\$tool";
             /** @var AdminTask $taskObject */
             $taskObject = app()->make($class);
+
             return response($taskObject->run());
         }
 

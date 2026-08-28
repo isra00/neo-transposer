@@ -46,7 +46,7 @@ final class CsrfProtectionTest extends TestCase
         return app('router')->gatherRouteMiddleware($route);
     }
 
-    public function testWriteRoutesStillHaveTheCsrfMiddlewareWired(): void
+    public function test_write_routes_still_have_the_csrf_middleware_wired(): void
     {
         // Present but exempted, so this asserts reachability rather than enforcement:
         // removing the middleware would mean re-enabling CSRF takes more than deleting
@@ -60,7 +60,7 @@ final class CsrfProtectionTest extends TestCase
         }
     }
 
-    public function testWriteRoutesStartSessionBeforeVerifyingCsrfTokens(): void
+    public function test_write_routes_start_session_before_verifying_csrf_tokens(): void
     {
         foreach (self::WRITE_ROUTES as $uri) {
             $middleware = $this->middlewareFor('POST', $uri);
@@ -77,7 +77,7 @@ final class CsrfProtectionTest extends TestCase
         }
     }
 
-    public function testCsrfVerificationIsGloballyExempted(): void
+    public function test_csrf_verification_is_globally_exempted(): void
     {
         // Inverted on purpose: CSRF was disabled by request, and this pins that it is a
         // deliberate wildcard exemption rather than protection lost to an accident
@@ -91,7 +91,7 @@ final class CsrfProtectionTest extends TestCase
         );
     }
 
-    public function testTheLoginPageRendersAUsableToken(): void
+    public function test_the_login_page_renders_a_usable_token(): void
     {
         // LoginController::get() flushes the session to force a log-out, which also drops
         // the _token StartSession had just created. It has to be regenerated, or the form
@@ -105,7 +105,7 @@ final class CsrfProtectionTest extends TestCase
         $this->assertSame(session()->token(), $match[1], 'the rendered token must be the session token');
     }
 
-    public function testEveryPostFormInTheViewsCarriesACsrfField(): void
+    public function test_every_post_form_in_the_views_carries_a_csrf_field(): void
     {
         foreach ($this->bladeFiles() as $path) {
             $source = file_get_contents($path);
@@ -121,7 +121,7 @@ final class CsrfProtectionTest extends TestCase
         }
     }
 
-    public function testTheFeedbackAjaxCallSendsTheCsrfToken(): void
+    public function test_the_feedback_ajax_call_sends_the_csrf_token(): void
     {
         // This POST is the one @csrf cannot cover: the payload is a hand-built object, so
         // the hidden field in the surrounding form is never read.

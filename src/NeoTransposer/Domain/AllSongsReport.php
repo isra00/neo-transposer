@@ -28,6 +28,7 @@ final class AllSongsReport
 
     /**
      * @return TransposedSongWithFeedback[]
+     *
      * @throws \Exception
      */
     public function getAllTranspositions(int $idBook, User $user): array
@@ -52,16 +53,16 @@ final class AllSongsReport
 
             /** @see https://github.com/isra00/neo-transposer/issues/129#issuecomment-1086611165 */
             if (
-                ("peopleCompatible" == $feedbackTranspositionWhichWorked && empty(
+                ($feedbackTranspositionWhichWorked == 'peopleCompatible' && empty(
                     $transposedSong->getPeopleCompatible()
-                    ))
-                || ("notEquivalent" == $feedbackTranspositionWhichWorked && empty($transposedSong->not_equivalent))
+                ))
+                || ($feedbackTranspositionWhichWorked == 'notEquivalent' && empty($transposedSong->not_equivalent))
             ) {
                 $feedbackWorked = false;
                 $feedbackTranspositionWhichWorked = null;
             }
 
-            //Remove bracketed text from song title (used for clarifications)
+            // Remove bracketed text from song title (used for clarifications)
             /** @todo Remove this: bracketed text differentiates variants! */
             $transposedSong->song->title = preg_replace('/(.)\[.*\]/', '$1', (string) $transposedSong->song->title);
 

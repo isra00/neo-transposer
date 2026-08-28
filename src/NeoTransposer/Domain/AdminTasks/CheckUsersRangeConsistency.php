@@ -10,34 +10,29 @@ final class CheckUsersRangeConsistency implements AdminTask
     public function __construct(protected UserRepository $userRepository)
     {
     }
-    
-	public function run(): string
-	{
-		$users = $this->userRepository->readVoiceRangeFromAllUsers();
 
-		$nc = new NotesCalculator();
+    public function run(): string
+    {
+        $users = $this->userRepository->readVoiceRangeFromAllUsers();
 
-		foreach ($users as $user)
-		{
-			if (!empty($user['lowest_note']) && !empty($user['highest_note']))
-			{
-				if ($user['lowest_note'] != $nc->lowestNote([$user['lowest_note'], $user['highest_note']]))
-				{
-					$output[] = '#' . $user['id_user'] . ' lowest ' . $user['lowest_note'] . ' > highest ' . $user['highest_note'] . '!';
-				}
+        $nc = new NotesCalculator();
 
-				if ($user['lowest_note'] == $user['highest_note'])
-				{
-					$output[] = '#' . $user['id_user'] . ' highest_note == lowest_note (' . $user['lowest_note'] . ')';
-				}
-			}
-		}
+        foreach ($users as $user) {
+            if (!empty($user['lowest_note']) && !empty($user['highest_note'])) {
+                if ($user['lowest_note'] != $nc->lowestNote([$user['lowest_note'], $user['highest_note']])) {
+                    $output[] = '#' . $user['id_user'] . ' lowest ' . $user['lowest_note'] . ' > highest ' . $user['highest_note'] . '!';
+                }
 
-		if (empty($output))
-		{
-			$output[] = 'NO inconsistencies found :-)';
-		}
+                if ($user['lowest_note'] == $user['highest_note']) {
+                    $output[] = '#' . $user['id_user'] . ' highest_note == lowest_note (' . $user['lowest_note'] . ')';
+                }
+            }
+        }
 
-		return implode("\n", $output);
-	}
+        if (empty($output)) {
+            $output[] = 'NO inconsistencies found :-)';
+        }
+
+        return implode("\n", $output);
+    }
 }

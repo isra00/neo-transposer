@@ -2,30 +2,32 @@
 
 namespace NeoTransposer\Tests\Domain;
 
+use Illuminate\Foundation\Testing\TestCase;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Illuminate\Foundation\Testing\TestCase;
 
 class TranspositionTest extends TestCase
 {
     /**
      * Fixture of the SUT.
+     *
      * @var Transposition
      */
     protected $transposition;
 
     /**
      * An instance of NotesCalculator, needed by some methods.
+     *
      * @var NotesCalculator;
      */
     protected $notesCalculator;
 
     protected $transpositionFactory;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -64,19 +66,19 @@ class TranspositionTest extends TestCase
         );
     }
 
-    public function testGetWithAlternativeChords()
+    public function test_get_with_alternative_chords()
     {
         $this->transposition->setAlternativeChords($this->notesCalculator);
-        $this->assertEquals(array('Em', 'Am', 'B7'), $this->transposition->chords);
+        $this->assertEquals(['Em', 'Am', 'B7'], $this->transposition->chords);
 
         // If AsBook, alternative chords should not be calculated.
-        $chords2 = array('Em', 'Am', 'B');
+        $chords2 = ['Em', 'Am', 'B'];
         $transposition = $this->buildTransposition($chords2, 0, true, null, null, null, null);
         $transposition->setAlternativeChords($this->notesCalculator);
         $this->assertEquals($chords2, $transposition->chords);
     }
 
-    public function testCalculatePeopleRange()
+    public function test_calculate_people_range()
     {
         $this->transposition->calculatePeopleRange(
             new NotesRange('A1', 'A2'),

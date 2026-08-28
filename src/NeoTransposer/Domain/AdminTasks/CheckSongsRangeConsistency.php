@@ -41,8 +41,8 @@ final class CheckSongsRangeConsistency implements AdminTask
 
             if (!empty($song['people_lowest_note']) && !empty($song['people_highest_note'])) {
                 if ($song['people_lowest_note'] != $nc->lowestNote(
-                        [$song['people_lowest_note'], $song['people_highest_note']]
-                    )) {
+                    [$song['people_lowest_note'], $song['people_highest_note']]
+                )) {
                     $output[] = $song['id_song'] . ' assembly lowest_note ' . $song['people_lowest_note'] . ' is higher than ' . $song['people_highest_note'] . '!';
                 }
 
@@ -50,11 +50,11 @@ final class CheckSongsRangeConsistency implements AdminTask
                     $output[] = $song['id_song'] . ' people_highest_note == people_lowest_note!';
                 }
 
-                if (0 > $nc->distanceWithOctave($song['people_lowest_note'], $song['lowest_note'])) {
+                if ($nc->distanceWithOctave($song['people_lowest_note'], $song['lowest_note']) < 0) {
                     $output[] = $song['id_song'] . ' people_lowest_note < lowest_note!';
                 }
 
-                if (0 > $nc->distanceWithOctave($song['highest_note'], $song['people_highest_note'])) {
+                if ($nc->distanceWithOctave($song['highest_note'], $song['people_highest_note']) < 0) {
                     $output[] = $song['id_song'] . ' people_highest_note > highest_note!';
                 }
             }

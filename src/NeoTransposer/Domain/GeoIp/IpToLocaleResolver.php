@@ -5,13 +5,13 @@ namespace NeoTransposer\Domain\GeoIp;
 final class IpToLocaleResolver
 {
     protected const LOCALES_BY_COUNTRY = [
-            'sw' => ['TZ', 'KE'],
-            'pt' => ['BR', 'PT', 'AO', 'CV', 'GW', 'MZ', 'ST', 'TL'],
-            'es' => [
-                'AR', 'BO', 'CL', 'CO', 'CR', 'DO', 'EC', 'SV', 'GT', 'HN', 'MX', 'NI', 'PA', 'PY', 'PE', 'PR', 'ES', 'UY', 'VE', 'CU', 'GQ'
-            ],
-            'it' => ['IT']
-        ];
+        'sw' => ['TZ', 'KE'],
+        'pt' => ['BR', 'PT', 'AO', 'CV', 'GW', 'MZ', 'ST', 'TL'],
+        'es' => [
+            'AR', 'BO', 'CL', 'CO', 'CR', 'DO', 'EC', 'SV', 'GT', 'HN', 'MX', 'NI', 'PA', 'PY', 'PE', 'PR', 'ES', 'UY', 'VE', 'CU', 'GQ',
+        ],
+        'it' => ['IT'],
+    ];
 
     public function __construct(protected GeoIpResolver $geoIpResolver)
     {

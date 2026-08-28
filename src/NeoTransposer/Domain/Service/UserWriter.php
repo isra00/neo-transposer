@@ -26,12 +26,10 @@ final class UserWriter
      */
     public function writeUser(User $user, ?int $idBook, ?string $lowest, ?string $highest, ?string $unhappyChoseStandardRange)
     {
-        if ($idBook)
-        {
-            if (!array_key_exists($idBook, $this->bookRepository->readAllBooks()))
-			{
-				throw new BookNotExistException($idBook);
-			}
+        if ($idBook) {
+            if (!array_key_exists($idBook, $this->bookRepository->readAllBooks())) {
+                throw new BookNotExistException($idBook);
+            }
 
             $user->id_book = $idBook;
         }
@@ -46,14 +44,13 @@ final class UserWriter
             $user->range = new NotesRange($lowest, $highest);
         }
 
-		if ($unhappyChoseStandardRange)
-		{
+        if ($unhappyChoseStandardRange) {
             $this->unhappyUser->chooseStandard($user, $unhappyChoseStandardRange);
-		}
+        }
 
         $this->userRepository->saveWithVoiceChange(
             $user,
-			$unhappyChoseStandardRange ? User::METHOD_UNHAPPY : User::METHOD_MANUAL
-		);
+            $unhappyChoseStandardRange ? User::METHOD_UNHAPPY : User::METHOD_MANUAL
+        );
     }
 }

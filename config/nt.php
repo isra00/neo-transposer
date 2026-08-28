@@ -22,7 +22,7 @@ return [
     'languages' => [
         'en' => [
             'name'     => 'English',
-            'notation' => 'american'
+            'notation' => 'american',
         ],
         'es' => [
             'name'     => 'Español',
@@ -39,7 +39,7 @@ return [
         'it' => [
             'name'     => 'Italiano',
             'notation' => 'latin',
-        ]
+        ],
     ],
 
     'voice_wizard'                           => include 'nt.voice_wizard.php',
@@ -61,7 +61,7 @@ return [
 
     'people_range'                           => ['B1', 'B2'],
 
-    //Feature flags
+    // Feature flags
     'hide_second_centered_if_not_equivalent' => false,
     'detailed_feedback'                      => true,
     'audio'                                  => true,

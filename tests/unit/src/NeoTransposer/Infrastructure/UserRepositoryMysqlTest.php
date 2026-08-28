@@ -19,7 +19,7 @@ class UserRepositoryMysqlTest extends MysqlRepositoryTest
         $this->userRepositoryMysql = new UserRepositoryMysql(new FeedbackRepositoryMysql());
     }
 
-    public function testReadFromEmailFindsTheUser()
+    public function test_read_from_email_finds_the_user()
     {
         $email = $this->faker->unique()->safeEmail();
         DB::table('user')->insert(['email' => $email]);
@@ -38,7 +38,7 @@ class UserRepositoryMysqlTest extends MysqlRepositoryTest
      *
      * @dataProvider provideCasings
      */
-    public function testReadFromEmailIsCaseInsensitive(string $typed)
+    public function test_read_from_email_is_case_insensitive(string $typed)
     {
         DB::table('user')->insert(['email' => 'Mixed.Case@Example.com']);
 
@@ -55,7 +55,7 @@ class UserRepositoryMysqlTest extends MysqlRepositoryTest
         ];
     }
 
-    public function testReadFromEmailNonExisting()
+    public function test_read_from_email_non_existing()
     {
         DB::table('user')->insert(['email' => 'someone@gmail.com']);
 
@@ -68,7 +68,7 @@ class UserRepositoryMysqlTest extends MysqlRepositoryTest
      *
      * @dataProvider provideLikeWildcards
      */
-    public function testReadFromEmailDoesNotHonourLikeWildcards(string $wildcardEmail)
+    public function test_read_from_email_does_not_honour_like_wildcards(string $wildcardEmail)
     {
         DB::table('user')->insert(['email' => 'victim@gmail.com']);
 
@@ -88,7 +88,7 @@ class UserRepositoryMysqlTest extends MysqlRepositoryTest
     /**
      * The id_user branch of readFromField() shares the same query.
      */
-    public function testReadFromId()
+    public function test_read_from_id()
     {
         DB::table('user')->insert(['id_user' => 4321, 'email' => 'victim@gmail.com']);
 

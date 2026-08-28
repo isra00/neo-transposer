@@ -17,7 +17,7 @@ final class RemoveOldCompiledCss implements AdminTask
         foreach ($allCssFiles as $file) {
             if (basename($file) != $currentFile) {
                 unlink($file);
-                $output[] = "Deleted " . basename($file);
+                $output[] = 'Deleted ' . basename($file);
             }
         }
 

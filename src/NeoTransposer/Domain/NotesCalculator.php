@@ -22,6 +22,7 @@ class NotesCalculator
      * a 4-octave numbered_scale. 4 octaves should be enough for voice range.
      *
      * @var array
+     *
      * @refactor Replace by a method numberedScale()
      */
     public $numbered_scale = [];
@@ -39,8 +40,8 @@ class NotesCalculator
     /**
      * Returns the lowest note in the array.
      *
-     * @param array $notes Array of numbered notes.
-     * @return string        The lowest note.
+     * @param  array  $notes  Array of numbered notes.
+     * @return string The lowest note.
      */
     public function lowestNote(array $notes)
     {
@@ -66,9 +67,9 @@ class NotesCalculator
     /**
      * Reads an element of an array, supporting negative indexes and cyclic index.
      *
-     * @param array   $array Any indexed array.
-     * @param integer $index Index to read
-     * @return mixed            The array element
+     * @param  array  $array  Any indexed array.
+     * @param  int  $index  Index to read
+     * @return mixed The array element
      */
     public function arrayIndex(array $array, int $index)
     {
@@ -84,9 +85,9 @@ class NotesCalculator
     /**
      * Transpose a given note with an offset.
      *
-     * @param string  $note   The note to transpose
-     * @param integer $offset The offset to transpose.
-     * @return string            The transposed note.
+     * @param  string  $note  The note to transpose
+     * @param  int  $offset  The offset to transpose.
+     * @return string The transposed note.
      */
     public function transposeNote($note, $offset)
     {
@@ -105,9 +106,9 @@ class NotesCalculator
     /**
      * Calculates the absolute distance (in semitones) between two notes, with octave specified.
      *
-     * @param string $note1 Note, specified as [note name][octave number], e.g. E3. If NotesRange, no need of $note2.
-     * @param string $note2 Another note, following the same pattern as $note1.
-     * @return int            Distance in semitones.
+     * @param  string  $note1  Note, specified as [note name][octave number], e.g. E3. If NotesRange, no need of $note2.
+     * @param  string  $note2  Another note, following the same pattern as $note1.
+     * @return int Distance in semitones.
      */
     public function distanceWithOctave(string $note1, string $note2): int
     {
@@ -122,7 +123,7 @@ class NotesCalculator
     /**
      * Transpose a chord adding or subtracting semitones.
      *
-     * @param int   $amount Number of semitones to add or substract.
+     * @param  int  $amount  Number of semitones to add or substract.
      * @return Chord Final chord.
      */
     public function transposeChord(Chord $chord, $amount): Chord
@@ -144,7 +145,7 @@ class NotesCalculator
      */
     public function transposeChords($chordList, $amount): array
     {
-        return array_map(fn($originalChord) => $this->transposeChord($originalChord, $amount), $chordList);
+        return array_map(fn ($originalChord) => $this->transposeChord($originalChord, $amount), $chordList);
     }
 
     /**
@@ -158,7 +159,7 @@ class NotesCalculator
      */
     public function getKey(Chord $firstChord): string
     {
-        //Search 'm' to support all kinds of minor chords.
+        // Search 'm' to support all kinds of minor chords.
         return (str_contains($firstChord->attributes, 'm'))
             ? $this->arrayIndex(
                 self::ACOUSTIC_SCALE,

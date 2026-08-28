@@ -5,6 +5,7 @@ namespace NeoTransposer\Tests\Infrastructure;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\DB;
+use NeoTransposer\Infrastructure\MysqlRepository;
 
 class MysqlRepositoryTest extends TestCase
 {
@@ -21,7 +22,7 @@ class MysqlRepositoryTest extends TestCase
         DB::purge('mysql');
 
         // Reset the static DBAL connection so it picks up the integration database
-        $reflection = new \ReflectionClass(\NeoTransposer\Infrastructure\MysqlRepository::class);
+        $reflection = new \ReflectionClass(MysqlRepository::class);
         $prop = $reflection->getProperty('dbal');
         $prop->setAccessible(true);
         $prop->setValue(null, null);

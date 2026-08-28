@@ -24,7 +24,7 @@ class ReceiveFeedbackController extends Controller
                 : redirect()->back();
         }
 
-        if (empty($request->get('id_song')) || null === $request->get('worked')) {
+        if (empty($request->get('id_song')) || $request->get('worked') === null) {
             return response()->json(['error' => 'Parameters id_song and worked are mandatory'], 400);
         }
 
@@ -42,6 +42,7 @@ class ReceiveFeedbackController extends Controller
         // Progressive enhancement: support form submission without AJAX, then refresh the page.
         if (!$request->ajax()) {
             $feedbackParam = str_replace(['1', '0'], ['yes', 'no'], (string) (int) $request->get('worked'));
+
             return redirect(
                 route('transpose_song', ['id_song' => $request->get('id_song')]) . '?fb=' . $feedbackParam . '#feedback'
             );

@@ -6,9 +6,6 @@ use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\Exception\SongDataException;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Silex\Application;
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Represents a transposition of a song, with transported chords, capo, etc.
@@ -49,15 +46,14 @@ class Transposition
      */
     final public const ALTERNATIVE_CHORDS = [
         'G' => [
-            'B' => 'B7'
+            'B' => 'B7',
         ],
         'E' => [
-            'B' => 'B7'
+            'B' => 'B7',
         ],
     ];
 
     /**
-     *
      * @throws SongDataException
      */
     public function __construct(
@@ -72,11 +68,12 @@ class Transposition
     ) {
         $this->setScore();
 
-        return $this; //For fluent constructions
+        return $this; // For fluent constructions
     }
 
     /**
      * Calculates the ease of the transposition, based on each chord's ease.
+     *
      * @throws SongDataException
      */
     public function setScore(): void
@@ -95,8 +92,8 @@ class Transposition
                     }
                 }
 
-                if (0 == $scoreForThisChord) {
-                    throw new SongDataException("Unknown chord: " . $chord);
+                if ($scoreForThisChord == 0) {
+                    throw new SongDataException('Unknown chord: ' . $chord);
                 }
             }
 
@@ -138,9 +135,9 @@ class Transposition
      * In most of the songs, the key is equal to the first chord. If not, no
      * alternative chords are calculated. Yes, that's simple.
      *
-     * @param NotesCalculator $ncalc An instance of NotesCalculator
-     *
+     * @param  NotesCalculator  $ncalc  An instance of NotesCalculator
      * @return string The key, expressed as major chord in american notation.
+     *
      * @throws SongDataException
      */
     public function getKey(NotesCalculator $ncalc): string
@@ -148,15 +145,15 @@ class Transposition
         $firstChord = Chord::fromString($this->chords[0]);
 
         /*
-		 * Flatten the chord, that is, remove all attributes different from minor.
-		 * This is needed because some songs, like Sola a Solo, start with a
-		 * 4-note chord (Dm5), or Song of Moses (C7).
-		 */
+         * Flatten the chord, that is, remove all attributes different from minor.
+         * This is needed because some songs, like Sola a Solo, start with a
+         * 4-note chord (Dm5), or Song of Moses (C7).
+         */
         $firstChord->attributes = (str_contains((string) $firstChord->attributes, 'm'))
             ? 'm' : '';
 
-        //The key is always expressed in major form, so we resolve the minor
-        //relatives, it is, the key will be its third minor.
+        // The key is always expressed in major form, so we resolve the minor
+        // relatives, it is, the key will be its third minor.
         if ($firstChord->attributes === 'm') {
             $position = (int) array_search($firstChord->fundamental, NotesCalculator::ACOUSTIC_SCALE);
             $firstChord->fundamental = $ncalc->arrayIndex(NotesCalculator::ACOUSTIC_SCALE, $position + 3);

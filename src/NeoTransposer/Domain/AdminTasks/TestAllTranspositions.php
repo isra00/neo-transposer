@@ -40,9 +40,9 @@ final class TestAllTranspositions implements AdminTask
 
         foreach ($testResult as $idSong => $result) {
             if (isset($testData['expectedResults'][$idSong]) && $difference = $this->diffTestResults(
-                    $result,
-                    $testData['expectedResults'][$idSong]
-                )) {
+                $result,
+                $testData['expectedResults'][$idSong]
+            )) {
                 $output .= "\n<strong>Song #$idSong</strong>\n";
                 foreach ($difference as $property => $resultValue) {
                     if (is_array($resultValue)) {
@@ -53,9 +53,9 @@ final class TestAllTranspositions implements AdminTask
                     } elseif (isset($testData['expectedResults'][$idSong][$property])) {
                         if (is_array($testData['expectedResults'][$idSong][$property])) {
                             $testData['expectedResults'][$idSong][$property] = '[' . implode(
-                                    '; ',
-                                    $testData['expectedResults'][$idSong][$property]
-                                ) . ']';
+                                '; ',
+                                $testData['expectedResults'][$idSong][$property]
+                            ) . ']';
                         }
                         $output .= "$property: expected <em>" . ($testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
                     } else {
@@ -102,7 +102,7 @@ final class TestAllTranspositions implements AdminTask
                     'highestNote' => $transposedSong->transpositions[0]->range->highest,
                     'score'       => $transposedSong->transpositions[0]->score,
                     'capo'        => $transposedSong->transpositions[0]->getCapo(),
-                    'chords'      => implode(',', $transposedSong->transpositions[0]->chords)
+                    'chords'      => implode(',', $transposedSong->transpositions[0]->chords),
                 ],
                 'centered2'       => [
                     'offset'      => $transposedSong->transpositions[1]->offset,
@@ -110,8 +110,8 @@ final class TestAllTranspositions implements AdminTask
                     'highestNote' => $transposedSong->transpositions[1]->range->highest,
                     'score'       => $transposedSong->transpositions[1]->score,
                     'capo'        => $transposedSong->transpositions[1]->getCapo(),
-                    'chords'      => implode(',', $transposedSong->transpositions[1]->chords)
-                ]
+                    'chords'      => implode(',', $transposedSong->transpositions[1]->chords),
+                ],
             ];
 
             if ($transposedSong->not_equivalent) {
@@ -161,6 +161,7 @@ final class TestAllTranspositions implements AdminTask
         foreach (array_intersect_key($actual, array_flip($arrayProperties)) as $type => $transposition) {
             if (!isset($expected[$type])) {
                 $transpositionsDiff[$type] = '[unexpected]';
+
                 continue;
             }
 
