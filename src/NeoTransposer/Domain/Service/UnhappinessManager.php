@@ -50,8 +50,6 @@ class UnhappinessManager
 
     /**
      * Wizard finished debe llamar a este método.
-     *
-     * @todo Esto es lógica de negocio, debería estar en el domain service que gestiona el wizard
      */
     public function changedVoiceRangeFromWizard(User $user)
     {

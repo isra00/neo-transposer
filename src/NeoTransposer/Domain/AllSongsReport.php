@@ -62,10 +62,6 @@ final class AllSongsReport
                 $feedbackTranspositionWhichWorked = null;
             }
 
-            // Remove bracketed text from song title (used for clarifications)
-            /** @todo Remove this: bracketed text differentiates variants! */
-            $transposedSong->song->title = preg_replace('/(.)\[.*\]/', '$1', (string) $transposedSong->song->title);
-
             $transposedSongWithFeedback = new TransposedSongWithFeedback(
                 $transposedSong,
                 self::PEOPLE_COMPATIBLE_MICRO_MESSAGES[$transposedSong->getPeopleCompatibleStatus()],

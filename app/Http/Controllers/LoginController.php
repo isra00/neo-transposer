@@ -78,7 +78,6 @@ class LoginController extends Controller
             $userRepository->save($user);
         }
 
-        // @todo firstTime podría ser un método en vez de un atributo si no se fuerza en otras partes?
         $user->firstTime = !$user->hasRange();
         session(['user' => $user]);
 

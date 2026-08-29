@@ -10,7 +10,6 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  */
 class Song
 {
-    /** @todo Make all these protected and create getters */
     public $idSong;
 
     public $idBook;
