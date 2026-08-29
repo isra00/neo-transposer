@@ -74,8 +74,8 @@ class LoginController extends Controller
 
         if (!$user = $userRepository->readFromEmail($req_email)) {
             $idBook = $bookRepository->readIdBookFromLocale($locale);
-            $user = new User($req_email, null, null, $idBook, null, null, null, new UserPerformance(0, 0));
-            $userRepository->save($user, $req->getClientIp());
+            $user = new User($req_email, null, null, $idBook, null, null, null, new UserPerformance(0, 0), $req->getClientIp());
+            $userRepository->save($user);
         }
 
         // @todo firstTime podría ser un método en vez de un atributo si no se fuerza en otras partes?

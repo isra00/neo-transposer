@@ -60,10 +60,9 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
      * Create or update the user in the database.
      *
      * @param  User  $user  The User object to persist.
-     * @param  string|null  $registerIp  The IP address with which the user registered.
      * @return int The user ID, if it was not set.
      */
-    public function save(User $user, ?string $registerIp = null): int
+    public function save(User $user): int
     {
         if ($user->id_user) {
             return $this->dbConnection->table('user')
@@ -78,13 +77,12 @@ final class UserRepositoryMysql extends MysqlRepository implements UserRepositor
                 ]);
         }
 
-        /** @todo Refactor this. registerIp should be just one more field, no special treatment. */
         return $user->id_user = (int) $this->dbConnection->table('user')->insertGetId([
             'email'			=> $user->email,
             'lowest_note'	=> $user->range->lowest ?? null,
             'highest_note'	=> $user->range->highest ?? null,
             'id_book'		=> $user->id_book,
-            'register_ip'	=> $registerIp,
+            'register_ip'	=> $user->registerIp,
         ]);
     }
 
