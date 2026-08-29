@@ -27,37 +27,61 @@
 
 				<ul id="sub-male" class="sub-gender">
 					<li>
-						<a class="flatbutton red" href="{{ route('wizard_select_standard', ['locale' => app()->getLocale(), 'gender' => 'male']) }}">
-							@lang('Neither higher nor lower than most of men / I don\'t know')
-						</a>
+						<form method="post" action="{{ route('wizard_select_standard', ['locale' => app()->getLocale()]) }}">
+							@csrf
+							<input type="hidden" name="gender" value="male">
+							<button type="submit" class="flatbutton red">
+								@lang('Neither higher nor lower than most of men / I don\'t know')
+							</button>
+						</form>
 					</li>
 					<li>
-						<a class="flatbutton red" href="{{ route('wizard_select_standard', ['locale' => app()->getLocale(), 'gender' => 'male_high']) }}">
-							@lang('My voice is higher than most of men')
-						</a>
+						<form method="post" action="{{ route('wizard_select_standard', ['locale' => app()->getLocale()]) }}">
+							@csrf
+							<input type="hidden" name="gender" value="male_high">
+							<button type="submit" class="flatbutton red">
+								@lang('My voice is higher than most of men')
+							</button>
+						</form>
 					</li>
 					<li>
-						<a class="flatbutton red" href="{{ route('wizard_select_standard', ['locale' => app()->getLocale(), 'gender' => 'male_low']) }}">
-							@lang('My voice is lower than most of men')
-						</a>
+						<form method="post" action="{{ route('wizard_select_standard', ['locale' => app()->getLocale()]) }}">
+							@csrf
+							<input type="hidden" name="gender" value="male_low">
+							<button type="submit" class="flatbutton red">
+								@lang('My voice is lower than most of men')
+							</button>
+						</form>
 					</li>
 				</ul>
 
 				<ul id="sub-female" class="sub-gender">
 					<li>
-						<a class="flatbutton red" href="{{ route('wizard_select_standard', ['locale' => app()->getLocale(), 'gender' => 'female']) }}">
-							@lang('Neither higher nor lower than most of women / I don\'t know')
-						</a>
+						<form method="post" action="{{ route('wizard_select_standard', ['locale' => app()->getLocale()]) }}">
+							@csrf
+							<input type="hidden" name="gender" value="female">
+							<button type="submit" class="flatbutton red">
+								@lang('Neither higher nor lower than most of women / I don\'t know')
+							</button>
+						</form>
 					</li>
 					<li>
-						<a class="flatbutton red" href="{{ route('wizard_select_standard', ['locale' => app()->getLocale(), 'gender' => 'female_high']) }}">
-							@lang('My voice is higher than most of women')
-						</a>
+						<form method="post" action="{{ route('wizard_select_standard', ['locale' => app()->getLocale()]) }}">
+							@csrf
+							<input type="hidden" name="gender" value="female_high">
+							<button type="submit" class="flatbutton red">
+								@lang('My voice is higher than most of women')
+							</button>
+						</form>
 					</li>
 					<li>
-						<a class="flatbutton red" href="{{ route('wizard_select_standard', ['locale' => app()->getLocale(), 'gender' => 'female_low']) }}">
-							@lang('My voice is lower than most of women')
-						</a>
+						<form method="post" action="{{ route('wizard_select_standard', ['locale' => app()->getLocale()]) }}">
+							@csrf
+							<input type="hidden" name="gender" value="female_low">
+							<button type="submit" class="flatbutton red">
+								@lang('My voice is lower than most of women')
+							</button>
+						</form>
 					</li>
 				</ul>
 			</section>

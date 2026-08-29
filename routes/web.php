@@ -78,6 +78,10 @@ Route::prefix('{locale}')
             ]));
         })->name('people-compatible-info');
 
+        // TEMPORARY, delete after deploy: wizard pages already open in a browser still
+        // link to select-standard by GET, which is now a POST. Catch those stale clicks.
+        Route::get('/wizard/select-standard', fn () => redirect()->route('wizard_step1', ['locale' => app()->getLocale()]));
+
         Route::group(['middleware' => NeedsLoginMiddleware::class], function () {
 
             Route::get('/user/voice', [UserVoiceController::class, 'get'])
@@ -92,7 +96,7 @@ Route::prefix('{locale}')
             Route::get('/wizard', [WizardSelectStandardController::class, 'get'])
                 ->name('wizard_step1');
 
-            Route::get('/wizard/select-standard', [WizardSelectStandardController::class, 'selectStandard'])
+            Route::post('/wizard/select-standard', [WizardSelectStandardController::class, 'selectStandard'])
                 ->name('wizard_select_standard');
 
             Route::match(['get', 'post'], '/wizard/lowest', [WizardEmpiricController::class, 'lowest'])

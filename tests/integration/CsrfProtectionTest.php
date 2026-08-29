@@ -30,6 +30,7 @@ final class CsrfProtectionTest extends TestCase
         'admin/chord-correction',
         'feedback',
         '{locale}/login',
+        '{locale}/wizard/select-standard',
         '{locale}/wizard/lowest',
         '{locale}/wizard/highest',
     ];

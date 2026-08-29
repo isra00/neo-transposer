@@ -11,10 +11,11 @@ Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 - Use `make start-local` + `make start-db-local` for development, `make test` for tests, `make bash` for shell.
 - Web server logs are redirected to the container's stderr and stdout.
 - Commit directly to master branch.
-- Apply usual Laravel conventions
+- Apply usual Laravel conventions.
 - Favor cohesion over decoupling. Code simplicity and maintainability are paramount.
 - Declare things in the narrowest scope that fits: a value used by only one method is a local variable, not a class constant or property. Promote it only when a second method needs it.
 - Be straight to the point in your answers when interacting with the agent user.
+- Consider the impact on current user sessions in production when making changes.
 
 ## Code style
 

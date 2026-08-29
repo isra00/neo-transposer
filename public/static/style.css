@@ -1139,12 +1139,16 @@ summary.show-voice-chart::-webkit-details-marker {
 	padding: 0;
 	margin: 0;
 }
-	.sub-gender-selection a {
+	.sub-gender-selection button {
 		display: block;
+		width: 100%;
 		margin-bottom: .6em;
 		padding: .5em .5em;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
 	}
-	.sub-gender-selection a::after {
+	.sub-gender-selection button::after {
 		content: " →";
 	}
 

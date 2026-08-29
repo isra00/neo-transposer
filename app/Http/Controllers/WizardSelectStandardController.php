@@ -20,17 +20,12 @@ final class WizardSelectStandardController extends Controller
         ]);
     }
 
-    /**
-     * This is a GET request.
-     *
-     * @todo This should not be a GET request, for security (CSRF!) and RESTfulness.
-     */
     public function selectStandard(Request $request)
     {
         $standardVoices = config('nt.voice_wizard.standard_voices');
-        $gender = $request->get('gender');
+        $gender = $request->input('gender');
 
-        if (!array_key_exists($gender, $standardVoices)) {
+        if (!is_string($gender) || !array_key_exists($gender, $standardVoices)) {
             return redirect()->route('wizard_step1', ['locale' => app()->getLocale()]);
         }
 

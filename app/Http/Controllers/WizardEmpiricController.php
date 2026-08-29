@@ -41,7 +41,7 @@ final class WizardEmpiricController extends Controller
 
         // This should not happen, as user should come from selecting a standard range.
         if (empty($user->range)) {
-            return redirect()->route('wizard_select_standard', ['locale' => $locale]);
+            return redirect()->route('wizard_step1', ['locale' => $locale]);
         }
 
         $action_no = $action_yes = null;
