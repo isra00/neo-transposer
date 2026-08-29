@@ -231,7 +231,8 @@ class Transposer
         $nearTranspositions = $this->calculateSurroundingTranspositions(
             $this->calculateCenteredTransposition(),
             self::OFFSETS_NOT_EQUIVALENT,
-            $this->getTranspositionsCentered()[0]->score
+            $this->getTranspositionsCentered()[0]->score,
+            $this->songPeopleRange
         );
 
         if (empty($nearTranspositions)) {
@@ -255,11 +256,12 @@ class Transposer
      *
      * @param  array  $deviations  The deviations in semitones, e.g. [-2, -1]
      * @param  int  $maxScore  Return only transpositions with score lower than this.
+     * @param  NotesRange|null  $songPeopleRange  Song's voice range for people, if known.
      * @return array An array of Transposition objects.
      *
      * @throws Exception\SongDataException
      */
-    protected function calculateSurroundingTranspositions(Transposition $centeredTransposition, array $deviations, int $maxScore): array
+    protected function calculateSurroundingTranspositions(Transposition $centeredTransposition, array $deviations, int $maxScore, ?NotesRange $songPeopleRange): array
     {
         $nearTranspositions = [];
 
@@ -278,9 +280,8 @@ class Transposer
                 $dif
             );
 
-            /** @todo Pasar esto como parámetro para no marear con el estado */
-            if ($this->songPeopleRange !== null) {
-                $near->calculatePeopleRange($this->songPeopleRange, $offset, $this->notesCalculator);
+            if ($songPeopleRange !== null) {
+                $near->calculatePeopleRange($songPeopleRange, $offset, $this->notesCalculator);
             }
 
             $nearAndItsEquivalentsWithCapo = Transposition::sortByEase(
