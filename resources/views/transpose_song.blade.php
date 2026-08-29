@@ -317,29 +317,14 @@
                         return;
                     }
 
-                    // Position the dialog next to the chord.
-                    var dialogTop = hTarget.getBoundingClientRect().top,
-                        dialogLeft = hTarget.getBoundingClientRect().left + hTarget.getBoundingClientRect().width;
+                    // Position the dialog next to the chord, clamped to the viewport.
+                    var chordRect = hTarget.getBoundingClientRect();
 
                     dialog.style.position = 'fixed';
                     dialog.style.margin = '0';
-                    dialog.style.top = dialogTop + "px";
-                    dialog.style.left = dialogLeft + "px";
-
                     dialog.style.display = 'block';
-
-                    // If it gets out of the limits of the screen, place at in the corner.
-                    /** @todo There should be a way of shortening this */
-                    var currentRight = dialog.getBoundingClientRect().left + dialog.offsetWidth,
-                        currentBottom = dialog.getBoundingClientRect().top + dialog.offsetHeight;
-
-                    if (currentRight > window.innerWidth) {
-                        dialog.style.left = (window.innerWidth - dialog.offsetWidth) + "px";
-                    }
-
-                    if (currentBottom > window.innerHeight) {
-                        dialog.style.top = (window.innerHeight - dialog.offsetHeight) + "px";
-                    }
+                    dialog.style.left = Math.min(chordRect.right, window.innerWidth - dialog.offsetWidth) + "px";
+                    dialog.style.top = Math.min(chordRect.top, window.innerHeight - dialog.offsetHeight) + "px";
 
                     event.target.addEventListener('mouseout', function() {
                         dialog.style.display = 'none';

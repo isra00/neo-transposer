@@ -166,12 +166,35 @@ class Transposition
         if (!$this->asBook) {
             $key = $nc->getKey($this->chords[0]);
 
-            /** @todo Refactor with array_walk */
             foreach ($this->chords as &$chord) {
                 $chord = Chord::fromString(self::ALTERNATIVE_CHORDS[$key][(string) $chord] ?? $chord);
             }
             $this->setScore();
         }
+    }
+
+    /**
+     * Sorts an array of Transpositions from lowest to highest score.
+     * If two have same score but one is asBook, that one takes precedence.
+     *
+     * @param  array  $transpositions  Array of Transpositions, with the score already set.
+     * @return array The sorted array
+     */
+    public static function sortByEase(array $transpositions): array
+    {
+        usort(
+            $transpositions, function (Transposition $one, Transposition $two) {
+
+                // If both have same score but one is asBook, that one goes first.
+                if ($one->score === $two->score) {
+                    return ($two->getAsBook()) ? 1 : 0;
+                }
+
+                return $one->score <=> $two->score;
+            }
+        );
+
+        return $transpositions;
     }
 
     public function getCapo(): int

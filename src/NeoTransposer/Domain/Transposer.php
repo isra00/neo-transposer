@@ -85,8 +85,6 @@ class Transposer
      * @param  int|null  $forceVoiceLimit  Force user's lowest or highest note (only used in Wizard).
      * @return Transposition The transposition matching that voice.
      *
-     * @todo Renombrar o reestructurar: si $forceVoiceLimit, entonces ya no es la "centeredTransposition"
-     *
      * @throws Exception\SongDataException
      */
     public function calculateCenteredTransposition(?int $forceVoiceLimit = 0): Transposition
@@ -186,32 +184,6 @@ class Transposer
     }
 
     /**
-     * Sorts an array of Transpositions from lowest to highest score.
-     * If two have same score but one is asBook, that one takes precedence.
-     *
-     * @param  array  $transpositions  Array of Transpositions, with the score already set.
-     * @return array The sorted array
-     *
-     * @todo Refactor sacar de esta clase, quizá un método estático de Transposition
-     */
-    public function sortTranspositionsByEase(array $transpositions): array
-    {
-        usort(
-            $transpositions, function (Transposition $one, Transposition $two) {
-
-                // If both have same score but one is asBook, that one goes first.
-                if ($one->score === $two->score) {
-                    return ($two->getAsBook()) ? 1 : 0;
-                }
-
-                return $one->score <=> $two->score;
-            }
-        );
-
-        return $transpositions;
-    }
-
-    /**
      * Main method to be used by the clients of this class. It returns the
      * centered and equivalent transpositions for a given song, sorted by ease.
      *
@@ -228,7 +200,7 @@ class Transposer
             $equivalents = $this->calculateEquivalentsWithCapo($centeredTransposition);
 
             $centeredAndEquivalent = array_merge([$centeredTransposition], $equivalents);
-            $this->centeredAndEquivalent = $this->sortTranspositionsByEase($centeredAndEquivalent);
+            $this->centeredAndEquivalent = Transposition::sortByEase($centeredAndEquivalent);
         }
 
         // This shouldn't be done before to avoid conflicts
@@ -239,7 +211,7 @@ class Transposer
         }
 
         // If alternative chords have been set, scores may change and so positions.
-        $this->centeredAndEquivalent = $this->sortTranspositionsByEase($this->centeredAndEquivalent);
+        $this->centeredAndEquivalent = Transposition::sortByEase($this->centeredAndEquivalent);
 
         return ($limitTranspositions)
             ? array_slice($this->centeredAndEquivalent, 0, $limitTranspositions)
@@ -266,7 +238,7 @@ class Transposer
             return null;
         }
 
-        $notEquivalentSorted = $this->sortTranspositionsByEase($nearTranspositions);
+        $notEquivalentSorted = Transposition::sortByEase($nearTranspositions);
 
         // For algorithm conservatism, no-capo takes always precedence.
         foreach ($notEquivalentSorted as $transposition) {
@@ -311,7 +283,7 @@ class Transposer
                 $near->calculatePeopleRange($this->songPeopleRange, $offset, $this->notesCalculator);
             }
 
-            $nearAndItsEquivalentsWithCapo = $this->sortTranspositionsByEase(
+            $nearAndItsEquivalentsWithCapo = Transposition::sortByEase(
                 array_merge(
                     [$near],
                     $this->calculateEquivalentsWithCapo($near)
@@ -537,6 +509,6 @@ class Transposer
             }
         }
 
-        return $this->sortTranspositionsByEase($equivalentsWithCapo)[0];
+        return Transposition::sortByEase($equivalentsWithCapo)[0];
     }
 }

@@ -6,13 +6,10 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 
 class TransposerFactory
 {
-    private NotesRange $standardPeopleRange;
-
     public function __construct(
         protected TranspositionFactory $transpositionFactory,
         protected NotesCalculator $notesCalculator
     ) {
-        $this->standardPeopleRange = new NotesRange(config('nt.people_range')[0], config('nt.people_range')[1]);
     }
 
     public function createTransposer(
@@ -25,7 +22,7 @@ class TransposerFactory
         return new Transposer(
             $this->notesCalculator,
             $this->transpositionFactory,
-            $this->standardPeopleRange, // @todo Leer config aquí y eliminar $this->standardPeopleRange
+            new NotesRange(config('nt.people_range')[0], config('nt.people_range')[1]),
             $singerRange,
             $songRange,
             $originalChords,

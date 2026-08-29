@@ -36,8 +36,7 @@ final class UserWriter
 
         if ($lowest || $highest) {
 
-            /** @todo En PHP 8, str_contains() */
-            if (strpos($highest, '1')) {
+            if (str_contains((string) $highest, '1')) {
                 throw new BadUserRangeException('Highest note is too low: ' . $highest);
             }
 

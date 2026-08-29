@@ -94,7 +94,6 @@ class NotesCalculator
         return $this->arrayIndex($this->numbered_scale, array_search($note, $this->numbered_scale) + $offset);
     }
 
-    /** @todo Refactor: podría ser violación de Tell, Don't Ask => mover a NotesRange */
     public function transposeRange(NotesRange $range, $offset): NotesRange
     {
         return new NotesRange(

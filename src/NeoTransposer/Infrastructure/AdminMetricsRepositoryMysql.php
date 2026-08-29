@@ -426,7 +426,6 @@ AND time > ?
 GROUP BY transposition
 ORDER BY fbs DESC
 SQL;
-        /** @todo Move that constant from AdminDashboard to ReadAdminMetrics (domain service) */
         $fbsByTransposition = $this->selectArrays($sql, [$detailedFeedbackDeployed]);
 
         $total = array_sum(array_column($fbsByTransposition, 'fbs'));

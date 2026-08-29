@@ -145,42 +145,6 @@ class TransposerTest extends TestCase
         $this->assertEquals($expected, $equivalents);
     }
 
-    public function test_sort_transpositions_by_ease()
-    {
-        $transpositionMockA = $this->getMockBuilder(Transposition::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $transpositionMockB = clone $transpositionMockA;
-
-        $transpositionMockA->score = 10;
-        $transpositionMockB->score = 20;
-
-        $this->assertEquals(
-            [$transpositionMockA, $transpositionMockB],
-            $this->buildTransposerWithValues()->sortTranspositionsByEase([$transpositionMockB, $transpositionMockA])
-        );
-    }
-
-    public function test_sort_transpositions_by_ease_when_equal_score_prioritize_as_book()
-    {
-        $transpositionMockA = $this->getMockBuilder(Transposition::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $transpositionMockB = clone $transpositionMockA;
-
-        $transpositionMockA->score = 10;
-        $transpositionMockB->score = 10;
-
-        $transpositionMockA->setAsBook(true);
-
-        $this->assertEquals(
-            [$transpositionMockA, $transpositionMockB],
-            $this->buildTransposerWithValues()->sortTranspositionsByEase([$transpositionMockB, $transpositionMockA])
-        );
-    }
-
     public function test_get_easier_not_equivalent()
     {
         $sut = $this->buildTransposer(

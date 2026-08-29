@@ -88,4 +88,40 @@ class TranspositionTest extends TestCase
 
         $this->assertEquals(new NotesRange('B1', 'B2'), $this->transposition->peopleRange);
     }
+
+    public function test_sort_by_ease()
+    {
+        $transpositionMockA = $this->getMockBuilder(Transposition::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $transpositionMockB = clone $transpositionMockA;
+
+        $transpositionMockA->score = 10;
+        $transpositionMockB->score = 20;
+
+        $this->assertEquals(
+            [$transpositionMockA, $transpositionMockB],
+            Transposition::sortByEase([$transpositionMockB, $transpositionMockA])
+        );
+    }
+
+    public function test_sort_by_ease_when_equal_score_prioritize_as_book()
+    {
+        $transpositionMockA = $this->getMockBuilder(Transposition::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $transpositionMockB = clone $transpositionMockA;
+
+        $transpositionMockA->score = 10;
+        $transpositionMockB->score = 10;
+
+        $transpositionMockA->setAsBook(true);
+
+        $this->assertEquals(
+            [$transpositionMockA, $transpositionMockB],
+            Transposition::sortByEase([$transpositionMockB, $transpositionMockA])
+        );
+    }
 }
