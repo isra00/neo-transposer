@@ -3,9 +3,6 @@
 namespace NeoTransposer\Tests\Domain\Service;
 
 use Illuminate\Foundation\Testing\TestCase;
-use NeoTransposer\Domain\GeoIp\Country;
-use NeoTransposer\Domain\GeoIp\GeoIpLocation;
-use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Service\AdminMetricsReader;
@@ -34,8 +31,6 @@ class AdminMetricsReaderTest extends TestCase
             ->willReturn(['theReadSongsWithFeedback']);
         $mockAdminMetricsRepository->method('readPerformanceByCountry')
             ->willReturn(['theReadPerformanceByCountry']);
-        $mockAdminMetricsRepository->method('readCountryNamesList')
-            ->willReturn(['theReadCountryNamesList']);
         $mockAdminMetricsRepository->method('readDetailedFeedbackTransposition')
             ->willReturn(['theReadDetailedFeedbackTransposition']);
         $mockAdminMetricsRepository->method('readDetailedFeedbackPcStatus')
@@ -66,12 +61,7 @@ class AdminMetricsReaderTest extends TestCase
                 ],
             ]);
 
-        $mockGeoIpResolver = $this->createMock(GeoIpResolver::class);
-        $mockGeoIpResolver->method('resolve')
-            ->with('1.1.1.1')
-            ->willReturn(new GeoIpLocation(new Country('TK', ['en' => 'Turkey'])));
-
-        $sut = new AdminMetricsReader($mockAdminMetricsRepository, $mockBookRepo, $mockGeoIpResolver);
+        $sut = new AdminMetricsReader($mockAdminMetricsRepository, $mockBookRepo);
 
         $expected = [
             'user_count'			=> 123,
@@ -86,7 +76,6 @@ class AdminMetricsReaderTest extends TestCase
             'global_perf_chrono'    => null,
             'feedback'              => [],
             'good_users_chrono'     => null,
-            'countries'				=> ['theReadCountryNamesList'],
             'dfb_transposition'		=> ['theReadDetailedFeedbackTransposition'],
             'dfb_pc_status'			=> ['theReadDetailedFeedbackPcStatus'],
             'dfb_centered_scorerate'=> ['theReadDetailedFeedbackCenteredScoreRate'],

@@ -1,5 +1,6 @@
 @extends('_base')
 @use('App\Support\AdminViewHelpers')
+@use('NeoTransposer\Domain\GeoIp\CountryNames')
 
 @section('content')
 
@@ -351,7 +352,7 @@
 				<td>{!! AdminViewHelpers::feedbackGraph($user['yes'], $user['no']) !!}</td>
 				<td>{{ $user['wizard_lowest_attempts'] }} / {{ $user['wizard_highest_attempts'] }}</td>
 				<td><img src="https://cdn1.iconfinder.com/data/icons/famfamfam_flag_icons/{{ strtolower($user['country']) }}.png" width="16" />&nbsp;
-					{{ $countries[$user['country']] ?? '' }}</td>
+					{{ $user['country'] ? CountryNames::nameOf($user['country']) : '' }}</td>
 			</tr>
 	@endforeach
 		</tbody>

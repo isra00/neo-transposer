@@ -2,8 +2,6 @@
 
 namespace NeoTransposer\Domain\Repository;
 
-use NeoTransposer\Domain\GeoIp\GeoIpResolver;
-
 interface AdminMetricsRepository
 {
     public function readUserCountTotal(): int;
@@ -28,9 +26,7 @@ interface AdminMetricsRepository
 
     public function readGoodUsersChronological(): array;
 
-    public function readCountryNamesList(GeoIpResolver $geoIpResolver): array;
-
-    public function readPerformanceByCountry(GeoIpResolver $geoIpResolver): array;
+    public function readPerformanceByCountry(): array;
 
     public function readDetailedFeedbackTransposition(string $detailedFeedbackDeployed): array;
 

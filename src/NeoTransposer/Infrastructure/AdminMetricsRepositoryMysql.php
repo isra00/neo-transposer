@@ -2,16 +2,13 @@
 
 namespace NeoTransposer\Infrastructure;
 
-use NeoTransposer\Domain\GeoIp\GeoIpNotFoundException;
-use NeoTransposer\Domain\GeoIp\GeoIpResolver;
+use NeoTransposer\Domain\GeoIp\CountryNames;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
 use NeoTransposer\Domain\Service\UnhappinessManager;
 
 final class AdminMetricsRepositoryMysql extends MysqlRepository implements AdminMetricsRepository
 {
-    private $countryNames;
-
     private function selectArrays(string $sql, array $params = []): array
     {
         return array_map(fn ($row) => (array) $row, $this->dbConnection->select($sql, $params));
@@ -329,45 +326,10 @@ SQL;
     }
 
     /**
-     * Get the names of all countries in user.country by geo-locating any IP for
-     * each country.
-     *
-     * @todo This is inherently wrong. Getting country long name from some IP instead of from its short name already
-     *       stored in DB is unreliable, because the IP might now belong to a different country.
-     */
-    public function readCountryNamesList(GeoIpResolver $geoIpResolver): array
-    {
-        if (!empty($this->countryNames)) {
-            return $this->countryNames;
-        }
-
-        // ONLY_FULL_GROUP_BY mode (default in MySQL>5.7) makes the query fail
-        $this->dbConnection->statement("SET @@sql_mode=''");
-        $ips_for_country = $this->selectArrays('SELECT country, register_ip FROM user WHERE NOT country IS NULL GROUP BY country');
-        $country_names = [];
-
-        foreach ($ips_for_country as $ip) {
-            try {
-                if (!is_null($geoIpResolver->resolve($ip['register_ip'])->country()->names())) {
-                    $country_names[$ip['country']] = $geoIpResolver->resolve($ip['register_ip'])->country()->names()['en'];
-                }
-            } catch (GeoIpNotFoundException) {
-                $country_names[$ip['country']] = $ip['country'];
-            }
-        }
-
-        $this->countryNames = $country_names;
-
-        return $country_names;
-    }
-
-    /**
      * @return list<mixed>
      */
-    public function readPerformanceByCountry(GeoIpResolver $geoIpResolver): array
+    public function readPerformanceByCountry(): array
     {
-        $country_names = $this->readCountryNamesList($geoIpResolver);
-
         $sql = <<<'SQL'
 SELECT user.country, COUNT(id_user) total, good
 FROM
@@ -408,7 +370,7 @@ SQL;
 
         $performance = [];
         foreach ($rows as $row) {
-            $row['country_name'] = @$country_names[$row['country']];
+            $row['country_name'] = CountryNames::nameOf($row['country']);
             $row['good_users'] = $goodUsersCountry[$row['country']] ?? 0;
             $performance[] = $row;
         }

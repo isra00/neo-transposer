@@ -9,9 +9,9 @@ final class SongsCollection
      */
     public function __construct(
         /**
-         * assoc array of id_song, slug, page, title
+         * assoc array of stdClass objects
          *
-         * @todo Refactor this should be an array of Song objects
+         * @todo Refactor: this should be an array of Song objects, instead of raw stdClass objects from DB query.
          */
         protected $songs
     ) {
