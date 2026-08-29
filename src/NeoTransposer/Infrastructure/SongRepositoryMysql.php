@@ -45,31 +45,25 @@ SQL;
     }
 
     /**
-     * Factory: get a Song object from the DB
-     *
-     * @param  string  $idSong  Song ID or slug.
-     * @return Song The requested Song object.
-     *
      * @throws SongNotExistException If song does not exist or has an invalid id_book associated.
-     *
-     * @todo Refactor esto. Id or Slug es doble responsabilidad. Solo el controller debería aceptar ambos.
      */
-    public function fetchSongByIdOrSlug(string $idSong): Song
+    public function readSongById(int $idSong): Song
     {
-        $fieldId = 'slug';
+        return $this->readSongByField('id_song', $idSong);
+    }
 
-        if ((string) (int) $idSong === $idSong) {
-            $fieldId = 'id_song';
-            $idSong = (int) $idSong;
-        }
-
-        return $this->readSongByField($fieldId, $idSong);
+    /**
+     * @throws SongNotExistException If song does not exist or has an invalid id_book associated.
+     */
+    public function readSongBySlug(string $slug): Song
+    {
+        return $this->readSongByField('slug', $slug);
     }
 
     /**
      * @throws SongNotExistException
      */
-    public function readSongByField(string $field, $value): Song
+    private function readSongByField(string $field, int|string $value): Song
     {
         /** @refactor SELECT * FROM 2 tablas?? Disgregar lo que hace falta de book y lo que no */
         $songRow = $this->dbConnection->selectOne(

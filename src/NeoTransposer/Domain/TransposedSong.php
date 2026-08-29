@@ -32,9 +32,17 @@ final class TransposedSong
     /**
      * @throws Exception
      */
-    public static function fromDb($idSong): TransposedSong
+    public static function fromDbById(int $idSong): TransposedSong
     {
-        return new self(app(SongRepository::class)->fetchSongByIdOrSlug($idSong));
+        return new self(app(SongRepository::class)->readSongById($idSong));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function fromSlug(string $slug): TransposedSong
+    {
+        return new self(app(SongRepository::class)->readSongBySlug($slug));
     }
 
     /**

@@ -122,7 +122,7 @@ final class WizardEmpiricController extends Controller
         $wizardConfig = config('nt.voice_wizard')[$locale][$wizardConfigSong];
         $user = session('user');
 
-        $transposedSong = TransposedSong::fromDb($wizardConfig['id_song']);
+        $transposedSong = TransposedSong::fromDbById($wizardConfig['id_song']);
         $transposedSong->transpose($user->range, $forceVoiceLimit);
 
         $transposedChords = $transposedSong->transpositionsCentered[0]->chordsForPrint;

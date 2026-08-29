@@ -35,7 +35,10 @@ final class TransposeSongController extends Controller
         }
 
         try {
-            $transposedSong = TransposedSong::fromDb($id_song);
+            // The URL accepts both the song ID and its slug
+            $transposedSong = ctype_digit((string) $id_song)
+                ? TransposedSong::fromDbById((int) $id_song)
+                : TransposedSong::fromSlug((string) $id_song);
         } catch (SongNotExistException) {
             abort(404, "Song $id_song does not exist.");
         }

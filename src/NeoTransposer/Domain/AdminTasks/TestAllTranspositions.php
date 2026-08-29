@@ -78,7 +78,7 @@ final class TestAllTranspositions implements AdminTask
         $allSongs = [];
 
         foreach ($songIds as $idSong) {
-            $song = TransposedSong::fromDb($idSong);
+            $song = TransposedSong::fromDbById($idSong);
 
             $song->transpose(
                 new NotesRange(
