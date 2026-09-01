@@ -33,7 +33,15 @@ final class IpToLocaleResolverTest extends TestCase
             'Italy → it'      => ['IT', 'it'],
             'USA → null'      => ['US', null],
             'UK → null'       => ['GB', null],
-            'France → null'   => ['FR', null],
+            'France → fr'     => ['FR', 'fr'],
+            'Germany → null'  => ['DE', null],
+            'Belgium → fr'    => ['BE', 'fr'],
+            'Switzerland → fr' => ['CH', 'fr'],
+            'Senegal → fr'    => ['SN', 'fr'],
+            'DR Congo → fr'   => ['CD', 'fr'],
+            'Haiti → fr'      => ['HT', 'fr'],
+            'Equatorial Guinea → es (not fr)' => ['GQ', 'es'],
+            'Canada → null'   => ['CA', null],
         ];
     }
 

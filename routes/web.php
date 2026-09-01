@@ -14,6 +14,7 @@ $bookUrls = [
     3 => '/songs-neocatechumenal-way',
     4 => '/cantos-caminho-neocatecumenal',
     5 => '/canti-cammino-neocatecumenale',
+    6 => '/chants-chemin-neocatechumenal',
 ];
 
 foreach ($bookUrls as $bookId => $slug) {
