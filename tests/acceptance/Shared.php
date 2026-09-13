@@ -32,8 +32,8 @@ class Shared
         $I->fillField('email', $faker->email());
         $I->click('sent');
         $I->click('#i-know');
-        $I->selectOption("form select[name=lowest_note]", 'A1');
-        $I->selectOption("form select[name=highest_note]", 'E3');
+        $I->selectOption('form select[name=lowest_note]', 'A1');
+        $I->selectOption('form select[name=highest_note]', 'E3');
         $I->click('form button');
     }
 
@@ -52,7 +52,7 @@ class Shared
         $I->amOnPage('/es/wizard');
         self::removeDebugBar($I);
         $I->click('.gender-selection a[data-show="sub-female"]');
-        $I->click('#sub-female li:nth-child(1) a');
+        $I->click('#sub-female li:nth-child(1) button');
         $I->click('#submit');
     }
 

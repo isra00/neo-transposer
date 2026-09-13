@@ -23,13 +23,13 @@ class FeedbackCest
         Shared::givenASpanishNewUserWithManualRangeInBookPage($I);
         Shared::whenIGoToNthSongAndClickButton($I, 1, '#feedback-yes');
 
-        //Answering "Yes" opens the dialog asking which transposition worked.
+        // Answering "Yes" opens the dialog asking which transposition worked.
         $I->click('#transpositions-feedback li:nth-child(2) .detailed-fb-choice');
         Shared::waitForAjax($I);
 
         $I->reloadPage();
 
-        //Only the first transpositions-list holds two tables, so nth-child(2) is the second centered one.
+        // Only the first transpositions-list holds two tables, so nth-child(2) is the second centered one.
         $I->seeElement('.transpositions-list table.transposition:nth-child(2) .feedback.green');
         $I->dontSeeElement('.transpositions-list table.transposition:nth-child(1) .feedback.green');
     }
@@ -46,7 +46,7 @@ class FeedbackCest
         $I->click('#transpositions-feedback li:nth-child(2) .detailed-fb-choice');
         Shared::waitForAjax($I);
 
-        //The answer buttons are hidden after answering, so reload to change the answer.
+        // The answer buttons are hidden after answering, so reload to change the answer.
         $I->reloadPage();
         Shared::removeDebugBar($I);
         $I->click('#feedback-no');

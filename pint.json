@@ -1,0 +1,24 @@
+{
+    "preset": "laravel",
+    "exclude": [
+        "bootstrap/cache",
+        "storage",
+        "tests/_output",
+        "tests/_support/_generated",
+        "public/adminer"
+    ],
+    "rules": {
+        "not_operator_with_successor_space": false,
+        "concat_space": {
+            "spacing": "one"
+        },
+        "new_with_parentheses": true,
+        "binary_operator_spaces": {
+            "default": "single_space",
+            "operators": {
+                "=>": null
+            }
+        },
+        "single_line_empty_body": false
+    }
+}

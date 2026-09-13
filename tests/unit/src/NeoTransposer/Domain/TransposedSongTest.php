@@ -2,15 +2,16 @@
 
 namespace NeoTransposer\Tests\Domain;
 
-use NeoTransposer\Domain\AutomaticTransposer;
-use NeoTransposer\Domain\AutomaticTransposerFactory;
+use Illuminate\Foundation\Testing\TestCase;
+use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\PeopleCompatibleCalculation;
 use NeoTransposer\Domain\TransposedSong;
+use NeoTransposer\Domain\Transposer;
+use NeoTransposer\Domain\TransposerFactory;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Illuminate\Foundation\Testing\TestCase;
 
 final class TransposedSongTest extends TestCase
 {
@@ -34,9 +35,11 @@ final class TransposedSongTest extends TestCase
                 'people_highest_note' => 'testPeopleHighest',
                 'chord_printer'       => 'testChordPrinter',
                 'locale'              => 'testLocale',
-                'url'                 => 'testUrl'
+                'url'                 => 'testUrl',
+
+                'artistic_adjustment' => null,
             ],
-            ["Am", "Dm"]
+            ['Am', 'Dm']
         );
 
         $song->originalChordsForPrint = $this->printedChordSet;
@@ -46,32 +49,33 @@ final class TransposedSongTest extends TestCase
 
     protected function buildTransposition(): Transposition
     {
-        $transposition = (new TranspositionFactory())->createTransposition(["Em", "Am"]);
+        $transposition = (new TranspositionFactory())->createTransposition(['Em', 'Am']);
         $transposition->chordsForPrint = $this->printedChordSet;
+
         return $transposition;
     }
 
-    public function testTransposeNoForceNoNotEquivalentNotPeopleCompatible(): void
+    public function test_transpose_no_force_no_not_equivalent_not_people_compatible(): void
     {
-        $mockAutomaticTransposer = $this->createMock(AutomaticTransposer::class);
+        $mockTransposer = $this->createMock(Transposer::class);
 
-        $mockAutomaticTransposer->expects($this->once())
+        $mockTransposer->expects($this->once())
             ->method('getTranspositionsCentered')
             ->willReturn([$this->buildTransposition()]);
-        $mockAutomaticTransposer->expects($this->once())
+        $mockTransposer->expects($this->once())
             ->method('getEasierNotEquivalent')
             ->willReturn(null);
-        $mockAutomaticTransposer->expects($this->once())
+        $mockTransposer->expects($this->once())
             ->method('calculatePeopleCompatible')
             ->willReturn(new PeopleCompatibleCalculation(PeopleCompatibleCalculation::NO_PEOPLE_RANGE_DATA, null));
 
-        $mockAutomaticTransposerFactory = $this->createMock(AutomaticTransposerFactory::class);
-        $mockAutomaticTransposerFactory->method('createAutomaticTransposer')
-            ->willReturn($mockAutomaticTransposer);
+        $mockTransposerFactory = $this->createMock(TransposerFactory::class);
+        $mockTransposerFactory->method('createTransposer')
+            ->willReturn($mockTransposer);
 
-        $this->app->instance(AutomaticTransposerFactory::class, $mockAutomaticTransposerFactory);
+        $this->app->instance(TransposerFactory::class, $mockTransposerFactory);
 
-        $mockPrinter = $this->createMock(\NeoTransposer\Domain\ChordPrinter\ChordPrinter::class);
+        $mockPrinter = $this->createMock(ChordPrinter::class);
         $mockPrinter->method('printChordset')
             ->willReturn($this->printedChordSet);
 
@@ -81,11 +85,10 @@ final class TransposedSongTest extends TestCase
 
         $this->sut = new TransposedSong($this->buildSong());
         $this->sut->transpose(new NotesRange('A1', 'E3'));
-        $this->assertEquals([$this->buildTransposition()], $this->sut->transpositions);
-        $this->assertEquals(null, $this->sut->not_equivalent);
+        $this->assertEquals([$this->buildTransposition()], $this->sut->transpositionsCentered);
+        $this->assertEquals(null, $this->sut->transpositionEasierNotEquivalent);
 
-        //Testing prepareForPrint()
+        // Testing prepareForPrint()
         $this->assertEquals($this->printedChordSet, $this->sut->song->originalChordsForPrint);
     }
-
 }

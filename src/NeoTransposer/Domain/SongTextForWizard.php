@@ -12,15 +12,14 @@ final class SongTextForWizard
          * Lyrics and chord placeholders (%0, %1...), as fetched from config file.
          */
         protected string $rawText
-    )
-    {
+    ) {
     }
 
     /**
      * Place the given chords in a song text with placeholders
      *
-     * @param array $chords Chords ready to be printed.
-     * @return string            HTML song text with chords.
+     * @param  array  $chords  Chords ready to be printed.
+     * @return string HTML song text with chords.
      *
      * @see    config.wizard.php
      */

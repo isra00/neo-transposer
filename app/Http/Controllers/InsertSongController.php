@@ -21,7 +21,7 @@ final class InsertSongController extends Controller
     {
         $songChords = array_values(array_filter(
             $request->get('chords', []),
-            fn($chord) => (string) $chord !== ''
+            fn ($chord) => (string) $chord !== ''
         ));
 
         $songCreator->createSong(

@@ -40,9 +40,9 @@ final class TestAllTranspositions implements AdminTask
 
         foreach ($testResult as $idSong => $result) {
             if (isset($testData['expectedResults'][$idSong]) && $difference = $this->diffTestResults(
-                    $result,
-                    $testData['expectedResults'][$idSong]
-                )) {
+                $result,
+                $testData['expectedResults'][$idSong]
+            )) {
                 $output .= "\n<strong>Song #$idSong</strong>\n";
                 foreach ($difference as $property => $resultValue) {
                     if (is_array($resultValue)) {
@@ -53,9 +53,9 @@ final class TestAllTranspositions implements AdminTask
                     } elseif (isset($testData['expectedResults'][$idSong][$property])) {
                         if (is_array($testData['expectedResults'][$idSong][$property])) {
                             $testData['expectedResults'][$idSong][$property] = '[' . implode(
-                                    '; ',
-                                    $testData['expectedResults'][$idSong][$property]
-                                ) . ']';
+                                '; ',
+                                $testData['expectedResults'][$idSong][$property]
+                            ) . ']';
                         }
                         $output .= "$property: expected <em>" . ($testData['expectedResults'][$idSong][$property]) . '</em> but got <em>' . $resultValue . "</em>\n";
                     } else {
@@ -78,7 +78,7 @@ final class TestAllTranspositions implements AdminTask
         $allSongs = [];
 
         foreach ($songIds as $idSong) {
-            $song = TransposedSong::fromDb($idSong);
+            $song = TransposedSong::fromDbById($idSong);
 
             $song->transpose(
                 new NotesRange(
@@ -97,32 +97,32 @@ final class TestAllTranspositions implements AdminTask
                 'songLowestNote'  => $transposedSong->song->range->lowest,
                 'songHighestNote' => $transposedSong->song->range->highest,
                 'centered1'       => [
-                    'offset'      => $transposedSong->transpositions[0]->offset,
-                    'lowestNote'  => $transposedSong->transpositions[0]->range->lowest,
-                    'highestNote' => $transposedSong->transpositions[0]->range->highest,
-                    'score'       => $transposedSong->transpositions[0]->score,
-                    'capo'        => $transposedSong->transpositions[0]->getCapo(),
-                    'chords'      => implode(',', $transposedSong->transpositions[0]->chords)
+                    'offset'      => $transposedSong->transpositionsCentered[0]->offset,
+                    'lowestNote'  => $transposedSong->transpositionsCentered[0]->range->lowest,
+                    'highestNote' => $transposedSong->transpositionsCentered[0]->range->highest,
+                    'score'       => $transposedSong->transpositionsCentered[0]->score,
+                    'capo'        => $transposedSong->transpositionsCentered[0]->getCapo(),
+                    'chords'      => implode(',', $transposedSong->transpositionsCentered[0]->chords),
                 ],
                 'centered2'       => [
-                    'offset'      => $transposedSong->transpositions[1]->offset,
-                    'lowestNote'  => $transposedSong->transpositions[1]->range->lowest,
-                    'highestNote' => $transposedSong->transpositions[1]->range->highest,
-                    'score'       => $transposedSong->transpositions[1]->score,
-                    'capo'        => $transposedSong->transpositions[1]->getCapo(),
-                    'chords'      => implode(',', $transposedSong->transpositions[1]->chords)
-                ]
+                    'offset'      => $transposedSong->transpositionsCentered[1]->offset,
+                    'lowestNote'  => $transposedSong->transpositionsCentered[1]->range->lowest,
+                    'highestNote' => $transposedSong->transpositionsCentered[1]->range->highest,
+                    'score'       => $transposedSong->transpositionsCentered[1]->score,
+                    'capo'        => $transposedSong->transpositionsCentered[1]->getCapo(),
+                    'chords'      => implode(',', $transposedSong->transpositionsCentered[1]->chords),
+                ],
             ];
 
-            if ($transposedSong->not_equivalent) {
+            if ($transposedSong->transpositionEasierNotEquivalent) {
                 $testResult[$transposedSong->song->idSong]['notEquivalent'] = [
-                    'offset'                => $transposedSong->not_equivalent->offset,
-                    'lowestNote'            => $transposedSong->not_equivalent->range->lowest,
-                    'highestNote'           => $transposedSong->not_equivalent->range->highest,
-                    'score'                 => $transposedSong->not_equivalent->score,
-                    'capo'                  => $transposedSong->not_equivalent->getCapo(),
-                    'deviationFromCentered' => $transposedSong->not_equivalent->deviationFromCentered,
-                    'chords'                => implode(',', $transposedSong->not_equivalent->chords),
+                    'offset'                => $transposedSong->transpositionEasierNotEquivalent->offset,
+                    'lowestNote'            => $transposedSong->transpositionEasierNotEquivalent->range->lowest,
+                    'highestNote'           => $transposedSong->transpositionEasierNotEquivalent->range->highest,
+                    'score'                 => $transposedSong->transpositionEasierNotEquivalent->score,
+                    'capo'                  => $transposedSong->transpositionEasierNotEquivalent->getCapo(),
+                    'deviationFromCentered' => $transposedSong->transpositionEasierNotEquivalent->deviationFromCentered,
+                    'chords'                => implode(',', $transposedSong->transpositionEasierNotEquivalent->chords),
                 ];
             }
 
@@ -161,6 +161,7 @@ final class TestAllTranspositions implements AdminTask
         foreach (array_intersect_key($actual, array_flip($arrayProperties)) as $type => $transposition) {
             if (!isset($expected[$type])) {
                 $transpositionsDiff[$type] = '[unexpected]';
+
                 continue;
             }
 

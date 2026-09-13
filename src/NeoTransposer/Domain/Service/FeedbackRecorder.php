@@ -38,6 +38,6 @@ final class FeedbackRecorder
 
         $user->setPerformance($this->feedbackRepository->readUserPerformance($user->id_user));
 
-		$this->unhappyUser->setUnhappy($user);
+        $this->unhappyUser->setUnhappy($user);
     }
 }

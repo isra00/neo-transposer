@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\Pool;
 
 class TestSongUrlsCommand extends Command
 {
@@ -33,10 +33,11 @@ class TestSongUrlsCommand extends Command
 
         if ($songs->isEmpty()) {
             $this->error('No songs with URLs found in the database.');
+
             return self::FAILURE;
         }
 
-        $this->info("Checking {$songs->count()} song URLs (" . self::CONCURRENT_REQUESTS . " concurrent)...");
+        $this->info("Checking {$songs->count()} song URLs (" . self::CONCURRENT_REQUESTS . ' concurrent)...');
 
         $broken = [];
         $blocked = [];
@@ -58,6 +59,7 @@ class TestSongUrlsCommand extends Command
                 if ($response instanceof \Throwable) {
                     $broken[] = "#{$song->id_song} \"{$song->title}\": {$response->getMessage()} — {$song->url}";
                     $this->output->write('<fg=red>F</>');
+
                     continue;
                 }
 
@@ -97,7 +99,7 @@ class TestSongUrlsCommand extends Command
     }
 
     /**
-     * @param array<int, array{host: string, status: int}> $blocked
+     * @param  array<int, array{host: string, status: int}>  $blocked
      */
     private function reportBlocked(array $blocked): void
     {
@@ -121,7 +123,7 @@ class TestSongUrlsCommand extends Command
     }
 
     /**
-     * @param array<int, string> $broken
+     * @param  array<int, string>  $broken
      */
     private function reportBroken(array $broken): void
     {

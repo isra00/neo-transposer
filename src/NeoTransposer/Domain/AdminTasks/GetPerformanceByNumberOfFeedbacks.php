@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\DB;
 
 final class GetPerformanceByNumberOfFeedbacks implements AdminTask
 {
-	public function run(): string
-	{
-		$sql = <<<SQL
+    public function run(): string
+    {
+        $sql = <<<'SQL'
 select fbs AS num_of_fbs, count(fbs) AS num_of_users, avg(performance) AS avg_perf
 from (
  SELECT id_user, count(*) fbs, sum(worked) / count(*) as performance
@@ -19,13 +19,12 @@ from (
 group by fbs
 order by fbs desc
 SQL;
-		$data = DB::select($sql);
-		$output = "# of FBs,# of users,AVG performance\n";
-		foreach ($data as $row)
-		{
-			$output .= implode(',', (array) $row) . "\n";
-		}
+        $data = DB::select($sql);
+        $output = "# of FBs,# of users,AVG performance\n";
+        foreach ($data as $row) {
+            $output .= implode(',', (array) $row) . "\n";
+        }
 
-		return $output;
-	}
+        return $output;
+    }
 }

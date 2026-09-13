@@ -2,14 +2,14 @@
 
 namespace NeoTransposer\Tests\Domain;
 
+use Illuminate\Foundation\Testing\TestCase;
 use NeoTransposer\Domain\Transposition;
 use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Illuminate\Foundation\Testing\TestCase;
 
 class TranspositionFactoryTest extends TestCase
 {
-    public function testCreateTransposition()
+    public function test_create_transposition()
     {
         $chordsScoreConfig = config('nt.chord_scores');
 

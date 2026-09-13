@@ -18,54 +18,54 @@ class UnhappyUserRepositoryMysqlTest extends MysqlRepositoryTest
         $this->unhappyUserRepositoryMysql = new UnhappyUserRepositoryMysql();
     }
 
-    public function testReadUserIsUnhappy()
+    public function test_read_user_is_unhappy()
     {
         $idUser = $this->faker->randomNumber();
         DB::table('unhappy_user')->insert(['id_user' => $idUser]);
         $this->assertTrue($this->unhappyUserRepositoryMysql->readUserIsUnhappy($idUser));
     }
 
-    public function testReadUserIsUnhappyNotUnhappy()
+    public function test_read_user_is_unhappy_not_unhappy()
     {
         $this->assertFalse($this->unhappyUserRepositoryMysql->readUserIsUnhappy($this->faker->randomNumber()));
     }
 
-    public function testReadUserIsUnhappyAndNoAction()
+    public function test_read_user_is_unhappy_and_no_action()
     {
         $idUser = $this->faker->randomNumber();
         DB::table('unhappy_user')->insert(['id_user' => $idUser, 'took_action' => null]);
         $this->assertTrue($this->unhappyUserRepositoryMysql->readUserIsUnhappyAndNoAction($idUser));
     }
 
-    public function testReadUserIsUnhappyAndNoActionWithAction()
+    public function test_read_user_is_unhappy_and_no_action_with_action()
     {
         $idUser = $this->faker->randomNumber();
         DB::table('unhappy_user')->insert(['id_user' => $idUser, 'took_action' => $this->faker->dateTime()->format('Y-m-d H:i:s')]);
         $this->assertFalse($this->unhappyUserRepositoryMysql->readUserIsUnhappyAndNoAction($idUser));
     }
 
-    public function testReadUserIsUnhappyAndNoActionUserNotUnhappy()
+    public function test_read_user_is_unhappy_and_no_action_user_not_unhappy()
     {
         $this->assertFalse($this->unhappyUserRepositoryMysql->readUserIsUnhappyAndNoAction($this->faker->randomNumber()));
     }
 
-    public function testWriteUnhappyUserPreviouslyNotUnhappy()
+    public function test_write_unhappy_user_previously_not_unhappy()
     {
         $idUser = $this->faker->randomNumber();
         $this->unhappyUserRepositoryMysql->writeUnhappyUser($idUser);
         $this->assertDatabaseHas('unhappy_user', ['id_user' => $idUser]);
     }
 
-    public function testWriteUnhappyUserPreviouslyUnhappy()
+    public function test_write_unhappy_user_previously_unhappy()
     {
         $idUser = $this->faker->randomNumber();
         DB::table('unhappy_user')->insert(['id_user' => $idUser]);
         $this->unhappyUserRepositoryMysql->writeUnhappyUser($idUser);
         $this->assertDatabaseHas('unhappy_user', ['id_user' => $idUser]);
-        //Should catch the UniqueConstraintViolationException and do nothing
+        // Should catch the UniqueConstraintViolationException and do nothing
     }
 
-    public function testDeleteExisting()
+    public function test_delete_existing()
     {
         $idUser = $this->faker->randomNumber();
         DB::table('unhappy_user')->insert(['id_user' => $idUser]);
@@ -73,12 +73,12 @@ class UnhappyUserRepositoryMysqlTest extends MysqlRepositoryTest
         $this->assertDatabaseMissing('unhappy_user', ['id_user' => $idUser]);
     }
 
-    public function testDeleteNonExisting()
+    public function test_delete_non_existing()
     {
         $this->unhappyUserRepositoryMysql->delete($this->faker->randomNumber());
     }
 
-    public function testUpdateUnhappyUserExisting()
+    public function test_update_unhappy_user_existing()
     {
         $idUser = $this->faker->randomNumber();
         DB::table('unhappy_user')->insert(['id_user' => $idUser]);
@@ -86,7 +86,7 @@ class UnhappyUserRepositoryMysqlTest extends MysqlRepositoryTest
         $this->assertDatabaseHas('unhappy_user', ['id_user' => $idUser, 'action' => 'std_male', 'perf_before_action' => 0.5]);
     }
 
-    public function testUpdateUnhappyUserNonExisting()
+    public function test_update_unhappy_user_non_existing()
     {
         $idUser = $this->faker->randomNumber();
         $this->unhappyUserRepositoryMysql->updateUnhappyUser('std_male', 0.5, $idUser);

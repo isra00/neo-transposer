@@ -7,45 +7,46 @@ use NeoTransposer\Domain\Repository\SongRepository;
 
 final class SitemapController extends Controller
 {
-	public function get(BookRepository $bookRepository, SongRepository $songRepository)
-	{
-		$urls = [];
+    public function get(BookRepository $bookRepository, SongRepository $songRepository)
+    {
+        $urls = [];
 
-		$languages = array_keys(config('nt.languages'));
+        $languages = array_keys(config('nt.languages'));
 
-		foreach ($languages as $lang)
-		{
-			$urls[] = [
-				'loc' => route('login', ['locale' => $lang]),
-			];
+        foreach ($languages as $lang) {
+            $urls[] = [
+                'loc' => route('login', ['locale' => $lang]),
+            ];
 
-			$urls[] = [
-				'loc' => route('people-compatible-info', ['locale' => $lang]),
-			];
+            $urls[] = [
+                'loc' => route('people-compatible-info', ['locale' => $lang]),
+            ];
 
-			$urls[] = [
-				'loc' => url('/es/manifesto'),
-			];
-		}
+            $urls[] = [
+                'loc' => url('/es/manifesto'),
+            ];
+        }
 
-		$books = $bookRepository->readAllBooks();
-		foreach ($books as $book)
-		{
-			$urls[] = [
-				'loc' => route('book_' . $book->idBook()),
-			];
-		}
+        $publishedBooks = $bookRepository->readPublishedBooks();
+        foreach ($publishedBooks as $book) {
+            $urls[] = [
+                'loc' => route('book_' . $book->idBook()),
+            ];
+        }
 
-		$songs = $songRepository->readAllSongs();
+        $songs = $songRepository->readAllSongs();
 
-		foreach ($songs as $song)
-		{
-			$urls[] = [
-				'loc' => route('transpose_song', ['id_song' => $song['slug']]),
-			];
-		}
+        foreach ($songs as $song) {
+            if (!isset($publishedBooks[$song['id_book']])) {
+                continue;
+            }
 
-		return response()->view('sitemap', ['urls' => $urls])
-			->header('Content-Type', 'application/xml');
-	}
+            $urls[] = [
+                'loc' => route('transpose_song', ['id_song' => $song['slug']]),
+            ];
+        }
+
+        return response()->view('sitemap', ['urls' => $urls])
+            ->header('Content-Type', 'application/xml');
+    }
 }

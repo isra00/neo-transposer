@@ -2,15 +2,15 @@
 
 namespace NeoTransposer\Tests\Domain;
 
-use NeoTransposer\Domain\SongTextForWizard;
 use Illuminate\Foundation\Testing\TestCase;
+use NeoTransposer\Domain\SongTextForWizard;
 
 class SongTextForWizardTest extends TestCase
 {
     /**
      * @dataProvider providerGetHtmlTextWithChords
      */
-    public function testGetHtmlTextWithChords($text, $chords, $expectedOutput)
+    public function test_get_html_text_with_chords($text, $chords, $expectedOutput)
     {
         $sut = new SongTextForWizard($text);
         $this->assertEquals($expectedOutput, $sut->getHtmlTextWithChords($chords));
@@ -20,7 +20,7 @@ class SongTextForWizardTest extends TestCase
     {
         return [
             [
-                <<<SONG
+                <<<'SONG'
 %0                 %1
 YAHVEH, TÚ ERES MI DIOS,
 
@@ -29,7 +29,7 @@ YO TE ENSALZARÉ.
 SONG
                 ,
                 ['<span class="chord-sans">Mi-</span>', '<span class="chord-sans">Si7</span>'],
-                <<<HTML
+                <<<'HTML'
 <span class="chord-sans">Mi-</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="chord-sans">Si7</span><br>
 YAHVEH,&nbsp;TÚ&nbsp;ERES&nbsp;MI&nbsp;DIOS,<br>
 <br>
@@ -38,7 +38,7 @@ YO&nbsp;TE&nbsp;ENSALZARÉ.
 HTML
             ],
             [
-                <<<SONG
+                <<<'SONG'
 %0                  %1     %2
 SI EL SEÑOR NO CONSTRUYE LA CASA,
 
@@ -47,14 +47,14 @@ EN VANO SE CANSAN LOS CONSTRUCTORES
 SONG
                 ,
                 ['<span class="chord-sans">Do</span>', '<span class="chord-sans">La-</span>', '<span class="chord-sans">Fa</span>', '<span class="chord-sans">Sol</span>'],
-                <<<HTML
+                <<<'HTML'
 <span class="chord-sans">Do</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="chord-sans">La-</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="chord-sans">Fa</span><br>
 SI&nbsp;EL&nbsp;SEÑOR&nbsp;NO&nbsp;CONSTRUYE&nbsp;LA&nbsp;CASA,<br>
 <br>
 &nbsp;&nbsp;&nbsp;<span class="chord-sans">Sol</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="chord-sans">Do</span><br>
 EN&nbsp;VANO&nbsp;SE&nbsp;CANSAN&nbsp;LOS&nbsp;CONSTRUCTORES
 HTML
-            ]
+            ],
         ];
     }
 }

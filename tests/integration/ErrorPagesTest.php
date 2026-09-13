@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 final class ErrorPagesTest extends TestCase
 {
-    public function test404RendersErrorViewWithErrorPageBodyClass(): void
+    public function test404_renders_error_view_with_error_page_body_class(): void
     {
         $response = $this->get('/definitely-not-a-real-route');
 
@@ -17,7 +17,7 @@ final class ErrorPagesTest extends TestCase
         $response->assertSee('The address you have requested does not exist, or has been removed.');
     }
 
-    public function test404LocalizesFromAcceptLanguageHeader(): void
+    public function test404_localizes_from_accept_language_header(): void
     {
         $response = $this->withHeaders(['Accept-Language' => 'es-ES,es;q=0.9'])
             ->get('/definitely-not-a-real-route');
@@ -32,7 +32,7 @@ final class ErrorPagesTest extends TestCase
      * login page, which is also the landing page and so gets left open in tabs. Aborting
      * stands in for the token mismatch, which ValidateCsrfToken suppresses under tests.
      */
-    public function test419RendersErrorViewInsteadOfTheFrameworkPageExpiredScreen(): void
+    public function test419_renders_error_view_instead_of_the_framework_page_expired_screen(): void
     {
         config(['app.debug' => false]);
 
@@ -45,7 +45,7 @@ final class ErrorPagesTest extends TestCase
         $response->assertSee('Your session has expired');
     }
 
-    public function test419LocalizesFromAcceptLanguageHeader(): void
+    public function test419_localizes_from_accept_language_header(): void
     {
         config(['app.debug' => false]);
 
@@ -58,7 +58,7 @@ final class ErrorPagesTest extends TestCase
         $response->assertSee('Tu sesión ha expirado');
     }
 
-    public function test500RendersErrorViewWhenDebugDisabled(): void
+    public function test500_renders_error_view_when_debug_disabled(): void
     {
         config(['app.debug' => false]);
 

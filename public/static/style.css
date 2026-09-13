@@ -1139,12 +1139,16 @@ summary.show-voice-chart::-webkit-details-marker {
 	padding: 0;
 	margin: 0;
 }
-	.sub-gender-selection a {
+	.sub-gender-selection button {
 		display: block;
+		width: 100%;
 		margin-bottom: .6em;
 		padding: .5em .5em;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
 	}
-	.sub-gender-selection a::after {
+	.sub-gender-selection button::after {
 		content: " →";
 	}
 
@@ -1670,6 +1674,455 @@ h2.step-1 {
 
 .insert-song input:invalid {
 	border: 1px solid red;
+}
+
+/*
+ * SONG COMPARISON
+ */
+.songbook-comparison-page .main {
+    width: auto;
+    margin: 1em;
+}
+
+.songbook-comparison {
+    --sc-same:    #3F863F;
+    --sc-range:   #b8860b;
+    --sc-key:     #e07b00;
+    --sc-chords:  #D32F2F;
+
+    --sc-same-bg:   #eef7ee;
+    --sc-range-bg:  #fdf6e3;
+    --sc-key-bg:    #fdf1e3;
+    --sc-chords-bg: #fdecea;
+}
+
+.sc-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: .75rem 1.25rem;
+    margin-bottom: .75rem;
+}
+
+.sc-controls fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.sc-controls legend {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #666;
+    padding: 0;
+}
+
+.sc-books {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+}
+
+.sc-books legend {
+    width: 100%;
+}
+
+.sc-book-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .3em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    padding: .15em .7em .15em .5em;
+    cursor: pointer;
+    background: #fff;
+    white-space: nowrap;
+}
+
+.sc-book-toggle:has(input:checked) {
+    border-color: #D32F2F;
+    background: #fdeceb;
+    font-weight: bold;
+}
+
+.sc-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .4rem .5rem;
+    font-size: .8rem;
+    margin: 0 0 .5rem;
+}
+
+.sc-legend-item {
+    border-radius: .25em;
+    padding: .1em .6em;
+    border-left: 4px solid transparent;
+}
+
+.sc-legend-note {
+    color: #666;
+    margin-left: auto;
+}
+
+/* No inner scroller: the table is as wide as the page and scrolls with it. */
+.sc-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: .85rem;
+}
+
+.sc-table th,
+.sc-table td {
+    border-bottom: 1px solid #e4e4e4;
+    vertical-align: top;
+    text-align: left;
+    padding: .4rem .5rem;
+}
+
+.sc-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #f3f3f3;
+    border-bottom: 2px solid #ccc;
+}
+
+.sc-table thead th small {
+    display: block;
+    font-weight: normal;
+    color: #666;
+}
+
+.sc-col-song {
+    width: 18%;
+}
+
+.sc-name {
+    display: block;
+    font-weight: bold;
+    line-height: 1.25;
+}
+
+.sc-has-note {
+    border-bottom: 1px dotted #aaa;
+    cursor: help;
+}
+
+.sc-row-flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25em;
+    margin-top: .2em;
+    font-weight: normal;
+}
+
+.sc-count {
+    font-size: .72rem;
+    color: #555;
+    background: #eee;
+    border-radius: .25em;
+    padding: 0 .4em;
+}
+
+.sc-count-missing {
+    background: #e4e4e4;
+    color: #222;
+    font-weight: bold;
+}
+
+.sc-flag {
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    border-radius: .25em;
+    padding: 0 .4em;
+    border-left: 4px solid transparent;
+}
+
+/* The status colours, shared by the legend, the row flags and the cells. */
+.sc-is-same    { background: var(--sc-same-bg);   border-left-color: var(--sc-same);   color: #2c5f2c; }
+.sc-is-range   { background: var(--sc-range-bg);  border-left-color: var(--sc-range);  color: #7a5c00; }
+.sc-is-key     { background: var(--sc-key-bg);    border-left-color: var(--sc-key);    color: #8a4b00; }
+.sc-is-chords  { background: var(--sc-chords-bg); border-left-color: var(--sc-chords); color: #9c2320; }
+
+.sc-is-alone   { background: #f1f1f1;             border-left-color: #999;             color: #555; }
+
+.sc-row.sc-is-alone > .sc-col-song { border-left-color: #bbb; }
+
+.sc-legend-item.sc-is-absent,
+td.sc-cell.sc-is-absent {
+    background: repeating-linear-gradient(-45deg, #fafafa, #fafafa 5px, #f0f0f0 5px, #f0f0f0 10px);
+    border-left-color: #ccc;
+    color: #999;
+}
+
+/* A row is tinted by its worst difference, so scanning the first column
+   alone tells you how far the books drift apart. */
+.sc-row > .sc-col-song {
+    border-left: 5px solid transparent;
+}
+
+.sc-row.sc-is-same   > .sc-col-song { border-left-color: var(--sc-same); }
+.sc-row.sc-is-range  > .sc-col-song { border-left-color: var(--sc-range); }
+.sc-row.sc-is-key    > .sc-col-song { border-left-color: var(--sc-key); }
+.sc-row.sc-is-chords > .sc-col-song { border-left-color: var(--sc-chords); }
+
+.sc-table tbody tr:hover th,
+.sc-table tbody tr:hover td {
+    background-color: #fffdf3;
+}
+
+.sc-cell {
+    border-left: 1px solid #eee;
+}
+
+.sc-not-in-book {
+    color: #bbb;
+}
+
+.sc-song + .sc-song {
+    margin-top: .4rem;
+    padding-top: .4rem;
+    border-top: 1px dashed #ddd;
+}
+
+.sc-song {
+    border-radius: .25em;
+    padding: .1em .3em;
+    margin: -.1em -.3em;
+}
+
+/* A cell that matches the reference says only that, in green. */
+.sc-song.sc-is-same    { background: var(--sc-same-bg); }
+.sc-song.sc-is-range   { background: var(--sc-range-bg); }
+.sc-song.sc-is-key     { background: var(--sc-key-bg); }
+.sc-song.sc-is-chords  { background: var(--sc-chords-bg); }
+
+.sc-song.sc-is-reference {
+    background: #fff;
+    box-shadow: inset 3px 0 0 #999;
+    padding-left: .5em;
+}
+
+.sc-title {
+    display: block;
+    line-height: 1.25;
+}
+
+.sc-same-mark {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--sc-same);
+}
+
+.sc-facts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .2em .3em;
+    margin-top: .15em;
+    font-size: .78rem;
+}
+
+.sc-chip,
+.sc-fact {
+    border-radius: .25em;
+    padding: 0 .35em;
+    border-left: 3px solid transparent;
+    white-space: nowrap;
+    background: #f0f0f0;
+    color: #555;
+}
+
+.sc-chip {
+    font-weight: bold;
+}
+
+.sc-chip i {
+    font-style: normal;
+    opacity: .6;
+}
+
+.sc-facts b {
+    font-variant-numeric: tabular-nums;
+}
+
+/* How far apart the two books are, not merely that they differ. */
+.sc-mag-low  { opacity: .85; }
+.sc-mag-mid  { font-weight: bold; }
+.sc-mag-high { font-weight: bold; box-shadow: inset 0 0 0 1px currentColor; }
+
+.sc-fact abbr {
+    text-decoration: none;
+    opacity: .6;
+}
+
+.sc-fact-people {
+    opacity: .85;
+}
+
+/* Twelve slots, one per semitone above the song's own tone: two books with
+   the same progression in different keys draw the same shape. */
+.sc-degrees {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px 3px;
+    border-radius: .25em;
+    background: #fff;
+    border: 1px solid var(--sc-chords);
+}
+
+.sc-degrees i {
+    display: block;
+    width: .5em;
+    height: .75em;
+    border-radius: 1px;
+    background: #e4e4e4;
+}
+
+.sc-degrees i.on {
+    background: var(--sc-chords);
+}
+
+.sc-empty {
+    margin-top: 1rem;
+    color: #666;
+}
+
+
+/* Edit song page: the form on the left, the songbook page image and the recording on the right,
+   so a song can be checked against its own sheet without scrolling or tab-switching. */
+.edit-song-page .main {
+    width: auto;
+    margin: 0 1em 1em;
+    max-width: none;
+}
+
+.edit-song-page h1 {
+    margin: .5em 0 .3em;
+}
+
+.edit-song-page .song-picker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 1.5em;
+    padding: .5em .8em;
+    background: #efefef;
+    border-radius: .3em;
+}
+
+.edit-song-page .song-picker form,
+.edit-song-page .song-picker p {
+    display: flex;
+    align-items: center;
+    gap: .4em;
+    margin: .3em 0;
+}
+
+.edit-song-page .song-picker select {
+    max-width: 22em;
+}
+
+.edit-song-page .song-nav {
+    margin-left: auto;
+}
+
+.edit-song-page .song-nav a {
+    margin-left: .5em;
+}
+
+/* row-reverse, not a markup swap: it puts the songbook page image on the left and the form on the
+   right, while wrapping still stacks the form first on a narrow screen. */
+.edit-song-page .edit-song-layout {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.5em;
+    margin-top: 1em;
+}
+
+.edit-song-page .edit-song {
+    flex: 1 1 22em;
+    min-width: 20em;
+    max-width: 100%;
+}
+
+.edit-song-page .edit-song p {
+    margin: .6em 0;
+}
+
+.edit-song-page .edit-song small {
+    display: block;
+    color: #666;
+}
+
+.edit-song-page .edit-song .song-id {
+    color: #666;
+}
+
+.edit-song-page .edit-song .submit-row {
+    display: flex;
+    gap: .8em;
+    margin-top: 1.2em;
+}
+
+.edit-song-page .song-media {
+    flex: 2 1 30em;
+    min-width: 20em;
+    max-width: 100%;
+    position: sticky;
+    top: 1em;
+}
+
+.edit-song-page .song-media h3 {
+    margin: 0 0 .4em;
+}
+
+.edit-song-page .song-media audio {
+    width: 100%;
+    margin-bottom: .8em;
+}
+
+/* An explicit height, not a flex-grown one: the songbook page images size themselves off
+   it with max-height, and a percentage only resolves against a definite height.
+   The offset covers the header, title and picker above, plus the player. */
+.edit-song-page .songbook-page-image {
+    width: 100%;
+    height: calc(100vh - 19rem);
+    min-height: 20em;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+/* One image per songbook page, each scaled down to fit the height in full.
+   Several pages sit side by side and scroll horizontally. */
+.edit-song-page .songbook-page-images {
+    display: flex;
+    align-items: flex-start;
+    gap: .5em;
+    overflow: auto;
+    box-sizing: border-box;
+    padding: .5em;
+}
+
+.edit-song-page .songbook-page-images img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+@media only screen and (max-width: 60rem) {
+    .edit-song-page .song-media {
+        position: static;
+    }
 }
 
 .error-page {

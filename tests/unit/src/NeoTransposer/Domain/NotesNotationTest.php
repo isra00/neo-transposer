@@ -1,10 +1,11 @@
 <?php
+
 /** @noinspection ReturnTypeCanBeDeclaredInspection */
 
 namespace NeoTransposer\Tests\Domain;
 
-use NeoTransposer\Domain\NotesNotation;
 use Illuminate\Foundation\Testing\TestCase;
+use NeoTransposer\Domain\NotesNotation;
 
 class NotesNotationTest extends TestCase
 {
@@ -13,18 +14,18 @@ class NotesNotationTest extends TestCase
      */
     protected $notesNotation;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->notesNotation = new NotesNotation();
     }
 
-    public function testGetNotation()
+    public function test_get_notation()
     {
         $this->assertEquals('Do', $this->notesNotation->getNotation('C', 'latin'));
     }
 
-    public function testGetVoiceRangeAsString()
+    public function test_get_voice_range_as_string()
     {
         $this->assertEquals(
             'A &rarr; A +1 oct',
@@ -32,7 +33,7 @@ class NotesNotationTest extends TestCase
         );
     }
 
-    public function testGetVoiceRangeAsStringLatinNotation()
+    public function test_get_voice_range_as_string_latin_notation()
     {
         $this->assertEquals(
             'La &rarr; La +1 oct',

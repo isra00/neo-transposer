@@ -2,20 +2,17 @@
 
 namespace NeoTransposer\Tests\Domain\Service;
 
-use NeoTransposer\Domain\GeoIp\Country;
-use NeoTransposer\Domain\GeoIp\GeoIpLocation;
-use NeoTransposer\Domain\GeoIp\GeoIpResolver;
+use Illuminate\Foundation\Testing\TestCase;
 use NeoTransposer\Domain\Repository\AdminMetricsRepository;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Service\AdminMetricsReader;
-use Illuminate\Foundation\Testing\TestCase;
 
 class AdminMetricsReaderTest extends TestCase
 {
     /**
      * Outside-in test for the use case, domain service and mocked repository
      */
-    public function testReadAdminMetricsNoLongReports()
+    public function test_read_admin_metrics_no_long_reports()
     {
         $mockAdminMetricsRepository = $this->createMock(AdminMetricsRepository::class);
         $mockAdminMetricsRepository->method('readUserCountTotal')
@@ -34,8 +31,6 @@ class AdminMetricsReaderTest extends TestCase
             ->willReturn(['theReadSongsWithFeedback']);
         $mockAdminMetricsRepository->method('readPerformanceByCountry')
             ->willReturn(['theReadPerformanceByCountry']);
-        $mockAdminMetricsRepository->method('readCountryNamesList')
-            ->willReturn(['theReadCountryNamesList']);
         $mockAdminMetricsRepository->method('readDetailedFeedbackTransposition')
             ->willReturn(['theReadDetailedFeedbackTransposition']);
         $mockAdminMetricsRepository->method('readDetailedFeedbackPcStatus')
@@ -63,15 +58,10 @@ class AdminMetricsReaderTest extends TestCase
                     'chord_printer' => 'Swahili',
                     'locale'        => 'sw',
                     'song_count'    => '227',
-                ]
+                ],
             ]);
 
-        $mockGeoIpResolver = $this->createMock(GeoIpResolver::class);
-        $mockGeoIpResolver->method('resolve')
-            ->with('1.1.1.1')
-            ->willReturn(new GeoIpLocation(new Country('TK', ['en' => 'Turkey'])));
-
-        $sut  = new AdminMetricsReader($mockAdminMetricsRepository, $mockBookRepo, $mockGeoIpResolver);
+        $sut = new AdminMetricsReader($mockAdminMetricsRepository, $mockBookRepo);
 
         $expected = [
             'user_count'			=> 123,
@@ -86,7 +76,6 @@ class AdminMetricsReaderTest extends TestCase
             'global_perf_chrono'    => null,
             'feedback'              => [],
             'good_users_chrono'     => null,
-            'countries'				=> ['theReadCountryNamesList'],
             'dfb_transposition'		=> ['theReadDetailedFeedbackTransposition'],
             'dfb_pc_status'			=> ['theReadDetailedFeedbackPcStatus'],
             'dfb_centered_scorerate'=> ['theReadDetailedFeedbackCenteredScoreRate'],

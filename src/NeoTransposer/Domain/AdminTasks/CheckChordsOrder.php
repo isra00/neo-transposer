@@ -2,7 +2,6 @@
 
 namespace NeoTransposer\Domain\AdminTasks;
 
-use Doctrine\DBAL\Connection;
 use NeoTransposer\Domain\Repository\SongChordRepository;
 
 /**

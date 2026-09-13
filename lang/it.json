@@ -181,7 +181,5 @@
     "/* error-500 */": "",
     "Internal error": "Errore interno",
     "Sorry! It's not your fault, but Neo-Transposer has just failed internally.": "Mi spiace. Non è stata colpa tua, però Neo-Transposer ha avuto un errore interno.",
-    "The administrator has been notified and will try to solve this as soon as possible.": "L'amministratore già è stato avvisato e cercherà di risolvere al più presto.",
-    "/* External login finish */": "",
-    "Login succesful - returning to the app.": "Sessione iniziata correttamente. Ritornando all'applicazione."
+    "The administrator has been notified and will try to solve this as soon as possible.": "L'amministratore già è stato avvisato e cercherà di risolvere al più presto."
 }

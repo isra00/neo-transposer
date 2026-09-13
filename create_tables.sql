@@ -28,6 +28,7 @@ CREATE TABLE `book` (
   `chord_printer` varchar(50) NOT NULL,
   `locale` char(2) NOT NULL,
   `song_count` smallint unsigned NOT NULL COMMENT 'Total # of songs that should be present. For management purposes only.',
+  `published` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'If 0, the book and its songs are hidden from the public interface.',
   PRIMARY KEY (`id_book`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -67,10 +68,26 @@ CREATE TABLE `song` (
   `people_highest_note` char(3) DEFAULT NULL,
   `artistic_adjustment` tinyint DEFAULT NULL,
   `url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `id_unique_song` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`),
-  KEY `id_book` (`id_book`)
+  KEY `id_book` (`id_book`),
+  KEY `id_unique_song` (`id_unique_song`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1205 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Table structure for table `unique_song`
+--
+
+DROP TABLE IF EXISTS `unique_song`;
+CREATE TABLE `unique_song` (
+  `id_unique_song` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `id_origin_book` int unsigned DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_unique_song`),
+  KEY `id_origin_book` (`id_origin_book`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

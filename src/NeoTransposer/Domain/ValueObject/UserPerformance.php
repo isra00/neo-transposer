@@ -10,12 +10,12 @@ final class UserPerformance
     {
     }
 
-    public function reports(): ?int
+    public function reports(): int
     {
         return $this->reports;
     }
 
-    public function score(): ?float
+    public function score(): float
     {
         return $this->score;
     }

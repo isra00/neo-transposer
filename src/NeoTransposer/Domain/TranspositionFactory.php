@@ -3,7 +3,6 @@
 namespace NeoTransposer\Domain;
 
 use NeoTransposer\Domain\ValueObject\NotesRange;
-use Silex\Application;
 
 final class TranspositionFactory
 {

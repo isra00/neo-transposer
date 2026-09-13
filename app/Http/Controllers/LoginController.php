@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Domain\ValueObject\UserPerformance;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -20,7 +20,7 @@ class LoginController extends Controller
     /**
      * Display login page (=landing page).
      *
-     * @param array $tplVars Additional vars for Twig, i.e. validation errors.
+     * @param  array  $tplVars  Additional vars for Twig, i.e. validation errors.
      */
     public function get(Request $req, BookRepository $bookRepository, string $locale, array $tplVars = [])
     {
@@ -34,11 +34,11 @@ class LoginController extends Controller
 
         session(['user' => new User()]);
 
-        $tplVars['all_books']        = $bookRepository->readAllBooks();
-        $tplVars['page_title']       = __('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
+        $tplVars['all_books'] = $bookRepository->readPublishedBooks();
+        $tplVars['page_title'] = __('Transpose the songs of the Neocatechumenal Way · Neo-Transposer');
         $tplVars['meta_description'] = __('Transpose the songs of the Neocatechumenal Way automatically with Neo-Transposer. The exact chords for your own voice!');
-        $tplVars['meta_canonical']   = url()->current();
-        $tplVars['page_class']       = 'page-login';
+        $tplVars['meta_canonical'] = url()->current();
+        $tplVars['page_class'] = 'page-login';
 
         return response()->view('login', $tplVars);
     }
@@ -67,18 +67,17 @@ class LoginController extends Controller
                 $locale,
                 [
                     'error_msg'  => __($errorMsg),
-                    'post'         => ['email' => $req_email]
+                    'post'         => ['email' => $req_email],
                 ]
             );
         }
 
         if (!$user = $userRepository->readFromEmail($req_email)) {
             $idBook = $bookRepository->readIdBookFromLocale($locale);
-            $user = new User($req_email, null, null, $idBook, null, null, null, new UserPerformance(0, 0));
-            $userRepository->save($user, $req->getClientIp());
+            $user = new User($req_email, null, null, $idBook, null, null, null, new UserPerformance(0, 0), $req->getClientIp());
+            $userRepository->save($user);
         }
 
-        // @todo firstTime podría ser un método en vez de un atributo si no se fuerza en otras partes?
         $user->firstTime = !$user->hasRange();
         session(['user' => $user]);
 
@@ -87,6 +86,7 @@ class LoginController extends Controller
         }
 
         $idBook = $user->id_book ?? 1;
+
         return redirect($req->get('redirect') ?? route("book_$idBook"));
     }
 
@@ -101,14 +101,13 @@ class LoginController extends Controller
             CURLOPT_POSTFIELDS,
             http_build_query([
                 'secret' => $secret,
-                'response' => $req->get('g-recaptcha-response')
+                'response' => $req->get('g-recaptcha-response'),
             ])
         );
 
         $response = curl_exec($curl);
         curl_close($curl);
 
-        return (true == json_decode($response, true)['success']);
+        return json_decode($response, true)['success'] == true;
     }
-
 }

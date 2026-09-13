@@ -19,11 +19,5 @@ class MysqlRepositoryTest extends TestCase
 
         config(['database.connections.mysql.database' => getenv('NT_DB_DATABASE_INTEGRATION')]);
         DB::purge('mysql');
-
-        // Reset the static DBAL connection so it picks up the integration database
-        $reflection = new \ReflectionClass(\NeoTransposer\Infrastructure\MysqlRepository::class);
-        $prop = $reflection->getProperty('dbal');
-        $prop->setAccessible(true);
-        $prop->setValue(null, null);
     }
 }

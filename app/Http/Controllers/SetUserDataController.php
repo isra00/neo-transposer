@@ -10,13 +10,11 @@ use NeoTransposer\Domain\Service\UserWriter;
 
 /**
  * Sets the user data and redirect. There is no response body.
- *
- * @todo Rename to UpdateUser
  */
 final class SetUserDataController
 {
-	public function get(Request $request, UserWriter $userDataWriter)
-	{
+    public function get(Request $request, UserWriter $userDataWriter)
+    {
         try {
             $userDataWriter->writeUser(
                 session('user'),
@@ -33,9 +31,9 @@ final class SetUserDataController
             abort(400, 'Bad value for URL parameter unhappy_choose_std');
         }
 
-		return redirect(
+        return redirect(
             $request->query('redirect')
                 ?: route('book_' . session('user')->id_book)
         );
-	}
+    }
 }

@@ -33,13 +33,13 @@ class InsertSongCest
         Shared::removeDebugBar($I);
         $I->see($title, 'h1');
 
-        //The page prints several transpositions, all with the same original chords, except
-        //the "as-book" one, which prints none.
+        // The page prints several transpositions, all with the same original chords, except
+        // the "as-book" one, which prints none.
         $firstTranspositionOriginalChords =
             '(//table[contains(@class, "transposition") and not(contains(@class, "as-book"))])[1]'
             . '//td[@class="original"]';
 
-        //One cell per original chord: proves the song_chord rows were persisted too.
+        // One cell per original chord: proves the song_chord rows were persisted too.
         $I->seeNumberOfElements($firstTranspositionOriginalChords, count(self::CHORDS));
 
         foreach (self::CHORDS as $chord) {
@@ -58,9 +58,9 @@ class InsertSongCest
 
         $this->whenIFillTheInsertSongForm($I, $title);
 
-        //Duplicate chords are only rejected by the form's own JS, which runs on keyup;
-        //setting the value directly is what any client that skips it would send, and the
-        //point of the test is that the server survives it.
+        // Duplicate chords are only rejected by the form's own JS, which runs on keyup;
+        // setting the value directly is what any client that skips it would send, and the
+        // point of the test is that the server survives it.
         $I->executeJS('document.querySelector(\'input[name="chords[3]"]\').value = "C"');
         $I->click('#submit');
         $I->dontSee('Song inserted');

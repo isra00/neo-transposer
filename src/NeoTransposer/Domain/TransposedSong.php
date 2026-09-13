@@ -3,7 +3,6 @@
 namespace NeoTransposer\Domain;
 
 use Exception;
-use NeoTransposer\Domain\ChordPrinter\ChordPrinter;
 use NeoTransposer\Domain\Entity\Song;
 use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\Domain\ValueObject\NotesRange;
@@ -12,22 +11,17 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  * Read a song from DB, calculate its transpositions, sort them according to
  * some business logic and prepare for print.
  *
- * This class is in an upper level than AutomaticTransposer and is intended to
+ * This class is in an upper level than Transposer and is intended to
  * be used by controllers such as TransposeSong, AllSongsReport and WizardEmpiric.
  */
 final class TransposedSong
 {
     /**
-     * @var  array
-     * @todo Rename to transpositionsCentered
+     * @var array
      */
-    public $transpositions;
+    public $transpositionsCentered;
 
-    /**
-     * @var  Transposition
-     * @todo Rename to transpositionNotEquivalent o transpositionEasierNotEquivalent
-     */
-    public $not_equivalent;
+    public ?Transposition $transpositionEasierNotEquivalent = null;
 
     private PeopleCompatibleCalculation $pcCalculation;
 
@@ -38,25 +32,33 @@ final class TransposedSong
     /**
      * @throws Exception
      */
-    public static function fromDb($idSong): TransposedSong
+    public static function fromDbById(int $idSong): TransposedSong
     {
-        return new self(app(SongRepository::class)->fetchSongByIdOrSlug($idSong));
+        return new self(app(SongRepository::class)->readSongById($idSong));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function fromSlug(string $slug): TransposedSong
+    {
+        return new self(app(SongRepository::class)->readSongBySlug($slug));
     }
 
     /**
      * Main method to be used by the clients of this class. It calculates all
      * transpositions.
      *
-     * @param int|null $forceVoiceLimit Force user's lowest or highest note (only used in Wizard).
-     *                                  AutomaticTransposer::FORCE_LOWEST or AutomaticTransposer::FORCE_HIGHEST.
+     * @param  int|null  $forceVoiceLimit  Force user's lowest or highest note (only used in Wizard).
+     *                                     Transposer::FORCE_LOWEST or Transposer::FORCE_HIGHEST.
      *
      * @throws Exception
      */
-    public function transpose(NotesRange $userRange, int $forceVoiceLimit = null): void
+    public function transpose(NotesRange $userRange, ?int $forceVoiceLimit = null): void
     {
-        $transposerFactory = app(AutomaticTransposerFactory::class);
+        $transposerFactory = app(TransposerFactory::class);
 
-        $transposer = $transposerFactory->createAutomaticTransposer(
+        $transposer = $transposerFactory->createTransposer(
             $userRange,
             $this->song->range,
             $this->song->originalChords,
@@ -64,21 +66,21 @@ final class TransposedSong
             $this->song->peopleRange
         );
 
-        $this->transpositions = $transposer->getTranspositionsCentered(
-            AutomaticTransposer::AMOUNT_CENTERED_TRANSPOSITIONS,
+        $this->transpositionsCentered = $transposer->getTranspositionsCentered(
+            Transposer::AMOUNT_CENTERED_TRANSPOSITIONS,
             $forceVoiceLimit
         );
-        $this->not_equivalent = $transposer->getEasierNotEquivalent();
+        $this->transpositionEasierNotEquivalent = $transposer->getEasierNotEquivalent();
 
         $this->pcCalculation = $transposer->calculatePeopleCompatible();
 
-        if ($this->not_equivalent !== null) {
+        if ($this->transpositionEasierNotEquivalent !== null) {
             $this->removeEasierNotEquivalentIfConflictWithPeopleCompatible();
         }
 
-        //If there is notEquivalent, show only one centered.
-        if ($this->not_equivalent && config('nt.hide_second_centered_if_not_equivalent')) {
-            unset($this->transpositions[1]);
+        // If there is notEquivalent, show only one centered.
+        if ($this->transpositionEasierNotEquivalent && config('nt.hide_second_centered_if_not_equivalent')) {
+            unset($this->transpositionsCentered[1]);
         }
 
         $this->prepareForPrint();
@@ -100,8 +102,8 @@ final class TransposedSong
                 }
             },
             array_merge(
-                $this->transpositions,
-                [$this->not_equivalent, $this->pcCalculation->peopleCompatibleTransposition]
+                $this->transpositionsCentered,
+                [$this->transpositionEasierNotEquivalent, $this->pcCalculation->peopleCompatibleTransposition]
             )
         );
     }
@@ -111,7 +113,7 @@ final class TransposedSong
         return $this->pcCalculation->peopleCompatibleTransposition;
     }
 
-    public function getPeopleCompatibleStatus(): ?int
+    public function getPeopleCompatibleStatus(): int
     {
         return $this->pcCalculation->status;
     }
@@ -119,7 +121,7 @@ final class TransposedSong
     /**
      * This IS actually used by transpose_song.twig's "peopleCompatibleStatusMsg"
      */
-    public function getPeopleCompatibleStatusMsg(): ?string
+    public function getPeopleCompatibleStatusMsg(): string
     {
         return $this->pcCalculation->getStatusMsg();
     }
@@ -129,7 +131,7 @@ final class TransposedSong
      */
     public function isAlreadyPeopleCompatible(): bool
     {
-        return PeopleCompatibleCalculation::ALREADY_COMPATIBLE == $this->pcCalculation->status;
+        return $this->pcCalculation->status == PeopleCompatibleCalculation::ALREADY_COMPATIBLE;
     }
 
     /**
@@ -141,10 +143,10 @@ final class TransposedSong
      */
     public function removeEasierNotEquivalentIfConflictWithPeopleCompatible(): void
     {
-        if (($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->not_equivalent))
+        if (($this->isAlreadyPeopleCompatible() && !$this->isCompatibleWithPeople($this->transpositionEasierNotEquivalent))
             || $this->pcCalculation->peopleCompatibleTransposition
         ) {
-            $this->not_equivalent = null;
+            $this->transpositionEasierNotEquivalent = null;
         }
     }
 
@@ -159,7 +161,7 @@ final class TransposedSong
             throw new Exception("Can't call isCompatibleWithPeople for this song because this song has no peopleRange");
         }
 
-        $nc          = new NotesCalculator();
+        $nc = new NotesCalculator();
         $peopleRange = new NotesRange(
             config('nt.people_range')[0],
             config('nt.people_range')[1]

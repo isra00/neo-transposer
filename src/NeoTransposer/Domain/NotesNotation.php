@@ -2,8 +2,6 @@
 
 namespace NeoTransposer\Domain;
 
-use Symfony\Component\Translation\TranslatorInterface;
-
 /**
  * Convert different nomenclatures for notes (american and latin so far).
  */
@@ -28,7 +26,7 @@ final class NotesNotation
         'F'  => 'Fa',
         'F#' => 'Fa#',
         'G'  => 'Sol',
-        'G#' => 'Sol#'
+        'G#' => 'Sol#',
     ];
 
     protected const REGEXP_NOTE = '/([ABCDEFG]#?b?)(\d)?/';
@@ -36,36 +34,36 @@ final class NotesNotation
     /**
      * Returns a given note in the given notation (american or latin).
      *
-     * @param  string $note     Note, in american notation (no flats, only sharps).
-     * @param  string $notation 'american' or 'latin'
-     * @return string           The note
+     * @param  string  $note  Note, in american notation (no flats, only sharps).
+     * @param  string  $notation  'american' or 'latin'
+     * @return string The note
      */
     public function getNotation(string $note, string $notation): string
     {
         preg_match(self::REGEXP_NOTE, $note, $match);
 
-        $note   = $match[1];
+        $note = $match[1];
         $octave = $match[2] ?? null;
 
-        $noteInNotation = ('latin' == $notation) ? self::LATIN_NOTES[$note] : $note;
+        $noteInNotation = ($notation == 'latin') ? self::LATIN_NOTES[$note] : $note;
+
         return $noteInNotation . $octave;
     }
 
     public function getNotationArray(array $notes, string $notation): array
     {
         $thisObject = $this;
-        return array_map(fn($note) => $thisObject->getNotation($note, $notation), $notes);
+
+        return array_map(fn ($note) => $thisObject->getNotation($note, $notation), $notes);
     }
 
     /**
      * Returns a user-friendly string with the voice range:
      *
-     * @param TranslatorInterface $trans       The Silex Translator object.
-     * @param string              $notation    Notation for notes (american|latin)
-     * @param string              $lowestNote  Lowest note of the voice range.
-     * @param string              $highestNote Highest note of the voice range.
-     *
-     * @return string             Something like "lowestNote - highestNote +x octaves"
+     * @param  string  $notation  Notation for notes (american|latin)
+     * @param  string  $lowestNote  Lowest note of the voice range.
+     * @param  string  $highestNote  Highest note of the voice range.
+     * @return string Something like "lowestNote - highestNote +x octaves"
      */
     public function getVoiceRangeAsString(string $notation, string $lowestNote, string $highestNote): string
     {
@@ -75,7 +73,7 @@ final class NotesNotation
         preg_match(self::REGEXP_NOTE, $highestNote, $match);
         $highestNote = $match[1];
 
-        if ('latin' == $notation) {
+        if ($notation == 'latin') {
             $lowestNote = $this->getNotation($lowestNote, 'latin');
             $highestNote = $this->getNotation($highestNote, 'latin');
         }

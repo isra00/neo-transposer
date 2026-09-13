@@ -18,22 +18,22 @@ use NeoTransposer\Domain\ValueObject\Chord;
  */
 abstract class ChordPrinter
 {
-	protected $cssClass = 'chord';
+    protected $cssClass = 'chord';
 
-	public function printChordset(array $chordset): array
-	{
-        return array_map(fn($chord) => $this->printChordHtml($chord), $chordset);
-	}
-
-	public function printChord(Chord $chord)
-	{
-		return $this->printChordInNotation($chord->fundamental, $chord->attributes);
-	}
-
-	public function printChordHtml($chord): string
+    public function printChordset(array $chordset): array
     {
-		return '<span class="' . $this->cssClass . '">' . $this->printChord($chord) . '</span>';
-	}
+        return array_map(fn ($chord) => $this->printChordHtml($chord), $chordset);
+    }
 
-	abstract public function printChordInNotation($fundamental, $attributes);
+    public function printChord(Chord $chord)
+    {
+        return $this->printChordInNotation($chord->fundamental, $chord->attributes);
+    }
+
+    public function printChordHtml($chord): string
+    {
+        return '<span class="' . $this->cssClass . '">' . $this->printChord($chord) . '</span>';
+    }
+
+    abstract public function printChordInNotation($fundamental, $attributes);
 }

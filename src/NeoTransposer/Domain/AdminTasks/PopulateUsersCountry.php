@@ -2,6 +2,7 @@
 
 namespace NeoTransposer\Domain\AdminTasks;
 
+use NeoTransposer\Domain\GeoIp\GeoIpNotFoundException;
 use NeoTransposer\Domain\GeoIp\GeoIpResolver;
 use NeoTransposer\Domain\Repository\UserRepository;
 
@@ -15,31 +16,26 @@ final class PopulateUsersCountry implements AdminTask
 
     public function run(): string
     {
-		$ipOfUsersWithoutCountry = $this->userRepository->readIpFromUsersWithNullCountry();
+        $ipOfUsersWithoutCountry = $this->userRepository->readIpFromUsersWithNullCountry();
 
-		foreach ($ipOfUsersWithoutCountry as $ip)
-		{
-			$ip = $ip['register_ip'];
+        foreach ($ipOfUsersWithoutCountry as $ip) {
+            $ip = $ip['register_ip'];
 
-			if (trim((string) $ip) === '')
-			{
-				continue;
-			}
+            if (trim((string) $ip) === '') {
+                continue;
+            }
 
-			try
-			{
+            try {
                 $location = $this->geoIpResolver->resolve($ip);
-			}
-			catch (\NeoTransposer\Domain\GeoIp\GeoIpNotFoundException)
-			{
-				continue;
-			}
+            } catch (GeoIpNotFoundException) {
+                continue;
+            }
 
             if ($country = $location->country()->isoCode()) {
                 $this->userRepository->saveUserCountryByIp($country, $ip);
             }
-		}
+        }
 
-		return 'user.country populated for ' . count($ipOfUsersWithoutCountry) . ' IPs';
-	}
+        return 'user.country populated for ' . count($ipOfUsersWithoutCountry) . ' IPs';
+    }
 }

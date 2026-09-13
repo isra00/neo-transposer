@@ -7,7 +7,7 @@ use NeoTransposer\Domain\Exception\InvalidStandardRangeException;
 use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\UnhappyUserRepository;
 
-final class UnhappinessManager
+class UnhappinessManager
 {
     /**
      * The performance below which a user is considered unhappy.
@@ -27,8 +27,7 @@ final class UnhappinessManager
     public function __construct(
         protected UnhappyUserRepository $unhappyUserRepository,
         protected FeedbackRepository $feedbackRepository
-    )
-    {
+    ) {
     }
 
     public function setUnhappy(User $user)
@@ -36,7 +35,7 @@ final class UnhappinessManager
         if ($user->performance->score() < self::UNHAPPY_THRESHOLD_PERF && $user->performance->reports() >= self::UNHAPPY_THRESHOLD_REPORTS) {
             $this->unhappyUserRepository->writeUnhappyUser($user->id_user);
         } elseif ($this->isUnhappyNoAction($user)) {
-            //If user was unhappy with no action but their performance is good, delete unhappy.
+            // If user was unhappy with no action but their performance is good, delete unhappy.
             $this->unhappyUserRepository->delete($user->id_user);
         }
     }
@@ -51,7 +50,6 @@ final class UnhappinessManager
 
     /**
      * Wizard finished debe llamar a este método.
-     * @todo Esto es lógica de negocio, debería estar en el domain service que gestiona el wizard
      */
     public function changedVoiceRangeFromWizard(User $user)
     {

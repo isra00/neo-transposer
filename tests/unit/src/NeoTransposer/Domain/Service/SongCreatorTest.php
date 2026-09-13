@@ -2,17 +2,17 @@
 
 namespace NeoTransposer\Tests\Domain\Service;
 
+use Illuminate\Foundation\Testing\TestCase;
 use NeoTransposer\Domain\Exception\SlugAlreadyExistsException;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\Domain\Service\SongCreator;
-use Illuminate\Foundation\Testing\TestCase;
 
 class SongCreatorTest extends TestCase
 {
     protected $sut;
 
-    public function testSongIsCreatedSuccessfully()
+    public function test_song_is_created_successfully()
     {
         $mockSongRepository = $this->createMock(SongRepository::class);
         $mockSongRepository->expects($this->once())
@@ -29,7 +29,7 @@ class SongCreatorTest extends TestCase
         $sut->createSong(1, 2, 'Sömé tìtlê', 'A1', 'A2', 'B1', 'G2', false, ['A', 'B']);
     }
 
-    public function testSlugAlreadyExists()
+    public function test_slug_already_exists()
     {
         $mockSongRepository = $this->createMock(SongRepository::class);
         $mockSongRepository->expects($this->exactly(2))
@@ -49,7 +49,7 @@ class SongCreatorTest extends TestCase
         $sut->createSong(1, 2, 'Some title', 'A1', 'A2', 'B1', 'G2', false, ['A', 'B']);
     }
 
-    public function testSlugAlreadyExistsAgain()
+    public function test_slug_already_exists_again()
     {
         $mockSongRepository = $this->createMock(SongRepository::class);
         $mockSongRepository->expects($this->exactly(2))
