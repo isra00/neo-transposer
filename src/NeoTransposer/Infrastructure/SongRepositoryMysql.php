@@ -139,6 +139,59 @@ SQL;
         });
     }
 
+    /**
+     * The chords are replaced wholesale rather than diffed: song_chord has no surrogate
+     * key, and a re-ordering would otherwise trip its UNIQUE(id_song, chord) halfway
+     * through. The transaction is what keeps a song from being left without chords.
+     */
+    public function updateSong(
+        int $idSong,
+        int $idBook,
+        ?int $page,
+        string $title,
+        string $lowestNote,
+        string $highestNote,
+        ?string $peopleLowestNote,
+        ?string $peopleHighestNote,
+        bool $firstChordIsNote,
+        string $slug,
+        array $chords,
+        ?string $url,
+        ?int $artisticAdjustment
+    ): void {
+
+        $this->dbConnection->transaction(function () use (
+            $idSong, $idBook, $page, $title, $lowestNote, $highestNote, $peopleLowestNote,
+            $peopleHighestNote, $firstChordIsNote, $slug, $chords, $url, $artisticAdjustment
+        ) {
+            $this->dbConnection->table('song')->where('id_song', $idSong)->update([
+                'id_book'             => $idBook,
+                'page'                => $page,
+                'title'               => $title,
+                'lowest_note'         => $lowestNote,
+                'highest_note'        => $highestNote,
+                'people_lowest_note'  => $peopleLowestNote,
+                'people_highest_note' => $peopleHighestNote,
+                'first_chord_is_tone' => $firstChordIsNote,
+                'slug'                => $slug,
+                'url'                 => $url,
+                'artistic_adjustment' => $artisticAdjustment,
+            ]);
+
+            $this->dbConnection->table('song_chord')->where('id_song', $idSong)->delete();
+
+            foreach ($chords as $position => $chord) {
+                if ($chord != '') {
+                    $this->dbConnection->table('song_chord')->insert([
+                        'id_song'  => $idSong,
+                        'chord'    => $chord,
+                        'position' => $position,
+                    ]);
+                }
+            }
+        });
+    }
+
     public function slugAlreadyExists(string $slug): bool
     {
         return $this->dbConnection->selectOne(

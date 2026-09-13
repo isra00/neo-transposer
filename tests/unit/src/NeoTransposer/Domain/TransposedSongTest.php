@@ -36,6 +36,8 @@ final class TransposedSongTest extends TestCase
                 'chord_printer'       => 'testChordPrinter',
                 'locale'              => 'testLocale',
                 'url'                 => 'testUrl',
+
+                'artistic_adjustment' => null,
             ],
             ['Am', 'Dm']
         );

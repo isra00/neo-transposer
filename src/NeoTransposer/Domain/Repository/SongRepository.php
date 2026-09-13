@@ -32,5 +32,21 @@ interface SongRepository
         ?string $url = null
     ): void;
 
+    public function updateSong(
+        int $idSong,
+        int $idBook,
+        ?int $page,
+        string $title,
+        string $lowestNote,
+        string $highestNote,
+        ?string $peopleLowestNote,
+        ?string $peopleHighestNote,
+        bool $firstChordIsNote,
+        string $slug,
+        array $chords,
+        ?string $url,
+        ?int $artisticAdjustment
+    ): void;
+
     public function slugAlreadyExists(string $slug): bool;
 }

@@ -10,6 +10,7 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  */
 class Song
 {
+    /** @todo Make all these protected and create getters */
     public $idSong;
 
     public $idBook;
@@ -25,6 +26,8 @@ class Song
     public $firstChordIsTone;
 
     public $url;
+
+    public $artisticAdjustment;
 
     /**
      * @var NotesRange|null
@@ -51,6 +54,7 @@ class Song
         $this->firstChordIsTone = $dbColumns['first_chord_is_tone'];
         $this->peopleRange = (!empty($dbColumns['people_lowest_note']) && !empty($dbColumns['people_highest_note'])) ? new NotesRange($dbColumns['people_lowest_note'], $dbColumns['people_highest_note']) : null;
         $this->url = $dbColumns['url'];
+        $this->artisticAdjustment = $dbColumns['artistic_adjustment'];
 
         // From table book
         $this->bookChordPrinter = $dbColumns['chord_printer']; // Used by TransposedSong

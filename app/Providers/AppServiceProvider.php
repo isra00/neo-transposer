@@ -17,6 +17,7 @@ use NeoTransposer\Domain\Repository\FeedbackRepository;
 use NeoTransposer\Domain\Repository\SongChordRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\Domain\Repository\UnhappyUserRepository;
+use NeoTransposer\Domain\Repository\UniqueSongRepository;
 use NeoTransposer\Domain\Repository\UserRepository;
 use NeoTransposer\Infrastructure\AdminMetricsRepositoryMysql;
 use NeoTransposer\Infrastructure\BookRepositoryMysql;
@@ -25,6 +26,7 @@ use NeoTransposer\Infrastructure\GeoIpResolverGeoIp2;
 use NeoTransposer\Infrastructure\SongChordRepositoryMysql;
 use NeoTransposer\Infrastructure\SongRepositoryMysql;
 use NeoTransposer\Infrastructure\UnhappyUserRepositoryMysql;
+use NeoTransposer\Infrastructure\UniqueSongRepositoryMysql;
 use NeoTransposer\Infrastructure\UserRepositoryMysql;
 
 class AppServiceProvider extends ServiceProvider
@@ -41,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(FeedbackRepository::class, FeedbackRepositoryMysql::class);
         $this->app->bind(UnhappyUserRepository::class, UnhappyUserRepositoryMysql::class);
         $this->app->bind(AdminMetricsRepository::class, AdminMetricsRepositoryMysql::class);
+        $this->app->bind(UniqueSongRepository::class, UniqueSongRepositoryMysql::class);
 
         $this->app->bind(CheckMissingTranslations::class, function () {
             return new CheckMissingTranslations(config('nt.languages'));

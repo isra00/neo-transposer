@@ -25,6 +25,8 @@
 			<li><a href="{{ route('admin_dashboard', ['tool' => 'CheckUsersRangeConsistency']) }}">Check user lower-highest notes</a></li>
 			<li><a href="{{ route('admin_dashboard', ['tool' => 'CheckChordsOrder']) }}">Check chord order</a></li>
 			<li><a href="/admin/chord-correction">Chord correction panel</a></li>
+			<li><a href="{{ route('edit_song') }}">Edit song (song-by-song review)</a></li>
+			<li><a href="{{ route('songbook_comparison') }}">Songbook comparison</a></li>
 			<li><a href="{{ route('admin_dashboard', ['tool' => 'TestAllTranspositions']) }}">Functional test: all transpositions</a></li>
 			<li><a href="{{ route('admin_dashboard', ['tool' => 'CheckOrphanChords']) }}">Detect orphan chords</a></li>
 			<li><a href="{{ route('admin_dashboard', ['tool' => 'CheckMissingTranslations']) }}">Missing translations</a></li>
@@ -474,6 +476,8 @@
 	</table>
 </article>
 
+@endsection
+
 @section('scripts')
 <script>
 BC3 = {
@@ -502,6 +506,4 @@ $(function() {
     BC3.generateToc();
 });
 </script>
-@endsection
-
 @endsection

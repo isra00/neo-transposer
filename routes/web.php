@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AllSongsReportController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ChordCorrectionPanelController;
+use App\Http\Controllers\EditSongController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InsertSongController;
 use App\Http\Controllers\LoginController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\ReceiveFeedbackController;
 use App\Http\Controllers\ServeCssController;
 use App\Http\Controllers\SetUserDataController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\SongbookComparisonController;
 use App\Http\Controllers\TransposeSongController;
 use App\Http\Controllers\UserBookController;
 use App\Http\Controllers\UserVoiceController;
@@ -25,13 +27,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'get']);
 
-// SEO-friendly URLs for books. Every book in the DB must have an entry here!
+// SEO-friendly URLs for books
 $bookUrls = [
     1 => '/nyimbo-njia-neokatekumenato',
     2 => '/cantos-camino-neocatecumenal',
     3 => '/songs-neocatechumenal-way',
     4 => '/cantos-caminho-neocatecumenal',
     5 => '/canti-cammino-neocatecumenale',
+    6 => '/chants-chemin-neocatechumenal',
 ];
 
 foreach ($bookUrls as $bookId => $slug) {
@@ -77,10 +80,6 @@ Route::prefix('{locale}')
                 'page_class' => 'static-page',
             ]));
         })->name('people-compatible-info');
-
-        // TEMPORARY, delete after deploy: wizard pages already open in a browser still
-        // link to select-standard by GET, which is now a POST. Catch those stale clicks.
-        Route::get('/wizard/select-standard', fn () => redirect()->route('wizard_step1', ['locale' => app()->getLocale()]));
 
         Route::group(['middleware' => NeedsLoginMiddleware::class], function () {
 
@@ -142,6 +141,11 @@ Route::middleware([
     Route::get('/admin/insert-song', [InsertSongController::class, 'get'])
         ->name('insert_song');
     Route::post('/admin/insert-song', [InsertSongController::class, 'post']);
+    Route::get('/admin/songbook-comparison', [SongbookComparisonController::class, 'get'])
+        ->name('songbook_comparison');
+    Route::get('/admin/edit-song/{id_song?}', [EditSongController::class, 'get'])
+        ->name('edit_song');
+    Route::post('/admin/edit-song/{id_song}', [EditSongController::class, 'post']);
 });
 
 // Easter eggs ;-)
