@@ -16,6 +16,10 @@ final class AllSongsReportController extends Controller
         $locale = App::getLocale();
         $idBook = $bookRepository->readIdBookFromLocale($locale);
 
+        if (!$bookRepository->readBook($idBook)?->isPublished()) {
+            abort(404, "There is no published book for locale $locale.");
+        }
+
         $allSongsTransposedWithFeedback = $allSongsReport->getAllTranspositions($idBook, $user);
 
         $your_voice = $user->getVoiceAsString(

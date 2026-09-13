@@ -27,7 +27,7 @@ final class UserWriter
     public function writeUser(User $user, ?int $idBook, ?string $lowest, ?string $highest, ?string $unhappyChoseStandardRange)
     {
         if ($idBook) {
-            if (!array_key_exists($idBook, $this->bookRepository->readAllBooks())) {
+            if (!array_key_exists($idBook, $this->bookRepository->readPublishedBooks())) {
                 throw new BookNotExistException($idBook);
             }
 

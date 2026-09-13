@@ -16,7 +16,9 @@ class Book
 
     protected $songCount;
 
-    public function __construct(int $idBook, string $langName, string $details, string $chordPrinter, string $locale, int $songCount)
+    protected $published;
+
+    public function __construct(int $idBook, string $langName, string $details, string $chordPrinter, string $locale, int $songCount, bool $published)
     {
         $this->idBook = $idBook;
         $this->langName = $langName;
@@ -24,6 +26,7 @@ class Book
         $this->chordPrinter = $chordPrinter;
         $this->locale = $locale;
         $this->songCount = $songCount;
+        $this->published = $published;
     }
 
     public function idBook(): int
@@ -44,5 +47,13 @@ class Book
     public function locale(): string
     {
         return $this->locale;
+    }
+
+    /**
+     * Unpublished books (and their songs) are hidden from the public interface.
+     */
+    public function isPublished(): bool
+    {
+        return $this->published;
     }
 }

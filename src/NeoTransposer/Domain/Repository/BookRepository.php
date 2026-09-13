@@ -10,6 +10,8 @@ interface BookRepository
 
     public function readAllBooks(): array;
 
+    public function readPublishedBooks(): array;
+
     public function readIdBookFromLocale(string $locale): int;
 
     public function readBook(int $idBook): ?Book;

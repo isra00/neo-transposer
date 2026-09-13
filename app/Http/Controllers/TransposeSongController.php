@@ -43,6 +43,11 @@ final class TransposeSongController extends Controller
             abort(404, "Song $id_song does not exist.");
         }
 
+        // Songs of an unpublished book are not public yet
+        if (!$bookRepository->readBook($transposedSong->song->idBook)?->isPublished()) {
+            abort(404, "Song $id_song does not exist.");
+        }
+
         $transposedSong->transpose(session('user')->range);
 
         App::setLocale($transposedSong->song->bookLocale);
@@ -117,7 +122,7 @@ final class TransposeSongController extends Controller
                     ),
                     'page_class'       => 'transpose-song',
                     'feedback'         => $feedback ?? null,
-                    'all_books'	       => $bookRepository->readAllBooks(),
+                    'all_books'	       => $bookRepository->readPublishedBooks(),
 
                     'user_less_than_one_octave' => $nc->rangeWideness(session('user')->range) < 12,
                     'url_wizard'                => route('wizard_step1', ['locale' => App::getLocale()]),

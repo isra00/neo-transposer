@@ -28,6 +28,7 @@ CREATE TABLE `book` (
   `chord_printer` varchar(50) NOT NULL,
   `locale` char(2) NOT NULL,
   `song_count` smallint unsigned NOT NULL COMMENT 'Total # of songs that should be present. For management purposes only.',
+  `published` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'If 0, the book and its songs are hidden from the public interface.',
   PRIMARY KEY (`id_book`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -27,8 +27,8 @@ final class SitemapController extends Controller
             ];
         }
 
-        $books = $bookRepository->readAllBooks();
-        foreach ($books as $book) {
+        $publishedBooks = $bookRepository->readPublishedBooks();
+        foreach ($publishedBooks as $book) {
             $urls[] = [
                 'loc' => route('book_' . $book->idBook()),
             ];
@@ -37,6 +37,10 @@ final class SitemapController extends Controller
         $songs = $songRepository->readAllSongs();
 
         foreach ($songs as $song) {
+            if (!isset($publishedBooks[$song['id_book']])) {
+                continue;
+            }
+
             $urls[] = [
                 'loc' => route('transpose_song', ['id_song' => $song['slug']]),
             ];

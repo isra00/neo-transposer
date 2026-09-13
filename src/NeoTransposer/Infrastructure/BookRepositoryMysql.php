@@ -25,21 +25,12 @@ final class BookRepositoryMysql extends MysqlRepository implements BookRepositor
 
     public function readAllBooks(): array
     {
-        $rows = $this->dbConnection->select('SELECT * FROM book ORDER BY lang_name');
-        $booksNice = [];
-        foreach ($rows as $row) {
-            $row = (array) $row;
-            $booksNice[$row['id_book']] = new Book(
-                $row['id_book'],
-                $row['lang_name'],
-                $row['details'],
-                $row['chord_printer'],
-                $row['locale'],
-                $row['song_count']
-            );
-        }
+        return $this->readBooks('SELECT * FROM book ORDER BY lang_name');
+    }
 
-        return $booksNice;
+    public function readPublishedBooks(): array
+    {
+        return $this->readBooks('SELECT * FROM book WHERE published = 1 ORDER BY lang_name');
     }
 
     public function readBook(int $idBook): ?Book
@@ -50,15 +41,34 @@ final class BookRepositoryMysql extends MysqlRepository implements BookRepositor
             return null;
         }
 
-        $row = (array) $rows[0];
+        return $this->createBookObjectFromDbRow((array) $rows[0]);
+    }
 
+    /**
+     * @return Book[] Indexed by id_book.
+     */
+    private function readBooks(string $sql): array
+    {
+        $books = [];
+
+        foreach ($this->dbConnection->select($sql) as $row) {
+            $row = (array) $row;
+            $books[$row['id_book']] = $this->createBookObjectFromDbRow($row);
+        }
+
+        return $books;
+    }
+
+    private function createBookObjectFromDbRow(array $row): Book
+    {
         return new Book(
             $row['id_book'],
             $row['lang_name'],
             $row['details'],
             $row['chord_printer'],
             $row['locale'],
-            $row['song_count']
+            $row['song_count'],
+            (bool) $row['published']
         );
     }
 }

@@ -12,7 +12,7 @@ final class UserBookController extends Controller
     public function get(BookRepository $bookRepository)
     {
         return response()->view('user_book', [
-            'books'      => $bookRepository->readAllBooks(),
+            'books'      => $bookRepository->readPublishedBooks(),
             'page_title' => __('Choose language'),
             'page_class' => 'page-user-book',
         ]);

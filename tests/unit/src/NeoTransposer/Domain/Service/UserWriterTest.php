@@ -58,7 +58,7 @@ class UserWriterTest extends TestCase
 
     public function test_write_user_rejects_unknown_book(): void
     {
-        $this->bookRepository->method('readAllBooks')->willReturn([1 => 'whatever']);
+        $this->bookRepository->method('readPublishedBooks')->willReturn([1 => 'whatever']);
 
         $this->userRepository->expects($this->never())->method('saveWithVoiceChange');
 

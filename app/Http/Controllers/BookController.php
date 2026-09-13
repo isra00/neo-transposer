@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use NeoTransposer\Domain\Exception\BookNotExistException;
 use NeoTransposer\Domain\NotesNotation;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Service\SongsLister;
@@ -17,15 +16,15 @@ final class BookController extends Controller
 {
     public function get(Request $req, SongsLister $songsLister, BookRepository $bookRepository, UnhappinessManager $unhappinessManager, $bookId)
     {
-        try {
-            $songs = session('user')->isLoggedIn()
-                ? $songsLister->readBookSongsWithUserFeedback((int) $bookId, session('user')->id_user)->asArray()
-                : $songsLister->readBookSongs((int) $bookId)->asArray();
-        } catch (BookNotExistException) {
+        $currentBook = $bookRepository->readBook((int) $bookId);
+
+        if (!$currentBook?->isPublished()) {
             abort(404, "Book $bookId does not exist.");
         }
 
-        $currentBook = $bookRepository->readBook((int) $bookId);
+        $songs = session('user')->isLoggedIn()
+            ? $songsLister->readBookSongsWithUserFeedback((int) $bookId, session('user')->id_user)->asArray()
+            : $songsLister->readBookSongs((int) $bookId)->asArray();
 
         App::setLocale($currentBook->locale());
 
@@ -54,7 +53,7 @@ final class BookController extends Controller
         $response = response()->view($template, [
             'page_title'	 		=> __('Songs of the Neocatechumenal Way in :lang', ['lang' => $currentBook->langName()]),
             'current_book'	 		=> $currentBook,
-            'all_books'	 		    => $bookRepository->readAllBooks(),
+            'all_books'	 		    => $bookRepository->readPublishedBooks(),
             'header_link'	 		=> route('book_' . $currentBook->idBook()),
             'songs'			 		=> $songs,
             'show_unhappy_warning'	=> $showUnhappyWarning,
