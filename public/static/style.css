@@ -656,6 +656,12 @@ a.link-all-report {
 		height: 100%;
 		width: auto;
 	}
+.transpose-song h3 img.site-icon {
+	height: 1.3em;
+	width: auto;
+	vertical-align: middle;
+	margin-right: 6px;
+}
 .transpose-song .explanation {
 	margin-bottom: 0;
 	clear: both;
