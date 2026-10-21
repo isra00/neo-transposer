@@ -15,7 +15,8 @@ COPY . ${WORKDIR}
 RUN composer dump-autoload --optimize --classmap-authoritative
 
 # ----------------------------------------------------------------------------------------------------------------------
-FROM php:8.3-apache AS nt-common
+# Pinned to >= 8.3.36 for PHP2Shell (CVE-2026-109618, CVE-2026-109619)
+FROM php:8.3.36-apache AS nt-common
 
 ARG WORKDIR="/app"
 EXPOSE 80
