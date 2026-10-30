@@ -14,7 +14,8 @@ final class UnpublishedBookTest extends TestCase
 {
     /**
      * The book URLs are hard-coded per id in routes/web.php, so the fixture has to
-     * reuse a real one instead of an out-of-the-way test id.
+     * reuse a real one instead of an out-of-the-way test id. The book itself comes
+     * from song_data.sql; the test only toggles its `published` flag.
      */
     private const ID_BOOK = 1;
 
@@ -26,15 +27,7 @@ final class UnpublishedBookTest extends TestCase
     {
         parent::setUp();
 
-        DB::table('book')->insert([
-            'id_book'       => self::ID_BOOK,
-            'lang_name'     => 'Kiswahili',
-            'details'       => 'Tanzania - Kenya 2003',
-            'chord_printer' => 'Swahili',
-            'locale'        => 'sw',
-            'song_count'    => 1,
-            'published'     => 0,
-        ]);
+        DB::table('book')->where('id_book', self::ID_BOOK)->update(['published' => 0]);
 
         DB::table('song')->insert([
             'id_song'             => 900201,
@@ -55,7 +48,7 @@ final class UnpublishedBookTest extends TestCase
     {
         DB::table('song_chord')->where('id_song', 900201)->delete();
         DB::table('song')->where('id_song', 900201)->delete();
-        DB::table('book')->where('id_book', self::ID_BOOK)->delete();
+        DB::table('book')->where('id_book', self::ID_BOOK)->update(['published' => 1]);
 
         parent::tearDown();
     }
