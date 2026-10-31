@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\View\Composers\PageTitleComposer;
 use GeoIp2\Database\Reader;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use NeoTransposer\Domain\AdminTasks\CheckMissingTranslations;
@@ -74,6 +75,12 @@ class AppServiceProvider extends ServiceProvider
         View::composer('_base', PageTitleComposer::class);
 
         config(['session.domain' => request()->getHost()]);
+
+        // Cloudflare talks plain HTTP to the origin, so Laravel would generate http:// URLs
+        // (redirects, og:url...) that browsers block as mixed content. Force HTTPS if we're in prod.
+        if (request()->getHost() === config('nt.canonical_domain')) {
+            URL::forceScheme('https');
+        }
 
         $this->initializeSession();
     }
