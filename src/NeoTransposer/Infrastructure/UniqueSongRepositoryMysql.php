@@ -47,6 +47,27 @@ final class UniqueSongRepositoryMysql extends MysqlRepository implements UniqueS
         return $comparison;
     }
 
+    public function readUnlinkedSongs(): array
+    {
+        return array_map(
+            fn ($row) => (array) $row,
+            $this->dbConnection->select(
+                'SELECT s.id_song, s.id_book, s.title, s.slug,
+                        s.lowest_note, s.highest_note,
+                        s.people_lowest_note, s.people_highest_note,
+                        s.first_chord_is_tone,
+                        (
+                            SELECT GROUP_CONCAT(c.chord ORDER BY c.position SEPARATOR " ")
+                            FROM song_chord c WHERE c.id_song = s.id_song
+                        ) AS chords
+                 FROM song s
+                 WHERE s.id_unique_song IS NULL
+                 AND NOT s.id_song IN (118, 319) -- Easter eggs, not songbook songs
+                 ORDER BY s.title'
+            )
+        );
+    }
+
     public function readBooksWithSongs(): array
     {
         return array_map(

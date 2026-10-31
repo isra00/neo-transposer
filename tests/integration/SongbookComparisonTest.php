@@ -66,6 +66,23 @@ final class SongbookComparisonTest extends TestCase
         $this->assertStringNotContainsString('sc-flag sc-is-chords', $row, 'both books play i-bVI-bVII, so the harmony is the same');
     }
 
+    public function test_the_card_says_same_chords_in_a_different_key(): void
+    {
+        $row = $this->rowOf($this->getComparison()->getContent());
+
+        $this->assertStringContainsString('same ✔︎', $row);
+        $this->assertStringContainsString('different key', $row);
+        $this->assertStringNotContainsString('/3 different', $row);
+    }
+
+    public function test_the_card_counts_the_chords_that_differ(): void
+    {
+        // Dm A# C against Dm A# C7: one chord of three no longer matches.
+        DB::table('song_chord')->where(['id_song' => 900102, 'position' => 3])->update(['chord' => 'C7']);
+
+        $this->assertStringContainsString('1/3 different', $this->rowOf($this->getComparison()->getContent()));
+    }
+
     public function test_a_different_voice_range_is_flagged(): void
     {
         $this->assertStringContainsString(
@@ -73,6 +90,52 @@ final class SongbookComparisonTest extends TestCase
             $this->rowOf($this->getComparison()->getContent()),
             'A1-D3 against A1-C3 is a range difference'
         );
+    }
+
+    public function test_a_range_moved_along_with_the_key_matches(): void
+    {
+        // Am E2-A2 against Em B1-E2: the same range, a fourth lower like the key.
+        DB::table('song')->where('id_song', 900101)->update(['lowest_note' => 'B1', 'highest_note' => 'E2']);
+        DB::table('song_chord')->where('id_song', 900101)->delete();
+        DB::table('song_chord')->where('id_song', 900102)->delete();
+        DB::table('song')->where('id_song', 900102)->update(['lowest_note' => 'E2', 'highest_note' => 'A2']);
+        foreach (['Em', 'Am'] as $position => $chord) {
+            DB::table('song_chord')->insert(['id_song' => 900101, 'chord' => $chord, 'position' => $position + 1]);
+        }
+        foreach (['Am', 'Dm'] as $position => $chord) {
+            DB::table('song_chord')->insert(['id_song' => 900102, 'chord' => $chord, 'position' => $position + 1]);
+        }
+
+        $row = $this->rowOf($this->getComparison()->getContent());
+
+        $this->assertStringContainsString('sc-flag sc-is-key', $row);
+        $this->assertStringNotContainsString('sc-flag sc-is-range', $row);
+    }
+
+    public function test_a_range_not_moved_along_with_the_key_differs(): void
+    {
+        // Same width as the reference, but it stayed put while the key moved.
+        DB::table('song')->where('id_song', 900101)->update(['lowest_note' => 'A1', 'highest_note' => 'C3']);
+
+        $this->assertStringContainsString('sc-flag sc-is-range', $this->rowOf($this->getComparison()->getContent()));
+    }
+
+    public function test_a_leading_chord_that_is_not_the_tone_is_not_a_key_difference(): void
+    {
+        // The reference opens with an intro E that is not the tone; both are in A.
+        DB::table('song')->where('id_song', 900101)->update(['first_chord_is_tone' => 0]);
+        DB::table('song_chord')->whereIn('id_song', [900101, 900102])->delete();
+        foreach (['E', 'A', 'B', 'E7', 'C#', 'F#m'] as $position => $chord) {
+            DB::table('song_chord')->insert(['id_song' => 900101, 'chord' => $chord, 'position' => $position + 1]);
+        }
+        foreach (['A', 'E', 'B7', 'E7', 'C#', 'F#m'] as $position => $chord) {
+            DB::table('song_chord')->insert(['id_song' => 900102, 'chord' => $chord, 'position' => $position + 1]);
+        }
+
+        $row = $this->rowOf($this->getComparison()->getContent());
+
+        $this->assertStringNotContainsString('sc-flag sc-is-key', $row);
+        $this->assertStringContainsString('2/6 different', $row);
     }
 
     public function test_a_book_without_the_song_is_shown_as_missing(): void

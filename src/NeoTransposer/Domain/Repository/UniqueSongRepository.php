@@ -22,6 +22,14 @@ interface UniqueSongRepository
     public function readComparison(): array;
 
     /**
+     * Songs not yet linked to any unique song, with the same columns as the songs of
+     * readComparison().
+     *
+     * @return mixed[][]
+     */
+    public function readUnlinkedSongs(): array;
+
+    /**
      * Ids of the books that actually hold songs.
      *
      * @return int[]

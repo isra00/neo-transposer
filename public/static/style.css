@@ -1694,6 +1694,9 @@ h2.step-1 {
     --sc-range-bg:  #fdf6e3;
     --sc-key-bg:    #fdf1e3;
     --sc-chords-bg: #fdecea;
+
+    --sc-unlinked:    #7b4fc4;
+    --sc-unlinked-bg: #f3eefb;
 }
 
 .sc-controls {
@@ -1712,8 +1715,6 @@ h2.step-1 {
 
 .sc-controls legend {
     font-size: .75rem;
-    text-transform: uppercase;
-    letter-spacing: .04em;
     color: #666;
     padding: 0;
 }
@@ -1844,14 +1845,27 @@ h2.step-1 {
 }
 
 /* The status colours, shared by the legend, the row flags and the cells. */
-.sc-is-same    { background: var(--sc-same-bg);   border-left-color: var(--sc-same);   color: #2c5f2c; }
+.sc-is-same    { background: none;                border-left-color: var(--sc-same);   color: #2c5f2c; }
 .sc-is-range   { background: var(--sc-range-bg);  border-left-color: var(--sc-range);  color: #7a5c00; }
 .sc-is-key     { background: var(--sc-key-bg);    border-left-color: var(--sc-key);    color: #8a4b00; }
 .sc-is-chords  { background: var(--sc-chords-bg); border-left-color: var(--sc-chords); color: #9c2320; }
 
-.sc-is-alone   { background: #f1f1f1;             border-left-color: #999;             color: #555; }
+.sc-is-alone   { background: none;                border-left-color: #999;             color: #555; }
 
 .sc-row.sc-is-alone > .sc-col-song { border-left-color: #bbb; }
+
+/* A song outside any unique song is a data gap to fix, not a difference between books:
+   a colour of its own, outside the green-to-red scale, and a dashed edge. */
+.sc-is-unlinked { background: var(--sc-unlinked-bg); border-left-color: var(--sc-unlinked); color: #4a2a7a; }
+
+.sc-row.sc-is-unlinked > .sc-col-song {
+    border-left: 5px dashed var(--sc-unlinked);
+    background: var(--sc-unlinked-bg);
+}
+
+.sc-row.sc-is-unlinked .sc-name {
+    font-style: italic;
+}
 
 .sc-legend-item.sc-is-absent,
 td.sc-cell.sc-is-absent {
@@ -1896,37 +1910,43 @@ td.sc-cell.sc-is-absent {
     margin: -.1em -.3em;
 }
 
-/* A cell that matches the reference says only that, in green. */
-.sc-song.sc-is-same    { background: var(--sc-same-bg); }
+/* Only a discrepancy gets a background, and a song identical to its reference
+   in everything, so the agreement can be told at a glance. */
+.sc-song.sc-identical  { background: var(--sc-same-bg); }
 .sc-song.sc-is-range   { background: var(--sc-range-bg); }
 .sc-song.sc-is-key     { background: var(--sc-key-bg); }
 .sc-song.sc-is-chords  { background: var(--sc-chords-bg); }
 
 .sc-song.sc-is-reference {
-    background: #fff;
     box-shadow: inset 3px 0 0 #999;
     padding-left: .5em;
 }
 
 .sc-title {
-    display: block;
+    display: inline;
     line-height: 1.25;
 }
 
-.sc-same-mark {
-    font-size: .72rem;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    color: var(--sc-same);
+.sc-rows {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: .15em .4em;
+    margin: .2em 0 0;
+    font-size: .78rem;
 }
 
-.sc-facts {
+.sc-rows dt {
+    color: #999;
+    font-size: .68rem;
+}
+
+.sc-rows dd {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: .2em .3em;
-    margin-top: .15em;
-    font-size: .78rem;
+    margin: 0;
 }
 
 .sc-chip,
@@ -1935,7 +1955,6 @@ td.sc-cell.sc-is-absent {
     padding: 0 .35em;
     border-left: 3px solid transparent;
     white-space: nowrap;
-    background: #f0f0f0;
     color: #555;
 }
 
@@ -1943,12 +1962,22 @@ td.sc-cell.sc-is-absent {
     font-weight: bold;
 }
 
-.sc-chip i {
-    font-style: normal;
-    opacity: .6;
+/* Neutral when it matches the reference; coloured only where it differs. */
+.sc-chip.sc-is-key   { background: var(--sc-key-bg);   border-left-color: var(--sc-key);   color: #8a4b00; }
+.sc-fact.sc-is-range { background: var(--sc-range-bg); border-left-color: var(--sc-range); color: #7a5c00; }
+
+.sc-no-tone {
+    width: 1em;
+    height: 1em;
+    vertical-align: -.15em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    opacity: .7;
 }
 
-.sc-facts b {
+.sc-rows b {
     font-variant-numeric: tabular-nums;
 }
 
@@ -1962,32 +1991,21 @@ td.sc-cell.sc-is-absent {
     opacity: .6;
 }
 
-.sc-fact-people {
-    opacity: .85;
+.sc-reference-star {
+    margin-left: .25em;
+    color: #e0a800;
 }
 
-/* Twelve slots, one per semitone above the song's own tone: two books with
-   the same progression in different keys draw the same shape. */
-.sc-degrees {
-    display: inline-flex;
-    gap: 2px;
-    padding: 2px 3px;
-    border-radius: .25em;
-    background: #fff;
-    border: 1px solid var(--sc-chords);
+.sc-verdict {
+    font-size: .7rem;
+    color: #888;
+    background: none;
+    white-space: nowrap;
 }
 
-.sc-degrees i {
-    display: block;
-    width: .5em;
-    height: .75em;
-    border-radius: 1px;
-    background: #e4e4e4;
-}
-
-.sc-degrees i.on {
-    background: var(--sc-chords);
-}
+.sc-verdict.sc-is-same   { color: var(--sc-same); }
+.sc-verdict.sc-is-key    { color: var(--sc-key); }
+.sc-verdict.sc-is-chords { color: var(--sc-chords); font-weight: bold; }
 
 .sc-empty {
     margin-top: 1rem;

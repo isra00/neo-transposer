@@ -52,8 +52,12 @@
 		<span class="sc-legend-item sc-is-chords">chords differ</span>
 		<span class="sc-legend-item sc-is-alone">only one book</span>
 		<span class="sc-legend-item sc-is-absent">not in the book</span>
+		<span class="sc-legend-item sc-is-unlinked">no unique song</span>
 		<span class="sc-legend-note">
 			{{ $stats['unique_songs'] }} songs · {{ $stats['shared_by_all'] }} in every book · {{ $stats['exclusive'] }} in one book only
+			@if($stats['unlinked'])
+			· <strong>{{ $stats['unlinked'] }} not linked</strong>
+			@endif
 		</span>
 	</p>
 
@@ -83,7 +87,9 @@
 						@if($row['unique_song']['notes']) title="{{ $row['unique_song']['notes'] }}" @endif>{{ $row['unique_song']['name'] }}</span>
 					<span class="sc-row-flags">
 						<span class="sc-count @if($row['books_missing']) sc-count-missing @endif">{{ $row['books_present'] }}/{{ count($selected_books) }}</span>
-						@if('alone' === $row['status'])
+						@if('unlinked' === $row['status'])
+						<span class="sc-flag sc-is-unlinked" title="Set this song's id_unique_song to compare it with the other books">no unique song</span>
+						@elseif('alone' === $row['status'])
 						<span class="sc-flag sc-is-alone">only this book</span>
 						@elseif('same' === $row['status'])
 						<span class="sc-flag sc-is-same">identical</span>
@@ -99,50 +105,67 @@
 				@php $cells = $row['cells'][$idBook] ?? []; @endphp
 				<td class="sc-cell @empty($cells) sc-is-absent @endempty">
 					@forelse($cells as $cell)
-					<div class="sc-song sc-is-{{ $cell['diff']['status'] }}">
-						<a class="sc-title" href="{{ route('edit_song', ['id_song' => $cell['id_song']]) }}">{{ $cell['title'] }}</a>
+						@php
+							$diff = $cell['diff'];
+							$isReference = 'reference' === $diff['status'];
+							//A lone song has nothing to be compared with: it shows its facts, no verdict.
+							$compared = !$isReference && $row['books_present'] > 1;
+							$identical = $compared && 'same' === $diff['status'];
+						@endphp
+						<div class="sc-song sc-is-{{ $diff['status'] }} @if($identical) sc-identical @endif">
+						<a class="sc-title" href="{{ route('edit_song', ['id_song' => $cell['id_song']]) }}">{{ $cell['title'] }}</a>@if('reference' === $cell['diff']['status'])<span class="sc-reference-star" title="This is the reference for this song">★</span>@endif
+						<dl class="sc-rows">
+							<dt>Chords</dt>
+							<dd title="{{ implode(' ', $cell['chords']) }}">
+								{{-- Identical to the reference in everything: its first chord adds nothing. --}}
+								@unless($identical)
+								<span class="sc-chip @if($diff['key']) sc-is-key {{ $magnitude($diff['key_delta']) }} @endif"
+									@if($diff['key']) title="{{ $diff['key_delta'] }} semitones from the reference" @endif>
+									{{ $cell['key'] }}
+									{{-- With the very same chords as the reference, an unknown tone does not matter. --}}
+									@if(!$cell['key_is_tone'] && !($compared && !$diff['key'] && !$diff['chords']))
+									<span title="First chord is not key"><svg class="sc-no-tone" viewBox="0 0 16 16" aria-label="First chord is not key"><circle cx="5" cy="8" r="3" /><path d="M8 8h6M12 8v2.5M14 8v2" /><path d="M2 14L14 2" /></svg></span>
+									@endif
+									@if($diff['key'])<b>{{ sprintf('%+d', $diff['key_delta']) }}</b>@endif
+								</span>
+								@endunless
+								@if($compared)
+									@if($diff['chords'])
+									<span class="sc-verdict sc-is-chords">{{ $diff['chords_different'] }}/{{ $diff['chords_total'] }} different</span>
+									@else
+									<span class="sc-verdict sc-is-same">same ✔︎</span>
+									@endif
+									@if($diff['key'])<span class="sc-verdict sc-is-key">different key</span>@endif
+								@endif
+							</dd>
 
-						@if('reference' === $cell['diff']['status'])
-						{{-- The baseline every other cell is expressed against. --}}
-						<span class="sc-facts">
-							<span class="sc-chip">{{ $cell['key'] }}@unless($cell['key_is_tone'])<i>?</i>@endunless</span>
-							<span class="sc-fact">{{ $cell['lowest'] }}–{{ $cell['highest'] }} · {{ $cell['extension'] }}<abbr title="semitones">st</abbr></span>
-						</span>
-						@elseif('same' === $cell['diff']['status'])
-						<span class="sc-same-mark" title="Same key, same chords and same range as the reference">identical</span>
-						@else
-						{{-- Only what actually differs, as a delta from the reference. --}}
-						<span class="sc-facts">
-							@if($cell['diff']['key'])
-							<span class="sc-chip sc-is-key {{ $magnitude($cell['diff']['key_delta']) }}" title="Key {{ $cell['key'] }}, {{ $cell['diff']['key_delta'] }} semitones from the reference">
-								{{ $cell['key'] }}@unless($cell['key_is_tone'])<i>?</i>@endunless
-								<b>{{ sprintf('%+d', $cell['diff']['key_delta']) }}</b>
-							</span>
-							@endif
+								{{-- A range equal to the reference's is noise: only a discrepancy is spelled out. --}}
+								<dt>Voice</dt>
+								<dd>
+									@if($compared && !$diff['extension'])
+									<span class="sc-verdict sc-is-same">same ✔︎</span>
+									@else
+									<span class="sc-fact @if($diff['extension']) sc-is-range {{ $magnitude($diff['extension_delta']) }} @endif">
+										{{ $cell['lowest'] }}–{{ $cell['highest'] }} · {{ $cell['extension'] }}<abbr title="semitones">st</abbr>
+										@if($diff['extension_delta'])<b>{{ sprintf('%+d', $diff['extension_delta']) }}</b>@endif
+									</span>
+									@endif
+								</dd>
 
-							@if($cell['diff']['extension'])
-							<span class="sc-fact sc-is-range {{ $magnitude($cell['diff']['extension_delta']) }}" title="Voice range {{ $cell['lowest'] }}–{{ $cell['highest'] }}, {{ $cell['extension'] }} semitones">
-								{{ $cell['extension'] }}<abbr title="semitones">st</abbr>
-								<b>{{ sprintf('%+d', $cell['diff']['extension_delta']) }}</b>
-							</span>
-							@endif
-
-							@if($cell['diff']['people_extension'])
-							<span class="sc-fact sc-is-range sc-fact-people {{ $magnitude($cell['diff']['people_extension_delta']) }}" title="People range {{ $cell['people_lowest'] }}–{{ $cell['people_highest'] }}">
-								people {{ $cell['people_extension'] }}<abbr title="semitones">st</abbr>
-								<b>{{ sprintf('%+d', $cell['diff']['people_extension_delta']) }}</b>
-							</span>
-							@endif
-
-							@if($cell['diff']['chords'])
-							<span class="sc-degrees" title="Chords: {{ implode(' ', $cell['chords']) }}">
-								@for($degree = 0; $degree < 12; $degree++)
-								<i class="@if(in_array($degree, $cell['relative_chords'])) on @endif"></i>
-								@endfor
-							</span>
-							@endif
-						</span>
-						@endif
+								<dt>People</dt>
+								<dd>
+									@if(null === $cell['people_extension'])
+									<span class="sc-not-in-book" title="Not recorded">—</span>
+									@elseif($compared && $diff['people_compared'] && !$diff['people_extension'])
+									<span class="sc-verdict sc-is-same">same ✔︎</span>
+									@else
+									<span class="sc-fact @if($diff['people_extension']) sc-is-range {{ $magnitude($diff['people_extension_delta']) }} @endif">
+										{{ $cell['people_lowest'] }}–{{ $cell['people_highest'] }} · {{ $cell['people_extension'] }}<abbr title="semitones">st</abbr>
+										@if($diff['people_extension_delta'])<b>{{ sprintf('%+d', $diff['people_extension_delta']) }}</b>@endif
+									</span>
+									@endif
+								</dd>
+						</dl>
 					</div>
 					@empty
 					<span class="sc-not-in-book">—</span>

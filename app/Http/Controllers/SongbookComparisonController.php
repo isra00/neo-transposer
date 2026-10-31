@@ -23,7 +23,7 @@ final class SongbookComparisonController extends Controller
      * Rows are shown worst-difference first: what you open the page to look at is the
      * songs the books disagree about, not the hundreds they agree on.
      */
-    private const STATUS_RANK = ['chords' => 4, 'key' => 3, 'range' => 2, 'same' => 1, 'alone' => 0];
+    private const STATUS_RANK = ['unlinked' => 5, 'chords' => 4, 'key' => 3, 'range' => 2, 'same' => 1, 'alone' => 0];
 
     private const FILTERS = [
         'all'        => 'Everything',
@@ -32,6 +32,7 @@ final class SongbookComparisonController extends Controller
         'chords'     => 'Chords differ',
         'range'      => 'Voice range differs',
         'exclusive'  => 'In one book only',
+        'unlinked'   => 'Not linked to a unique song',
     ];
 
     public function get(
@@ -59,8 +60,18 @@ final class SongbookComparisonController extends Controller
         $filter = array_key_exists($request->get('filter'), self::FILTERS) ? $request->get('filter') : 'all';
         $search = trim((string) $request->get('search'));
 
+        // A song not linked to a unique song yet cannot be compared, but it is listed as a
+        // row of its own so the gap shows up and gets fixed.
+        $unlinkedSongs = array_map(fn ($song) => [
+            'id_unique_song' => null,
+            'name'           => $song['title'],
+            'id_origin_book' => (int) $song['id_book'],
+            'notes'          => null,
+            'songs'          => [(int) $song['id_book'] => [$song]],
+        ], $uniqueSongRepository->readUnlinkedSongs());
+
         $rows = [];
-        foreach ($uniqueSongRepository->readComparison() as $uniqueSong) {
+        foreach ([...$uniqueSongRepository->readComparison(), ...$unlinkedSongs] as $uniqueSong) {
             $row = $this->buildRow($uniqueSong, $selectedBooks, $reference, $notesCalculator);
 
             // A song none of the selected books has says nothing about them.
@@ -91,7 +102,7 @@ final class SongbookComparisonController extends Controller
     }
 
     /**
-     * @param  array{id_unique_song: int, name: string, id_origin_book: ?int, notes: ?string, songs: array<int, mixed[][]>}  $uniqueSong
+     * @param  array{id_unique_song: ?int, name: string, id_origin_book: ?int, notes: ?string, songs: array<int, mixed[][]>}  $uniqueSong
      * @param  int[]  $selectedBooks
      */
     private function buildRow(
@@ -119,6 +130,7 @@ final class SongbookComparisonController extends Controller
         $differs = $this->rowDiffFlags($cells);
 
         $status = match (true) {
+            $uniqueSong['id_unique_song'] === null => 'unlinked',
             // Nothing was compared, so it is neither identical nor different.
             count($cells) === 1 => 'alone',
             $differs['chords'] => 'chords',
@@ -155,10 +167,7 @@ final class SongbookComparisonController extends Controller
             foreach ($bookCells as $cell) {
                 $widest = max(
                     $widest,
-                    count(array_diff(
-                        array_merge($cell['relative_chords'], $referenceCell['relative_chords'] ?? []),
-                        array_intersect($cell['relative_chords'], $referenceCell['relative_chords'] ?? [])
-                    )),
+                    $cell['diff']['chords_different'],
                     abs($cell['diff']['key_delta']),
                     abs($cell['diff']['extension_delta']),
                     abs($cell['diff']['people_extension_delta'])
@@ -174,7 +183,7 @@ final class SongbookComparisonController extends Controller
      */
     private function buildCell(array $song, NotesCalculator $notesCalculator): array
     {
-        $chords = array_filter(explode(' ', (string) $song['chords']));
+        $chords = array_values(array_filter(explode(' ', (string) $song['chords'])));
         $key = $chords ? Chord::fromString(reset($chords)) : null;
 
         $range = new NotesRange($song['lowest_note'], $song['highest_note']);
@@ -189,34 +198,97 @@ final class SongbookComparisonController extends Controller
             'key_is_tone'       => (bool) $song['first_chord_is_tone'],
             'key_pitch_class'   => $key ? $this->pitchClass($key->fundamental) : null,
             'chords'            => $chords,
-            'relative_chords'   => $key ? $this->relativeChords($chords, $key) : [],
+            'chord_pitches'     => array_map(fn ($name) => $this->chordPitch(Chord::fromString($name)), $chords),
             'lowest'            => $range->lowest,
             'highest'           => $range->highest,
+            'lowest_index'      => $notesCalculator->distanceWithOctave($range->lowest, 'C1'),
             'extension'         => $notesCalculator->rangeWideness($range),
             'people_lowest'     => $peopleRange?->lowest,
+            'people_lowest_index' => $peopleRange ? $notesCalculator->distanceWithOctave($peopleRange->lowest, 'C1') : null,
             'people_highest'    => $peopleRange?->highest,
             'people_extension'  => $peopleRange ? $notesCalculator->rangeWideness($peopleRange) : null,
         ];
     }
 
     /**
-     * The chords of the song as semitones above its own tone, so that two books
-     * playing the same harmony in different keys come out identical.
-     *
-     * @param  string[]  $chords
-     * @return int[] Sorted, without duplicates.
+     * @return array{int, string} Pitch class of the fundamental, and the attributes.
      */
-    private function relativeChords(array $chords, Chord $key): array
+    private function chordPitch(Chord $chord): array
     {
-        $degrees = [];
-        foreach ($chords as $chord) {
-            $degrees[] = (12 + $this->pitchClass(Chord::fromString($chord)->fundamental) - $this->pitchClass($key->fundamental)) % 12;
+        return [$this->pitchClass($chord->fundamental), (string) $chord->attributes];
+    }
+
+    /**
+     * The chords of the song, in order, moved down $shift semitones, as comparable
+     * strings ("9m", "5", "7"): two books playing the same harmony in different keys
+     * come out identical once the second is shifted by the key difference.
+     *
+     * @param  array{int, string}[]  $chordPitches
+     * @return string[]
+     */
+    private function shiftedChords(array $chordPitches, int $shift): array
+    {
+        return array_map(fn ($pitch) => (($pitch[0] - $shift + 24) % 12) . $pitch[1], $chordPitches);
+    }
+
+    /**
+     * Semitones the cell is above the reference, folded into a tritone either way: a
+     * book printing a song 7 semitones up printed it 5 semitones down just as truly.
+     *
+     * The first chords are compared only when both are the tone. Otherwise (a book
+     * opening with an intro chord) the key is unknown, so the shift is inferred as the
+     * transposition that makes both chord lists match best, no shift winning ties.
+     * A shift that still leaves most chords different is a coincidence, not a key.
+     *
+     * @param  mixed[]  $cell
+     * @param  mixed[]  $referenceCell
+     */
+    private function keyDelta(array $cell, array $referenceCell): int
+    {
+        if ($cell['key_pitch_class'] === null || $referenceCell['key_pitch_class'] === null) {
+            return 0;
         }
 
-        $degrees = array_values(array_unique($degrees));
-        sort($degrees);
+        if ($cell['key_is_tone'] && $referenceCell['key_is_tone']) {
+            return (($cell['key_pitch_class'] - $referenceCell['key_pitch_class'] + 18) % 12) - 6;
+        }
 
-        return $degrees;
+        $referenceChords = $this->shiftedChords($referenceCell['chord_pitches'], 0);
+        $best = 0;
+        $bestDifferent = PHP_INT_MAX;
+        foreach ([0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, -6] as $shift) {
+            $different = $this->chordsDifferent($this->shiftedChords($cell['chord_pitches'], $shift), $referenceChords);
+            if ($different < $bestDifferent) {
+                [$best, $bestDifferent] = [$shift, $different];
+            }
+        }
+
+        $total = max(count($cell['chord_pitches']), count($referenceCell['chord_pitches']));
+
+        return $bestDifferent * 2 <= $total ? $best : 0;
+    }
+
+    /**
+     * How many chords of the longer of both songs have no counterpart in the other,
+     * through their longest common subsequence: a chord added or dropped in one book
+     * counts once, not as a shift that makes every chord after it different.
+     *
+     * @param  string[]  $a
+     * @param  string[]  $b
+     */
+    private function chordsDifferent(array $a, array $b): int
+    {
+        $lcs = array_fill(0, count($b) + 1, 0);
+        foreach ($a as $chordA) {
+            $diagonal = 0;
+            foreach ($b as $j => $chordB) {
+                $above = $lcs[$j + 1];
+                $lcs[$j + 1] = $chordA === $chordB ? $diagonal + 1 : max($lcs[$j + 1], $lcs[$j]);
+                $diagonal = $above;
+            }
+        }
+
+        return max(count($a), count($b)) - $lcs[count($b)];
     }
 
     private function pitchClass(string $fundamental): int
@@ -256,6 +328,7 @@ final class SongbookComparisonController extends Controller
             return [
                 'key' => false, 'chords' => false, 'extension' => false, 'people_extension' => false,
                 'key_delta' => 0, 'extension_delta' => 0, 'people_extension_delta' => 0,
+                'chords_different' => 0, 'chords_total' => count($cell['chords']), 'people_compared' => false,
                 'status' => $referenceCell === null ? 'same' : 'reference',
             ];
         }
@@ -264,21 +337,31 @@ final class SongbookComparisonController extends Controller
         // not different: colouring it as a difference would drown the real ones.
         $peopleRangeComparable = $cell['people_extension'] !== null && $referenceCell['people_extension'] !== null;
 
+        $keyDelta = $this->keyDelta($cell, $referenceCell);
+        $chordsDifferent = $this->chordsDifferent(
+            $this->shiftedChords($cell['chord_pitches'], $keyDelta),
+            $this->shiftedChords($referenceCell['chord_pitches'], 0)
+        );
+
         $diff = [
-            'key'              => $cell['key_pitch_class'] !== $referenceCell['key_pitch_class'],
-            'chords'           => $cell['relative_chords'] !== $referenceCell['relative_chords'],
-            'extension'        => $cell['extension'] !== $referenceCell['extension'],
-            'people_extension' => $peopleRangeComparable
-                && $cell['people_extension'] !== $referenceCell['people_extension'],
+            'key'              => $keyDelta !== 0,
+            'chords'           => $chordsDifferent > 0,
+            'extension'        => !$this->rangeMatches(
+                $cell['extension'], $cell['lowest_index'],
+                $referenceCell['extension'], $referenceCell['lowest_index'],
+                $keyDelta
+            ),
+            'people_extension' => $peopleRangeComparable && !$this->rangeMatches(
+                $cell['people_extension'], $cell['people_lowest_index'],
+                $referenceCell['people_extension'], $referenceCell['people_lowest_index'],
+                $keyDelta
+            ),
         ];
 
-        // Signed, and folded into a tritone either way: a book printing a song 7
-        // semitones up printed it 5 semitones down just as truly.
-        $keyDelta = $cell['key_pitch_class'] === null || $referenceCell['key_pitch_class'] === null
-            ? 0
-            : (($cell['key_pitch_class'] - $referenceCell['key_pitch_class'] + 18) % 12) - 6;
-
         return $diff + [
+            'people_compared'        => $peopleRangeComparable,
+            'chords_different'       => $chordsDifferent,
+            'chords_total'           => max(count($cell['chords']), count($referenceCell['chords'])),
             'key_delta'              => $keyDelta,
             'extension_delta'        => $cell['extension'] - $referenceCell['extension'],
             'people_extension_delta' => $peopleRangeComparable
@@ -291,6 +374,20 @@ final class SongbookComparisonController extends Controller
                 default => 'same',
             },
         ];
+    }
+
+    /**
+     * Whether a range is the reference's one, moved along with the key: Am E2-A2 matches
+     * Em B1-E2. The key delta is folded into a tritone, so the range may have moved by
+     * it in either octave direction (Am to Em is -5 or +7).
+     */
+    private function rangeMatches(int $extension, int $lowestIndex, int $referenceExtension, int $referenceLowestIndex, int $keyDelta): bool
+    {
+        $shift = $lowestIndex - $referenceLowestIndex;
+
+        return $extension === $referenceExtension
+            && abs($shift) < 12
+            && ($shift - $keyDelta) % 12 === 0;
     }
 
     /**
@@ -318,7 +415,8 @@ final class SongbookComparisonController extends Controller
             'key'        => $row['differs']['key'],
             'chords'     => $row['differs']['chords'],
             'range'      => $row['differs']['extension'] || $row['differs']['people_extension'],
-            'exclusive'  => $row['books_present'] === 1,
+            'exclusive'  => $row['books_present'] === 1 && $row['status'] !== 'unlinked',
+            'unlinked'   => $row['status'] === 'unlinked',
             default      => true,
         };
     }
@@ -349,9 +447,17 @@ final class SongbookComparisonController extends Controller
             'per_book'     => array_fill_keys($selectedBooks, 0),
             'shared_by_all' => 0,
             'exclusive'    => 0,
+            'unlinked'     => 0,
         ];
 
         foreach ($rows as $row) {
+            if ($row['status'] === 'unlinked') {
+                $stats['unique_songs']--;
+                $stats['unlinked']++;
+                $stats['per_book'][array_key_first($row['cells'])]++;
+
+                continue;
+            }
             foreach (array_keys($row['cells']) as $idBook) {
                 $stats['per_book'][$idBook]++;
             }

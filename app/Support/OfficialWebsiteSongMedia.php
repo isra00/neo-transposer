@@ -52,17 +52,22 @@ final class OfficialWebsiteSongMedia
         $cached = self::cache()->get(self::cacheKey($songUrl));
 
         if (is_array($cached)) {
-            return new self($cached['pdf'], $cached['audio'], $cached['images'], null);
+            return new self($cached['pdf'], $cached['audio'], $cached['images'], $cached['error'] ?? null);
         }
 
         try {
             $response = Http::timeout(10)->connectTimeout(5)->get($songUrl);
+            $error = $response->successful() ? null : 'HTTP ' . $response->status() . ' fetching the song page';
         } catch (\Throwable $e) {
-            return new self(null, [], [], $e->getMessage());
+            $error = $e->getMessage();
         }
 
-        if (!$response->successful()) {
-            return new self(null, [], [], 'HTTP ' . $response->status() . ' fetching the song page');
+        if ($error !== null) {
+            // Cached briefly, so a slow or down site does not stall every reload, yet is retried soon.
+            $failureTtlSeconds = 300;
+            self::cache()->put(self::cacheKey($songUrl), ['pdf' => null, 'audio' => [], 'images' => [], 'error' => $error], $failureTtlSeconds);
+
+            return new self(null, [], [], $error);
         }
 
         $html = $response->body();
