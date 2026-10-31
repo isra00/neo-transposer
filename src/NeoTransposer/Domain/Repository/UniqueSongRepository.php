@@ -27,4 +27,12 @@ interface UniqueSongRepository
      * @return int[]
      */
     public function readBooksWithSongs(): array;
+
+    /**
+     * The songs of every book that belong to the given unique song.
+     *
+     * @return mixed[][] Rows with id_song, id_book, title and is_origin (the song
+     *                   is in the unique song's origin book).
+     */
+    public function readSongs(int $idUniqueSong): array;
 }

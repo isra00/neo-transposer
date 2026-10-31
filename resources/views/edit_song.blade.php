@@ -2,8 +2,6 @@
 
 @section('content')
 
-<h1>Edit song</h1>
-
 {{--
 	Two separate forms on purpose: picking a book must not carry the song being edited,
 	or the controller would resolve that song again and take the book from it, leaving
@@ -58,8 +56,11 @@
 		@csrf
 
 		<p class="song-id">
-			Song <strong>#{{ $song->idSong }}</strong> ·
-			<a href="{{ route('transpose_song', ['id_song' => $song->slug]) }}" target="_blank">see it live</a>
+			Song <strong>#{{ $song->idSong }}</strong>
+			<a href="{{ route('transpose_song', ['id_song' => $song->slug]) }}" target="_blank">[NT page]</a>
+			@foreach ($linked_songs as $linkedSong)
+				· <a href="{{ route('edit_song', ['id_song' => $linkedSong['id_song']]) }}">{{ $all_books[$linkedSong['id_book']]->langName() }}@if ($linkedSong['is_origin']) &#9733;@endif</a>
+			@endforeach
 		</p>
 
 		<p>
@@ -146,19 +147,34 @@
 		@elseif ($media->error)
 			<p class="notification error">Could not read <a href="{{ $song->url }}" target="_blank">the song page</a>: {{ $media->error }}</p>
 		@else
-			<h3>
-				<a href="{{ $song->url }}" target="_blank">{{ parse_url($song->url, PHP_URL_HOST) }} &#8599;</a>
-			</h3>
+			<div class="song-media-header">
+				<h3>
+					<a href="{{ $song->url }}" target="_blank">{{ parse_url($song->url, PHP_URL_HOST) }} &#8599;</a>
+				</h3>
+				@if ($media->pdfUrl)
+					<a href="{{ $media->pdfUrl }}" target="_blank">songbook page &#8599;</a>
+				@endif
+				@if (count($media->audioUrls) === 1)
+					<audio controls preload="none" src="{{ $media->audioUrls[0] }}"></audio>
+				@elseif (!$media->audioUrls)
+					<p class="notification error">No audio found on the song page.</p>
+				@endif
+			</div>
 
-			@if ($media->audioUrl)
-				<audio controls preload="none" src="{{ $media->audioUrl }}"></audio>
-			@else
-				<p class="notification error">No audio found on the song page.</p>
+			{{-- Several melodies of the same song: one player each, labelled by file name. --}}
+			@if (count($media->audioUrls) > 1)
+				<ul class="audio-tracks">
+				@foreach ($media->audioUrls as $audioUrl)
+					<li>
+						<span>{{ pathinfo(parse_url($audioUrl, PHP_URL_PATH), PATHINFO_FILENAME) }}</span>
+						<audio controls preload="none" src="{{ $audioUrl }}"></audio>
+					</li>
+				@endforeach
+				</ul>
 			@endif
 
 			@if ($media->pdfUrl)
 				<iframe class="songbook-page-image" src="{{ $media->pdfUrl }}" title="Songbook page image of {{ $song->title }}"></iframe>
-				<p><a href="{{ $media->pdfUrl }}" target="_blank">Open the songbook page image in a new tab &#8599;</a></p>
 			@elseif ($media->imageUrls)
 				{{-- Publishers without a PDF publish one songbook page image per page. --}}
 				<div class="songbook-page-image songbook-page-images">

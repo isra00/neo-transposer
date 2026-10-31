@@ -30,12 +30,14 @@ final class OfficialWebsiteSongMedia
     private const NOT_A_SONGBOOK_PAGE_IMAGE = ['favicon', 'logo', 'avatar', 'icon', 'sprite', 'banner', 'gravatar'];
 
     /**
+     * @param  string[]  $audioUrls  Recordings, in page order: some songs have several
+     *                               melodies, one recording each.
      * @param  string[]  $imageUrls  Songbook page images, in the order the publisher's page
      *                               lists them.
      */
     private function __construct(
         public readonly ?string $pdfUrl,
-        public readonly ?string $audioUrl,
+        public readonly array $audioUrls,
         public readonly array $imageUrls,
         public readonly ?string $error
     ) {
@@ -44,7 +46,7 @@ final class OfficialWebsiteSongMedia
     public static function forUrl(?string $songUrl): self
     {
         if (empty($songUrl)) {
-            return new self(null, null, [], null);
+            return new self(null, [], [], null);
         }
 
         $cached = self::cache()->get(self::cacheKey($songUrl));
@@ -56,18 +58,18 @@ final class OfficialWebsiteSongMedia
         try {
             $response = Http::timeout(10)->connectTimeout(5)->get($songUrl);
         } catch (\Throwable $e) {
-            return new self(null, null, [], $e->getMessage());
+            return new self(null, [], [], $e->getMessage());
         }
 
         if (!$response->successful()) {
-            return new self(null, null, [], 'HTTP ' . $response->status() . ' fetching the song page');
+            return new self(null, [], [], 'HTTP ' . $response->status() . ' fetching the song page');
         }
 
         $html = $response->body();
 
         $media = [
-            'pdf'    => self::firstLinkWithExtension($html, $songUrl, ['pdf']),
-            'audio'  => self::firstLinkWithExtension($html, $songUrl, ['mp3', 'm4a', 'ogg', 'wav']),
+            'pdf'    => self::linksWithExtension($html, $songUrl, ['pdf'])[0] ?? null,
+            'audio'  => self::linksWithExtension($html, $songUrl, ['mp3', 'm4a', 'ogg', 'wav']),
             'images' => self::songbookPageImages($html, $songUrl),
         ];
 
@@ -91,21 +93,26 @@ final class OfficialWebsiteSongMedia
 
     private static function cacheKey(string $songUrl): string
     {
-        return 'official_website_song_media_v2:' . md5($songUrl);
+        return 'official_website_song_media_v3:' . md5($songUrl);
     }
 
     /**
+     * Distinct links, in page order. The query string is dropped: players link the same
+     * file once as a download (href) and again with a cache buster (src="...mp3?_=1").
+     *
      * @param  string[]  $extensions
+     * @return string[]
      */
-    private static function firstLinkWithExtension(string $html, string $pageUrl, array $extensions): ?string
+    private static function linksWithExtension(string $html, string $pageUrl, array $extensions): array
     {
         $pattern = '/(?:href|src)\s*=\s*["\']([^"\']+\.(?:' . implode('|', $extensions) . '))(?:\?[^"\']*)?["\']/i';
 
-        if (!preg_match($pattern, $html, $match)) {
-            return null;
-        }
+        preg_match_all($pattern, $html, $matches);
 
-        return self::absolutize(html_entity_decode($match[1]), $pageUrl);
+        return array_values(array_unique(array_map(
+            fn ($url) => self::absolutize(html_entity_decode($url), $pageUrl),
+            $matches[1]
+        )));
     }
 
     /**

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use NeoTransposer\Domain\Exception\SongNotExistException;
 use NeoTransposer\Domain\Repository\BookRepository;
 use NeoTransposer\Domain\Repository\SongRepository;
+use NeoTransposer\Domain\Repository\UniqueSongRepository;
 
 /**
  * Song-by-song editor for reviewing a whole songbook: all the song and chord data of
@@ -19,6 +20,7 @@ final class EditSongController extends Controller
         Request $request,
         SongRepository $songRepository,
         BookRepository $bookRepository,
+        UniqueSongRepository $uniqueSongRepository,
         ?string $idSong = null
     ) {
         $allBooks = $bookRepository->readAllBooks();
@@ -41,6 +43,14 @@ final class EditSongController extends Controller
 
         $bookSongs = $songRepository->readBookSongs($idBook)->asArray();
 
+        // The same song as printed in other books, to review them one after another.
+        $linkedSongs = $song?->idUniqueSong
+            ? array_filter(
+                $uniqueSongRepository->readSongs((int) $song->idUniqueSong),
+                fn ($row) => (int) $row['id_song'] !== (int) $song->idSong
+            )
+            : [];
+
         return response()->view('edit_song', [
             'page_title'   => ($song ? 'Edit: ' . $song->title : 'Edit song') . ' · ' . config('nt.software_name'),
             'page_class'   => 'edit-song-page',
@@ -48,6 +58,7 @@ final class EditSongController extends Controller
             'id_book'      => $idBook,
             'book_songs'   => $bookSongs,
             'song'         => $song,
+            'linked_songs' => $linkedSongs,
             'siblings'     => $song ? $this->siblings($bookSongs, (int) $song->idSong) : ['prev' => null, 'next' => null],
             'media'        => OfficialWebsiteSongMedia::forUrl($song->url ?? null),
         ]);

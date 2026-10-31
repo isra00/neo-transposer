@@ -54,4 +54,19 @@ final class UniqueSongRepositoryMysql extends MysqlRepository implements UniqueS
             $this->dbConnection->select('SELECT DISTINCT id_book FROM song ORDER BY id_book')
         );
     }
+
+    public function readSongs(int $idUniqueSong): array
+    {
+        return array_map(
+            fn ($row) => (array) $row,
+            $this->dbConnection->select(
+                'SELECT s.id_song, s.id_book, s.title, s.id_book = u.id_origin_book AS is_origin
+                 FROM song s
+                 JOIN unique_song u ON u.id_unique_song = s.id_unique_song
+                 WHERE s.id_unique_song = ?
+                 ORDER BY s.id_book, s.id_song',
+                [$idUniqueSong]
+            )
+        );
+    }
 }

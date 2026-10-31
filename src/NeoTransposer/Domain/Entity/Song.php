@@ -29,6 +29,8 @@ class Song
 
     public $artisticAdjustment;
 
+    public $idUniqueSong;
+
     /**
      * @var NotesRange|null
      */
@@ -55,6 +57,7 @@ class Song
         $this->peopleRange = (!empty($dbColumns['people_lowest_note']) && !empty($dbColumns['people_highest_note'])) ? new NotesRange($dbColumns['people_lowest_note'], $dbColumns['people_highest_note']) : null;
         $this->url = $dbColumns['url'];
         $this->artisticAdjustment = $dbColumns['artistic_adjustment'];
+        $this->idUniqueSong = $dbColumns['id_unique_song'] ?? null;
 
         // From table book
         $this->bookChordPrinter = $dbColumns['chord_printer']; // Used by TransposedSong
