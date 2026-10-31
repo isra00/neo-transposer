@@ -76,6 +76,7 @@ final class EditSongController extends Controller
         ));
 
         $url = trim((string) $request->get('url')) ?: null;
+        $previousUrl = $songRepository->readSongById((int) $idSong)->url;
 
         $songRepository->updateSong(
             (int) $idSong,
@@ -96,7 +97,9 @@ final class EditSongController extends Controller
         );
 
         // The media embeds come from the url's page, so a new url must be scraped again.
-        OfficialWebsiteSongMedia::forget($url);
+        if ($url !== $previousUrl) {
+            OfficialWebsiteSongMedia::forget($url);
+        }
 
         session()->flash('success', 'Song saved');
 
