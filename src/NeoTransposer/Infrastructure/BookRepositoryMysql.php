@@ -30,7 +30,7 @@ final class BookRepositoryMysql extends MysqlRepository implements BookRepositor
 
     public function readPublishedBooks(): array
     {
-        return $this->readBooks('SELECT * FROM book WHERE published = 1 ORDER BY lang_name');
+        return array_filter($this->readAllBooks(), fn (Book $book) => empty(config('nt.languages')[$book->locale()]['unpublished']));
     }
 
     public function readBook(int $idBook): ?Book
@@ -67,8 +67,7 @@ final class BookRepositoryMysql extends MysqlRepository implements BookRepositor
             $row['details'],
             $row['chord_printer'],
             $row['locale'],
-            $row['song_count'],
-            (bool) $row['published']
+            $row['song_count']
         );
     }
 }

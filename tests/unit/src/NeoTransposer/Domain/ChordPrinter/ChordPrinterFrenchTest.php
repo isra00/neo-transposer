@@ -1,18 +1,19 @@
 <?php
+
 /** @noinspection ReturnTypeCanBeDeclaredInspection */
 
 namespace NeoTransposer\Tests\Domain\ChordPrinter;
 
+use Illuminate\Foundation\Testing\TestCase;
 use NeoTransposer\Domain\ChordPrinter\ChordPrinterFrench;
 use NeoTransposer\Domain\ValueObject\Chord;
-use Illuminate\Foundation\Testing\TestCase;
 
 class ChordPrinterFrenchTest extends TestCase
 {
     /**
      * @dataProvider chordsProvider
      */
-    public function testPrintChord(string $chord, string $expected)
+    public function test_print_chord(string $chord, string $expected)
     {
         $this->assertEquals($expected, (new ChordPrinterFrench())->printChord(Chord::fromString($chord)));
     }
@@ -24,31 +25,31 @@ class ChordPrinterFrenchTest extends TestCase
     public static function chordsProvider(): array
     {
         return [
-            //Major
+            // Major
             ['A',     'La'],
             ['G',     'Sol'],
-            //Flats: the songbook always spells A# as Bb
+            // Flats: the songbook always spells A# as Bb
             ['A#',    'Si<em>b</em>'],
             ['A#7',   'Si<em>b</em> 7'],
-            //Sharps
+            // Sharps
             ['F#',    'Fa#'],
             ['C#',    'Do#'],
             ['D#',    'Re#'],
             ['G#',    'Sol#'],
             ['F#m',   'Fa# <em>m</em>'],
-            //Minor
+            // Minor
             ['Am',    'La <em>m</em>'],
             ['Cm',    'Do <em>m</em>'],
-            //Seventh, detached from the note
+            // Seventh, detached from the note
             ['E7',    'Mi 7'],
             ['C#7',   'Do# 7'],
-            //Added interval on a minor chord, detached from the "m"
+            // Added interval on a minor chord, detached from the "m"
             ['Dm5',   'Re <em>m</em> 5'],
             ['Em6',   'Mi <em>m</em> 6'],
             ['Dm9',   'Re <em>m</em> 9'],
-            //Major seventh
+            // Major seventh
             ['F7M',   'Fa <em>maj7</em>'],
-            //Diminished
+            // Diminished
             ['C#dim', 'Do# <em>dim</em>'],
         ];
     }

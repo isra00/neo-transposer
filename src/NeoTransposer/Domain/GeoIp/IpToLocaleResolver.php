@@ -14,7 +14,7 @@ final class IpToLocaleResolver
         'fr' => [
             'FR', 'MC', 'BE', 'CH', 'LU', 'HT', // Europe
             'CD', 'CG', 'SN', 'CI', 'ML', 'BF', 'NE', 'GN', 'BJ', 'TG', 'TD', 'CF', 'CM', 'GA', 'DJ', 'MG', 'RW', 'BI', 'KM', 'SC', 'MU', // Africa
-            'GP', 'MQ', 'GF', 'RE', 'YT', 'PF', 'NC', 'WF', 'PM', 'BL', 'MF', //French overseas territories
+            'GP', 'MQ', 'GF', 'RE', 'YT', 'PF', 'NC', 'WF', 'PM', 'BL', 'MF', // French overseas territories
         ],
     ];
 

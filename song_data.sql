@@ -29,7 +29,6 @@ CREATE TABLE `book` (
   `chord_printer` varchar(50) NOT NULL,
   `locale` char(2) NOT NULL,
   `song_count` smallint unsigned NOT NULL COMMENT 'Total # of songs that should be present. For management purposes only.',
-  `published` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'If 0, the book and its songs are hidden from the public interface.',
   PRIMARY KEY (`id_book`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,11 +39,11 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'Kiswahili','Tanzania - Kenya 2003','Swahili','sw',227,1);
-INSERT INTO `book` VALUES (2,'Español','Madrid 2023','Spanish','es',228,1);
-INSERT INTO `book` VALUES (3,'English','London 2013','English','en',234,1);
-INSERT INTO `book` VALUES (4,'Português','Brasilia 2017','Spanish','pt',231,1);
-INSERT INTO `book` VALUES (5,'Italiano','Roma 2020','Italian','it',236,1);
+INSERT INTO `book` VALUES (1,'Kiswahili','Tanzania - Kenya 2003','Swahili','sw',227);
+INSERT INTO `book` VALUES (2,'Español','Madrid 2023','Spanish','es',228);
+INSERT INTO `book` VALUES (3,'English','London 2013','English','en',234);
+INSERT INTO `book` VALUES (4,'Português','Brasilia 2017','Spanish','pt',231);
+INSERT INTO `book` VALUES (5,'Italiano','Roma 2020','Italian','it',236);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 

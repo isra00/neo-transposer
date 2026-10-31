@@ -14,7 +14,7 @@
 
 @section('languageSwitchTop')
     <nav class="lang-switch-top">
-        @foreach (config('nt.languages') as $locale => $lang)
+        @foreach ($languages as $locale => $lang)
             <a class="flag-{{ $locale }} @if ($locale == app()->getLocale()) active @endif" hreflang="{{ $locale }}" href="{{ route('login', ['locale' => $locale]) }}">
                 {{ Str::substr($lang['name'], 0, 3) }}<span>{{ Str::substr($lang['name'], 3) }}</span>
             </a>

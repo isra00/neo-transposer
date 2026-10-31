@@ -18,7 +18,7 @@ final class BookController extends Controller
     {
         $currentBook = $bookRepository->readBook((int) $bookId);
 
-        if (!$currentBook?->isPublished()) {
+        if (!$currentBook) {
             abort(404, "Book $bookId does not exist.");
         }
 

@@ -18,10 +18,12 @@ final class LocaleAutodetector
      * well, the NCW is organized by country, and where a country speaks a
      * language, the catechumens sing in that language (with a few exceptions,
      * like USA). This is why geoip language detection works better.
+     *
+     * Only published languages are detected.
      */
     public function detect(Request $request): void
     {
-        $supportedLocales = array_keys(config('nt.languages'));
+        $supportedLocales = array_keys(array_filter(config('nt.languages'), fn ($lang) => empty($lang['unpublished'])));
 
         // We don't use getPreferredLanguage() because it does an exact intersect
         // first, so a lower-priority exact match (e.g. "en") beats a higher-priority
@@ -35,6 +37,10 @@ final class LocaleAutodetector
             }
         }
 
-        App::setLocale($this->ipToLocaleResolver->resolveIpToLocale($request->getClientIp()) ?? App::currentLocale());
+        $ipLocale = $this->ipToLocaleResolver->resolveIpToLocale($request->getClientIp());
+
+        if (in_array($ipLocale, $supportedLocales, true)) {
+            App::setLocale($ipLocale);
+        }
     }
 }

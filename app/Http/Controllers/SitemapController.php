@@ -11,7 +11,7 @@ final class SitemapController extends Controller
     {
         $urls = [];
 
-        $languages = array_keys(config('nt.languages'));
+        $languages = array_keys(array_filter(config('nt.languages'), fn ($lang) => empty($lang['unpublished'])));
 
         foreach ($languages as $lang) {
             $urls[] = [

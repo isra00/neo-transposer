@@ -2,6 +2,8 @@
 
 return [
 
+    // Languages flagged 'unpublished' (and their books and songs) are reachable by direct
+    // link only, not listed anywhere.
     'languages' => [
         'en' => [
             'name'     => 'English',
@@ -26,6 +28,7 @@ return [
         'fr' => [
             'name'     => 'Français',
             'notation' => 'latin',
+            'unpublished' => true,
         ],
     ],
 
