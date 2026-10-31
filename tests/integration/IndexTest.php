@@ -31,7 +31,7 @@ final class IndexTest extends TestCase
     {
         $this->stubGeoIp(null);
 
-        $this->withHeaders(['Accept-Language' => 'fr-FR,fr;q=0.9'])
+        $this->withHeaders(['Accept-Language' => 'de-DE,de;q=0.9'])
             ->get('/')
             ->assertRedirect('/en/login');
     }
