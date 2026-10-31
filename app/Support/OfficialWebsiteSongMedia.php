@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Http;
  * can be read and listened to without leaving the form, so we scrape the page for them.
  *
  * Publishers differ: chantscnc.fr links the songbook page image as a PDF,
- * cantos.cnc.madrid puts it in <img> tags, one per songbook page. Both are collected,
- * and the view falls back to the images when there is no PDF.
+ * cantos.cnc.madrid puts it in <img> tags, one per songbook page, and
+ * cantineocatecumenale.it only as the page's og:image (its <img> tags are app store badges
+ * and banners). All are collected, and the view falls back to the images when there is no PDF.
  *
  * The scrape is cached: while editing a songbook the same page is reloaded often, and
  * the publisher's site is slow enough for a round trip per reload to be noticeable.
@@ -90,7 +91,7 @@ final class OfficialWebsiteSongMedia
 
     private static function cacheKey(string $songUrl): string
     {
-        return 'official_website_song_media_v1:' . md5($songUrl);
+        return 'official_website_song_media_v2:' . md5($songUrl);
     }
 
     /**
@@ -115,6 +116,12 @@ final class OfficialWebsiteSongMedia
      */
     private static function songbookPageImages(string $html, string $pageUrl): array
     {
+        if (str_ends_with(parse_url($pageUrl, PHP_URL_HOST) ?? '', 'cantineocatecumenale.it')) {
+            return preg_match('/<meta\b[^>]*?\bproperty\s*=\s*["\']og:image["\'][^>]*?\bcontent\s*=\s*["\']([^"\']+)["\']/i', $html, $match)
+                ? [self::absolutize(html_entity_decode($match[1]), $pageUrl)]
+                : [];
+        }
+
         preg_match_all('/<img\b[^>]*?\bsrc\s*=\s*["\']([^"\']+)["\']/i', $html, $matches);
 
         $images = [];
