@@ -3,6 +3,8 @@
 namespace NeoTransposerTests\Acceptance;
 
 use AcceptanceTester;
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Songs are inserted very seldom, and the insertion writes to two tables (song and
@@ -14,24 +16,39 @@ class InsertSongCest
 {
     private const CHORDS = ['C', 'G', 'Am', 'F'];
 
+    private string $title;
+
     public function _before(AcceptanceTester $I)
     {
         $I->haveHttpHeader('X-Admin-Bypass', 'local-dev');
+        $this->title = 'Test song ' . uniqid();
+    }
+
+    /**
+     * Locally the suite runs against the developer's own database, so the inserted song
+     * must not be left behind. The app is booted only to reach that same database.
+     */
+    public function _after(AcceptanceTester $I)
+    {
+        $app = require __DIR__ . '/../../bootstrap/app.php';
+        $app->make(Kernel::class)->bootstrap();
+
+        $idSongs = DB::table('song')->where('title', $this->title)->pluck('id_song');
+        DB::table('song_chord')->whereIn('id_song', $idSongs)->delete();
+        DB::table('song')->whereIn('id_song', $idSongs)->delete();
     }
 
     public function insertedSongShouldBeShownCorrectlyInTransposeSongPage(AcceptanceTester $I)
     {
-        $title = 'Test song ' . uniqid();
-
-        $this->whenIFillTheInsertSongForm($I, $title);
+        $this->whenIFillTheInsertSongForm($I, $this->title);
         $I->click('#submit');
         $I->see('Song inserted', '.notification.success');
 
         Shared::givenASpanishNewUserWithManualRangeInBookPage($I);
 
-        $I->amOnPage('/transpose/' . str_replace(' ', '-', strtolower($title)));
+        $I->amOnPage('/transpose/' . str_replace(' ', '-', strtolower($this->title)));
         Shared::removeDebugBar($I);
-        $I->see($title, 'h1');
+        $I->see($this->title, 'h1');
 
         // The page prints several transpositions, all with the same original chords, except
         // the "as-book" one, which prints none.
@@ -54,9 +71,7 @@ class InsertSongCest
      */
     public function aFailedChordInsertShouldLeaveNoSongBehind(AcceptanceTester $I)
     {
-        $title = 'Test song ' . uniqid();
-
-        $this->whenIFillTheInsertSongForm($I, $title);
+        $this->whenIFillTheInsertSongForm($I, $this->title);
 
         // Duplicate chords are only rejected by the form's own JS, which runs on keyup;
         // setting the value directly is what any client that skips it would send, and the
@@ -67,7 +82,7 @@ class InsertSongCest
 
         Shared::givenASpanishNewUserWithManualRangeInBookPage($I);
 
-        $I->amOnPage('/transpose/' . str_replace(' ', '-', strtolower($title)));
+        $I->amOnPage('/transpose/' . str_replace(' ', '-', strtolower($this->title)));
         $I->seeElement('.error-page');
     }
 
