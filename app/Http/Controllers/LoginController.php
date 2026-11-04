@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use NeoTransposer\Domain\Entity\User;
 use NeoTransposer\Domain\Repository\BookRepository;
@@ -77,7 +78,12 @@ class LoginController extends Controller
         if (!$user = $userRepository->readFromEmail($req_email)) {
             $idBook = $bookRepository->readIdBookFromLocale($locale);
             $user = new User($req_email, null, null, $idBook, null, null, null, new UserPerformance(0, 0), $req->getClientIp());
-            $userRepository->save($user);
+            try {
+                $userRepository->save($user);
+            } catch (UniqueConstraintViolationException) {
+                // A concurrent request (e.g. a double-submitted form) registered this e-mail first
+                $user = $userRepository->readFromEmail($req_email);
+            }
         }
 
         $user->firstTime = !$user->hasRange();
