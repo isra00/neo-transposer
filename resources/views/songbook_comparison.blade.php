@@ -49,6 +49,7 @@
 		<span class="sc-legend-item sc-is-same">identical</span>
 		<span class="sc-legend-item sc-is-range">range differs</span>
 		<span class="sc-legend-item sc-is-key">key differs</span>
+		<span class="sc-legend-item sc-is-close">≤20% chords differ</span>
 		<span class="sc-legend-item sc-is-chords">chords differ</span>
 		<span class="sc-legend-item sc-is-alone">only one book</span>
 		<span class="sc-legend-item sc-is-absent">not in the book</span>
@@ -82,21 +83,15 @@
 		@foreach($rows as $row)
 			<tr class="sc-row sc-is-{{ $row['status'] }}">
 				<th class="sc-col-song" scope="row">
-					{{-- The mapping note is context, not a difference: available on hover, out of the way. --}}
-					<span class="sc-name @if($row['unique_song']['notes']) sc-has-note @endif"
-						@if($row['unique_song']['notes']) title="{{ $row['unique_song']['notes'] }}" @endif>{{ $row['unique_song']['name'] }}</span>
+					<span class="sc-name">{{ $row['unique_song']['name'] }}</span>
+					@if($row['unique_song']['notes'])
+					<span class="sc-note">{{ $row['unique_song']['notes'] }}</span>
+					@endif
+					{{-- What differs is told by each column; the row only says how many books have it. --}}
 					<span class="sc-row-flags">
 						<span class="sc-count @if($row['books_missing']) sc-count-missing @endif">{{ $row['books_present'] }}/{{ count($selected_books) }}</span>
 						@if('unlinked' === $row['status'])
 						<span class="sc-flag sc-is-unlinked" title="Set this song's id_unique_song to compare it with the other books">no unique song</span>
-						@elseif('alone' === $row['status'])
-						<span class="sc-flag sc-is-alone">only this book</span>
-						@elseif('same' === $row['status'])
-						<span class="sc-flag sc-is-same">identical</span>
-						@else
-						@if($row['differs']['chords'])<span class="sc-flag sc-is-chords">chords</span>@endif
-						@if($row['differs']['key'])<span class="sc-flag sc-is-key">key</span>@endif
-						@if($row['differs']['extension'] || $row['differs']['people_extension'])<span class="sc-flag sc-is-range">range</span>@endif
 						@endif
 					</span>
 				</th>
@@ -104,39 +99,47 @@
 				@foreach($selected_books as $idBook)
 				@php $cells = $row['cells'][$idBook] ?? []; @endphp
 				<td class="sc-cell @empty($cells) sc-is-absent @endempty">
-					@forelse($cells as $cell)
+					@if($cells)
+					<div class="sc-songs">
+					@foreach($cells as $cell)
 						@php
 							$diff = $cell['diff'];
 							$isReference = 'reference' === $diff['status'];
 							//A lone song has nothing to be compared with: it shows its facts, no verdict.
 							$compared = !$isReference && $row['books_present'] > 1;
-							$identical = $compared && 'same' === $diff['status'];
+							$ok = $compared && 'same' === $diff['status'];
+							$identical = $ok && !$diff['key'];
 						@endphp
-						<div class="sc-song sc-is-{{ $diff['status'] }} @if($identical) sc-identical @endif">
+						<div class="sc-song sc-is-{{ $diff['status'] }} @if($ok) sc-identical @endif @if($cell['verified_at']) sc-verified @endif">
+						{{-- Floated first, so the title wraps around it instead of under it. --}}
+						<label class="sc-verify" title="{{ $cell['verified_at'] ? 'Verified on ' . $cell['verified_at'] : 'Mark as verified' }}">
+							<input type="checkbox" data-url="{{ route('songbook_comparison_verify', ['id_song' => $cell['id_song']]) }}" @checked($cell['verified_at'])>
+							<svg class="sc-verify-icon" viewBox="0 0 16 16" aria-label="Mark as verified"><path d="M8 1l5.5 2v4.5c0 3.4-2.4 6.1-5.5 7.5-3.1-1.4-5.5-4.1-5.5-7.5V3z" /><path d="M5.3 8.2l1.9 1.9 3.6-3.8" /></svg>
+						</label>
 						<a class="sc-title" href="{{ route('edit_song', ['id_song' => $cell['id_song']]) }}">{{ $cell['title'] }}</a>@if('reference' === $cell['diff']['status'])<span class="sc-reference-star" title="This is the reference for this song">★</span>@endif
 						<dl class="sc-rows">
 							<dt>Chords</dt>
 							<dd title="{{ implode(' ', $cell['chords']) }}">
+								@if($compared)
+									@if($diff['chords'])
+									<span class="sc-verdict sc-is-chords">{{ $diff['chords_different'] }}/{{ $diff['chords_total'] }} different{{ $diff['chords_reordered'] ? ' order' : '' }}</span>
+									@else
+									<span class="sc-verdict sc-is-same">@unless($diff['key'])same @endunless✔︎</span>
+									@endif
+									@if($diff['key'])<span class="sc-verdict sc-is-key">different key</span>@endif
+								@endif
 								{{-- Identical to the reference in everything: its first chord adds nothing. --}}
 								@unless($identical)
 								<span class="sc-chip @if($diff['key']) sc-is-key {{ $magnitude($diff['key_delta']) }} @endif"
-									@if($diff['key']) title="{{ $diff['key_delta'] }} semitones from the reference" @endif>
+									@if($diff['key']) title="{{ abs($diff['key_delta']) }} semitones {{ $diff['key_delta'] > 0 ? 'above' : 'below' }} the reference" @endif>
 									{{ $cell['key'] }}
 									{{-- With the very same chords as the reference, an unknown tone does not matter. --}}
 									@if(!$cell['key_is_tone'] && !($compared && !$diff['key'] && !$diff['chords']))
 									<span title="First chord is not key"><svg class="sc-no-tone" viewBox="0 0 16 16" aria-label="First chord is not key"><circle cx="5" cy="8" r="3" /><path d="M8 8h6M12 8v2.5M14 8v2" /><path d="M2 14L14 2" /></svg></span>
 									@endif
-									@if($diff['key'])<b>{{ sprintf('%+d', $diff['key_delta']) }}</b>@endif
+									@if($diff['key'])<b>{{ $diff['key_delta'] > 0 ? '↑' : '↓' }}{{ abs($diff['key_delta']) }}<abbr class="sc-st" title="semitones">st</abbr></b>@endif
 								</span>
 								@endunless
-								@if($compared)
-									@if($diff['chords'])
-									<span class="sc-verdict sc-is-chords">{{ $diff['chords_different'] }}/{{ $diff['chords_total'] }} different</span>
-									@else
-									<span class="sc-verdict sc-is-same">same ✔︎</span>
-									@endif
-									@if($diff['key'])<span class="sc-verdict sc-is-key">different key</span>@endif
-								@endif
 							</dd>
 
 								{{-- A range equal to the reference's is noise: only a discrepancy is spelled out. --}}
@@ -167,9 +170,11 @@
 								</dd>
 						</dl>
 					</div>
-					@empty
+					@endforeach
+					</div>
+					@else
 					<span class="sc-not-in-book">—</span>
-					@endforelse
+					@endif
 				</td>
 				@endforeach
 			</tr>
@@ -182,4 +187,34 @@
 	@endif
 
 </article>
+@endsection
+
+@section('scripts')
+<script>
+$(function() {
+	$('.sc-verify input').on('change', function() {
+		var checkbox = this,
+			label = $(checkbox).parent();
+
+		checkbox.disabled = true;
+		$.ajax({
+			type: 'POST',
+			url: $(checkbox).data('url'),
+			data: {verified: checkbox.checked ? 1 : 0},
+			dataType: 'json',
+			success: function(response) {
+				label.closest('.sc-song').toggleClass('sc-verified', !!response.verified_at);
+				label.attr('title', response.verified_at ? 'Verified on ' + response.verified_at : 'Mark as verified');
+			},
+			error: function() {
+				//Not saved: the checkbox goes back to what the database says.
+				checkbox.checked = !checkbox.checked;
+			},
+			complete: function() {
+				checkbox.disabled = false;
+			}
+		});
+	});
+});
+</script>
 @endsection

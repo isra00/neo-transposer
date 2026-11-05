@@ -48,6 +48,8 @@ jobs:
           make init-test-db
           make start
 
+      - name: 🗄 create_tables.sql includes every migration
+        run: make check-migrations
       - name: 🧹 Code style (Laravel Pint)
         run: make lint
       - name: 🔎 Static analysis (PHPStan)

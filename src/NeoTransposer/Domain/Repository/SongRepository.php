@@ -49,4 +49,11 @@ interface SongRepository
     ): void;
 
     public function slugAlreadyExists(string $slug): bool;
+
+    /**
+     * Stamps the song as verified now, or clears the stamp.
+     *
+     * @return string|null The new verified_at.
+     */
+    public function setVerified(int $idSong, bool $verified): ?string;
 }

@@ -17,6 +17,26 @@ Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 - Be concise in your answers.
 - Consider the impact on current user sessions in production when making changes.
 
+## Database schema
+
+- Every schema change is a Laravel migration in `database/migrations/`, applied with
+  `make migrate` (and `php artisan migrate --force` on each production deploy).
+- `create_tables.sql` is the full current schema, used to create fresh DBs (CI, tests).
+  A new migration also goes there: change the table and list the migration in its
+  `migrations` table. `make check-migrations` (run in CI) fails if one is missing.
+- `song_data.sql` is data only: no DDL, and every INSERT names its columns.
+
+## Song data
+
+- `song_data.sql` is the song data production has (or gets on the next deploy). It is
+  generated: never edit it by hand.
+- Songs are edited in the local DB. `make song-data-migration` turns what changed since
+  `song_data.sql` into a migration and refreshes `song_data.sql`; deploying runs it.
+- Each change in a data migration only applies if production still has the value it
+  changes; if any does not, the migration fails and applies nothing.
+- Songs edited in production: `make pull-song-data` (needs `NT_PROD_SSH`) brings them into
+  the local DB and `song_data.sql`. It refuses while production has pending migrations.
+
 ## Code style
 
 - Laravel Pint is the source of truth; the ruleset is `pint.json` (`laravel` preset with a

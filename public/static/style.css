@@ -1694,6 +1694,8 @@ h2.step-1 {
     --sc-range-bg:  #fdf6e3;
     --sc-key-bg:    #fdf1e3;
     --sc-chords-bg: #fdecea;
+    --sc-close:     #c9a800;
+    --sc-close-bg:  #fdf8c8;
 
     --sc-unlinked:    #7b4fc4;
     --sc-unlinked-bg: #f3eefb;
@@ -1808,9 +1810,14 @@ h2.step-1 {
     line-height: 1.25;
 }
 
-.sc-has-note {
-    border-bottom: 1px dotted #aaa;
-    cursor: help;
+.sc-note {
+    display: block;
+    margin-top: .15em;
+    font-size: .75rem;
+    font-weight: normal;
+    font-style: italic;
+    color: #666;
+    line-height: 1.25;
 }
 
 .sc-row-flags {
@@ -1849,6 +1856,7 @@ h2.step-1 {
 .sc-is-range   { background: var(--sc-range-bg);  border-left-color: var(--sc-range);  color: #7a5c00; }
 .sc-is-key     { background: var(--sc-key-bg);    border-left-color: var(--sc-key);    color: #8a4b00; }
 .sc-is-chords  { background: var(--sc-chords-bg); border-left-color: var(--sc-chords); color: #9c2320; }
+.sc-is-close   { background: var(--sc-close-bg);  border-left-color: var(--sc-close);  color: #6b5a00; }
 
 .sc-is-alone   { background: none;                border-left-color: #999;             color: #555; }
 
@@ -1894,20 +1902,38 @@ td.sc-cell.sc-is-absent {
     border-left: 1px solid #eee;
 }
 
+/* Colour is per cell, never per row: the row's status class must not tint it. */
+tr.sc-row {
+    background: none;
+}
+
+/* The songs fill the whole cell height, so their colour covers the cell.
+   height: 1px on the cell lets its child resolve height: 100%. */
+td.sc-cell:not(.sc-is-absent) {
+    padding: 0;
+    height: 1px;
+}
+
+.sc-songs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sc-songs > .sc-song:last-child {
+    flex-grow: 1;
+}
+
 .sc-not-in-book {
     color: #bbb;
 }
 
 .sc-song + .sc-song {
-    margin-top: .4rem;
-    padding-top: .4rem;
     border-top: 1px dashed #ddd;
 }
 
 .sc-song {
-    border-radius: .25em;
-    padding: .1em .3em;
-    margin: -.1em -.3em;
+    padding: .4rem .5rem;
 }
 
 /* Only a discrepancy gets a background, and a song identical to its reference
@@ -1916,6 +1942,41 @@ td.sc-cell.sc-is-absent {
 .sc-song.sc-is-range   { background: var(--sc-range-bg); }
 .sc-song.sc-is-key     { background: var(--sc-key-bg); }
 .sc-song.sc-is-chords  { background: var(--sc-chords-bg); }
+.sc-song.sc-is-close   { background: var(--sc-close-bg); }
+
+/* A verified song was checked by hand: whatever the comparison says, it is right. */
+.sc-song.sc-verified {
+    background: var(--sc-same-bg);
+}
+
+.sc-verify {
+    float: right;
+    margin: 0 0 .2em .4em;
+    white-space: nowrap;
+    font-size: .72rem;
+    color: #888;
+    cursor: pointer;
+}
+
+.sc-verify input {
+    vertical-align: middle;
+    margin: 0 .2em 0 0;
+}
+
+.sc-verify-icon {
+    width: 1.1em;
+    height: 1.1em;
+    vertical-align: middle;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.sc-verified .sc-verify {
+    color: var(--sc-same);
+}
 
 .sc-song.sc-is-reference {
     box-shadow: inset 3px 0 0 #999;
@@ -1991,6 +2052,13 @@ td.sc-cell.sc-is-absent {
     opacity: .6;
 }
 
+.sc-st {
+    text-decoration: none;
+    font-weight: normal;
+    color: #999;
+    cursor: help;
+}
+
 .sc-reference-star {
     margin-left: .25em;
     color: #e0a800;
@@ -2006,6 +2074,7 @@ td.sc-cell.sc-is-absent {
 .sc-verdict.sc-is-same   { color: var(--sc-same); }
 .sc-verdict.sc-is-key    { color: var(--sc-key); }
 .sc-verdict.sc-is-chords { color: var(--sc-chords); font-weight: bold; }
+.sc-is-close .sc-verdict.sc-is-chords { color: #8a7300; }
 
 .sc-empty {
     margin-top: 1rem;

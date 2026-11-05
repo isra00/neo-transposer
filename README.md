@@ -31,6 +31,22 @@ See [Code of Conduct](CODE_OF_CONDUCT.md)
  * Free contributions: Feel free to fork and submit a pull request with changes.
  * Please note this is a non-profit project with no paid staff. No contribution will be rewarded in money or in specie, but it will be duly credited. Likewise, your contributions will NOT be used for any commercial purpose.
 
+### Database changes ###
+
+Schema changes (not data) are regular Laravel migrations; apply each one to `create_tables.sql` too and list it in its `migrations` table.
+
+Changes in the database data related to songs (book, song, song_chord, unique_song) are tracked with Laravel migrations, as they are critically important for this application:
+
+1. `make pull-song-data`: brings in prod-only edits. Only needed if songs were edited in prod. It needs `NT_PROD_SSH` set, and it refuses while prod has undeployed migrations.
+2. Edit song data locally.
+3. `make song-data-migration`: generates the guarded migration (each change only applies if prod still has the value it replaces) and refreshes `song_data.sql`.
+4. `make test`: the test-all-transpositions may fail if the edits changed any song's transposition, and it lists those songs.
+5. Review each difference and edit the JSON file `testAllTranspositions.expected.json` by hand where the change is intended.
+6. Commit the migration, `song_data.sql` and the JSON together.
+7. Upon deploy, run `php artisan migrate --force` in prod.
+
+Note that `song_data.sql` is generated and must never be edited by hand.
+
 ### Pre-commit hook ###
 
 You must run the complete test suite and build process locally before committing changes to git. To do so, make sure you have `make` and `docker` installed, set these environment variables 

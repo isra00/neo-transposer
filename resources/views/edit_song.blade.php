@@ -132,6 +132,12 @@
 			<input name="artistic_adjustment" id="artistic_adjustment" type="text" size="3" value="{{ $song->artisticAdjustment }}" pattern="^-?[0-9]+$">
 		</p>
 
+		<p>
+			<input type="checkbox" name="verified" id="verified" @checked($song->verifiedAt)>
+			<label for="verified">Verified</label>
+			@if ($song->verifiedAt)<small>on {{ $song->verifiedAt }}</small>@endif
+		</p>
+
 		<p class="submit-row">
 			<button type="submit" id="submit" name="sent" class="bigbutton">Save</button>
 			@if ($siblings['next'])

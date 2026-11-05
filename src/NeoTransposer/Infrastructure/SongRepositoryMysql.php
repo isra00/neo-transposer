@@ -192,6 +192,14 @@ SQL;
         });
     }
 
+    public function setVerified(int $idSong, bool $verified): ?string
+    {
+        $verifiedAt = $verified ? date('Y-m-d H:i:s') : null;
+        $this->dbConnection->table('song')->where('id_song', $idSong)->update(['verified_at' => $verifiedAt]);
+
+        return $verifiedAt;
+    }
+
     public function slugAlreadyExists(string $slug): bool
     {
         return $this->dbConnection->selectOne(

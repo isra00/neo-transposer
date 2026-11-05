@@ -32,6 +32,11 @@ class Song
     public $idUniqueSong;
 
     /**
+     * When an admin checked the song against its book in the Songbook comparison.
+     */
+    public $verifiedAt;
+
+    /**
      * @var NotesRange|null
      */
     public $peopleRange;
@@ -58,6 +63,7 @@ class Song
         $this->url = $dbColumns['url'];
         $this->artisticAdjustment = $dbColumns['artistic_adjustment'];
         $this->idUniqueSong = $dbColumns['id_unique_song'] ?? null;
+        $this->verifiedAt = $dbColumns['verified_at'] ?? null;
 
         // From table book
         $this->bookChordPrinter = $dbColumns['chord_printer']; // Used by TransposedSong

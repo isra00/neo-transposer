@@ -143,6 +143,9 @@ Route::middleware([
     Route::post('/admin/insert-song', [InsertSongController::class, 'post']);
     Route::get('/admin/songbook-comparison', [SongbookComparisonController::class, 'get'])
         ->name('songbook_comparison');
+    Route::post('/admin/songbook-comparison/verify/{id_song}', [SongbookComparisonController::class, 'verify'])
+        ->whereNumber('id_song')
+        ->name('songbook_comparison_verify');
     Route::get('/admin/edit-song/{id_song?}', [EditSongController::class, 'get'])
         ->name('edit_song');
     Route::post('/admin/edit-song/{id_song}', [EditSongController::class, 'post']);

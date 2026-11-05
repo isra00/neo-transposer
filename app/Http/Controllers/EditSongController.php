@@ -76,7 +76,7 @@ final class EditSongController extends Controller
         ));
 
         $url = trim((string) $request->get('url')) ?: null;
-        $previousUrl = $songRepository->readSongById((int) $idSong)->url;
+        $previousSong = $songRepository->readSongById((int) $idSong);
 
         $songRepository->updateSong(
             (int) $idSong,
@@ -97,8 +97,14 @@ final class EditSongController extends Controller
         );
 
         // The media embeds come from the url's page, so a new url must be scraped again.
-        if ($url !== $previousUrl) {
+        if ($url !== $previousSong->url) {
             OfficialWebsiteSongMedia::forget($url);
+        }
+
+        // Only a change is stamped: re-saving a verified song keeps the date it was verified.
+        $verified = (bool) $request->get('verified');
+        if ($verified !== ($previousSong->verifiedAt !== null)) {
+            $songRepository->setVerified((int) $idSong, $verified);
         }
 
         session()->flash('success', 'Song saved');

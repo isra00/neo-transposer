@@ -62,31 +62,62 @@ final class SongbookComparisonTest extends TestCase
         $html = $this->getComparison()->getContent();
         $row = $this->rowOf($html);
 
-        $this->assertStringContainsString('sc-flag sc-is-key', $row, 'Am against Dm is a key difference');
-        $this->assertStringNotContainsString('sc-flag sc-is-chords', $row, 'both books play i-bVI-bVII, so the harmony is the same');
+        $this->assertStringContainsString('sc-is-key sc-mag-', $row, 'Am against Dm is a key difference');
+        $this->assertStringNotContainsString('sc-verdict sc-is-chords', $row, 'both books play i-bVI-bVII, so the harmony is the same');
     }
 
     public function test_the_card_says_same_chords_in_a_different_key(): void
     {
         $row = $this->rowOf($this->getComparison()->getContent());
 
-        $this->assertStringContainsString('same ✔︎', $row);
+        $this->assertStringContainsString('sc-is-same">✔︎', $row);
         $this->assertStringContainsString('different key', $row);
         $this->assertStringNotContainsString('/3 different', $row);
     }
 
     public function test_the_card_counts_the_chords_that_differ(): void
     {
-        // Dm A# C against Dm A# C7: one chord of three no longer matches.
-        DB::table('song_chord')->where(['id_song' => 900102, 'position' => 3])->update(['chord' => 'C7']);
+        // Dm A# C against Dm A# Cm: one chord of three no longer matches.
+        DB::table('song_chord')->where(['id_song' => 900102, 'position' => 3])->update(['chord' => 'Cm']);
 
         $this->assertStringContainsString('1/3 different', $this->rowOf($this->getComparison()->getContent()));
+    }
+
+    public function test_a_dominant_seventh_matches_its_plain_major_chord(): void
+    {
+        // Dm A# C against Dm A# C7: the seventh does not change the harmony.
+        DB::table('song_chord')->where(['id_song' => 900102, 'position' => 3])->update(['chord' => 'C7']);
+        $this->assertStringNotContainsString('sc-verdict sc-is-chords', $this->rowOf($this->getComparison()->getContent()));
+    }
+
+    public function test_a_few_chords_off_is_a_near_match(): void
+    {
+        // Dm A# C F Gm A against the same ending on E, same range: 1/6 is under the 20% threshold.
+        DB::table('song_chord')->whereIn('id_song', [900101, 900102])->delete();
+        foreach (['Dm', 'A#', 'C', 'F', 'Gm', 'A'] as $position => $chord) {
+            DB::table('song_chord')->insert(['id_song' => 900101, 'chord' => $chord, 'position' => $position + 1]);
+            DB::table('song_chord')->insert(['id_song' => 900102, 'chord' => $position === 5 ? 'E' : $chord, 'position' => $position + 1]);
+        }
+        DB::table('song')->where('id_song', 900102)->update(['highest_note' => 'D3']);
+
+        $row = $this->rowOf($this->getComparison()->getContent());
+        $this->assertStringContainsString('sc-song sc-is-close', $row);
+        $this->assertStringContainsString('1/6 different', $row);
+    }
+
+    public function test_the_same_chords_in_another_order_are_told_apart(): void
+    {
+        // Dm A# C against Dm C A#: no chord is missing, they only come in another order.
+        DB::table('song_chord')->where(['id_song' => 900102, 'chord' => 'A#'])->update(['position' => 3]);
+        DB::table('song_chord')->where(['id_song' => 900102, 'chord' => 'C'])->update(['position' => 2]);
+
+        $this->assertStringContainsString('1/3 different order', $this->rowOf($this->getComparison()->getContent()));
     }
 
     public function test_a_different_voice_range_is_flagged(): void
     {
         $this->assertStringContainsString(
-            'sc-flag sc-is-range',
+            'sc-is-range sc-mag-',
             $this->rowOf($this->getComparison()->getContent()),
             'A1-D3 against A1-C3 is a range difference'
         );
@@ -108,8 +139,8 @@ final class SongbookComparisonTest extends TestCase
 
         $row = $this->rowOf($this->getComparison()->getContent());
 
-        $this->assertStringContainsString('sc-flag sc-is-key', $row);
-        $this->assertStringNotContainsString('sc-flag sc-is-range', $row);
+        $this->assertStringContainsString('sc-is-key sc-mag-', $row);
+        $this->assertStringNotContainsString('sc-is-range sc-mag-', $row);
     }
 
     public function test_a_range_not_moved_along_with_the_key_differs(): void
@@ -117,7 +148,7 @@ final class SongbookComparisonTest extends TestCase
         // Same width as the reference, but it stayed put while the key moved.
         DB::table('song')->where('id_song', 900101)->update(['lowest_note' => 'A1', 'highest_note' => 'C3']);
 
-        $this->assertStringContainsString('sc-flag sc-is-range', $this->rowOf($this->getComparison()->getContent()));
+        $this->assertStringContainsString('sc-is-range sc-mag-', $this->rowOf($this->getComparison()->getContent()));
     }
 
     public function test_a_leading_chord_that_is_not_the_tone_is_not_a_key_difference(): void
@@ -134,8 +165,8 @@ final class SongbookComparisonTest extends TestCase
 
         $row = $this->rowOf($this->getComparison()->getContent());
 
-        $this->assertStringNotContainsString('sc-flag sc-is-key', $row);
-        $this->assertStringContainsString('2/6 different', $row);
+        $this->assertStringNotContainsString('sc-is-key sc-mag-', $row);
+        $this->assertStringContainsString('1/6 different', $row);
     }
 
     public function test_a_book_without_the_song_is_shown_as_missing(): void
@@ -147,6 +178,41 @@ final class SongbookComparisonTest extends TestCase
     /**
      * @param  mixed[]  $query
      */
+    public function test_a_song_can_be_marked_and_unmarked_as_verified(): void
+    {
+        $auth = ['PHP_AUTH_USER' => 'tester', 'PHP_AUTH_PW' => self::PASSWORD];
+
+        $response = $this->withServerVariables($auth)->post('/admin/songbook-comparison/verify/900102', ['verified' => 1]);
+        $this->assertNotNull($response->json('verified_at'));
+        $this->assertNotNull(DB::table('song')->where('id_song', 900102)->value('verified_at'));
+        $this->assertStringContainsString('sc-verified', $this->rowOf($this->getComparison()->getContent()));
+
+        $response = $this->withServerVariables($auth)->post('/admin/songbook-comparison/verify/900102', ['verified' => 0]);
+        $this->assertNull($response->json('verified_at'));
+        $this->assertNull(DB::table('song')->where('id_song', 900102)->value('verified_at'));
+    }
+
+    public function test_the_edit_song_page_keeps_the_verification_date_when_saved_again(): void
+    {
+        $auth = ['PHP_AUTH_USER' => 'tester', 'PHP_AUTH_PW' => self::PASSWORD];
+        $form = [
+            'id_book' => 902, 'title' => 'Song in the other book', 'slug' => 'test-song-900102',
+            'lowest_note' => 'A1', 'highest_note' => 'C3', 'chords' => ['Dm', 'A#', 'C'], 'first_chord_is_key' => 1,
+        ];
+
+        $this->withServerVariables($auth)->post('/admin/edit-song/900102', $form + ['verified' => 'on']);
+        $verifiedAt = DB::table('song')->where('id_song', 900102)->value('verified_at');
+        $this->assertNotNull($verifiedAt);
+        $this->assertStringContainsString('id="verified" checked', $this->withServerVariables($auth)->get('/admin/edit-song/900102')->getContent());
+
+        DB::table('song')->where('id_song', 900102)->update(['verified_at' => '2020-01-01 00:00:00']);
+        $this->withServerVariables($auth)->post('/admin/edit-song/900102', $form + ['verified' => 'on']);
+        $this->assertSame('2020-01-01 00:00:00', DB::table('song')->where('id_song', 900102)->value('verified_at'));
+
+        $this->withServerVariables($auth)->post('/admin/edit-song/900102', $form);
+        $this->assertNull(DB::table('song')->where('id_song', 900102)->value('verified_at'));
+    }
+
     private function getComparison(array $query = []): TestResponse
     {
         $query += ['books' => [901, 902]];

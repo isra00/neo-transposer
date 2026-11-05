@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use NeoTransposer\Domain\NotesCalculator;
 use NeoTransposer\Domain\Repository\BookRepository;
+use NeoTransposer\Domain\Repository\SongRepository;
 use NeoTransposer\Domain\Repository\UniqueSongRepository;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
@@ -34,6 +36,17 @@ final class SongbookComparisonController extends Controller
         'exclusive'  => 'In one book only',
         'unlinked'   => 'Not linked to a unique song',
     ];
+
+    /**
+     * Marks a song as checked against its book, or unmarks it. Called by the cell's
+     * checkbox, so the page is not reloaded.
+     */
+    public function verify(Request $request, SongRepository $songRepository, int $id_song): JsonResponse
+    {
+        return response()->json([
+            'verified_at' => $songRepository->setVerified($id_song, $request->boolean('verified')),
+        ]);
+    }
 
     public function get(
         Request $request,
@@ -194,6 +207,7 @@ final class SongbookComparisonController extends Controller
         return [
             'id_song'           => (int) $song['id_song'],
             'title'             => $song['title'],
+            'verified_at'       => $song['verified_at'],
             'key'               => $key ? (string) $key : null,
             'key_is_tone'       => (bool) $song['first_chord_is_tone'],
             'key_pitch_class'   => $key ? $this->pitchClass($key->fundamental) : null,
@@ -215,7 +229,11 @@ final class SongbookComparisonController extends Controller
      */
     private function chordPitch(Chord $chord): array
     {
-        return [$this->pitchClass($chord->fundamental), (string) $chord->attributes];
+        // A dominant seventh plays the same harmonic role as its plain major triad: books
+        // that only differ in writing E or E7 play the same song.
+        $attributes = $chord->attributes === '7' ? '' : (string) $chord->attributes;
+
+        return [$this->pitchClass($chord->fundamental), $attributes];
     }
 
     /**
@@ -328,7 +346,7 @@ final class SongbookComparisonController extends Controller
             return [
                 'key' => false, 'chords' => false, 'extension' => false, 'people_extension' => false,
                 'key_delta' => 0, 'extension_delta' => 0, 'people_extension_delta' => 0,
-                'chords_different' => 0, 'chords_total' => count($cell['chords']), 'people_compared' => false,
+                'chords_different' => 0, 'chords_reordered' => false, 'chords_total' => count($cell['chords']), 'people_compared' => false,
                 'status' => $referenceCell === null ? 'same' : 'reference',
             ];
         }
@@ -338,10 +356,9 @@ final class SongbookComparisonController extends Controller
         $peopleRangeComparable = $cell['people_extension'] !== null && $referenceCell['people_extension'] !== null;
 
         $keyDelta = $this->keyDelta($cell, $referenceCell);
-        $chordsDifferent = $this->chordsDifferent(
-            $this->shiftedChords($cell['chord_pitches'], $keyDelta),
-            $this->shiftedChords($referenceCell['chord_pitches'], 0)
-        );
+        $chords = $this->shiftedChords($cell['chord_pitches'], $keyDelta);
+        $referenceChords = $this->shiftedChords($referenceCell['chord_pitches'], 0);
+        $chordsDifferent = $this->chordsDifferent($chords, $referenceChords);
 
         $diff = [
             'key'              => $keyDelta !== 0,
@@ -361,6 +378,8 @@ final class SongbookComparisonController extends Controller
         return $diff + [
             'people_compared'        => $peopleRangeComparable,
             'chords_different'       => $chordsDifferent,
+            // The very same chords, only met in another order.
+            'chords_reordered'       => $chordsDifferent > 0 && !array_diff($chords, $referenceChords) && !array_diff($referenceChords, $chords),
             'chords_total'           => max(count($cell['chords']), count($referenceCell['chords'])),
             'key_delta'              => $keyDelta,
             'extension_delta'        => $cell['extension'] - $referenceCell['extension'],
@@ -368,9 +387,10 @@ final class SongbookComparisonController extends Controller
                 ? $cell['people_extension'] - $referenceCell['people_extension']
                 : 0,
             'status' => match (true) {
-                $diff['chords'] => 'chords',
-                $diff['key'] => 'key',
-                $diff['extension'] || $diff['people_extension'] => 'range',
+                $diff['extension'] || $diff['people_extension'] => $diff['chords'] ? 'chords' : 'range',
+                // A few chords off (a passing seventh, an extra bar) is a near match, not a different song.
+                $diff['chords'] => $chordsDifferent <= 0.2 * max(count($cell['chords']), count($referenceCell['chords'])) ? 'close' : 'chords',
+                // The same chords and ranges in another key are the same song, just transposed.
                 default => 'same',
             },
         ];

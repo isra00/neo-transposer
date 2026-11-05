@@ -68,6 +68,7 @@ CREATE TABLE `song` (
   `artistic_adjustment` tinyint DEFAULT NULL,
   `url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `id_unique_song` int unsigned DEFAULT NULL,
+  `verified_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`),
   KEY `id_book` (`id_book`),
@@ -165,6 +166,23 @@ CREATE TABLE `user` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34500 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `migrations`
+-- This file is the schema with every migration listed here already applied, so
+-- `artisan migrate` skips them. A new migration goes into the tables above and here.
+--
+
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO `migrations` (`migration`, `batch`) VALUES
+('2026_11_05_000000_add_verified_at_to_song', 1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -13,7 +13,7 @@ final class UniqueSongRepositoryMysql extends MysqlRepository implements UniqueS
                     s.id_song, s.id_book, s.title, s.slug,
                     s.lowest_note, s.highest_note,
                     s.people_lowest_note, s.people_highest_note,
-                    s.first_chord_is_tone,
+                    s.first_chord_is_tone, s.verified_at,
                     (
                         SELECT GROUP_CONCAT(c.chord ORDER BY c.position SEPARATOR " ")
                         FROM song_chord c WHERE c.id_song = s.id_song
@@ -55,7 +55,7 @@ final class UniqueSongRepositoryMysql extends MysqlRepository implements UniqueS
                 'SELECT s.id_song, s.id_book, s.title, s.slug,
                         s.lowest_note, s.highest_note,
                         s.people_lowest_note, s.people_highest_note,
-                        s.first_chord_is_tone,
+                        s.first_chord_is_tone, s.verified_at,
                         (
                             SELECT GROUP_CONCAT(c.chord ORDER BY c.position SEPARATOR " ")
                             FROM song_chord c WHERE c.id_song = s.id_song
