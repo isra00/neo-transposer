@@ -8,7 +8,7 @@
 
 	<h1>Que sont les transpositions compatibles avec l'assemblée ?</h1>
 
-	<p>Vous savez déjà que Neo-Transposer transpose les <a href="https://neocatechumenaleiter.org/fr/evangelisation/#cantos">chants du Chemin</a> pour votre voix, ou dans un langage technique, pour votre ton de voix. Le ton de voix correspond à l'ensemble des notes que vous êtes capable de chanter, de la plus grave à la plus aiguë.</p>
+	<p>Vous savez déjà que Neo-Transposer transpose les <a href="https://neocatechumenaleiter.org/fr/evangelisation/nouvelle-esthetique/#sec-cantos">chants du Chemin</a> pour votre voix, ou dans un langage technique, pour votre ton de voix. Le ton de voix correspond à l'ensemble des notes que vous êtes capable de chanter, de la plus grave à la plus aiguë.</p>
 
 	<p>Jusqu'à présent, chaque fois que vous utilisiez Neo-Transposer pour transposer un chant, l'application affichait ce message :</p>
 
