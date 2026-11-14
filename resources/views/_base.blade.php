@@ -113,7 +113,6 @@
         @yield('content')
     </section>
 
-    <div class="push"></div>
 </div>
 
 @section('footer')

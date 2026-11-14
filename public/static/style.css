@@ -1,18 +1,13 @@
-html, body {
-	height: 100%;
-}
-
 body {
 	font-family: 'Droid Sans', Arial, sans-serif;
 	margin: 0;
 	color: #222;
 	background: #fdfdfd;
 
-	/* Sticky footer thanks to https://github.com/philipwalton/solved-by-flexbox/blob/master/assets/css/components/site.css */
+	/* Sticky footer: the footer is pushed down by its margin-top: auto */
 	display: flex;
-	min-height: 100vh;
 	flex-direction: column;
-	height: 100%; /* IE */
+	min-height: 100dvh;
 }
 
 a {
@@ -58,14 +53,8 @@ button {
 }
 
 .wrapper {
-	flex: 1 0 auto;
-	padding: var(--space) var(--space) 0;
-	width: 100%;
+	padding-bottom: 40px;
 }
-	.push {
-		height: 40px;
-		clear: both;
-	}
 
 .lang-switch-top {
 	text-align: center;
@@ -163,6 +152,7 @@ button {
 	}
 
 footer {
+	margin-top: auto;
 	padding: 1em;
 	text-align: center;
 	line-height: 130%;
@@ -2614,9 +2604,8 @@ td.red {
 		overflow: hidden;
 	}
 
-	.push {
-		height: auto;
-		clear: both;
+	.wrapper {
+		padding-bottom: 0;
 	}
 
 	/* LOGIN */
