@@ -23,10 +23,6 @@ return [
             'name'     => 'Italiano',
             'notation' => 'latin',
         ],
-        'fr' => [
-            'name'     => 'Français',
-            'notation' => 'latin',
-        ],
     ],
 
     'voice_wizard'                           => include 'nt.voice_wizard.php',

@@ -47,20 +47,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(GeoIpResolver::class, function (Application $app) {
-            $mmdbPath = base_path() . '/' . config('nt.mmdb');
-            if (file_exists($mmdbPath) && filesize($mmdbPath) > 0) {
-                try {
-                    return $app->make(GeoIpResolverGeoIp2::class, ['reader' => new Reader($mmdbPath)]);
-                } catch (\Throwable $e) {
-                    // Fail gracefully if MMDB file is corrupt or unreadable
-                }
-            }
-
-            return new class implements GeoIpResolver {
-                public function resolve(string $ip): \NeoTransposer\Domain\GeoIp\GeoIpLocation {
-                    return new \NeoTransposer\Domain\GeoIp\GeoIpLocation(new \NeoTransposer\Domain\GeoIp\Country('FR', ['fr' => 'France']));
-                }
-            };
+            return $app->make(GeoIpResolverGeoIp2::class, ['reader' => new Reader(base_path() . '/' . config('nt.mmdb'))]);
         });
 
         $this->app->bind('factory.ChordPrinter', function () {
