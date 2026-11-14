@@ -1,7 +1,7 @@
 {
 	"singerLowestVoice": "A1",
 	"singerHighestVoice": "E3",
-	
+
 	"expectedResults":
 	{
 		"26": {
@@ -999,25 +999,25 @@
 			"peopleCompatibleStatus": 3
 		},
 		"181": {
-			"songLowestNote": "F#2",
+			"songLowestNote": "B1",
 			"songHighestNote": "F#3",
 			"centered1": {
-				"offset": -5,
-				"lowestNote": "C#2",
-				"highestNote": "C#3",
+				"offset": -2,
+				"lowestNote": "A2",
+				"highestNote": "E3",
 				"score": 10,
 				"capo": 2,
 				"chords": "Am,A7,Dm,E7"
 			},
 			"centered2": {
-				"offset": -5,
-				"lowestNote": "C#2",
-				"highestNote": "C#3",
-				"score": 21,
+				"offset": -2,
+				"lowestNote": "A2",
+				"highestNote": "E3",
+				"score": 16,
 				"capo": 0,
-				"chords": "Bm,B7,Em,F#7"
+				"chords": "Dm,D7,Gm,A7"
 			},
-			"peopleCompatibleStatus": 2
+			"peopleCompatibleStatus": 3
 		},
 		"182": {
 			"songLowestNote": "E2",
@@ -4888,8 +4888,8 @@
 			"peopleCompatibleStatus": 2
 		},
 		"336": {
-			"songLowestNote": "D2",
-			"songHighestNote": "D3",
+			"songLowestNote": "A1",
+			"songHighestNote": "A2",
 			"centered1": {
 				"offset": -1,
 				"lowestNote": "C#2",

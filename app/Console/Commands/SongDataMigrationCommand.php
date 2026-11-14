@@ -80,6 +80,9 @@ class SongDataMigrationCommand extends Command
      */
     private function export(mixed $value): string
     {
+        if ($value === null) {
+            return 'null';
+        }
         if (!is_array($value)) {
             return var_export($value, true);
         }

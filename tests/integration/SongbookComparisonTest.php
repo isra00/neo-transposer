@@ -72,7 +72,7 @@ final class SongbookComparisonTest extends TestCase
 
         $this->assertStringContainsString('sc-is-same">✔︎', $row);
         $this->assertStringContainsString('different key', $row);
-        $this->assertStringNotContainsString('/3 different', $row);
+        $this->assertDoesNotMatchRegularExpression('~/3\s+different~', $row);
     }
 
     public function test_the_card_counts_the_chords_that_differ(): void
@@ -80,7 +80,7 @@ final class SongbookComparisonTest extends TestCase
         // Dm A# C against Dm A# Cm: one chord of three no longer matches.
         DB::table('song_chord')->where(['id_song' => 900102, 'position' => 3])->update(['chord' => 'Cm']);
 
-        $this->assertStringContainsString('1/3 different', $this->rowOf($this->getComparison()->getContent()));
+        $this->assertMatchesRegularExpression('~1/3\s+different~', $this->rowOf($this->getComparison()->getContent()));
     }
 
     public function test_a_dominant_seventh_matches_its_plain_major_chord(): void
@@ -102,7 +102,7 @@ final class SongbookComparisonTest extends TestCase
 
         $row = $this->rowOf($this->getComparison()->getContent());
         $this->assertStringContainsString('sc-song sc-is-close', $row);
-        $this->assertStringContainsString('1/6 different', $row);
+        $this->assertMatchesRegularExpression('~1/6\s+different~', $row);
     }
 
     public function test_the_same_chords_in_another_order_are_told_apart(): void
@@ -111,7 +111,7 @@ final class SongbookComparisonTest extends TestCase
         DB::table('song_chord')->where(['id_song' => 900102, 'chord' => 'A#'])->update(['position' => 3]);
         DB::table('song_chord')->where(['id_song' => 900102, 'chord' => 'C'])->update(['position' => 2]);
 
-        $this->assertStringContainsString('1/3 different order', $this->rowOf($this->getComparison()->getContent()));
+        $this->assertMatchesRegularExpression('~1/3\s+order\s+different~', $this->rowOf($this->getComparison()->getContent()));
     }
 
     public function test_a_different_voice_range_is_flagged(): void
@@ -166,7 +166,7 @@ final class SongbookComparisonTest extends TestCase
         $row = $this->rowOf($this->getComparison()->getContent());
 
         $this->assertStringNotContainsString('sc-is-key sc-mag-', $row);
-        $this->assertStringContainsString('1/6 different', $row);
+        $this->assertMatchesRegularExpression('~1/6\s+order\s+different~', $row);
     }
 
     public function test_a_book_without_the_song_is_shown_as_missing(): void

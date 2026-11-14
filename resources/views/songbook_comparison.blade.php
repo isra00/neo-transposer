@@ -122,7 +122,7 @@
 							<dd title="{{ implode(' ', $cell['chords']) }}">
 								@if($compared)
 									@if($diff['chords'])
-									<span class="sc-verdict sc-is-chords">{{ $diff['chords_different'] }}/{{ $diff['chords_total'] }} different{{ $diff['chords_reordered'] ? ' order' : '' }}</span>
+									<span class="sc-verdict sc-is-chords">{{ $diff['chords_different'] }}/{{ $diff['chords_total'] }} {{ $diff['chords_reordered'] ? ' order' : '' }} different</span>
 									@else
 									<span class="sc-verdict sc-is-same">@unless($diff['key'])same @endunless✔︎</span>
 									@endif

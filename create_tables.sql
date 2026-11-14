@@ -182,7 +182,8 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 INSERT INTO `migrations` (`migration`, `batch`) VALUES
-('2026_11_05_000000_add_verified_at_to_song', 1);
+('2026_11_05_000000_add_verified_at_to_song', 1),
+('2026_11_11_203320_song_data', 1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
