@@ -127,6 +127,31 @@ SONG
         ],
     ],
 
+    'fr'	=> [
+        'lowest' => [
+            'id_song'		=> 1523,
+            'override_highest_note'	=> 'F2',
+            'song_contents'	=> <<<'SONG'
+%0              %1
+YAHVÉ, TU ES MON DIEU,
+
+           %0
+JE T’EXALTERAI.
+SONG
+        ],
+
+        'highest' => [
+            'id_song'		=> 1491,
+            'song_contents'	=> <<<'SONG'
+%0                    %1          %2
+SI LE SEIGNEUR NE CONSTRUIT LA MAISON,
+
+   %3                           %0
+EN VAIN TRAVAILLENT LES CONSTRUCTEURS.
+SONG
+        ],
+    ],
+
     'standard_voices'	=> [
         'male_high'		=> ['C#2', 'F#3'],
         'male'			=> ['B1',	 'E3'],

@@ -98,7 +98,10 @@ button {
 	background-image: url(img/flag-pt.gif);
 }
 .flag-it {
-	background-image: url(img/flag-it.png);
+    background-image: url(img/flag-it.png);
+}
+.flag-fr {
+    background-image: url(img/flag-fr.png);
 }
 
 /*
@@ -2572,6 +2575,9 @@ td.red {
 	}
 	.page-login.lang-it .mkt {
 		background-image: url(img/mkt-it.jpg);
+	}
+	.page-login.lang-fr .mkt {
+		background-image: url(img/mkt-fr.jpg);
 	}
 	.page-login.lang-en .mkt,
 	.page-login.lang-pt .mkt {

@@ -231,7 +231,11 @@
                 eSongList = document.getElementsByClassName("song-index")[0],
                 isTouchScreen = window.navigator.msMaxTouchPoints || ('ontouchstart' in document.documentElement),
                 aElementsToHide = $(".link-all-report").add(".tip").add("footer"),
-                isItalian = document.getElementsByTagName("html")[0].lang == "it";
+                // Letters that can follow an elided article (Italian "dell'eterno", French "l'homme")
+                aElisionLetters = {
+                    "it": ["e"],
+                    "fr": ["a", "e", "i", "o", "u", "y", "h"]
+                }[document.getElementsByTagName("html")[0].lang] || [];
 
             eQuickSearch.value = "";
 
@@ -265,10 +269,10 @@
 
                         var sSearchStringWithDiacritics = applyDiacritics(sSearchString, "regex");
 
-                        //Optional apostrophe before every "e"
-                        if (isItalian) {
-                            sSearchStringWithDiacritics = sSearchStringWithDiacritics.replaceAll("(?:e|", "'?(?:e|");
-                        }
+                        //Optional apostrophe before letters that can follow an elision
+                        aElisionLetters.forEach(function(letter) {
+                            sSearchStringWithDiacritics = sSearchStringWithDiacritics.replaceAll("(?:" + letter + "|", "['’]?(?:" + letter + "|");
+                        });
 
                         oRegExp = new RegExp("(" + sSearchStringWithDiacritics + ")", "ig");
 
