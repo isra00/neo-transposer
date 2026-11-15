@@ -14,8 +14,6 @@
 	<nav class="admin-tools">
 		<ul>
 			<h4>Server Ops</h4>
-			<li><a href="{{ route('admin_dashboard', ['tool' => 'RefreshCompiledCss']) }}">Refresh compiled CSS</a></li>
-			<li><a href="{{ route('admin_dashboard', ['tool' => 'RemoveOldCompiledCss']) }}">Remove old CSS</a></li>
 			<li><a href="{{ route('admin_dashboard', ['tool' => 'PopulateUsersCountry']) }}">Populate Country data</a></li>
 		</ul>
 

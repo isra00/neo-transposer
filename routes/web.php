@@ -9,7 +9,6 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InsertSongController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReceiveFeedbackController;
-use App\Http\Controllers\ServeCssController;
 use App\Http\Controllers\SetUserDataController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SongbookComparisonController;
@@ -116,10 +115,6 @@ Route::group(['middleware' => NeedsLoginMiddleware::class], function () {
 });
 
 Route::get('/sitemap.xml', [SitemapController::class, 'get']);
-
-// Lazily compiles /static/compiled-<hash>.css when Apache doesn't find it on disk.
-Route::get('/static/compiled-{hash}.css', [ServeCssController::class, 'get'])
-    ->where('hash', '[a-f0-9]{32}');
 
 // Feedback route handles auth check itself (returns 408 for AJAX when session expires)
 Route::post('/feedback', [ReceiveFeedbackController::class, 'post'])

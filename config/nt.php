@@ -36,7 +36,6 @@ return [
     'chord_scores'                           => include 'nt.scores.php',
     'mmdb'                                   => 'GeoLite2-Country.mmdb',
     'test_all_transpositions_expected'       => __DIR__ . '/../tests/testAllTranspositions.expected.json',
-    'css_cache'                              => '332db24297179e87b53376af59e92869',
 
     'analytics_id'                           => env('NT_ANALYTICS_ID'),
     'recaptcha_secret'                       => env('NT_RECAPTCHA_SECRET'),

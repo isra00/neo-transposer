@@ -68,9 +68,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::share('cssFile', config('app.debug')
-            ? 'style.css?nocache=' . time()
-            : 'compiled-' . config('nt.css_cache') . '.css');
+        // The file is cached for a year by browsers and the CDN: its hash busts that cache.
+        View::share('cssFile', 'style.css?v=' . md5_file(public_path('static/style.css')));
 
         View::composer('_base', PageTitleComposer::class);
 

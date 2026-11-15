@@ -28,7 +28,6 @@ web/resucito-imgs/
 .sublime-project
 .sublime-project.sublime-workspace
 cache/profiler
-web/static/compiled-*.css
 tests/phpmd/phpmd.html
 .phpunit.result.cache
 GeoLite2-Country.mmdb
@@ -40,6 +39,5 @@ GeoLite2-Country.mmdb
 _output
 /public/adminer*
 ntprod.sql
-public/static/compiled*
 last-mmdb.tar.gz
 neo_transposer.sql
