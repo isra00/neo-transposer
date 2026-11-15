@@ -45,4 +45,9 @@ class Book
     {
         return $this->locale;
     }
+
+    public function songCount(): int
+    {
+        return $this->songCount;
+    }
 }
