@@ -130,7 +130,7 @@ song-data-migration:
 # NT_PROD_SSH: the ssh arguments to reach the production server, e.g. "-i ~/.ssh/key user@host"
 pull-song-data:
 	@if [ -z "${NT_PROD_SSH}" ]; then echo "Set NT_PROD_SSH to the ssh arguments of the production server" >&2; exit 1; fi
-	ssh ${NT_PROD_SSH} "mysqldump --single-transaction --skip-add-locks --no-create-info --complete-insert --skip-extended-insert --no-tablespaces neo_transposer book unique_song song song_chord" > storage/app/prod_song_data.sql
+	ssh ${NT_PROD_SSH} "mysqldump --single-transaction --skip-add-locks --no-create-info --complete-insert --skip-extended-insert --no-tablespaces neo_transposer book song song_chord" > storage/app/prod_song_data.sql
 	ssh ${NT_PROD_SSH} "mysql -N -e 'SELECT migration FROM migrations' neo_transposer 2>/dev/null || true" > storage/app/prod_migrations.txt
 	docker exec -t -u www-data transposer-dev php artisan app:pull-song-data storage/app/prod_song_data.sql storage/app/prod_migrations.txt
 

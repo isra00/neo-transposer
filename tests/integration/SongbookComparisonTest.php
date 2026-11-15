@@ -15,8 +15,6 @@ final class SongbookComparisonTest extends TestCase
 {
     private const PASSWORD = 'correct-horse-battery-staple';
 
-    private const ID_UNIQUE_SONG = 900001;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -25,12 +23,6 @@ final class SongbookComparisonTest extends TestCase
         DB::table('book')->insert([
             ['id_book' => 901, 'lang_name' => 'Testish', 'details' => 'Testville 2020', 'chord_printer' => 'English', 'locale' => 'ts', 'song_count' => 1],
             ['id_book' => 902, 'lang_name' => 'Mockish', 'details' => 'Mocktown 2021', 'chord_printer' => 'English', 'locale' => 'mk', 'song_count' => 1],
-        ]);
-
-        DB::table('unique_song')->insert([
-            'id_unique_song' => self::ID_UNIQUE_SONG,
-            'name'           => 'Test unique song',
-            'id_origin_book' => 901,
         ]);
 
         // Am F G in one book, Dm A# C in the other: same degrees (i, bVI, bVII) over the tone.
@@ -42,7 +34,6 @@ final class SongbookComparisonTest extends TestCase
     {
         DB::table('song_chord')->whereIn('id_song', [900101, 900102])->delete();
         DB::table('song')->whereIn('id_song', [900101, 900102])->delete();
-        DB::table('unique_song')->where('id_unique_song', self::ID_UNIQUE_SONG)->delete();
         DB::table('book')->whereIn('id_book', [901, 902])->delete();
         parent::tearDown();
     }
@@ -52,7 +43,6 @@ final class SongbookComparisonTest extends TestCase
         $response = $this->getComparison();
 
         $response->assertOk();
-        $response->assertSee('Test unique song');
         $response->assertSee('Song in the origin book');
         $response->assertSee('Song in the other book');
     }
@@ -224,11 +214,12 @@ final class SongbookComparisonTest extends TestCase
     }
 
     /**
-     * The page holds every unique song, so the assertions must look at this one's row.
+     * The page holds every unique song, so the assertions must look at this one's row,
+     * which starts with its name: the origin song's title.
      */
     private function rowOf(string $html): string
     {
-        $start = strpos($html, 'Test unique song');
+        $start = strpos($html, 'Song in the origin book');
         $this->assertNotFalse($start, 'the test unique song is not on the page');
 
         return substr($html, $start, (int) (strpos($html, '</tr>', $start) - $start));
@@ -247,7 +238,7 @@ final class SongbookComparisonTest extends TestCase
             'lowest_note'         => $lowest,
             'highest_note'        => $highest,
             'first_chord_is_tone' => 1,
-            'id_unique_song'      => self::ID_UNIQUE_SONG,
+            'id_origin_song'      => 900101,
         ]);
 
         foreach ($chords as $position => $chord) {

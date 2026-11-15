@@ -15,7 +15,7 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  * Side-by-side comparison of the songbooks: which songs each one has, and how the
  * key, the chords and the voice ranges of the same song differ between them.
  *
- * Songs are compared through the unique_song they belong to. Keys and chords are
+ * Songs are compared through the origin song they point to (id_origin_song). Keys and chords are
  * compared relative to the song's own tone, since a book printing a song in another
  * key is a different fact from a book printing different harmony.
  */
@@ -76,10 +76,9 @@ final class SongbookComparisonController extends Controller
         // A song not linked to a unique song yet cannot be compared, but it is listed as a
         // row of its own so the gap shows up and gets fixed.
         $unlinkedSongs = array_map(fn ($song) => [
-            'id_unique_song' => null,
+            'id_origin_song' => null,
             'name'           => $song['title'],
             'id_origin_book' => (int) $song['id_book'],
-            'notes'          => null,
             'songs'          => [(int) $song['id_book'] => [$song]],
         ], $uniqueSongRepository->readUnlinkedSongs());
 
@@ -115,7 +114,7 @@ final class SongbookComparisonController extends Controller
     }
 
     /**
-     * @param  array{id_unique_song: ?int, name: string, id_origin_book: ?int, notes: ?string, songs: array<int, mixed[][]>}  $uniqueSong
+     * @param  array{id_origin_song: ?int, name: string, id_origin_book: ?int, songs: array<int, mixed[][]>}  $uniqueSong
      * @param  int[]  $selectedBooks
      */
     private function buildRow(
@@ -143,7 +142,7 @@ final class SongbookComparisonController extends Controller
         $differs = $this->rowDiffFlags($cells);
 
         $status = match (true) {
-            $uniqueSong['id_unique_song'] === null => 'unlinked',
+            $uniqueSong['id_origin_song'] === null => 'unlinked',
             // Nothing was compared, so it is neither identical nor different.
             count($cells) === 1 => 'alone',
             $differs['chords'] => 'chords',

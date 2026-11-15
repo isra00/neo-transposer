@@ -5,19 +5,19 @@ namespace NeoTransposer\Domain\Repository;
 interface UniqueSongRepository
 {
     /**
-     * Every unique song with the songs of each book that belong to it, for the
-     * songbook comparison.
+     * Every unique song (the songs that point to the same origin song) with the songs
+     * of each book that belong to it, for the songbook comparison.
      *
      * A book can hold more than one song of the same unique song (some books
      * print two arrangements of it), hence the list of songs per book.
      *
      * @return array<int, array{
-     *     id_unique_song: int,
+     *     id_origin_song: int,
      *     name: string,
      *     id_origin_book: ?int,
-     *     notes: ?string,
      *     songs: array<int, mixed[][]>
-     * }> Indexed by id_unique_song; the songs of each book indexed by id_book.
+     * }> Indexed by id_origin_song; the songs of each book indexed by id_book. The
+     *    name is the origin song's title.
      */
     public function readComparison(): array;
 
@@ -37,10 +37,9 @@ interface UniqueSongRepository
     public function readBooksWithSongs(): array;
 
     /**
-     * The songs of every book that belong to the given unique song.
+     * The songs of every book that point to the given origin song, itself included.
      *
-     * @return mixed[][] Rows with id_song, id_book, title and is_origin (the song
-     *                   is in the unique song's origin book).
+     * @return mixed[][] Rows with id_song, id_book, title and is_origin.
      */
-    public function readSongs(int $idUniqueSong): array;
+    public function readSongs(int $idOriginSong): array;
 }

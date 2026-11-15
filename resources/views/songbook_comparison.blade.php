@@ -84,14 +84,11 @@
 			<tr class="sc-row sc-is-{{ $row['status'] }}">
 				<th class="sc-col-song" scope="row">
 					<span class="sc-name">{{ $row['unique_song']['name'] }}</span>
-					@if($row['unique_song']['notes'])
-					<span class="sc-note">{{ $row['unique_song']['notes'] }}</span>
-					@endif
 					{{-- What differs is told by each column; the row only says how many books have it. --}}
 					<span class="sc-row-flags">
 						<span class="sc-count @if($row['books_missing']) sc-count-missing @endif">{{ $row['books_present'] }}/{{ count($selected_books) }}</span>
 						@if('unlinked' === $row['status'])
-						<span class="sc-flag sc-is-unlinked" title="Set this song's id_unique_song to compare it with the other books">no unique song</span>
+						<span class="sc-flag sc-is-unlinked" title="Set this song's id_origin_song to compare it with the other books">no unique song</span>
 						@endif
 					</span>
 				</th>

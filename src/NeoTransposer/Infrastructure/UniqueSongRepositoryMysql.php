@@ -8,8 +8,9 @@ final class UniqueSongRepositoryMysql extends MysqlRepository implements UniqueS
 {
     public function readComparison(): array
     {
+        // LEFT JOIN: the songs of a group whose origin song was deleted still show up.
         $rows = $this->dbConnection->select(
-            'SELECT u.id_unique_song, u.name, u.id_origin_book, u.notes,
+            'SELECT s.id_origin_song, o.title AS name, o.id_book AS id_origin_book,
                     s.id_song, s.id_book, s.title, s.slug,
                     s.lowest_note, s.highest_note,
                     s.people_lowest_note, s.people_highest_note,
@@ -18,30 +19,25 @@ final class UniqueSongRepositoryMysql extends MysqlRepository implements UniqueS
                         SELECT GROUP_CONCAT(c.chord ORDER BY c.position SEPARATOR " ")
                         FROM song_chord c WHERE c.id_song = s.id_song
                     ) AS chords
-             FROM unique_song u
-             LEFT JOIN song s ON s.id_unique_song = u.id_unique_song
-             ORDER BY u.name, s.id_book, s.id_song'
+             FROM song s
+             LEFT JOIN song o ON o.id_song = s.id_origin_song
+             WHERE s.id_origin_song IS NOT NULL
+             ORDER BY s.id_book, s.id_song'
         );
 
         $comparison = [];
         foreach ($rows as $row) {
             $row = (array) $row;
-            $idUniqueSong = (int) $row['id_unique_song'];
+            $idOriginSong = (int) $row['id_origin_song'];
 
-            $comparison[$idUniqueSong] ??= [
-                'id_unique_song' => $idUniqueSong,
-                'name'           => $row['name'],
+            $comparison[$idOriginSong] ??= [
+                'id_origin_song' => $idOriginSong,
+                'name'           => $row['name'] ?? $row['title'],
                 'id_origin_book' => $row['id_origin_book'] === null ? null : (int) $row['id_origin_book'],
-                'notes'          => $row['notes'],
                 'songs'          => [],
             ];
 
-            // LEFT JOIN: a unique song whose songs were all deleted still has a row.
-            if ($row['id_song'] === null) {
-                continue;
-            }
-
-            $comparison[$idUniqueSong]['songs'][(int) $row['id_book']][] = $row;
+            $comparison[$idOriginSong]['songs'][(int) $row['id_book']][] = $row;
         }
 
         return $comparison;
@@ -61,7 +57,7 @@ final class UniqueSongRepositoryMysql extends MysqlRepository implements UniqueS
                             FROM song_chord c WHERE c.id_song = s.id_song
                         ) AS chords
                  FROM song s
-                 WHERE s.id_unique_song IS NULL
+                 WHERE s.id_origin_song IS NULL
                  AND NOT s.id_song IN (118, 319) -- Easter eggs, not songbook songs
                  ORDER BY s.title'
             )
@@ -76,17 +72,16 @@ final class UniqueSongRepositoryMysql extends MysqlRepository implements UniqueS
         );
     }
 
-    public function readSongs(int $idUniqueSong): array
+    public function readSongs(int $idOriginSong): array
     {
         return array_map(
             fn ($row) => (array) $row,
             $this->dbConnection->select(
-                'SELECT s.id_song, s.id_book, s.title, s.id_book = u.id_origin_book AS is_origin
-                 FROM song s
-                 JOIN unique_song u ON u.id_unique_song = s.id_unique_song
-                 WHERE s.id_unique_song = ?
-                 ORDER BY s.id_book, s.id_song',
-                [$idUniqueSong]
+                'SELECT id_song, id_book, title, id_song = id_origin_song AS is_origin
+                 FROM song
+                 WHERE id_origin_song = ?
+                 ORDER BY id_book, id_song',
+                [$idOriginSong]
             )
         );
     }

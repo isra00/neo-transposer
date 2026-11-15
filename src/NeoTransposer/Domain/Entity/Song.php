@@ -29,7 +29,7 @@ class Song
 
     public $artisticAdjustment;
 
-    public $idUniqueSong;
+    public $idOriginSong;
 
     /**
      * When an admin checked the song against its book in the Songbook comparison.
@@ -62,7 +62,7 @@ class Song
         $this->peopleRange = (!empty($dbColumns['people_lowest_note']) && !empty($dbColumns['people_highest_note'])) ? new NotesRange($dbColumns['people_lowest_note'], $dbColumns['people_highest_note']) : null;
         $this->url = $dbColumns['url'];
         $this->artisticAdjustment = $dbColumns['artistic_adjustment'];
-        $this->idUniqueSong = $dbColumns['id_unique_song'] ?? null;
+        $this->idOriginSong = $dbColumns['id_origin_song'] ?? null;
         $this->verifiedAt = $dbColumns['verified_at'] ?? null;
 
         // From table book

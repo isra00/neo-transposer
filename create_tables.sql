@@ -67,27 +67,13 @@ CREATE TABLE `song` (
   `people_highest_note` char(3) DEFAULT NULL,
   `artistic_adjustment` tinyint DEFAULT NULL,
   `url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `id_unique_song` int unsigned DEFAULT NULL,
+  `id_origin_song` int unsigned DEFAULT NULL,
   `verified_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_song`),
   UNIQUE KEY `slug` (`slug`),
   KEY `id_book` (`id_book`),
-  KEY `id_unique_song` (`id_unique_song`)
+  KEY `id_origin_song` (`id_origin_song`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1205 DEFAULT CHARSET=utf8mb3;
-
---
--- Table structure for table `unique_song`
---
-
-DROP TABLE IF EXISTS `unique_song`;
-CREATE TABLE `unique_song` (
-  `id_unique_song` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `id_origin_book` int unsigned DEFAULT NULL,
-  `notes` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_unique_song`),
-  KEY `id_origin_book` (`id_origin_book`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +169,9 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2026_11_05_000000_add_verified_at_to_song', 1),
-('2026_11_11_203320_song_data', 1);
+('2026_11_11_203320_song_data', 1),
+('2026_11_15_004656_song_data', 1),
+('2026_11_15_120000_replace_unique_song_with_id_origin_song', 1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

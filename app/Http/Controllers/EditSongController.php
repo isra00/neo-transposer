@@ -44,9 +44,9 @@ final class EditSongController extends Controller
         $bookSongs = $songRepository->readBookSongs($idBook)->asArray();
 
         // The same song as printed in other books, to review them one after another.
-        $linkedSongs = $song?->idUniqueSong
+        $linkedSongs = $song?->idOriginSong
             ? array_filter(
-                $uniqueSongRepository->readSongs((int) $song->idUniqueSong),
+                $uniqueSongRepository->readSongs((int) $song->idOriginSong),
                 fn ($row) => (int) $row['id_song'] !== (int) $song->idSong
             )
             : [];

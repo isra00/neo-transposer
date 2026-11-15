@@ -1813,16 +1813,6 @@ h2.step-1 {
     line-height: 1.25;
 }
 
-.sc-note {
-    display: block;
-    margin-top: .15em;
-    font-size: .75rem;
-    font-weight: normal;
-    font-style: italic;
-    color: #666;
-    line-height: 1.25;
-}
-
 .sc-row-flags {
     display: flex;
     flex-wrap: wrap;
