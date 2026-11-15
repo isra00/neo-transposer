@@ -10,6 +10,8 @@ env:
   NT_DB_PASSWORD: root
   NT_DB_DATABASE: nt_only_songs
   NT_DB_DATABASE_INTEGRATION: nt_empty_tables
+  # Songs DB for the unit/integration run, separate from the one acceptance tests browse.
+  UNIT_DB: nt_only_songs_unit
   NT_DEBUG: 1
   NT_ADMIN_USERNAME: unused
   NT_ADMIN_PASSWORD: unused
@@ -87,6 +89,7 @@ jobs:
       - name: ⚙ Initialise the test DB and start the app
         run: |
           make init-test-db
+          make init-unit-db
           make start
 
       - name: 🗄 create_tables.sql includes every migration
@@ -96,7 +99,7 @@ jobs:
       - name: 🔎 Static analysis (PHPStan)
         run: make analyse
 
-      # Both suites in parallel (they don't touch the same songs), logs printed one after the other.
+      # Both suites in parallel, each on its own songs DB; logs printed one after the other.
       - name: 🧪 Unit & integration tests ∥ acceptance tests
         run: |
           make test-unit > unit.log 2>&1 & unit=$!
