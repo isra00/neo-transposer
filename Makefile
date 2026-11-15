@@ -1,5 +1,5 @@
 .PHONY: build start-db-container wait-db init-test-db start-db-for-test \
-        start-selenium wait-selenium test test-acceptance test-song-urls migrate check-migrations \
+        start-selenium wait-selenium test test-unit test-transpositions test-acceptance test-song-urls migrate check-migrations \
         song-data-migration pull-song-data
 .DEFAULT_GOAL := build-dev
 
@@ -93,9 +93,15 @@ stop:
 stop-all: stop
 	@docker stop nt-mysql || true
 
-test:
+test: test-unit test-transpositions
+
+# Unit & integration suites. CI runs them alongside test-acceptance.
+test-unit:
 	@docker exec nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${NT_DB_DATABASE_INTEGRATION} COLLATE 'utf8_general_ci'"
 	docker exec -t -u www-data transposer-dev vendor/bin/codecept run --skip acceptance
+
+# Not in parallel with test-acceptance: InsertSongCest briefly adds a song it would see.
+test-transpositions:
 	docker exec -t -u www-data transposer-dev php artisan app:test-all-transpositions
 
 test-acceptance: start-selenium wait-selenium

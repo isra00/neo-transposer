@@ -50,6 +50,16 @@ jobs:
             --cache-to=type=gha,mode=max,scope=dev
         run: make build-dev
 
+      # Built while the checks and tests run; it's only pushed once they pass.
+      - name: 📦 Build the PROD Docker image in the background
+        env:
+          DOCKER_BUILD: docker buildx build --load
+          DOCKER_BUILD_ARGS: >-
+            --cache-from=type=gha,scope=prod
+            --cache-from=type=gha,scope=dev
+            --cache-to=type=gha,mode=max,scope=prod
+        run: (make build-prod; echo $? > prod-build.exit) > prod-build.log 2>&1 &
+
       - name: ⚙ Initialise the test DB and start the app
         run: |
           make init-test-db
@@ -62,11 +72,19 @@ jobs:
       - name: 🔎 Static analysis (PHPStan)
         run: make analyse
 
-      - name: 🧪 Unit & integration tests, functional test
-        run: make test
+      # Both suites in parallel (they don't touch the same songs), logs printed one after the other.
+      - name: 🧪 Unit & integration tests ∥ acceptance tests
+        run: |
+          make test-unit > unit.log 2>&1 & unit=$!
+          make test-acceptance > acceptance.log 2>&1 & acceptance=$!
+          u=0; wait $unit || u=$?
+          a=0; wait $acceptance || a=$?
+          echo "===== Unit & integration (exit $u)"; cat unit.log
+          echo "===== Acceptance (exit $a)"; cat acceptance.log
+          [ $u -eq 0 ] && [ $a -eq 0 ]
 
-      - name: 🧪 Acceptance tests
-        run: make test-acceptance
+      - name: 🧪 Functional test (all transpositions)
+        run: make test-transpositions
 
       - name: 📝 Get tests' outputs
         if: always()
@@ -83,14 +101,11 @@ jobs:
           name: Codeception-outputs
           path: _output
 
-      - name: 📦 Build the PROD Docker image
-        env:
-          DOCKER_BUILD: docker buildx build --load
-          DOCKER_BUILD_ARGS: >-
-            --cache-from=type=gha,scope=prod
-            --cache-from=type=gha,scope=dev
-            --cache-to=type=gha,mode=max,scope=prod
-        run: make build-prod
+      - name: 📦 Wait for the PROD Docker image
+        run: |
+          while [ ! -f prod-build.exit ]; do sleep 1; done
+          cat prod-build.log
+          exit "$(cat prod-build.exit)"
 
       - name: Log in to the Container registry
         uses: docker/login-action@v4
