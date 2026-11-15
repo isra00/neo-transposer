@@ -4,8 +4,7 @@ namespace NeoTransposer\Domain\ValueObject;
 
 use NeoTransposer\Domain\Exception\SongDataException;
 
-/** @todo Make it immutable */
-final class Chord implements \Stringable
+final readonly class Chord implements \Stringable
 {
     public function __construct(
         public string $fundamental,

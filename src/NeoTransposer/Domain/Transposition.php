@@ -129,38 +129,6 @@ class Transposition
         $this->chordsForPrint = $chordPrinter->printChordset($this->chords);
     }
 
-    /**
-     * In most of the songs, the key is equal to the first chord. If not, no
-     * alternative chords are calculated. Yes, that's simple.
-     *
-     * @param  NotesCalculator  $ncalc  An instance of NotesCalculator
-     * @return string The key, expressed as major chord in american notation.
-     *
-     * @throws SongDataException
-     */
-    public function getKey(NotesCalculator $ncalc): string
-    {
-        $firstChord = Chord::fromString($this->chords[0]);
-
-        /*
-         * Flatten the chord, that is, remove all attributes different from minor.
-         * This is needed because some songs, like Sola a Solo, start with a
-         * 4-note chord (Dm5), or Song of Moses (C7).
-         */
-        $firstChord->attributes = (str_contains((string) $firstChord->attributes, 'm'))
-            ? 'm' : '';
-
-        // The key is always expressed in major form, so we resolve the minor
-        // relatives, it is, the key will be its third minor.
-        if ($firstChord->attributes === 'm') {
-            $position = (int) array_search($firstChord->fundamental, NotesCalculator::ACOUSTIC_SCALE);
-            $firstChord->fundamental = $ncalc->arrayIndex(NotesCalculator::ACOUSTIC_SCALE, $position + 3);
-            $firstChord->attributes = null;
-        }
-
-        return $firstChord->fundamental . $firstChord->attributes;
-    }
-
     public function setAlternativeChords(NotesCalculator $nc): void
     {
         if (!$this->asBook) {
