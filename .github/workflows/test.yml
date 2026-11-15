@@ -42,6 +42,14 @@ jobs:
       - name: ⚙ Boot fixture containers in the background
         run: (make start-db-container && make start-selenium) > fixtures.log 2>&1 &
 
+      # Fallback for update_mmdb.sh when MaxMind's download fails (e.g. daily limit reached).
+      - name: 🌍 Restore the last GeoLite2 database
+        uses: actions/cache@v4
+        with:
+          path: GeoLite2-Country.mmdb
+          key: geolite2-${{ github.run_id }}
+          restore-keys: geolite2-
+
       - name: 📦 Build the DEV Docker image
         env:
           DOCKER_BUILD: docker buildx build --load
@@ -53,6 +61,7 @@ jobs:
       # Built while the checks and tests run; it's only pushed once they pass.
       - name: 📦 Build the PROD Docker image in the background
         env:
+          UPDATE_MMDB: 'true'
           DOCKER_BUILD: docker buildx build --load
           DOCKER_BUILD_ARGS: >-
             --cache-from=type=gha,scope=prod

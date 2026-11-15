@@ -10,15 +10,18 @@
 # the plain `docker build` is used. See .github/workflows/test.yml.
 DOCKER_BUILD ?= docker build
 DOCKER_BUILD_ARGS ?=
+# CI sets it to `true` for the PROD build: the DEV build has just fetched the .mmdb, and
+# MaxMind caps GeoLite downloads per day.
+UPDATE_MMDB ?= sh update_mmdb.sh
 
 # This should be run on post-commit, right? Otherwise serve would fail bc commit name has changed.
 build-dev:
-	sh update_mmdb.sh
+	$(UPDATE_MMDB)
 	$(DOCKER_BUILD) $(DOCKER_BUILD_ARGS) --target dev -t transposer:`git rev-parse --short HEAD`-dev .
 	docker tag transposer:`git rev-parse --short HEAD`-dev transposer:latest-dev
 
 build-prod:
-	sh update_mmdb.sh
+	$(UPDATE_MMDB)
 	$(DOCKER_BUILD) $(DOCKER_BUILD_ARGS) --target prod -t transposer:`git rev-parse --short HEAD`-prod .
 	docker tag transposer:`git rev-parse --short HEAD`-prod transposer:prod
 
