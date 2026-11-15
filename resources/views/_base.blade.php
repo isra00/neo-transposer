@@ -70,7 +70,7 @@
     @yield('header_extra')
 </head>
 
-<body class="lang-{{ app()->getLocale() }} {{ $page_class ?? '' }}" id="top">
+<body class="lang-{{ app()->getLocale() }} {{ $page_class ?? '' }}{{ app()->isProduction() ? '' : ' not-prod' }}" id="top">
 
 <div class="wrapper">
 
