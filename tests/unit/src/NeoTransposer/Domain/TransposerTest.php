@@ -11,9 +11,6 @@ use NeoTransposer\Domain\TranspositionFactory;
 use NeoTransposer\Domain\ValueObject\Chord;
 use NeoTransposer\Domain\ValueObject\NotesRange;
 
-/**
- * @todo Add some corner cases to transposition algorithms
- */
 class TransposerTest extends TestCase
 {
     protected $sut;
@@ -77,6 +74,16 @@ class TransposerTest extends TestCase
             $deviationFromCentered,
             $peopleRange
         );
+    }
+
+    private function chords(string ...$names): array
+    {
+        return array_map(fn (string $name) => Chord::fromString($name), $names);
+    }
+
+    private function chordNames(Transposition $transposition): array
+    {
+        return array_map('strval', $transposition->chords);
     }
 
     public function test_calculate_centered_transposition()
@@ -415,5 +422,250 @@ class TransposerTest extends TestCase
             $expected,
             $sut->calculatePeopleCompatible()
         );
+    }
+
+    public function test_centered_song_wider_than_singer_goes_to_the_bottom()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('A1', 'A2'),
+            new NotesRange('C2', 'E3'),
+            $this->chords('Am', 'G'),
+            false
+        );
+
+        $expected = $this->buildTransposition(
+            $this->chords('F#m', 'E'),
+            0,
+            false,
+            -3,
+            new NotesRange('A1', 'C#3')
+        );
+
+        $this->assertEquals($expected, $sut->calculateCenteredTransposition());
+    }
+
+    /**
+     * The singer's range has 7 semitones more than the song's: the song gets
+     * 4 below and 3 above.
+     */
+    public function test_centered_rounds_up_when_the_middle_is_not_a_semitone()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('A1', 'E3'),
+            new NotesRange('B1', 'B2'),
+            $this->chords('Am'),
+            false
+        );
+
+        $expected = $this->buildTransposition(
+            $this->chords('Bm'),
+            0,
+            false,
+            2,
+            new NotesRange('C#2', 'C#3')
+        );
+
+        $this->assertEquals($expected, $sut->calculateCenteredTransposition());
+    }
+
+    public function test_centered_one_octave_away_is_as_book()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('A1', 'D#3'),
+            new NotesRange('C1', 'C2'),
+            $this->chords('Am', 'G'),
+            false
+        );
+
+        $expected = $this->buildTransposition(
+            $this->chords('Am', 'G'),
+            0,
+            true,
+            12,
+            new NotesRange('C2', 'C3')
+        );
+
+        $this->assertEquals($expected, $sut->calculateCenteredTransposition());
+    }
+
+    public function test_force_highest_voice_with_song_wider_than_singer()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('A1', 'A2'),
+            new NotesRange('C2', 'E3'),
+            $this->chords('Am', 'G'),
+            false
+        );
+
+        $expected = $this->buildTransposition(
+            $this->chords('Dm', 'C'),
+            0,
+            false,
+            -7,
+            new NotesRange('F1', 'A2')
+        );
+
+        $this->assertEquals(
+            $expected,
+            $sut->calculateCenteredTransposition(Transposer::FORCE_HIGHEST)
+        );
+    }
+
+    /**
+     * The centered (E, B) gets B7 as alternative chord. With capo 2 (as book)
+     * and with capo 4 have the same score: the one as book goes first.
+     */
+    public function test_transpositions_centered_sorted_by_ease_with_alternative_chords()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('G1', 'G3'),
+            new NotesRange('B1', 'B2'),
+            $this->chords('D', 'A'),
+            true
+        );
+
+        $all = $sut->getTranspositionsCentered(0);
+
+        $this->assertSame(
+            [2, 4, 0, 5, 3, 1],
+            array_map(fn (Transposition $transposition) => $transposition->getCapo(), $all)
+        );
+        $this->assertTrue($all[0]->getAsBook());
+        $this->assertSame(['E', 'B7'], $this->chordNames($all[2]));
+        $this->assertEquals(array_slice($all, 0, 2), $sut->getTranspositionsCentered());
+    }
+
+    public function test_transposition_as_book_gets_no_alternative_chords()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('F1', 'F3'),
+            new NotesRange('B1', 'B2'),
+            $this->chords('E', 'B'),
+            true
+        );
+
+        $noCapo = array_values(array_filter(
+            $sut->getTranspositionsCentered(0),
+            fn (Transposition $transposition) => $transposition->getCapo() == 0
+        ))[0];
+
+        $this->assertTrue($noCapo->getAsBook());
+        $this->assertSame(['E', 'B'], $this->chordNames($noCapo));
+    }
+
+    /**
+     * One semitone down with capo 5 (E7, C) is easier than one semitone up
+     * without capo (B7, G), but no capo takes precedence.
+     */
+    public function test_easier_not_equivalent_prefers_no_capo()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('A1', 'E3'),
+            new NotesRange('B1', 'B2'),
+            $this->chords('G#7', 'E'),
+            false
+        );
+
+        $expected = $this->buildTransposition(
+            $this->chords('B7', 'G'),
+            0,
+            false,
+            3,
+            new NotesRange('D2', 'D3'),
+            1
+        );
+
+        $this->assertEquals($expected, $sut->getEasierNotEquivalent());
+    }
+
+    /**
+     * Same chords as in the test above, but the song takes the whole singer's
+     * range, so it can't be moved up nor down.
+     */
+    public function test_no_easier_not_equivalent_within_singer_range()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('A1', 'A2'),
+            new NotesRange('C2', 'C3'),
+            $this->chords('C#7', 'A'),
+            false
+        );
+
+        $this->assertNull($sut->getEasierNotEquivalent());
+    }
+
+    /**
+     * One semitone up with capo 1 has the same chords as the centered (Em, Am):
+     * as easy, but not easier.
+     */
+    public function test_no_easier_not_equivalent_when_centered_is_the_easiest()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('A1', 'E3'),
+            new NotesRange('B1', 'B2'),
+            $this->chords('Dm', 'Gm'),
+            false
+        );
+
+        $this->assertNull($sut->getEasierNotEquivalent());
+    }
+
+    public function test_people_compatible_already_compatible_matching_people_range()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('A1', 'C#3'),
+            new NotesRange('B1', 'B2'),
+            $this->chords('Am', 'E'),
+            true,
+            new NotesRange('B1', 'B2')
+        );
+
+        $this->assertEquals(
+            new PeopleCompatibleCalculation(PeopleCompatibleCalculation::ALREADY_COMPATIBLE),
+            $sut->calculatePeopleCompatible()
+        );
+    }
+
+    /**
+     * The people would need 3 semitones up, but the singer only has 1 left.
+     */
+    public function test_people_compatible_adjusted_but_still_too_low()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('G1', 'D3'),
+            new NotesRange('A1', 'D3'),
+            $this->chords('Am', 'Dm'),
+            false,
+            new NotesRange('A1', 'E2')
+        );
+
+        $calculation = $sut->calculatePeopleCompatible();
+        $transposition = $calculation->peopleCompatibleTransposition;
+
+        $this->assertSame(PeopleCompatibleCalculation::TOO_LOW_FOR_PEOPLE, $calculation->status);
+        $this->assertSame(0, $transposition->offset);
+        $this->assertSame(1, $transposition->deviationFromCentered);
+        $this->assertEquals(new NotesRange('A1', 'D3'), $transposition->range);
+        $this->assertEquals(new NotesRange('A1', 'E2'), $transposition->peopleRange);
+    }
+
+    public function test_people_compatible_wider_adjusted_down()
+    {
+        $sut = $this->buildTransposer(
+            new NotesRange('A1', 'E3'),
+            new NotesRange('C2', 'E3'),
+            $this->chords('Am', 'Dm'),
+            false,
+            new NotesRange('D2', 'E3')
+        );
+
+        $calculation = $sut->calculatePeopleCompatible();
+        $transposition = $calculation->peopleCompatibleTransposition;
+
+        $this->assertSame(PeopleCompatibleCalculation::ADJUSTED_WIDER, $calculation->status);
+        $this->assertSame(-3, $transposition->offset);
+        $this->assertSame(-2, $transposition->deviationFromCentered);
+        $this->assertEquals(new NotesRange('A1', 'C#3'), $transposition->range);
+        $this->assertEquals(new NotesRange('B1', 'C#3'), $transposition->peopleRange);
     }
 }
