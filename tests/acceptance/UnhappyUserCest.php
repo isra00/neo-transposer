@@ -45,7 +45,7 @@ class UnhappyUserCest
 
         $I->amOnPage('/cantos-camino-neocatecumenal');
 
-        Shared::clickAndWaitForNewPage($I, '.standard-voice-selection a[href*="female"]');
+        Shared::clickAndWaitForNewPage($I, '.standard-voice-selection button[value="female"]');
         Shared::clickAndWaitForNewPage($I, '.song-index li a');
         $I->see('Mi → La +1 oct');
     }

@@ -29,6 +29,7 @@ final class CsrfProtectionTest extends TestCase
         'admin/insert-song',
         'admin/chord-correction',
         'feedback',
+        'set-user-data',
         '{locale}/login',
         '{locale}/wizard/select-standard',
         '{locale}/wizard/lowest',

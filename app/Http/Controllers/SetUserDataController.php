@@ -13,15 +13,15 @@ use NeoTransposer\Domain\Service\UserWriter;
  */
 final class SetUserDataController
 {
-    public function get(Request $request, UserWriter $userDataWriter)
+    public function post(Request $request, UserWriter $userDataWriter)
     {
         try {
             $userDataWriter->writeUser(
                 session('user'),
-                (int) $request->query('book'),
-                $request->query('lowest_note'),
-                $request->query('highest_note'),
-                $request->query('unhappy_choose_std')
+                (int) $request->input('book'),
+                $request->input('lowest_note'),
+                $request->input('highest_note'),
+                $request->input('unhappy_choose_std')
             );
         } catch (BookNotExistException $e) {
             abort(404, $e->getMessage());
@@ -32,7 +32,7 @@ final class SetUserDataController
         }
 
         return redirect(
-            $request->query('redirect')
+            $request->input('redirect')
                 ?: route('book_' . session('user')->id_book)
         );
     }

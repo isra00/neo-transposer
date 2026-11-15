@@ -13,7 +13,8 @@
 		<a href="javascript:void(0)" id="i-know" class="flatbutton red">@lang('<span>I do know</span> my voice range')</a>
 	</nav>
 
-	<form method="get" action="{{ route('set_user_data') }}" id="voice-range" class="hidden">
+	<form method="post" action="{{ route('set_user_data') }}" id="voice-range" class="hidden">
+		@csrf
 		<p class="voice-selector">
 			<span class="field">
 				@lang('Lowest:')

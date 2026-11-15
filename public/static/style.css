@@ -293,11 +293,18 @@ footer {
 				border-radius: .3em;
 			}
 
-		.books li a {
+		.books li button {
 			display: block;
+			width: 100%;
 			padding: .5em .5em;
+			border: 0;
+			background: none;
+			font-size: inherit;
+			color: #D32F2F;
+			text-align: left;
+			cursor: pointer;
 		}
-			.books li a small {
+			.books li button small {
 				display: block;
 				font-size: .7em;
 				color: #333;
@@ -514,8 +521,17 @@ a.link-all-report {
 			margin: 1em 0 0 1em;
 		}
 
-	.standard-voice-selection a:first-child {
+	.standard-voice-selection {
+		margin: 1em 0;
+	}
+	.standard-voice-selection form {
+		display: inline-block;
+	}
+	.standard-voice-selection form:first-child {
 		margin-right: 1em;
+	}
+	.standard-voice-selection button {
+		cursor: pointer;
 	}
 
 /*
@@ -2727,7 +2743,7 @@ td.red {
 		background: #f4f4f4;
 	}
 
-	.standard-voice-selection a span {
+	.standard-voice-selection button span {
 		display: none;
 	}
 
@@ -3103,7 +3119,7 @@ td.red {
 			box-shadow: none;
 			border-radius: 0;
 		}
-	.books li a small {
+	.books li button small {
 		color:  #ccc;
 	}
 
