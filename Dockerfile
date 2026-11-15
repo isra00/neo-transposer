@@ -14,6 +14,24 @@ RUN composer install \
 COPY . ${WORKDIR}
 RUN composer dump-autoload --optimize --classmap-authoritative
 
+# Same as above without dev packages, for the prod image
+FROM composer:2.8.1 AS composer-prod
+
+ARG WORKDIR="/app"
+
+WORKDIR ${WORKDIR}
+
+COPY composer.json composer.lock ${WORKDIR}/
+RUN composer install \
+    --no-dev \
+    --ignore-platform-reqs \
+    --no-ansi \
+    --no-interaction \
+    --no-scripts
+
+COPY . ${WORKDIR}
+RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
+
 # ----------------------------------------------------------------------------------------------------------------------
 # Pinned to >= 8.3.36 for PHP2Shell (CVE-2026-109618, CVE-2026-109619)
 FROM php:8.3.36-apache AS nt-common
@@ -37,7 +55,6 @@ COPY ./build/apache.conf /etc/apache2/sites-enabled/000-default.conf
 # ----------------------------------------------------------------------------------------------------------------------
 FROM nt-common AS prod
 
-#@todo PROD should have a different Composer run, without dev stuff
 COPY ./build/php-prod.ini /usr/local/etc/php/conf.d/neo-transposer-prod.ini
 
 # Install the New Relic APM PHP agent & daemon. To enable and configure it, add a /usr/local/etc/php/conf.d/newrelic.ini
@@ -50,7 +67,7 @@ RUN \
   rm -rf /tmp/newrelic-php5-* /tmp/nrinstall*
 
 ARG WORKDIR="/app"
-COPY --from=composer --chown=www-data ${WORKDIR} /var/www/html/
+COPY --from=composer-prod --chown=www-data ${WORKDIR} /var/www/html/
 
 #This reduces 1/2 of the app's folder size
 RUN rm -rf /var/www/html/.git; \
@@ -61,9 +78,7 @@ FROM nt-common AS dev
 
 COPY ./build/php-dev.ini /usr/local/etc/php/conf.d/neo-transposer-dev.ini
 
-#For some reason, xdebug sneaks his way into the prod image!
-#xdebug is not a core extension so it must be installed with PECL. 3.1 is the highest version supporting PHP 7.3
-#@todo Update XDebug version to latest; ensure it's not in prod image.
+#xdebug is not a core extension so it must be installed with PECL
 RUN rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && curl -fsSL https://getcomposer.org/download/2.8.1/composer.phar -o /usr/bin/composer.phar \
     && chmod +x /usr/bin/composer.phar \

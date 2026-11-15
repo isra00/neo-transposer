@@ -45,7 +45,6 @@ class TranspositionChartTest extends TestCase
 
         $mockTransposition->range = new NotesRange('C1', 'C2');
 
-        /** @fixme Either make NotesNotation a non-static class or mock it here */
         $chart = new TranspositionChart($mockNc, $mockSong, $mockUser, 'american');
         $chart->addTransposition('testCaption', 'testCssClass', $mockTransposition);
 
