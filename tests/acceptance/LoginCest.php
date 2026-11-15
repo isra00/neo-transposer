@@ -17,16 +17,16 @@ class LoginCest
         // Register a new user and set voice range
         $I->amOnPage('/es/login');
         $I->fillField('email', $email);
-        $I->click('sent');
+        Shared::clickAndWaitForNewPage($I, 'sent');
         $I->click('#i-know');
         $I->selectOption('form select[name=lowest_note]', 'A1');
         $I->selectOption('form select[name=highest_note]', 'E3');
-        $I->click('form button');
+        Shared::clickAndWaitForNewPage($I, 'form button');
 
         // Log back in with the same email
         $I->amOnPage('/es/login');
         $I->fillField('email', $email);
-        $I->click('sent');
+        Shared::clickAndWaitForNewPage($I, 'sent');
         $I->seeElement('.page-book');
     }
 
@@ -35,7 +35,7 @@ class LoginCest
         $faker = Factory::create();
         $I->amOnPage('/es/login');
         $I->fillField('email', $faker->email());
-        $I->click('sent');
+        Shared::clickAndWaitForNewPage($I, 'sent');
         $I->seeElement('.page-user-voice');
     }
 
@@ -43,7 +43,7 @@ class LoginCest
     {
         $I->amOnPage('/es/login');
         $I->fillField('email', 'test@domain');
-        $I->click('sent');
+        Shared::clickAndWaitForNewPage($I, 'sent');
         $I->see(self::ERROR_MSG_ES);
         $I->seeElement('.page-login');
     }
@@ -53,7 +53,7 @@ class LoginCest
         $faker = Factory::create();
         $I->amOnPage('/es/login');
         $I->fillField('email', $faker->email());
-        $I->click('sent');
+        Shared::clickAndWaitForNewPage($I, 'sent');
         $I->dontSee(self::ERROR_MSG_ES);
         $I->seeElement('.page-user-voice');
     }

@@ -41,7 +41,7 @@ class InsertSongCest
     public function insertedSongShouldBeShownCorrectlyInTransposeSongPage(AcceptanceTester $I)
     {
         $this->whenIFillTheInsertSongForm($I, $this->title);
-        $I->click('#submit');
+        Shared::clickAndWaitForNewPage($I, '#submit');
         $I->see('Song inserted', '.notification.success');
 
         Shared::givenASpanishNewUserWithManualRangeInBookPage($I);
@@ -77,7 +77,7 @@ class InsertSongCest
         // setting the value directly is what any client that skips it would send, and the
         // point of the test is that the server survives it.
         $I->executeJS('document.querySelector(\'input[name="chords[3]"]\').value = "C"');
-        $I->click('#submit');
+        Shared::clickAndWaitForNewPage($I, '#submit');
         $I->dontSee('Song inserted');
 
         Shared::givenASpanishNewUserWithManualRangeInBookPage($I);

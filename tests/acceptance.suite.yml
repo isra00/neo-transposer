@@ -20,7 +20,5 @@ modules:
             prefs:
               download.default_directory: "..."
     - \Helper\Acceptance
-extensions:
-    enabled:
-        - Codeception\Extension\Recorder:
-          delete_successful: false
+# No Recorder extension: it screenshots every step of every test. On failure the
+# WebDriver module already saves <test>.fail.png and .fail.html to tests/_output.

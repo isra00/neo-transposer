@@ -13,11 +13,11 @@ class TransposeSongCest
         $faker = Factory::create();
         $I->amOnPage('/es/login');
         $I->fillField('email', $faker->email());
-        $I->click('sent');
+        Shared::clickAndWaitForNewPage($I, 'sent');
         $I->click('#i-know');
         $I->selectOption('form select[name=lowest_note]', 'A1');
         $I->selectOption('form select[name=highest_note]', 'E3');
-        $I->click('form button');
+        Shared::clickAndWaitForNewPage($I, 'form button');
 
         $I->amOnPage('/transpose/gracias-a-yahveh');
 

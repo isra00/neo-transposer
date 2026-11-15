@@ -43,6 +43,7 @@ start start-local: stop
 		-e NT_ADMIN_PASSWORD \
 		-e NT_ANALYTICS_ID \
 		-e NT_DEBUG \
+		-e XDEBUG_MODE \
 		-e NT_PROFILER \
 		-e NT_TRUSTED_PROXIES \
 		-e SENTRY_LARAVEL_DSN \
@@ -99,7 +100,7 @@ COVERAGE_ARGS ?= --coverage-xml
 test:
 	@docker exec transposer-dev bash -c "mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini.disabled /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null; true"
 	@docker exec nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${NT_DB_DATABASE_INTEGRATION} COLLATE 'utf8_general_ci'"
-	docker exec -t -u www-data transposer-dev vendor/bin/codecept run --skip acceptance $(COVERAGE_ARGS)
+	docker exec -t -u www-data -e XDEBUG_MODE=coverage transposer-dev vendor/bin/codecept run --skip acceptance $(COVERAGE_ARGS)
 	@# Only applies when the sources are bind-mounted (make start-local); in CI the outputs
 	@# live inside the container until `make get-test-outputs`, so there is nothing to rewrite.
 	@if [ -f tests/_output/coverage.xml ]; then sed "s@\/var\/www\/html@\/\/wsl$$\/Ubuntu\/var\/www\/vhosts\/transposer.local@g" tests/_output/coverage.xml > tests/_output/coverage.xml.tmp && mv tests/_output/coverage.xml.tmp tests/_output/coverage.xml; fi
