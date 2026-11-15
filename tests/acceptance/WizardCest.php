@@ -12,7 +12,7 @@ class WizardCest
         $I->amOnPage('/es/wizard');
         Shared::removeDebugBar($I);
         $I->click('.gender-selection a[data-show="sub-male"]');
-        $I->seeElement('#sub-male');
+        $I->waitForElementVisible('#sub-male', 5);
     }
 
     public function newUserWizardLowestHighestHappyPath(AcceptanceTester $I)
