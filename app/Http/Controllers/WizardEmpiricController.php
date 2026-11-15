@@ -28,15 +28,6 @@ final class WizardEmpiricController extends Controller
     public function lowest(Request $request)
     {
         $locale = app()->getLocale();
-        $wizardConfig = config('nt.voice_wizard');
-
-        if (!isset($wizardConfig[$locale]['lowest'])) {
-            return response()->view('error', [
-                'page_title'  => __('Error'),
-                'error_title' => __('Sorry, the voice measure wizard is not available in ' . config('nt.languages')[$locale]['name']),
-            ], 404);
-        }
-
         $user = session('user');
 
         // This should not happen, as user should come from selecting a standard range.
