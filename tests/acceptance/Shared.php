@@ -66,6 +66,8 @@ class Shared
         $I->amOnPage('/es/wizard');
         self::removeDebugBar($I);
         $I->click('.gender-selection a[data-show="sub-female"]');
+        // The sub-options slide in with a 0.5s CSS transition.
+        $I->waitForElementClickable('#sub-female li:nth-child(1) button', 5);
         self::clickAndWaitForNewPage($I, '#sub-female li:nth-child(1) button');
         self::clickAndWaitForNewPage($I, '#submit');
     }
