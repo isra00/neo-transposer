@@ -21,16 +21,6 @@ class User
     public $firstTime = false;
 
     /**
-     * Declared here rather than promoted in the constructor on purpose: the User is
-     * serialized into the session, and a promoted property has no class-level default,
-     * so it would be left uninitialized when unserializing sessions written before it
-     * existed. The constructor still accepts it, see below.
-     *
-     * @todo Change to promoted 30 days after deploying this change.
-     */
-    public ?string $registerIp = null;
-
-    /**
      * @param  string|null  $email  User email
      * @param  int|null  $id_user  User ID
      * @param  NotesRange|null  $range  User highest note
@@ -49,9 +39,8 @@ class User
         public ?int $wizard_lowest_attempts = null,
         public ?int $wizard_highest_attempts = null,
         public ?UserPerformance $performance = null,
-        ?string $registerIp = null
+        public ?string $registerIp = null
     ) {
-        $this->registerIp = $registerIp;
     }
 
     public function setPerformance(UserPerformance $performance): void
