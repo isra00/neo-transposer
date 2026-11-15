@@ -12,19 +12,19 @@ class WizardCest
         $I->amOnPage('/es/wizard');
         Shared::removeDebugBar($I);
         $I->click('.gender-selection a[data-show="sub-male"]');
-        $I->seeElement('#sub-male');
+        $I->waitForElementVisible('#sub-male', 5);
     }
 
     public function newUserWizardLowestHighestHappyPath(AcceptanceTester $I)
     {
         Shared::givenASpanishNewUserInWizardLowestPage($I);
 
-        $I->click('#yes');
+        Shared::clickAndWaitForNewPage($I, '#yes');
         Shared::removeDebugBar($I);
-        $I->click('#no');
+        Shared::clickAndWaitForNewPage($I, '#no');
 
         Shared::removeDebugBar($I);
-        $I->click('#no');
+        Shared::clickAndWaitForNewPage($I, '#no');
 
         $I->seeElement('.song-index');
         $I->seeInCurrentUrl('cantos-camino-neocatecumenal');
@@ -38,7 +38,7 @@ class WizardCest
         $I->seeElement('#no[type="button"]');
 
         // After clicking Yes once, No button should become type="submit"
-        $I->click('#yes');
+        Shared::clickAndWaitForNewPage($I, '#yes');
         $I->seeElement('#no[type="submit"]');
     }
 
@@ -46,7 +46,7 @@ class WizardCest
     {
         Shared::givenASpanishNewUserInWizardLowestPage($I);
         Shared::removeDebugBar($I);
-        $I->click('.wizard-nav a:first-child');
+        Shared::clickAndWaitForNewPage($I, '.wizard-nav a:first-child');
         $I->seeElement('.gender-selection');
     }
 }

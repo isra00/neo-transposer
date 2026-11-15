@@ -1,6 +1,13 @@
 #!/bin/sh
 set -e
 
+# MaxMind caps GeoLite downloads per day and only updates the database twice a week,
+# so a copy fetched in the last 24 hours is kept as is.
+if [ -n "$(find GeoLite2-Country.mmdb -mmin -1440 2>/dev/null)" ]; then
+  echo "GeoLite2-Country.mmdb was downloaded less than a day ago; not downloading it again."
+  exit 0
+fi
+
 if [ -z "$NT_MAXMIND_LICENSE_KEY" ]; then
   echo "Environment variable NT_MAXMIND_LICENSE_KEY must be set before calling this script" >&2
   exit 1
@@ -32,5 +39,7 @@ fi
 rm -f last-mmdb.tar.gz
 folder=$(ls -d GeoLite2-Country_*)
 mv -f "./$folder/GeoLite2-Country.mmdb" ./GeoLite2-Country.mmdb
+# tar keeps MaxMind's build date as mtime; record when it was downloaded instead.
+touch ./GeoLite2-Country.mmdb
 rm -r "./$folder"
 echo "Updated from version $folder"

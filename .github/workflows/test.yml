@@ -16,6 +16,9 @@ env:
   NT_ANALYTICS_ID: UA-xxxxxxxx-1
   NT_MAXMIND_LICENSE_KEY: ${{ secrets.NT_MAXMIND_LICENSE_KEY }}
   REGISTRY: ghcr.io
+  # Xdebug's develop/debug modes slow every PHP process (Pint 18s -> 3s, plus Apache
+  # in acceptance tests). Nothing in CI needs it.
+  XDEBUG_MODE: 'off'
 
 jobs:
   test-and-distribute:
@@ -28,20 +31,51 @@ jobs:
       - name: 🐳 Set up Buildx
         uses: docker/setup-buildx-action@v4
 
-      # Started before the build so MySQL boots and the ~1.5 GB Selenium image
-      # downloads while Docker is building, instead of on the critical path after it.
+      # `docker buildx build` in a run: step doesn't see the runtime token the
+      # type=gha cache needs, so without this the cache is silently never read or written.
+      - name: 🐳 Expose GitHub runtime to buildx
+        uses: crazy-max/ghaction-github-runtime@v3
+
+      # Backgrounded so MySQL boots and the ~1.5 GB Selenium image downloads while
+      # Docker is building, instead of on the critical path. wait-db/wait-selenium
+      # block on them later. Runner keeps the process alive until the job ends.
       - name: ⚙ Boot fixture containers in the background
-        run: |
-          make start-db-container
-          make start-selenium
+        run: (make start-db-container && make start-selenium) > fixtures.log 2>&1 &
+
+      # Download MaxMind's GeoLite at most once a day: the first
+      # run of the day downloads it and caches it under today's key; later runs reuse it.
+      # An older copy is restored too, as fallback if that download fails.
+      - name: 📅 Today's date
+        id: date
+        run: echo "today=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: 🌍 Restore the GeoLite2 database
+        id: mmdb
+        uses: actions/cache@v4
+        with:
+          path: GeoLite2-Country.mmdb
+          key: geolite2-${{ steps.date.outputs.today }}
+          restore-keys: geolite2-
 
       - name: 📦 Build the DEV Docker image
         env:
+          UPDATE_MMDB: ${{ steps.mmdb.outputs.cache-hit == 'true' && 'true' || 'sh update_mmdb.sh' }}
           DOCKER_BUILD: docker buildx build --load
           DOCKER_BUILD_ARGS: >-
             --cache-from=type=gha,scope=dev
             --cache-to=type=gha,mode=max,scope=dev
         run: make build-dev
+
+      # Built while the checks and tests run; it's only pushed once they pass.
+      - name: 📦 Build the PROD Docker image in the background
+        env:
+          UPDATE_MMDB: 'true'
+          DOCKER_BUILD: docker buildx build --load
+          DOCKER_BUILD_ARGS: >-
+            --cache-from=type=gha,scope=prod
+            --cache-from=type=gha,scope=dev
+            --cache-to=type=gha,mode=max,scope=prod
+        run: (make build-prod; echo $? > prod-build.exit) > prod-build.log 2>&1 &
 
       - name: ⚙ Initialise the test DB and start the app
         run: |
@@ -55,15 +89,27 @@ jobs:
       - name: 🔎 Static analysis (PHPStan)
         run: make analyse
 
-      - name: 🧪 Unit & integration tests, functional test
-        run: make test
+      # Both suites in parallel, integration tests keep their fixtures in a transaction; logs printed one after the other.
+      - name: 🧪 Unit & integration tests ∥ acceptance tests
+        run: |
+          make test-unit > unit.log 2>&1 & unit=$!
+          make test-acceptance > acceptance.log 2>&1 & acceptance=$!
+          u=0; wait $unit || u=$?
+          a=0; wait $acceptance || a=$?
+          echo "===== Unit & integration (exit $u)"; cat unit.log
+          echo "===== Acceptance (exit $a)"; cat acceptance.log
+          [ $u -eq 0 ] && [ $a -eq 0 ]
 
-      - name: 🧪 Acceptance tests
-        run: make test-acceptance
+      - name: 🧪 Functional test (all transpositions)
+        run: make test-transpositions
 
       - name: 📝 Get tests' outputs
         if: always()
         run: make get-test-outputs dest=.
+
+      - name: Show fixture containers' boot log
+        if: failure()
+        run: cat fixtures.log
 
       - name: Upload tests' outputs as artifacts
         uses: actions/upload-artifact@v7
@@ -72,14 +118,11 @@ jobs:
           name: Codeception-outputs
           path: _output
 
-      - name: 📦 Build the PROD Docker image
-        env:
-          DOCKER_BUILD: docker buildx build --load
-          DOCKER_BUILD_ARGS: >-
-            --cache-from=type=gha,scope=prod
-            --cache-from=type=gha,scope=dev
-            --cache-to=type=gha,mode=max,scope=prod
-        run: make build-prod
+      - name: 📦 Wait for the PROD Docker image
+        run: |
+          while [ ! -f prod-build.exit ]; do sleep 1; done
+          cat prod-build.log
+          exit "$(cat prod-build.exit)"
 
       - name: Log in to the Container registry
         uses: docker/login-action@v4
@@ -109,8 +152,6 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
-      - name: Fix code coverage paths
-        run: sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' ./_output/coverage.xml
 
 #      - name: 🕵️ SonarCloud code quality scan
 #        uses: SonarSource/sonarcloud-github-action@v1.9.1
