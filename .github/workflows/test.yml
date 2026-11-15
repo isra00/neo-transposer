@@ -42,16 +42,24 @@ jobs:
       - name: ⚙ Boot fixture containers in the background
         run: (make start-db-container && make start-selenium) > fixtures.log 2>&1 &
 
-      # Fallback for update_mmdb.sh when MaxMind's download fails (e.g. daily limit reached).
-      - name: 🌍 Restore the last GeoLite2 database
+      # MaxMind caps GeoLite downloads per day, so download at most once a day: the first
+      # run of the day downloads it and caches it under today's key; later runs reuse it.
+      # An older copy is restored too, as fallback if that download fails.
+      - name: 📅 Today's date
+        id: date
+        run: echo "today=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: 🌍 Restore the GeoLite2 database
+        id: mmdb
         uses: actions/cache@v4
         with:
           path: GeoLite2-Country.mmdb
-          key: geolite2-${{ github.run_id }}
+          key: geolite2-${{ steps.date.outputs.today }}
           restore-keys: geolite2-
 
       - name: 📦 Build the DEV Docker image
         env:
+          UPDATE_MMDB: ${{ steps.mmdb.outputs.cache-hit == 'true' && 'true' || 'sh update_mmdb.sh' }}
           DOCKER_BUILD: docker buildx build --load
           DOCKER_BUILD_ARGS: >-
             --cache-from=type=gha,scope=dev
