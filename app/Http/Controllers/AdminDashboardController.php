@@ -12,8 +12,6 @@ final class AdminDashboardController extends Controller
         'PopulateUsersCountry',
         'CheckSongsRangeConsistency',
         'CheckUsersRangeConsistency',
-        'RefreshCompiledCss',
-        'RemoveOldCompiledCss',
         'CheckChordsOrder',
         'TestAllTranspositions',
         'GetVoiceRangeOfGoodUsers',

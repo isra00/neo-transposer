@@ -16,10 +16,8 @@ final class RouteSmokeTest extends TestCase
         $checked = [];
 
         foreach (Route::getRoutes() as $route) {
-            // Skip other packages' routes (debugbar & co) and the CSS one, which recompiles
-            // into public/static and rewrites config/nt.php when hit.
-            if (!in_array('web', $route->gatherMiddleware(), true)
-                || str_starts_with($route->uri(), 'static/compiled-')) {
+            // Skip other packages' routes (debugbar & co).
+            if (!in_array('web', $route->gatherMiddleware(), true)) {
                 continue;
             }
 

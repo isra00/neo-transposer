@@ -4,7 +4,7 @@
     @if ($print_css_code)
         <style>{!! $print_css_code !!}</style>
     @else
-        <link rel="stylesheet" href="{{ url('/static/print.css') }}" type="text/css" media="print" />
+        <link rel="stylesheet" href="{{ url('/static/print.css') }}?v={{ md5_file(public_path('static/print.css')) }}" type="text/css" media="print" />
     @endif
 @endsection
 
