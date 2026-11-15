@@ -57,6 +57,13 @@ jobs:
           key: geolite2-${{ steps.date.outputs.today }}
           restore-keys: geolite2-
 
+      # TEMPORARY: seeds the cache with a locally downloaded copy while MaxMind rate-limits us.
+      - name: 🌍 Seed the GeoLite2 database from mmdb.enc
+        if: steps.mmdb.outputs.cache-hit != 'true' && hashFiles('mmdb.enc') != ''
+        run: |
+          openssl enc -d -aes-256-cbc -pbkdf2 -in mmdb.enc -out GeoLite2-Country.mmdb -pass env:NT_MAXMIND_LICENSE_KEY
+          touch GeoLite2-Country.mmdb
+
       - name: 📦 Build the DEV Docker image
         env:
           UPDATE_MMDB: ${{ steps.mmdb.outputs.cache-hit == 'true' && 'true' || 'sh update_mmdb.sh' }}
