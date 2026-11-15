@@ -15,12 +15,12 @@ final class BookRepositoryMysql extends MysqlRepository implements BookRepositor
         );
     }
 
+    /**
+     * Every locale has exactly one book: a missing or duplicate one throws.
+     */
     public function readIdBookFromLocale(string $locale): int
     {
-        return (int) $this->dbConnection->scalar(
-            'SELECT id_book FROM book WHERE locale = ?',
-            [$locale]
-        );
+        return $this->dbConnection->table('book')->where('locale', $locale)->soleValue('id_book');
     }
 
     public function readAllBooks(): array

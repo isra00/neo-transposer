@@ -28,7 +28,8 @@ CREATE TABLE `book` (
   `chord_printer` varchar(50) NOT NULL,
   `locale` char(2) NOT NULL,
   `song_count` smallint unsigned NOT NULL COMMENT 'Total # of songs that should be present. For management purposes only.',
-  PRIMARY KEY (`id_book`)
+  PRIMARY KEY (`id_book`),
+  UNIQUE KEY `locale` (`locale`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -171,7 +172,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2026_11_05_000000_add_verified_at_to_song', 1),
 ('2026_11_11_203320_song_data', 1),
 ('2026_11_15_004656_song_data', 1),
-('2026_11_15_120000_replace_unique_song_with_id_origin_song', 1);
+('2026_11_15_120000_replace_unique_song_with_id_origin_song', 1),
+('2026_11_16_120000_add_unique_locale_to_book', 1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
