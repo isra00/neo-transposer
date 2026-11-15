@@ -60,10 +60,10 @@ final class TransposedSong
 
         $transposer = $transposerFactory->createTransposer(
             $userRange,
-            $this->song->range,
-            $this->song->originalChords,
-            $this->song->firstChordIsTone,
-            $this->song->peopleRange
+            $this->song->range(),
+            $this->song->originalChords(),
+            $this->song->firstChordIsTone(),
+            $this->song->peopleRange()
         );
 
         $this->transpositionsCentered = $transposer->getTranspositionsCentered(
@@ -91,7 +91,7 @@ final class TransposedSong
      */
     private function prepareForPrint(): void
     {
-        $chordPrinter = app('factory.ChordPrinter')($this->song->bookChordPrinter);
+        $chordPrinter = app('factory.ChordPrinter')($this->song->bookChordPrinter());
 
         $this->song->setOriginalChordsForPrint($chordPrinter);
 
@@ -157,7 +157,7 @@ final class TransposedSong
      */
     private function isCompatibleWithPeople(Transposition $transposition): bool
     {
-        if (empty($this->song->peopleRange)) {
+        if (empty($this->song->peopleRange())) {
             throw new Exception("Can't call isCompatibleWithPeople for this song because this song has no peopleRange");
         }
 
@@ -168,7 +168,7 @@ final class TransposedSong
         );
 
         return $nc->transposeRange(
-            $this->song->peopleRange,
+            $this->song->peopleRange(),
             $transposition->offset
         )->isWithinRange($peopleRange, $nc);
     }

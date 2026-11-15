@@ -45,7 +45,7 @@ final class TransposeSongController extends Controller
 
         $transposedSong->transpose(session('user')->range);
 
-        App::setLocale($transposedSong->song->bookLocale);
+        App::setLocale($transposedSong->song->bookLocale());
 
         $your_voice = session('user')->getVoiceAsString(
             new NotesNotation(),
@@ -94,7 +94,7 @@ final class TransposeSongController extends Controller
         if (session('user')->isLoggedIn()) {
             $feedback = $feedbackRepository->readSongFeedbackForUser(
                 session('user')->id_user ?? null,
-                $transposedSong->song->idSong
+                $transposedSong->song->idSong()
             );
         }
 
@@ -107,13 +107,13 @@ final class TransposeSongController extends Controller
                     'voice_chart'      => $transpositionChart->getChartHtml(),
                     'page_title'       => __(
                         ':song (Neocatechumenal Way)',
-                        ['song' => $transposedSong->song->title]
+                        ['song' => $transposedSong->song->title()]
                     ),
-                    'header_link'      => route('book_' . $transposedSong->song->idBook),
-                    'meta_canonical'   => route('transpose_song', ['id_song' => $transposedSong->song->slug]),
+                    'header_link'      => route('book_' . $transposedSong->song->idBook()),
+                    'meta_canonical'   => route('transpose_song', ['id_song' => $transposedSong->song->slug()]),
                     'meta_description' => __(
                         'Transpose the chords of &quot;:song&quot; (song of the Neocatechumenal Way) automatically so you can sing it without stress!',
-                        ['song' => $transposedSong->song->title]
+                        ['song' => $transposedSong->song->title()]
                     ),
                     'page_class'       => 'transpose-song',
                     'feedback'         => $feedback ?? null,
@@ -134,8 +134,8 @@ final class TransposeSongController extends Controller
         $transpositionChart = new TranspositionChart($nc, $transposedSong->song, session('user'), config('nt.languages')[App::getLocale()]['notation']);
         $transpositionChart->addTransposition('Transposed:', 'transposed-song', $transposedSong->transpositionsCentered[0]);
 
-        if ($transposedSong->song->peopleRange !== null) {
-            $transpositionChart->addVoice('Original for people:', 'original-song original-people', $transposedSong->song->peopleRange);
+        if ($transposedSong->song->peopleRange() !== null) {
+            $transpositionChart->addVoice('Original for people:', 'original-song original-people', $transposedSong->song->peopleRange());
             $transpositionChart->addVoice('Transposed for people:', 'transposed-song transposed-people', $transposedSong->transpositionsCentered[0]->peopleRange);
             $transpositionChart->addVoice('People standard:', 'people-standard', new NotesRange(config('nt.people_range')[0], config('nt.people_range')[1]));
         }

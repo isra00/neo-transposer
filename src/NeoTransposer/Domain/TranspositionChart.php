@@ -28,7 +28,7 @@ final class TranspositionChart
         $this->notation = $notation;
 
         $this->addVoice('Your voice:', 'singer', $singer->range);
-        $this->addVoice('Original chords:', 'original-song', $song->range);
+        $this->addVoice('Original chords:', 'original-song', $song->range());
     }
 
     public function addVoice(string $caption, string $cssClass, NotesRange $range): void

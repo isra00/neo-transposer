@@ -291,7 +291,6 @@ class Transposer
                 )
             );
 
-            /** @todo Change notEquivalent: it is a misleading name */
             foreach ($nearAndItsEquivalentsWithCapo as $notEquivalent) {
 
                 if ($this->originalChords == $notEquivalent->chords) {

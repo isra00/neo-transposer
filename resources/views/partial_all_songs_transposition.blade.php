@@ -23,7 +23,7 @@
     @if ($transposition->getAsBook())
         @lang('(as in the book)')
     @else
-        @foreach ($item->transposedSong->song->originalChordsForPrint as $i => $original_chord)
+        @foreach ($item->transposedSong->song->originalChordsForPrint() as $i => $original_chord)
             <span class="chord-pair">
                 {!! $original_chord !!}
                 &rarr;

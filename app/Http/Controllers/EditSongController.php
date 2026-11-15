@@ -38,29 +38,29 @@ final class EditSongController extends Controller
         }
 
         $idBook = $song
-            ? (int) $song->idBook
+            ? (int) $song->idBook()
             : (int) ($request->get('id_book') ?: array_key_first($allBooks));
 
         $bookSongs = $songRepository->readBookSongs($idBook)->asArray();
 
         // The same song as printed in other books, to review them one after another.
-        $linkedSongs = $song?->idOriginSong
+        $linkedSongs = $song?->idOriginSong()
             ? array_filter(
-                $uniqueSongRepository->readSongs((int) $song->idOriginSong),
-                fn ($row) => (int) $row['id_song'] !== (int) $song->idSong
+                $uniqueSongRepository->readSongs((int) $song->idOriginSong()),
+                fn ($row) => (int) $row['id_song'] !== (int) $song->idSong()
             )
             : [];
 
         return response()->view('edit_song', [
-            'page_title'   => ($song ? 'Edit: ' . $song->title : 'Edit song') . ' · ' . config('nt.software_name'),
+            'page_title'   => ($song ? 'Edit: ' . $song->title() : 'Edit song') . ' · ' . config('nt.software_name'),
             'page_class'   => 'edit-song-page',
             'all_books'    => $allBooks,
             'id_book'      => $idBook,
             'book_songs'   => $bookSongs,
             'song'         => $song,
             'linked_songs' => $linkedSongs,
-            'siblings'     => $song ? $this->siblings($bookSongs, (int) $song->idSong) : ['prev' => null, 'next' => null],
-            'media'        => OfficialWebsiteSongMedia::forUrl($song->url ?? null),
+            'siblings'     => $song ? $this->siblings($bookSongs, (int) $song->idSong()) : ['prev' => null, 'next' => null],
+            'media'        => OfficialWebsiteSongMedia::forUrl($song?->url()),
         ]);
     }
 
@@ -97,13 +97,13 @@ final class EditSongController extends Controller
         );
 
         // The media embeds come from the url's page, so a new url must be scraped again.
-        if ($url !== $previousSong->url) {
+        if ($url !== $previousSong->url()) {
             OfficialWebsiteSongMedia::forget($url);
         }
 
         // Only a change is stamped: re-saving a verified song keeps the date it was verified.
         $verified = (bool) $request->get('verified');
-        if ($verified !== ($previousSong->verifiedAt !== null)) {
+        if ($verified !== ($previousSong->verifiedAt() !== null)) {
             $songRepository->setVerified((int) $idSong, $verified);
         }
 

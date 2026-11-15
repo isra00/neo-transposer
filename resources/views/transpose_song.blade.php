@@ -21,7 +21,7 @@
         <div class="teaser">
             <div class="inside">
                 <div class="more-inside">
-                    <p>@lang('Neo-Transposer helps you to automatically transpose the chords of <strong>:song</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!', ['song' => $song->song->title])</p>
+                    <p>@lang('Neo-Transposer helps you to automatically transpose the chords of <strong>:song</strong> so they match your voice. Type your e-mail, follow the steps and it will transpose all the songs of the Neocatechumenal Way for you!', ['song' => $song->song->title()])</p>
                     @include('partial_login_form', ['redirect' => request()->getRequestUri()])
                 </div>
             </div>
@@ -29,13 +29,13 @@
     @endif
 
     <h1>
-        {{ $song->song->title }}
-        <small>@if(config('app.debug')) [{{ $song->song->idSong }}] @endif</small>
+        {{ $song->song->title() }}
+        <small>@if(config('app.debug')) [{{ $song->song->idSong() }}] @endif</small>
     </h1>
 
-    @if ($song->song->url)
+    @if ($song->song->url())
         <h3 class="song-url">
-            <a href="{{ $song->song->url }}" target="_blank">
+            <a href="{{ $song->song->url() }}" target="_blank">
                 @lang('Official audio and lyrics')
                 <span>
                     <svg height="100%" viewBox="0 0 1.5629659 1.5629659" id="svg1" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><g id="Lager_80" data-name="Lager 80" transform="matrix(0.04883963,0,0,0.04883963,0,9.7839678e-5)"><path id="Path_89" data-name="Path 89" d="m 24,22 v 5 a 1,1 0 0 1 -1,1 H 5 A 1,1 0 0 1 4,27 V 9 A 1,1 0 0 1 5,8 h 5 A 2,2 0 0 0 12,6 V 6 A 2,2 0 0 0 10,4 H 3 A 3,3 0 0 0 0,7 v 22 a 3,3 0 0 0 3,3 h 22 a 3,3 0 0 0 3,-3 v -7 a 2,2 0 0 0 -2,-2 v 0 a 2,2 0 0 0 -2,2 z" fill="CurrentColor" /><rect id="Rectangle_40" data-name="Rectangle 40" width="16" height="4" rx="2" transform="translate(16)" fill="CurrentColor" x="0" y="0" /><rect id="Rectangle_41" data-name="Rectangle 41" width="16" height="4" rx="2" transform="rotate(90,16,16)" fill="CurrentColor" x="0" y="0" /><g id="Group_37" data-name="Group 37"><rect id="Rectangle_42" data-name="Rectangle 42" width="32.296001" height="3.971" rx="1.9859999" transform="rotate(-45,30.162249,2.3423875)" fill="CurrentColor" x="0" y="0" /></g></g></svg>
@@ -48,7 +48,7 @@
 
     <div class="transpositions-list">
         @foreach ($song->transpositionsCentered as $transposition)
-            @include('partial_print_transposition', ['transposition' => $transposition, 'original_chords' => $song->song->originalChordsForPrint, 'feedback_worked' => $transpositionThatWorked === 'centered' . $loop->iteration])
+            @include('partial_print_transposition', ['transposition' => $transposition, 'original_chords' => $song->song->originalChordsForPrint(), 'feedback_worked' => $transpositionThatWorked === 'centered' . $loop->iteration])
         @endforeach
     </div>
 
@@ -56,7 +56,7 @@
         @php $difference = ($song->transpositionEasierNotEquivalent->deviationFromCentered > 0) ? __('higher') : __('lower') @endphp
         <p class="explanation">@lang('This other transposition is a bit :difference, but it has easier chords and may also fit your voice:', ['difference' => $difference])</p>
         <div class="transpositions-list">
-            @include('partial_print_transposition', ['transposition' => $song->transpositionEasierNotEquivalent, 'original_chords' => $song->song->originalChordsForPrint, 'feedback_worked' => $transpositionThatWorked === 'notEquivalent'])
+            @include('partial_print_transposition', ['transposition' => $song->transpositionEasierNotEquivalent, 'original_chords' => $song->song->originalChordsForPrint(), 'feedback_worked' => $transpositionThatWorked === 'notEquivalent'])
         </div>
     @endif
 
@@ -66,7 +66,7 @@
             <small><a class="inline-block" href="{{ route('people-compatible-info', ['locale' => app()->getLocale()]) }}">@lang('Learn more')</a></small>
         </p>
         <div class="transpositions-list">
-            @include('partial_print_transposition', ['transposition' => $song->getPeopleCompatible(), 'original_chords' => $song->song->originalChordsForPrint, 'feedback_worked' => $transpositionThatWorked === 'peopleCompatible'])
+            @include('partial_print_transposition', ['transposition' => $song->getPeopleCompatible(), 'original_chords' => $song->song->originalChordsForPrint(), 'feedback_worked' => $transpositionThatWorked === 'peopleCompatible'])
         </div>
     @endif
 
@@ -86,7 +86,7 @@
     @if (session('user')->isLoggedIn())
         <form class="transposition-feedback" method="post" action="{{ route('transposition_feedback') }}">
             @csrf
-            <input type="hidden" name="id_song" value="{{ $song->song->idSong }}">
+            <input type="hidden" name="id_song" value="{{ $song->song->idSong() }}">
             <input type="hidden" name="centered_score_rate" value="{{ $song->transpositionsCentered[1]->score / $song->transpositionsCentered[0]->score }}">
             <input type="hidden" name="deviation" value="{{ $song->transpositionEasierNotEquivalent->deviationFromCentered ?? $song->getPeopleCompatible()->deviationFromCentered ?? null }}">
             <input type="hidden" name="pc_status" value="{{ $song->getPeopleCompatibleStatusMsg() ?? '' }}">
@@ -224,7 +224,7 @@
                             // verified before the controller, which is what returns 408.
                             if (XHR.status === 408 || XHR.status === 419) {
                                 document.getElementById("feedback-thanks").style.display = 'none';
-                                gtag('event', 'FeedbackSentAfterSessionExpired', {'event_category': 'FeedbackTransposition', 'event_label': '{{ $song->song->title }}'});
+                                gtag('event', 'FeedbackSentAfterSessionExpired', {'event_category': 'FeedbackTransposition', 'event_label': '{{ $song->song->title() }}'});
 
                                 alert("@lang('Your session has expired. Please log-in and submit the feedback again.')");
                                 window.location.reload();
@@ -235,14 +235,14 @@
 
                 sendBasicFeedback: function(iAnswer) {
                     NT.sendFeedbackAjax({
-                        id_song: {{ $song->song->idSong }},
+                        id_song: {{ $song->song->idSong() }},
                         worked: iAnswer,
                         referer: '{{ request()->server('HTTP_REFERER') }}',
                         centered_score_rate: '{{ $song->transpositionsCentered[1]->score / $song->transpositionsCentered[0]->score }}',
                         deviation: '{{ $song->transpositionEasierNotEquivalent?->deviationFromCentered ?: $song->getPeopleCompatible()?->deviationFromCentered ?: null }}',
                         pc_status: '{{ $song->getPeopleCompatibleStatusMsg() ?? '' }}',
                     }, function() {
-                        gtag('event', (iAnswer ? 'Worked' : 'NotWorked'), {'event_category': 'FeedbackTransposition', 'event_label': '{{ $song->song->title }}'});
+                        gtag('event', (iAnswer ? 'Worked' : 'NotWorked'), {'event_category': 'FeedbackTransposition', 'event_label': '{{ $song->song->title() }}'});
 
                         @if (config('nt.detailed_feedback'))
                         if (iAnswer === 1) {
@@ -254,7 +254,7 @@
 
                 sendDetailedFeedback: function(transposition, deviation) {
                     NT.sendFeedbackAjax({
-                        id_song: {{ $song->song->idSong }},
+                        id_song: {{ $song->song->idSong() }},
                         worked: 1,
                         referer: '{{ request()->server('HTTP_REFERER') }}',
                         transposition: transposition,
@@ -362,7 +362,7 @@
                     if (voiceChartDetails) {
                         voiceChartDetails.addEventListener("toggle", function(e) {
                             if (e.target.open) {
-                                gtag('event', 'ShowVoiceChart', {'event_category': 'Actions', 'event_label': '{{ $song->song->title }}'});
+                                gtag('event', 'ShowVoiceChart', {'event_category': 'Actions', 'event_label': '{{ $song->song->title() }}'});
                             }
                         });
                     }

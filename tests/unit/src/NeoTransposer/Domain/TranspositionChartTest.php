@@ -32,7 +32,7 @@ class TranspositionChartTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $mockSong->range = new NotesRange('C1', 'C2');
+        $mockSong->method('range')->willReturn(new NotesRange('C1', 'C2'));
 
         $mockUser = $this->getMockBuilder(User::class)
             ->getMock();

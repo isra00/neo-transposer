@@ -21,7 +21,7 @@ final class TransposedSongTest extends TestCase
 
     protected function buildSong(): Song
     {
-        $song = new Song(
+        return new Song(
             [
                 'id_song'             => 'testIdSong',
                 'id_book'             => 'testIdBook',
@@ -41,10 +41,6 @@ final class TransposedSongTest extends TestCase
             ],
             ['Am', 'Dm']
         );
-
-        $song->originalChordsForPrint = $this->printedChordSet;
-
-        return $song;
     }
 
     protected function buildTransposition(): Transposition
@@ -89,6 +85,6 @@ final class TransposedSongTest extends TestCase
         $this->assertEquals(null, $this->sut->transpositionEasierNotEquivalent);
 
         // Testing prepareForPrint()
-        $this->assertEquals($this->printedChordSet, $this->sut->song->originalChordsForPrint);
+        $this->assertEquals($this->printedChordSet, $this->sut->song->originalChordsForPrint());
     }
 }

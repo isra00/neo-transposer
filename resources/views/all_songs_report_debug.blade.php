@@ -5,9 +5,9 @@
 @foreach ($all_songs_transposed_with_fb as $item)
     <li>
         <h2>
-            <span class="page-number">{!! $item->transposedSong->song->page ?? '&#248;' !!} · </span>
-            {{ $item->transposedSong->song->title }}
-            @if(config('app.debug')) <a href="{{ route('transpose_song', ['id_song' => $item->transposedSong->song->idSong]) }}">[{{ $item->transposedSong->song->idSong }}]</a>@endif
+            <span class="page-number">{!! $item->transposedSong->song->page() ?? '&#248;' !!} · </span>
+            {{ $item->transposedSong->song->title() }}
+            @if(config('app.debug')) <a href="{{ route('transpose_song', ['id_song' => $item->transposedSong->song->idSong()]) }}">[{{ $item->transposedSong->song->idSong() }}]</a>@endif
         </h2>
 
         <ul>
@@ -20,7 +20,7 @@
                     @if ($transposition->getAsBook())
                         @lang('(as in the book)')
                     @else
-                        @foreach ($item->transposedSong->song->originalChordsForPrint as $i => $original_chord)
+                        @foreach ($item->transposedSong->song->originalChordsForPrint() as $i => $original_chord)
                             <span class="chord-pair">{!! $original_chord !!} &rarr; {!! $transposition->chordsForPrint[$i] !!}@if (!$loop->last); @endif</span>
                         @endforeach
                     @endif
@@ -33,7 +33,7 @@
                     @if ($item->transposedSong->transpositionEasierNotEquivalent->getCapo())
                         <span class="capo">C{{ $item->transposedSong->transpositionEasierNotEquivalent->getCapo() }}</span>
                     @endif
-                    @foreach ($item->transposedSong->song->originalChordsForPrint as $i => $original_chord)
+                    @foreach ($item->transposedSong->song->originalChordsForPrint() as $i => $original_chord)
                         <span class="chord-pair">{!! $original_chord !!} &rarr; {!! $item->transposedSong->transpositionEasierNotEquivalent->chordsForPrint[$i] !!}@if (!$loop->last); @endif</span>
                     @endforeach
                 </li>
@@ -46,7 +46,7 @@
                         @if ($item->transposedSong->getPeopleCompatible()->getCapo())
                             <span class="capo">C{{ $item->transposedSong->getPeopleCompatible()->getCapo() }}</span>
                         @endif
-                        @foreach ($item->transposedSong->song->originalChordsForPrint as $i => $original_chord)
+                        @foreach ($item->transposedSong->song->originalChordsForPrint() as $i => $original_chord)
                             <span class="chord-pair">{!! $original_chord !!} &rarr; {!! $item->transposedSong->getPeopleCompatible()->chordsForPrint[$i] !!}@if (!$loop->last); @endif</span>
                         @endforeach
                     @endif

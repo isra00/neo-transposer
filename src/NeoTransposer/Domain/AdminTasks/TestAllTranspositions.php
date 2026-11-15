@@ -93,9 +93,9 @@ final class TestAllTranspositions implements AdminTask
         $testResult = [];
 
         foreach ($allSongs as $transposedSong) {
-            $testResult[$transposedSong->song->idSong] = [
-                'songLowestNote'  => $transposedSong->song->range->lowest,
-                'songHighestNote' => $transposedSong->song->range->highest,
+            $testResult[$transposedSong->song->idSong()] = [
+                'songLowestNote'  => $transposedSong->song->range()->lowest,
+                'songHighestNote' => $transposedSong->song->range()->highest,
                 'centered1'       => [
                     'offset'      => $transposedSong->transpositionsCentered[0]->offset,
                     'lowestNote'  => $transposedSong->transpositionsCentered[0]->range->lowest,
@@ -115,7 +115,7 @@ final class TestAllTranspositions implements AdminTask
             ];
 
             if ($transposedSong->transpositionEasierNotEquivalent) {
-                $testResult[$transposedSong->song->idSong]['notEquivalent'] = [
+                $testResult[$transposedSong->song->idSong()]['notEquivalent'] = [
                     'offset'                => $transposedSong->transpositionEasierNotEquivalent->offset,
                     'lowestNote'            => $transposedSong->transpositionEasierNotEquivalent->range->lowest,
                     'highestNote'           => $transposedSong->transpositionEasierNotEquivalent->range->highest,
@@ -126,10 +126,10 @@ final class TestAllTranspositions implements AdminTask
                 ];
             }
 
-            $testResult[$transposedSong->song->idSong]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus();
+            $testResult[$transposedSong->song->idSong()]['peopleCompatibleStatus'] = $transposedSong->getPeopleCompatibleStatus();
 
             if (($peopleCompatibleTransposition = $transposedSong->getPeopleCompatible()) !== null) {
-                $testResult[$transposedSong->song->idSong]['peopleCompatible'] = [
+                $testResult[$transposedSong->song->idSong()]['peopleCompatible'] = [
                     'offset'                => $peopleCompatibleTransposition->offset,
                     'lowestNote'            => $peopleCompatibleTransposition->range->lowest,
                     'highestNote'           => $peopleCompatibleTransposition->range->highest,

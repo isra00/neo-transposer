@@ -37,9 +37,9 @@
     @foreach ($all_songs_transposed_with_fb as $item)
         <li>
             <h2>
-                <span class="page-number">{!! $item->transposedSong->song->page ?? '&#248;' !!} · </span>
-                {{ $item->transposedSong->song->title }}
-                @if(config('app.debug')) <a href="{{ route('transpose_song', ['id_song' => $item->transposedSong->song->idSong]) }}">[{{ $item->transposedSong->song->idSong }}]</a>@endif
+                <span class="page-number">{!! $item->transposedSong->song->page() ?? '&#248;' !!} · </span>
+                {{ $item->transposedSong->song->title() }}
+                @if(config('app.debug')) <a href="{{ route('transpose_song', ['id_song' => $item->transposedSong->song->idSong()]) }}">[{{ $item->transposedSong->song->idSong() }}]</a>@endif
             </h2>
 
             <ul>

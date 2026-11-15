@@ -131,7 +131,7 @@ final class WizardEmpiricController extends Controller
 
         return [
             'song'       => (new SongTextForWizard($wizardConfig['song_contents']))->getHtmlTextWithChords($transposedChords),
-            'song_title' => $transposedSong->song->title,
+            'song_title' => $transposedSong->song->title(),
             'song_key'   => $transposedChords[0],
             'song_capo'  => $transposedSong->transpositionsCentered[0]->getCapoForPrint(),
             'show_audio' => config('nt.audio') && file_exists(public_path($audioFile)),

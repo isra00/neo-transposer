@@ -10,44 +10,43 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
  */
 class Song
 {
-    /** @todo Make all these protected and create getters */
-    public $idSong;
+    protected $idSong;
 
-    public $idBook;
+    protected $idBook;
 
-    public $page;
+    protected $page;
 
-    public $title;
+    protected $title;
 
-    public $range;
+    protected $range;
 
-    public $slug;
+    protected $slug;
 
-    public $firstChordIsTone;
+    protected $firstChordIsTone;
 
-    public $url;
+    protected $url;
 
-    public $artisticAdjustment;
+    protected $artisticAdjustment;
 
-    public $idOriginSong;
+    protected $idOriginSong;
 
     /**
      * When an admin checked the song against its book in the Songbook comparison.
      */
-    public $verifiedAt;
+    protected $verifiedAt;
 
     /**
      * @var NotesRange|null
      */
-    public $peopleRange;
+    protected $peopleRange;
 
-    public $bookChordPrinter;
+    protected $bookChordPrinter;
 
-    public $bookLocale;
+    protected $bookLocale;
 
-    public $originalChords;
+    protected $originalChords;
 
-    public $originalChordsForPrint = [];
+    protected $originalChordsForPrint = [];
 
     public function __construct($dbColumns, $originalChords)
     {
@@ -76,5 +75,85 @@ class Song
     public function setOriginalChordsForPrint(ChordPrinter $chordPrinter): void
     {
         $this->originalChordsForPrint = $chordPrinter->printChordset($this->originalChords);
+    }
+
+    public function idSong()
+    {
+        return $this->idSong;
+    }
+
+    public function idBook()
+    {
+        return $this->idBook;
+    }
+
+    public function page()
+    {
+        return $this->page;
+    }
+
+    public function title()
+    {
+        return $this->title;
+    }
+
+    public function range(): NotesRange
+    {
+        return $this->range;
+    }
+
+    public function slug()
+    {
+        return $this->slug;
+    }
+
+    public function firstChordIsTone()
+    {
+        return $this->firstChordIsTone;
+    }
+
+    public function url()
+    {
+        return $this->url;
+    }
+
+    public function artisticAdjustment()
+    {
+        return $this->artisticAdjustment;
+    }
+
+    public function idOriginSong()
+    {
+        return $this->idOriginSong;
+    }
+
+    public function verifiedAt()
+    {
+        return $this->verifiedAt;
+    }
+
+    public function peopleRange(): ?NotesRange
+    {
+        return $this->peopleRange;
+    }
+
+    public function bookChordPrinter()
+    {
+        return $this->bookChordPrinter;
+    }
+
+    public function bookLocale()
+    {
+        return $this->bookLocale;
+    }
+
+    public function originalChords()
+    {
+        return $this->originalChords;
+    }
+
+    public function originalChordsForPrint()
+    {
+        return $this->originalChordsForPrint;
     }
 }
