@@ -26,7 +26,7 @@ final class SetUserDataController
         } catch (BookNotExistException $e) {
             abort(404, $e->getMessage());
         } catch (BadUserRangeException) {
-            return redirect()->route('user_voice', ['bad_voice_range' => '1']);
+            return redirect()->route('user_voice', ['locale' => app()->getLocale(), 'bad_voice_range' => '1']);
         } catch (InvalidStandardRangeException) {
             abort(400, 'Bad value for URL parameter unhappy_choose_std');
         }
