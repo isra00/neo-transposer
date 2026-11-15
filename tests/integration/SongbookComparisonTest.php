@@ -2,6 +2,7 @@
 
 namespace Tests\Integration;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Testing\TestResponse;
@@ -13,6 +14,9 @@ use Illuminate\Testing\TestResponse;
  */
 final class SongbookComparisonTest extends TestCase
 {
+    // Its fixtures stay uncommitted, so the acceptance tests running alongside never see them.
+    use DatabaseTransactions;
+
     private const PASSWORD = 'correct-horse-battery-staple';
 
     protected function setUp(): void
@@ -28,14 +32,6 @@ final class SongbookComparisonTest extends TestCase
         // Am F G in one book, Dm A# C in the other: same degrees (i, bVI, bVII) over the tone.
         $this->insertSong(900101, 901, 'Song in the origin book', 'A1', 'D3', ['Am', 'F', 'G']);
         $this->insertSong(900102, 902, 'Song in the other book', 'A1', 'C3', ['Dm', 'A#', 'C']);
-    }
-
-    protected function tearDown(): void
-    {
-        DB::table('song_chord')->whereIn('id_song', [900101, 900102])->delete();
-        DB::table('song')->whereIn('id_song', [900101, 900102])->delete();
-        DB::table('book')->whereIn('id_book', [901, 902])->delete();
-        parent::tearDown();
     }
 
     public function test_it_shows_the_song_of_every_book_that_has_it(): void

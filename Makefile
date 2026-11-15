@@ -1,5 +1,5 @@
 .PHONY: build start-db-container wait-db init-test-db start-db-for-test \
-        start-selenium wait-selenium test test-unit init-unit-db test-transpositions test-acceptance test-song-urls migrate check-migrations \
+        start-selenium wait-selenium test test-unit test-transpositions test-acceptance test-song-urls migrate check-migrations \
         song-data-migration pull-song-data
 .DEFAULT_GOAL := build-dev
 
@@ -99,17 +99,9 @@ stop-all: stop
 test: test-unit test-transpositions
 
 # Unit & integration suites. CI runs them alongside test-acceptance.
-# With UNIT_DB set, the integration tests use that database instead of NT_DB_DATABASE:
-# they add books and songs that would break the pages the acceptance tests browse.
 test-unit:
 	@docker exec nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${NT_DB_DATABASE_INTEGRATION} COLLATE 'utf8_general_ci'"
-	docker exec -t -u www-data $(if $(UNIT_DB),-e NT_DB_DATABASE=$(UNIT_DB)) transposer-dev vendor/bin/codecept run --skip acceptance
-
-# A songs DB of its own for test-unit, so it can run alongside test-acceptance.
-init-unit-db: wait-db
-	docker exec    nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} -e "CREATE DATABASE ${UNIT_DB} COLLATE 'utf8_general_ci'"
-	docker exec -i nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} ${UNIT_DB} < create_tables.sql
-	docker exec -i nt-mysql mysql -u${NT_DB_USER} -p${NT_DB_PASSWORD} ${UNIT_DB} < song_data.sql
+	docker exec -t -u www-data transposer-dev vendor/bin/codecept run --skip acceptance
 
 # Not in parallel with test-acceptance: InsertSongCest briefly adds a song it would see.
 test-transpositions:

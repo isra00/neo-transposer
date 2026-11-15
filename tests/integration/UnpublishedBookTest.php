@@ -2,6 +2,7 @@
 
 namespace Tests\Integration;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\DB;
  */
 final class UnpublishedBookTest extends TestCase
 {
+    // Its fixtures stay uncommitted, so the acceptance tests running alongside never see them.
+    use DatabaseTransactions;
+
     /**
      * The book URLs are hard-coded per id in routes/web.php, so the fixture has to
      * reuse a real one instead of an out-of-the-way test id. The book itself comes
@@ -43,13 +47,6 @@ final class UnpublishedBookTest extends TestCase
         DB::table('song_chord')->insert([
             'id_song' => 900201, 'chord' => 'Am', 'position' => 1,
         ]);
-    }
-
-    protected function tearDown(): void
-    {
-        DB::table('song_chord')->where('id_song', 900201)->delete();
-        DB::table('song')->where('id_song', 900201)->delete();
-        parent::tearDown();
     }
 
     public function test_the_book_page_is_reachable_by_direct_link(): void
