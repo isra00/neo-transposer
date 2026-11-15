@@ -41,7 +41,6 @@ start start-local: stop
 		-e NT_DB_PASSWORD \
 		-e NT_DB_DATABASE \
 		-e NT_DB_DATABASE_INTEGRATION \
-		-e NT_RECAPTCHA_SECRET \
 		-e NT_ADMIN_USERNAME \
 		-e NT_ADMIN_PASSWORD \
 		-e NT_ANALYTICS_ID \

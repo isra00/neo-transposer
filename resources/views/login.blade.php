@@ -1,9 +1,6 @@
 @extends('_base')
 
 @section('header_extra')
-    @if (!config('app.debug') && !config('nt.disable_recaptcha'))
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-    @endif
 
     @foreach ($all_books as $id => $book)
         <link rel="alternate" hreflang="{{ $book->locale() }}" href="{{ url()->to(route('login', ['locale' => $book->locale()])) }}" />

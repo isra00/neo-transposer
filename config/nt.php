@@ -38,7 +38,6 @@ return [
     'test_all_transpositions_expected'       => __DIR__ . '/../tests/testAllTranspositions.expected.json',
 
     'analytics_id'                           => env('NT_ANALYTICS_ID'),
-    'recaptcha_secret'                       => env('NT_RECAPTCHA_SECRET'),
 
     'software_name'                          => 'Neo-Transposer', /* Deprecated */
     'seo_title_suffix'                       => 'Transpose chords',
@@ -55,5 +54,4 @@ return [
     'show_manifesto'                         => false,
     'show_commitment'                        => false,
     'show_people_compatible_in_report'       => false,
-    'disable_recaptcha'                      => true,
 ];

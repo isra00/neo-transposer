@@ -56,20 +56,14 @@ class LoginController extends Controller
 
         $req_email = trim($req->string('email'));
 
-        $isCaptchaValid = config('app.debug') || config('nt.disable_recaptcha') || $this->validateCaptcha($req, config('nt.recaptcha_secret'));
-
         // The D modifier makes "$" mean end-of-string, not "before a trailing newline".
-        if (!preg_match('/' . self::REGEXP_VALID_EMAIL . '/iD', $req_email) || !$isCaptchaValid) {
-            $errorMsg = $isCaptchaValid ?
-                'That e-mail doesn\'t look good. Please, re-type it.'
-                : 'The Captcha code is not valid. If you are human, please try again or update your browser to log-in.';
-
+        if (!preg_match('/' . self::REGEXP_VALID_EMAIL . '/iD', $req_email)) {
             return $this->get(
                 $req,
                 $bookRepository,
                 $locale,
                 [
-                    'error_msg'  => __($errorMsg),
+                    'error_msg'  => __('That e-mail doesn\'t look good. Please, re-type it.'),
                     'post'         => ['email' => $req_email],
                 ]
             );
@@ -96,26 +90,5 @@ class LoginController extends Controller
         $idBook = $user->id_book ?? 1;
 
         return redirect($req->get('redirect') ?? route("book_$idBook"));
-    }
-
-    private function validateCaptcha(Request $req, string $secret): bool
-    {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt(
-            $curl,
-            CURLOPT_POSTFIELDS,
-            http_build_query([
-                'secret' => $secret,
-                'response' => $req->get('g-recaptcha-response'),
-            ])
-        );
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-
-        return json_decode($response, true)['success'] == true;
     }
 }
