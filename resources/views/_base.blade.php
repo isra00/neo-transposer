@@ -118,7 +118,6 @@
 
 @section('footer')
 <footer>
-    @production🥑 @endproduction
     {!! __('This is <a href=":urlCode">free</a> and <a href=":urlCommitment">non-profit</a> software.', ['urlCode' => 'https://github.com/isra00/neo-transposer', 'urlCommitment' => route('commitment', ['locale' => 'es'])]) !!}
     <a href="mailto:neo-transposer@mail.com">@lang('Contact me')</a>.
 </footer>
