@@ -39,7 +39,7 @@ SQL;
         int $idUser,
         bool $worked,
         NotesRange $userRange,
-        string $pcStatus,
+        ?string $pcStatus,
         float $centeredScoreRate,
         ?int $deviationFromCentered = null,
         ?string $transposition = null

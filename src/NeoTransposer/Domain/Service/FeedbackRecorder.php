@@ -19,7 +19,7 @@ final class FeedbackRecorder
         int $idSong,
         bool $worked,
         NotesRange $userRange,
-        string $pcStatus,
+        ?string $pcStatus,
         float $centeredScoreRate,
         ?int $deviationFromCentered,
         ?string $transposition
