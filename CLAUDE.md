@@ -9,6 +9,7 @@ Stack: Laravel 11, Blade, Docker, zepto.js, MySQL
 - The app runs in Docker; DB host is `host.docker.internal`.
 - Run commands inside the Docker container or via the Makefile.
 - Use `make start-local` + `make start-db-local` for development, `make test` for tests, `make bash` for shell.
+- Admin routes (HTTP basic auth) can be reached locally with the header `X-Admin-Bypass: local-dev` (only when `app.debug` is on), e.g. to check admin pages with curl or Chrome.
 - Web server logs are redirected to the container's stderr and stdout.
 - Commit directly to master branch.
 - Apply usual Laravel conventions.
