@@ -107,10 +107,7 @@ Route::prefix('{locale}')
 
 Route::group(['middleware' => NeedsLoginMiddleware::class], function () {
 
-    // GET is accepted only for pages rendered before the 2026-11 deploy that made this
-    // POST-only: their links and form still send GET. The views no longer do.
-    // @todo Back to Route::post() once those pages are gone (branch set-user-data-post-only).
-    Route::match(['get', 'post'], '/set-user-data', [SetUserDataController::class, 'post'])
+    Route::post('/set-user-data', [SetUserDataController::class, 'post'])
         ->name('set_user_data');
 });
 

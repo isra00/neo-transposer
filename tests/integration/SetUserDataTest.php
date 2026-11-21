@@ -99,14 +99,10 @@ final class SetUserDataTest extends TestCase
         $this->assertSame(2, $this->userRow()['id_book']);
     }
 
-    /**
-     * Pages rendered before the POST conversion still send GET: their links and form
-     * have to keep working until the transition is over.
-     */
-    public function test_get_is_still_accepted_during_the_transition(): void
+    public function test_get_is_not_allowed_and_saves_nothing(): void
     {
-        $this->get('/set-user-data?book=3')->assertRedirect(route('book_3'));
+        $this->get('/set-user-data?book=3')->assertStatus(405);
 
-        $this->assertSame(3, $this->userRow()['id_book']);
+        $this->assertSame(2, $this->userRow()['id_book']);
     }
 }
