@@ -16,12 +16,13 @@ final class ChordCorrectionPanelController extends Controller
             return response('No inconsistent chord positions found :-)');
         }
 
+        $idsToShow = array_slice(array_map('intval', array_keys($problematic)), 0, 10);
+
         $chords = DB::select(
-            'SELECT * FROM song_chord JOIN song USING (id_song) WHERE id_song IN (' . implode(',', array_map('intval', array_keys($problematic))) . ') ORDER BY id_song, position'
+            'SELECT * FROM song_chord JOIN song USING (id_song) WHERE id_song IN (' . implode(',', $idsToShow) . ') ORDER BY id_song, position'
         );
 
         $songs = [];
-        $count = 0;
         foreach ($chords as $chord) {
             $chord = (array) $chord;
 
@@ -31,6 +32,9 @@ final class ChordCorrectionPanelController extends Controller
                     'id_book' => $chord['id_book'],
                     'page'    => $chord['page'],
                     'title'   => $chord['title'],
+                    'image'   => ($chord['id_book'] == 1)
+                        ? "/resucito-imgs/sw/{$chord['page']}.jpg"
+                        : '/resucito-imgs/es/' . str_pad((string) $chord['page'], 3, '0', STR_PAD_LEFT) . '.pdf',
                     'chords'  => [],
                 ];
             }
@@ -39,20 +43,11 @@ final class ChordCorrectionPanelController extends Controller
                 'chord'    => $chord['chord'],
                 'position' => $chord['position'],
             ];
-
-            $songs[$chord['id_song']]['image'] = ($chord['id_book'] == 1)
-                ? "/resucito-imgs/sw/{$chord['page']}.jpg"
-                : '/resucito-imgs/es/' . str_pad((string) $chord['page'], 3, '0', STR_PAD_LEFT) . '.pdf';
-
-            if ($count > 50) {
-                break;
-            }
-
-            $count++;
         }
 
         return response()->view('chord_correction_panel', [
             'songs'      => $songs,
+            'total'      => count($problematic),
             'page_title' => 'Chord correction panel',
             'page_class' => 'admin-dashboard',
         ]);

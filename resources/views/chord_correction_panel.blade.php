@@ -5,6 +5,8 @@
 <form method="post" action="{{ route('chord_correction_panel') }}">
 	@csrf
 
+	<p>Showing {{ count($songs) }} of {{ $total }} songs with inconsistent chord positions.</p>
+
 	@foreach ($songs as $song)
 	<div style="overflow: hidden">
 		<h2>{{ $song['page'] }} · {{ $song['title'] }}</h2>
