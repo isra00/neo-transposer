@@ -68,6 +68,18 @@ final class RateLimitTest extends TestCase
         $this->postLogin($this->ip, 'rate-limit-21@example.com')->assertStatus(429);
     }
 
+    public function test_enforce_throttles_feedback_per_client_ip(): void
+    {
+        config(['abuse.rate_limit_mode' => 'enforce']);
+
+        // Unauthenticated AJAX feedback answers 408 from the controller: enough to see it pass the throttle.
+        for ($i = 1; $i <= 10; $i++) {
+            $this->postFeedback($this->ip)->assertStatus(408);
+        }
+
+        $this->postFeedback($this->ip)->assertStatus(429);
+    }
+
     public function test_shadow_never_blocks_and_logs_once_per_minute(): void
     {
         config(['abuse.rate_limit_mode' => 'shadow']);
@@ -108,6 +120,12 @@ final class RateLimitTest extends TestCase
     private function postSetUserData(string $ip)
     {
         return $this->withHeader('CF-Connecting-IP', $ip)->post('/set-user-data', ['book' => 2]);
+    }
+
+    private function postFeedback(string $ip)
+    {
+        return $this->withHeaders(['CF-Connecting-IP' => $ip, 'X-Requested-With' => 'XMLHttpRequest'])
+            ->post('/feedback', ['id_song' => 1, 'worked' => 1]);
     }
 
     private function postLogin(string $ip, string $email)

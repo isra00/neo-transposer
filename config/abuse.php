@@ -10,11 +10,13 @@
  */
 return [
 
-    // Per-IP throttle on POST /{locale}/login and POST /set-user-data.
+    // Per-IP throttle on POST /{locale}/login, POST /set-user-data and POST /feedback.
     'rate_limit_mode' => env('NT_RATE_LIMIT_MODE', 'shadow'),
 
     'rate_limits_per_minute' => [
         'login'         => 20,
         'set-user-data' => 30,
+        // Real users send at most ~3/min; the page silently ignores a 429 here, so leave headroom.
+        'feedback'      => 10,
     ],
 ];

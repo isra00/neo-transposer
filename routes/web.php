@@ -117,6 +117,7 @@ Route::get('/sitemap.xml', [SitemapController::class, 'get']);
 
 // Feedback route handles auth check itself (returns 408 for AJAX when session expires)
 Route::post('/feedback', [ReceiveFeedbackController::class, 'post'])
+    ->middleware('throttle:feedback')
     ->name('transposition_feedback');
 
 Route::get('/transpose/{id_song}', [TransposeSongController::class, 'get'])
