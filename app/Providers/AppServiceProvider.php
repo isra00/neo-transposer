@@ -4,7 +4,11 @@ namespace App\Providers;
 
 use App\View\Composers\PageTitleComposer;
 use GeoIp2\Database\Reader;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -37,6 +41,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Keep throttle counters out of MySQL (Laravel's default cache store is the DB), so a
+        // login flood doesn't add DB writes on top of the ones it already causes.
+        config(['cache.limiter' => 'file']);
+
         $this->app->bind(BookRepository::class, BookRepositoryMysql::class);
         $this->app->bind(SongRepository::class, SongRepositoryMysql::class);
         $this->app->bind(SongChordRepository::class, SongChordRepositoryMysql::class);
@@ -71,6 +79,8 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('_base', PageTitleComposer::class);
 
+        $this->configureRateLimiting();
+
         config(['session.domain' => request()->getHost()]);
 
         // Cloudflare talks plain HTTP to the origin, so Laravel would generate http:// URLs
@@ -80,6 +90,55 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->initializeSession();
+    }
+
+    /**
+     * Login and /set-user-data each hit MySQL and create sessions; a single IP looping over
+     * them took the server down on 2026-11-21. Limits (config/abuse.php) are generous enough
+     * for a group of people logging in together behind one church/home router.
+     */
+    private function configureRateLimiting(): void
+    {
+        foreach (config('abuse.rate_limits_per_minute') as $name => $perMinute) {
+            RateLimiter::for($name, function (Request $request) use ($name, $perMinute) {
+                $ip = self::clientIp($request);
+
+                return match (config('abuse.rate_limit_mode')) {
+                    'enforce' => Limit::perMinute($perMinute)->by($ip),
+                    'shadow'  => self::shadowLimit($name, $perMinute, $ip, $request),
+                    default   => Limit::none(),
+                };
+            });
+        }
+    }
+
+    /**
+     * Counts like the real limit but never blocks: logs once per IP and minute when the
+     * limit would have kicked in, so we can check for false positives before enforcing.
+     */
+    private static function shadowLimit(string $name, int $perMinute, string $ip, Request $request): Limit
+    {
+        $hits = RateLimiter::hit("shadow:$name:" . sha1($ip), 60);
+
+        if ($hits === $perMinute + 1) {
+            Log::warning('Rate limit would block', [
+                'limiter'    => $name,
+                'ip'         => $ip,
+                'per_minute' => $perMinute,
+                'path'       => $request->path(),
+                'user_agent' => $request->userAgent(),
+            ]);
+        }
+
+        return Limit::none();
+    }
+
+    /**
+     * Behind Cloudflare + the host Apache proxy, the real visitor IP is in CF-Connecting-IP.
+     */
+    private static function clientIp(Request $request): string
+    {
+        return $request->header('CF-Connecting-IP') ?: (string) $request->ip();
     }
 
     private function initializeSession(): void

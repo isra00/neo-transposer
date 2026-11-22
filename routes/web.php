@@ -49,7 +49,8 @@ Route::prefix('{locale}')
 
         // Login routes
         Route::get('/login', [LoginController::class, 'get'])->name('login');
-        Route::post('/login', [LoginController::class, 'post']);
+        Route::post('/login', [LoginController::class, 'post'])
+            ->middleware('throttle:login');
 
         Route::get('/manifest.json', [WebManifestController::class, 'get'])->name('webmanifest');
 
@@ -108,6 +109,7 @@ Route::prefix('{locale}')
 Route::group(['middleware' => NeedsLoginMiddleware::class], function () {
 
     Route::post('/set-user-data', [SetUserDataController::class, 'post'])
+        ->middleware('throttle:set-user-data')
         ->name('set_user_data');
 });
 
