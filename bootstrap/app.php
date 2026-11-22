@@ -1,6 +1,7 @@
 <?php
 
 use App\Support\LocaleAutodetector;
+use App\Support\TrustedProxies;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,8 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php'
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $proxies = env('NT_TRUSTED_PROXIES', '');
-        $middleware->trustProxies(at: $proxies === '*' ? '*' : array_filter(explode(',', $proxies)));
+        // Only X-Forwarded-For is taken from the proxies: the scheme is already forced to https.
+        $middleware->trustProxies(
+            at: TrustedProxies::from(env('NT_TRUSTED_PROXIES')),
+            headers: Request::HEADER_X_FORWARDED_FOR,
+        );
 
         // CSRF verification is disabled on every route by request. The middleware still runs
         // in the `web` group, but the wildcard exemption makes it a no-op, so every POST —

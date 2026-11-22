@@ -124,6 +124,8 @@ class AppServiceProvider extends ServiceProvider
             Log::warning('Rate limit would block', [
                 'limiter'    => $name,
                 'ip'         => $ip,
+                // What the rest of the app sees; should equal 'ip' once proxies are trusted.
+                'laravel_ip' => $request->ip(),
                 'per_minute' => $perMinute,
                 'path'       => $request->path(),
                 'user_agent' => $request->userAgent(),
