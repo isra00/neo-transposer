@@ -28,7 +28,6 @@ return [
         'fr' => [
             'name'     => 'Français',
             'notation' => 'latin',
-            'unpublished' => false,
         ],
     ],
 

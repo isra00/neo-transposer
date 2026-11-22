@@ -173,7 +173,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2026_11_11_203320_song_data', 1),
 ('2026_11_15_004656_song_data', 1),
 ('2026_11_15_120000_replace_unique_song_with_id_origin_song', 1),
-('2026_11_16_120000_add_unique_locale_to_book', 1);
+('2026_11_16_120000_add_unique_locale_to_book', 1),
+('2026_11_21_164426_song_data', 1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
