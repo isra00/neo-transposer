@@ -101,7 +101,9 @@ class AppServiceProvider extends ServiceProvider
     {
         foreach (config('abuse.rate_limits_per_minute') as $name => $perMinute) {
             RateLimiter::for($name, function (Request $request) use ($name, $perMinute) {
-                $ip = self::clientIp($request);
+                // The visitor IP, resolved through the trusted proxies (App\Support\TrustedProxies).
+                // Not CF-Connecting-IP: a client bypassing Cloudflare could set that header freely.
+                $ip = (string) $request->ip();
 
                 return match (config('abuse.rate_limit_mode')) {
                     'enforce' => Limit::perMinute($perMinute)->by($ip),
@@ -124,8 +126,8 @@ class AppServiceProvider extends ServiceProvider
             Log::warning('Rate limit would block', [
                 'limiter'    => $name,
                 'ip'         => $ip,
-                // What the rest of the app sees; should equal 'ip' once proxies are trusted.
-                'laravel_ip' => $request->ip(),
+                // Should equal 'ip'; a mismatch means the request didn't come through Cloudflare.
+                'cf_ip'      => $request->header('CF-Connecting-IP'),
                 'per_minute' => $perMinute,
                 'path'       => $request->path(),
                 'user_agent' => $request->userAgent(),
@@ -133,14 +135,6 @@ class AppServiceProvider extends ServiceProvider
         }
 
         return Limit::none();
-    }
-
-    /**
-     * Behind Cloudflare + the host Apache proxy, the real visitor IP is in CF-Connecting-IP.
-     */
-    private static function clientIp(Request $request): string
-    {
-        return $request->header('CF-Connecting-IP') ?: (string) $request->ip();
     }
 
     private function initializeSession(): void

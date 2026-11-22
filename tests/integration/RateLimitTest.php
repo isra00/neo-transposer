@@ -13,8 +13,9 @@ use NeoTransposer\Domain\ValueObject\NotesRange;
 
 /**
  * A single IP looping over login and /set-user-data took production down on 2026-11-21.
- * Both endpoints are throttled per visitor IP (CF-Connecting-IP), with counters kept out of
- * MySQL, and config('abuse.rate_limit_mode') switches between off / shadow (log only) / enforce.
+ * Both endpoints are throttled per visitor IP ($request->ip(), see TrustedProxiesTest), with
+ * counters kept out of MySQL, and config('abuse.rate_limit_mode') switches between
+ * off / shadow (log only) / enforce.
  */
 final class RateLimitTest extends TestCase
 {
@@ -26,7 +27,13 @@ final class RateLimitTest extends TestCase
     {
         parent::setUp();
         // Counters live in the file cache, which outlives the DB transaction: use a fresh IP per test.
-        $this->ip = '198.51.100.' . random_int(1, 254) . '-' . uniqid();
+        $this->ip = self::randomIp();
+    }
+
+    private static function randomIp(): string
+    {
+        // Documentation range (2001:db8::/32): never a trusted proxy, unique enough per test.
+        return sprintf('2001:db8:%x:%x::%x', random_int(0, 0xFFFF), random_int(0, 0xFFFF), random_int(1, 0xFFFF));
     }
 
     public function test_rate_limiter_does_not_use_the_database_cache(): void
@@ -54,7 +61,19 @@ final class RateLimitTest extends TestCase
         $this->postSetUserData($this->ip)->assertStatus(429);
 
         // Another visitor is unaffected.
-        $this->postSetUserData($this->ip . '-other')->assertStatus(302);
+        $this->postSetUserData(self::randomIp())->assertStatus(302);
+    }
+
+    public function test_a_spoofed_cf_connecting_ip_does_not_escape_the_limit(): void
+    {
+        config(['abuse.rate_limit_mode' => 'enforce']);
+
+        // A client hitting the server directly, rotating CF-Connecting-IP on every request.
+        for ($i = 1; $i <= 20; $i++) {
+            $this->postLogin($this->ip, "rate-limit-$i@example.com", self::randomIp())->assertStatus(302);
+        }
+
+        $this->postLogin($this->ip, 'rate-limit-21@example.com', self::randomIp())->assertStatus(429);
     }
 
     public function test_enforce_throttles_login_per_client_ip(): void
@@ -119,17 +138,23 @@ final class RateLimitTest extends TestCase
 
     private function postSetUserData(string $ip)
     {
-        return $this->withHeader('CF-Connecting-IP', $ip)->post('/set-user-data', ['book' => 2]);
+        return $this->withServerVariables(['REMOTE_ADDR' => $ip])->post('/set-user-data', ['book' => 2]);
     }
 
     private function postFeedback(string $ip)
     {
-        return $this->withHeaders(['CF-Connecting-IP' => $ip, 'X-Requested-With' => 'XMLHttpRequest'])
+        return $this->withServerVariables(['REMOTE_ADDR' => $ip])
+            ->withHeader('X-Requested-With', 'XMLHttpRequest')
             ->post('/feedback', ['id_song' => 1, 'worked' => 1]);
     }
 
-    private function postLogin(string $ip, string $email)
+    private function postLogin(string $ip, string $email, ?string $spoofedCfIp = null)
     {
-        return $this->withHeader('CF-Connecting-IP', $ip)->post('/en/login', ['email' => $email]);
+        $request = $this->withServerVariables(['REMOTE_ADDR' => $ip]);
+        if ($spoofedCfIp !== null) {
+            $request = $request->withHeader('CF-Connecting-IP', $spoofedCfIp);
+        }
+
+        return $request->post('/en/login', ['email' => $email]);
     }
 }
